@@ -764,7 +764,7 @@
                     "coordinates": {
                         "x": 1231.574701516618,
                         "y": -2261.0196837689577,
-                        "z": 0
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1268,7 +1268,7 @@
                     "coordinates": {
                         "x": -5596.04754007739,
                         "y": 2102.874516307352,
-                        "z": 0
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1330,7 +1330,7 @@
                     "coordinates": {
                         "x": -3182.5594250967383,
                         "y": -949.8618021006077,
-                        "z": 0
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3467,6 +3467,69 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Tunnel to EMMI Zone Exit West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spin Boost"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Speedbooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Start Point": {
                             "type": "and",
                             "data": {
@@ -3563,32 +3626,6 @@
                                             "name": "Space",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Speedbooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     },
                                     {
@@ -3782,10 +3819,6 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        },
-                        "Event - Break PB Tube (block_pbtube_2)": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
                         }
                     }
                 },
@@ -4227,10 +4260,19 @@
                             }
                         },
                         "Tile Group (POWERBOMB) 2": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    }
+                                ]
                             }
                         },
                         "Tile Group (POWERBOMB) 3": {
@@ -4873,6 +4915,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5191,8 +5259,11 @@
                             }
                         },
                         "Tile Group (SCREWATTACK) 1": {
-                            "type": "template",
-                            "data": "Use Spin Boost"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5628,7 +5699,7 @@
                     "coordinates": {
                         "x": 13700.103071531643,
                         "y": -8278.62296433725,
-                        "z": 0
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -5662,12 +5733,24 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
                                         }
                                     },
                                     {

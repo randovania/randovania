@@ -164,7 +164,7 @@ def test_create_new_dock(skip_qtbot, tmp_path, blank_game_data):
     assert target_area.node_with_name("Dock to Back-Only Lock Room") is None
 
     # Run
-    window._create_new_dock(NodeLocation(0, 0, 0), target_area)
+    window._create_new_dock(NodeLocation(0.0, 0.0, 0.0), target_area)
 
     # Assert
     new_node = current_area.node_with_name("Dock to Explosive Depot")

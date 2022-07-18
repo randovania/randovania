@@ -56,7 +56,7 @@ def test_round_trip(spoiler: bool,
 @pytest.mark.parametrize("extra_data", [False, True])
 def test_decode(default_echoes_preset, mocker, extra_data):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
-    mocker.patch("randovania.layout.generator_parameters._game_db_hash", autospec=True,
+    mocker.patch("randovania.layout.generator_parameters.game_db_hash", autospec=True,
                  return_value=120)
 
     random_uuid = uuid.uuid4()
@@ -105,7 +105,7 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 ])
 def test_decode_mock_other(encoded, num_players, mocker):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
-    mocker.patch("randovania.layout.generator_parameters._game_db_hash", autospec=True,
+    mocker.patch("randovania.layout.generator_parameters.game_db_hash", autospec=True,
                  return_value=120)
 
     preset = MagicMock()

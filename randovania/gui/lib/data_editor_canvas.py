@@ -72,7 +72,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     border_y: float = 75
     canvas_size: QSizeF
 
-    _next_node_location: NodeLocation = NodeLocation(0, 0, 0)
+    _next_node_location: NodeLocation = NodeLocation(0.0, 0.0, 0.0)
     CreateNodeRequest = Signal(NodeLocation)
     MoveNodeRequest = Signal(Node, NodeLocation)
     SelectNodeRequest = Signal(Node)
@@ -369,7 +369,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def qt_local_to_game_loc(self, pos: QPointF) -> NodeLocation:
         return NodeLocation((pos.x() / self.scale) + self.area_bounds.min_x,
                             self.area_bounds.max_y - (pos.y() / self.scale),
-                            0)
+                            0.0)
 
     def get_area_canvas_offset(self):
         return QPointF(
