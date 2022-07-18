@@ -36,6 +36,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Fixed: Phazon Mining Tunnel now accounts for Bombs when coming from Fungal Hall B
+- Fixed: The Central Dynamo drone event is now accounted for to go through Dynamo Access
+- Added: Beginner Wall Boost to lock onto the spider track in Metroid Quarantine A
 - Added: Advancing through rooms containing Trooper Pirates now requires either the proper beam(s), basic defensive capabilities (varies slightly by room), or Combat (Intermediate), except where noted. Rooms affected:
     - Elite Control
     - Elite Research
