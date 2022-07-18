@@ -1254,24 +1254,15 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Ice Door to Dynamo Access/Door to Central Dynamo
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Door to Quarantine Access A
-      All of the following:
-          # The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A. However, if Samus leaves this room without picking up the item, the doors to Save Station Mines B and Dynamo Access will then permanently be sealed, making it impossible to backtrack through the room.
-          Morph Ball and Power Bomb
-          After Invisible Drone or Knowledge (Beginner)
-  > Door to Save Station Mines B
-      After Invisible Drone
-  > Event - Security Drone
-      Any of the following:
-          # Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc
-          Combat (Beginner) or Normal Damage ≥ 100
+  > Before Fight
+      Trivial
 
 > Door to Quarantine Access A; Heals? False
   * Layers: default
   * Ice Door to Quarantine Access A/Door to Central Dynamo
   * Extra - dock_index: 1
   * Extra - nonstandard: False
-  > Door to Save Station Mines B
+  > Room Bottom
       Morph Ball and Power Bomb
 
 > Door to Save Station Mines B; Heals? False
@@ -1279,31 +1270,8 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Ice Door to Save Station Mines B/Door to Central Dynamo
   * Extra - dock_index: 2
   * Extra - nonstandard: False
-  > Door to Dynamo Access
-      All of the following:
-          After Invisible Drone
-          Any of the following:
-              # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
-              Space Jump Boots
-              Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert) and Standable Terrain (Intermediate)
-          Combat (Intermediate) or Normal Damage ≥ 125 or Shoot Ice Beam
-  > Door to Quarantine Access A
-      All of the following:
-          Morph Ball and Power Bomb
-          Any of the following:
-              All of the following:
-                  After Invisible Drone
-                  Ice Beam or Combat (Intermediate) or Normal Damage ≥ 200
-              Before Invisible Drone and Knowledge (Beginner)
-  > Event - Security Drone
-      All of the following:
-          Any of the following:
-              # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
-              Space Jump Boots
-              Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert) and Standable Terrain (Intermediate)
-          Any of the following:
-              # Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc
-              Combat (Beginner) or Normal Damage ≥ 100
+  > Room Bottom
+      Trivial
 
 > Event - Security Drone; Heals? False
   * Layers: default
@@ -1324,8 +1292,47 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Layers: default
   * Pickup 84; Major Location? True
   * Extra - position_required: False
-  > Door to Save Station Mines B
+  > Room Bottom
       Trivial
+
+> Before Fight; Heals? False
+  * Layers: default
+  > Door to Dynamo Access
+      After Invisible Drone
+  > Door to Quarantine Access A
+      All of the following:
+          # The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A. However, if Samus leaves this room without picking up the item, the doors to Save Station Mines B and Dynamo Access will then permanently be sealed, making it impossible to backtrack through the room.
+          Morph Ball and Power Bomb
+          After Invisible Drone or Knowledge (Beginner)
+  > Event - Security Drone
+      Any of the following:
+          # Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc
+          Combat (Beginner) or Normal Damage ≥ 100
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Quarantine Access A
+      All of the following:
+          Morph Ball and Power Bomb
+          Any of the following:
+              Knowledge (Beginner)
+              All of the following:
+                  After Invisible Drone
+                  Ice Beam or Combat (Intermediate) or Normal Damage ≥ 200
+  > Door to Save Station Mines B
+      Before Invisible Drone or Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Ice Beam
+  > Pickup (Main Power Bombs)
+      All of the following:
+          # Achieving the Infinite Speed without going up to hit the fight trigger: https://youtu.be/LRmJn2BAYwc
+          Boost Ball and Morph Ball and Infinite Speed (Intermediate)
+          Morph Ball Bomb or Power Bomb
+  > Before Fight
+      All of the following:
+          Any of the following:
+              # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert) and Standable Terrain (Intermediate)
+          Before Invisible Drone or Combat (Intermediate) or Normal Damage ≥ 125 or Shoot Ice Beam
 
 ----------------
 Elite Quarters Access
