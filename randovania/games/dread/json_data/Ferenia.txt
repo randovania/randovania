@@ -1705,7 +1705,9 @@ Extra - asset_id: collision_camera_019
   * Layers: default
   * Morph Ball Tunnel to Energy Recharge Station Secret/Tunnel to Energy Recharge Station (Gate)
   > Tile Group (WEIGHT)
-      After Ferenia - grapplepulloff1x2_000 and Lay Bomb
+      All of the following:
+          After Ferenia - grapplepulloff1x2_000
+          Lay Bomb or Lay Power Bomb
 
 > Bomb Ledge; Heals? False
   * Layers: default
@@ -1713,18 +1715,29 @@ Extra - asset_id: collision_camera_019
       Screw Attack
   > Event - Grapple Block (grapplepulloff1x2_000)
       All of the following:
-          Morph Ball
+          Grapple Beam and Morph Ball
           Any of the following:
               Cross Bomb
               All of the following:
                   # Bomb & Power Bombs, to desync the tunnel bomb blocks from the ledge bomb blocks
                   Bomb and Power Bombs
+              All of the following:
+                  # Power bombs (video: https://twitter.com/i/status/1545111396760690692 )
+                  Power Bombs ≥ 2 and Movement (Beginner)
+              All of the following:
+                  # Bombs (video: https://twitter.com/SantosJuice/status/1545703077138665472 )
+                  Bomb and Movement (Intermediate)
   > Tile Group (WEIGHT)
-      Morph Ball
+      Trivial
   > Tunnel to Energy Recharge Station Secret
       All of the following:
           Morph Ball and After Ferenia - grapplepulloff1x2_000
-          Cross Bomb or Power Bombs
+          Any of the following:
+              # Destroy bomb blocks
+              Bomb or Cross Bomb or Power Bombs ≥ 2
+          Any of the following:
+              # Movement
+              Flash Shift or Movement (Beginner) or Use Spin Boost
 
 ----------------
 Energy Recharge Station Secret
@@ -1739,23 +1752,22 @@ Extra - asset_id: collision_camera_020
   > Corner
       Trivial
 
-> Tile Group (BOMB WEIGHT); Heals? False
-  * Layers: default
-  > Corner
-      Lay Bomb
-
 > Tunnel to Energy Recharge Station (Gate); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Energy Recharge Station (Gate)/Tunnel to Energy Recharge Station Secret
-  > Tile Group (BOMB WEIGHT)
-      Lay Bomb
+  > Corner
+      Lay Bomb or Lay Power Bomb
 
 > Corner; Heals? False
   * Layers: default
   > Pickup (Energy Part)
       Morph Ball
   > Tunnel to Energy Recharge Station (Gate)
-      Morph Ball and Screw Attack
+      All of the following:
+          Morph Ball and Screw Attack
+          Any of the following:
+              # In case of entering with just 2 PBs, pickup can be third PB or (cross) bombs
+              Bomb or Cross Bomb or Power Bombs ≥ 3
 
 ----------------
 EMMI Zone Exit Middle
