@@ -822,30 +822,48 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Map Station Access (dooremmy_002)
+  > Dock to Map Station Access (Lower)
       Trivial
+  > Dock to EMMI Zone Exit West
+      All of the following:
+          # If you start in the room direclty below this one, you can carry a speed boost all the way to here
+          Morph Ball and Speed Booster and Speedbooster Conservation (Advanced) and Shoot Plasma Beam
 
-> Dock to Map Station Access (dooremmy_002); Heals? False
+> Dock to Map Station Access (Lower); Heals? False
   * Layers: default
-  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Southeast (dooremmy_002)
+  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Southeast (Lower)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Blue EMMI Introduction
       Trivial
-  > Dock to Map Station Access (dooremmy_003)
+  > Dock to Map Station Access (Upper)
       Any of the following:
-          Grapple Beam or Use Spin Boost
+          Grapple Beam or Space Jump or Lay Cross Comb
+          Slide and Slide Jump (Beginner) and Use Spin Boost
+          Flash Shift and Walljump (Beginner)
           Gravity Suit and Simple IBJ
+          All of the following:
+              # This room allows for a bomb jump out of the water without a WBJ
+              Bomb and Morph Ball and Infinite Bomb Jump (Intermediate)
+          All of the following:
+              # If you start in the room directly below this one, you can carry a speed boost all the way here
+              Morph Ball and Speed Booster and Speedbooster Conservation (Advanced) and Shoot Plasma Beam
 
-> Dock to Map Station Access (dooremmy_003); Heals? False
+> Dock to Map Station Access (Upper); Heals? False
   * Layers: default
-  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Southeast (dooremmy_003)
+  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Southeast (Upper)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to Map Station Access (dooremmy_002)
+  > Dock to Map Station Access (Lower)
       Trivial
   > Dock to EMMI Zone Exit West
-      Flash Shift or Grapple Beam or Spider Magnet or Slide Jump (Beginner) or Use Spin Boost
+      Any of the following:
+          Flash Shift or Grapple Beam or Spider Magnet or Use Spin Boost
+          Slide and Slide Jump (Beginner)
+          All of the following:
+              # The boost must be charged from the map room
+              Speed Booster
+              Lay Bomb or Lay Power Bomb
 
 > Dock to EMMI Zone Exit West; Heals? False
   * Layers: default
@@ -856,8 +874,10 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Map Station Access (dooremmy_003)
-      Flash Shift or Grapple Beam or Spider Magnet or Slide Jump (Beginner) or Use Spin Boost
+  > Dock to Map Station Access (Upper)
+      Any of the following:
+          Flash Shift or Grapple Beam or Spider Magnet or Use Spin Boost
+          Slide and Slide Jump (Beginner)
   > Tunnel to Blue EMMI Introduction
       Trivial
 
@@ -872,27 +892,27 @@ Map Station Access
 Extra - total_boundings: {'x1': -5000.0, 'x2': -2900.0, 'y1': -900.0, 'y2': 1300.0}
 Extra - polygon: [[-2900.0, 1300.0], [-5000.0, 1300.0], [-5000.0, -900.0], [-2900.0, -900.0]]
 Extra - asset_id: collision_camera_012
-> Dock to EMMI Zone Exit Southeast (dooremmy_002); Heals? False
+> Dock to EMMI Zone Exit Southeast (Lower); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit Southeast/Dock to Map Station Access (dooremmy_002)
+  * EMMI Door to EMMI Zone Exit Southeast/Dock to Map Station Access (Lower)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (BOMB) 1
       Morph Ball
   > Ledge Grab
       Any of the following:
-          Flash Shift and Grapple Beam
+          Space Jump
           All of the following:
-              Gravity Suit
-              Simple IBJ or Use Spin Boost
-  > Stick to Spider Magnet Wall
-      All of the following:
-          Spider Magnet
-          Flash Shift or Grapple Beam or Gravity Suit or Space Jump
+              Grapple Beam
+              Flash Shift or Spider Magnet or Movement (Beginner) or Walljump (Beginner) or Use Spin Boost
+          All of the following:
+              # This room allows for a bomb jump out of the water without a WBJ
+              Walljump (Beginner) or Simple IBJ or Use Spin Boost
+              Gravity Suit or Lay Bomb
 
-> Dock to EMMI Zone Exit Southeast (dooremmy_003); Heals? False
+> Dock to EMMI Zone Exit Southeast (Upper); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit Southeast/Dock to Map Station Access (dooremmy_003)
+  * EMMI Door to EMMI Zone Exit Southeast/Dock to Map Station Access (Upper)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (BOMB) 3
@@ -919,7 +939,7 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Dock to EMMI Zone Exit Southeast (dooremmy_002)
+  > Dock to EMMI Zone Exit Southeast (Lower)
       Morph Ball
   > Tunnel to Map Station Access Secret
       Morph Ball
@@ -930,7 +950,7 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to EMMI Zone Exit Southeast (dooremmy_002)
+  > Dock to EMMI Zone Exit Southeast (Lower)
       Trivial
 
 > Tile Group (BOMB) 2; Heals? False
@@ -952,7 +972,7 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Dock to EMMI Zone Exit Southeast (dooremmy_003)
+  > Dock to EMMI Zone Exit Southeast (Upper)
       Can Slide
   > Door to Map Station
       Morph Ball
@@ -965,17 +985,12 @@ Extra - asset_id: collision_camera_012
 
 > Ledge Grab; Heals? False
   * Layers: default
-  > Dock to EMMI Zone Exit Southeast (dooremmy_002)
+  > Dock to EMMI Zone Exit Southeast (Lower)
       Trivial
   > Tile Group (WEIGHT)
       Morph Ball
   > Tile Group (BOMB) 2
       Morph Ball
-
-> Stick to Spider Magnet Wall; Heals? False
-  * Layers: default
-  > Ledge Grab
-      Trivial
 
 ----------------
 Map Station
@@ -1008,9 +1023,9 @@ EMMI Zone Exit West
 Extra - total_boundings: {'x1': -10000.0, 'x2': -7900.0, 'y1': 300.0, 'y2': 4200.0}
 Extra - polygon: [[-7900.0, 4200.0], [-10000.0, 4200.0], [-10000.0, 300.0], [-7900.0, 300.0]]
 Extra - asset_id: collision_camera_014
-> Door to EMMI Zone Middle Path (doorgrapplegrapple_006); Heals? False
+> Door to EMMI Zone Middle Path (Grapple); Heals? False
   * Layers: default
-  * Grapple Beam Door to EMMI Zone Middle Path/Door to EMMI Zone Exit West (doorgrapplegrapple_006)
+  * Grapple Beam Door to EMMI Zone Middle Path/Door to EMMI Zone Exit West (Grapple)
   * Extra - actor_name: doorgrapplegrapple_006
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1033,14 +1048,14 @@ Extra - asset_id: collision_camera_014
   * EMMI Door to Early Ice Room/Dock to EMMI Zone Exit West (Upper)
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to EMMI Zone Middle Path (doorgrapplegrapple_006)
+  > Door to EMMI Zone Middle Path (Grapple)
       Trivial
-  > Door to EMMI Zone Middle Path (doorpowerpower_009)
+  > Door to EMMI Zone Middle Path (Power)
       Trivial
 
-> Door to EMMI Zone Middle Path (doorpowerpower_009); Heals? False
+> Door to EMMI Zone Middle Path (Power); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Middle Path/Door to EMMI Zone Exit West (doorpowerpower_009)
+  * Power Beam Door to EMMI Zone Middle Path/Door to EMMI Zone Exit West (Power)
   * Extra - actor_name: doorpowerpower_009
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1061,8 +1076,17 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Upper Platform
       Any of the following:
-          Grapple Beam or Simple IBJ or Use Spin Boost
-          Flash Shift and Spider Magnet
+          Simple IBJ or Use Spin Boost
+          All of the following:
+              Grapple Beam
+              Flash Shift or Movement (Beginner) or Walljump (Beginner)
+          All of the following:
+              Spider Magnet
+              Any of the following:
+                  Flash Shift or Walljump (Beginner)
+                  Slide and Slide Jump (Intermediate)
+          Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Tunnel to EMMI Zone Middle Path; Heals? False
   * Layers: default
@@ -1092,7 +1116,7 @@ Extra - asset_id: collision_camera_015
   > Dock to EMMI Zone Exit West (Upper)
       Trivial
   > Spin Boost Ledge
-      Gravity Suit or Water Bomb Jump (Beginner) or Use Spin Boost
+      Gravity Suit or Perform WBJ or Use Spin Boost
 
 > Dock to EMMI Zone Exit West (Upper); Heals? False
   * Layers: default
@@ -1115,7 +1139,9 @@ Extra - asset_id: collision_camera_015
   > Dock to EMMI Zone Exit West (Lower)
       Trivial
   > Dock to EMMI Zone Exit Northwest
-      Simple IBJ or Use Spin Boost
+      Any of the following:
+          Movement (Beginner) or Simple IBJ or Use Spin Boost
+          Missiles ≥ 5 and Shoot Ice Missile
 
 ----------------
 EMMI Zone Exit Northwest
@@ -1193,33 +1219,33 @@ EMMI Zone Middle Path
 Extra - total_boundings: {'x1': -8000.0, 'x2': -2900.0, 'y1': 2550.0, 'y2': 4200.0}
 Extra - polygon: [[-2900.0, 4200.0], [-8000.0, 4200.0], [-8000.0, 2550.0], [-2900.0, 2550.0]]
 Extra - asset_id: collision_camera_018
-> Door to EMMI Zone Exit West (doorgrapplegrapple_006); Heals? False
+> Door to EMMI Zone Exit West (Grapple); Heals? False
   * Layers: default
-  * Grapple Beam Door to EMMI Zone Exit West/Door to EMMI Zone Middle Path (doorgrapplegrapple_006)
+  * Grapple Beam Door to EMMI Zone Exit West/Door to EMMI Zone Middle Path (Grapple)
   * Extra - actor_name: doorgrapplegrapple_006
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit West (doorpowerpower_009)
+  > Door to EMMI Zone Exit West (Power)
       Trivial
   > Tunnel to EMMI Zone Exit West
       Trivial
 
-> Door to EMMI Zone Exit West (doorpowerpower_009); Heals? False
+> Door to EMMI Zone Exit West (Power); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Exit West/Door to EMMI Zone Middle Path (doorpowerpower_009)
+  * Power Beam Door to EMMI Zone Exit West/Door to EMMI Zone Middle Path (Power)
   * Extra - actor_name: doorpowerpower_009
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit West (doorgrapplegrapple_006)
+  > Door to EMMI Zone Exit West (Grapple)
       Trivial
   > Door to EMMI Zone Exit Northeast
-      Flash Shift or Grapple Beam or Gravity Suit or Morph Ball
+      Flash Shift or Grapple Beam or Gravity Suit or Morph Ball or Use Spin Boost
 
 > Door to EMMI Zone Exit Northeast; Heals? False
   * Layers: default
@@ -1230,13 +1256,13 @@ Extra - asset_id: collision_camera_018
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit West (doorpowerpower_009)
+  > Door to EMMI Zone Exit West (Power)
       Trivial
 
 > Tunnel to EMMI Zone Exit West; Heals? False
   * Layers: default
   * Ghavoran EMMI Tunnel to EMMI Zone Exit West/Tunnel to EMMI Zone Middle Path
-  > Door to EMMI Zone Exit West (doorgrapplegrapple_006)
+  > Door to EMMI Zone Exit West (Grapple)
       Trivial
 
 ----------------
@@ -1245,9 +1271,9 @@ Central Unit Access
 Extra - total_boundings: {'x1': -7000.0, 'x2': -2900.0, 'y1': 4100.0, 'y2': 6400.0}
 Extra - polygon: [[-2900.0, 6400.0], [-7000.0, 6400.0], [-7000.0, 4100.0], [-2900.0, 4100.0]]
 Extra - asset_id: collision_camera_019
-> Door to EMMI Zone Exit Northeast (doorpowerpower_010); Heals? False
+> Door to EMMI Zone Exit Northeast (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Exit Northeast/Door to Central Unit Access (doorpowerpower_010)
+  * Power Beam Door to EMMI Zone Exit Northeast/Door to Central Unit Access (Upper)
   * Extra - actor_name: doorpowerpower_010
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1259,9 +1285,9 @@ Extra - asset_id: collision_camera_019
   > Room Center
       Trivial
 
-> Door to EMMI Zone Exit Northeast (doorpowerpower_011); Heals? False
+> Door to EMMI Zone Exit Northeast (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Exit Northeast/Door to Central Unit Access (doorpowerpower_011)
+  * Power Beam Door to EMMI Zone Exit Northeast/Door to Central Unit Access (Lower)
   * Extra - actor_name: doorpowerpower_011
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1280,10 +1306,14 @@ Extra - asset_id: collision_camera_019
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit Northeast (doorpowerpower_010)
-      Flash Shift or Space Jump
+  > Door to EMMI Zone Exit Northeast (Upper)
+      Any of the following:
+          Flash Shift or Space Jump
+          Slide and Slide Jump (Beginner) and Use Spin Boost
   > Room Center
       Trivial
+  > Pickup (Ice Missile)
+      After Ghavoran - Central Unit
 
 > Tunnel to EMMI Zone Exit Northwest; Heals? False
   * Layers: default
@@ -1301,18 +1331,33 @@ Extra - asset_id: collision_camera_019
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_IceMissiles
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to EMMI Zone Exit Northeast (doorpowerpower_011)
+  > Door to EMMI Zone Exit Northeast (Upper)
+      Any of the following:
+          Grapple Beam or Space Jump or Simple IBJ
+          Morph Ball and Single-wall Wall Jump (Intermediate)
+          All of the following:
+              Walljump (Beginner)
+              Flash Shift or Use Spin Boost
+          Speed Booster and After Ghavoran - Central Unit and Can Slide
+  > Door to EMMI Zone Exit Northeast (Lower)
       Trivial
+  > Door to EMMI Zone Exit Northwest
+      Any of the following:
+          Space Jump or Simple IBJ
+          Morph Ball and Single-wall Wall Jump (Intermediate)
+          Walljump (Beginner) and Use Spin Boost
+          Speed Booster and After Ghavoran - Central Unit and Can Slide
   > Dock to Central Unit
       Can Slide
-  > Pickup (Ice Missile)
-      After Ghavoran - Central Unit
 
 > Dock to Central Unit; Heals? False
   * Layers: default
   * EMMI Door to Central Unit/Dock to Central Unit Access
   > Tunnel to EMMI Zone Exit Northwest
-      Space Jump or Speed Booster or Simple IBJ
+      Any of the following:
+          Space Jump or Simple IBJ
+          Speed Booster and After Ghavoran - Central Unit
+          Walljump (Beginner) and Use Spin Boost
   > Room Center
       Can Slide
 
@@ -1340,14 +1385,14 @@ Extra - asset_id: collision_camera_020
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Spin Boost Tower (dooremmy)
+  > Dock to Spin Boost Tower (Lower)
       Trivial
   > Tile Group (WEIGHT)
       All of the following:
           Morph Ball and After Ghavoran - Central Unit
           Space Jump or Simple IBJ
 
-> Dock to Spin Boost Tower (dooremmy); Heals? False
+> Dock to Spin Boost Tower (Lower); Heals? False
   * Layers: default
   * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (dooremmy)
   * Extra - actor_name: dooremmy
@@ -1355,38 +1400,38 @@ Extra - asset_id: collision_camera_020
   > Door to EMMI Zone Middle Path
       Trivial
 
-> Dock to Spin Boost Tower (dooremmy_007); Heals? False
+> Dock to Spin Boost Tower (Upper); Heals? False
   * Layers: default
   * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (dooremmy_007)
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to Central Unit Access (doorpowerpower_011)
+  > Door to Central Unit Access (Lower)
       Morph Ball and After Ghavoran - Central Unit
 
-> Door to Central Unit Access (doorpowerpower_010); Heals? False
+> Door to Central Unit Access (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Central Unit Access/Door to EMMI Zone Exit Northeast (doorpowerpower_010)
+  * Power Beam Door to Central Unit Access/Door to EMMI Zone Exit Northeast (Upper)
   * Extra - actor_name: doorpowerpower_010
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Central Unit Access (doorpowerpower_011)
+  > Door to Central Unit Access (Lower)
       Trivial
 
-> Door to Central Unit Access (doorpowerpower_011); Heals? False
+> Door to Central Unit Access (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Central Unit Access/Door to EMMI Zone Exit Northeast (doorpowerpower_011)
+  * Power Beam Door to Central Unit Access/Door to EMMI Zone Exit Northeast (Lower)
   * Extra - actor_name: doorpowerpower_011
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Spin Boost Tower (dooremmy_007)
+  > Dock to Spin Boost Tower (Upper)
       After Ghavoran - Central Unit and Can Slide
-  > Door to Central Unit Access (doorpowerpower_010)
+  > Door to Central Unit Access (Upper)
       Trivial
 
 > Tile Group (WEIGHT); Heals? False
@@ -1395,7 +1440,7 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to Spin Boost Tower (dooremmy_007)
+  > Dock to Spin Boost Tower (Upper)
       Morph Ball
 
 ----------------
@@ -1439,7 +1484,7 @@ Extra - asset_id: collision_camera_021
 
 > Dock to EMMI Zone Exit Northeast (dooremmy); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (dooremmy)
+  * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (Lower)
   * Extra - actor_name: dooremmy
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Upper Center Platform
@@ -1447,7 +1492,7 @@ Extra - asset_id: collision_camera_021
 
 > Dock to EMMI Zone Exit Northeast (dooremmy_007); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (dooremmy_007)
+  * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (Upper)
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Ammo Recharge
@@ -2324,8 +2369,6 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tile Group (WEIGHT)
       Morph Ball
-  > Tile Group (BOMB) 1
-      Lay Cross Comb
 
 > Tile Group (WEIGHT); Heals? False
   * Layers: default
@@ -2344,7 +2387,15 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
-      Lay Cross Comb
+      Any of the following:
+          Lay Cross Comb
+          All of the following:
+              Gravity Suit and Movement (Expert)
+              Flash Shift or Use Spin Boost
+  > Tile Group (WEIGHT)
+      Trivial
+  > Bomb Ledge
+      Trivial
 
 > Tile Group (BOMB) 2; Heals? False
   * Layers: default
@@ -2353,17 +2404,23 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tunnel to Map Station Access
+      Trivial
 
 > Tunnel to Map Station Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Map Station Access/Tunnel to Map Station Access Secret
-  > Get on Bomb Block
-      Gravity Suit
+  > Bomb Ledge
+      Any of the following:
+          Gravity Suit or Perform WBJ
+          Space Jump and Water Space Jump (Beginner)
 
-> Get on Bomb Block; Heals? False
+> Bomb Ledge; Heals? False
   * Layers: default
   > Tile Group (BOMB) 1
       Morph Ball
+  > Tile Group (BOMB) 2
+      Trivial
   > Tunnel to Map Station Access
       Trivial
 

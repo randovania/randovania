@@ -2,6 +2,17 @@
 cd /D "%~dp0"
 cd ..
 
+if NOT exist .git\ (
+    echo.
+    echo Downloading Randovania via the "Download ZIP" button in GitHub is not supported.
+    echo.
+    echo Please follow the instructions in the README:
+    echo   https://github.com/randovania/randovania/blob/main/README.md#installation
+    echo.
+    pause
+    exit
+)
+
 py -3.10 tools\test_py_version.py
 if NOT ["%errorlevel%"]==["0"] pause
 if NOT ["%errorlevel%"]==["0"] exit /b 0

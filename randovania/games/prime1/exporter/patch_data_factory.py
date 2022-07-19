@@ -100,6 +100,7 @@ _LOCATIONS_GROUPED_TOGETHER = [
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
+                                     pickup_markers: bool,
                                      rng: Random) -> dict:
     model = detail.model.as_json
 
@@ -129,7 +130,8 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         "hudmemoText": hud_text,
         "currIncrease": count,
         "maxIncrease": count,
-        "respawn": False
+        "respawn": False,
+        "showIcon": pickup_markers
     }
     if modal_hud_override:
         result["modalHudmemo"] = True
@@ -255,6 +257,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     pickup_index = node.pickup_index.index
                     pickup = prime1_pickup_details_to_patcher(pickup_list[pickup_index],
                                                               pickup_index in modal_hud_override,
+                                                              self.cosmetic_patches.pickup_markers,
                                                               self.rng)
 
                     if node.extra.get("position_required"):
