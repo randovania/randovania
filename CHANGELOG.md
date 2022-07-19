@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Exporting with `QoL Cosmetic = False`
 - Changed: Patches now consume fewer layers on average
+- Added: Item icons on map in cosmetic patches
 
 #### Logic Database
 
