@@ -14,9 +14,13 @@ _PERMALINK_MAX_SEED = 2 ** 31
 _PERMALINK_PLAYER_COUNT_LIMITS = (2, 256)
 
 
-def _game_db_hash(game: RandovaniaGame) -> int:
-    data = default_data.read_json_then_binary(game)[1]
+def raw_database_hash(data: dict) -> int:
     return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
+
+
+def game_db_hash(game: RandovaniaGame) -> int:
+    data = default_data.read_json_then_binary(game)[1]
+    return raw_database_hash(data)
 
 
 def _get_unique_games(presets: list[Preset]) -> Iterator[RandovaniaGame]:
@@ -69,7 +73,7 @@ class GeneratorParameters(BitPackValue):
             yield from preset.bit_pack_encode({"manager": manager})
 
         for game in _get_unique_games(self.presets):
-            yield _game_db_hash(game), 256
+            yield game_db_hash(game), 256
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "GeneratorParameters":
@@ -84,7 +88,7 @@ class GeneratorParameters(BitPackValue):
         ]
         for game in _get_unique_games(presets):
             included_data_hash = decoder.decode_single(256)
-            expected_data_hash = _game_db_hash(game)
+            expected_data_hash = game_db_hash(game)
             if included_data_hash != expected_data_hash:
                 raise ValueError("Given permalink is for a Randovania {} database with hash '{}', "
                                  "but current database has hash '{}'.".format(game.long_name,

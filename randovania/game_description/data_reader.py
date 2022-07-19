@@ -260,7 +260,7 @@ def read_dock_weakness_database(data: dict,
 
 
 def location_from_json(location: dict[str, float]) -> NodeLocation:
-    return NodeLocation(location["x"], location["y"], location["z"])
+    return NodeLocation(float(location["x"]), float(location["y"]), float(location["z"]))
 
 
 class WorldReader:
