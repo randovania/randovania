@@ -19,10 +19,16 @@ if typing.TYPE_CHECKING:
 NodeIndex = int
 
 
-class NodeLocation(NamedTuple):
+@dataclasses.dataclass(frozen=True, slots=True)
+class NodeLocation:
     x: float
     y: float
     z: float
+
+    def __post_init__(self):
+        assert isinstance(self.x, float)
+        assert isinstance(self.y, float)
+        assert isinstance(self.z, float)
 
 
 @dataclasses.dataclass(frozen=True)
