@@ -6,7 +6,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 33
+CURRENT_VERSION = 34
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -640,7 +640,21 @@ def _migrate_v32(preset: dict) -> dict:
         }
     }
     return preset
+def _migrate_v33(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["range_scale_low"] = 1.0
+        preset["configuration"]["range_scale_high"] = 1.0
+        preset["configuration"]["range_health_low"] = 1.0
+        preset["configuration"]["range_health_high"] = 1.0
+        preset["configuration"]["range_speed_low"] = 1.0
+        preset["configuration"]["range_speed_high"] = 1.0
+        preset["configuration"]["range_damage_low"] = 1.0
+        preset["configuration"]["range_damage_high"] = 1.0
+        preset["configuration"]["range_knockback_low"] = 1.0
+        preset["configuration"]["range_knockback_high"] = 1.0
+        preset["configuration"]["diff_xyz"] = False
 
+    return preset
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -675,6 +689,7 @@ _MIGRATIONS = {
     30: _migrate_v30,
     31: _migrate_v31,
     32: _migrate_v32,
+    33: _migrate_v33,
 }
 
 

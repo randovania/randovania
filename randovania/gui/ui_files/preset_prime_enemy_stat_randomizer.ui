@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EnemyAttributeRandomizer</class>
+ <widget class="QMainWindow" name="EnemyAttributeRandomizer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>482</width>
+    <height>407</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Energy</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>462</width>
+         <height>387</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QGroupBox" name="enemy_stat_randomizerd">
+          <property name="title">
+           <string>Enemy Stat Randomizer</string>
+          </property>
+          <widget class="QLabel" name="scale_attribute_label">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>130</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Scale Range</string>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_scale_low">
+           <property name="geometry">
+            <rect>
+             <x>163</x>
+             <y>130</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <double>0.010000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>25.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QLabel" name="enemy_stat_randomizer_description">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>30</y>
+             <width>351</width>
+             <height>76</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randomize Enemy and boss stats within a custom range.&lt;/p&gt;&lt;p&gt;Bosses and some enemies have certain size/speed limitations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_scale_high">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>130</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <double>0.010000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>25.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_health_low">
+           <property name="geometry">
+            <rect>
+             <x>163</x>
+             <y>200</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <double>0.010000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QLabel" name="health_attribute_label">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>200</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Health Range</string>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_health_high">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>200</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <double>0.010000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_speed_low">
+           <property name="geometry">
+            <rect>
+             <x>163</x>
+             <y>250</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>100.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QLabel" name="speed_attribute_label">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>250</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Speed Range</string>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_speed_high">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>250</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>100.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_damage_low">
+           <property name="geometry">
+            <rect>
+             <x>163</x>
+             <y>300</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QLabel" name="damage_attribute_label">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>300</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Damage Range</string>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_damage_high">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>300</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_knockback_low">
+           <property name="geometry">
+            <rect>
+             <x>163</x>
+             <y>350</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QLabel" name="knockback_attribute_label">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>350</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Knockback Range</string>
+           </property>
+          </widget>
+          <widget class="QDoubleSpinBox" name="range_knockback_high">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>350</y>
+             <width>101</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>167</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.250000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+          <widget class="QLabel" name="minimum_label">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>110</y>
+             <width>81</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Minimum&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="maximum_label">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>110</y>
+             <width>81</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Maximum&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="diff_xyz">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>155</y>
+             <width>231</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Randomize Scale XYZ Values Separately</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

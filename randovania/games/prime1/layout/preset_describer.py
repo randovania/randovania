@@ -44,6 +44,31 @@ class PrimePresetDescriber(GamePresetDescriber):
         superheated_probability = describe_probability(configuration.superheated_probability, "superheated")
         submerged_probability = describe_probability(configuration.submerged_probability, "submerged")
 
+        def attribute_in_range(rand_range, attribute):
+            if rand_range[0] == 1.0 and rand_range[1] == 1.0:
+                return None
+            if rand_range[0] > rand_range[1]:
+                temp = rand_range[0]
+                rand_range[0] = rand_range[1]
+                rand_range[1] = temp
+
+            return "randomized " + attribute + " within range " + str(rand_range[0]) + " - " + str(rand_range[1])
+
+        def different_xyz_randomization(diff_xyz):
+            if range_scale is None:
+                return None
+            elif diff_xyz == True:
+                return "Scale XYZ values will be randomized separately"
+            elif diff_xyz == False:
+                return "Scale XYZ values will be randomized together"
+        
+        range_scale = attribute_in_range([configuration.range_scale_low, configuration.range_scale_high], "Scale")
+        range_health = attribute_in_range([configuration.range_health_low, configuration.range_health_high], "Health")
+        range_speed = attribute_in_range([configuration.range_speed_low, configuration.range_speed_high], "Speed")
+        range_damage = attribute_in_range([configuration.range_damage_low, configuration.range_damage_high], "Damage")
+        range_knockback = attribute_in_range([configuration.range_knockback_low, configuration.range_knockback_high], "Knockback")
+        diff_xyz = different_xyz_randomization(configuration.diff_xyz)
+
         extra_message_tree = {
             "Difficulty": [
                 {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},
@@ -111,6 +136,14 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     cutscene_removal: cutscene_removal is not None,
+                },
+                {
+                    range_scale: range_scale is not None,
+                    range_health: range_health is not None,
+                    range_speed: range_speed is not None,
+                    range_damage: range_damage is not None,
+                    range_knockback: range_knockback is not None,
+                    diff_xyz: diff_xyz is not None,
                 }
             ],
         }

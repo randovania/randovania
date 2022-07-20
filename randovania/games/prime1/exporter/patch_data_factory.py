@@ -902,6 +902,18 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
 
+            "randScaleMin": self.configuration.range_scale_low,
+            "randScaleMax": self.configuration.range_scale_high,
+            "randHealthMin": self.configuration.range_health_low,
+            "randHealthMax": self.configuration.range_health_high,
+            "randSpeedMin": self.configuration.range_speed_low,
+            "randSpeedMax": self.configuration.range_speed_high,
+            "randDamageMin": self.configuration.range_damage_low,
+            "randDamageMax": self.configuration.range_damage_high,
+            "randKnockbackMin": self.configuration.range_knockback_low,
+            "randKnockbackMax": self.configuration.range_knockback_high,
+            "diffXYZ": self.configuration.diff_xyz,
+
             # TODO
             # "externAssetsDir": path_to_converted_assets,
         }

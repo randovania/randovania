@@ -7,6 +7,8 @@ from textwrap import wrap
 
 import py_randomprime
 
+import PARAMETEREDITOR.PARAMETEREDITOR
+
 from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description.resources.pickup_entry import PickupModel
@@ -165,6 +167,18 @@ class PrimeGameExporter(GameExporter):
         )
         new_config["preferences"]["cacheDir"] = cache_dir
 
+        random_scale_min = new_config.pop("randScaleMin")
+        random_scale_max = new_config.pop("randScaleMax")
+        random_health_min = new_config.pop("randHealthMin")
+        random_health_max = new_config.pop("randHealthMax")
+        random_speed_min = new_config.pop("randSpeedMin")
+        random_speed_max = new_config.pop("randSpeedMax")
+        random_damage_min = new_config.pop("randDamageMin")
+        random_damage_max = new_config.pop("randDamageMax")
+        random_knockback_min = new_config.pop("randKnockbackMin")
+        random_knockback_max = new_config.pop("randKnockbackMax")
+        diff_XYZ = new_config.pop("diffXYZ")
+
         assets_meta = {}
         updaters = [progress_update]
         if export_params.use_echoes_models:
@@ -175,6 +189,7 @@ class PrimeGameExporter(GameExporter):
             new_config["externAssetsDir"] = os.fspath(assets_path)
         else:
             asset_conversion.delete_converted_assets(export_params.asset_cache_path)
+
 
         # Replace models
         adjust_model_names(new_config, assets_meta, export_params.use_echoes_models)
@@ -197,3 +212,15 @@ class PrimeGameExporter(GameExporter):
                 raise
             else:
                 raise RuntimeError(f"randomprime panic: {e}") from e
+            
+
+        if all(v == 1.0 for v in [random_scale_min, random_scale_max,
+                                  random_health_min, random_health_max,
+                                  random_speed_min, random_speed_max,
+                                  random_damage_min, random_damage_max,
+                                  random_knockback_min, random_knockback_max]):
+            pass
+        else:
+            PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_scale_min, random_scale_max, random_health_min,
+                                              random_health_max, random_speed_min, random_speed_max, random_damage_min,
+                                              random_damage_max, random_knockback_min, random_knockback_max, diff_XYZ) 
