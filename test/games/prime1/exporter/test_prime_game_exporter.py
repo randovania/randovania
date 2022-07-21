@@ -15,7 +15,10 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
-    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None"}
+    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
+                  "randScaleMin": 1.0, "randScaleMax": 1.0, "randHealthMin": 1.0, "randHealthMax": 1.0,
+                  "randSpeedMin": 1.0, "randSpeedMax": 1.0, "randDamageMin": 1.0, "randDamageMax": 1.0,
+                  "randKnockbackMin": 1.0, "randKnockbackMax": 1.0, "diffXYZ": False}
     progress_update = MagicMock()
 
     echoes_input_path = tmp_path.joinpath("echoes.iso")

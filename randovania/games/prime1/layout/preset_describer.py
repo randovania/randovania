@@ -55,19 +55,19 @@ class PrimePresetDescriber(GamePresetDescriber):
             return "randomized " + attribute + " within range " + str(rand_range[0]) + " - " + str(rand_range[1])
 
         def different_xyz_randomization(diff_xyz):
-            if range_scale is None:
+            if enemy_rando_range_scale is None:
                 return None
             elif diff_xyz == True:
                 return "Scale XYZ values will be randomized separately"
             elif diff_xyz == False:
                 return "Scale XYZ values will be randomized together"
         
-        range_scale = attribute_in_range([configuration.range_scale_low, configuration.range_scale_high], "Scale")
-        range_health = attribute_in_range([configuration.range_health_low, configuration.range_health_high], "Health")
-        range_speed = attribute_in_range([configuration.range_speed_low, configuration.range_speed_high], "Speed")
-        range_damage = attribute_in_range([configuration.range_damage_low, configuration.range_damage_high], "Damage")
-        range_knockback = attribute_in_range([configuration.range_knockback_low, configuration.range_knockback_high], "Knockback")
-        diff_xyz = different_xyz_randomization(configuration.diff_xyz)
+        enemy_rando_range_scale = attribute_in_range([configuration.enemy_rando_range_scale_low, configuration.enemy_rando_range_scale_high], "Scale")
+        enemy_rando_range_health = attribute_in_range([configuration.enemy_rando_range_health_low, configuration.enemy_rando_range_health_high], "Health")
+        enemy_rando_range_speed = attribute_in_range([configuration.enemy_rando_range_speed_low, configuration.enemy_rando_range_speed_high], "Speed")
+        enemy_rando_range_damage = attribute_in_range([configuration.enemy_rando_range_damage_low, configuration.enemy_rando_range_damage_high], "Damage")
+        enemy_rando_range_knockback = attribute_in_range([configuration.enemy_rando_range_knockback_low, configuration.enemy_rando_range_knockback_high], "Knockback")
+        enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_rando_diff_xyz)
 
         extra_message_tree = {
             "Difficulty": [
@@ -138,12 +138,12 @@ class PrimePresetDescriber(GamePresetDescriber):
                     cutscene_removal: cutscene_removal is not None,
                 },
                 {
-                    range_scale: range_scale is not None,
-                    range_health: range_health is not None,
-                    range_speed: range_speed is not None,
-                    range_damage: range_damage is not None,
-                    range_knockback: range_knockback is not None,
-                    diff_xyz: diff_xyz is not None,
+                    enemy_rando_range_scale: enemy_rando_range_scale is not None,
+                    enemy_rando_range_health: enemy_rando_range_health is not None,
+                    enemy_rando_range_speed: enemy_rando_range_speed is not None,
+                    enemy_rando_range_damage: enemy_rando_range_damage is not None,
+                    enemy_rando_range_knockback: enemy_rando_range_knockback is not None,
+                    enemy_rando_diff_xyz: enemy_rando_diff_xyz is not None,
                 }
             ],
         }

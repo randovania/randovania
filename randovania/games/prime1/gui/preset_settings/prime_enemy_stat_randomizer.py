@@ -35,92 +35,92 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
-        self.range_scale_low.setValue(preset.configuration.range_scale_low)
-        self.range_scale_high.setValue(preset.configuration.range_scale_high)
-        self.range_health_low.setValue(preset.configuration.range_health_low)
-        self.range_health_high.setValue(preset.configuration.range_health_high)
-        self.range_speed_low.setValue(preset.configuration.range_speed_low)
-        self.range_speed_high.setValue(preset.configuration.range_speed_high)
-        self.range_damage_low.setValue(preset.configuration.range_damage_low)
-        self.range_damage_high.setValue(preset.configuration.range_damage_high)
-        self.range_knockback_low.setValue(preset.configuration.range_knockback_low)
-        self.range_knockback_high.setValue(preset.configuration.range_knockback_high)
-        self.diff_xyz.setChecked(preset.configuration.diff_xyz)
+        self.range_scale_low.setValue(preset.configuration.enemy_rando_range_scale_low)
+        self.range_scale_high.setValue(preset.configuration.enemy_rando_range_scale_high)
+        self.range_health_low.setValue(preset.configuration.enemy_rando_range_health_low)
+        self.range_health_high.setValue(preset.configuration.enemy_rando_range_health_high)
+        self.range_speed_low.setValue(preset.configuration.enemy_rando_range_speed_low)
+        self.range_speed_high.setValue(preset.configuration.enemy_rando_range_speed_high)
+        self.range_damage_low.setValue(preset.configuration.enemy_rando_range_damage_low)
+        self.range_damage_high.setValue(preset.configuration.enemy_rando_range_damage_high)
+        self.range_knockback_low.setValue(preset.configuration.enemy_rando_range_knockback_low)
+        self.range_knockback_high.setValue(preset.configuration.enemy_rando_range_knockback_high)
+        self.diff_xyz.setChecked(preset.configuration.enemy_rando_diff_xyz)
 
 
     def _on_spin_changed_range_scale_low(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_scale_low",
+                "enemy_rando_range_scale_low",
                 self.range_scale_low.value(),
             )
 
     def _on_spin_changed_range_scale_high(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_scale_high",
+                "enemy_rando_range_scale_high",
                 self.range_scale_high.value(),
             )
 
     def _on_spin_changed_range_health_low(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_health_low",
+                "enemy_rando_range_health_low",
                 self.range_health_low.value(),
             )
 
     def _on_spin_changed_range_health_high(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_health_high",
+                "enemy_rando_range_health_high",
                 self.range_health_high.value(),
             )
 
     def _on_spin_changed_range_speed_low(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_speed_low",
+                "enemy_rando_range_speed_low",
                 self.range_speed_low.value(),
             )
 
     def _on_spin_changed_range_speed_high(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_speed_high",
+                "enemy_rando_range_speed_high",
                 self.range_speed_high.value(),
             )
 
     def _on_spin_changed_range_damage_low(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_damage_low",
+                "enemy_rando_range_damage_low",
                 self.range_damage_low.value(),
             )
 
     def _on_spin_changed_range_damage_high(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_damage_high",
+                "enemy_rando_range_damage_high",
                 self.range_damage_high.value(),
             )
 
     def _on_spin_changed_range_knockback_low(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_knockback_low",
+                "enemy_rando_range_knockback_low",
                 self.range_knockback_low.value(),
             )
 
     def _on_spin_changed_range_knockback_high(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "range_knockback_high",
+                "enemy_rando_range_knockback_high",
                 self.range_knockback_high.value(),
             )    
 
     def _on_check_change(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "diff_xyz",
+                "enemy_rando_diff_xyz",
                 self.diff_xyz.isChecked(),
             )    

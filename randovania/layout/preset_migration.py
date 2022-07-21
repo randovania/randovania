@@ -642,18 +642,17 @@ def _migrate_v32(preset: dict) -> dict:
     return preset
 def _migrate_v33(preset: dict) -> dict:
     if preset["game"] == "prime1":
-        preset["configuration"]["range_scale_low"] = 1.0
-        preset["configuration"]["range_scale_high"] = 1.0
-        preset["configuration"]["range_health_low"] = 1.0
-        preset["configuration"]["range_health_high"] = 1.0
-        preset["configuration"]["range_speed_low"] = 1.0
-        preset["configuration"]["range_speed_high"] = 1.0
-        preset["configuration"]["range_damage_low"] = 1.0
-        preset["configuration"]["range_damage_high"] = 1.0
-        preset["configuration"]["range_knockback_low"] = 1.0
-        preset["configuration"]["range_knockback_high"] = 1.0
-        preset["configuration"]["diff_xyz"] = False
-
+        preset["configuration"]["enemy_rando_range_scale_low"] = 1.0
+        preset["configuration"]["enemy_rando_range_scale_high"] = 1.0
+        preset["configuration"]["enemy_rando_range_health_low"] = 1.0
+        preset["configuration"]["enemy_rando_range_health_high"] = 1.0
+        preset["configuration"]["enemy_rando_range_speed_low"] = 1.0
+        preset["configuration"]["enemy_rando_range_speed_high"] = 1.0
+        preset["configuration"]["enemy_rando_range_damage_low"] = 1.0
+        preset["configuration"]["enemy_rando_range_damage_high"] = 1.0
+        preset["configuration"]["enemy_rando_range_knockback_low"] = 1.0
+        preset["configuration"]["enemy_rando_range_knockback_high"] = 1.0
+        preset["configuration"]["enemy_rando_diff_xyz"] = False
     return preset
 
 _MIGRATIONS = {
