@@ -165,6 +165,7 @@ def _determine_valid_weaknesses(dock: DockNode,
         
         exclusions = set()
         def get_excluded_weakness(d: DockNode):
+            # TODO: make this a proper DockNode property rather than an extra field
             return [
                 dock_type_state.weakness_database.get_by_weakness(dock_type_state.dock_type_name, weakness)
                 for weakness in d.extra.get("excluded_dock_weaknesses", [])
