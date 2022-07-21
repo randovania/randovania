@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - **Major** - Added: Door rando. Door locks can now be randomized, with many options to fine-tune your experience.
+- **Major** - Added: Enemy Stat Rando. Enemy stat values such as speed and scale can be randomized within a range you specify.
 
 #### Patcher Changes
 

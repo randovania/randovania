@@ -47,7 +47,7 @@ class PrimePresetDescriber(GamePresetDescriber):
         def attribute_in_range(rand_range, attribute):
             if rand_range[0] == 1.0 and rand_range[1] == 1.0:
                 return None
-            if rand_range[0] > rand_range[1]:
+            elif rand_range[0] > rand_range[1]:
                 temp = rand_range[0]
                 rand_range[0] = rand_range[1]
                 rand_range[1] = temp
