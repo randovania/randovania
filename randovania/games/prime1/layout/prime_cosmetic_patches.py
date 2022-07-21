@@ -11,6 +11,7 @@ DEFAULT_HUD_COLOR = (102, 174, 225)
 class PrimeCosmeticPatches(BaseCosmeticPatches):
     qol_cosmetic: bool = True
     open_map: bool = True
+    pickup_markers: bool = True
     force_fusion: bool = False
     use_hud_color: bool = False
     hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
