@@ -128,10 +128,10 @@ class GamePresetDescriber:
 
         template_strings["Gameplay"].append(f"Starting Location: {starting_location}")
 
-        # Dock Rando
+        # Dock Locks
         dock_mode = configuration.dock_rando.mode
         if dock_mode != DockRandoMode.VANILLA:
-            template_strings["Door Rando"].append(f"Mode: {dock_mode.long_name} ({dock_mode.description})")
+            template_strings["Door Locks"].append(f"Mode: {dock_mode.long_name} ({dock_mode.description})")
 
         return template_strings
 

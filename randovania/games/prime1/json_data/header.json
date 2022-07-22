@@ -1591,7 +1591,7 @@
                                             "data": {
                                                 "type": "items",
                                                 "name": "Missile",
-                                                "amount": 10,
+                                                "amount": 11,
                                                 "negate": false
                                             }
                                         },
@@ -1716,6 +1716,69 @@
                                 }
                             }
                         }
+                    },
+                    "Charge Beam Door": {
+                        "extra": {
+                            "shieldType": "Charge"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Bomb Door": {
+                        "extra": {
+                            "shieldType": "Bomb"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Open Normal Door"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "lock": null
                     }
                 },
                 "dock_rando": {
@@ -1729,6 +1792,8 @@
                         "Wave Door"
                     ],
                     "change_to": [
+                        "Bomb Door",
+                        "Charge Beam Door",
                         "Flamethrower Blast Shield",
                         "Ice Door",
                         "Ice Spreader Blast Shield",
