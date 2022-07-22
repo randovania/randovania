@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
-    <height>407</height>
+    <width>735</width>
+    <height>361</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QScrollArea" name="scroll_area">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -31,8 +31,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>445</width>
-         <height>466</height>
+         <width>715</width>
+         <height>341</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -42,8 +42,42 @@
         </sizepolicy>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" colspan="4">
+         <widget class="QLabel" name="enemy_stat_randomizer_description">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randomize all enemy attributes using the boxes below. These values are applied to each enemy individually, so one beetle could be made larger while another beetle is made smaller. Keep in mind that while each box has a limit, you can still set them to extreme values that may make the game unbeatable. Also note that these settings are not logical, so you'll be expected to fight every enemy as if they were normal.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="1">
          <widget class="QLabel" name="minimum_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Minimum&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
@@ -51,6 +85,18 @@
         </item>
         <item row="1" column="2">
          <widget class="QLabel" name="maximum_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Maximum&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
@@ -58,22 +104,40 @@
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="scale_attribute_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="text">
-           <string>Scale Range</string>
+           <string>Size Range</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
          <widget class="QDoubleSpinBox" name="range_scale_low">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -93,9 +157,21 @@
         </item>
         <item row="2" column="2">
          <widget class="QDoubleSpinBox" name="range_scale_high">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -113,18 +189,24 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0" colspan="2">
+        <item row="3" column="0" colspan="3">
          <widget class="QCheckBox" name="diff_xyz">
           <property name="text">
-           <string>Randomize Scale XYZ Values Separately</string>
+           <string>Enemies/Bosses will be stretched randomly within the above range</string>
           </property>
          </widget>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="health_attribute_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -135,9 +217,21 @@
         </item>
         <item row="4" column="1">
          <widget class="QDoubleSpinBox" name="range_health_low">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -157,9 +251,21 @@
         </item>
         <item row="4" column="2">
          <widget class="QDoubleSpinBox" name="range_health_high">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -177,11 +283,37 @@
           </property>
          </widget>
         </item>
+        <item row="4" column="3">
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Includes all aspects of health such as a 
+Sheegoth's shell and exposed back</string>
+          </property>
+         </widget>
+        </item>
         <item row="5" column="0">
          <widget class="QLabel" name="speed_attribute_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -192,9 +324,21 @@
         </item>
         <item row="5" column="1">
          <widget class="QDoubleSpinBox" name="range_speed_low">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -211,9 +355,21 @@
         </item>
         <item row="5" column="2">
          <widget class="QDoubleSpinBox" name="range_speed_high">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -228,11 +384,37 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="3">
+         <widget class="QLabel" name="label_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Includes attack frequency/speed, as well as 
+animation speed</string>
+          </property>
+         </widget>
+        </item>
         <item row="6" column="0">
          <widget class="QLabel" name="damage_attribute_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -243,9 +425,21 @@
         </item>
         <item row="6" column="1">
          <widget class="QDoubleSpinBox" name="range_damage_low">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -262,9 +456,21 @@
         </item>
         <item row="6" column="2">
          <widget class="QDoubleSpinBox" name="range_damage_high">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -281,9 +487,15 @@
         </item>
         <item row="7" column="0">
          <widget class="QLabel" name="knockback_attribute_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -294,9 +506,21 @@
         </item>
         <item row="7" column="1">
          <widget class="QDoubleSpinBox" name="range_knockback_low">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -313,9 +537,21 @@
         </item>
         <item row="7" column="2">
          <widget class="QDoubleSpinBox" name="range_knockback_high">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>167</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -330,15 +566,18 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="0" colspan="3">
-         <widget class="QLabel" name="enemy_stat_randomizer_description">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randomize all enemy and boss attributes within a range you can specify below. Attributes that you can randomize include scale (basically size), health (includes all aspects of health such as for a Sheegoth, both its shell and exposed back will have its health value randomized), speed (includes attack frequency/speed, as well as animation speed) damage by enemy attacks, and both how much the enemy knocks you back with its attacks, and its knockback resistance to your attacks.&lt;/p&gt;&lt;p&gt;These values effect every enemy individually rather than as a group, so you can have one beetle be as big as an elephant while the beetle next to it is as tiny as an ant.&lt;/p&gt;&lt;p&gt;Each field has a limit on how low and high you can set the values to but you can still set them to crazy numbers so be mindful that very high scale/speed values can make the game unbeatable.&lt;/p&gt;&lt;p&gt;These values also aren't considered by logic so keep that in mind as well.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <item row="8" column="0" colspan="4">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="wordWrap">
-           <bool>true</bool>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>52</height>
+           </size>
           </property>
-         </widget>
+         </spacer>
         </item>
        </layout>
       </widget>

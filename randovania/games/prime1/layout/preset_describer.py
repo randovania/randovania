@@ -48,21 +48,18 @@ class PrimePresetDescriber(GamePresetDescriber):
             if rand_range[0] == 1.0 and rand_range[1] == 1.0:
                 return None
             elif rand_range[0] > rand_range[1]:
-                temp = rand_range[0]
-                rand_range[0] = rand_range[1]
-                rand_range[1] = temp
+                rand_range = (rand_range[1], rand_range[0])
 
-            return "randomized " + attribute + " within range " + str(rand_range[0]) + " - " + str(rand_range[1])
+            #return "Random " + attribute + " within range " + str(rand_range[0]) + " - " + str(rand_range[1])
+            return "Random {0} within range {1} - {2}".format(attribute, rand_range[0], rand_range[1])
 
         def different_xyz_randomization(diff_xyz):
             if enemy_rando_range_scale is None:
                 return None
             elif diff_xyz == True:
-                return "Scale XYZ values will be randomized separately"
-            elif diff_xyz == False:
-                return "Scale XYZ values will be randomized together"
+                return "Enemies will be stretched randomly"
         
-        enemy_rando_range_scale = attribute_in_range([configuration.enemy_rando_range_scale_low, configuration.enemy_rando_range_scale_high], "Scale")
+        enemy_rando_range_scale = attribute_in_range([configuration.enemy_rando_range_scale_low, configuration.enemy_rando_range_scale_high], "Size")
         enemy_rando_range_health = attribute_in_range([configuration.enemy_rando_range_health_low, configuration.enemy_rando_range_health_high], "Health")
         enemy_rando_range_speed = attribute_in_range([configuration.enemy_rando_range_speed_low, configuration.enemy_rando_range_speed_high], "Speed")
         enemy_rando_range_damage = attribute_in_range([configuration.enemy_rando_range_damage_low, configuration.enemy_rando_range_damage_high], "Damage")
