@@ -29,8 +29,8 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPrimeGoal(editor),
         PresetPrimeHints(editor),
         PresetDockRando(editor, game_description),
-        PresetPrimePatches(editor),
         PresetEnemyAttributeRandomizer(editor),
+        PresetPrimePatches(editor),
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor),
     ]

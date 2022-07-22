@@ -27,7 +27,7 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Enemy Stat Randomizer"
+        return "Enemy Attributes"
 
     @classmethod
     def uses_patches_tab(cls) -> bool:
