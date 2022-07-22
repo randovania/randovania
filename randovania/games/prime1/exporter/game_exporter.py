@@ -212,15 +212,15 @@ class PrimeGameExporter(GameExporter):
                 raise
             else:
                 raise RuntimeError(f"randomprime panic: {e}") from e
-            
 
-        if all(v == 1.0 for v in [random_scale_min, random_scale_max,
-                                  random_health_min, random_health_max,
-                                  random_speed_min, random_speed_max,
-                                  random_damage_min, random_damage_max,
-                                  random_knockback_min, random_knockback_max]):
-            pass
-        else:
-            PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_scale_min, random_scale_max, random_health_min,
+
+        if any(v != 1.0 for v in [random_scale_min, random_scale_max,
+                            random_health_min, random_health_max,
+                            random_speed_min, random_speed_max,
+                            random_damage_min, random_damage_max,
+                            random_knockback_min, random_knockback_max]):
+           PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_scale_min, random_scale_max, random_health_min,
                                               random_health_max, random_speed_min, random_speed_max, random_damage_min,
                                               random_damage_max, random_knockback_min, random_knockback_max, diff_XYZ) 
+        else:
+            pass
