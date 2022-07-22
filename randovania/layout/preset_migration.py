@@ -644,7 +644,7 @@ def _migrate_v32(preset: dict) -> dict:
 def _migrate_v33(preset: dict) -> dict:
     if preset["game"] == "dread":
         preset["configuration"]["linear_damage_runs"] = False
-        preset["configuration"]["linear_dps"] = 10
+        preset["configuration"]["linear_dps"] = 20
     return preset
 
 _MIGRATIONS = {

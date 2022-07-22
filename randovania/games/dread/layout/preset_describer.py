@@ -18,7 +18,9 @@ class DreadPresetDescriber(GamePresetDescriber):
             template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
         
         if configuration.linear_dps > 0 and configuration.linear_damage_runs:
-            template_strings["Difficulty"].append(f"Damage Runs: {configuration.linear_dps} damage per second")
+            template_strings["Difficulty"].append(f"Damage Rooms: {configuration.linear_dps} damage per second")
+        elif configuration.linear_dps <= 0 and configuration.linear_damage_runs:
+            template_strings["Difficulty"].append(f"Damage Rooms: Off")
 
         extra_message_tree = {
             "Difficulty": [
