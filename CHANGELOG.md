@@ -32,8 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Patcher Changes
 
 - Fixed: Exporting with `QoL Cosmetic = False`
-- Changed: Patches now consume fewer layers on average
+- Fixed: Zoid's deadname appearing in credits
 - Added: Item icons on map in cosmetic patches
+- Changed: Patches now consume fewer layers on average
 
 #### Logic Database
 
