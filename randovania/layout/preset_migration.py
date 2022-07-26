@@ -644,8 +644,8 @@ def _migrate_v32(preset: dict) -> dict:
 def _migrate_v33(preset: dict) -> dict:
     if preset["game"] == "dread":
         preset["configuration"]["artifacts"] = {
-            "mode": "any-bosses",
-            "required_artifacts": 9,
+            "mode": "disabled",
+            "required_artifacts": 0,
         }
 
     return preset
