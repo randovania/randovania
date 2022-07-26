@@ -2,6 +2,7 @@ import logging
 import os
 
 from randovania.exporter import pickup_exporter, item_names
+from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -14,12 +15,14 @@ from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.games.dread.layout.dread_configuration import DreadArtifactMode, DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 
 _ALTERNATIVE_MODELS = {
+    "rando_artifact": "itemsphere",
+
     "powerup_slide": "itemsphere",
     "powerup_hyperbeam": "powerup_plasmabeam",
     "powerup_metroidsuit": "powerup_gravitysuit",
@@ -128,11 +131,13 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
         # target.
 
-        if detail.model.game != RandovaniaGame.METROID_DREAD:
+        alt_model = _ALTERNATIVE_MODELS.get(detail.model.name, detail.model.name)
+
+        if detail.model.game != RandovaniaGame.METROID_DREAD or alt_model == "itemsphere":
             map_icon = {
                 # TODO: more specific icons for pickups in other games
                 "custom_icon": {
-                    "label": detail.model.name.upper(),
+                    "label": detail.original_pickup.name.upper(),
                 }
             }
             model_name = "itemsphere"
@@ -140,7 +145,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             map_icon = {
                 "icon_id": detail.model.name
             }
-            model_name = _ALTERNATIVE_MODELS.get(detail.model.name, detail.model.name)
+            model_name = alt_model
 
         ammoconfig = self.configuration.ammo_configuration.items_state
         pbammo = self.item_db.ammo["Power Bomb Tank"]
@@ -289,6 +294,34 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             used_actors[actor_idef] = door_type
 
         return result
+    
+    def _objective_patches(self) -> dict:
+        if self.configuration.artifacts.mode == DreadArtifactMode.DISABLED:
+            return {
+                "required_artifacts": 0,
+                "hints": []
+            }
+        
+        artifacts = [self.game.resource_database.get_item(f"Artifact{i+1}") for i in range(9)]
+        artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+            self.description.all_patches,
+            self.players_config,
+            DreadHintNamer(self.description.all_patches, self.players_config),
+            True,
+            artifacts,
+            True
+        )
+
+        hint_text = []
+        for group in (artifacts[:3], artifacts[3:6], artifacts[6:]):
+            text = "|".join(artifact_hints[a] for a in group if artifact_hints[a])
+            if text:
+                hint_text.append(text)
+        
+        return {
+            "required_artifacts": self.configuration.artifacts.required_artifacts,
+            "hints": hint_text,
+        }
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
@@ -340,6 +373,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "default_x_released": self.configuration.x_starts_released,
             },
             "door_patches": self._door_patches(),
+            "objective": self._objective_patches(),
         }
 
 

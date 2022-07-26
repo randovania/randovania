@@ -498,6 +498,13 @@ Extra - asset_id: collision_camera_009
   * Blocked Passage to Thermal Device Room South/Tunnel to Above Z-57 Fight
   > Z-57 Room
       Trivial
+  > Pickup (Z-57)
+      All of the following:
+          # TODO: proper fight requirements
+          After Elun - Release X Parasites and Use Spin Boost
+          Any of the following:
+              Shoot Charge Beam and Shoot Wide Beam
+              Missiles ≥ 30 and Shoot Super Missile
 
 > Z-57 Room; Heals? False
   * Layers: default
@@ -516,6 +523,15 @@ Extra - asset_id: collision_camera_009
       Trivial
   > Z-57 Room
       After Cataris - First Thermal Device
+
+> Pickup (Z-57); Heals? False
+  * Layers: extra_pickup_drops
+  * Pickup 149; Major Location? False
+  * Extra - pickup_type: cutscene
+  * Extra - callback_function: OnCutscene81Ended
+  * Extra - boss_hint_name: Experiment Z-57
+  > Z-57 Room
+      Trivial
 
 ----------------
 EMMI Zone Exit East
@@ -3002,6 +3018,7 @@ Extra - asset_id: collision_camera_036
   * Extra - actor_def: actors/characters/emmymagma/charclasses/emmymagma.bmsad
   * Extra - string_key: GUI_ITEM_ACQUIRED_MORPH_BALL
   * Extra - callback_function: OnEmmyMagmaDead
+  * Extra - boss_hint_name: E.M.M.I.-03MB
   > Door to Central Unit
       Trivial
 
@@ -4931,6 +4948,7 @@ Extra - asset_id: collision_camera_063
   * Pickup 148; Major Location? True
   * Extra - pickup_type: cutscene
   * Extra - callback_function: OnKraidDeath_CUSTOM
+  * Extra - boss_hint_name: Kraid
   > Right Ledge
       Trivial
 

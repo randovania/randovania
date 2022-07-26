@@ -103,6 +103,9 @@ class DreadHintNamer(HintNamer):
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
+        if resource.short_name.startswith("Artifact"):
+            return ""
+        
         return "{} has no need to be located.".format(
             colorize_text(self.color_item, resource.long_name, with_color)
         )
@@ -112,11 +115,19 @@ class DreadHintNamer(HintNamer):
         determiner = ""
         if player_name is not None:
             determiner = self.format_player(player_name, with_color=with_color) + "'s "
+        
+        fmt = "{} is located in {}{}."
+        location_name = self.format_location(location, with_world=True, with_area=not hide_area, with_color=with_color)
 
-        return "{} is located in {}{}.".format(
+        node = default_database.game_description_for(location.game).world_list.node_from_pickup_index(location.location)
+        if (boss_hint_name := node.extra.get("boss_hint_name")) is not None:
+            fmt = "{} is guarded by {}{}."
+            location_name = colorize_text(DreadColor.RED, boss_hint_name, with_color)
+
+        return fmt.format(
             colorize_text(self.color_item, resource.long_name, with_color),
             determiner,
-            self.format_location(location, with_world=True, with_area=not hide_area, with_color=with_color),
+            location_name,
         )
 
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
