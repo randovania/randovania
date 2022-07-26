@@ -48,6 +48,11 @@ class DreadPresetDescriber(GamePresetDescriber):
                 },
                 {
                     "X Starts Released": configuration.x_starts_released,
+                },
+                {
+                    f"Requires {configuration.artifacts.required_artifacts} Metroid DNA": True,
+                    "Prefer E.M.M.I. for DNA": configuration.artifacts.prefer_emmi,
+                    "Prefer major bosses for DNA": configuration.artifacts.prefer_major_bosses,
                 }
             ]
         }

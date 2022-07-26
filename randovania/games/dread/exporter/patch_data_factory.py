@@ -15,7 +15,7 @@ from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
-from randovania.games.dread.layout.dread_configuration import DreadArtifactMode, DreadConfiguration
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
@@ -294,15 +294,15 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             used_actors[actor_idef] = door_type
 
         return result
-    
+
     def _objective_patches(self) -> dict:
-        if self.configuration.artifacts.mode == DreadArtifactMode.DISABLED:
+        if self.configuration.artifacts.required_artifacts == 0:
             return {
                 "required_artifacts": 0,
                 "hints": []
             }
-        
-        artifacts = [self.game.resource_database.get_item(f"Artifact{i+1}") for i in range(9)]
+
+        artifacts = [self.game.resource_database.get_item(f"Artifact{i + 1}") for i in range(9)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
             self.players_config,
@@ -317,7 +317,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             text = "|".join(artifact_hints[a] for a in group if artifact_hints[a])
             if text:
                 hint_text.append(text)
-        
+
         return {
             "required_artifacts": self.configuration.artifacts.required_artifacts,
             "hints": hint_text,

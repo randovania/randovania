@@ -5,7 +5,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.games.dread.layout.dread_configuration import DreadArtifactMode, DreadConfiguration
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_dread_artifact
 from randovania.generator.item_pool.pool_creator import _extend_pool_results
@@ -17,19 +17,19 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, db: Res
     assert isinstance(configuration, DreadConfiguration)
 
     _extend_pool_results(results, artifact_pool(db, configuration, rng))
-    
+
 
 def artifact_pool(resource_database: ResourceDatabase, configuration: DreadConfiguration, rng: Random) -> PoolResults:
     config = configuration.artifacts
-    
-    item_pool: list[PickupEntry] = []
+
     new_assignment: dict[PickupIndex, PickupEntry] = {}
     initial_resources = ResourceCollection.with_database(resource_database)
 
-    keys: list[PickupEntry] = []
-    if config.mode != DreadArtifactMode.DISABLED:
-        keys = [create_dread_artifact(i, resource_database) for i in range(9)]
-    
+    if config.required_artifacts == 0:
+        return PoolResults([], new_assignment, initial_resources)
+
+    keys: list[PickupEntry] = [create_dread_artifact(i, resource_database) for i in range(9)]
+
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]
 
@@ -37,42 +37,35 @@ def artifact_pool(resource_database: ResourceDatabase, configuration: DreadConfi
         initial_resources.add_resource_gain(key.progression)
 
     locations: list[PickupIndex] = []
-    if config.mode.include_emmis:
+    if config.prefer_emmi:
         locations.extend(_EMMI_INDICES)
-    if config.mode.include_major_bosses:
+    if config.prefer_major_bosses:
         locations.extend(_BOSS_INDICES)
-        if configuration.extra_pickups_for_bosses:
-            locations.extend(_EXTRA_BOSS_INDICES)
-    
+
     item_pool = keys_to_shuffle
-    
+
     if rng is not None:
         rng.shuffle(locations)
         new_assignment = {location: key for location, key in zip(locations, keys_to_shuffle)}
         item_pool = [key for key in keys_to_shuffle if key not in new_assignment.values()]
-    
+
     return PoolResults(item_pool, new_assignment, initial_resources)
-    
+
 
 _EMMI_INDICES = [
-    PickupIndex(139), # Artaria
-    PickupIndex(144), # Cataris
-    PickupIndex(147), # Dairon
-    PickupIndex(143), # Ferenia
-    PickupIndex(146), # Ghavoran
-    PickupIndex(137), # Hanubia
+    PickupIndex(139),  # Artaria
+    PickupIndex(144),  # Cataris
+    PickupIndex(147),  # Dairon
+    PickupIndex(143),  # Ferenia
+    PickupIndex(146),  # Ghavoran
+    PickupIndex(137),  # Hanubia
 ]
 
 _BOSS_INDICES = [
-    PickupIndex(138), # Corpius
-    PickupIndex(142), # Escue
-    PickupIndex(145), # Golzuna
+    PickupIndex(138),  # Corpius
+    PickupIndex(142),  # Escue
+    PickupIndex(145),  # Golzuna
+    PickupIndex(150),  # Drogyga
+    PickupIndex(149),  # Experiment Z-57
+    PickupIndex(148),  # Kraid
 ]
-
-_EXTRA_BOSS_INDICES = [
-    PickupIndex(150), # Drogyga
-    PickupIndex(149), # Experiment Z-57
-    PickupIndex(148), # Kraid
-]
-    
-
