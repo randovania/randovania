@@ -6,7 +6,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 33
+CURRENT_VERSION = 34
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -642,6 +642,18 @@ def _migrate_v32(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v33(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"].pop("extra_pickups_for_bosses")
+        preset["configuration"]["artifacts"] = {
+            "prefer_emmi": True,
+            "prefer_major_bosses": True,
+            "required_artifacts": 0,
+        }
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -675,6 +687,7 @@ _MIGRATIONS = {
     30: _migrate_v30,
     31: _migrate_v31,
     32: _migrate_v32,
+    33: _migrate_v33,
 }
 
 

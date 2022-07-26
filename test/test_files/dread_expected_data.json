@@ -12,6 +12,10 @@
     "starting_text": [
         []
     ],
+    "objective": {
+        "hints": [],
+        "required_artifacts": 0
+    },
     "pickups": [
         {
             "pickup_type": "actor",
@@ -2899,6 +2903,36 @@
                 "function": "OnKraidDeath_CUSTOM",
                 "args": 0
             }
+        },
+        {
+            "caption": "Nothing acquired.",
+            "pickup_lua_callback": {
+              "args": 0,
+              "function": "OnCutscene81Ended",
+              "scenario": "s020_magma"
+            },
+            "pickup_type": "cutscene",
+            "resources": [
+                {
+                  "item_id": "ITEM_NONE",
+                  "quantity": 1
+                }
+            ]
+        },
+        {
+            "caption": "Nothing acquired.",
+            "pickup_lua_callback": {
+                "args": 0,
+                "function": "OnHydrogigaDead_CUSTOM",
+                "scenario": "s040_aqua"
+            },
+            "pickup_type": "cutscene",
+            "resources": [
+                {
+                    "item_id": "ITEM_NONE",
+                    "quantity": 1
+                }
+            ]
         }
     ],
     "elevators": [
