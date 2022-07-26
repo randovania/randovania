@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.5.0] - 2022-07-01
 
 - Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions. 
-- Added: Exporting presets now fills in default file name
+- Added: Exporting presets now fills in default file name.
 - Added: Logging messages when receiving events from the server.
 - Changed: Internal changes to server for hopefully less expired sessions.
 - Fixed: The discord bot no longer includes the lock nodes.
@@ -27,11 +27,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- **Major** - Added: Door rando. Door locks can now be randomized, with many options to fine-tune your experience.
+- **Major** - Added: Door lock rando. Door locks can now be randomized, with many options to fine-tune your experience.
+- **Major** - Added: Option to show icons on the map for each uncollected item in the game under "Customize Cosmetic Options..."
 
 #### Patcher Changes
 
-- Fixed: Exporting with `QoL Cosmetic = False`
+- Fixed: Exporting with `QoL Cosmetic` disabled
+- Fixed: Zoid's deadname appearing in credits
 - Changed: Patches now consume fewer layers on average
 
 #### Logic Database
@@ -39,24 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Phazon Mining Tunnel now accounts only for Bombs when coming from Fungal Hall B
 - Fixed: The Central Dynamo drone event is now accounted for to go through Dynamo Access
 - Added: Beginner Wall Boost to lock onto the spider track in Metroid Quarantine A
-- Added: Advancing through rooms containing Trooper Pirates now requires either the proper beam(s), basic defensive capabilities (varies slightly by room), or Combat (Intermediate), except where noted. Rooms affected:
-    - Elite Control
-    - Elite Research
-    - Ore Processing - Climbing the room vanilla now requires Power Beam. Ore Processing climb without Power Beam now requires Combat (Advanced).
-    - Central Dynamo
-    - Omega Research
-    - Mine Security Station
-    - Metroid Quarantine B - The Standable Terrain method of traversing the room now requires Combat (Advanced) without Plasma Beam.
-    - Phazon Processing Center - This room is only affected after picking up the item in Plasma Processing.
-- Added: Advancing through rooms containing Scatter Bombus now requires Morph Ball, Wave Beam, Movement tricks, or basic defensive capabilities. Rooms affected:
-    - Ice Ruins Access
-    - Canyon Entryway
-    - Temple Entryway
-    - Hydra Lab Entryway
-    - West Tower Entrance
-    - Aether Lab Entryway
-    - Lower Edge Tunnel
-    - Lake Tunnel
+- Added: Advancing through rooms containing Trooper Pirates now requires either the proper beam(s), basic defensive capabilities (varies slightly by room), or Combat (Intermediate) where appropriate
+- Added: Advancing through rooms containing Scatter Bombus now requires Morph Ball, Wave Beam, Movement tricks, or basic defensive capabilities
 
 ### Metroid Prime 2: Echoes
 

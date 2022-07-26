@@ -13811,6 +13811,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Drogyga)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -13837,6 +13844,35 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Pickup (Drogyga)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -450.0,
+                        "y": 10385.25,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "cutscene",
+                        "callback_function": "OnHydrogigaDead_CUSTOM",
+                        "boss_hint_name": "Drogyga"
+                    },
+                    "pickup_index": 150,
+                    "major_location": false,
+                    "connections": {
+                        "Dock to Underneath Drogyga": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },

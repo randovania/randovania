@@ -2094,6 +2094,72 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Z-57)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: proper fight requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ElunReleaseX",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Charge Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Wide Beam"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Super Missile"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MissileAmmo",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2213,6 +2279,35 @@
                                 "name": "s020_magma:default:deviceheat",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Z-57)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1700.0,
+                        "y": -7314.82,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "cutscene",
+                        "callback_function": "OnCutscene81Ended",
+                        "boss_hint_name": "Experiment Z-57"
+                    },
+                    "pickup_index": 149,
+                    "major_location": false,
+                    "connections": {
+                        "Z-57 Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -15780,7 +15875,8 @@
                         "pickup_type": "emmi",
                         "actor_def": "actors/characters/emmymagma/charclasses/emmymagma.bmsad",
                         "string_key": "GUI_ITEM_ACQUIRED_MORPH_BALL",
-                        "callback_function": "OnEmmyMagmaDead"
+                        "callback_function": "OnEmmyMagmaDead",
+                        "boss_hint_name": "E.M.M.I.-03MB"
                     },
                     "pickup_index": 144,
                     "major_location": true,
@@ -26628,11 +26724,12 @@
                     },
                     "description": "",
                     "layers": [
-                        "extra_pickup_drops"
+                        "default"
                     ],
                     "extra": {
                         "pickup_type": "cutscene",
-                        "callback_function": "OnKraidDeath_CUSTOM"
+                        "callback_function": "OnKraidDeath_CUSTOM",
+                        "boss_hint_name": "Kraid"
                     },
                     "pickup_index": 148,
                     "major_location": true,
