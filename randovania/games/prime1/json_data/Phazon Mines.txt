@@ -1254,7 +1254,7 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Ice Door to Dynamo Access/Door to Central Dynamo
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Before Fight
+  > Fight Trigger
       Trivial
 
 > Door to Quarantine Access A; Heals? False
@@ -1262,6 +1262,11 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Ice Door to Quarantine Access A/Door to Central Dynamo
   * Extra - dock_index: 1
   * Extra - nonstandard: False
+  > Pickup (Main Power Bombs)
+      All of the following:
+          # Achieving the Infinite Speed without going up to hit the fight trigger: https://youtu.be/LRmJn2BAYwc
+          Boost Ball and Morph Ball and Infinite Speed (Intermediate) and Normal Damage ≥ 280
+          Morph Ball Bomb or Power Bomb
   > Room Bottom
       Morph Ball and Power Bomb
 
@@ -1284,9 +1289,6 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
               All of the following:
                   # Destroying the drone requires Samus being able to take 400 more damage during item acquisition. The video shows how to avoid destroying it. https://youtu.be/LRmJn2BAYwc
                   Boost Ball and Power Bomb and Infinite Speed (Intermediate) and Normal Damage ≥ 680
-              All of the following:
-                  # Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/LRmJn2BAYwc
-                  Boost Ball and Power Bomb and Infinite Speed (Intermediate) and Knowledge (Advanced) and Normal Damage ≥ 280
 
 > Pickup (Main Power Bombs); Heals? False
   * Layers: default
@@ -1295,24 +1297,26 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   > Room Bottom
       Trivial
 
-> Before Fight; Heals? False
+> Fight Trigger; Heals? False
   * Layers: default
   > Door to Dynamo Access
       After Invisible Drone
-  > Door to Quarantine Access A
-      All of the following:
-          # The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A. However, if Samus leaves this room without picking up the item, the doors to Save Station Mines B and Dynamo Access will then permanently be sealed, making it impossible to backtrack through the room.
-          Morph Ball and Power Bomb
-          After Invisible Drone or Knowledge (Beginner)
   > Event - Security Drone
       Any of the following:
           # Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc
           Combat (Beginner) or Normal Damage ≥ 100
+  > Pickup (Main Power Bombs)
+      All of the following:
+          # Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/LRmJn2BAYwc
+          Boost Ball and Morph Ball and Power Bomb and Infinite Speed (Intermediate) and Knowledge (Advanced) and Normal Damage ≥ 280
+  > Room Bottom
+      Trivial
 
 > Room Bottom; Heals? False
   * Layers: default
   > Door to Quarantine Access A
       All of the following:
+          # The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A.
           Morph Ball and Power Bomb
           Any of the following:
               Knowledge (Beginner)
@@ -1321,12 +1325,7 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
                   Ice Beam or Combat (Intermediate) or Normal Damage ≥ 200
   > Door to Save Station Mines B
       Before Invisible Drone or Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Ice Beam
-  > Pickup (Main Power Bombs)
-      All of the following:
-          # Achieving the Infinite Speed without going up to hit the fight trigger: https://youtu.be/LRmJn2BAYwc
-          Boost Ball and Morph Ball and Infinite Speed (Intermediate)
-          Morph Ball Bomb or Power Bomb
-  > Before Fight
+  > Fight Trigger
       All of the following:
           Any of the following:
               # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
