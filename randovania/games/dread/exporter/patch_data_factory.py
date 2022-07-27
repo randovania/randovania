@@ -302,7 +302,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "hints": []
             }
 
-        artifacts = [self.game.resource_database.get_item(f"Artifact{i + 1}") for i in range(9)]
+        artifacts = [self.game.resource_database.get_item(f"Artifact{i + 1}") for i in range(12)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
             self.players_config,
@@ -313,7 +313,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         )
 
         hint_text = []
-        for group in (artifacts[:3], artifacts[3:6], artifacts[6:]):
+        for group in (artifacts[:3], artifacts[3:6], artifacts[6:9], artifacts[9:]):
             text = "|".join(artifact_hints[a] for a in group if artifact_hints[a])
             if text:
                 hint_text.append(text)
