@@ -186,7 +186,9 @@ Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
 # Documentation
 
-- Unfamiliar with a term? Check the [glossary](docs/GLOSSARY.md).
-- Adding a new game? Check the [dedicated guide](docs/NEW_GAME.md).
-- Changing a data format? Check the [migrations documentation](docs/MIGRATIONS.md).
-- Working with the logic database? Check the [guide](https://github.com/SolventMercury/randovania/blob/main/docs/DATABASE_FORMAT.md).
+- Unfamiliar with a term? Check the [glossary](docs/Glossary.md).
+- Adding a new game? Check the [dedicated guide](docs/New Game.md).
+- Changing a data format? Check the [migrations documentation](docs/Migrations.md).
+- Working with the logic database?
+  - [Read how the database is organized](docs/Database Format.md).
+  - Read the [unfinished script for a video](docs/Database Editor.md) on how to use the data editor.
