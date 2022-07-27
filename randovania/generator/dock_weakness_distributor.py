@@ -152,6 +152,7 @@ def _determine_valid_weaknesses(dock: DockNode,
                                 dock_type_state: DockTypeState,
                                 state: State,
                                 logic: Logic,
+                                mode: DockRandoMode,
                                 ) -> dict[DockWeakness, float]:
     """
     Determine the valid weaknesses to assign to the dock given a reach
@@ -161,12 +162,25 @@ def _determine_valid_weaknesses(dock: DockNode,
 
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
-
-        if dock_type_params.locked in dock_type_state.can_change_to and target in reach.nodes:
+        
+        exclusions = set()
+        def get_excluded_weakness(d: DockNode):
+            # TODO: make this a proper DockNode property rather than an extra field
+            return [
+                dock_type_state.weakness_database.get_by_weakness(dock_type_state.dock_type_name, weakness)
+                for weakness in d.extra.get("excluded_dock_weaknesses", [])
+            ]
+        exclusions.update(get_excluded_weakness(dock))
+        if mode == DockRandoMode.TWO_WAY:
+            exclusions.update(get_excluded_weakness(target))
+        
+        if dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions) and target in reach.nodes:
             weighted_weaknesses[dock_type_params.locked] = 2.0
+        
+        exclusions.update(weighted_weaknesses.keys())
 
         weighted_weaknesses.update({
-            weakness: 1.0 for weakness in sorted(dock_type_state.can_change_to.difference(weighted_weaknesses.keys()))
+            weakness: 1.0 for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
             if (
                     weakness.requirement.satisfied(state.resources, state.energy, state.resource_database)
                     and (weakness.lock is None or weakness.lock.requirement.satisfied(state.resources, state.energy,
@@ -238,7 +252,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
             resolver.setup_resolver(patches.configuration, patches),
         )
         weighted_weaknesses = _determine_valid_weaknesses(dock, target, dock_type_params, dock_type_state, new_state,
-                                                          logic)
+                                                          logic, patches.configuration.dock_rando.mode)
 
         # Assign the dock (and its target if desired/possible)
         weakness = random_lib.select_element_with_weight(weighted_weaknesses, rng)
