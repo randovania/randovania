@@ -104,9 +104,6 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.ryujinx_radio.toggled.connect(self._on_update_target_platform)
         self._on_update_target_platform()
 
-        # Small Size
-        self.exlaunch_check.setChecked(per_game.reduce_mod_size)
-
         # Output to SD
         self.sd_non_removable.clicked.connect(self.refresh_drive_list)
         self.sd_refresh_button.clicked.connect(self.refresh_drive_list)
@@ -212,7 +209,6 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
                 cosmetic_patches=per_game.cosmetic_patches,
                 input_directory=self.input_file,
                 target_platform=self.target_platform,
-                reduce_mod_size=self.exlaunch_check.isChecked(),
                 output_preference=output_preference,
             ))
 
@@ -220,7 +216,6 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     def _on_update_target_platform(self):
         target_platform = self.target_platform
-        self.exlaunch_check.setVisible(target_platform == DreadModPlatform.ATMOSPHERE)
 
         self.output_tab_widget.setTabVisible(
             self.output_tab_widget.indexOf(self.tab_sd_card),
@@ -410,7 +405,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             input_path=self.input_file,
             output_path=output_path,
             target_platform=self.target_platform,
-            use_exlaunch=self.exlaunch_check.isChecked() and self.target_platform == DreadModPlatform.ATMOSPHERE,
+            use_exlaunch=self.target_platform == DreadModPlatform.ATMOSPHERE,
             clean_output_path=clean_output_path,
             post_export=post_export,
         )

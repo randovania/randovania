@@ -168,7 +168,6 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
         cosmetic_patches=DreadCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
         target_platform=DreadModPlatform.ATMOSPHERE,
-        reduce_mod_size=False,
         output_preference=json.dumps({
             "selected_tab": "sd",
             "tab_options": {
@@ -196,7 +195,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
         input_path=tmp_path.joinpath("input"),
         output_path=output_path,
         target_platform=DreadModPlatform.ATMOSPHERE,
-        use_exlaunch=False,
+        use_exlaunch=True,
         clean_output_path=False,
         post_export=None,
     )
@@ -213,7 +212,6 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker):
         cosmetic_patches=DreadCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
         target_platform=DreadModPlatform.RYUJINX,
-        reduce_mod_size=False,
         output_preference=json.dumps({
             "selected_tab": "ryujinx",
             "tab_options": {}
@@ -245,7 +243,6 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
         cosmetic_patches=DreadCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
         target_platform=DreadModPlatform.ATMOSPHERE,
-        reduce_mod_size=True,
         output_preference=json.dumps({
             "selected_tab": "ftp",
             "tab_options": {

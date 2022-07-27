@@ -10,7 +10,6 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 class DreadPerGameOptions(PerGameOptions):
     input_directory: Path | None = None
     target_platform: DreadModPlatform = DreadModPlatform.RYUJINX
-    reduce_mod_size: bool = False
     output_preference: str | None = None
 
     @property
@@ -19,7 +18,6 @@ class DreadPerGameOptions(PerGameOptions):
             **super().as_json,
             "input_directory": str(self.input_directory) if self.input_directory is not None else None,
             "target_platform": self.target_platform.value,
-            "reduce_mod_size": self.reduce_mod_size,
             "output_preference": self.output_preference,
         }
 
@@ -31,6 +29,5 @@ class DreadPerGameOptions(PerGameOptions):
             cosmetic_patches=cosmetic_patches,
             input_directory=decode_if_not_none(value["input_directory"], Path),
             target_platform=DreadModPlatform(value["target_platform"]),
-            reduce_mod_size=value["reduce_mod_size"],
             output_preference=value["output_preference"],
         )
