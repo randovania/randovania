@@ -25,10 +25,7 @@ def artifact_pool(resource_database: ResourceDatabase, configuration: DreadConfi
     new_assignment: dict[PickupIndex, PickupEntry] = {}
     initial_resources = ResourceCollection.with_database(resource_database)
 
-    if config.required_artifacts == 0:
-        return PoolResults([], new_assignment, initial_resources)
-
-    keys: list[PickupEntry] = [create_dread_artifact(i, resource_database) for i in range(9)]
+    keys: list[PickupEntry] = [create_dread_artifact(i, resource_database) for i in range(12)]
 
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]
