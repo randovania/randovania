@@ -2089,10 +2089,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Z-57 Room": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": true
                             }
                         },
                         "Pickup (Z-57)": {
@@ -26581,13 +26583,6 @@
                     "extra": {},
                     "event_name": "Kraid",
                     "connections": {
-                        "Right Ledge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Kraid)": {
                             "type": "and",
                             "data": {

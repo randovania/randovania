@@ -28,6 +28,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
                     "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
                     "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
+                    "Progressive Bomb": has_shuffled_item(major_items, "Progressive Bomb"),
                     "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
                     "Progressive Spin": has_shuffled_item(major_items, "Progressive Spin")
                 }

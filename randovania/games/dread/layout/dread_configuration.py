@@ -11,7 +11,7 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 class DreadArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_emmi: bool
     prefer_major_bosses: bool
-    required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 9, "precision": 1})
+    required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 12, "precision": 1})
 
 
 @dataclasses.dataclass(frozen=True)
