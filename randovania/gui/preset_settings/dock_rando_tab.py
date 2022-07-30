@@ -40,7 +40,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Door Rando"
+        return "Door Locks"
 
     @classmethod
     def uses_patches_tab(cls) -> bool:

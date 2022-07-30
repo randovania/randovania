@@ -347,7 +347,9 @@ Extra - asset_id: collision_camera_003
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
-          Flash Shift or Grapple Beam or Space Jump or Speed Booster
+          Any of the following:
+              Flash Shift or Grapple Beam or Space Jump or Speed Booster
+              Bomb and Horizontal Bomb Jump (Advanced)
   > Tile Group (POWERBEAM) 3
       Morph Ball
 
@@ -1368,6 +1370,7 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_def: actors/characters/emmyforest/charclasses/emmyforest.bmsad
   * Extra - string_key: GUI_ITEM_ACQUIRED_ICE_MISSILE
   * Extra - callback_function: OnEmmyForestDead
+  * Extra - boss_hint_name: E.M.M.I.-05IM
   > Room Center
       Trivial
 
@@ -1469,10 +1472,42 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Event - Breakable (grapplepulloff1x2_000)
+      Any of the following:
+          All of the following:
+              # With these methods it is impossible to get on the platfrom directly
+              Grapple Beam and Shoot Ice Missile
+              Flash Shift or Spider Magnet
+          All of the following:
+              # You can reach the platform directly with these
+              Grapple Beam
+              Any of the following:
+                  # Pull the block
+                  Movement (Beginner) or Shoot Ice Missile
+              Any of the following:
+                  # Methods of reaching platform
+                  Simple IBJ or Use Spin Boost
+                  All of the following:
+                      Speed Booster
+                      After Ghavoran - Super Missile Rotatable Enky or Shoot Plasma Beam
+                  Flash Shift and Spider Magnet
+                  Spider Magnet and Slide and Slide Jump (Beginner) and Walljump (Beginner)
+  > Tile Group (MISSILE)
+      All of the following:
+          After Ghavoran - grapplepulloff1x2_000 and Shoot Missile
+          Any of the following:
+              Flash Shift or Spider Magnet or Simple IBJ or Use Spin Boost
+              All of the following:
+                  Speed Booster
+                  After Ghavoran - Super Missile Rotatable Enky or Shoot Plasma Beam
   > Dock to Flipper Room
       Trivial
-  > Energy Part Platform
-      Flash Shift or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+  > Upper Center Platform
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          All of the following:
+              Speed Booster
+              After Ghavoran - Super Missile Rotatable Enky or Shoot Plasma Beam
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -1488,7 +1523,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_name: dooremmy
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Upper Center Platform
-      Flash Shift or Use Spin Boost
+      Flash Shift or Simple IBJ or Use Spin Boost
 
 > Dock to EMMI Zone Exit Northeast (dooremmy_007); Heals? False
   * Layers: default
@@ -1527,7 +1562,7 @@ Extra - asset_id: collision_camera_021
   * Event Ghavoran - grapplepulloff1x2_000
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Energy Part Platform
+  > Door to Save Station Center
       Trivial
 
 > Ammo Recharge; Heals? False; Spawn Point
@@ -1546,25 +1581,33 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
+  > Door to Save Station Center
+      After Ghavoran - grapplepulloff1x2_000
   > Pickup (Energy Part)
       Morph Ball
-  > Energy Part Platform
-      Trivial
 
 > Dock to Flipper Room; Heals? False
   * Layers: default
   * Open Passage to Flipper Room/Dock to Spin Boost Tower
   > Door to Save Station Center
-      Grapple Beam or Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Grapple Beam or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Speed Booster and After Ghavoran - Super Missile Rotatable Enky
 
 > Upper Center Platform; Heals? False
   * Layers: default
+  > Door to Save Station Center
+      Trivial
   > Dock to EMMI Zone Exit Northeast (dooremmy)
-      Flash Shift or Use Spin Boost
+      Flash Shift or Simple IBJ or Use Spin Boost
   > Dock to EMMI Zone Exit Northeast (dooremmy_007)
       After Ghavoran - Ammo Recharge Enky Below
-  > Energy Part Platform
-      Trivial
+  > Event - Breakable (grapplepulloff1x2_000)
+      All of the following:
+          Grapple Beam
+          Movement (Intermediate) or Shoot Ice Missile
+  > Tile Group (MISSILE)
+      After Ghavoran - grapplepulloff1x2_000 and Shoot Missile
   > Event - Ammo Recharge Enky (Below)
       Destroy Enky
 
@@ -1582,24 +1625,15 @@ Extra - asset_id: collision_camera_021
 > Ledge Below PB Tank; Heals? False
   * Layers: default
   > Door to Above Pulse Radar
-      Simple IBJ or Use Spin Boost
+      Movement (Beginner) or Simple IBJ or Use Spin Boost
   > Pickup (Power Bomb Tank)
-      Infinite Bomb Jump (Intermediate) or Use Spin Boost
+      Any of the following:
+          Use Spin Boost
+          Bomb and Morph Ball and Infinite Bomb Jump (Intermediate)
+          Flash Shift and Speed Booster and After Ghavoran - Ammo Recharge Enky Above and Speedbooster Conservation (Intermediate) and Walljump (Beginner)
+          Flash Shift and Movement (Advanced)
   > E-Tank Alcove
       Trivial
-
-> Energy Part Platform; Heals? False
-  * Layers: default
-  > Door to Save Station Center
-      Trivial
-  > Event - Breakable (grapplepulloff1x2_000)
-      All of the following:
-          Grapple Beam
-          Movement (Beginner) or Shoot Ice Missile
-  > Tile Group (MISSILE)
-      After Ghavoran - grapplepulloff1x2_000
-  > Upper Center Platform
-      Simple IBJ or Use Spin Boost
 
 > Event - Ammo Recharge Enky (Above); Heals? False
   * Layers: default
@@ -1610,7 +1644,7 @@ Extra - asset_id: collision_camera_021
 > Event - Ammo Recharge Enky (Below); Heals? False
   * Layers: default
   * Event Ghavoran - Ammo Recharge Enky Below
-  > Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  > Upper Center Platform
       Trivial
 
 ----------------
@@ -2306,6 +2340,7 @@ Extra - asset_id: collision_camera_026
   * Extra - string_key: GUI_ITEM_ACQUIRED_LINE_BOMB
   * Extra - callback_function: golzuna
   * Extra - callback_args: 2
+  * Extra - boss_hint_name: Golzuna
   > Door to Cross Bomb Tutorial
       Trivial
 

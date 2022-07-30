@@ -33,6 +33,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
                     "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
                     "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
+                    "Progressive Bomb": has_shuffled_item(major_items, "Progressive Bomb"),
                     "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
                     "Progressive Spin": has_shuffled_item(major_items, "Progressive Spin")
                 }
@@ -53,6 +54,11 @@ class DreadPresetDescriber(GamePresetDescriber):
                 },
                 {
                     "X Starts Released": configuration.x_starts_released,
+                },
+                {
+                    f"Requires {configuration.artifacts.required_artifacts} Metroid DNA": True,
+                    "Prefer E.M.M.I. for DNA": configuration.artifacts.prefer_emmi,
+                    "Prefer major bosses for DNA": configuration.artifacts.prefer_major_bosses,
                 },
                 {
                     "Linear Damage Run Scaling": configuration.linear_damage_runs
