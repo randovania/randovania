@@ -643,12 +643,6 @@ def _migrate_v32(preset: dict) -> dict:
 
 def _migrate_v33(preset: dict) -> dict:
     if preset["game"] == "dread":
-        preset["configuration"]["linear_damage_runs"] = False
-        preset["configuration"]["linear_dps"] = 20
-    return preset
-
-def _migrate_v34(preset: dict) -> dict:
-    if preset["game"] == "dread":
         preset["configuration"].pop("extra_pickups_for_bosses")
         preset["configuration"]["artifacts"] = {
             "prefer_emmi": True,
@@ -656,8 +650,14 @@ def _migrate_v34(preset: dict) -> dict:
             "required_artifacts": 0,
         }
 
+def _migrate_v34(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["linear_damage_runs"] = False
+        preset["configuration"]["linear_dps"] = 20
     return preset
 
+
+    return preset
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
