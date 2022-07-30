@@ -649,6 +649,8 @@ def _migrate_v33(preset: dict) -> dict:
             "prefer_major_bosses": True,
             "required_artifacts": 0,
         }
+        
+    return preset
 
 def _migrate_v34(preset: dict) -> dict:
     if preset["game"] == "dread":
@@ -656,8 +658,6 @@ def _migrate_v34(preset: dict) -> dict:
         preset["configuration"]["linear_dps"] = 20
     return preset
 
-
-    return preset
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
