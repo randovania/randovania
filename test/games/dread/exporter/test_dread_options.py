@@ -8,7 +8,6 @@ def test_round_trip(tmp_path):
         cosmetic_patches=RandovaniaGame.METROID_DREAD.data.layout.cosmetic_patches.default(),
         input_directory=tmp_path.joinpath("input"),
         target_platform=DreadModPlatform.ATMOSPHERE,
-        reduce_mod_size=True,
         output_preference="{}",
     )
 
