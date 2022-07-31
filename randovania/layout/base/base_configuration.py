@@ -70,3 +70,13 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
                 result.extend(f.dangerous_settings())
 
         return result
+
+    def settings_incompatible_with_multiworld(self) -> list[str]:
+        result = []
+
+        for field in dataclasses.fields(self):
+            f = getattr(self, field.name)
+            if hasattr(f, "settings_incompatible_with_multiworld"):
+                result.extend(f.settings_incompatible_with_multiworld())
+
+        return result
