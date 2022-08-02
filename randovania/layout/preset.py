@@ -42,6 +42,9 @@ class Preset(BitPackValue):
     def dangerous_settings(self) -> list[str]:
         return self.configuration.dangerous_settings()
 
+    def settings_incompatible_with_multiworld(self) -> list[str]:
+        return self.configuration.settings_incompatible_with_multiworld()
+
     def is_same_configuration(self, other: "Preset") -> bool:
         return self.configuration == other.configuration
 
