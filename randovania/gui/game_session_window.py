@@ -307,9 +307,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         try:
             window = cls(network_client, game_connection, preset_manager, window_manager, options)
-            await window.on_game_session_meta_update(network_client.current_game_session)
-            window.update_session_actions(GameSessionActions(tuple()))
-            window.update_session_audit_log(GameSessionAuditLog(tuple()))
+            await window.on_game_session_meta_update(network_client.current_game_session_meta)
+            window.update_session_actions(network_client.current_game_session_actions)
+            window.update_session_audit_log(network_client.current_game_session_audit_log)
             await window.on_game_connection_updated()
             window.on_server_connection_state_updated(network_client.connection_state)
             window.connect_to_events()
