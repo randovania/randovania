@@ -33,8 +33,6 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
         minimum_random_starting_items=0,
         maximum_random_starting_items=0,
         indices_to_exclude=exclusion,
-        multi_pickup_placement=False,
-        multi_pickup_new_weighting=False,
         logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
         first_progression_must_be_local=False,
         minimum_available_locations_for_hint_placement=0,

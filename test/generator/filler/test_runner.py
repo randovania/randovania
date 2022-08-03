@@ -43,7 +43,7 @@ async def test_run_filler(echoes_game_description,
     player_state = MagicMock()
     player_state.index = 0
     player_state.game = player_pools[0].game
-    player_state.pickups_left = runner._split_expansions(player_pools[0].pickups)[0]
+    player_state.pickups_left = list(player_pools[0].pickups)
     player_state.scan_asset_initial_pickups = {}
 
     mocker.patch("randovania.generator.filler.runner.retcon_playthrough_filler", autospec=True,
