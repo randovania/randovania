@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.5.1] - 2022-08-03
 
 - Fixed: The History and Audit Log are now properly updated when joining a game session.
+- Fixed: Your connection state is properly updated when joining a game session.
 
 ## [4.5.0] - 2022-08-01
 
