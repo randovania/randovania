@@ -139,16 +139,19 @@ def _get_preset(preset_json: dict) -> VersionedPreset:
 
 
 def _emit_session_meta_update(session: GameSession):
+    logger().debug("game_session_meta_update for session %d (%s)", session.id, session.name)
     flask_socketio.emit("game_session_meta_update", session.create_session_entry(), room=f"game-session-{session.id}",
                         namespace="/")
 
 
 def _emit_session_actions_update(session: GameSession):
+    logger().debug("game_session_actions_update for session %d (%s)", session.id, session.name)
     flask_socketio.emit("game_session_actions_update", session.describe_actions(), room=f"game-session-{session.id}",
                         namespace="/")
 
 
 def _emit_session_audit_update(session: GameSession):
+    logger().debug("game_session_audit_update for session %d (%s)", session.id, session.name)
     flask_socketio.emit("game_session_audit_update", session.get_audit_log(), room=f"game-session-{session.id}",
                         namespace="/")
 
@@ -705,6 +708,7 @@ def _emit_game_session_pickups_update(sio: ServerApp, membership: GameSessionMem
 
 
 def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes, game_connection_state: str):
+    print("got game_session_self_update", session_id, game_connection_state)
     current_user = sio.get_current_user()
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
