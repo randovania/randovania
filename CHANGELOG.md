@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.5.0] - 2022-07-01
+## [4.5.1] - 2022-08-03
+
+- Fixed: The History and Audit Log are now properly updated when joining a game session.
+- Fixed: Your connection state is properly updated when joining a game session.
+
+## [4.5.0] - 2022-08-01
 
 - Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions. 
 - Added: Exporting presets now fills in default file name.
