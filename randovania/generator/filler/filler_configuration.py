@@ -11,8 +11,6 @@ class FillerConfiguration:
     minimum_random_starting_items: int
     maximum_random_starting_items: int
     indices_to_exclude: frozenset[PickupIndex]
-    multi_pickup_placement: bool
-    multi_pickup_new_weighting: bool
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
     minimum_available_locations_for_hint_placement: int
