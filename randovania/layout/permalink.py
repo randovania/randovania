@@ -177,9 +177,8 @@ class Permalink:
         except Exception as e:
             games = generator_parameters.try_decode_game_list(data.generator_params)
 
+            msg = f"{e}"
             if data.randovania_version != cls.current_randovania_version():
-                msg = "Detected version {}, current version is {}".format(data.randovania_version.hex(),
-                                                                          cls.current_randovania_version().hex())
-            else:
-                msg = f"Error decoding parameters - {e}"
+                msg += "\nDetected version {}, current version is {}".format(data.randovania_version.hex(),
+                                                                             cls.current_randovania_version().hex())
             raise UnsupportedPermalink(msg, data.seed_hash, data.randovania_version, games) from e
