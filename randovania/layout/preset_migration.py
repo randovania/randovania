@@ -6,7 +6,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 34
+CURRENT_VERSION = 35
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -640,7 +640,26 @@ def _migrate_v32(preset: dict) -> dict:
         }
     }
     return preset
+
+
 def _migrate_v33(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"].pop("extra_pickups_for_bosses")
+        preset["configuration"]["artifacts"] = {
+            "prefer_emmi": True,
+            "prefer_major_bosses": True,
+            "required_artifacts": 0,
+        }
+
+    return preset
+
+
+def _migrate_v34(preset: dict) -> dict:
+    preset["configuration"].pop("multi_pickup_placement")
+    preset["configuration"].pop("multi_pickup_new_weighting")
+
+    return preset
+def _migrate_v35(preset: dict) -> dict:
     if preset["game"] == "prime1":
         preset["configuration"]["enemy_rando_range_scale_low"] = 1.0
         preset["configuration"]["enemy_rando_range_scale_high"] = 1.0
@@ -689,6 +708,8 @@ _MIGRATIONS = {
     31: _migrate_v31,
     32: _migrate_v32,
     33: _migrate_v33,
+    34: _migrate_v34,
+    35: _migrate_v35,
 }
 
 
