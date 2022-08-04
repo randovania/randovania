@@ -1,29 +1,54 @@
-from PySide6 import QtWidgets
+from __future__ import annotations
 
-from randovania.game_description import default_database
-from randovania.game_description.world.world import World
+from PySide6 import QtWidgets, QtGui
+
 from randovania.gui import game_specific_gui
 from randovania.gui.generated.customize_preset_dialog_ui import Ui_CustomizePresetDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
+from randovania.layout import filtered_database
 from randovania.layout.preset import Preset
 
 
-def dark_world_flags(world: World):
-    yield False
-    if world.dark_name is not None:
-        yield True
+class PresetTabRoot(QtWidgets.QWidget):
+    tab_type: type[PresetTab]
+    current_tab: PresetTab | None
+
+    def __init__(self, owner: CustomizePresetDialog, tab_type: type[PresetTab]):
+        super().__init__()
+        self.owner = owner
+        self.tab_type = tab_type
+        self.current_tab = None
+
+        self.root_layout = QtWidgets.QVBoxLayout(self)
+        self.root_layout.setContentsMargins(0, 0, 0, 0)
+
+    def showEvent(self, arg: QtGui.QShowEvent) -> None:
+        if self.current_tab is None:
+            editor = self.owner.editor
+            self.current_tab = self.tab_type(
+                editor,
+                filtered_database.game_description_for_layout(editor.configuration),
+                self.owner.window_manager,
+            )
+            self.root_layout.addWidget(self.current_tab)
+            self.current_tab.on_preset_changed(editor.create_custom_preset_with())
+            self.owner.set_visible_tab(self)
+
+        return super().showEvent(arg)
+
+    def release_widget(self):
+        self.current_tab.deleteLater()
+        self.current_tab = None
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
     _tab_types: list[type[PresetTab]]
-    _tabs: dict[type[PresetTab], PresetTab]
+    _tabs: dict[type[PresetTab], PresetTabRoot]
     _editor: PresetEditor
-
-    # _updated_tabs: set[PresetTab]
-    # _last_preset: Preset
+    _current_tab: PresetTabRoot | None
 
     def __init__(self, window_manager: WindowManager, editor: PresetEditor):
         super().__init__()
@@ -31,10 +56,10 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         common_qt_lib.set_default_window_icon(self)
 
         self._editor = editor
+        self.window_manager = window_manager
         self._tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
         self._tabs = {}
-
-        game_description = default_database.game_description_for(editor.game)
+        self._current_tab = None
 
         for extra_tab in self._tab_types:
             if extra_tab.uses_patches_tab():
@@ -42,7 +67,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             else:
                 parent_tab = self.logic_tab_widget
 
-            tab = self._tabs[extra_tab] = extra_tab(editor, game_description, window_manager)
+            tab = self._tabs[extra_tab] = PresetTabRoot(self, extra_tab)
             parent_tab.addTab(tab, extra_tab.tab_title())
 
         for i in range(self.main_tab_widget.count()):
@@ -54,29 +79,28 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
+    def set_visible_tab(self, tab: PresetTabRoot):
+        if tab != self._current_tab:
+            if self._current_tab is not None:
+                self._current_tab.release_widget()
+            self._current_tab = tab
+
     # Options
     def on_preset_changed(self, preset: Preset):
-        # self._updated_tabs.clear()
-        # self._last_preset = preset
-
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
-        for extra_tab in self._tabs.values():
-            extra_tab.on_preset_changed(preset)
-
-        # active_tab = self.current_tab()
-        # active_tab.on_preset_changed(preset)
-        # self._updated_tabs.add(active_tab)
-
-    # def _refresh_tab_on_switch(self, arg):
-    #     active_tab = self.current_tab()
-    #     if active_tab not in self._updated_tabs:
-    #         self._updated_tabs.add(active_tab)
-    #         active_tab.on_preset_changed(self._last_preset)
-
-    def current_tab(self) -> PresetTab:
-        active_main_tab: QtWidgets.QTabWidget = self.main_tab_widget.currentWidget()
-        return active_main_tab.currentWidget()
+        if (tab := self.current_preset_tab) is not None:
+            tab.on_preset_changed(preset)
 
     def _edit_name(self, value: str):
         with self._editor as editor:
             editor.name = value
+
+    @property
+    def editor(self):
+        return self._editor
+
+    @property
+    def current_preset_tab(self) -> PresetTab | None:
+        if self._current_tab is not None:
+            return self._current_tab.current_tab
+        return None
