@@ -21,18 +21,18 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 
 _ALTERNATIVE_MODELS = {
-    "rando_artifact": "itemsphere",
+    "Nothing": ["itemsphere"],
 
-    "powerup_slide": "itemsphere",
-    "powerup_hyperbeam": "powerup_plasmabeam",
-    "powerup_metroidsuit": "powerup_gravitysuit",
+    "powerup_slide": ["itemsphere"],
+    "powerup_hyperbeam": ["powerup_plasmabeam"],
+    "powerup_metroidsuit": ["powerup_gravitysuit"],
 
-    "PROGRESSIVE_BEAM": "powerup_widebeam",
-    "PROGRESSIVE_CHARGE": "powerup_chargebeam",
-    "PROGRESSIVE_MISSILE": "powerup_supermissile",
-    "PROGRESSIVE_SUIT": "powerup_variasuit",
-    "PROGRESSIVE_BOMB": "powerup_bomb",
-    "PROGRESSIVE_SPIN": "powerup_doublejump",
+    "PROGRESSIVE_BEAM": ["powerup_widebeam", "powerup_plasmabeam", "powerup_wavebeam"],
+    "PROGRESSIVE_CHARGE": ["powerup_chargebeam", "powerup_diffusionbeam"],
+    "PROGRESSIVE_MISSILE": ["powerup_supermissile", "powerup_icemissile"],
+    "PROGRESSIVE_SUIT": ["powerup_variasuit", "powerup_gravitysuit"],
+    "PROGRESSIVE_BOMB": ["powerup_bomb", "powerup_crossbomb"],
+    "PROGRESSIVE_SPIN": ["powerup_doublejump", "powerup_spacejump"],
 }
 
 
@@ -131,21 +131,21 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
         # target.
 
-        alt_model = _ALTERNATIVE_MODELS.get(detail.model.name, detail.model.name)
+        alt_model = _ALTERNATIVE_MODELS.get(detail.model.name, [detail.model.name])
 
-        if detail.model.game != RandovaniaGame.METROID_DREAD or alt_model == "itemsphere":
+        if detail.model.game != RandovaniaGame.METROID_DREAD or alt_model[0] == "itemsphere":
             map_icon = {
                 # TODO: more specific icons for pickups in other games
                 "custom_icon": {
                     "label": detail.original_pickup.name.upper(),
                 }
             }
-            model_name = "itemsphere"
+            model_names = ["itemsphere"]
         else:
             map_icon = {
                 "icon_id": detail.model.name
             }
-            model_name = alt_model
+            model_names = alt_model
 
         ammoconfig = self.configuration.ammo_configuration.items_state
         pbammo = self.item_db.ammo["Power Bomb Tank"]
@@ -198,7 +198,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     })
                 details.update({
                     "pickup_actor": self._teleporter_ref_for(pickup_node),
-                    "model": model_name,
+                    "model": model_names,
                     "map_icon": map_icon,
                 })
             else:

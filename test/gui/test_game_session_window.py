@@ -71,7 +71,7 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
     )
-    network_client.current_game_session = initial_session
+    network_client.current_game_session_meta = initial_session
 
     window = await GameSessionWindow.create_and_update(network_client, game_connection, preset_manager,
                                                        MagicMock(), MagicMock())

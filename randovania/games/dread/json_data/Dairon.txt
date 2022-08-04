@@ -57,8 +57,9 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Wide Beam Block - Adjacent
       Any of the following:
-          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+          Spider Magnet or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
+          Grapple Beam and Movement (Beginner)
 
 > Door to Transport to Cataris; Heals? False
   * Layers: default
@@ -69,12 +70,16 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Event - Push Wide Beam Block
+      Wave Beam and Push Wide Beam Block
   > Wide Beam Block - Adjacent
       After Dairon - Wide Beam Block Cataris Transport
   > Wide Beam Block - Above
       Any of the following:
-          Grapple Beam or Spider Magnet or Space Jump
-          Flash Shift and Walljump (Beginner)
+          Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+          All of the following:
+              Speed Booster or Walljump (Beginner)
+              Flash Shift or Use Spin Boost
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -105,7 +110,9 @@ Extra - asset_id: collision_camera_001
   > Top Floor
       Any of the following:
           Space Jump or Walljump (Advanced) or Simple IBJ
-          Flash Shift and Walljump (Beginner)
+          All of the following:
+              Walljump (Beginner)
+              Flash Shift or Use Spin Boost
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -131,6 +138,10 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Door to Transport to Cataris
       After Dairon - Wide Beam Block Cataris Transport
+  > Tile Group (POWERBEAM)
+      Any of the following:
+          Space Jump or Simple IBJ
+          Walljump (Beginner) and Use Spin Boost
   > Event - Push Wide Beam Block
       Push Wide Beam Block
 
@@ -143,7 +154,13 @@ Extra - asset_id: collision_camera_001
   > Top Floor
       After Dairon - Teleport To Artaria Speed Blocks Destroyed
   > Event - Speed Booster blocks Destroyed
-      Speed Booster
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+              All of the following:
+                  Walljump (Beginner)
+                  Flash Shift or Use Spin Boost
 
 > Top Floor; Heals? False
   * Layers: default
@@ -177,7 +194,9 @@ Extra - asset_id: collision_camera_002
   > Dock to EMMI Zone Exit East
       After Dairon - Wide Beam Block by Save Room
   > Above Crumble Blocks
-      Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Trivial
+  > Event - Push Wide Beam Block
+      Wave Beam and Movement (Beginner) and Push Wide Beam Block
 
 > Dock to EMMI Zone Exit East; Heals? False
   * Layers: default
@@ -223,7 +242,9 @@ Extra - asset_id: collision_camera_002
 > Above Crumble Blocks; Heals? False
   * Layers: default
   > Door to Save Station East
-      Grapple Beam or Spider Magnet or Walljump (Beginner)
+      Any of the following:
+          Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
+          Grapple Beam and Movement (Beginner)
   > Tile Group (WEIGHT)
       Trivial
   > Tile Group (BOMB)
@@ -267,6 +288,8 @@ Extra - asset_id: collision_camera_003
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Dock to EMMI Zone Exit East
       After Dairon - Pull Grapple Block below Ferenia Elevator
+  > Event - Pull Grapple Block
+      Break/Move Grapple Block from Behind
 
 > Event - Pull Grapple Block; Heals? False
   * Layers: default
@@ -288,7 +311,11 @@ Extra - asset_id: collision_camera_004
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
-          Grapple Beam or Space Jump or Speed Booster or Simple IBJ
+          Any of the following:
+              Grapple Beam or Space Jump or Speed Booster or Simple IBJ
+              All of the following:
+                  Flash Shift
+                  Lay Cross Comb or Use Spin Boost
   > Event - Blob (db_reg_b1_005)
       Lay Bomb or Shoot Beam
   > Dock to Hub Access
@@ -304,7 +331,7 @@ Extra - asset_id: collision_camera_004
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_002
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
   > Dock to Yellow EMMI Introduction
-      After Dairon - db_reg_b1_005
+      Flash Shift or After Dairon - db_reg_b1_005
   > Door to Total Recharge Station East
       Trivial
   > Event - Blob (db_reg_b1_005)
@@ -371,7 +398,7 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   * Open Passage to Hub Access/Dock to Big Hub
   > Dock to Yellow EMMI Introduction
-      After Dairon - Wide Beam Block Hub or Simple IBJ or Use Spin Boost
+      Speed Booster or After Dairon - Wide Beam Block Hub or Simple IBJ or Use Spin Boost
   > Door to Total Recharge Station East
       Trivial
   > Event - Pull Grapple Block (grapplepulloff1x2_007)
@@ -403,7 +430,7 @@ Extra - asset_id: collision_camera_005
   * EMMI Door to Hub Access/Dock to EMMI Zone Exit East
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door from Yellow EMMI Introduction
+  > Door to Yellow EMMI Introduction
       Trivial
   > Event - Ferenia Transport Speed Blocks Destroyed
       Speed Booster
@@ -416,9 +443,9 @@ Extra - asset_id: collision_camera_005
   > Dock to Hub Access
       After Dairon - Ferenia Transport Speed Blocks Destroyed
 
-> Door from Yellow EMMI Introduction; Heals? False
+> Door to Yellow EMMI Introduction; Heals? False
   * Layers: default
-  * Access Closed to Yellow EMMI Introduction/Door to EMMI Zone Exit East
+  * Access Locked to Yellow EMMI Introduction/Door to EMMI Zone Exit East
   * Extra - actor_name: doorchargeclosed_000
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -463,7 +490,7 @@ Extra - asset_id: collision_camera_006
 
 > Door to Teleport to Cataris; Heals? False
   * Layers: default
-  * Power Beam Door to Teleport to Cataris/Door to Wide Beam Room
+  * Missile Door to Teleport to Cataris/Door to Wide Beam Room
   * Extra - actor_name: doorpowerpower_021
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
@@ -480,7 +507,7 @@ Extra - asset_id: collision_camera_006
   > Pickup (Wide Beam)
       Trivial
   > Door to Teleport to Cataris
-      Morph Ball
+      Morph Ball and After Dairon - powergenerator_001
   > Tile Group (POWERBEAM) 4
       Trivial
 
@@ -556,8 +583,6 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_def: actordef:actors/props/powergenerator/charclasses/powergenerator.bmsad
   * Extra - start_point_actor_name: powergenerator_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_generator/charclasses/weightactivatedplatform_generator.bmsad
-  > Door to Teleport to Cataris
-      Trivial
   > Start Point
       Trivial
 
@@ -566,7 +591,7 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_name: powergeneratorengine_001
   * Extra - start_point_actor_def: actordef:actors/props/powergeneratorengine/charclasses/powergeneratorengine.bmsad
   > Door to Teleport to Cataris
-      Trivial
+      After Dairon - powergenerator_001
   > Event - Electric Generator
       Trivial
   > Tunnel to Teleport to Cataris
@@ -606,6 +631,8 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Wide Beam Room
+      After Dairon - powergenerator_001
+  > Tile Group (POWERBEAM) 1
       Trivial
   > Tile Group (POWERBEAM) 2
       Trivial
@@ -622,7 +649,7 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Wide Beam Room
-      Trivial
+      After Dairon - powergenerator_001
   > Tile Group (POWERBEAM) 1
       Trivial
 
@@ -638,7 +665,7 @@ Extra - asset_id: collision_camera_008
   > Door to Total Recharge Station East
       Trivial
   > Door to Power Switch 1
-      Trivial
+      After Dairon - powergenerator_001
 
 > Event - Blob from shaft (db_dif_b1_001); Heals? False
   * Layers: default
@@ -669,10 +696,12 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door to Total Recharge Station East
+      Trivial
   > Door to Power Switch 1
-      Trivial
+      After Dairon - powergenerator_001
   > Tunnel to Power Switch 1
-      Trivial
+      Can Slide
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Layers: default
@@ -695,7 +724,7 @@ Extra - asset_id: collision_camera_008
 > Bottom-Left Corner; Heals? False
   * Layers: default
   > Door to Early Grapple Access
-      Morph Ball
+      Morph Ball and After Dairon - powergenerator_001
   > Event - Blob from shaft (db_dif_b1_001)
       Shoot Diffusion or Wave
   > Teleporter to Cataris - Teleport to Dairon
@@ -703,7 +732,9 @@ Extra - asset_id: collision_camera_008
           After Dairon - db_dif_b1_001
           Any of the following:
               Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
-              Flash Shift and Grapple Beam
+              All of the following:
+                  Grapple Beam
+                  Flash Shift or Movement (Beginner)
   > Tile Group (POWERBEAM) 2
       Trivial
 
@@ -1527,7 +1558,7 @@ Extra - asset_id: collision_camera_018
 
 > Door to EMMI Zone Exit East; Heals? False
   * Layers: default
-  * Charge Beam Door to EMMI Zone Exit East/Door from Yellow EMMI Introduction
+  * Charge Beam Door to EMMI Zone Exit East/Door to Yellow EMMI Introduction
   * Extra - actor_name: doorchargeclosed_000
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1586,7 +1617,9 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Open Passage to EMMI Zone Exit North/Dock to Yellow EMMI Introduction
   > Pickup (Energy Part)
-      Missiles and Lay Bomb
+      All of the following:
+          Missiles
+          Lay Bomb or Lay Power Bomb
   > Lower-Left Area
       Speed Booster
 

@@ -430,17 +430,23 @@ class NetworkClient:
     async def create_new_session(self, session_name: str) -> GameSessionEntry:
         result = await self._emit_with_result("create_game_session", session_name)
         self._current_game_session_meta = GameSessionEntry.from_json(result)
+        self._current_game_session_actions = None
+        self._current_game_session_audit_log = None
         return self._current_game_session_meta
 
     async def join_game_session(self, session: GameSessionListEntry, password: str | None):
         result = await self._emit_with_result("join_game_session", (session.id, password))
         self._current_game_session_meta = GameSessionEntry.from_json(result)
+        self._current_game_session_actions = None
+        self._current_game_session_audit_log = None
 
     async def leave_game_session(self, permanent: bool):
         if permanent:
             await self.session_admin_player(self._current_user.id, admin_actions.SessionAdminUserAction.KICK, None)
         await self._emit_with_result("disconnect_game_session", self._current_game_session_meta.id)
         self._current_game_session_meta = None
+        self._current_game_session_actions = None
+        self._current_game_session_audit_log = None
 
     async def session_admin_global(self, action: admin_actions.SessionAdminGlobalAction, arg):
         return await self._emit_with_result("game_session_admin_session",
@@ -477,5 +483,13 @@ class NetworkClient:
         await self._emit_with_result("logout")
 
     @property
-    def current_game_session(self) -> GameSessionEntry | None:
+    def current_game_session_meta(self) -> GameSessionEntry | None:
         return self._current_game_session_meta
+
+    @property
+    def current_game_session_actions(self) -> GameSessionActions:
+        return self._current_game_session_actions or GameSessionActions(tuple())
+
+    @property
+    def current_game_session_audit_log(self) -> GameSessionAuditLog:
+        return self._current_game_session_audit_log or GameSessionAuditLog(tuple())

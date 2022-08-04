@@ -659,6 +659,13 @@ def _migrate_v34(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v34(preset: dict) -> dict:
+    preset["configuration"].pop("multi_pickup_placement")
+    preset["configuration"].pop("multi_pickup_new_weighting")
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91

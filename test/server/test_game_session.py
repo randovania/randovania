@@ -945,7 +945,7 @@ def session_update_fixture(clean_database, mocker):
     return session
 
 
-def test_emit_session_meta_update(session_update, mocker):
+def test_emit_session_meta_update(session_update, flask_app, mocker):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
     session_json = {
@@ -979,7 +979,8 @@ def test_emit_session_meta_update(session_update, mocker):
     }
 
     # Run
-    game_session._emit_session_meta_update(session_update)
+    with flask_app.test_request_context():
+        game_session._emit_session_meta_update(session_update)
 
     # Assert
     mock_emit.assert_called_once_with(
@@ -990,7 +991,7 @@ def test_emit_session_meta_update(session_update, mocker):
     )
 
 
-def test_emit_session_actions_update(session_update, mocker):
+def test_emit_session_actions_update(session_update, flask_app, mocker):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
     actions = [
@@ -1005,7 +1006,8 @@ def test_emit_session_actions_update(session_update, mocker):
     ]
 
     # Run
-    game_session._emit_session_actions_update(session_update)
+    with flask_app.test_request_context():
+        game_session._emit_session_actions_update(session_update)
 
     # Assert
     mock_emit.assert_called_once_with(
@@ -1016,7 +1018,7 @@ def test_emit_session_actions_update(session_update, mocker):
     )
 
 
-def test_emit_session_audit_update(session_update, mocker):
+def test_emit_session_audit_update(session_update, flask_app, mocker):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
     database.GameSessionAudit.create(session=session_update, user=1234, message="Did something",
@@ -1030,7 +1032,8 @@ def test_emit_session_audit_update(session_update, mocker):
     ]
 
     # Run
-    game_session._emit_session_audit_update(session_update)
+    with flask_app.test_request_context():
+        game_session._emit_session_audit_update(session_update)
 
     # Assert
     mock_emit.assert_called_once_with(
