@@ -659,6 +659,7 @@ def _migrate_v34(preset: dict) -> dict:
     preset["configuration"].pop("multi_pickup_new_weighting")
 
     return preset
+<<<<<<< HEAD
 def _migrate_v35(preset: dict) -> dict:
     if preset["game"] == "prime1":
         preset["configuration"]["enemy_rando_range_scale_low"] = 1.0
@@ -673,6 +674,9 @@ def _migrate_v35(preset: dict) -> dict:
         preset["configuration"]["enemy_rando_range_knockback_high"] = 1.0
         preset["configuration"]["enemy_rando_diff_xyz"] = False
     return preset
+=======
+
+>>>>>>> upstream/main
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -709,7 +713,10 @@ _MIGRATIONS = {
     32: _migrate_v32,
     33: _migrate_v33,
     34: _migrate_v34,
+<<<<<<< HEAD
     35: _migrate_v35,
+=======
+>>>>>>> upstream/main
 }
 
 

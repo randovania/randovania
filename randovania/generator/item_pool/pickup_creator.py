@@ -162,6 +162,30 @@ def create_sky_temple_key(key_number: int,
     )
 
 
+def create_dread_artifact(artifact_number: int,
+                          resource_database: ResourceDatabase,
+                          ) -> PickupEntry:
+    DREAD_ARTIFACT_CATEGORY = ItemCategory(
+        name="artifact",
+        long_name="",
+        hint_details=("some ", "Metroid DNA"),
+        is_major=False,
+        is_key=True
+    )
+
+    return PickupEntry(
+        name=f"Metroid DNA {artifact_number + 1}",
+        progression=((resource_database.get_item(f"Artifact{artifact_number+1}"), 1),),
+        model=PickupModel(
+            game=resource_database.game_enum,
+            name="rando_artifact"
+        ),
+        item_category=DREAD_ARTIFACT_CATEGORY,
+        broad_category=GENERIC_KEY_CATEGORY,
+        probability_offset=0.25,
+    )
+
+
 def create_energy_cell(cell_index: int,
                        resource_database: ResourceDatabase,
                        ) -> PickupEntry:

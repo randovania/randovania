@@ -558,6 +558,10 @@ Extra - asset_id: collision_camera_005
   * Extra - right_shield_def: None
   > Door to White EMMI Arena
       Trivial
+  > Dock to Early Cloak Room (Water Blob)
+      Any of the following:
+          Movement (Intermediate)
+          Movement (Beginner) and Lay Bomb
 
 > Door to White EMMI Arena; Heals? False
   * Layers: default
@@ -624,7 +628,17 @@ Extra - asset_id: collision_camera_005
   > Door to White EMMI Introduction
       Trivial
   > Tile Group (POWERBEAM)
-      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+      Any of the following:
+          Spider Magnet or Space Jump or Simple IBJ
+          All of the following:
+              Stand on Frozen Enemy (Intermediate) and Walljump (Beginner) and Shoot Ice Missile
+              After Artaria - Central Unit or After Elun - Release X Parasites
+          All of the following:
+              Walljump (Beginner)
+              Flash Shift or Use Spin Boost
+          All of the following:
+              Grapple Beam
+              Movement (Beginner) or Walljump (Beginner)
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -676,7 +690,12 @@ Extra - asset_id: collision_camera_006
           # Spider ceiling wall here. Probably don't need an event for it.
           Spider Magnet or Simple IBJ or Use Spin Boost
   > Door to EMMI Zone Ballspark Hallway
-      Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
+          All of the following:
+              # Enemy that you freeze only spawns after White EMMI is defeated.
+              Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+              After Artaria - Central Unit or After Elun - Release X Parasites
   > Door to EMMI Zone First Entrance
       After Artaria - EMMI First Chase
   > Door to EMMI Zone Spinner
@@ -774,6 +793,8 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
   > Door to White EMMI Introduction (Thermal)
       Trivial
+  > Teleporter to Dairon - Teleport to Artaria
+      Wave Beam
 
 > Door to White EMMI Introduction (Lower); Heals? False
   * Layers: default
@@ -1065,9 +1086,11 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to EMMI Zone Exit Northwest
-      Space Jump or Simple IBJ
+      Space Jump or Speed Booster or Simple IBJ
   > Door to EMMI Zone Exit Southwest (DoorFrame_005)
       Trivial
+  > Door to Wide Beam Block Room (DoorFrame_007)
+      Flash Shift
 
 > Door to EMMI Zone Exit Southwest (DoorFrame_005); Heals? False
   * Layers: default
@@ -1097,7 +1120,9 @@ Extra - asset_id: collision_camera_010
   > Door to EMMI Zone Exit Southwest (DoorFrame_005)
       Trivial
   > Door to Wide Beam Block Room (DoorFrame_007)
-      Simple IBJ or Use Spin Boost
+      Speed Booster or Simple IBJ or Use Spin Boost
+  > Pickup (Power Bomb Tank)
+      Ballspark
   > Tunnel to Wide Beam Block Room
       Trivial
 
@@ -1113,7 +1138,9 @@ Extra - asset_id: collision_camera_010
   > Door to Wide Beam Block Room (DoorFrame_006)
       Trivial
   > Door to EMMI Zone Ballspark Hallway
-      Spider Magnet or Space Jump or Simple IBJ
+      Any of the following:
+          Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+          Flash Shift and After Artaria - Central Unit and Walljump (Intermediate)
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -1134,6 +1161,11 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to EMMI Zone Exit Northwest
+      All of the following:
+          # very dumb triple flash shift off of frozen enemy.
+          Flash Shift and Stand on Frozen Enemy (Advanced) and Shoot Ice Missile
+          After Artaria - Central Unit or After Elun - Release X Parasites
   > Door to Wide Beam Block Room (DoorFrame_007)
       Trivial
   > Pickup (Power Bomb Tank)
@@ -1142,6 +1174,10 @@ Extra - asset_id: collision_camera_010
           Any of the following:
               Grapple Beam or Space Jump
               Spider Magnet and Use Spin Boost
+              All of the following:
+                  Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
+                  After Artaria - Central Unit or After Elun - Release X Parasites
+                  Flash Shift or Spider Magnet or Lay Cross Comb or Use Spin Boost
   > Tunnel to EMMI Zone Exit Northwest
       Ballspark
 
@@ -1435,9 +1471,14 @@ Extra - asset_id: collision_camera_011
   > Door to Save Station West
       Trivial
   > Dock to EMMI Zone Exit Northwest
-      All of the following:
-          Gravity Suit
-          Simple IBJ or Use Spin Boost
+      Any of the following:
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Speed Booster or Simple IBJ or Use Spin Boost
+                  Flash Shift and Walljump (Beginner)
+                  Morph Ball and Single-wall Wall Jump (Intermediate)
+          Speed Booster and Movement (Beginner) and Use Spin Boost
   > Event - Destroy Post Chain Reaction Debris (Below)
       After Artaria - Chain Reaction Device and Shoot Beam
   > Teleporter to Cataris - Teleport to Artaria (Red)
@@ -1902,8 +1943,12 @@ Extra - asset_id: collision_camera_017
   * Extra - right_shield_def: None
   > Door to EMMI Zone Spinner (DoorFrame_010)
       Any of the following:
-          Space Jump or Simple IBJ
-          Flash Shift and Walljump (Beginner) and Use Spin Boost
+          Space Jump or Speed Booster or Simple IBJ
+          Walljump (Beginner) and Use Spin Boost
+          Flash Shift and Walljump (Beginner)
+          All of the following:
+              Stand on Frozen Enemy (Intermediate) and Walljump (Advanced) and Shoot Ice Missile
+              After Artaria - Central Unit or After Elun - Release X Parasites
   > Start Point
       Trivial
 
@@ -1931,7 +1976,9 @@ Extra - asset_id: collision_camera_017
   > Door to EMMI Zone Spinner (DoorFrame_010)
       Trivial
   > Door to EMMI Zone Spinner (DoorFrame_011)
-      Simple IBJ or Use Spin Boost
+      Any of the following:
+          Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Intermediate)
 
 > Door to Central Unit Access (Power); Heals? False
   * Layers: default
@@ -1992,7 +2039,12 @@ Extra - asset_id: collision_camera_017
   > Door to Central Unit Access (Charge)
       Trivial
   > Door to EMMI Zone Spinner (1)
-      Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          All of the following:
+              Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+              After Artaria - Central Unit or After Elun - Release X Parasites
+          Grapple Beam and Movement (Beginner)
   > Door to Central Unit Access (Power)
       Trivial
   > Tunnel to EMMI Zone Spinner
@@ -2091,6 +2143,7 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_def: actors/characters/scorpius/charclasses/scorpius.bmsad
   * Extra - string_key: GUI_ITEM_ACQUIRED_OPTICAL_CAMO
   * Extra - callback_function: OnCutscene0057Finished
+  * Extra - boss_hint_name: Corpius
   > Start Point
       Trivial
 
@@ -3088,7 +3141,10 @@ Extra - asset_id: collision_camera_048
   * Layers: default
   * Open Passage to EMMI Zone Exit Northwest/Dock to EMMI Zone Dome
   > Door to EMMI Zone Exit North
-      Simple IBJ or Use Spin Boost
+      Any of the following:
+          Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Beginner)
 
 > Below Slide; Heals? False
   * Layers: default
@@ -3192,6 +3248,7 @@ Extra - asset_id: collision_camera_049
   * Extra - pickup_type: emmi
   * Extra - string_key: GUI_ITEM_ACQUIRED_SPIDER_MAGNET
   * Extra - callback_function: OnEmmyCaveDead
+  * Extra - boss_hint_name: E.M.M.I.-02SM
   > Door to White EMMI Arena (Bottom)
       Trivial
 
@@ -3279,13 +3336,17 @@ Extra - asset_id: collision_camera_051
   * Extra - actor_name: DoorEmmy03
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock from EMMI Zone Hub
-      Flash Shift or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
+          Morph Ball and Single-wall Wall Jump (Beginner)
   > Door to EMMI Zone Dome
       Trivial
   > Tunnel to Teleport to Cataris
       Lay Bomb
   > Dock to EMMI Zone Dome
-      Space Jump or Simple IBJ
+      Any of the following:
+          # this is a "trivial walljump", should be replaced with just trivial if we decide on that.
+          Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Dock from EMMI Zone Hub; Heals? False
   * Layers: default

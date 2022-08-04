@@ -28,8 +28,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             self.game_specific_group.setVisible(False)
 
         # Item Placement
-        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
-        signal_handling.on_checked(self.multi_pickup_new_weighting_check, self._persist_multi_pickup_new_weighting)
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
         signal_handling.on_checked(self.local_first_progression_check, self._persist_local_first_progression)
 
@@ -61,9 +59,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration
 
-        self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
-        self.multi_pickup_new_weighting_check.setEnabled(layout.multi_pickup_placement)
-        self.multi_pickup_new_weighting_check.setChecked(layout.multi_pickup_new_weighting)
         self.local_first_progression_check.setChecked(layout.first_progression_must_be_local)
         self.check_major_minor.setChecked(
             layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
@@ -88,14 +83,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     @property
     def game_specific_widgets(self) -> Iterable[QWidget] | None:
         return None
-
-    def _persist_multi_pickup_placement(self, value: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("multi_pickup_placement", value)
-
-    def _persist_multi_pickup_new_weighting(self, value: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("multi_pickup_new_weighting", value)
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL

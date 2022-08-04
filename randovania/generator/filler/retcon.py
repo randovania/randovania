@@ -219,7 +219,7 @@ def retcon_playthrough_filler(rng: Random,
         if new_pickups:
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):
-                if i > 0 and current_player.configuration.multi_pickup_new_weighting:
+                if i > 0:
                     current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
                     current_player.advance_scan_asset_seen_count()
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
@@ -233,8 +233,6 @@ def retcon_playthrough_filler(rng: Random,
                 current_player.pickups_left.remove(new_pickup)
 
             current_player.num_actions += 1
-            if not current_player.configuration.multi_pickup_new_weighting:
-                increment_considered_count(all_locations_weighted)
 
         last_message = f"{sum(player.num_actions for player in player_states)} actions performed."
         status_update(last_message)
@@ -280,8 +278,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
         index_owner_state, pickup_index = select_element_with_weight(locations_weighted, rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
 
-        if current_player.configuration.multi_pickup_new_weighting:
-            increment_considered_count(all_locations_weighted)
+        increment_considered_count(all_locations_weighted)
         all_locations_weighted.pop((index_owner_state, pickup_index))
 
         # Place a hint for the new item

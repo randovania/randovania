@@ -171,22 +171,3 @@ def get_pickups_that_solves_unreachable(pickups_left: list[PickupEntry],
 
     return tuple(result)
 
-
-def get_pickups_with_interesting_resources(pickup_pool: list[PickupEntry],
-                                           reach: GeneratorReach,
-                                           uncollected_resource_nodes: list[ResourceNode],
-                                           ) -> PickupCombinations:
-    """Old logic. Given pickup list and a reach, gets these that gives at least one of the interesting resources."""
-    interesting_resources = interesting_resources_for_reach(reach)
-    progression_pickups = []
-
-    for pickup in pickup_pool:
-        if pickup in progression_pickups:
-            continue
-        if _resources_in_pickup(pickup, reach.state.resources).intersection(interesting_resources):
-            progression_pickups.append(pickup)
-
-    return tuple(
-        (pickup,)
-        for pickup in progression_pickups
-    )
