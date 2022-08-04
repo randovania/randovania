@@ -183,25 +183,19 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Total Recharge Station South
-      Before Cataris - First Thermal Device
-  > Door to Total Recharge Station South (doorpowerpower_019)
+  > Start Point
       Trivial
-  > Dock to Above Z-57 Fight
-      After Cataris - First Thermal Device
-  > Tunnel to Above Z-57 Fight
-      Morph Ball
 
-> Door to Total Recharge Station South (doorpowerpower_004); Heals? False
+> Door to Total Recharge Station South (Thermal Device); Heals? False
   * Layers: default
-  * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (doorpowerpower_004)
+  * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (Thermal Device)
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Thermal Device - deviceheat
+  > Event - First Thermal Device
       Trivial
 
 > Dock to Total Recharge Station South; Heals? False
@@ -213,29 +207,29 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Navigation Station Southeast
-      Before Cataris - First Thermal Device
+  > Front of Thermal Door
+      Trivial
 
-> Door to Total Recharge Station South (doorpowerpower_019); Heals? False
+> Door to Total Recharge Station South (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (doorpowerpower_019)
+  * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (Top)
   * Extra - actor_name: doorpowerpower_019
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Navigation Station Southeast
+  > Start Point
       Trivial
 
-> Event - Thermal Device - deviceheat; Heals? False
+> Event - First Thermal Device; Heals? False
   * Layers: default
   * Event Cataris - First Thermal Device
   * Extra - actor_name: deviceheat
   * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_005
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
-  > Door to Total Recharge Station South (doorpowerpower_004)
+  > Door to Total Recharge Station South (Thermal Device)
       Trivial
 
 > Start Point; Heals? False; Spawn Point
@@ -244,18 +238,33 @@ Extra - asset_id: collision_camera_004
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station Southeast
       Trivial
+  > Door to Total Recharge Station South (Top)
+      Trivial
+  > Dock to Above Z-57 Fight
+      After Cataris - First Thermal Device
+  > Tunnel to Above Z-57 Fight
+      Morph Ball and After Cataris - First Thermal Device
+  > Front of Thermal Door
+      Trivial
 
 > Dock to Above Z-57 Fight; Heals? False
   * Layers: default
   * Open Passage to Above Z-57 Fight/Dock to Thermal Device Room South
-  > Door to Navigation Station Southeast
+  > Start Point
       After Cataris - First Thermal Device
 
 > Tunnel to Above Z-57 Fight; Heals? False
   * Layers: default
   * Morph Ball Launcher to Above Z-57 Fight/Dock from Thermal Device Room South
-  > Door to Navigation Station Southeast
+  > Start Point
       Morph Ball
+
+> Front of Thermal Door; Heals? False
+  * Layers: default
+  > Dock to Total Recharge Station South
+      Before Cataris - First Thermal Device
+  > Start Point
+      Trivial
 
 ----------------
 Artaria Transport Access
@@ -305,18 +314,16 @@ Total Recharge Station South
 Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': -7900.0, 'y2': -5900.0}
 Extra - polygon: [[8500.0, -5900.0], [6400.0, -5900.0], [6400.0, -7900.0], [8500.0, -7900.0]]
 Extra - asset_id: collision_camera_007
-> Door to Thermal Device Room South (doorpowerpower_004); Heals? False
+> Door to Thermal Device Room South (Thermal Device); Heals? False
   * Layers: default
-  * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (doorpowerpower_004)
+  * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (Thermal Device)
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Thermal Device Room South
-      Before Cataris - First Thermal Device
-  > Tile Group (POWERBEAM)
+  > Next to Thermal Door
       Trivial
 
 > Dock to Thermal Device Room South; Heals? False
@@ -328,12 +335,12 @@ Extra - asset_id: collision_camera_007
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Thermal Device Room South (doorpowerpower_004)
-      Before Cataris - First Thermal Device
+  > Next to Thermal Door
+      Trivial
 
-> Door to Thermal Device Room South (doorpowerpower_019); Heals? False
+> Door to Thermal Device Room South (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (doorpowerpower_019)
+  * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (Top)
   * Extra - actor_name: doorpowerpower_019
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -369,15 +376,15 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Dock to Thermal Device Room South
-      Can Slide
   > Tunnel to Transport to Artaria
+      Can Slide
+  > Next to Thermal Door
       Can Slide
 
 > Tunnel to Transport to Artaria; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Transport to Artaria/Tunnel to Total Recharge Station South
-  > Door to Thermal Device Room South (doorpowerpower_019)
+  > Door to Thermal Device Room South (Top)
       After Cataris - breakablemag001
   > Event - Breakable (breakablemag001)
       Shoot Beam
@@ -385,6 +392,15 @@ Extra - asset_id: collision_camera_007
       Trivial
   > Tile Group (POWERBEAM)
       Trivial
+
+> Next to Thermal Door; Heals? False
+  * Layers: default
+  > Door to Thermal Device Room South (Thermal Device)
+      Trivial
+  > Dock to Thermal Device Room South
+      Before Cataris - First Thermal Device
+  > Tile Group (POWERBEAM)
+      Can Slide
 
 ----------------
 Above Z-57 Fight
