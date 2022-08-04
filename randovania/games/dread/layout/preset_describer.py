@@ -16,6 +16,11 @@ class DreadPresetDescriber(GamePresetDescriber):
 
         if configuration.energy_per_tank != 100:
             template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
+        
+        if configuration.linear_dps > 0 and configuration.linear_damage_runs:
+            template_strings["Difficulty"].append(f"Damage Rooms: {configuration.linear_dps} damage per second")
+        elif configuration.linear_dps <= 0 and configuration.linear_damage_runs:
+            template_strings["Difficulty"].append(f"Damage Rooms: Off")
 
         extra_message_tree = {
             "Difficulty": [
@@ -54,6 +59,9 @@ class DreadPresetDescriber(GamePresetDescriber):
                     f"Requires {configuration.artifacts.required_artifacts} Metroid DNA": True,
                     "Prefer E.M.M.I. for DNA": configuration.artifacts.prefer_emmi,
                     "Prefer major bosses for DNA": configuration.artifacts.prefer_major_bosses,
+                },
+                {
+                    "Linear Damage Run Scaling": configuration.linear_damage_runs
                 }
             ]
         }
