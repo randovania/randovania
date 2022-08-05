@@ -31,8 +31,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     damage_strictness: LayoutDamageStrictness
     pickup_model_style: PickupModelStyle
     pickup_model_data_source: PickupModelDataSource
-    multi_pickup_placement: bool
-    multi_pickup_new_weighting: bool
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
     minimum_available_locations_for_hint_placement: int = dataclasses.field(metadata={"min": 0, "max": 99})
@@ -68,5 +66,15 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
             f = getattr(self, field.name)
             if hasattr(f, "dangerous_settings"):
                 result.extend(f.dangerous_settings())
+
+        return result
+
+    def settings_incompatible_with_multiworld(self) -> list[str]:
+        result = []
+
+        for field in dataclasses.fields(self):
+            f = getattr(self, field.name)
+            if hasattr(f, "settings_incompatible_with_multiworld"):
+                result.extend(f.settings_incompatible_with_multiworld())
 
         return result

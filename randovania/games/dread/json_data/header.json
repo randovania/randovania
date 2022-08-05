@@ -1025,6 +1025,14 @@
             "HanubiaTankSpeed": {
                 "long_name": "Hanubia - Prepare Speedboost in Tank Room",
                 "extra": {}
+            },
+            "DaironStormSpeedBlocks": {
+                "long_name": "Dairon - Storm Gate Speed Blocks Destroyed",
+                "extra": {}
+            },
+            "DaironFereniaTransportSpeedBlocks": {
+                "long_name": "Dairon - Ferenia Transport Speed Blocks Destroyed",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1374,13 +1382,8 @@
                             "data": "Shoot Charge Beam"
                         },
                         {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wide",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Shoot Wide Beam"
                         }
                     ]
                 }
@@ -2399,7 +2402,7 @@
                                                         "data": {
                                                             "type": "tricks",
                                                             "name": "Knowledge",
-                                                            "amount": 3,
+                                                            "amount": 1,
                                                             "negate": false
                                                         }
                                                     },

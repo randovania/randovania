@@ -91,10 +91,6 @@ class GamePresetDescriber:
 
         if randomization_mode != RandomizationMode.FULL:
             template_strings["Item Placement"].append(f"Randomization Mode: {randomization_mode.value}")
-        if configuration.multi_pickup_placement:
-            template_strings["Item Placement"].append("Multi-pickup placement")
-            if configuration.multi_pickup_new_weighting:
-                template_strings["Item Placement"].append("New multi-pickup weighting")
 
         # Starting Items
         if random_starting_items != "0":

@@ -305,14 +305,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                 preset_manager: PresetManager, window_manager: WindowManager, options: Options,
                                 ) -> Optional["GameSessionWindow"]:
 
+        logger.debug("Creating GameSessionWindow")
         try:
             window = cls(network_client, game_connection, preset_manager, window_manager, options)
-            await window.on_game_session_meta_update(network_client.current_game_session)
-            window.update_session_actions(GameSessionActions(tuple()))
-            window.update_session_audit_log(GameSessionAuditLog(tuple()))
-            await window.on_game_connection_updated()
+            await window.on_game_session_meta_update(network_client.current_game_session_meta)
+            window.update_session_actions(network_client.current_game_session_actions)
+            window.update_session_audit_log(network_client.current_game_session_audit_log)
             window.on_server_connection_state_updated(network_client.connection_state)
             window.connect_to_events()
+            await window.on_game_connection_updated()
+
+            logger.debug("Finished creating GameSessionWindow")
 
             return window
 
@@ -508,16 +511,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         if result == QtWidgets.QDialog.Accepted:
             new_preset = VersionedPreset.with_preset(editor.create_custom_preset_with())
+
             if self._preset_manager.add_new_preset(new_preset):
                 self.refresh_row_import_preset_actions()
 
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, new_preset.as_json))
+            await self._do_import_preset(row_index, new_preset)
 
     @asyncSlot()
     @handle_network_errors
     async def _row_import_preset(self, row: RowWidget, preset: VersionedPreset):
         row_index = self.rows.index(row)
-        await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
+        await self._do_import_preset(row_index, preset)
 
     def _row_import_preset_from_file_prompt(self, row: RowWidget):
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
@@ -540,6 +544,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
 
         row_index = self.rows.index(row)
+        await self._do_import_preset(row_index, preset)
+
+    async def _do_import_preset(self, row_index: int, preset: VersionedPreset):
+        if incompatible := preset.get_preset().settings_incompatible_with_multiworld():
+            return await async_dialog.warning(
+                self, "Incompatible preset",
+                "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible),
+                QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok
+            )
+
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
 
     def _row_save_preset_to_manager(self, row: RowWidget):

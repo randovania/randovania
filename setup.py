@@ -37,7 +37,7 @@ git_hash = {repr(bytes.fromhex(version.node[1:9]))}
 
     if version.exact:
         return setuptools_scm.version.guess_next_simple_semver(
-            version.tag, retain=setuptools_scm.version.SEMVER_LEN, increment=False
+            version, retain=setuptools_scm.version.SEMVER_LEN, increment=False
         )
     else:
         if version.branch != "stable":

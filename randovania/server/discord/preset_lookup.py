@@ -75,12 +75,16 @@ async def look_for_permalinks(message: discord.Message):
             randovania_version = permalink.randovania_version
             games = [preset.game for preset in permalink.parameters.presets]
             seed_hash = permalink.seed_hash
+            error_message = None
 
         except UnsupportedPermalink as e:
             permalink = None
             randovania_version = e.randovania_version
             games = e.games
             seed_hash = e.seed_hash
+            error_message = f"\n\nPermalink incompatible with Randovania {randovania.VERSION}"
+            if e.__cause__ is not None:
+                error_message += f"\n{e.__cause__}"
 
         except (ValueError, UnsupportedPermalink):
             # TODO: handle the incorrect version permalink
@@ -118,7 +122,7 @@ async def look_for_permalinks(message: discord.Message):
                 custom_id="attach_presets_of_permalink",
             )))
         else:
-            embed.description += f"\nPermalink incompatible with Randovania {randovania.VERSION}"
+            embed.description += error_message
 
     if embed is not None:
         content = None

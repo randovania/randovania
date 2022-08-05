@@ -37,26 +37,6 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLineEdit" name="input_file_edit">
-     <property name="placeholderText">
-      <string>Path to vanilla extracted RomFS</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="input_file_button">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Select File</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="0" colspan="3">
     <layout class="QHBoxLayout" name="target_platform_layout">
      <item>
@@ -85,17 +65,20 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="0" colspan="3">
-    <widget class="QCheckBox" name="exlaunch_check">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option reduces the size of the output folder from 1.4GB to 17MB, but certain features such as map icons won't work.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="input_file_button">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
      </property>
      <property name="text">
-      <string>Reduce mod file size (?)</string>
+      <string>Select File</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0" rowspan="2" colspan="3">
+   <item row="6" column="0" rowspan="2" colspan="3">
     <widget class="QTabWidget" name="output_tab_widget">
      <property name="currentIndex">
       <number>0</number>
@@ -272,21 +255,34 @@
      </widget>
     </widget>
    </item>
-   <item row="10" column="0">
+   <item row="5" column="0" colspan="3">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="9" column="0">
     <widget class="QCheckBox" name="auto_save_spoiler_check">
      <property name="text">
       <string>Include a spoiler log on same directory</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
+   <item row="10" column="0">
     <widget class="QPushButton" name="accept_button">
      <property name="text">
       <string>Accept</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="2">
+   <item row="10" column="2">
     <widget class="QPushButton" name="cancel_button">
      <property name="text">
       <string>Cancel</string>
@@ -300,18 +296,12 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="3">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLineEdit" name="input_file_edit">
+     <property name="placeholderText">
+      <string>Path to vanilla extracted RomFS</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+    </widget>
    </item>
   </layout>
  </widget>
