@@ -11,10 +11,6 @@ from pathlib import Path
 from statistics import stdev
 from typing import Dict, Tuple, Optional, List, Iterable, Set
 
-from randovania.game_description.default_database import game_description_for
-from randovania.game_description.world.logbook_node import LogbookNode
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 
 NON_MAJOR_PROGRESSION = [
@@ -68,20 +64,26 @@ def read_json(path: Path) -> dict:
 
 _KEY_MATCH = re.compile(r"Key (\d+)")
 _ARTIFACT_MATCH = re.compile(r"Artifact of (\w+)")
+_DNA_MATCH = re.compile(r"Metroid DNA (\d+)")
 _PLAYER_MATCH = re.compile(r" for Player \d+")
+_FILTERING = [
+    (_KEY_MATCH, "Key"),
+    (_ARTIFACT_MATCH, "Artifact"),
+    (_DNA_MATCH, "Metroid DNA"),
+    (_PLAYER_MATCH, ""),
+]
 
 
 def _filter_item_name(name: str) -> str:
-    return _PLAYER_MATCH.sub("", _ARTIFACT_MATCH.sub("Artifact", _KEY_MATCH.sub("Key", name)))
+    result = name
+    for match, sub in _FILTERING:
+        result = match.sub(sub, result)
+    return result
 
 
 def accumulate_results(game_modifications: dict,
                        items: Dict[str, Dict[str, int]],
                        locations: Dict[str, Dict[str, int]],
-                       item_hints: Dict[str, Dict[str, int]],
-                       location_hints: Dict[str, Dict[str, int]],
-
-                       index_to_location: Dict[int, Tuple[str, str]],
                        major_progression_items_only: bool,
                        ):
     for world_name, world_data in game_modifications["locations"].items():
@@ -92,20 +94,6 @@ def accumulate_results(game_modifications: dict,
                 continue
             items[item_name][area_name] += 1
             locations[area_name][item_name] += 1
-
-    for logbook_asset, hint_data in game_modifications["hints"].items():
-        if hint_data["hint_type"] != "location":
-            continue
-
-        if hint_data["target"] == -1:
-            item_name = "Nothing"
-        else:
-            area_name, location_name = index_to_location[hint_data["target"]]
-            item_name = game_modifications["locations"][area_name][location_name]
-
-        item_name = _filter_item_name(item_name)
-        location_hints[logbook_asset][item_name] += 1
-        item_hints[item_name][logbook_asset] += 1
 
 
 def calculate_pickup_count(items: Dict[str, Dict[str, int]]) -> Dict[str, int]:
@@ -178,18 +166,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     items = collections.defaultdict(item_creator)
     locations = collections.defaultdict(item_creator)
-    item_hints = collections.defaultdict(item_creator)
-    location_hints = collections.defaultdict(item_creator)
     item_order = collections.defaultdict(list)
 
-    game_description = game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
-    world_list = game_description.world_list
-    index_to_location = {
-        node.pickup_index.index: (world_list.world_name_from_node(node, distinguish_dark_aether=True),
-                                  world_list.node_name(node))
-        for node in game_description.world_list.iterate_nodes()
-        if isinstance(node, PickupNode)
-    }
     progression_count_for_location = collections.defaultdict(int)
     progression_no_key_count_for_location = collections.defaultdict(int)
 
@@ -206,11 +184,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
             continue
 
         for game_modifications in seed_data["game_modifications"]:
-            accumulate_results(game_modifications,
-                               items, locations,
-                               item_hints, location_hints,
-                               index_to_location,
-                               major_progression_items_only)
+            accumulate_results(game_modifications, items, locations, major_progression_items_only)
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
@@ -267,8 +241,6 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     items = sort_by_contents(items)
     locations = sort_by_contents(locations)
-    item_hints = sort_by_contents(item_hints)
-    location_hints = sort_by_contents(location_hints)
 
     location_progression_count = {
         location: value
@@ -280,7 +252,6 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         for location, value in sorted(progression_no_key_count_for_location.items(),
                                       key=lambda t: t[1], reverse=True)
     }
-
 
     stddev_by_location = {
         location: stddev
@@ -296,7 +267,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
             stddev_count += 1
         except:
             pass
-    accumulated_stddev /= stddev_count*2 # div by 2 because +1 deviance at one location always implies +1 everywhere else 
+    accumulated_stddev /= stddev_count * 2  # div by 2 because +1 deviance at one location always implies +1 everywhere else
 
     ## Accumulate deviances for all locations
 
@@ -345,8 +316,6 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         "stddev_by_location": stddev_by_location,
         "items": items,
         "locations": locations,
-        "item_hints": item_hints,
-        "location_hints": location_hints,
         "location_progression_count": location_progression_count,
         "location_progression_no_key_count": location_progression_no_key_count,
         "item_order": {

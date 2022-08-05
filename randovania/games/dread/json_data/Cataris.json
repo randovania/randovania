@@ -811,43 +811,16 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Total Recharge Station South": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:deviceheat",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        "Door to Total Recharge Station South (doorpowerpower_019)": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Dock to Above Z-57 Fight": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:deviceheat",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to Above Z-57 Fight": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
-                "Door to Total Recharge Station South (doorpowerpower_004)": {
+                "Door to Total Recharge Station South (Thermal Device)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -871,13 +844,13 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Total Recharge Station South",
-                        "node_name": "Door to Thermal Device Room South (doorpowerpower_004)"
+                        "node_name": "Door to Thermal Device Room South (Thermal Device)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Thermal Device - deviceheat": {
+                        "Event - First Thermal Device": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -916,18 +889,16 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Navigation Station Southeast": {
-                            "type": "resource",
+                        "Front of Thermal Door": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:deviceheat",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
                 },
-                "Door to Total Recharge Station South (doorpowerpower_019)": {
+                "Door to Total Recharge Station South (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -951,13 +922,13 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Total Recharge Station South",
-                        "node_name": "Door to Thermal Device Room South (doorpowerpower_019)"
+                        "node_name": "Door to Thermal Device Room South (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Navigation Station Southeast": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -966,12 +937,12 @@
                         }
                     }
                 },
-                "Event - Thermal Device - deviceheat": {
+                "Event - First Thermal Device": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 5850.0,
-                        "y": -7200.0,
+                        "x": 5978.490028490029,
+                        "y": -7144.681861348528,
                         "z": 0.0
                     },
                     "description": "",
@@ -986,7 +957,7 @@
                     },
                     "event_name": "s020_magma:default:deviceheat",
                     "connections": {
-                        "Door to Total Recharge Station South (doorpowerpower_004)": {
+                        "Door to Total Recharge Station South (Thermal Device)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1018,6 +989,55 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Total Recharge Station South (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Above Z-57 Fight": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s020_magma:default:deviceheat",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Above Z-57 Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Front of Thermal Door": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1044,7 +1064,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Navigation Station Southeast": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1078,13 +1098,45 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Navigation Station Southeast": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Front of Thermal Door": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6091.500474833809,
+                        "y": -7756.267806267806,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Dock to Total Recharge Station South": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s020_magma:default:deviceheat",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1279,7 +1331,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to Thermal Device Room South (doorpowerpower_004)": {
+                "Door to Thermal Device Room South (Thermal Device)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1303,22 +1355,13 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Thermal Device Room South",
-                        "node_name": "Door to Total Recharge Station South (doorpowerpower_004)"
+                        "node_name": "Door to Total Recharge Station South (Thermal Device)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Thermal Device Room South": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:deviceheat",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        "Tile Group (POWERBEAM)": {
+                        "Next to Thermal Door": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1357,18 +1400,16 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Thermal Device Room South (doorpowerpower_004)": {
-                            "type": "resource",
+                        "Next to Thermal Door": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:deviceheat",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
                 },
-                "Door to Thermal Device Room South (doorpowerpower_019)": {
+                "Door to Thermal Device Room South (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1392,7 +1433,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Thermal Device Room South",
-                        "node_name": "Door to Total Recharge Station South (doorpowerpower_019)"
+                        "node_name": "Door to Total Recharge Station South (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -1494,11 +1535,11 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Thermal Device Room South": {
+                        "Tunnel to Transport to Artaria": {
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Tunnel to Transport to Artaria": {
+                        "Next to Thermal Door": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -1527,7 +1568,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Thermal Device Room South (doorpowerpower_019)": {
+                        "Door to Thermal Device Room South (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1553,6 +1594,42 @@
                                 "comment": null,
                                 "items": []
                             }
+                        }
+                    }
+                },
+                "Next to Thermal Door": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6708.784425451092,
+                        "y": -7667.806267806268,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Thermal Device Room South (Thermal Device)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Thermal Device Room South": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s020_magma:default:deviceheat",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 }

@@ -28,9 +28,12 @@ def print_retcon_loop_start(game: GameDescription,
             extra = ""
 
         print("\n===============================")
-        print("\n>>> Player {}: From {}, {} open pickup indices, {} open events{}".format(
+        print(("\n>>> Player {}: From {}, {} reachable nodes, {} safe nodes, "
+               "{} open pickup indices, {} open events{}").format(
             player_index,
             game.world_list.node_name(reach.state.node, with_world=True),
+            sum(1 for n in reach.nodes if reach.is_reachable_node(n)),
+            sum(1 for n in reach.nodes if reach.is_safe_node(n)),
             len(current_uncollected.indices),
             len(current_uncollected.events),
             extra
