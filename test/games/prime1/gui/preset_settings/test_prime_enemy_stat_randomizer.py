@@ -9,7 +9,7 @@ from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer imp
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.games.game import RandovaniaGame
 
-def test_on_preset_changed(skip_qtbot, preset_manager, game):
+def test_on_preset_changed(skip_qtbot, preset_manager):
     #Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
     preset = dataclasses.replace(base,
