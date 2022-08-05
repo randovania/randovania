@@ -641,7 +641,6 @@ def _migrate_v32(preset: dict) -> dict:
     }
     return preset
 
-
 def _migrate_v33(preset: dict) -> dict:
     if preset["game"] == "dread":
         preset["configuration"].pop("extra_pickups_for_bosses")
@@ -650,9 +649,8 @@ def _migrate_v33(preset: dict) -> dict:
             "prefer_major_bosses": True,
             "required_artifacts": 0,
         }
-
+        
     return preset
-
 
 def _migrate_v34(preset: dict) -> dict:
     preset["configuration"].pop("multi_pickup_placement")
