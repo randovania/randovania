@@ -178,7 +178,7 @@ def create_dread_artifact(artifact_number: int,
         progression=((resource_database.get_item(f"Artifact{artifact_number+1}"), 1),),
         model=PickupModel(
             game=resource_database.game_enum,
-            name="rando_artifact"
+            name=f"DNA_{artifact_number + 1}"
         ),
         item_category=DREAD_ARTIFACT_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
