@@ -661,18 +661,9 @@ def _migrate_v34(preset: dict) -> dict:
     return preset
 
 def _migrate_v35(preset: dict) -> dict:
-    if preset["game"] == "prime1":
-        preset["configuration"]["enemy_rando_range_scale_low"] = 1.0
-        preset["configuration"]["enemy_rando_range_scale_high"] = 1.0
-        preset["configuration"]["enemy_rando_range_health_low"] = 1.0
-        preset["configuration"]["enemy_rando_range_health_high"] = 1.0
-        preset["configuration"]["enemy_rando_range_speed_low"] = 1.0
-        preset["configuration"]["enemy_rando_range_speed_high"] = 1.0
-        preset["configuration"]["enemy_rando_range_damage_low"] = 1.0
-        preset["configuration"]["enemy_rando_range_damage_high"] = 1.0
-        preset["configuration"]["enemy_rando_range_knockback_low"] = 1.0
-        preset["configuration"]["enemy_rando_range_knockback_high"] = 1.0
-        preset["configuration"]["enemy_rando_diff_xyz"] = False
+    if preset["game"] == "dread":
+        preset["configuration"]["linear_damage_runs"] = False
+        preset["configuration"]["linear_dps"] = 20
     return preset
 
 def _migrate_v36(preset: dict) -> dict:
