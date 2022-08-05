@@ -1,6 +1,5 @@
 from unittest.mock import MagicMock
 
-from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -19,7 +18,9 @@ def test_preset_editor_tabs_for(skip_qtbot, game_enum: RandovaniaGame, preset_ma
 
     for it in tabs:
         assert issubclass(it, PresetTab)
-        skip_qtbot.addWidget(it(editor, game, window_manager))
+        tab = it(editor, game, window_manager)
+        tab.on_preset_changed(preset.get_preset())
+        skip_qtbot.addWidget(tab)
 
     # Assert
     assert len(tabs) >= 3
