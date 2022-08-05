@@ -56,7 +56,7 @@ class PrimePresetDescriber(GamePresetDescriber):
         def different_xyz_randomization(diff_xyz):
             if enemy_rando_range_scale is None:
                 return None
-            elif diff_xyz == True:
+            elif diff_xyz:
                 return "Enemies will be stretched randomly"
         
         enemy_rando_range_scale = attribute_in_range([configuration.enemy_rando_range_scale_low, configuration.enemy_rando_range_scale_high], "Size")
