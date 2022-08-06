@@ -19,33 +19,9 @@ logger = logging.getLogger(__name__)
 def display_exception(val: Exception):
     if not isinstance(val, KeyboardInterrupt):
         logging.exception("unhandled exception", exc_info=val)
-        box = QtWidgets.QMessageBox(
-            QtWidgets.QMessageBox.Critical,
-            "An exception was raised",
-            ("An unhandled Exception occurred:\n{}\n\n"
-             "When reporting, make sure to paste the entire contents of the following box."
-             "\nIt has already be copied to your clipboard."
-             ).format(val),
-            QtWidgets.QMessageBox.Ok,
-        )
-        from randovania.gui.lib import common_qt_lib
-        common_qt_lib.set_default_window_icon(box)
-        detailed_exception = "".join(traceback.format_exception(val))
-        box.setDetailedText(detailed_exception)
 
-        common_qt_lib.set_clipboard(detailed_exception)
-
-        # Expand the detailed text
-        for button in box.buttons():
-            if box.buttonRole(button) == QtWidgets.QMessageBox.ActionRole:
-                button.click()
-                break
-
-        box_layout: QtWidgets.QGridLayout = box.layout()
-        box_layout.addItem(
-            QtWidgets.QSpacerItem(600, 0, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding),
-            box_layout.rowCount(), 0, 1, box_layout.columnCount(),
-        )
+        from randovania.gui.lib import error_message_box
+        box = error_message_box.create_box_for_exception(val)
         box.exec_()
 
 
