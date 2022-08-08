@@ -27,18 +27,30 @@ def describe_artifacts(artifacts: DreadArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
+def _format_environmental_damage(configuration: DreadConfiguration):
+    def format_dmg(value: int | None):
+        if value is None:
+            return "Unmodified"
+        elif value == 0:
+            return "Removed"
+        else:
+            return f"Constant {value} dmg/s"
+        pass
+
+    return [
+        {f"{name}: {format_dmg(dmg)}": True}
+        for name, dmg in [("Heat", configuration.constant_heat_damage),
+                          ("Cold", configuration.constant_cold_damage),
+                          ("Lava", configuration.constant_lava_damage)]
+    ]
+
+
 class DreadPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, DreadConfiguration)
 
         major_items = configuration.major_items_configuration
         template_strings = super().format_params(configuration)
-
-        
-        if configuration.linear_dps > 0 and configuration.linear_damage_runs:
-            template_strings["Difficulty"].append(f"Damage Rooms: {configuration.linear_dps} damage per second")
-        elif configuration.linear_dps <= 0 and configuration.linear_damage_runs:
-            template_strings["Difficulty"].append(f"Damage Rooms: Off")
 
         extra_message_tree = {
             "Difficulty": [
@@ -77,10 +89,8 @@ class DreadPresetDescriber(GamePresetDescriber):
                 {
                     "X Starts Released": configuration.x_starts_released,
                 },
-                {
-                    "Linear Damage Run Scaling": configuration.linear_damage_runs
-                }
-            ]
+            ],
+            "Environmental Damage": _format_environmental_damage(configuration),
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 
