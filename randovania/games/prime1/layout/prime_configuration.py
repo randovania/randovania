@@ -100,6 +100,13 @@ class PrimeConfiguration(BaseConfiguration):
         if self.allow_underwater_movement_without_gravity:
             result.append("Dangerous Gravity Suit Logic")
 
+        if any(v != 1.0 for v in [self.enemy_rando_range_scale_low, self.enemy_rando_range_scale_high,
+                                  self.enemy_rando_range_health_low, self.enemy_rando_range_health_high,
+                                  self.enemy_rando_range_speed_low, self.enemy_rando_range_speed_high,
+                                  self.enemy_rando_range_damage_low, self.enemy_rando_range_damage_high,
+                                  self.enemy_rando_range_knockback_low, self.enemy_rando_range_knockback_high]):
+            result.append("Dangerous Random Enemy Attributes")
+
         return result
 
     def active_layers(self) -> set[str]:

@@ -50,7 +50,6 @@ class PrimePresetDescriber(GamePresetDescriber):
             elif rand_range[0] > rand_range[1]:
                 rand_range = (rand_range[1], rand_range[0])
 
-            #return "Random " + attribute + " within range " + str(rand_range[0]) + " - " + str(rand_range[1])
             return "Random {0} within range {1} - {2}".format(attribute, rand_range[0], rand_range[1])
 
         def different_xyz_randomization(diff_xyz):
@@ -65,7 +64,9 @@ class PrimePresetDescriber(GamePresetDescriber):
         enemy_rando_range_damage = attribute_in_range([configuration.enemy_rando_range_damage_low, configuration.enemy_rando_range_damage_high], "Damage")
         enemy_rando_range_knockback = attribute_in_range([configuration.enemy_rando_range_knockback_low, configuration.enemy_rando_range_knockback_high], "Knockback")
         enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_rando_diff_xyz)
-
+        #if enemy_rando_range_scale != None:
+            #configuration.random_boss_sizes = False
+            #setattr(configuration, "random_boss_sizes", False)
         extra_message_tree = {
             "Difficulty": [
                 {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},

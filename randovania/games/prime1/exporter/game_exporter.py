@@ -219,6 +219,7 @@ class PrimeGameExporter(GameExporter):
                                   random_speed_min, random_speed_max,
                                   random_damage_min, random_damage_max,
                                   random_knockback_min, random_knockback_max]):
+
             PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_scale_min, random_scale_max, random_health_min,
-                                                              random_health_max, random_speed_min, random_speed_max, random_damage_min,
-                                                              random_damage_max, random_knockback_min, random_knockback_max, diff_XYZ) 
+                                                            random_health_max, random_speed_min, random_speed_max, random_damage_min,
+                                                            random_damage_max, random_knockback_min, random_knockback_max, diff_XYZ) 
