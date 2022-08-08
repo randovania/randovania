@@ -152,8 +152,6 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_def: None
   > Door to Purple Drapes
       Trivial
-  > Pickup (Energy Tank)
-      Lay Bomb
   > Tile Group (POWERBEAM)
       Trivial
   > Tile Group (BOMB) 1
@@ -195,7 +193,7 @@ Extra - asset_id: collision_camera_003
   > Door to Gyroscope Room
       Trivial
   > Event - Elun - Ammo Recharge Room Blob
-      Wave Beam
+      Diffusion Beam or Wave Beam
   > Ammo Recharge
       Trivial
 
@@ -286,6 +284,8 @@ Extra - asset_id: collision_camera_003
 > Dock from Purple Drapes; Heals? False
   * Layers: default
   * Blocked Passage to Purple Drapes/Tunnel to Ammo Recharge Station
+  > Event - Elun - Ammo Recharge Room Blob
+      Lay Bomb
   > Event - Release X
       Trivial
 
@@ -519,7 +519,7 @@ Extra - asset_id: collision_camera_007
   > Door to Chozo Soldier Arena
       All of the following:
           Can Slide
-          Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
+          Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Simple IBJ
   > Tile Group (BOMB)
       Morph Ball
 
@@ -585,7 +585,9 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Gyroscope Room
-      Ballspark
+      Any of the following:
+          Ballspark
+          Movement (Beginner) and Lay Cross Comb
   > Tunnel to Bottom Morph Launcher
       Morph Ball
 
