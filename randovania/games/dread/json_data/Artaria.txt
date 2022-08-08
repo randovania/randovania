@@ -241,7 +241,11 @@ Extra - asset_id: collision_camera_002
   > Door to Navigation Station South
       Any of the following:
           Simple IBJ or Use Spin Boost
-          Speed Booster and Can Slide
+          All of the following:
+              Speed Booster
+              Any of the following:
+                  Can Slide
+                  Disabled Door Lock Randomizer and Open Charge Door
   > Tunnel to Melee Tutorial Room
       Trivial
 
@@ -287,6 +291,8 @@ Extra - asset_id: collision_camera_003
       Trivial
   > West of Blob
       Trivial
+  > Near Missile Tank 1
+      Speed Booster and Disabled Door Lock Randomizer
 
 > Door to Early Cloak Room; Heals? False
   * Layers: default
@@ -636,6 +642,7 @@ Extra - asset_id: collision_camera_005
           All of the following:
               Walljump (Beginner)
               Flash Shift or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -688,7 +695,8 @@ Extra - asset_id: collision_camera_006
           Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
   > Door to EMMI Zone Ballspark Hallway
       Any of the following:
-          Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift or Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
           All of the following:
               # Enemy that you freeze only spawns after White EMMI is defeated.
               After Artaria - Central Unit and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
@@ -1873,6 +1881,7 @@ Extra - asset_id: collision_camera_016
           Any of the following:
               Flash Shift or Use Spin Boost
               After Elun - Release X Parasites and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
+              Speed Booster and Disabled Door Lock Randomizer
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -2255,7 +2264,7 @@ Extra - asset_id: collision_camera_022
           Morph Ball
           Any of the following:
               Simple IBJ
-              Speed Booster and Open Charge Door
+              Speed Booster and Disabled Door Lock Randomizer and Open Charge Door
               Movement (Intermediate) and Use Spin Boost
 
 > Door to Thermal Device; Heals? False
@@ -2386,7 +2395,7 @@ Extra - asset_id: collision_camera_023_B
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
               Any of the following:
                   Spider Magnet or Space Jump
-                  Speed Booster and Movement (Beginner) and Open Charge Door
+                  Speed Booster and Movement (Beginner) and Disabled Door Lock Randomizer and Open Charge Door
                   Grapple Beam and Movement (Intermediate)
 
 > Pickup (Missile Tank); Heals? False
@@ -4572,9 +4581,10 @@ Extra - asset_id: collision_camera_071
   * Extra - right_shield_def: None
   > Door to Teleport to Dairon (Top)
       Any of the following:
-          Flash Shift or Space Jump or Speed Booster or Simple IBJ
+          Flash Shift or Space Jump or Simple IBJ
           Walljump (Beginner) and Use Spin Boost
           Morph Ball and Single-wall Wall Jump (Intermediate)
+          Speed Booster and Disabled Door Lock Randomizer
   > Door to Teleport to Dairon (Bottom)
       Trivial
 
@@ -4830,8 +4840,9 @@ Extra - asset_id: collision_camera_077
   * Extra - right_shield_def: None
   > Elevator to Cataris - Transport to Artaria
       Any of the following:
-          Spider Magnet or Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
+          Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
           Grapple Beam and Movement (Beginner)
+          Speed Booster and Disabled Door Lock Randomizer
 
 > Elevator to Cataris - Transport to Artaria; Heals? False; Spawn Point
   * Layers: default
@@ -4942,7 +4953,13 @@ Extra - asset_id: collision_camera_079
           Spider Magnet or Simple IBJ or Use Spin Boost
           Morph Ball and Damage Boost (Beginner)
           Missiles ≥ 2 and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
-          Speed Booster and Movement (Intermediate)
+          All of the following:
+              Speed Booster
+              Any of the following:
+                  Morph Ball
+                  All of the following:
+                      # Avoid being pushed through the cloak door
+                      Movement (Intermediate) and Disabled Door Lock Randomizer
           All of the following:
               Flash Shift
               Grapple Beam or Walljump (Beginner)
