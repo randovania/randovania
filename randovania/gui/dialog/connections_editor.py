@@ -189,7 +189,7 @@ class ResourceRequirementEditor:
         # Negate flag
         if resource_type == ResourceType.ITEM:
             negate: bool = self.negate_combo.currentData()
-        elif resource_type == ResourceType.EVENT:
+        elif resource_type in {ResourceType.EVENT, ResourceType.MISC}:
             negate = self.negate_check.isChecked()
         else:
             negate = False
