@@ -26,7 +26,7 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="root_layout">
     <item>
      <widget class="QTabWidget" name="main_tab_widget">
       <property name="currentIndex">
@@ -262,13 +262,6 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QPushButton" name="browse_sessions_button">
-             <property name="text">
-              <string>Browse for a multiworld session</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="import_permalink_label">
              <property name="text">
@@ -282,7 +275,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="import_game_file_label">
              <property name="text">
-              <string>If they've shared a spoiler file instead, you can import it directly. This skips the generation step.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If they've shared a spoiler file instead, you can import it directly. This skips the generation step. You can also drag and drop the file into Randovania.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -319,16 +312,6 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="browse_sessions_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Joining a multiworld that someone else created? Browse all existing sessions here!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
@@ -351,34 +334,10 @@
            <string>Creating a new game</string>
           </property>
           <layout class="QGridLayout" name="play_new_permalink_layout">
-           <item row="2" column="0">
-            <widget class="QLabel" name="host_new_game_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Want to play multiworld?&lt;/p&gt;&lt;p&gt;Host a new online session and invite people!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="create_new_seed_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Playing alone? Hosting a race?&lt;/p&gt;&lt;p&gt;Create a new game here and then share the permalink!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QPushButton" name="create_new_seed_button">
-             <property name="text">
-              <string>Create new game</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="host_new_game_button">
-             <property name="text">
-              <string>Host new multiworld session</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Playing alone? Hosting a race?&lt;/p&gt;&lt;p&gt;Select which game you want to randomize!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -400,19 +359,69 @@
         </item>
        </layout>
       </widget>
-      <widget class="GenerateGameWidget" name="tab_create_seed">
+      <widget class="QWidget" name="tab_multiworld">
        <attribute name="title">
-        <string>Generate Game</string>
+        <string>Multiworld</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="multiworld_intro_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TODO: add an introduction to Multiworld and how to play.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="multiworld_line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="browse_sessions_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Joining a multiworld that someone else created? Browse all existing sessions here!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="browse_sessions_button">
+          <property name="text">
+           <string>Browse for a multiworld session</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="host_new_game_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Want to play multiworld?&lt;/p&gt;&lt;p&gt;Host a new online session and invite people!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="host_new_game_button">
+          <property name="text">
+           <string>Host new multiworld session</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="GamesHelpWidget" name="games_tab">
+       <attribute name="title">
+        <string>Games</string>
        </attribute>
       </widget>
       <widget class="RandovaniaHelpWidget" name="help_tab">
        <attribute name="title">
         <string>Randovania Help</string>
-       </attribute>
-      </widget>
-      <widget class="GamesHelpWidget" name="games_tab">
-       <attribute name="title">
-        <string>Games</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="about_tab">
@@ -444,6 +453,110 @@
         </item>
        </layout>
       </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="progress_box">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Progress</string>
+      </property>
+      <layout class="QGridLayout" name="progress_box_layout">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>4</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>4</number>
+       </property>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="stop_background_process_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>75</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Stop</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QProgressBar" name="progress_bar">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="value">
+          <number>0</number>
+         </property>
+         <property name="textVisible">
+          <bool>false</bool>
+         </property>
+         <property name="invertedAppearance">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="progress_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>7</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -587,12 +700,6 @@
    <class>GamesHelpWidget</class>
    <extends>QTabWidget</extends>
    <header>randovania/gui/widgets/games_help_widget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>GenerateGameWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

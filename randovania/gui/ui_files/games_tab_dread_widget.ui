@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DreadHelpWidget</class>
- <widget class="QTabWidget" name="DreadHelpWidget">
+ <class>DreadGameTabWidget</class>
+ <widget class="QTabWidget" name="DreadGameTabWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,8 +11,34 @@
    </rect>
   </property>
   <property name="currentIndex">
-   <number>1</number>
+   <number>0</number>
   </property>
+  <widget class="QWidget" name="tab_intro">
+   <attribute name="title">
+    <string>Introduction</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="intro_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TODO: Introduce the game&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="quick_generate_button">
+      <property name="text">
+       <string>Quick generate</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="GenerateGameWidget" name="tab_generate_game">
+   <attribute name="title">
+    <string>Play</string>
+   </attribute>
+  </widget>
   <widget class="QWidget" name="faq_tab">
    <attribute name="title">
     <string>FAQ</string>
@@ -41,7 +67,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>370</height>
+         <height>371</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -92,7 +118,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>370</height>
+         <height>371</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="differences_scroll_layout_3">
@@ -146,7 +172,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>370</height>
+         <height>371</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -203,7 +229,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>370</height>
+         <height>371</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -287,7 +313,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>370</height>
+         <height>371</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_scroll_layout">
@@ -325,6 +351,14 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GenerateGameWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

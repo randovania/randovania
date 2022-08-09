@@ -67,6 +67,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _data_visualizer: QtWidgets.QWidget | None = None
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
+    _play_game_buttons: dict[RandovaniaGame, QtWidgets.QPushButton]
     GameDetailsSignal = Signal(LayoutDescription)
 
     InitPostShowSignal = Signal()
@@ -102,6 +103,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         self._preset_manager = preset_manager
         self.network_client = network_client
+        self._play_game_buttons = {}
 
         if preview:
             debug.set_level(2)
@@ -122,14 +124,24 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
         self.browse_racetime_button.clicked.connect(self._browse_racetime)
-        self.create_new_seed_button.clicked.connect(
-            lambda: self.main_tab_widget.setCurrentWidget(self.tab_create_seed))
+
+        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.progress_update_signal.connect(self.update_progress)
+        self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
         # Menu Bar
         self.game_menus = []
         self.menu_action_edits = []
 
         for game in RandovaniaGame.sorted_all_games():
+            # Play game buttons
+            button = QtWidgets.QPushButton(self.play_new_game_group)
+            button.setText(game.long_name)
+            button.clicked.connect(partial(self._play_game, game))
+            button.setVisible(game.data.development_state.can_view(False))
+            self.play_new_permalink_layout.addWidget(button)
+            self._play_game_buttons[game] = button
+
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
@@ -170,6 +182,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
         self._options = options
+        self.games_tab.set_main_window(self)
 
         self.main_tab_widget.setCurrentIndex(0)
 
@@ -204,11 +217,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 self.open_game_details(LayoutDescription.from_file(path))
                 return
 
-            elif path.suffix == f".{VersionedPreset.file_extension()}":
-                self.main_tab_widget.setCurrentWidget(self.tab_create_seed)
-                # TODO: find the correct tab
-                self.tab_create_seed.import_preset_file(path)
-                return
+            # FIXME: re-implement importing presets
+            # elif path.suffix == f".{VersionedPreset.file_extension()}":
+            #     self.main_tab_widget.setCurrentWidget(self.tab_create_seed)
+            #     self.tab_create_seed.import_preset_file(path)
+            #     return
 
     def showEvent(self, event: QtGui.QShowEvent):
         self.InitPostShowSignal.emit()
@@ -221,13 +234,20 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             return
         self._experimental_games_visible = self.menu_action_experimental_games.isChecked()
 
+        for game, button in self._play_game_buttons.items():
+            button.setVisible(game.data.development_state.can_view(self._experimental_games_visible))
+
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
 
         for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits):
             game: RandovaniaGame = game_menu.game
-            if game.data.development_state.can_view(self.menu_action_experimental_games.isChecked()):
+            if game.data.development_state.can_view(self._experimental_games_visible):
                 self.menu_open.addAction(game_menu.menuAction())
+
+    def _play_game(self, game: RandovaniaGame):
+        self.main_tab_widget.setCurrentWidget(self.games_tab)
+        self.games_tab.set_current_game(game)
 
     # Delayed Initialization
     @asyncSlot()
@@ -243,9 +263,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         logging.info("Creating OnlineInteractions...")
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
-
-        logging.info("Running GenerateSeedTab.setup_ui")
-        self.tab_create_seed.setup_ui(self, self, self._options)
 
         logging.info("Will update for modified options")
         with self._options:
@@ -378,7 +395,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_experimental_games.setChecked(self._options.experimental_games)
         self.refresh_game_list()
 
-        self.tab_create_seed.on_options_changed(self._options)
+        self.games_tab.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
 
     # Menu Actions
@@ -473,6 +490,21 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                     trick_menu.addAction(difficulty_action)
                     difficulty_action.triggered.connect(
                         functools.partial(self._open_trick_details_popup, game, trick, trick_level))
+
+    # Background Update
+
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setEnabled(not value)
+
+    def update_progress(self, message: str, percentage: int):
+        self.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.progress_bar.setRange(0, 100)
+            self.progress_bar.setValue(percentage)
+        else:
+            self.progress_bar.setRange(0, 0)
 
     # ==========
 
