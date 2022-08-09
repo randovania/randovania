@@ -11,7 +11,7 @@ def test_migrate_to_version_missing_migration():
     with pytest.raises(migration_lib.UnsupportedVersion,
                        match=("Requested a migration from version 1, but it's no longer supported. "
                               f"You can try using an older Randovania version.")):
-        migration_lib.migrate_to_version(data, 2, {})
+        migration_lib.apply_migrations(data, [None])
 
 
 def test_migrate_to_version_data_too_new():
@@ -20,6 +20,6 @@ def test_migrate_to_version_data_too_new():
     }
 
     with pytest.raises(migration_lib.UnsupportedVersion,
-                       match=("Requested a migration up to version 2, but got version 3. "
-                              "This file was created using a newer Randovania version.")):
-        migration_lib.migrate_to_version(data, 2, {})
+                       match=("Found version 3, but only 2 is known. "
+                              f"This file was created using a newer Randovania version.")):
+        migration_lib.apply_migrations(data, [None])
