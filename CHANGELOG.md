@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The multi-pickup placement, using the new weighting, is now the default mode. The old behavior has been removed.
 - Changed: Error messages when a permalink is incompatible have been improved with more details.
+- Fixed: Exceptions when exporting a game now use the improved error dialog.
+- Fixed: Gracefully handle unsupported old versions of the preferences file.
 
 ### Cave Story
 
