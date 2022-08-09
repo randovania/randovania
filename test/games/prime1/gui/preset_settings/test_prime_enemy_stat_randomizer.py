@@ -18,7 +18,35 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     editor = PresetEditor(preset)
     window = PresetEnemyAttributeRandomizer(editor)
 
+    window.range_scale_low.setValue(1.2)
+    window.range_scale_high.setValue(1.7)
+    
+    window.range_health_low.setValue(0.12)
+    window.range_health_high.setValue(1.272)
+    
+    window.range_speed_low.setValue(3.292)
+    window.range_speed_high.setValue(7.2)
+    
+    window.range_damage_low.setValue(9.2)
+    window.range_damage_high.setValue(99.21)
+    
+    window.range_knockback_low.setValue(0.2)
+    window.range_knockback_high.setValue(0.5147)
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())
 
-    
+    # Assert
+    assert editor.configuration.enemy_rando_range_scale_low == window.range_scale_low.value()
+    assert editor.configuration.enemy_rando_range_scale_high == window.range_scale_high.value()
+
+    assert editor.configuration.enemy_rando_range_health_low == window.range_health_low.value()
+    assert editor.configuration.enemy_rando_range_health_high == window.range_health_high.value()
+
+    assert editor.configuration.enemy_rando_range_speed_low == window.range_speed_low.value()
+    assert editor.configuration.enemy_rando_range_speed_high == window.range_speed_high.value()
+
+    assert editor.configuration.enemy_rando_range_damage_low == window.range_damage_low.value()
+    assert editor.configuration.enemy_rando_range_damage_high == window.range_damage_high.value()
+
+    assert editor.configuration.enemy_rando_range_knockback_low == window.range_knockback_low.value()
+    assert editor.configuration.enemy_rando_range_knockback_high == window.range_knockback_high.value()

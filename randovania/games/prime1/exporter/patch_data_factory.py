@@ -796,7 +796,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         seed = self.description.get_seed_for_player(self.players_config.player_index)
 
         boss_sizes = None
-        if self.configuration.random_boss_sizes:
+        if self.configuration.random_boss_sizes and all(v == 1.0 for v in [self.configuration.enemy_rando_range_scale_low, self.configuration.enemy_rando_range_scale_high]):
             def get_random_size(minimum, maximum):
                 if self.rng.choice([True, False]):
                     temp = [self.rng.uniform(minimum, 1.0), self.rng.uniform(minimum, 1.0)]
@@ -822,6 +822,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "platedBeetle": get_random_size(0.05, 6.0),
                 "cloakedDrone": get_random_size(0.05, 6.0),  # only scales width (lmao)
             }
+            print("YO")
 
         return {
             "seed": seed,
