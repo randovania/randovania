@@ -30,7 +30,7 @@ Extra - asset_id: collision_camera_000
   > Event - Missile Tank Blob through wall (breakablemag002)
       Shoot Diffusion or Wave
   > Mid-Level
-      Simple IBJ or Use Spin Boost
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -107,7 +107,7 @@ Extra - asset_id: collision_camera_000
   > Door to Navigation Station Southeast
       Trivial
   > Tile Group (POWERBEAM) 1
-      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+      Trivial
 
 ----------------
 Dropdown Pit
@@ -124,7 +124,9 @@ Extra - asset_id: collision_camera_001
   * Layers: default
   * Slide Tunnel to Underlava Puzzle Room 2/Tunnel to Dropdown Pit
   > Tunnel to Above Z-57 Fight
-      Space Jump or Simple IBJ
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer and Can Slide
 
 ----------------
 Navigation Station Southeast
@@ -490,7 +492,7 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   > Door to Z-57 Heat Room East
       Any of the following:
-          Spider Magnet or Space Jump or Simple IBJ
+          Spider Magnet or Space Jump or Speed Booster or Simple IBJ
           Flash Shift and Use Spin Boost
   > Tile Group (SCREWATTACK) 2
       Trivial
@@ -1342,7 +1344,9 @@ Extra - asset_id: collision_camera_018
   > Door to Save Station East
       Trivial
   > Tile Group (POWERBEAM)
-      Spider Magnet or Infinite Bomb Jump (Beginner) or Use Spin Boost
+      Any of the following:
+          Spider Magnet or Infinite Bomb Jump (Beginner) or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
 
 > Door to Moving Magnet Walls (Tall) (Cloak); Heals? False
   * Layers: default
@@ -1657,7 +1661,9 @@ Extra - asset_id: collision_camera_020
   > Door to EMMI Zone West Exit Path
       All of the following:
           Can Slide
-          Flash Shift or Spider Magnet or Use Spin Boost
+          Any of the following:
+              Flash Shift or Spider Magnet or Use Spin Boost
+              Bomb and Morph Ball and Infinite Bomb Jump (Intermediate)
   > Event - Lower-left Blob (breakablemag005)
       Shoot Beam
 
@@ -2003,7 +2009,10 @@ Extra - asset_id: collision_camera_024
 > Left Room; Heals? False
   * Layers: default
   > Tunnel to Heated U-Turn (bottom)
-      Morph Ball and Varia Suit and Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat/Cold Runs (Intermediate) or Heat Damage ≥ 200
+          Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Center Room
       All of the following:
           Can Slide
@@ -2094,7 +2103,11 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Navigation Station Northwest
-      Spider Magnet or Space Jump
+      Any of the following:
+          Spider Magnet or Space Jump
+          Flash Shift and Spin Boost and Walljump (Beginner)
+          Bomb and Morph Ball and Infinite Bomb Jump (Advanced)
+          Speed Booster and Disabled Door Lock Randomizer
   > Event - Morph Tunnel Blob
       Shoot Beam
   > Tile Group (BOMB)
@@ -2659,7 +2672,7 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Tower East
       Any of the following:
-          Space Jump or Infinite Bomb Jump (Beginner)
+          Space Jump or Speed Booster or Infinite Bomb Jump (Beginner)
           All of the following:
               Spider Magnet
               Grapple Beam or After Cataris - Lower Lava Button
@@ -2670,6 +2683,7 @@ Extra - asset_id: collision_camera_031
       Any of the following:
           Spider Magnet or Space Jump
           Flash Shift and Grapple Beam
+          Speed Booster and Knowledge (Beginner)
 
 > Dock to EMMI Zone Tower East; Heals? False
   * Layers: default
@@ -2963,9 +2977,13 @@ Extra - asset_id: collision_camera_036
   > Tunnel to EMMI Zone Exits West
       Trivial
   > Upper-right Corner
-      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+      Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
+  > Door to Central Unit
+      All of the following:
+          After Cataris - breakablemag008
+          Morph Ball or Can Slide
   > Event - Central Unit Blob through wall
-      Wave Beam
+      Diffusion Beam and Wave Beam
 
 > Event - Top Blob (breakablemag007); Heals? False
   * Layers: default
@@ -2974,6 +2992,8 @@ Extra - asset_id: collision_camera_036
   * Extra - actor_def: actordef:actors/props/breakablemag007/charclasses/breakablemag007.bmsad
   > Upper-right Corner
       Trivial
+  > Door to Central Unit
+      Shoot Beam
 
 > Event - Central Unit Blob (breakablemag008); Heals? False
   * Layers: default
@@ -2982,6 +3002,8 @@ Extra - asset_id: collision_camera_036
   * Extra - actor_def: actordef:actors/props/breakablemag008/charclasses/breakablemag008.bmsad
   > Door to Central Unit
       Trivial
+  > Event - Central Unit Blob through wall
+      Shoot Beam
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -3012,8 +3034,6 @@ Extra - asset_id: collision_camera_036
       Any of the following:
           Morph Ball
           After Cataris - breakablemag008 and Can Slide
-  > Event - Top Blob (breakablemag007)
-      Shoot Beam
   > Event - Central Unit Blob (breakablemag008)
       Shoot Beam
   > Upper-right Corner
@@ -3085,10 +3105,10 @@ Extra - asset_id: collision_camera_038
   * Open Passage to Thermal Device Room North/Dock to Lava Button West (Bottom)
   > Tunnel to Thermal Device Room North
       Any of the following:
+          Gravity Suit or After Cataris - Lower Lava Button
           All of the following:
-              Gravity Suit or After Cataris - Lower Lava Button
-              Speed Booster or Simple IBJ or Use Spin Boost
-          Space Jump and Lava Damage ≥ 500
+              Heat/Cold Runs (Advanced) and Lava Damage ≥ 500
+              Varia Suit or Heat Damage ≥ 500
 
 > Dock to Thermal Device Room North (Mid); Heals? False
   * Layers: default
@@ -3312,7 +3332,7 @@ Extra - asset_id: collision_camera_042
   * Layers: default
   * Open Passage to Lava Button West/Dock to Thermal Device Room North (Mid)
   > Dock to Dairon Transport Access
-      Spider Magnet or Infinite Bomb Jump (Beginner) or Use Spin Boost
+      Trivial
 
 > Dock to Dairon Transport Access; Heals? False
   * Layers: default
@@ -4079,12 +4099,8 @@ Extra - asset_id: collision_camera_049
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
       Any of the following:
-          Gravity Suit and Speed Booster
-          All of the following:
-              Any of the following:
-                  Varia Suit
-                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
-              Simple IBJ or Use Spin Boost
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
