@@ -7,7 +7,9 @@ from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import common_qt_lib, signal_handling
-from randovania.gui.preset_settings.preset_tab import PresetTab, PresetEditor
+from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.preset_settings.preset_tab import PresetTab
+from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
@@ -15,8 +17,8 @@ from randovania.layout.preset import Preset
 
 
 class PresetGeneration(PresetTab, Ui_PresetGeneration):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription) -> None:
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         # Game-specific Settings

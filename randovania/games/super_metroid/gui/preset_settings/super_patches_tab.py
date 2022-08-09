@@ -3,8 +3,10 @@ import functools
 
 from PySide6.QtWidgets import QCheckBox
 
+from randovania.game_description.game_description import GameDescription
 from randovania.games.super_metroid.layout.super_metroid_patch_configuration import SuperPatchConfiguration
 from randovania.gui.generated.preset_patcher_super_patches_ui import Ui_PresetPatcherSuperPatches
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
@@ -14,9 +16,10 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
     checkboxes = {}
     radio_buttons = {}
 
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
+
         self.checkboxes = {
             "instant_g4": self.instant_g4_checkbox,
             "fast_doors_and_elevators": self.fast_doors_checkbox,

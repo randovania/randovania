@@ -4,8 +4,10 @@ import functools
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QComboBox
 
+from randovania.game_description.game_description import GameDescription
 from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
 from randovania.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
@@ -20,8 +22,8 @@ _BEAMS = {
 
 class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration):
 
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         def _add_header(text: str, col: int):
