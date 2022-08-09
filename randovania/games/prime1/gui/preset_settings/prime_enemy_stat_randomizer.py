@@ -35,17 +35,17 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
-        self.range_scale_low.setValue(preset.configuration.enemy_rando_range_scale_low)
-        self.range_scale_high.setValue(preset.configuration.enemy_rando_range_scale_high)
-        self.range_health_low.setValue(preset.configuration.enemy_rando_range_health_low)
-        self.range_health_high.setValue(preset.configuration.enemy_rando_range_health_high)
-        self.range_speed_low.setValue(preset.configuration.enemy_rando_range_speed_low)
-        self.range_speed_high.setValue(preset.configuration.enemy_rando_range_speed_high)
-        self.range_damage_low.setValue(preset.configuration.enemy_rando_range_damage_low)
-        self.range_damage_high.setValue(preset.configuration.enemy_rando_range_damage_high)
-        self.range_knockback_low.setValue(preset.configuration.enemy_rando_range_knockback_low)
-        self.range_knockback_high.setValue(preset.configuration.enemy_rando_range_knockback_high)
-        self.diff_xyz.setChecked(preset.configuration.enemy_rando_diff_xyz)
+        self.range_scale_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_scale_low)
+        self.range_scale_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_scale_high)
+        self.range_health_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_health_low)
+        self.range_health_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_health_high)
+        self.range_speed_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_speed_low)
+        self.range_speed_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_speed_high)
+        self.range_damage_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_damage_low)
+        self.range_damage_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_damage_high)
+        self.range_knockback_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_knockback_low)
+        self.range_knockback_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_knockback_high)
+        self.diff_xyz.setChecked(config.enemy_attribute_randomizer.enemy_rando_diff_xyz)
 
 
     def _on_spin_changed_range_scale_low(self):
