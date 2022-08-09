@@ -64,6 +64,12 @@ class PrimePresetDescriber(GamePresetDescriber):
         enemy_rando_range_damage = attribute_in_range([configuration.enemy_rando_range_damage_low, configuration.enemy_rando_range_damage_high], "Damage")
         enemy_rando_range_knockback = attribute_in_range([configuration.enemy_rando_range_knockback_low, configuration.enemy_rando_range_knockback_high], "Knockback")
         enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_rando_diff_xyz)
+<<<<<<< HEAD
+=======
+        #if enemy_rando_range_scale != None:
+            #configuration.random_boss_sizes = False
+            #setattr(configuration, "random_boss_sizes", False)
+>>>>>>> 4ebb8ff05cb14bf338e9cc2167e356e94096abf5
         extra_message_tree = {
             "Difficulty": [
                 {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},

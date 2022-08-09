@@ -10,6 +10,4 @@ class ExportFailure(Exception):
         result = []
         if self.output is not None:
             result.append(self.output)
-        if self.__traceback__ is not None:
-            result.extend(traceback.format_tb(self.__traceback__))
         return "\n".join(result)
