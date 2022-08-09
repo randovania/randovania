@@ -1,5 +1,5 @@
 import functools
-from typing import Callable
+from typing import Callable, Sequence
 
 from PySide6 import QtWidgets, QtCore
 
@@ -105,7 +105,7 @@ class AreaListHelper:
 
         return checks_for_world, checks_for_area
 
-    def update_area_list(self, areas_to_check: list[AreaIdentifier],
+    def update_area_list(self, areas_to_check: Sequence[AreaIdentifier],
                          invert_check: bool,
                          location_for_world: dict[str, QtWidgets.QCheckBox],
                          location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox],

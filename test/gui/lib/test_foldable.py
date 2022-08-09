@@ -10,7 +10,7 @@ def test_foldable_initial_state(skip_qtbot):
     skip_qtbot.addWidget(foldable_2)
 
     # Assert
-    assert foldable._toggleButton.text() == "My foldable title"
+    assert foldable._toggle_button.text() == "My foldable title"
     assert not foldable._folded
     assert foldable_2._folded
 
@@ -24,8 +24,8 @@ def test_foldable_actions(skip_qtbot):
     # Run & Assert
     foldable._unfold()
     assert not foldable._folded
-    assert not foldable._contentArea.isHidden()
+    assert not foldable._content_area.isHidden()
 
     foldable._fold()
     assert foldable._folded
-    assert foldable._contentArea.isHidden()
+    assert foldable._content_area.isHidden()

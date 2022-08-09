@@ -1,3 +1,6 @@
+from unittest.mock import MagicMock
+
+from randovania.game_description import default_database
 from randovania.games.super_metroid.gui.preset_settings.super_patches_tab import PresetSuperPatchConfiguration
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.interface_common.preset_editor import PresetEditor
@@ -9,8 +12,10 @@ def test_elements_init(skip_qtbot, test_files_dir):
     preset = VersionedPreset.from_file_sync(preset_path).get_preset()
     assert isinstance(preset.configuration, SuperMetroidConfiguration)
 
+    game = default_database.game_description_for(preset.game)
+
     editor = PresetEditor(preset)
-    super_patches_tab = PresetSuperPatchConfiguration(editor)
+    super_patches_tab = PresetSuperPatchConfiguration(editor, game, MagicMock())
     skip_qtbot.addWidget(super_patches_tab)
 
     # Test whether visual elements are initialized correctly
