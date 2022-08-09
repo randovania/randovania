@@ -103,7 +103,6 @@
           <property name="font">
            <font>
             <pointsize>14</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -401,271 +400,10 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_create_seed">
+      <widget class="GenerateGameWidget" name="tab_create_seed">
        <attribute name="title">
         <string>Generate Game</string>
        </attribute>
-       <layout class="QGridLayout" name="create_layout">
-        <property name="leftMargin">
-         <number>4</number>
-        </property>
-        <property name="topMargin">
-         <number>4</number>
-        </property>
-        <property name="rightMargin">
-         <number>4</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item row="4" column="0">
-         <widget class="QPushButton" name="create_generate_no_retry_button">
-          <property name="text">
-           <string>Generate without retry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QPushButton" name="create_generate_race_button">
-          <property name="text">
-           <string>Generate for Race</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QPushButton" name="create_generate_button">
-          <property name="text">
-           <string>Generate</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <widget class="QSpinBox" name="num_players_spin_box">
-          <property name="cursor">
-           <cursorShape>ArrowCursor</cursorShape>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-          <property name="suffix">
-           <string> players</string>
-          </property>
-          <property name="minimum">
-           <number>1</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2">
-         <widget class="PresetTreeWidget" name="create_preset_tree">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
-          </property>
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
-          </property>
-          <property name="dragDropMode">
-           <enum>QAbstractItemView::InternalMove</enum>
-          </property>
-          <property name="alternatingRowColors">
-           <bool>false</bool>
-          </property>
-          <property name="rootIsDecorated">
-           <bool>false</bool>
-          </property>
-          <column>
-           <property name="text">
-            <string>Presets (Right click for actions)</string>
-           </property>
-          </column>
-          <item>
-           <property name="text">
-            <string>Metroid Prime</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>Default Preset</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>Your Custom Preset</string>
-             </property>
-            </item>
-           </item>
-          </item>
-          <item>
-           <property name="text">
-            <string>Metroid Prime 2</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="5" column="0" colspan="4">
-         <widget class="QGroupBox" name="progress_box">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="title">
-           <string>Progress</string>
-          </property>
-          <layout class="QGridLayout" name="progress_box_layout">
-           <property name="leftMargin">
-            <number>2</number>
-           </property>
-           <property name="topMargin">
-            <number>4</number>
-           </property>
-           <property name="rightMargin">
-            <number>2</number>
-           </property>
-           <property name="bottomMargin">
-            <number>4</number>
-           </property>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="stop_background_process_button">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>75</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Stop</string>
-             </property>
-             <property name="checkable">
-              <bool>false</bool>
-             </property>
-             <property name="flat">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QProgressBar" name="progress_bar">
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>150</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="value">
-              <number>0</number>
-             </property>
-             <property name="textVisible">
-              <bool>false</bool>
-             </property>
-             <property name="invertedAppearance">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="progress_label">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>7</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="2" column="2" colspan="2">
-         <widget class="QScrollArea" name="create_scroll_area">
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="create_scroll_area_contents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>302</width>
-             <height>442</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="create_scroll_area_layout">
-            <property name="leftMargin">
-             <number>4</number>
-            </property>
-            <property name="topMargin">
-             <number>4</number>
-            </property>
-            <property name="rightMargin">
-             <number>4</number>
-            </property>
-            <property name="bottomMargin">
-             <number>4</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="create_preset_description">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-       </layout>
       </widget>
       <widget class="RandovaniaHelpWidget" name="help_tab">
        <attribute name="title">
@@ -716,7 +454,7 @@
      <x>0</x>
      <y>0</y>
      <width>645</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_open">
@@ -840,11 +578,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>PresetTreeWidget</class>
-   <extends>QTreeWidget</extends>
-   <header location="global">randovania/gui/lib/preset_tree_widget.h</header>
-  </customwidget>
-  <customwidget>
    <class>RandovaniaHelpWidget</class>
    <extends>QTabWidget</extends>
    <header>randovania/gui/widgets/randovania_help_widget.h</header>
@@ -854,6 +587,12 @@
    <class>GamesHelpWidget</class>
    <extends>QTabWidget</extends>
    <header>randovania/gui/widgets/games_help_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GenerateGameWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
