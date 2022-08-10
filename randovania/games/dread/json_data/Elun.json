@@ -1201,10 +1201,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Alcove": {
-                            "type": "template",
-                            "data": "Lay Bomb"
-                        },
                         "Event - Release X": {
                             "type": "and",
                             "data": {
@@ -1312,14 +1308,19 @@
                             }
                         },
                         "Event - Elun - Ammo Recharge Room Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
-                        },
-                        "Dock from Purple Drapes": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
