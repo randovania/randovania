@@ -13,6 +13,7 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         self.enemy_stat_randomizer_description.setText(self.enemy_stat_randomizer_description.text().replace("color:#0000ff;", ""))
 
         # Signals
+        self.Activate_Randomizer.stateChanged.connect(self._on_activation)
         self.range_scale_low.valueChanged.connect(self._on_spin_changed_range_scale_low)
         self.range_scale_high.valueChanged.connect(self._on_spin_changed_range_scale_high)
         self.range_health_low.valueChanged.connect(self._on_spin_changed_range_health_low)
@@ -33,19 +34,74 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
     def uses_patches_tab(cls) -> bool:
         return True
 
+    def _on_activation(self):
+        self.minimum_label.setEnabled(not Activate_Randomizer)
+        self.maximum_label.setEnabled(not Activate_Randomizer)
+        self.scale_attribute_label.setEnabled(not Activate_Randomizer)
+        self.range_scale_low.setEnabled(not Activate_Randomizer)
+        self.range_scale_high.setEnabled(not Activate_Randomizer)
+        self.health_attribute_label.setEnabled(not Activate_Randomizer)
+        self.range_health_low.setEnabled(not Activate_Randomizer)
+        self.range_health_high.setEnabled(not Activate_Randomizer)
+        self.speed_attribute_label.setEnabled(not Activate_Randomizer)
+        self.range_speed_low.setEnabled(not Activate_Randomizer)
+        self.range_speed_high.setEnabled(not Activate_Randomizer)
+        self.damage_attribute_label.setEnabled(not Activate_Randomizer)
+        self.range_damage_low.setEnabled(not Activate_Randomizer)
+        self.range_damage_high.setEnabled(not Activate_Randomizer)
+        self.knockback_attribute_label.setEnabled(not Activate_Randomizer)
+        self.range_knockback_low.setEnabled(not Activate_Randomizer)
+        self.range_knockback_high.setEnabled(not Activate_Randomizer)
+        self.label.setEnabled(not Activate_Randomizer)
+        self.label_2.setEnabled(not Activate_Randomizer)
+
     def on_preset_changed(self, preset: Preset):
+        print(preset)
         config = preset.configuration
-        self.range_scale_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_scale_low)
-        self.range_scale_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_scale_high)
-        self.range_health_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_health_low)
-        self.range_health_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_health_high)
-        self.range_speed_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_speed_low)
-        self.range_speed_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_speed_high)
-        self.range_damage_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_damage_low)
-        self.range_damage_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_damage_high)
-        self.range_knockback_low.setValue(config.enemy_attribute_randomizer.enemy_rando_range_knockback_low)
-        self.range_knockback_high.setValue(config.enemy_attribute_randomizer.enemy_rando_range_knockback_high)
-        self.diff_xyz.setChecked(config.enemy_attribute_randomizer.enemy_rando_diff_xyz)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_scale_low'):
+            self.range_scale_low.setValue(config.enemy_attributes.enemy_rando_range_scale_low)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_scale_low', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_scale_high'):
+            self.range_scale_high.setValue(config.enemy_attributes.enemy_rando_range_scale_high)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_scale_high', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_health_low'):
+            self.range_health_low.setValue(config.enemy_attributes.enemy_rando_range_health_low)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_health_low', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_health_high'):
+            self.range_health_high.setValue(config.enemy_attributes.enemy_rando_range_health_high)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_health_high', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_speed_low'):
+            self.range_speed_low.setValue(config.enemy_attributes.enemy_rando_range_speed_low)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_speed_low', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_speed_high'):
+            self.range_speed_high.setValue(config.enemy_attributes.enemy_rando_range_speed_high)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_speed_high', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_damage_low'):
+            self.range_damage_low.setValue(config.enemy_attributes.enemy_rando_range_damage_low)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_damage_low', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_damage_high'):
+            self.range_damage_high.setValue(config.enemy_attributes.enemy_rando_range_damage_high)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_damage_high', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_knockback_low'):
+            self.range_knockback_low.setValue(config.enemy_attributes.enemy_rando_range_knockback_low)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_knockback_low', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_range_knockback_high'):
+            self.range_knockback_high.setValue(config.enemy_attributes.enemy_rando_range_knockback_high)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_range_knockback_high', None)
+        if hasattr(config.enemy_attributes, 'enemy_rando_diff_xyz'):
+            self.diff_xyz.setChecked(config.enemy_attributes.enemy_rando_diff_xyz)
+        else:
+            setattr(config.enemy_attributes, 'enemy_rando_diff_xyz', None)
 
 
     def _on_spin_changed_range_scale_low(self):
