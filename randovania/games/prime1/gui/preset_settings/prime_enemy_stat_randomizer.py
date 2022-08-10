@@ -40,8 +40,12 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         checked: bool = self.Activate_Randomizer.isChecked()
         with self._editor as editor:
             if checked:
-                editor.set_configuration_field("enemy_attributes", EnemyAttributeRandomizer(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False))
-                #print(EnemyAttributeRandomizer)
+                editor.set_configuration_field("enemy_attributes", EnemyAttributeRandomizer(self.range_scale_low.value(), self.range_scale_high.value(),
+                                                                                            self.range_health_low.value(), self.range_health_high.value(),
+                                                                                            self.range_speed_low.value(), self.range_speed_high.value(),
+                                                                                            self.range_damage_low.value(), self.range_damage_high.value(),
+                                                                                            self.range_knockback_low.value(), self.range_knockback_high.value(),
+                                                                                            self.diff_xyz.isChecked()))
             else:
                 editor.set_configuration_field("enemy_attributes", None)
         self.minimum_label.setEnabled(checked)

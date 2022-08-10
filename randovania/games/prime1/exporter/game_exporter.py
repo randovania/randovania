@@ -167,17 +167,7 @@ class PrimeGameExporter(GameExporter):
         )
         new_config["preferences"]["cacheDir"] = cache_dir
 
-        random_scale_min = new_config.pop("randScaleMin")
-        random_scale_max = new_config.pop("randScaleMax")
-        random_health_min = new_config.pop("randHealthMin")
-        random_health_max = new_config.pop("randHealthMax")
-        random_speed_min = new_config.pop("randSpeedMin")
-        random_speed_max = new_config.pop("randSpeedMax")
-        random_damage_min = new_config.pop("randDamageMin")
-        random_damage_max = new_config.pop("randDamageMax")
-        random_knockback_min = new_config.pop("randKnockbackMin")
-        random_knockback_max = new_config.pop("randKnockbackMax")
-        diff_XYZ = new_config.pop("diffXYZ")
+        random_enemy_attributes = new_config.pop("randEnemyAttributes")
 
         assets_meta = {}
         updaters = [progress_update]
@@ -213,13 +203,18 @@ class PrimeGameExporter(GameExporter):
             else:
                 raise RuntimeError(f"randomprime panic: {e}") from e
 
-
-        if any(v != 1.0 for v in [random_scale_min, random_scale_max,
-                                  random_health_min, random_health_max,
-                                  random_speed_min, random_speed_max,
-                                  random_damage_min, random_damage_max,
-                                  random_knockback_min, random_knockback_max]):
-
-            PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_scale_min, random_scale_max, random_health_min,
-                                                            random_health_max, random_speed_min, random_speed_max, random_damage_min,
-                                                            random_damage_max, random_knockback_min, random_knockback_max, diff_XYZ) 
+        if random_enemy_attributes:
+            rand_scale_low = random_enemy_attributes.enemy_rando_range_scale_low
+            rand_scale_high = random_enemy_attributes.enemy_rando_range_scale_high
+            rand_health_low = random_enemy_attributes.enemy_rando_range_health_low
+            rand_health_high = random_enemy_attributes.enemy_rando_range_health_high
+            rand_speed_low = random_enemy_attributes.enemy_rando_range_speed_low
+            rand_speed_high = random_enemy_attributes.enemy_rando_range_speed_high
+            rand_damage_low = random_enemy_attributes.enemy_rando_range_damage_low
+            rand_damage_high = random_enemy_attributes.enemy_rando_range_damage_high
+            rand_knockback_low = random_enemy_attributes.enemy_rando_range_knockback_low
+            rand_knockback_high =  random_enemy_attributes.enemy_rando_range_knockback_high
+            diff_xyz =  random_enemy_attributes.enemy_rando_diff_xyz
+            PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], rand_scale_low, rand_scale_high,
+                                                              rand_health_low, rand_health_high, rand_speed_low, rand_speed_high, rand_damage_low, rand_damage_high,
+                                                              rand_knockback_low, rand_knockback_high, diff_xyz) 

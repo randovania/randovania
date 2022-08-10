@@ -903,18 +903,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
 
-            "randScaleMin": self.configuration.enemy_attribute_randomizer.enemy_rando_range_scale_low,
-            "randScaleMax": self.configuration.enemy_attribute_randomizer.enemy_rando_range_scale_high,
-            "randHealthMin": self.configuration.enemy_attribute_randomizer.enemy_rando_range_health_low,
-            "randHealthMax": self.configuration.enemy_attribute_randomizer.enemy_rando_range_health_high,
-            "randSpeedMin": self.configuration.enemy_attribute_randomizer.enemy_rando_range_speed_low,
-            "randSpeedMax": self.configuration.enemy_attribute_randomizer.enemy_rando_range_speed_high,
-            "randDamageMin": self.configuration.enemy_attribute_randomizer.enemy_rando_range_damage_low,
-            "randDamageMax": self.configuration.enemy_attribute_randomizer.enemy_rando_range_damage_high,
-            "randKnockbackMin": self.enemy_attribute_randomizer.configuration.enemy_rando_range_knockback_low,
-            "randKnockbackMax": self.enemy_attribute_randomizer.configuration.enemy_rando_range_knockback_high,
-            "diffXYZ": self.enemy_attribute_randomizer.configuration.enemy_rando_diff_xyz,
-
+            "randEnemyAttributes": self.configuration.enemy_attributes
+            
             # TODO
             # "externAssetsDir": path_to_converted_assets,
         }

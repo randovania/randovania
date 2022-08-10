@@ -2,6 +2,7 @@ import dataclasses
 from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.hint_configuration import HintConfiguration
@@ -22,7 +23,7 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     MAJOR = "major"
 
 @dataclasses.dataclass(frozen=True)
-class EnemyAttributeRandomizer(BitPackDataclass):
+class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
     enemy_rando_range_scale_low: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
     enemy_rando_range_scale_high: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
     enemy_rando_range_health_low: float = dataclasses.field(metadata={"min": 0.01, "max": 2500.0, "precision": 1.0})
