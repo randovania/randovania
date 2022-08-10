@@ -21,19 +21,19 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     MINOR = "minor"
     MAJOR = "major"
 
+@dataclasses.dataclass(frozen=True)
 class EnemyAttributeRandomizer(BitPackDataclass):
-    optional_int: int | None = dataclasses.field(metadata={"min": 0, "max": 15})
-    enemy_rando_range_scale_low: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
-    enemy_rando_range_scale_high: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
-    enemy_rando_range_health_low: float = dataclasses.field(metadata={"min": 0.01, "max": 2500.0, "precision": 1.0})
-    enemy_rando_range_health_high: float = dataclasses.field(metadata={"min": 0.01, "max": 2500.0, "precision": 1.0})
-    enemy_rando_range_speed_low: float = dataclasses.field(metadata={"min": 0.0, "max": 250.0, "precision": 1.0})
-    enemy_rando_range_speed_high: float = dataclasses.field(metadata={"min": 0.0, "max": 250.0, "precision": 1.0})
-    enemy_rando_range_damage_low: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
-    enemy_rando_range_damage_high: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
-    enemy_rando_range_knockback_low: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
-    enemy_rando_range_knockback_high: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
-    enemy_rando_diff_xyz: bool
+    enemy_rando_range_scale_low: float | None = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
+    enemy_rando_range_scale_high: float | None = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
+    enemy_rando_range_health_low: float | None = dataclasses.field(metadata={"min": 0.01, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_health_high: float | None = dataclasses.field(metadata={"min": 0.01, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_speed_low: float | None = dataclasses.field(metadata={"min": 0.0, "max": 250.0, "precision": 1.0})
+    enemy_rando_range_speed_high: float | None = dataclasses.field(metadata={"min": 0.0, "max": 250.0, "precision": 1.0})
+    enemy_rando_range_damage_low: float | None = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_damage_high: float | None = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_knockback_low: float | None = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_knockback_high: float | None = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_diff_xyz: bool | None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -74,7 +74,7 @@ class PrimeConfiguration(BaseConfiguration):
     qol_pickup_scans: bool
     qol_cutscenes: LayoutCutsceneMode
 
-    enemy_attribute_randomizer: EnemyAttributeRandomizer | None
+    enemy_attributes: EnemyAttributeRandomizer | None
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
