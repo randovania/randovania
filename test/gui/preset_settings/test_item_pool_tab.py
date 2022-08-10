@@ -1,5 +1,6 @@
 import dataclasses
 import uuid
+from unittest.mock import MagicMock
 
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -8,16 +9,16 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 
 
-def test_on_default_item_updated(skip_qtbot, preset_manager):
+def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_manager):
     # Setup
-    game = RandovaniaGame.METROID_PRIME_ECHOES
+    game = echoes_game_description.game
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base,
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
 
     editor = PresetEditor(preset)
-    window = PresetItemPool(editor)
+    window = PresetItemPool(editor, echoes_game_description, MagicMock())
 
     item_database = default_database.item_database_for_game(window.game)
     item = item_database.major_items["Dark Beam"]

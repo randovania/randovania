@@ -19,6 +19,7 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
@@ -55,7 +56,7 @@ def _update_label_on_show(label: QtWidgets.QLabel, text: str):
     label.showEvent = showEvent
 
 
-class MainWindow(WindowManager, Ui_MainWindow):
+class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
     _experimental_games_visible: bool = False
@@ -66,7 +67,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
     _data_visualizer: QtWidgets.QWidget | None = None
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
-    generate_seed_tab = None
     GameDetailsSignal = Signal(LayoutDescription)
 
     InitPostShowSignal = Signal()
@@ -174,8 +174,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.main_tab_widget.setCurrentIndex(0)
 
     def closeEvent(self, event):
-        if self.generate_seed_tab is not None:
-            self.generate_seed_tab.stop_background_process()
+        self.stop_background_process()
         super().closeEvent(event)
 
     def dragEnterEvent(self, event: QtGui.QDragEnterEvent):
@@ -207,7 +206,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
             elif path.suffix == f".{VersionedPreset.file_extension()}":
                 self.main_tab_widget.setCurrentWidget(self.tab_create_seed)
-                self.generate_seed_tab.import_preset_file(path)
+                # TODO: find the correct tab
+                self.tab_create_seed.import_preset_file(path)
                 return
 
     def showEvent(self, event: QtGui.QShowEvent):
@@ -244,12 +244,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
 
-        logging.info("Will load GenerateSeedTab")
-        from randovania.gui.generate_seed_tab import GenerateSeedTab
-        logging.info("Creating GenerateSeedTab...")
-        self.generate_seed_tab = GenerateSeedTab(self, self, self._options)
         logging.info("Running GenerateSeedTab.setup_ui")
-        self.generate_seed_tab.setup_ui()
+        self.tab_create_seed.setup_ui(self, self, self._options)
 
         logging.info("Will update for modified options")
         with self._options:
@@ -382,7 +378,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_experimental_games.setChecked(self._options.experimental_games)
         self.refresh_game_list()
 
-        self.generate_seed_tab.on_options_changed(self._options)
+        self.tab_create_seed.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
 
     # Menu Actions

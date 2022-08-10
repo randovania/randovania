@@ -78,13 +78,13 @@ async def test_drop_event_preset(default_main_window):
     mock_url.toLocalFile.return_value = "/my/path.rdvpreset"
     event = MagicMock()
     event.mimeData.return_value.urls.return_value = [mock_url]
-    default_main_window.generate_seed_tab.import_preset_file = MagicMock()
+    default_main_window.tab_create_seed.import_preset_file = MagicMock()
 
     # Run
     default_main_window.dropEvent(event)
 
     # Assert
-    default_main_window.generate_seed_tab.import_preset_file(Path("/my/path.rdvpreset"))
+    default_main_window.tab_create_seed.import_preset_file(Path("/my/path.rdvpreset"))
     assert default_main_window.main_tab_widget.currentWidget() == default_main_window.tab_create_seed
 
 
