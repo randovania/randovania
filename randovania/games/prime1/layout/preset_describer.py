@@ -58,12 +58,12 @@ class PrimePresetDescriber(GamePresetDescriber):
             elif diff_xyz:
                 return "Enemies will be stretched randomly"
         
-        enemy_rando_range_scale = attribute_in_range([configuration.enemy_rando_range_scale_low, configuration.enemy_rando_range_scale_high], "Size")
-        enemy_rando_range_health = attribute_in_range([configuration.enemy_rando_range_health_low, configuration.enemy_rando_range_health_high], "Health")
-        enemy_rando_range_speed = attribute_in_range([configuration.enemy_rando_range_speed_low, configuration.enemy_rando_range_speed_high], "Speed")
-        enemy_rando_range_damage = attribute_in_range([configuration.enemy_rando_range_damage_low, configuration.enemy_rando_range_damage_high], "Damage")
-        enemy_rando_range_knockback = attribute_in_range([configuration.enemy_rando_range_knockback_low, configuration.enemy_rando_range_knockback_high], "Knockback")
-        enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_rando_diff_xyz)
+        enemy_rando_range_scale = "yo"
+        enemy_rando_range_health = "yo"
+        enemy_rando_range_speed = "yo"
+        enemy_rando_range_damage = "yo"
+        enemy_rando_range_knockback = "yo"
+        enemy_rando_diff_xyz = "yo"
         extra_message_tree = {
             "Difficulty": [
                 {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},
