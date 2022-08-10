@@ -222,17 +222,38 @@ class BitPackValueUsingReference(bitpacking.BitPackValue):
 
 @dataclasses.dataclass(frozen=True)
 class DataclassForTest(bitpacking.BitPackDataclass):
+    optional_int: int | None = dataclasses.field(metadata={"min": 0, "max": 15})
     uses_reference: BitPackValueUsingReference
 
 
-@pytest.mark.parametrize(["value", "reference"], [
-    (10, 5),
+@pytest.mark.parametrize(["data_value", "data_reference"], [
+    (5, 5),
     (20, 5),
     (50, 5),
 ])
-def test_round_trip_dataclass_for_test(value, reference):
-    data = DataclassForTest(BitPackValueUsingReference(value))
-    ref = DataclassForTest(BitPackValueUsingReference(reference))
+@pytest.mark.parametrize(["int_v", "int_reference"], [
+    (15, 5),
+    (12, None),
+    (None, 20),
+])
+def test_round_trip_dataclass_for_test(int_v, data_value, int_reference, data_reference):
+    data = DataclassForTest(int_v, BitPackValueUsingReference(data_value))
+    ref = DataclassForTest(data_value, BitPackValueUsingReference(data_reference))
 
     result = bitpacking.round_trip(data, {"reference": ref})
     assert result == data
+
+
+@pytest.mark.parametrize(["int_v", "int_reference", "data_value", "data_reference", "expected"], [
+    (None, 1, 5, 5, b"\x00"),
+    (2, None, 5, 5, b"\xc8"),
+    (None, None, 5, 5, b"\x00"),
+    (1, None, 20, 5, b'\xc6<'),
+    (5, 30, 50, 5, b"\xd6\xb4"),
+])
+def test_encode_dataclass_for_test(int_v, int_reference, data_value, data_reference, expected):
+    data = DataclassForTest(int_v, BitPackValueUsingReference(data_value))
+    ref = DataclassForTest(data_value, BitPackValueUsingReference(data_reference))
+
+    result = bitpacking.pack_value(data, {"reference": ref})
+    assert result == expected
