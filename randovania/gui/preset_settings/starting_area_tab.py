@@ -7,6 +7,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
 from randovania.gui.lib.area_list_helper import AreaListHelper
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import StartingLocationList
@@ -14,15 +15,15 @@ from randovania.layout.preset import Preset
 
 
 class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
+    starting_area_quick_fill_default: QtWidgets.QPushButton
     _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
 
     _num_quick_fill_buttons: int
 
-    def __init__(self, editor: PresetEditor, game: GameDescription):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
-        self.game_description = game
 
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
 

@@ -4,46 +4,45 @@ import pytest
 from PySide6 import QtWidgets
 
 from randovania.games.game import RandovaniaGame, DevelopmentState
-from randovania.gui.generate_seed_tab import GenerateSeedTab
-from randovania.gui.generated.main_window_ui import Ui_MainWindow
+from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 
 
 @pytest.fixture(name="tab")
-def _tab(skip_qtbot):
-    class Window(QtWidgets.QMainWindow, Ui_MainWindow):
-        pass
+def _tab(skip_qtbot, preset_manager):
+    window_manager = MagicMock()
+    window_manager.preset_manager = preset_manager
 
-    window = Window()
-    window.setupUi(window)
-
-    return GenerateSeedTab(window, MagicMock(), MagicMock())
+    widget = GenerateGameWidget()
+    skip_qtbot.addWidget(widget)
+    widget.setup_ui(window_manager, MagicMock(), MagicMock())
+    return widget
 
 
 def test_add_new_preset(tab, preset_manager):
     preset = preset_manager.default_preset
-    tab.setup_ui()
-    tab.window.create_preset_tree.select_preset = MagicMock()
+    tab.create_preset_tree.select_preset = MagicMock()
+    tab._window_manager.preset_manager = MagicMock()
 
     # Run
     tab._add_new_preset(preset)
 
     # Assert
     tab._window_manager.preset_manager.add_new_preset.assert_called_once_with(preset)
-    tab.window.create_preset_tree.select_preset.assert_called_once_with(preset)
+    tab.create_preset_tree.select_preset.assert_called_once_with(preset)
 
 
 @pytest.mark.parametrize("has_existing_window", [False, True])
 async def test_on_customize_button(tab, mocker, has_existing_window):
-    mock_settings_window = mocker.patch("randovania.gui.generate_seed_tab.CustomizePresetDialog")
+    mock_settings_window = mocker.patch("randovania.gui.widgets.generate_game_widget.CustomizePresetDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     mock_execute_dialog.return_value = QtWidgets.QDialog.Accepted
     tab._add_new_preset = MagicMock()
     tab._logic_settings_window = MagicMock() if has_existing_window else None
-    tab.window.create_preset_tree = MagicMock()
-    tab.window.create_preset_tree.selectedItems.return_value = [MagicMock()]
+    tab.create_preset_tree = MagicMock()
+    tab.create_preset_tree.selectedItems.return_value = [MagicMock()]
 
     # Run
     await tab._on_customize_preset()
@@ -61,11 +60,8 @@ async def test_on_customize_button(tab, mocker, has_existing_window):
 
 
 @pytest.mark.parametrize("allow_experimental", [False, True])
-def test_on_options_changed_select_preset(tab, preset_manager, game_enum, is_dev_version, allow_experimental):
-    preset = preset_manager.default_preset_for_game(game_enum)
-
-    tab._window_manager.preset_manager = preset_manager
-    tab.setup_ui()
+def test_on_options_changed_select_preset(tab, game_enum, is_dev_version, allow_experimental):
+    preset = tab._window_manager.preset_manager.default_preset_for_game(game_enum)
 
     tab._options.experimental_games = allow_experimental
     tab._options.selected_preset_uuid = preset.uuid
@@ -85,8 +81,8 @@ def test_on_options_changed_select_preset(tab, preset_manager, game_enum, is_dev
 
 @pytest.mark.parametrize("allow_experimental", [False, True])
 @pytest.mark.parametrize("game", RandovaniaGame)
-def test_click_on_preset_tree(tab, preset_manager, game: RandovaniaGame, skip_qtbot, tmp_path, allow_experimental):
-    preset = preset_manager.default_preset_for_game(game)
+def test_click_on_preset_tree(tab, game: RandovaniaGame, skip_qtbot, tmp_path, allow_experimental):
+    preset = tab._window_manager.preset_manager.default_preset_for_game(game)
 
     options = Options(tmp_path, None)
     with options:
@@ -94,29 +90,27 @@ def test_click_on_preset_tree(tab, preset_manager, game: RandovaniaGame, skip_qt
     options.on_options_changed = lambda: tab.on_options_changed(options)
 
     tab._options = options
-    tab._window_manager.preset_manager = preset_manager
-    tab.setup_ui()
     tab.on_options_changed(options)
 
     # Run
-    item = tab.window.create_preset_tree.preset_to_item.get(preset.uuid)
+    item = tab.create_preset_tree.preset_to_item.get(preset.uuid)
     # assert item.parent().text(0) == "1"
     if not game.data.development_state.can_view(allow_experimental):
         assert item is None
     else:
-        tab.window.create_preset_tree.selectionModel().reset()
+        tab.create_preset_tree.selectionModel().reset()
         item.setSelected(True)
 
         # Assert
         assert tab._current_preset_data.get_preset() == preset.get_preset()
 
 
-def test_generate_new_seed(tab, preset_manager, mocker):
+def test_generate_new_seed(tab, mocker):
     # Setup
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=12341234)
 
-    tab.window.create_preset_tree = MagicMock()
-    tab.window.create_preset_tree.current_preset_data = preset_manager.default_preset
+    tab.create_preset_tree = MagicMock()
+    tab.create_preset_tree.current_preset_data = tab._window_manager.preset_manager.default_preset
     tab.generate_seed_from_permalink = MagicMock()
 
     spoiler = MagicMock(spec=bool)
@@ -131,7 +125,7 @@ def test_generate_new_seed(tab, preset_manager, mocker):
             GeneratorParameters(
                 seed_number=12341234,
                 spoiler=spoiler,
-                presets=[preset_manager.default_preset.get_preset()],
+                presets=[tab._window_manager.preset_manager.default_preset.get_preset()],
             )
         ), retries=retries
     )

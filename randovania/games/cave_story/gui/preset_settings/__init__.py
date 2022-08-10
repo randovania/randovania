@@ -5,9 +5,6 @@ from randovania.interface_common.preset_editor import PresetEditor
 
 
 def cs_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
-    game_enum = editor.game
-    game_description = default_database.game_description_for(game_enum)
-
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
     from randovania.games.cave_story.gui.preset_settings.cs_generation_tab import PresetCSGeneration
@@ -17,11 +14,11 @@ def cs_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.games.cave_story.gui.preset_settings.cs_hp_tab import PresetCSHP
 
     return [
-        PresetTrickLevel(editor, game_description, window_manager),
-        PresetCSStartingArea(editor, game_description),
-        PresetCSGeneration(editor, game_description),
-        PresetCSObjective(editor),
-        PresetLocationPool(editor, game_description),
-        CSPresetItemPool(editor),
-        PresetCSHP(editor)
+        PresetTrickLevel,
+        PresetCSStartingArea,
+        PresetCSGeneration,
+        PresetCSObjective,
+        PresetLocationPool,
+        CSPresetItemPool,
+        PresetCSHP,
     ]

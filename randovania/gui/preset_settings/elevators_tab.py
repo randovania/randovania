@@ -13,6 +13,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.area_list_helper import AreaListHelper
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList, \
@@ -28,10 +29,9 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
     _elevator_target_for_world: dict[str, QtWidgets.QCheckBox]
     _elevator_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
 
-    def __init__(self, editor: PresetEditor, game: GameDescription):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
-        self.game_description = game
 
         self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
 
