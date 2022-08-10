@@ -58,7 +58,7 @@ class PrimePresetDescriber(GamePresetDescriber):
             elif diff_xyz:
                 return "Enemies will be stretched randomly"
 
-        if configuration.enemy_attributes:
+        if configuration.enemy_attributes is not None:
             enemy_rando_range_scale = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_scale_low, configuration.enemy_attributes.enemy_rando_range_scale_high], "Size")
             enemy_rando_range_health = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_health_low, configuration.enemy_attributes.enemy_rando_range_health_high], "Health")
             enemy_rando_range_speed = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_speed_low, configuration.enemy_attributes.enemy_rando_range_speed_high], "Speed")
@@ -151,7 +151,7 @@ class PrimePresetDescriber(GamePresetDescriber):
                 }
             ],
         }
-        if enemy_rando_range_scale != None:
+        if enemy_rando_range_scale is not None:
             for listing in extra_message_tree["Game Changes"]:
                 if "Random Boss Sizes" in listing.keys():
                     listing["Random Boss Sizes"] = False

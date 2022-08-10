@@ -5,8 +5,6 @@ from randovania.interface_common.preset_editor import PresetEditor
 
 
 def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
-    game_enum = editor.game
-    game_description = default_database.game_description_for(game_enum)
 
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy

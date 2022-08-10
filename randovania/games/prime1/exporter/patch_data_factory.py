@@ -902,7 +902,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
 
-            "randEnemyAttributes": self.configuration.enemy_attributes
+            "randEnemyAttributes": vars(self.configuration.enemy_attributes)
             
             # TODO
             # "externAssetsDir": path_to_converted_assets,

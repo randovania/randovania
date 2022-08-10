@@ -203,19 +203,10 @@ class PrimeGameExporter(GameExporter):
             else:
                 raise RuntimeError(f"randomprime panic: {e}") from e
 
-        if random_enemy_attributes:
-            print(random_enemy_attributes[0])
-            rand_scale_low = random_enemy_attributes.enemy_rando_range_scale_low
-            rand_scale_high = random_enemy_attributes.enemy_rando_range_scale_high
-            rand_health_low = random_enemy_attributes.enemy_rando_range_health_low
-            rand_health_high = random_enemy_attributes.enemy_rando_range_health_high
-            rand_speed_low = random_enemy_attributes.enemy_rando_range_speed_low
-            rand_speed_high = random_enemy_attributes.enemy_rando_range_speed_high
-            rand_damage_low = random_enemy_attributes.enemy_rando_range_damage_low
-            rand_damage_high = random_enemy_attributes.enemy_rando_range_damage_high
-            rand_knockback_low = random_enemy_attributes.enemy_rando_range_knockback_low
-            rand_knockback_high =  random_enemy_attributes.enemy_rando_range_knockback_high
-            diff_xyz =  random_enemy_attributes.enemy_rando_diff_xyz
-            PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], rand_scale_low, rand_scale_high,
-                                                              rand_health_low, rand_health_high, rand_speed_low, rand_speed_high, rand_damage_low, rand_damage_high,
-                                                              rand_knockback_low, rand_knockback_high, diff_xyz) 
+        if random_enemy_attributes is not None:
+            PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_enemy_attributes['enemy_rando_range_scale_low'],
+                                                              random_enemy_attributes['enemy_rando_range_scale_high'], random_enemy_attributes['enemy_rando_range_health_low'],
+                                                              random_enemy_attributes['enemy_rando_range_health_high'], random_enemy_attributes['enemy_rando_range_speed_low'],
+                                                              random_enemy_attributes['enemy_rando_range_speed_high'], random_enemy_attributes['enemy_rando_range_damage_low'],
+                                                              random_enemy_attributes['enemy_rando_range_damage_high'], random_enemy_attributes['enemy_rando_range_knockback_low'],
+                                                              random_enemy_attributes['enemy_rando_range_knockback_high'], random_enemy_attributes['enemy_rando_diff_xyz']) 
