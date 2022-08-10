@@ -23,6 +23,8 @@ from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.layout_description import LayoutDescription
+from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -902,7 +904,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
 
-            "randEnemyAttributes": vars(self.configuration.enemy_attributes)
+            "randEnemyAttributes": self.configuration.enemy_attributes and self.configuration.enemy_attributes.as_json
             
             # TODO
             # "externAssetsDir": path_to_converted_assets,

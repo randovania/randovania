@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, ANY
 import pytest
 
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams, adjust_model_names
+from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 
 @pytest.mark.parametrize('use_echoes_models', [True, False])
@@ -16,9 +17,8 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
-                  "randScaleMin": 1.0, "randScaleMax": 1.0, "randHealthMin": 1.0, "randHealthMax": 1.0,
-                  "randSpeedMin": 1.0, "randSpeedMax": 1.0, "randDamageMin": 1.0, "randDamageMax": 1.0,
-                  "randKnockbackMin": 1.0, "randKnockbackMax": 1.0, "diffXYZ": False}
+                  "randEnemyAttributes": EnemyAttributeRandomizer(1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json,
+                  "seed": 106827108}
     progress_update = MagicMock()
 
     echoes_input_path = tmp_path.joinpath("echoes.iso")
