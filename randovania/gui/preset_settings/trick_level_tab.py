@@ -20,11 +20,8 @@ from randovania.lib import enum_lib
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
-        super().__init__(editor)
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
-
-        self.game_description = game_description
-        self._window_manager = window_manager
 
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
         signal_handling.on_checked(self.underwater_abuse_check, self._on_underwater_abuse_check)

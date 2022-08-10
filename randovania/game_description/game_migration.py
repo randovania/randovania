@@ -1,7 +1,5 @@
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 11
-
 
 def _migrate_v6(data: dict) -> dict:
     lore_types = {
@@ -80,20 +78,21 @@ def _migrate_v10(data: dict) -> dict:
     return data
 
 
-_MIGRATIONS = {
-    1: migration_lib.unsupported_migration,
-    2: migration_lib.unsupported_migration,
-    3: migration_lib.unsupported_migration,
-    4: migration_lib.unsupported_migration,
-    5: migration_lib.unsupported_migration,
-    6: _migrate_v6,
-    7: _migrate_v7,
-    8: _migrate_v8,
-    9: _migrate_v9,
-    10: _migrate_v10,
-}
+_MIGRATIONS = [
+    None,
+    None,
+    None,
+    None,
+    None,
+    _migrate_v6,
+    _migrate_v7,
+    _migrate_v8,
+    _migrate_v9,
+    _migrate_v10,
+]
+CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def migrate_to_current(data: dict):
-    return migration_lib.migrate_to_version(data, CURRENT_VERSION, _MIGRATIONS,
-                                            copy_before_migrating=True)
+    return migration_lib.apply_migrations(data, _MIGRATIONS,
+                                          copy_before_migrating=True)

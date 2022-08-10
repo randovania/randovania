@@ -3,8 +3,10 @@ import dataclasses
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
 from randovania.interface_common.preset_editor import PresetEditor
@@ -13,10 +15,9 @@ from randovania.layout.preset import Preset
 
 
 class MetroidPresetItemPool(PresetItemPool):
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         item_database = default_database.item_database_for_game(self.game)
-        game_description = default_database.game_description_for(self.game)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
 

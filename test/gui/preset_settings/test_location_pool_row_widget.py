@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 import pytest
 
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -57,7 +59,7 @@ def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echo
     # Setup
     preset_editor = PresetEditor(customized_preset)
 
-    location_pool_tab = PresetLocationPool(preset_editor, echoes_game_description)
+    location_pool_tab = PresetLocationPool(preset_editor, echoes_game_description, MagicMock())
 
     # Get the first major location in the list, and the first non-major one
     # Then, put it in a state which will have to be changed in the case where

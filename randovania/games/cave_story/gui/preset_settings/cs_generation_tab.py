@@ -3,15 +3,16 @@ from typing import Iterable
 from PySide6.QtWidgets import *
 
 from randovania.game_description.game_description import GameDescription
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
 
 class PresetCSGeneration(PresetGeneration):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription) -> None:
+    def setupUi(self, obj):
+        super().setupUi(obj)
         self._create_puppy_checkbox()
-        super().__init__(editor, game_description)
 
     @property
     def game_specific_widgets(self) -> Iterable[QWidget] | None:

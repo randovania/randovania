@@ -1,14 +1,16 @@
 from PySide6 import QtWidgets
 
+from randovania.game_description.game_description import GameDescription
 from randovania.games.blank.layout import BlankConfiguration
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
 
 class PresetBlankPatches(PresetTab):
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
 
         self.root_widget = QtWidgets.QWidget(self)
         self.root_layout = QtWidgets.QVBoxLayout(self.root_widget)
