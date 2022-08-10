@@ -204,6 +204,7 @@ class PrimeGameExporter(GameExporter):
                 raise RuntimeError(f"randomprime panic: {e}") from e
 
         if random_enemy_attributes:
+            print(random_enemy_attributes[0])
             rand_scale_low = random_enemy_attributes.enemy_rando_range_scale_low
             rand_scale_high = random_enemy_attributes.enemy_rando_range_scale_high
             rand_health_low = random_enemy_attributes.enemy_rando_range_health_low
