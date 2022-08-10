@@ -1,6 +1,8 @@
 from PySide6 import QtWidgets
 import dataclasses
 
+from randovania.game_description.game_description import GameDescription
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.generated.preset_prime_enemy_stat_randomizer_ui import Ui_EnemyAttributeRandomizer
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -8,8 +10,8 @@ from randovania.layout.preset import Preset
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         self.enemy_stat_randomizer_description.setText(self.enemy_stat_randomizer_description.text().replace("color:#0000ff;", ""))
