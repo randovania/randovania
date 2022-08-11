@@ -105,7 +105,7 @@ class PrimeConfiguration(BaseConfiguration):
         if self.allow_underwater_movement_without_gravity:
             result.append("Dangerous Gravity Suit Logic")
 
-        if enemy_attributes is not None:
+        if self.enemy_attributes is not None:
             result.append("Dangerous Random Enemy Attributes")
 
         return result

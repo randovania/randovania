@@ -17,8 +17,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
-                  "randEnemyAttributes": EnemyAttributeRandomizer(1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json,
-                  "seed": 106827108}
+                  "randEnemyAttributes": EnemyAttributeRandomizer(1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json}
     progress_update = MagicMock()
 
     echoes_input_path = tmp_path.joinpath("echoes.iso")

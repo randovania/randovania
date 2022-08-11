@@ -17,7 +17,7 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         self.enemy_stat_randomizer_description.setText(self.enemy_stat_randomizer_description.text().replace("color:#0000ff;", ""))
 
         # Signals
-        self.Activate_Randomizer.stateChanged.connect(self._on_activation)
+        self.activate_randomizer.stateChanged.connect(self._on_activation)
         self.range_scale_low.valueChanged.connect(self._on_spin_changed_range_scale_low)
         self.range_scale_high.valueChanged.connect(self._on_spin_changed_range_scale_high)
         self.range_health_low.valueChanged.connect(self._on_spin_changed_range_health_low)
@@ -39,7 +39,7 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         return True
 
     def _on_activation(self):
-        checked: bool = self.Activate_Randomizer.isChecked()
+        checked: bool = self.activate_randomizer.isChecked()
         widget_arr = [self.minimum_label, self.maximum_label, self.scale_attribute_label, self.range_scale_low, self.range_scale_high, self.health_attribute_label,
                       self.range_health_low, self.range_health_high, self.speed_attribute_label, self.range_speed_low, self.range_speed_high, self.damage_attribute_label,
                       self.range_damage_low, self.range_damage_high, self.knockback_attribute_label, self.range_knockback_low, self.range_knockback_high, self.diff_xyz,
@@ -60,7 +60,7 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
         if config.enemy_attributes is not None:
-            self.Activate_Randomizer.setChecked(True)
+            self.activate_randomizer.setChecked(True)
             self.range_scale_low.setValue(config.enemy_attributes.enemy_rando_range_scale_low)
             self.range_scale_high.setValue(config.enemy_attributes.enemy_rando_range_scale_high)
             self.range_health_low.setValue(config.enemy_attributes.enemy_rando_range_health_low)
@@ -74,59 +74,59 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
             self.diff_xyz.setChecked(config.enemy_attributes.enemy_rando_diff_xyz)
 
     def _on_spin_changed_range_scale_low(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_scale_low=self.range_scale_low.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_scale_low=self.range_scale_low.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_scale_high(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_scale_high=self.range_scale_high.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_scale_high=self.range_scale_high.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_health_low(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_health_low=self.range_health_low.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_health_low=self.range_health_low.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_health_high(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_health_high=self.range_health_high.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_health_high=self.range_health_high.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_speed_low(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_speed_low=self.range_speed_low.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_speed_low=self.range_speed_low.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_speed_high(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_speed_high=self.range_speed_high.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_speed_high=self.range_speed_high.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_damage_low(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_damage_low=self.range_damage_low.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_damage_low=self.range_damage_low.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_damage_high(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_damage_high=self.range_damage_high.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_damage_high=self.range_damage_high.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_knockback_low(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_knockback_low=self.range_knockback_low.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_knockback_low=self.range_knockback_low.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_spin_changed_range_knockback_high(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_range_knockback_high=self.range_knockback_high.value())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_range_knockback_high=self.range_knockback_high.value())
+        self._set_enemy_attributes_in_editor(config)
 
     def _on_check_change(self):
-            config = self._editor.configuration.enemy_attributes
-            config = dataclasses.replace(config, enemy_rando_diff_xyz=self.diff_xyz.isChecked())
-            self._set_enemy_attributes_in_editor(config)
+        config = self._editor.configuration.enemy_attributes
+        config = dataclasses.replace(config, enemy_rando_diff_xyz=self.diff_xyz.isChecked())
+        self._set_enemy_attributes_in_editor(config)
 
     def _set_enemy_attributes_in_editor(self, config):
         with self._editor as editor:
