@@ -9,15 +9,22 @@ from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRan
 
 
 @pytest.mark.parametrize('use_echoes_models', [True, False])
-def test_patch_game(mocker, tmp_path, use_echoes_models):
+@pytest.mark.parametrize('use_enemy_attribute_randomizer', [True, False])
+def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_randomizer):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
     })
+    if use_enemy_attribute_randomizer:
+        use_enemy_attribute_randomizer = EnemyAttributeRandomizer(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json
+    else:
+        use_enemy_attribute_randomizer = None
+
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
-                  "randEnemyAttributes": EnemyAttributeRandomizer(1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json}
+                  "randEnemyAttributes": use_enemy_attribute_randomizer, "seed": 103817502}
+    mock_enemy_data = MagicMock(use_enemy_attribute_randomizer)
     progress_update = MagicMock()
 
     echoes_input_path = tmp_path.joinpath("echoes.iso")
@@ -68,6 +75,11 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
         mock_asset_convert.assert_called_once_with(echoes_input_path, asset_cache_path, ANY)
     else:
         assert not asset_cache_path.exists()
+
+    if use_enemy_attribute_randomizer:
+        mock_enemy_data.assert_called_once_with({'patch': 'data', 'gameConfig': {}, 'hasSpoiler': True, 'preferences': {}, 'roomRandoMode': 'None', 'randEnemyAttributes': use_enemy_attribute_randomizer, 'seed': 103817502})
+    else:
+        mock_enemy_data.assert_not_called()
 
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(',', ': ')), ANY)

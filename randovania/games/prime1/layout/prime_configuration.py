@@ -83,7 +83,7 @@ class PrimeConfiguration(BaseConfiguration):
 
     def dangerous_settings(self) -> list[str]:
         result = super().dangerous_settings()
-
+        
         if self.shuffle_item_pos:
             result.append("Shuffled Item Position")
 

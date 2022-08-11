@@ -28,7 +28,7 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         self.range_damage_high.valueChanged.connect(self._on_spin_changed_range_damage_high)
         self.range_knockback_low.valueChanged.connect(self._on_spin_changed_range_knockback_low)
         self.range_knockback_high.valueChanged.connect(self._on_spin_changed_range_knockback_high)
-        self.diff_xyz.toggled.connect(self._on_check_change)
+        self.diff_xyz.toggled.connect(self._on_diff_xyz_check_change)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -123,7 +123,7 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         config = dataclasses.replace(config, enemy_rando_range_knockback_high=self.range_knockback_high.value())
         self._set_enemy_attributes_in_editor(config)
 
-    def _on_check_change(self):
+    def _on_diff_xyz_check_change(self):
         config = self._editor.configuration.enemy_attributes
         config = dataclasses.replace(config, enemy_rando_diff_xyz=self.diff_xyz.isChecked())
         self._set_enemy_attributes_in_editor(config)
