@@ -1,5 +1,6 @@
 import dataclasses
 import uuid
+from unittest.mock import MagicMock
 
 import pytest
 from PySide6 import QtCore
@@ -23,7 +24,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window = PresetStartingArea(editor, default_database.game_description_for(preset.game))
+    window = PresetStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
 
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())
@@ -40,7 +41,7 @@ def test_starting_location_world_select(skip_qtbot, preset_manager):
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game))
+    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
     # Run
@@ -69,7 +70,7 @@ def test_quick_fill_default(skip_qtbot, preset_manager, game_enum: RandovaniaGam
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window = PresetStartingArea(editor, default_database.game_description_for(preset.game))
+    window = PresetStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
     # Run
@@ -86,7 +87,7 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window = PresetCSStartingArea(editor, default_database.game_description_for(preset.game))
+    window = PresetCSStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
     # Run

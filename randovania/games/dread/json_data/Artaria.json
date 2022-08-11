@@ -1039,8 +1039,37 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Slide"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Slide"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Open Charge Door"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "DoorLocks",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1242,6 +1271,32 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Near Missile Tank 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2595,38 +2650,60 @@
                             }
                         },
                         "Dock to Early Cloak Room (Water Blob)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Movement",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 2,
-                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2844,11 +2921,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Early Cloak Room (Water Blob)": {
+                        "Next to Pickup": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "If this lock is unmoved, it can cause death if the room has been loaded",
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -2856,61 +2942,6 @@
                                             "name": "ArtariaEmmiMagnetDoorLock",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Next to Pickup": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "ArtariaEmmiMagnetDoorLock",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -2991,15 +3022,6 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "template",
                                                     "data": "Shoot Ice Missile"
                                                 },
@@ -3071,6 +3093,15 @@
                                         }
                                     },
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
@@ -3079,35 +3110,18 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Grapple",
+                                                        "name": "Speed",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -3237,7 +3251,7 @@
             }
         },
         "White EMMI Introduction": {
-            "default_node": "Warp from Entrance",
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3318,6 +3332,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -3336,12 +3359,29 @@
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -3372,29 +3412,38 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "ArtariaCU",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "ElunReleaseX",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "events",
+                                                        "name": "ArtariaCU",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3404,15 +3453,70 @@
                             }
                         },
                         "Door to EMMI Zone First Entrance": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "ArtariaEmmiFirstChase",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Door to EMMI Zone Spinner": {
+                        "Event - First Chase Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3532,52 +3636,32 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Teleport to Dairon (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "ArtariaEmmiFirstChase",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to EMMI Zone Spinner": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Slide"
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "ArtariaEmmiFirstChase",
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3585,14 +3669,9 @@
                                 ]
                             }
                         },
-                        "Event - EMMI First Chase": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "ArtariaEmmiFirstChase",
-                                "amount": 1,
-                                "negate": true
-                            }
+                        "Start Point": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -3626,39 +3705,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleport to Dairon (Lower)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s010_cave:default:PRP_DB_CV_002",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Door to EMMI Zone First Entrance": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "ArtariaEmmiFirstChase",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -3681,53 +3732,54 @@
                     },
                     "event_name": "s010_cave:default:PRP_DB_CV_002",
                     "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3057.1,
+                        "y": -1613.78,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Teleport to Dairon (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s010_cave:default:PRP_DB_CV_002",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to EMMI Zone First Entrance": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Door to EMMI Zone Spinner": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        }
-                    }
-                },
-                "Event - EMMI First Chase": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5651.44,
-                        "y": -1541.42,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "ArtariaEmmiFirstChase",
-                    "connections": {
-                        "Warp from Entrance": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Warp from Entrance": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3057.103372028745,
-                        "y": -1613.7783305693752,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
+                        },
                         "Event - First Chase Blob": {
                             "type": "and",
                             "data": {
@@ -3807,7 +3859,7 @@
                                 "items": []
                             }
                         },
-                        "Teleporter to Dairon - Teleport to Artaria": {
+                        "Door to EMMI Zone Exit North (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3848,14 +3900,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI First Chase End (DoorFrame_015)": {
+                        "Door to EMMI First Chase End (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to EMMI First Chase End (DoorFrame_016)": {
+                        "Door to EMMI First Chase End (Bottom)": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -3898,7 +3950,7 @@
                                 "items": []
                             }
                         },
-                        "Door to EMMI First Chase End (DoorPowerPower_001)": {
+                        "Door to EMMI First Chase End (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3907,7 +3959,7 @@
                         }
                     }
                 },
-                "Dock to Arbitrary Enky Room (DoorEmmy06)": {
+                "Dock to Arbitrary Enky Room (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3933,7 +3985,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Arbitrary Enky Room (DoorEmmy07)": {
+                        "Dock to Arbitrary Enky Room (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3943,7 +3995,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Movement",
-                                            "amount": 2,
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     },
@@ -3959,7 +4011,7 @@
                                 ]
                             }
                         },
-                        "Door to EMMI First Chase End (DoorPowerPower_001)": {
+                        "Door to EMMI First Chase End (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3967,34 +4019,12 @@
                             }
                         },
                         "Tunnel to EMMI Zone Exit North": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Ballspark"
                         }
                     }
                 },
-                "Dock to Arbitrary Enky Room (DoorEmmy07)": {
+                "Dock to Arbitrary Enky Room (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4020,7 +4050,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Arbitrary Enky Room (DoorEmmy06)": {
+                        "Dock to Arbitrary Enky Room (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4036,7 +4066,7 @@
                         }
                     }
                 },
-                "Door to EMMI First Chase End (DoorPowerPower_001)": {
+                "Door to EMMI First Chase End (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4060,7 +4090,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "EMMI First Chase End",
-                        "node_name": "Door to Teleport to Dairon (DoorPowerPower_001)"
+                        "node_name": "Door to Teleport to Dairon (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -4072,10 +4102,17 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Dock to Arbitrary Enky Room (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
-                "Door to EMMI First Chase End (DoorFrame_015)": {
+                "Door to EMMI First Chase End (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4099,7 +4136,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "EMMI First Chase End",
-                        "node_name": "Door to Teleport to Dairon (DoorFrame_015)"
+                        "node_name": "Door to Teleport to Dairon (Middle)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -4114,7 +4151,7 @@
                         }
                     }
                 },
-                "Door to EMMI First Chase End (DoorFrame_016)": {
+                "Door to EMMI First Chase End (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4138,7 +4175,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "EMMI First Chase End",
-                        "node_name": "Door to Teleport to Dairon (DoorFrame_016)"
+                        "node_name": "Door to Teleport to Dairon (Bottom)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -4247,7 +4284,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Arbitrary Enky Room (DoorEmmy07)": {
+                        "Dock to Arbitrary Enky Room (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4325,7 +4362,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Arbitrary Enky Room (DoorEmmy07)": {
+                        "Dock to Arbitrary Enky Room (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4432,13 +4469,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Arbitrary Enky Room (DoorEmmy07)": {
-                            "type": "resource",
+                        "Dock to Arbitrary Enky Room (Upper)": {
+                            "type": "and",
                             "data": {
-                                "type": "tricks",
-                                "name": "Movement",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8131,12 +8166,12 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Door to White EMMI Arena (1)": {
+                "Door to White EMMI Arena (Power)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2591.2315433473564,
-                        "y": -4032.7992246143695,
+                        "x": 2591.23,
+                        "y": -4032.8,
                         "z": 0.0
                     },
                     "description": "",
@@ -8155,13 +8190,13 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "White EMMI Arena",
-                        "node_name": "Door to EMMI Zone Spinner (1)"
+                        "node_name": "Door to EMMI Zone Spinner (Power)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to White EMMI Arena (DoorFrame_010)": {
+                        "Door to White EMMI Arena (Middle)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -8170,13 +8205,42 @@
                                 "negate": false
                             }
                         },
-                        "Door to White EMMI Arena (DoorFrame_011)": {
-                            "type": "resource",
+                        "Door to White EMMI Arena (Top)": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Space",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Tunnel to White EMMI Arena": {
@@ -8216,16 +8280,58 @@
                     "pickup_index": 5,
                     "major_location": false,
                     "connections": {
-                        "Door to White EMMI Arena (DoorFrame_011)": {
+                        "Door to White EMMI Arena (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to White EMMI Arena (Top)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Cross Comb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
-                "Door to White EMMI Arena (DoorFrame_009)": {
+                "Door to White EMMI Arena (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8249,7 +8355,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "White EMMI Arena",
-                        "node_name": "Door to EMMI Zone Spinner (DoorFrame_009)"
+                        "node_name": "Door to EMMI Zone Spinner (Bottom)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -8264,12 +8370,12 @@
                         }
                     }
                 },
-                "Door to White EMMI Arena (DoorFrame_010)": {
+                "Door to White EMMI Arena (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2749.690670626083,
-                        "y": -3072.7233358079684,
+                        "x": 2749.69,
+                        "y": -3072.72,
                         "z": 0.0
                     },
                     "description": "",
@@ -8288,13 +8394,13 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "White EMMI Arena",
-                        "node_name": "Door to EMMI Zone Spinner (DoorFrame_010)"
+                        "node_name": "Door to EMMI Zone Spinner (Middle)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to White EMMI Arena (1)": {
+                        "Door to White EMMI Arena (Power)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -8305,12 +8411,12 @@
                         }
                     }
                 },
-                "Door to White EMMI Arena (DoorFrame_011)": {
+                "Door to White EMMI Arena (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2656.4794192856552,
-                        "y": -2173.234760372845,
+                        "x": 2656.48,
+                        "y": -2173.23,
                         "z": 0.0
                     },
                     "description": "",
@@ -8329,13 +8435,13 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "White EMMI Arena",
-                        "node_name": "Door to EMMI Zone Spinner (DoorFrame_011)"
+                        "node_name": "Door to EMMI Zone Spinner (Top)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to White EMMI Arena (1)": {
+                        "Door to White EMMI Arena (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8343,12 +8449,29 @@
                             }
                         },
                         "Pickup (Missile Tank)": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Grapple",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArtariaEmmiSpinnerRotated",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to White EMMI Introduction": {
@@ -8431,7 +8554,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to White EMMI Arena (DoorFrame_011)": {
+                        "Door to White EMMI Arena (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -8479,16 +8602,66 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to White EMMI Arena (1)": {
-                            "type": "resource",
+                        "Door to White EMMI Arena (Power)": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Space",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Door to White EMMI Arena (DoorFrame_009)": {
+                        "Door to White EMMI Arena (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8512,7 +8685,7 @@
                     "extra": {},
                     "event_name": "ArtariaEmmiMagnetPlatformLowered",
                     "connections": {
-                        "Door to White EMMI Arena (1)": {
+                        "Door to White EMMI Arena (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8536,7 +8709,7 @@
                     "extra": {},
                     "event_name": "ArtariaEmmiSpinnerRotated",
                     "connections": {
-                        "Door to White EMMI Arena (DoorFrame_011)": {
+                        "Door to White EMMI Arena (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8748,6 +8921,32 @@
                                                                     "name": "ElunReleaseX",
                                                                     "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
                                                                 }
                                                             }
                                                         ]
@@ -9240,7 +9439,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Spinner (DoorFrame_010)": {
+                        "Door to EMMI Zone Spinner (Middle)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9264,10 +9463,6 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
@@ -9275,31 +9470,26 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -9369,6 +9559,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9382,7 +9598,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Spinner (1)": {
+                "Door to EMMI Zone Spinner (Power)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9406,7 +9622,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "EMMI Zone Spinner",
-                        "node_name": "Door to White EMMI Arena (1)"
+                        "node_name": "Door to White EMMI Arena (Power)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -9451,14 +9667,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Spinner (DoorFrame_010)": {
+                        "Door to EMMI Zone Spinner (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to EMMI Zone Spinner (DoorFrame_011)": {
+                        "Door to EMMI Zone Spinner (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9505,6 +9721,32 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9541,7 +9783,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Spinner (DoorFrame_009)": {
+                        "Door to EMMI Zone Spinner (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9557,7 +9799,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Spinner (DoorFrame_009)": {
+                "Door to EMMI Zone Spinner (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9581,7 +9823,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "EMMI Zone Spinner",
-                        "node_name": "Door to White EMMI Arena (DoorFrame_009)"
+                        "node_name": "Door to White EMMI Arena (Bottom)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -9596,7 +9838,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Spinner (DoorFrame_010)": {
+                "Door to EMMI Zone Spinner (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9620,7 +9862,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "EMMI Zone Spinner",
-                        "node_name": "Door to White EMMI Arena (DoorFrame_010)"
+                        "node_name": "Door to White EMMI Arena (Middle)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -9642,7 +9884,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Spinner (DoorFrame_011)": {
+                "Door to EMMI Zone Spinner (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9666,7 +9908,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "EMMI Zone Spinner",
-                        "node_name": "Door to White EMMI Arena (DoorFrame_011)"
+                        "node_name": "Door to White EMMI Arena (Top)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -9705,7 +9947,7 @@
                                 "items": []
                             }
                         },
-                        "Door to EMMI Zone Spinner (1)": {
+                        "Door to EMMI Zone Spinner (Power)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9805,6 +10047,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -10682,6 +10933,15 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Open Charge Door"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -11314,6 +11574,15 @@
                                                                                 "name": "Movement",
                                                                                 "amount": 1,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "DoorLocks",
+                                                                                "amount": 1,
+                                                                                "negate": true
                                                                             }
                                                                         }
                                                                     ]
@@ -15486,29 +15755,12 @@
                             }
                         },
                         "Tunnel to Central Unit": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "ArtariaCU",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "ArtariaEmmiFirstChase",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "ArtariaCU",
+                                "amount": 1,
+                                "negate": true
                             }
                         }
                     }
@@ -16418,28 +16670,6 @@
                             }
                         }
                     }
-                },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2300.0,
-                        "y": 1000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_062",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -20896,7 +21126,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Dock to Arbitrary Enky Room (DoorEmmy06)"
+                        "node_name": "Dock to Arbitrary Enky Room (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -20945,7 +21175,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Dock to Arbitrary Enky Room (DoorEmmy07)"
+                        "node_name": "Dock to Arbitrary Enky Room (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -21366,7 +21596,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleport to Dairon (DoorFrame_016)": {
+                        "Door to Teleport to Dairon (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -21377,7 +21607,7 @@
                         }
                     }
                 },
-                "Door to Teleport to Dairon (DoorPowerPower_001)": {
+                "Door to Teleport to Dairon (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -21401,13 +21631,13 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Door to EMMI First Chase End (DoorPowerPower_001)"
+                        "node_name": "Door to EMMI First Chase End (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleport to Dairon (DoorFrame_015)": {
+                        "Door to Teleport to Dairon (Middle)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -21419,13 +21649,57 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Teleport to Dairon (DoorFrame_015)": {
+                "Door to Teleport to Dairon (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -21449,13 +21723,13 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Door to EMMI First Chase End (DoorFrame_015)"
+                        "node_name": "Door to EMMI First Chase End (Middle)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleport to Dairon (DoorPowerPower_001)": {
+                        "Door to Teleport to Dairon (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -21472,11 +21746,93 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         },
-                        "Door to Teleport to Dairon (DoorFrame_016)": {
+                        "Door to Teleport to Dairon (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -21485,7 +21841,7 @@
                         }
                     }
                 },
-                "Door to Teleport to Dairon (DoorFrame_016)": {
+                "Door to Teleport to Dairon (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -21509,7 +21865,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Door to EMMI First Chase End (DoorFrame_016)"
+                        "node_name": "Door to EMMI First Chase End (Bottom)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -21519,7 +21875,7 @@
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Door to Teleport to Dairon (DoorFrame_015)": {
+                        "Door to Teleport to Dairon (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -21542,7 +21898,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Door to Teleport to Dairon (DoorFrame_015)": {
+                        "Door to Teleport to Dairon (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -22564,12 +22920,29 @@
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -23396,12 +23769,46 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Avoid being pushed through the cloak door",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "DoorLocks",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]

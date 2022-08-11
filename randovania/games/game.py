@@ -52,7 +52,7 @@ class GameLayout:
 
 @dataclass(frozen=True)
 class GameGui:
-    tab_provider: Callable[[PresetEditor, WindowManager], Iterable[PresetTab]]
+    tab_provider: Callable[[PresetEditor, WindowManager], Iterable[type[PresetTab]]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
     cosmetic_dialog: type[BaseCosmeticPatchesDialog]
