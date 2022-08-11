@@ -7,7 +7,7 @@ from textwrap import wrap
 
 import py_randomprime
 
-import PARAMETEREDITOR.PARAMETEREDITOR
+import Random_Enemy_Attributes.Random_Enemy_Attributes
 
 from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -204,7 +204,7 @@ class PrimeGameExporter(GameExporter):
                 raise RuntimeError(f"randomprime panic: {e}") from e
 
         if random_enemy_attributes is not None:
-            PARAMETEREDITOR.PARAMETEREDITOR.PyPARAMETEREDITOR(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_enemy_attributes['enemy_rando_range_scale_low'],
+            Random_Enemy_Attributes.Random_Enemy_Attributes.PyRandom_Enemy_Attributes(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_enemy_attributes['enemy_rando_range_scale_low'],
                                                               random_enemy_attributes['enemy_rando_range_scale_high'], random_enemy_attributes['enemy_rando_range_health_low'],
                                                               random_enemy_attributes['enemy_rando_range_health_high'], random_enemy_attributes['enemy_rando_range_speed_low'],
                                                               random_enemy_attributes['enemy_rando_range_speed_high'], random_enemy_attributes['enemy_rando_range_damage_low'],
