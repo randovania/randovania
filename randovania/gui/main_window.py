@@ -46,16 +46,6 @@ def _t(key: str, disambiguation: str | None = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
 
 
-def _update_label_on_show(label: QtWidgets.QLabel, text: str):
-    def showEvent(_):
-        if label._delayed_text is not None:
-            label.setText(label._delayed_text)
-            label._delayed_text = None
-
-    label._delayed_text = text
-    label.showEvent = showEvent
-
-
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
@@ -67,7 +57,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _data_visualizer: QtWidgets.QWidget | None = None
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
-    _play_game_buttons: dict[RandovaniaGame, QtWidgets.QPushButton]
+    _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     GameDetailsSignal = Signal(LayoutDescription)
 
     InitPostShowSignal = Signal()
@@ -103,7 +93,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         self._preset_manager = preset_manager
         self.network_client = network_client
-        self._play_game_buttons = {}
+        self._play_game_logos = {}
 
         if preview:
             debug.set_level(2)
@@ -116,10 +106,12 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.GameDetailsSignal.connect(self._open_game_details)
         self.InitPostShowSignal.connect(self.initialize_post_show)
 
-        self.intro_play_now_button.clicked.connect(lambda: self.main_tab_widget.setCurrentWidget(self.tab_play))
-        self.open_faq_button.clicked.connect(self._open_faq)
-        self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
-                                                                 RandovaniaGame.METROID_PRIME_ECHOES))
+        self.intro_play_solo_button.clicked.connect(
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_new))
+        self.intro_play_existing_button.clicked.connect(
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_existing))
+        self.intro_play_multiworld_button.clicked.connect(
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_multiworld))
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
@@ -133,14 +125,26 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.game_menus = []
         self.menu_action_edits = []
 
+        from randovania.gui.lib.flow_layout import FlowLayout
+        from randovania.gui.lib.clickable_label import ClickableLabel
+        self.play_flow_layout = FlowLayout(self.play_new_contents)
+        self.play_flow_layout.setSpacing(15)
+        self.play_flow_layout.setAlignment(Qt.AlignHCenter)
+
         for game in RandovaniaGame.sorted_all_games():
             # Play game buttons
-            button = QtWidgets.QPushButton(self.play_new_game_group)
-            button.setText(game.long_name)
-            button.clicked.connect(partial(self._play_game, game))
-            button.setVisible(game.data.development_state.can_view(False))
-            self.play_new_permalink_layout.addWidget(button)
-            self._play_game_buttons[game] = button
+            image_path = game.data_path.joinpath("assets", "cover.png")
+            if image_path.exists():
+                logo = ClickableLabel(self.play_new_contents)
+                logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
+                logo.setScaledContents(True)
+                logo.setFixedSize(150, 200)
+                logo.setToolTip(game.long_name)
+                logo.setAccessibleName(game.long_name)
+                logo.clicked.connect(partial(self._play_game, game))
+                logo.setVisible(game.data.development_state.can_view(False))
+                self.play_flow_layout.addWidget(logo)
+                self._play_game_logos[game] = logo
 
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
@@ -234,8 +238,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             return
         self._experimental_games_visible = self.menu_action_experimental_games.isChecked()
 
-        for game, button in self._play_game_buttons.items():
-            button.setVisible(game.data.development_state.can_view(self._experimental_games_visible))
+        for game, logo in self._play_game_logos.items():
+            logo.setVisible(game.data.development_state.can_view(self._experimental_games_visible))
 
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
@@ -269,9 +273,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self.on_options_changed()
 
     # Generate Seed
-    def _open_faq(self):
-        self.main_tab_widget.setCurrentWidget(self.games_tab)
-
     async def generate_seed_from_permalink(self, permalink: Permalink):
         from randovania.lib.status_update_lib import ProgressUpdateCallable
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
