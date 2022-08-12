@@ -7,7 +7,7 @@ from textwrap import wrap
 
 import py_randomprime
 
-import Random_Enemy_Attributes.Random_Enemy_Attributes
+from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
 
 from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -168,6 +168,7 @@ class PrimeGameExporter(GameExporter):
         new_config["preferences"]["cacheDir"] = cache_dir
 
         random_enemy_attributes = new_config.pop("randEnemyAttributes")
+        random_enemy_attributes_seed = new_config.pop("seed")
 
         assets_meta = {}
         updaters = [progress_update]
@@ -204,9 +205,9 @@ class PrimeGameExporter(GameExporter):
                 raise RuntimeError(f"randomprime panic: {e}") from e
 
         if random_enemy_attributes is not None:
-            Random_Enemy_Attributes.Random_Enemy_Attributes.PyRandom_Enemy_Attributes(new_config["inputIso"], new_config["outputIso"], patch_data["seed"], random_enemy_attributes['enemy_rando_range_scale_low'],
+            PyRandom_Enemy_Attributes(new_config["inputIso"], new_config["outputIso"], random_enemy_attributes_seed, random_enemy_attributes['enemy_rando_range_scale_low'],
                                                               random_enemy_attributes['enemy_rando_range_scale_high'], random_enemy_attributes['enemy_rando_range_health_low'],
                                                               random_enemy_attributes['enemy_rando_range_health_high'], random_enemy_attributes['enemy_rando_range_speed_low'],
                                                               random_enemy_attributes['enemy_rando_range_speed_high'], random_enemy_attributes['enemy_rando_range_damage_low'],
                                                               random_enemy_attributes['enemy_rando_range_damage_high'], random_enemy_attributes['enemy_rando_range_knockback_low'],
-                                                              random_enemy_attributes['enemy_rando_range_knockback_high'], random_enemy_attributes['enemy_rando_diff_xyz']) 
+                                                              random_enemy_attributes['enemy_rando_range_knockback_high'], random_enemy_attributes['enemy_rando_diff_xyz'])
