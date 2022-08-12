@@ -65,7 +65,7 @@
         <item row="2" column="0" colspan="3">
          <widget class="QLabel" name="intro_welcome_label">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -210,22 +210,27 @@
         <bool>true</bool>
        </property>
        <attribute name="title">
-        <string>Play new game</string>
+        <string>Games</string>
        </attribute>
        <widget class="QWidget" name="play_new_contents">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>586</width>
-          <height>584</height>
+          <width>581</width>
+          <height>455</height>
          </rect>
         </property>
        </widget>
       </widget>
+      <widget class="GamesHelpWidget" name="games_tab">
+       <attribute name="title">
+        <string>Games</string>
+       </attribute>
+      </widget>
       <widget class="QWidget" name="tab_play_existing">
        <attribute name="title">
-        <string>Play existing game</string>
+        <string>Import Game</string>
        </attribute>
        <layout class="QVBoxLayout" name="play_existing_layout">
         <item>
@@ -337,45 +342,6 @@
          <widget class="QPushButton" name="host_new_game_button">
           <property name="text">
            <string>Host new multiworld session</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="GamesHelpWidget" name="games_tab">
-       <attribute name="title">
-        <string>Games</string>
-       </attribute>
-      </widget>
-      <widget class="RandovaniaHelpWidget" name="help_tab">
-       <attribute name="title">
-        <string>Randovania Help</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="about_tab">
-       <attribute name="title">
-        <string>About</string>
-       </attribute>
-       <layout class="QGridLayout" name="about_layout">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QTextBrowser" name="about_text_browser">
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="openExternalLinks">
-           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -495,7 +461,7 @@
      <x>0</x>
      <y>0</y>
      <width>599</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_open">
@@ -540,9 +506,19 @@
     <addaction name="separator"/>
     <addaction name="menu_action_layout_editor"/>
    </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="menu_action_help"/>
+    <addaction name="menu_action_changelog"/>
+    <addaction name="separator"/>
+    <addaction name="menu_action_about"/>
+   </widget>
    <addaction name="menu_open"/>
    <addaction name="menu_edit"/>
    <addaction name="menu_advanced"/>
+   <addaction name="menu_help"/>
   </widget>
   <action name="menu_action_edit_existing_database">
    <property name="text">
@@ -615,15 +591,24 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These games aren't fully integrated into Randovania and might have any number of issues.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
+  <action name="menu_action_help">
+   <property name="text">
+    <string>Randovania Help</string>
+   </property>
+  </action>
+  <action name="menu_action_changelog">
+   <property name="text">
+    <string>Change Log</string>
+   </property>
+  </action>
+  <action name="menu_action_about">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>RandovaniaHelpWidget</class>
-   <extends>QTabWidget</extends>
-   <header>randovania/gui/widgets/randovania_help_widget.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>GamesHelpWidget</class>
    <extends>QTabWidget</extends>
