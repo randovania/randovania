@@ -147,12 +147,18 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 logo.setAccessibleName(game.long_name)
                 logo.clicked.connect(partial(self._play_game, game))
                 logo.setVisible(game.data.development_state.can_view(False))
+
+                def enlarge_logo(l: ClickableLabel, active: bool):
+                    if active:
+                        l.new_effect = QtWidgets.QGraphicsColorizeEffect()
+                        l.new_effect.setStrength(0.5)
+                        l.setGraphicsEffect(l.new_effect)
+                    else:
+                        l.setGraphicsEffect(None)
+                    # l.setFixedSize(150+width, 200+width)
                 
-                def enlarge_logo(l: ClickableLabel, width: int):
-                    l.setFixedSize(150+width, 200+width)
-                
-                logo.entered.connect(partial(enlarge_logo, logo, 15))
-                logo.left.connect(partial(enlarge_logo, logo, 0))
+                logo.entered.connect(partial(enlarge_logo, logo, True))
+                logo.left.connect(partial(enlarge_logo, logo, False))
                 self.play_flow_layout.addWidget(logo)
                 self._play_game_logos[game] = logo
 
