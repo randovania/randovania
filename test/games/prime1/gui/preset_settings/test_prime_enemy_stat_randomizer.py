@@ -1,8 +1,10 @@
 import dataclasses
 import uuid
+from unittest.mock import MagicMock
 
 import pytest
 from PySide6 import QtWidgets
+from PySide6.QtCore import Qt
 
 from randovania.game_description import default_database
 from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
@@ -16,8 +18,10 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window = PresetEnemyAttributeRandomizer(editor)
+    window = PresetEnemyAttributeRandomizer(editor, default_database.game_description_for(preset.game), MagicMock())
 
+    skip_qtbot.mouseClick(window.activate_randomizer, Qt.LeftButton)
+    
     window.range_scale_low.setValue(1.2)
     window.range_scale_high.setValue(1.7)
     
@@ -36,17 +40,17 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     window.on_preset_changed(editor.create_custom_preset_with())
 
     # Assert
-    assert editor.configuration.enemy_rando_range_scale_low == window.range_scale_low.value()
-    assert editor.configuration.enemy_rando_range_scale_high == window.range_scale_high.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_scale_low == window.range_scale_low.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_scale_high == window.range_scale_high.value()
 
-    assert editor.configuration.enemy_rando_range_health_low == window.range_health_low.value()
-    assert editor.configuration.enemy_rando_range_health_high == window.range_health_high.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_health_low == window.range_health_low.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_health_high == window.range_health_high.value()
 
-    assert editor.configuration.enemy_rando_range_speed_low == window.range_speed_low.value()
-    assert editor.configuration.enemy_rando_range_speed_high == window.range_speed_high.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_speed_low == window.range_speed_low.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_speed_high == window.range_speed_high.value()
 
-    assert editor.configuration.enemy_rando_range_damage_low == window.range_damage_low.value()
-    assert editor.configuration.enemy_rando_range_damage_high == window.range_damage_high.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_damage_low == window.range_damage_low.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_damage_high == window.range_damage_high.value()
 
-    assert editor.configuration.enemy_rando_range_knockback_low == window.range_knockback_low.value()
-    assert editor.configuration.enemy_rando_range_knockback_high == window.range_knockback_high.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_knockback_low == window.range_knockback_low.value()
+    assert editor.configuration.enemy_attributes.enemy_rando_range_knockback_high == window.range_knockback_high.value()
