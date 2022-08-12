@@ -58,8 +58,12 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
-    GameDetailsSignal = Signal(LayoutDescription)
+    about_window: QtWidgets.QMainWindow | None = None
+    changelog_tab: QtWidgets.QWidget | None = None
+    changelog_window: QtWidgets.QMainWindow | None = None
+    help_window: QtWidgets.QMainWindow | None = None
 
+    GameDetailsSignal = Signal(LayoutDescription)
     InitPostShowSignal = Signal()
 
     @property
@@ -190,6 +194,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_layout_editor.triggered.connect(self._on_menu_action_layout_editor)
         self.menu_action_help.triggered.connect(self._on_menu_action_help)
         self.menu_action_changelog.triggered.connect(self._on_menu_action_changelog)
+        self.menu_action_changelog.setVisible(False)
         self.menu_action_about.triggered.connect(self._on_menu_action_about)
 
         # Setting this event only now, so all options changed trigger only once
@@ -198,10 +203,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.games_tab.set_main_window(self)
 
         self.main_tab_widget.setCurrentIndex(0)
-
-        self.about_window = None
-        self.changelog_window = None
-        self.help_window = None
 
     def closeEvent(self, event):
         self.stop_background_process()
@@ -367,7 +368,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if all_change_logs:
             from randovania.gui.widgets.changelog_widget import ChangeLogWidget
             self.changelog_tab = ChangeLogWidget(all_change_logs)
-            # self.main_tab_widget.addTab(changelog_tab, "Change Log")
+            self.menu_action_changelog.setVisible(True)
 
         if new_change_logs:
             from randovania.gui.lib.scroll_message_box import ScrollMessageBox
