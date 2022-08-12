@@ -1,5 +1,6 @@
 import dataclasses
 import uuid
+from unittest.mock import MagicMock
 
 import pytest
 from PySide6 import QtWidgets
