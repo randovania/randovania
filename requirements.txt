@@ -6,16 +6,18 @@
 #
 aiofiles==0.8.0
     # via randovania (setup.py)
-aiohttp==3.7.4.post0
+aiohttp==3.8.1
     # via
     #   py-cord
     #   python-socketio
     #   randovania (setup.py)
+aiosignal==1.2.0
+    # via aiohttp
 altgraph==0.17.2
     # via pyinstaller
 appdirs==1.4.4
     # via randovania (setup.py)
-async-timeout==3.0.1
+async-timeout==4.0.2
     # via aiohttp
 async-wiiload==1.0.2
     # via randovania (setup.py)
@@ -41,10 +43,10 @@ certifi==2022.6.15
     #   requests
 cffi==1.15.1
     # via cryptography
-chardet==4.0.0
-    # via aiohttp
-charset-normalizer==2.0.12
-    # via requests
+charset-normalizer==2.1.0
+    # via
+    #   aiohttp
+    #   requests
 click==8.1.3
     # via flask
 colorama==0.4.5
@@ -89,6 +91,10 @@ fonttools==4.34.4
     # via matplotlib
 frozendict==2.3.4
     # via randovania (setup.py)
+frozenlist==1.3.1
+    # via
+    #   aiohttp
+    #   aiosignal
 future==0.18.2
     # via pefile
 graphviz==0.20.1
@@ -165,7 +171,7 @@ pillow==9.2.0
     # via
     #   matplotlib
     #   randovania (setup.py)
-pluggy==0.13.1
+pluggy==1.0.0
     # via pytest
 prometheus-client==0.14.1
     # via prometheus-flask-exporter
@@ -257,7 +263,7 @@ requests-oauthlib==1.3.1
     # via
     #   flask-discord
     #   randovania (setup.py)
-retro-data-structures==0.10.1
+retro-data-structures==0.11.0
     # via
     #   open-prime-rando
     #   randovania (setup.py)
@@ -280,16 +286,14 @@ tomli==2.0.1
 tsc-utils==0.2.3
     # via randovania (setup.py)
 typing-extensions==4.3.0
-    # via
-    #   aiohttp
-    #   tsc-utils
+    # via tsc-utils
 urllib3==1.26.11
     # via
     #   dulwich
     #   requests
 werkzeug==2.2.2
     # via flask
-yarl==1.7.2
+yarl==1.8.1
     # via aiohttp
 
 # The following packages are considered to be unsafe in a requirements file:
