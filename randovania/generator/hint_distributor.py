@@ -160,9 +160,13 @@ class HintDistributor(ABC):
     def fill_unassigned_hints(self, patches: GamePatches,
                               world_list: WorldList,
                               rng: Random,
-                              scan_asset_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
+                              hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
                               ) -> GamePatches:
         new_hints = copy.copy(patches.hints)
+
+        debug.debug_print("fill_unassigned_hints: hint_initial_pickups has {} elements".format(
+            len(hint_initial_pickups)
+        ))
 
         # Get all LogbookAssets from the WorldList
         potential_hint_locations: set[NodeIdentifier] = {
@@ -171,8 +175,8 @@ class HintDistributor(ABC):
             if isinstance(node, LogbookNode)
         }
         for logbook in potential_hint_locations:
-            if logbook not in scan_asset_initial_pickups:
-                scan_asset_initial_pickups[logbook] = frozenset()
+            if logbook not in hint_initial_pickups:
+                hint_initial_pickups[logbook] = frozenset()
 
         # But remove these that already have hints
         potential_hint_locations -= patches.hints.keys()
@@ -193,7 +197,7 @@ class HintDistributor(ABC):
 
         if debug.debug_level() > 1:
             print(f"> Num pickups per asset:")
-            for asset, pickups in scan_asset_initial_pickups.items():
+            for asset, pickups in hint_initial_pickups.items():
                 print(f"* {asset}: {len(pickups)} pickups")
             print("> Done.")
 
@@ -231,7 +235,7 @@ class HintDistributor(ABC):
         ordered_potential_hint_locations = list(sorted(potential_hint_locations))
 
         num_logbooks: dict[PickupIndex, int] = {
-            index: sum(1 for indices in scan_asset_initial_pickups.values() if index in indices)
+            index: sum(1 for indices in hint_initial_pickups.values() if index in indices)
             for index in ordered_possible_indices
         }
         max_seen = max(num_logbooks.values()) if num_logbooks else 0
@@ -245,7 +249,7 @@ class HintDistributor(ABC):
                 pickup_indices_weight[index] = 0
 
         for logbook in sorted(ordered_potential_hint_locations,
-                              key=lambda r: len(scan_asset_initial_pickups[r]),
+                              key=lambda r: len(hint_initial_pickups[r]),
                               reverse=True):
             try:
                 new_index = random_lib.select_element_with_weight(pickup_indices_weight, rng)
