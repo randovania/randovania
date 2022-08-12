@@ -9,7 +9,7 @@ from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRan
 
 
 @pytest.mark.parametrize('use_echoes_models', [True, False])
-@pytest.mark.parametrize('use_enemy_attribute_randomizer', [True, False])
+@pytest.mark.parametrize('use_enemy_attribute_randomizer', [False, True])
 def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_randomizer):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
@@ -19,15 +19,13 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         enemy_attribute_randomizer = EnemyAttributeRandomizer(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json
     else:
         enemy_attribute_randomizer = None
-    print(use_enemy_attribute_randomizer)
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
-    mock_enemy_data: MagicMock = mocker.patch("Random_Enemy_Attributes.Random_Enemy_Attributes.PyRandom_Enemy_Attributes")
+    mock_enemy_data: MagicMock = mocker.patch("randovania.games.prime1.exporter.game_exporter.PyRandom_Enemy_Attributes")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
-                  "randEnemyAttributes": EnemyAttributeRandomizer(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json, "seed": seed} # I still have the "seed" here because if I don't have this here, my function creates a  KeyError: 'seed'
+                  "randEnemyAttributes": enemy_attribute_randomizer, "seed": seed}
     progress_update = MagicMock()
-
     echoes_input_path = tmp_path.joinpath("echoes.iso")
     asset_cache_path = tmp_path.joinpath("internal_copies", "prime1", "prime2_models")
 
@@ -78,7 +76,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         assert not asset_cache_path.exists()
 
     if use_enemy_attribute_randomizer:
-        mock_enemy_data.assert_called_once_with(tmp_path.joinpath("input.Iso"), tmp_path.joinpath("output.Iso"), seed, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False)
+        mock_enemy_data.assert_called_once_with(os.fspath(tmp_path.joinpath("input.iso")), os.fspath(tmp_path.joinpath("output.iso")), seed, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False)
     else:
         mock_enemy_data.assert_not_called()
 
