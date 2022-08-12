@@ -6,6 +6,7 @@ from PySide6 import QtWidgets, QtCore
 
 from randovania.exporter import item_names
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
@@ -19,6 +20,7 @@ from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
@@ -57,8 +59,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     _progressive_widgets: list[ProgressiveItemWidget]
 
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)

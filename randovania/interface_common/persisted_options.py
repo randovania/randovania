@@ -3,7 +3,6 @@ from typing import Iterator
 
 from randovania.lib import migration_lib, json_lib
 
-_CURRENT_OPTIONS_FILE_VERSION = 18
 _FIRST_VERSION_IN_SUBFOLDER = 18
 
 
@@ -96,15 +95,26 @@ def _convert_v17(options: dict) -> dict:
     return options
 
 
-_CONVERTER_FOR_VERSION = {
-    11: _convert_v11,
-    12: _convert_v12,
-    13: _convert_v13,
-    14: _convert_v14,
-    15: _convert_v15,
-    16: _convert_v16,
-    17: _convert_v17,
-}
+_CONVERTER_FOR_VERSION = [
+    None,
+    None,
+    None,
+    None,
+    None,
+    None,
+    None,
+    None,
+    None,
+    None,
+    _convert_v11,
+    _convert_v12,
+    _convert_v13,
+    _convert_v14,
+    _convert_v15,
+    _convert_v16,
+    _convert_v17,
+]
+_CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
 
 # debug_locations_check
@@ -113,9 +123,8 @@ def get_persisted_options_from_data(persisted_data: dict) -> dict:
     options = persisted_data.get("options", {})
     options["schema_version"] = persisted_data.get("version", 0)
 
-    return migration_lib.migrate_to_version(
+    return migration_lib.apply_migrations(
         options,
-        _CURRENT_OPTIONS_FILE_VERSION,
         _CONVERTER_FOR_VERSION,
     )
 

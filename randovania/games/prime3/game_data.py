@@ -20,7 +20,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.CorruptionCosmeticPatchesDialog,
         export_dialog=gui.CorruptionGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        help_widget=lambda: gui.CorruptionHelpWidget(),
+        game_tab=gui.CorruptionGameTabWidget,
     )
 
 

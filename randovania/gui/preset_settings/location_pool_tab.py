@@ -13,6 +13,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
 from randovania.gui.lib.area_list_helper import AreaListHelper, dark_world_flags
 from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -23,21 +24,20 @@ from randovania.layout.preset import Preset
 class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
     _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: dict[int, QtWidgets.QCheckBox]
-    _row_widget_for_node: dict[Node, LocationPoolRowWidget]
+    _row_widget_for_node: dict[PickupNode, LocationPoolRowWidget]
     _during_batch_update: bool
     _major_minor: bool
 
-    def __init__(self, editor: PresetEditor, game: GameDescription):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
-        self.game_description = game
         self._during_batch_update = False
 
         self._row_widget_for_node = {}
 
         world_list = self.game_description.world_list
 
-        nodes_by_world = collections.defaultdict(list)
+        nodes_by_world: dict[str, list[PickupNode]] = collections.defaultdict(list)
         node_names = {}
         pickup_match = re.compile(r"Pickup \(([^\)]+)\)")
 
@@ -75,7 +75,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
 
                 row_widget = LocationPoolRowWidget(node, node_names[node])
                 vbox_layout.addWidget(row_widget)
-                row_widget.changed.connect(functools.partial(self._on_location_changed, row_widget))
+                row_widget.changed.connect(self._on_location_changed)
                 self._row_widget_for_node[node] = row_widget
 
             spoiler.set_content_layout(vbox_layout)
@@ -121,9 +121,11 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
                     row_widget.setEnabled(True)
                     row_widget.set_can_have_progression(True)
 
-    def _on_location_changed(self, row_widget: LocationPoolRowWidget):
+    def _on_location_changed(self, node: PickupNode):
         if self._during_batch_update:
             return
         with self._editor as editor:
-            editor.available_locations = editor.available_locations.ensure_index(row_widget.node.pickup_index,
-                                                                                 not row_widget.can_have_progression)
+            editor.available_locations = editor.available_locations.ensure_index(
+                node.pickup_index,
+                not self._row_widget_for_node[node].can_have_progression
+            )

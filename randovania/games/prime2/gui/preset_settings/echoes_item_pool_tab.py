@@ -1,8 +1,10 @@
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.games.game import RandovaniaGame
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 from randovania.interface_common.preset_editor import PresetEditor
@@ -12,8 +14,8 @@ from randovania.layout.preset import Preset
 class EchoesPresetItemPool(MetroidPresetItemPool):
     _split_ammo_widgets: list[SplitAmmoWidget]
 
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         item_database = default_database.item_database_for_game(self.game)
 
         self._create_split_ammo_widgets(item_database)

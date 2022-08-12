@@ -4,6 +4,7 @@ from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QComboBox
 
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
@@ -12,6 +13,7 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
 from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
@@ -43,8 +45,8 @@ def gate_data():
 class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
     _combo_for_gate: dict[NodeIdentifier, QComboBox]
 
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)

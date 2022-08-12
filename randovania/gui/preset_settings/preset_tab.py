@@ -1,15 +1,23 @@
+from __future__ import annotations
+
 import dataclasses
+import typing
 
 from PySide6 import QtWidgets
 
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetTab(QtWidgets.QMainWindow):
-    def __init__(self, editor: PresetEditor) -> None:
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__()
         self._editor = editor
+        self.game_description = game_description
+        self._window_manager = window_manager
 
     @classmethod
     def tab_title(cls) -> str:

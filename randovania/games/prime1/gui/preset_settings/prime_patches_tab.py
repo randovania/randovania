@@ -2,9 +2,11 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.game_description.game_description import GameDescription
 from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, RoomRandoMode
 from randovania.gui.generated.preset_prime_patches_ui import Ui_PresetPrimePatches
 from randovania.gui.lib import signal_handling
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
@@ -32,8 +34,8 @@ _FIELDS = [
 
 
 class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         self.description_label.setText(self.description_label.text().replace("color:#0000ff;", ""))
