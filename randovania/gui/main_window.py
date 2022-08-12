@@ -108,6 +108,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.options_changed_signal.connect(self.on_options_changed)
         self.GameDetailsSignal.connect(self._open_game_details)
         self.InitPostShowSignal.connect(self.initialize_post_show)
+        self.main_tab_widget.currentChanged.connect(self._on_main_tab_changed)
 
         self.intro_play_solo_button.clicked.connect(
             lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_new))
@@ -124,6 +125,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.progress_update_signal.connect(self.update_progress)
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
+        self.set_games_selector_visible(True)
+
         # Menu Bar
         self.game_menus = []
         self.menu_action_edits = []
@@ -137,24 +140,28 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         for game in RandovaniaGame.sorted_all_games():
             # Play game buttons
             image_path = game.data_path.joinpath("assets", "cover.png")
-            if image_path.exists():
-                logo = ClickableLabel(self.play_new_contents)
-                logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
-                logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
-                logo.setScaledContents(True)
-                logo.setFixedSize(150, 200)
-                logo.setToolTip(game.long_name)
-                logo.setAccessibleName(game.long_name)
-                logo.clicked.connect(partial(self._play_game, game))
-                logo.setVisible(game.data.development_state.can_view(False))
+            logo = ClickableLabel(self.play_new_contents)
+            logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
+            logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
+            logo.setScaledContents(True)
+            logo.setFixedSize(150, 200)
+            logo.setToolTip(game.long_name)
+            logo.setAccessibleName(game.long_name)
+            logo.clicked.connect(partial(self._select_game, game))
+            logo.setVisible(game.data.development_state.can_view(False))
+
+            def highlight_logo(l: ClickableLabel, active: bool):
+                if active:
+                    l.new_effect = QtWidgets.QGraphicsColorizeEffect()
+                    l.new_effect.setStrength(0.5)
+                    l.setGraphicsEffect(l.new_effect)
+                else:
+                    l.setGraphicsEffect(None)
                 
-                def enlarge_logo(l: ClickableLabel, width: int):
-                    l.setFixedSize(150+width, 200+width)
-                
-                logo.entered.connect(partial(enlarge_logo, logo, 15))
-                logo.left.connect(partial(enlarge_logo, logo, 0))
-                self.play_flow_layout.addWidget(logo)
-                self._play_game_logos[game] = logo
+            logo.entered.connect(partial(highlight_logo, logo, True))
+            logo.left.connect(partial(highlight_logo, logo, False))
+            self.play_flow_layout.addWidget(logo)
+            self._play_game_logos[game] = logo
 
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
@@ -244,6 +251,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def showEvent(self, event: QtGui.QShowEvent):
         self.InitPostShowSignal.emit()
 
+    def _on_main_tab_changed(self):
+        if self.main_tab_widget.currentWidget() not in {self.tab_play_new, self.games_tab}:
+            self.set_games_selector_visible(True)
+
     # Per-Game elements
     def refresh_game_list(self):
         self.games_tab.set_experimental_visible(self.menu_action_experimental_games.isChecked())
@@ -263,9 +274,16 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             if game.data.development_state.can_view(self._experimental_games_visible):
                 self.menu_open.addAction(game_menu.menuAction())
 
-    def _play_game(self, game: RandovaniaGame):
+    def set_games_selector_visible(self, visible: bool):
+        self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(self.tab_play_new), visible)
+        self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(self.games_tab), not visible)
+
+    def _select_game(self, game: RandovaniaGame):
+        # Make sure the target tab is visible, but don't use set_games_selector_visible to avoid hiding the current tab
+        self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(self.games_tab), True)
         self.main_tab_widget.setCurrentWidget(self.games_tab)
         self.games_tab.set_current_game(game)
+        self.set_games_selector_visible(False)
 
     # Delayed Initialization
     @asyncSlot()

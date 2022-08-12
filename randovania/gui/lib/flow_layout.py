@@ -108,10 +108,11 @@ class FlowLayout(QLayout):
     def _do_layout(self, rect, test_only):
         x = rect.x()
         y = rect.y()
+        space_x = 0
         line_height = 0
         spacing = self.spacing()
 
-        rows: list[Tuple[list[QWidgetItem], int]] = []
+        rows: list[tuple[list[QWidgetItem], int, int]] = []
 
         row = []
         for item in self._item_list:
@@ -126,7 +127,7 @@ class FlowLayout(QLayout):
             space_y = spacing + layout_spacing_y
             next_x = x + item.sizeHint().width() + space_x
             if next_x - space_x > rect.right() and line_height > 0:
-                rows.append((row, rect.right() - x - space_x))
+                rows.append((row, rect.right() - x, line_height))
                 row = []
                 x = rect.x()
                 y = y + line_height + space_y
@@ -139,13 +140,17 @@ class FlowLayout(QLayout):
             x = next_x
             line_height = max(line_height, item.sizeHint().height())
             row.append(item)
-        rows.append((row, rect.right() - x - space_x))
-        
+
+        rows.append((row, rect.right() - x - space_x, line_height))
+
         if not test_only and self.center:
-            for items, margin in rows:
-                margin /= 2
+            for items, x_margin, y_size in rows:
+                x_margin /= 2
                 for item in items:
                     r = item.geometry()
-                    item.setGeometry(QRect(QPoint(r.x()+margin, r.y()), item.sizeHint()))
+                    new_y = r.y()
+                    if r.height() < y_size:
+                        new_y += (y_size - r.height()) / 2
+                    item.setGeometry(QRect(QPoint(r.x() + x_margin, new_y), item.sizeHint()))
 
         return y + line_height - rect.y()
