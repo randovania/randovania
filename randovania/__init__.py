@@ -30,6 +30,18 @@ def get_readme() -> Path:
     return get_file_path().parent.joinpath("README.md")
 
 
+def get_readme_section(section: str) -> str:
+    readme = get_readme().read_text()
+
+    start_comment = f"<!-- Begin {section} -->\n"
+    end_comment = f"<!-- End {section} -->"
+
+    start = readme.find(start_comment) + len(start_comment)
+    end = readme.find(end_comment)
+
+    return readme[start:end]
+
+
 def get_data_path() -> Path:
     return get_file_path().joinpath("data")
 

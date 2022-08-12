@@ -41,18 +41,20 @@
 
 """PySide6 port of the widgets/layouts/flowlayout example from Qt v6.x"""
 
+from typing import Tuple
 from PySide6.QtCore import Qt, QMargins, QPoint, QRect, QSize
-from PySide6.QtWidgets import QLayout, QSizePolicy
+from PySide6.QtWidgets import QLayout, QSizePolicy, QWidgetItem
 
 
 class FlowLayout(QLayout):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, center=False):
         super().__init__(parent)
 
         if parent is not None:
             self.setContentsMargins(QMargins(0, 0, 0, 0))
 
-        self._item_list = []
+        self._item_list: list[QWidgetItem] = []
+        self.center = center
 
     def __del__(self):
         item = self.takeAt(0)
@@ -106,9 +108,13 @@ class FlowLayout(QLayout):
     def _do_layout(self, rect, test_only):
         x = rect.x()
         y = rect.y()
+        space_x = 0
         line_height = 0
         spacing = self.spacing()
 
+        rows: list[tuple[list[QWidgetItem], int, int]] = []
+
+        row = []
         for item in self._item_list:
             style = item.widget().style()
             layout_spacing_x = style.layoutSpacing(
@@ -121,6 +127,8 @@ class FlowLayout(QLayout):
             space_y = spacing + layout_spacing_y
             next_x = x + item.sizeHint().width() + space_x
             if next_x - space_x > rect.right() and line_height > 0:
+                rows.append((row, rect.right() - x, line_height))
+                row = []
                 x = rect.x()
                 y = y + line_height + space_y
                 next_x = x + item.sizeHint().width() + space_x
@@ -131,5 +139,18 @@ class FlowLayout(QLayout):
 
             x = next_x
             line_height = max(line_height, item.sizeHint().height())
+            row.append(item)
+
+        rows.append((row, rect.right() - x - space_x, line_height))
+
+        if not test_only and self.center:
+            for items, x_margin, y_size in rows:
+                x_margin /= 2
+                for item in items:
+                    r = item.geometry()
+                    new_y = r.y()
+                    if r.height() < y_size:
+                        new_y += (y_size - r.height()) / 2
+                    item.setGeometry(QRect(QPoint(r.x() + x_margin, new_y), item.sizeHint()))
 
         return y + line_height - rect.y()
