@@ -136,12 +136,19 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             if image_path.exists():
                 logo = ClickableLabel(self.play_new_contents)
                 logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
+                logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
                 logo.setScaledContents(True)
                 logo.setFixedSize(150, 200)
                 logo.setToolTip(game.long_name)
                 logo.setAccessibleName(game.long_name)
                 logo.clicked.connect(partial(self._play_game, game))
                 logo.setVisible(game.data.development_state.can_view(False))
+                
+                def enlarge_logo(l: ClickableLabel, width: int):
+                    l.setFixedSize(150+width, 200+width)
+                
+                logo.entered.connect(partial(enlarge_logo, logo, 15))
+                logo.left.connect(partial(enlarge_logo, logo, 0))
                 self.play_flow_layout.addWidget(logo)
                 self._play_game_logos[game] = logo
 
