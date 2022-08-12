@@ -126,7 +126,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         from randovania.gui.lib.flow_layout import FlowLayout
         from randovania.gui.lib.clickable_label import ClickableLabel
-        self.play_flow_layout = FlowLayout(self.play_new_contents)
+        self.play_flow_layout = FlowLayout(self.play_new_contents, True)
         self.play_flow_layout.setSpacing(15)
         self.play_flow_layout.setAlignment(Qt.AlignHCenter)
 
