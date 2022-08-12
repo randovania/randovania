@@ -16,7 +16,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window = PresetEnemyAttributeRandomizer(editor)
+    window = PresetEnemyAttributeRandomizer(editor, default_database.game_description_for(preset.game), MagicMock())
 
     window.range_scale_low.setValue(1.2)
     window.range_scale_high.setValue(1.7)
