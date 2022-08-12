@@ -16,7 +16,7 @@ def _gui() -> game.GameGui:
         tab_provider=gui.super_metroid_preset_tabs,
         cosmetic_dialog=gui.SuperCosmeticPatchesDialog,
         export_dialog=gui.SuperMetroidGameExportDialog,
-        help_widget=lambda: gui.SuperMetroidHelpWidget(),
+        game_tab=gui.SuperMetroidGameTabWidget,
     )
 
 
