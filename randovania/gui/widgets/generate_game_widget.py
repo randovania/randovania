@@ -10,6 +10,7 @@ from typing import Callable
 from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot
 
+from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -109,24 +110,26 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
     _original_show_event: Callable[[QtGui.QShowEvent], None]
     _window_manager: WindowManager
     _options: Options
+    game: RandovaniaGame
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.failure_handler = GenerationFailureHandler(self)
 
-    def setup_ui(self, window_manager: WindowManager, background_task: BackgroundTaskMixin, options: Options):
+    def setup_ui(self, game: RandovaniaGame, window_manager: WindowManager, background_task: BackgroundTaskMixin,
+                 options: Options):
         self._window_manager = window_manager
         self._background_task = background_task
         self._options = options
+        self.game = game
 
+        self.create_preset_tree.game = game
         self.create_preset_tree.window_manager = self._window_manager
         self.create_preset_tree.options = self._options
 
         # Progress
         self._background_task.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
-        self._background_task.progress_update_signal.connect(self.update_progress)
-        self.stop_background_process_button.clicked.connect(self._background_task.stop_background_process)
 
         self.num_players_spin_box.setVisible(self._window_manager.is_preview_mode)
         self.create_generate_no_retry_button.setVisible(self._window_manager.is_preview_mode)
@@ -135,9 +138,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self._preset_menu = PresetMenu(self)
 
         # Signals
-        self.create_generate_button.clicked.connect(partial(self._generate_new_seed, True))
-        self.create_generate_no_retry_button.clicked.connect(partial(self._generate_new_seed, True, retries=0))
-        self.create_generate_race_button.clicked.connect(partial(self._generate_new_seed, False))
+        self.create_generate_button.clicked.connect(partial(self.generate_new_layout, True))
+        self.create_generate_no_retry_button.clicked.connect(partial(self.generate_new_layout, True, retries=0))
+        self.create_generate_race_button.clicked.connect(partial(self.generate_new_layout, False))
         self.create_preset_tree.itemSelectionChanged.connect(self._on_select_preset)
         self.create_preset_tree.customContextMenuRequested.connect(self._on_tree_context_menu)
 
@@ -160,13 +163,12 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         return self.create_preset_tree.current_preset_data
 
     def enable_buttons_with_background_tasks(self, value: bool):
-        self.stop_background_process_button.setEnabled(not value)
         self.create_generate_button.setEnabled(value)
         self.create_generate_race_button.setEnabled(value)
 
     def _add_new_preset(self, preset: VersionedPreset):
         with self._options as options:
-            options.selected_preset_uuid = preset.uuid
+            options.set_selected_preset_uuid_for(self.game, preset.uuid)
 
         self._window_manager.preset_manager.add_new_preset(preset)
         self._update_preset_tree_items()
@@ -263,7 +265,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
         if preset_data is not None:
             with self._options as options:
-                options.selected_preset_uuid = preset_data.uuid
+                options.set_selected_preset_uuid_for(self.game, preset_data.uuid)
 
     def _on_tree_context_menu(self, pos: QtCore.QPoint):
         item: QtWidgets.QTreeWidgetItem = self.create_preset_tree.itemAt(pos)
@@ -276,17 +278,23 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     # Generate seed
 
-    def _generate_new_seed(self, spoiler: bool, retries: int | None = None):
+    def generate_new_layout(self, spoiler: bool, retries: int | None = None):
         preset = self._current_preset_data
         num_players = self.num_players_spin_box.value()
 
-        self.generate_seed_from_permalink(Permalink.from_parameters(GeneratorParameters(
-            seed_number=random.randint(0, 2 ** 31),
-            spoiler=spoiler,
-            presets=[preset.get_preset()] * num_players,
-        )), retries=retries)
+        if preset is None:
+            preset = self._window_manager.preset_manager.default_preset_for_game(self.game)
 
-    def generate_seed_from_permalink(self, permalink: Permalink, retries: int | None = None):
+        self.generate_layout_from_permalink(
+            permalink=Permalink.from_parameters(GeneratorParameters(
+                seed_number=random.randint(0, 2 ** 31),
+                spoiler=spoiler,
+                presets=[preset.get_preset()] * num_players,
+            )),
+            retries=retries,
+        )
+
+    def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None):
         def work(progress_update: ProgressUpdateCallable):
             try:
                 layout = simplified_patcher.generate_layout(progress_update=progress_update,
@@ -306,19 +314,18 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self._background_task.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):
-        self.create_preset_tree.set_show_experimental(options.experimental_games)
-
         if not self._has_set_from_last_selected:
             self._has_set_from_last_selected = True
-            preset = self._window_manager.preset_manager.preset_for_uuid(options.selected_preset_uuid)
+            preset_manager = self._window_manager.preset_manager
+            preset = preset_manager.preset_for_uuid(options.selected_preset_uuid_for(self.game))
             if preset is None:
-                preset = self._window_manager.preset_manager.default_preset
+                preset = preset_manager.default_preset_for_game(self.game)
             self.create_preset_tree.select_preset(preset)
 
     def on_preset_changed(self, preset: VersionedPreset | None):
         can_generate = False
         if preset is None:
-            description = "Please select a preset from the list, not a game."
+            description = "Please select a preset from the list."
 
         else:
             try:
@@ -338,13 +345,3 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self.create_preset_description.setText(description)
         for btn in [self.create_generate_button, self.create_generate_race_button]:
             btn.setEnabled(can_generate)
-
-    def update_progress(self, message: str, percentage: int):
-        self.progress_label.setText(message)
-        if "Aborted" in message:
-            percentage = 0
-        if percentage >= 0:
-            self.progress_bar.setRange(0, 100)
-            self.progress_bar.setValue(percentage)
-        else:
-            self.progress_bar.setRange(0, 0)

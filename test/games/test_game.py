@@ -1,3 +1,6 @@
+from unittest.mock import MagicMock
+
+
 def test_gui(skip_qtbot, game_enum):
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
@@ -5,8 +8,7 @@ def test_gui(skip_qtbot, game_enum):
 
     # Run
     g = game_enum.gui
-    if g.help_widget is not None:
-        skip_qtbot.addWidget(g.help_widget())
+    skip_qtbot.addWidget(g.game_tab(MagicMock(), MagicMock(), MagicMock()))
 
     # Assert
     assert issubclass(g.cosmetic_dialog, BaseCosmeticPatchesDialog)

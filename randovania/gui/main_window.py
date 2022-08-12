@@ -46,16 +46,6 @@ def _t(key: str, disambiguation: str | None = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
 
 
-def _update_label_on_show(label: QtWidgets.QLabel, text: str):
-    def showEvent(_):
-        if label._delayed_text is not None:
-            label.setText(label._delayed_text)
-            label._delayed_text = None
-
-    label._delayed_text = text
-    label.showEvent = showEvent
-
-
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
@@ -67,6 +57,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _data_visualizer: QtWidgets.QWidget | None = None
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
+    _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     GameDetailsSignal = Signal(LayoutDescription)
 
     InitPostShowSignal = Signal()
@@ -102,6 +93,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         self._preset_manager = preset_manager
         self.network_client = network_client
+        self._play_game_logos = {}
 
         if preview:
             debug.set_level(2)
@@ -114,22 +106,46 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.GameDetailsSignal.connect(self._open_game_details)
         self.InitPostShowSignal.connect(self.initialize_post_show)
 
-        self.intro_play_now_button.clicked.connect(lambda: self.main_tab_widget.setCurrentWidget(self.tab_play))
-        self.open_faq_button.clicked.connect(self._open_faq)
-        self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
-                                                                 RandovaniaGame.METROID_PRIME_ECHOES))
+        self.intro_play_solo_button.clicked.connect(
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_new))
+        self.intro_play_existing_button.clicked.connect(
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_existing))
+        self.intro_play_multiworld_button.clicked.connect(
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_multiworld))
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
         self.browse_racetime_button.clicked.connect(self._browse_racetime)
-        self.create_new_seed_button.clicked.connect(
-            lambda: self.main_tab_widget.setCurrentWidget(self.tab_create_seed))
+
+        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.progress_update_signal.connect(self.update_progress)
+        self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
         # Menu Bar
         self.game_menus = []
         self.menu_action_edits = []
 
+        from randovania.gui.lib.flow_layout import FlowLayout
+        from randovania.gui.lib.clickable_label import ClickableLabel
+        self.play_flow_layout = FlowLayout(self.play_new_contents)
+        self.play_flow_layout.setSpacing(15)
+        self.play_flow_layout.setAlignment(Qt.AlignHCenter)
+
         for game in RandovaniaGame.sorted_all_games():
+            # Play game buttons
+            image_path = game.data_path.joinpath("assets", "cover.png")
+            if image_path.exists():
+                logo = ClickableLabel(self.play_new_contents)
+                logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
+                logo.setScaledContents(True)
+                logo.setFixedSize(150, 200)
+                logo.setToolTip(game.long_name)
+                logo.setAccessibleName(game.long_name)
+                logo.clicked.connect(partial(self._play_game, game))
+                logo.setVisible(game.data.development_state.can_view(False))
+                self.play_flow_layout.addWidget(logo)
+                self._play_game_logos[game] = logo
+
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
@@ -170,6 +186,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
         self._options = options
+        self.games_tab.set_main_window(self)
 
         self.main_tab_widget.setCurrentIndex(0)
 
@@ -204,11 +221,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 self.open_game_details(LayoutDescription.from_file(path))
                 return
 
-            elif path.suffix == f".{VersionedPreset.file_extension()}":
-                self.main_tab_widget.setCurrentWidget(self.tab_create_seed)
-                # TODO: find the correct tab
-                self.tab_create_seed.import_preset_file(path)
-                return
+            # FIXME: re-implement importing presets
+            # elif path.suffix == f".{VersionedPreset.file_extension()}":
+            #     self.main_tab_widget.setCurrentWidget(self.tab_create_seed)
+            #     self.tab_create_seed.import_preset_file(path)
+            #     return
 
     def showEvent(self, event: QtGui.QShowEvent):
         self.InitPostShowSignal.emit()
@@ -221,13 +238,20 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             return
         self._experimental_games_visible = self.menu_action_experimental_games.isChecked()
 
+        for game, logo in self._play_game_logos.items():
+            logo.setVisible(game.data.development_state.can_view(self._experimental_games_visible))
+
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
 
         for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits):
             game: RandovaniaGame = game_menu.game
-            if game.data.development_state.can_view(self.menu_action_experimental_games.isChecked()):
+            if game.data.development_state.can_view(self._experimental_games_visible):
                 self.menu_open.addAction(game_menu.menuAction())
+
+    def _play_game(self, game: RandovaniaGame):
+        self.main_tab_widget.setCurrentWidget(self.games_tab)
+        self.games_tab.set_current_game(game)
 
     # Delayed Initialization
     @asyncSlot()
@@ -244,17 +268,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
 
-        logging.info("Running GenerateSeedTab.setup_ui")
-        self.tab_create_seed.setup_ui(self, self, self._options)
-
         logging.info("Will update for modified options")
         with self._options:
             self.on_options_changed()
 
     # Generate Seed
-    def _open_faq(self):
-        self.main_tab_widget.setCurrentWidget(self.games_tab)
-
     async def generate_seed_from_permalink(self, permalink: Permalink):
         from randovania.lib.status_update_lib import ProgressUpdateCallable
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
@@ -378,7 +396,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_experimental_games.setChecked(self._options.experimental_games)
         self.refresh_game_list()
 
-        self.tab_create_seed.on_options_changed(self._options)
+        self.games_tab.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
 
     # Menu Actions
@@ -473,6 +491,21 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                     trick_menu.addAction(difficulty_action)
                     difficulty_action.triggered.connect(
                         functools.partial(self._open_trick_details_popup, game, trick, trick_level))
+
+    # Background Update
+
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setEnabled(not value)
+
+    def update_progress(self, message: str, percentage: int):
+        self.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.progress_bar.setRange(0, 100)
+            self.progress_bar.setValue(percentage)
+        else:
+            self.progress_bar.setRange(0, 0)
 
     # ==========
 
