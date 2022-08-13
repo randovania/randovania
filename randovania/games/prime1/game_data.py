@@ -21,7 +21,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.PrimeCosmeticPatchesDialog,
         export_dialog=gui.PrimeGameExportDialog,
         spoiler_visualizer=(TeleporterDetailsTab,),
-        help_widget=lambda: gui.PrimeHelpWidget(),
+        game_tab=gui.PrimeGameTabWidget,
     )
 
 

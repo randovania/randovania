@@ -10,6 +10,8 @@ def test_on_first_show_after_set_experimental(skip_qtbot, is_dev_version):
     # Setup
 
     widget = GamesHelpWidget()
+    widget._last_options = MagicMock()
+    widget.set_main_window(MagicMock())
     widget.set_experimental_visible(True)
 
     # Run
@@ -23,7 +25,6 @@ def test_on_first_show_after_set_experimental(skip_qtbot, is_dev_version):
     assert visibility == {
         game: game.data.development_state.can_view(True)
         for game in RandovaniaGame.all_games()
-        if game.gui.help_widget is not None
     }
 
 
@@ -41,6 +42,8 @@ def test_set_experimental_visible_before_show(skip_qtbot, is_dev_version):
 def test_set_experimental_visible_after_show(skip_qtbot, is_dev_version):
     # Setup
     widget = GamesHelpWidget()
+    widget._last_options = MagicMock()
+    widget.set_main_window(MagicMock())
     widget._on_first_show()
 
     assert widget._index_for_game
@@ -58,7 +61,6 @@ def test_set_experimental_visible_after_show(skip_qtbot, is_dev_version):
     assert visibility == {
         game: game.data.development_state.can_view(True)
         for game in RandovaniaGame.all_games()
-        if game.gui.help_widget is not None
     }
 
 

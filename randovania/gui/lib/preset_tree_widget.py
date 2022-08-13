@@ -11,12 +11,11 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):
+    game: RandovaniaGame
     window_manager: WindowManager
     options: Options
     preset_to_item: dict[uuid.UUID, QtWidgets.QTreeWidgetItem]
-    show_experimental: bool = False
     expanded_connected: bool = False
-    root_tree_items: dict[RandovaniaGame, QtWidgets.QTreeWidgetItem]
 
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
         item: QtWidgets.QTreeWidgetItem = self.itemAt(event.pos())
@@ -51,12 +50,6 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         for item in self.selectedItems():
             return self.preset_for_item(item)
 
-    def set_show_experimental(self, show_experimental: bool):
-        old = self.show_experimental
-        self.show_experimental = show_experimental
-        if old != show_experimental:
-            self.update_items()
-
     def update_items(self):
         if self.expanded_connected:
             self.itemExpanded.disconnect(self.on_item_expanded)
@@ -64,36 +57,34 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             self.expanded_connected = False
 
         self.clear()
-
-        self.root_tree_items = {}
-
-        for game in RandovaniaGame.sorted_all_games():
-            if not game.data.development_state.can_view(self.show_experimental):
-                continue
-
-            root = QtWidgets.QTreeWidgetItem(self)
-            root.setText(0, game.long_name)
-            root.setExpanded(self.options.is_game_expanded(game))
-            self.root_tree_items[game] = root
+        self.setRootIsDecorated(True)
 
         self.preset_to_item = {}
+        default_parent = None
+        root_parents = set()
 
         # Included presets
         for preset in self.window_manager.preset_manager.included_presets.values():
-            if not preset.game.data.development_state.can_view(self.show_experimental):
+            if preset.game != self.game:
                 continue
 
-            item = QtWidgets.QTreeWidgetItem(self.root_tree_items[preset.game])
+            item = QtWidgets.QTreeWidgetItem(self)
             item.setText(0, preset.name)
             item.setData(0, Qt.UserRole, preset.uuid)
+            item.setExpanded(True)
             self.preset_to_item[preset.uuid] = item
+            root_parents.add(item)
+
+            if default_parent is None:
+                # The first included preset will be the parent of all presets with missing parents
+                default_parent = item
 
         # Custom Presets
         for preset in self.window_manager.preset_manager.custom_presets.values():
-            if not preset.game.data.development_state.can_view(self.show_experimental):
+            if preset.game != self.game:
                 continue
 
-            item = QtWidgets.QTreeWidgetItem(self.root_tree_items[preset.game])
+            item = QtWidgets.QTreeWidgetItem(default_parent)
             item.setText(0, preset.name)
             item.setData(0, Qt.UserRole, preset.uuid)
             self.preset_to_item[preset.uuid] = item
@@ -101,19 +92,19 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         # Set parents after, so don't have issues with order
         for preset in sorted(self.window_manager.preset_manager.custom_presets.values(), key=lambda it: it.name):
             if preset.base_preset_uuid in self.preset_to_item:
-                root_item = self.root_tree_items[preset.game]
                 self_item = self.preset_to_item[preset.uuid]
                 target_parent = parent_item = self.preset_to_item[preset.base_preset_uuid]
 
-                while parent_item != root_item:
+                while parent_item not in root_parents:
                     if parent_item == self_item:
                         # LOOP DETECTED!
-                        target_parent = root_item
+                        target_parent = default_parent
                         break
                     parent_item = parent_item.parent()
 
-                root_item.removeChild(self_item)
-                target_parent.addChild(self_item)
+                if default_parent != target_parent:
+                    default_parent.removeChild(self_item)
+                    target_parent.addChild(self_item)
 
         for preset_uuid, item in self.preset_to_item.items():
             item.setExpanded(not self.options.is_preset_uuid_hidden(preset_uuid))
@@ -126,19 +117,9 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         if preset.uuid in self.preset_to_item:
             self.setCurrentItem(self.preset_to_item[preset.uuid])
 
-    def _find_game_for_root_item(self, item):
-        for game, root_item in self.root_tree_items.items():
-            if root_item is item:
-                return game
-        raise ValueError(f"Unknown item: {item}")
-
     def _on_item_new_state(self, item: QtWidgets.QTreeWidgetItem, new_state: bool):
         uid = item.data(0, Qt.UserRole)
-        if uid is None:
-            game = self._find_game_for_root_item(item)
-            with self.options as options:
-                options.set_is_game_expanded(game, new_state)
-        else:
+        if uid is not None:
             with self.options as options:
                 options.set_preset_uuid_hidden(uid, not new_state)
 
