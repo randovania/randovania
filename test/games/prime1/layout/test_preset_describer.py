@@ -16,16 +16,16 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
         configuration = dataclasses.replace(
             preset.configuration,
             enemy_attributes=EnemyAttributeRandomizer(
-                enemy_rando_range_scale_low=0.25,
-                enemy_rando_range_scale_high=5.25,
+                enemy_rando_range_scale_low=5.25,
+                enemy_rando_range_scale_high=0.25,
                 enemy_rando_range_health_low=2.25,
                 enemy_rando_range_health_high=8.23,
                 enemy_rando_range_speed_low=0.15,
                 enemy_rando_range_speed_high=7.25,
                 enemy_rando_range_damage_low=1.25,
                 enemy_rando_range_damage_high=100.25,
-                enemy_rando_range_knockback_low=15.5,
-                enemy_rando_range_knockback_high=200.35,
+                enemy_rando_range_knockback_low=1.0,
+                enemy_rando_range_knockback_high=1.0,
                 enemy_rando_diff_xyz=True,
             ),
             random_boss_sizes=True,
@@ -76,7 +76,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
         ]
     }
     if use_enemy_attribute_randomizer:
-        expected["Game Changes"].insert(5, "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, Random Knockback within range 15.5 - 200.35, Enemies will be stretched randomly")
+        expected["Game Changes"].insert(5, "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, Enemies will be stretched randomly")
     else:
         expected["Game Changes"].insert(2, "Random Boss Sizes")
     assert expected == result
