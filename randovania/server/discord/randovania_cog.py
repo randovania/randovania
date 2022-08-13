@@ -1,7 +1,6 @@
-from discord.ext import commands
-from discord_slash import SlashCommand
+import discord
 
 
-class RandovaniaCog(commands.Cog):
-    async def add_commands(self, slash: SlashCommand):
+class RandovaniaCog(discord.Cog):
+    async def add_commands(self):
         raise NotImplementedError()

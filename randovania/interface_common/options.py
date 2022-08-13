@@ -95,7 +95,6 @@ _SERIALIZER_FOR_FIELD = {
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "experimental_games": Serializer(identity, bool),
-    "selected_preset_uuid": Serializer(str, uuid.UUID),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuids, decode_uuids),
     "game_backend": Serializer(lambda it: it.value, MemoryExecutorChoice),
@@ -105,7 +104,7 @@ _SERIALIZER_FOR_FIELD = {
 
 
 def add_per_game_serializer():
-    def make_decoder(g):
+    def make_decoder(g: RandovaniaGame):
         return lambda it: g.options.from_json(it)
 
     for game in RandovaniaGame.all_games():
@@ -114,6 +113,7 @@ def add_per_game_serializer():
             make_decoder(game),
         )
         _SERIALIZER_FOR_FIELD[f"is_game_expanded_{game.value}"] = Serializer(identity, bool)
+        _SERIALIZER_FOR_FIELD[f"selected_preset_uuid_{game.value}"] = Serializer(str, uuid.UUID)
 
 
 add_per_game_serializer()
@@ -149,7 +149,6 @@ class Options:
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
     _experimental_games: bool | None = None
-    _selected_preset_uuid: uuid.UUID | None = None
     _displayed_alerts: set[InfoAlert] | None = None
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _game_backend: MemoryExecutorChoice | None = None
@@ -164,6 +163,7 @@ class Options:
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
             self._set_field(f"is_game_expanded_{game.value}", None)
+            self._set_field(f"selected_preset_uuid_{game.value}", None)
 
     def __getattr__(self, item):
         if isinstance(item, str):
@@ -171,6 +171,8 @@ class Options:
                 game_name = item[len("game_"):]
             elif item.startswith("is_game_expanded_"):
                 game_name = item[len("is_game_expanded_"):]
+            elif item.startswith("selected_preset_uuid_"):
+                game_name = item[len("selected_preset_uuid_"):]
             else:
                 raise AttributeError(item)
 
@@ -183,7 +185,7 @@ class Options:
             if result is None:
                 if item.startswith("game_"):
                     result = game.options.default_for_game(game)
-                else:
+                elif item.startswith("is_game_expanded_"):
                     result = game.data.development_state.is_stable
             return result
 
@@ -362,14 +364,6 @@ class Options:
         self._edit_field("experimental_games", value)
 
     @property
-    def selected_preset_uuid(self) -> uuid.UUID | None:
-        return self._selected_preset_uuid
-
-    @selected_preset_uuid.setter
-    def selected_preset_uuid(self, value: uuid.UUID):
-        self._edit_field("selected_preset_uuid", value)
-
-    @property
     def game_backend(self) -> MemoryExecutorChoice:
         return _return_with_default(self._game_backend, lambda: MemoryExecutorChoice.DOLPHIN)
 
@@ -412,6 +406,8 @@ class Options:
             with self:
                 self.displayed_alerts = alerts
 
+    # Per Game
+
     def options_for_game(self, game: RandovaniaGame) -> PerGameOptions:
         return getattr(self, f"game_{game.value}")
 
@@ -426,6 +422,12 @@ class Options:
 
     def set_is_game_expanded(self, game: RandovaniaGame, value: bool):
         self._edit_field(f"is_game_expanded_{game.value}", value)
+
+    def selected_preset_uuid_for(self, game: RandovaniaGame) -> uuid.UUID | None:
+        return getattr(self, f"selected_preset_uuid_{game.value}")
+
+    def set_selected_preset_uuid_for(self, game: RandovaniaGame, value: uuid.UUID | None):
+        self._edit_field(f"selected_preset_uuid_{game.value}", value)
 
     @property
     def hidden_preset_uuids(self):
