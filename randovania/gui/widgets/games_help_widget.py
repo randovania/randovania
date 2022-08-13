@@ -59,6 +59,11 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
                     return game
         return None
 
+    def current_game_widget(self) -> BaseGameTabWidget | None:
+        if self._widget_for_game is not None:
+            return self._widget_for_game.get(self.current_game())
+        return None
+
     def ensure_current_game_has_widget(self):
         game = self.current_game()
         if game is not None and game not in self._widget_for_game:

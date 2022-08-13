@@ -110,12 +110,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.InitPostShowSignal.connect(self.initialize_post_show)
         self.main_tab_widget.currentChanged.connect(self._on_main_tab_changed)
 
-        self.intro_play_solo_button.clicked.connect(
-            lambda: self.main_tab_widget.setCurrentWidget(self.tab_game_list))
-        self.intro_play_existing_button.clicked.connect(
-            lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_existing))
-        self.intro_play_multiworld_button.clicked.connect(
-            lambda: self.main_tab_widget.setCurrentWidget(self.tab_multiworld))
+        self.intro_play_solo_button.clicked.connect(partial(self._set_main_tab, self.tab_game_list))
+        self.intro_play_existing_button.clicked.connect(partial(self._set_main_tab, self.tab_play_existing))
+        self.intro_play_multiworld_button.clicked.connect(partial(self._set_main_tab, self.tab_multiworld))
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
@@ -244,7 +241,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
             # FIXME: re-implement importing presets
             # elif path.suffix == f".{VersionedPreset.file_extension()}":
-            #     self.main_tab_widget.setCurrentWidget(self.tab_create_seed)
+            #     self._set_main_tab(self.tab_create_seed)
             #     self.tab_create_seed.import_preset_file(path)
             #     return
 
@@ -274,6 +271,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.main_tab_widget.currentWidget() not in {self.tab_game_list, self.tab_game_details}:
             self.set_games_selector_visible(True)
 
+    def _set_main_tab(self, tab: QtWidgets.QWidget):
+        self.main_tab_widget.setCurrentWidget(tab)
+
     def _set_main_tab_visible(self, tab: QtWidgets.QWidget, visible: bool):
         self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(tab), visible)
 
@@ -285,17 +285,17 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         currently_selected = self.main_tab_widget.currentWidget() in tabs
         if visible:
             if currently_selected:
-                self.main_tab_widget.setCurrentWidget(self.tab_game_list)
+                self._set_main_tab(self.tab_game_list)
             self._set_main_tab_visible(self.tab_game_details, False)
         else:
             if currently_selected:
-                self.main_tab_widget.setCurrentWidget(self.tab_game_details)
+                self._set_main_tab(self.tab_game_details)
             self._set_main_tab_visible(self.tab_game_list, False)
 
     def _select_game(self, game: RandovaniaGame):
         # Make sure the target tab is visible, but don't use set_games_selector_visible to avoid hiding the current tab
         self.set_games_selector_visible(False)
-        self.main_tab_widget.setCurrentWidget(self.tab_game_details)
+        self._set_main_tab(self.tab_game_details)
         self.tab_game_details.set_current_game(game)
 
     # Delayed Initialization
