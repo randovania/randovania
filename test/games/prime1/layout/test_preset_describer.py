@@ -80,9 +80,3 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
     else:
         expected["Game Changes"].insert(2, "Random Boss Sizes")
     assert expected == result
-
-#expected = {
-#    # all that stuff in the dict
-#}
-#if use_enemy_attribute_randomizer:
-#    expected["Game Changes"].append("Random size within... etc")
