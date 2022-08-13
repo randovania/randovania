@@ -2,7 +2,7 @@ import dataclasses
 
 import pytest
 
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode, RoomRandoMode
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
