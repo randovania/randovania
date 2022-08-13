@@ -36,6 +36,8 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     
     window.range_knockback_low.setValue(0.2)
     window.range_knockback_high.setValue(0.5147)
+
+    skip_qtbot.mouseClick(window.diff_xyz, Qt.LeftButton)
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())
 
@@ -54,3 +56,5 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
 
     assert editor.configuration.enemy_attributes.enemy_rando_range_knockback_low == window.range_knockback_low.value()
     assert editor.configuration.enemy_attributes.enemy_rando_range_knockback_high == window.range_knockback_high.value()
+
+    assert editor.configuration.enemy_attributes.enemy_rando_diff_xyz == window.diff_xyz.isChecked()
