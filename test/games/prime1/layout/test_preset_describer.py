@@ -26,7 +26,10 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
             enemy_rando_range_knockback_low=15.5,
             enemy_rando_range_knockback_high=200.35,
             enemy_rando_diff_xyz=True,
-        )
+        ),
+        random_boss_sizes=True,
+        superheated_probability=531,
+        submerged_probability=287
     )
 
     # Run
@@ -57,6 +60,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
         "Game Changes": [
             "Varia-only heat protection, Progressive suit damage reduction",
             "Warp to start, Unlocked Vault door, Phazon Elite without Dynamo",
+            "53.1% chance of superheated, 28.7% chance of submerged",
             "Deterministic I. Drone RNG, Deterministic Maze RNG",
             "Competitive cutscene removal",
             "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, Random Knockback within range 15.5 - 200.35, Enemies will be stretched randomly",
