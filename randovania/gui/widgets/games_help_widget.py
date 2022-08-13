@@ -29,8 +29,7 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
         self._layout_for_index = {}
         self._widget_for_game = {}
 
-        self.setTabPosition(QtWidgets.QTabWidget.West)
-        self.setIconSize(QtCore.QSize(75, 100))
+        self.tabBar().setVisible(False)
 
         for game in RandovaniaGame.sorted_all_games():
             widget = QtWidgets.QWidget()
@@ -38,10 +37,7 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
             widget_layout = QtWidgets.QVBoxLayout(widget)
             widget_layout.setContentsMargins(0, 0, 0, 0)
 
-            image_path = game.data_path.joinpath("assets", "cover.png")
-            cover = QtGui.QPixmap(os.fspath(image_path))
-
-            index = self.addTab(widget, cover, "")
+            index = self.addTab(widget, game.long_name)
             self.setTabVisible(index, game.data.development_state.can_view(self._experimental_visible))
             self._index_for_game[game] = index
             self._layout_for_index[index] = widget_layout

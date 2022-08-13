@@ -111,7 +111,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.main_tab_widget.currentChanged.connect(self._on_main_tab_changed)
 
         self.intro_play_solo_button.clicked.connect(
-            lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_new))
+            lambda: self.main_tab_widget.setCurrentWidget(self.tab_game_list))
         self.intro_play_existing_button.clicked.connect(
             lambda: self.main_tab_widget.setCurrentWidget(self.tab_play_existing))
         self.intro_play_multiworld_button.clicked.connect(
@@ -133,14 +133,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         from randovania.gui.lib.flow_layout import FlowLayout
         from randovania.gui.lib.clickable_label import ClickableLabel
-        self.play_flow_layout = FlowLayout(self.play_new_contents, True)
+        self.play_flow_layout = FlowLayout(self.game_list_contents, True)
         self.play_flow_layout.setSpacing(15)
         self.play_flow_layout.setAlignment(Qt.AlignHCenter)
 
         for game in RandovaniaGame.sorted_all_games():
             # Play game buttons
             image_path = game.data_path.joinpath("assets", "cover.png")
-            logo = ClickableLabel(self.play_new_contents)
+            logo = ClickableLabel(self.game_list_contents)
             logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
             logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
             logo.setScaledContents(True)
@@ -207,7 +207,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
         self._options = options
-        self.games_tab.set_main_window(self)
+        self.tab_game_details.set_main_window(self)
 
         self.main_tab_widget.setCurrentIndex(0)
 
@@ -251,13 +251,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def showEvent(self, event: QtGui.QShowEvent):
         self.InitPostShowSignal.emit()
 
-    def _on_main_tab_changed(self):
-        if self.main_tab_widget.currentWidget() not in {self.tab_play_new, self.games_tab}:
-            self.set_games_selector_visible(True)
-
     # Per-Game elements
     def refresh_game_list(self):
-        self.games_tab.set_experimental_visible(self.menu_action_experimental_games.isChecked())
+        self.tab_game_details.set_experimental_visible(self.menu_action_experimental_games.isChecked())
 
         if self._experimental_games_visible == self.menu_action_experimental_games.isChecked():
             return
@@ -274,16 +270,33 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             if game.data.development_state.can_view(self._experimental_games_visible):
                 self.menu_open.addAction(game_menu.menuAction())
 
+    def _on_main_tab_changed(self):
+        if self.main_tab_widget.currentWidget() not in {self.tab_game_list, self.tab_game_details}:
+            self.set_games_selector_visible(True)
+
+    def _set_main_tab_visible(self, tab: QtWidgets.QWidget, visible: bool):
+        self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(tab), visible)
+
     def set_games_selector_visible(self, visible: bool):
-        self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(self.tab_play_new), visible)
-        self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(self.games_tab), not visible)
+        tabs = [self.tab_game_list, self.tab_game_details]
+        for tab in tabs:
+            self._set_main_tab_visible(tab, True)
+
+        currently_selected = self.main_tab_widget.currentWidget() in tabs
+        if visible:
+            if currently_selected:
+                self.main_tab_widget.setCurrentWidget(self.tab_game_list)
+            self._set_main_tab_visible(self.tab_game_details, False)
+        else:
+            if currently_selected:
+                self.main_tab_widget.setCurrentWidget(self.tab_game_details)
+            self._set_main_tab_visible(self.tab_game_list, False)
 
     def _select_game(self, game: RandovaniaGame):
         # Make sure the target tab is visible, but don't use set_games_selector_visible to avoid hiding the current tab
-        self.main_tab_widget.setTabVisible(self.main_tab_widget.indexOf(self.games_tab), True)
-        self.main_tab_widget.setCurrentWidget(self.games_tab)
-        self.games_tab.set_current_game(game)
         self.set_games_selector_visible(False)
+        self.main_tab_widget.setCurrentWidget(self.tab_game_details)
+        self.tab_game_details.set_current_game(game)
 
     # Delayed Initialization
     @asyncSlot()
@@ -428,7 +441,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_experimental_games.setChecked(self._options.experimental_games)
         self.refresh_game_list()
 
-        self.games_tab.on_options_changed(self._options)
+        self.tab_game_details.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
 
     # Menu Actions
