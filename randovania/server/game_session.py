@@ -708,7 +708,6 @@ def _emit_game_session_pickups_update(sio: ServerApp, membership: GameSessionMem
 
 
 def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes, game_connection_state: str):
-    print("got game_session_self_update", session_id, game_connection_state)
     current_user = sio.get_current_user()
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
