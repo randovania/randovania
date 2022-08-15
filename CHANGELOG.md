@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The multi-pickup placement, using the new weighting, is now the default mode. The old behavior has been removed.
 - Changed: Error messages when a permalink is incompatible have been improved with more details.
-- Changed: The Customize Preset dialog now creates each tab as you click then. This means the dialog is now faster to first open, but there's a short delay when opening certain tabs. 
+- Changed: The Customize Preset dialog now creates each tab as you click then. This means the dialog is now faster to first open, but there's a short delay when opening certain tabs.
+- Changed: Progressive items now have their proper count as the simplified shuffled option.
 - Fixed: Exceptions when exporting a game now use the improved error dialog.
 - Fixed: Gracefully handle unsupported old versions of the preferences file.
+- Fixed: Excluding all copies of a progressive item, or the non-progressive equivalent, no longer hides them from the editor.
 
 ### Cave Story
 

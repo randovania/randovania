@@ -1,3 +1,4 @@
+from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 
@@ -31,7 +32,13 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
             if case == MajorItemStateCase.STARTING_ITEM and len(item.progression) > 1:
                 continue
 
-            self.state_case_combo.addItem(case.pretty_text, case)
+            if case == MajorItemStateCase.SHUFFLED and item.default_shuffled_count > 1:
+                text = f"{item.default_shuffled_count} shuffled copies"
+            elif case == MajorItemStateCase.STARTING_ITEM and item.default_starting_count > 1:
+                text = f"{item.default_starting_count} starting copies"
+            else:
+                text = case.pretty_text
+            self.state_case_combo.addItem(text, case)
 
         self.priority_combo.addItem("Very Low", 0.25)
         self.priority_combo.addItem("Low", 0.50)
@@ -53,12 +60,12 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self.vanilla_check.setEnabled(item.original_index is not None)
         if not self.vanilla_check.isEnabled():
             self.vanilla_check.setToolTip(
-                "This item does not exist in the original game, so there's no vanilla location.")
+                "This item does not exist in the original game, so there's no vanilla location."
+            )
 
         self.starting_check.setEnabled(len(item.progression) <= 1)
         if not self.starting_check.isEnabled():
-            self.starting_check.setToolTip(
-                "Progressive items are not allowed to be marked as starting.")
+            self.starting_check.setToolTip("Progressive items are not allowed to be marked as starting.")
 
         if item.ammo_index:
             ammo_names = " and ".join(
@@ -74,17 +81,18 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
             self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
 
+        if self._item.warning is not None:
+            self.warning_label = QtWidgets.QLabel(self._item.warning, self)
+            self.warning_label.setWordWrap(True)
+            self.root_layout.addWidget(self.warning_label, self.root_layout.rowCount(), 0, 1, -1)
+
         self.set_custom_fields_visible(False)
         if self._item.must_be_starting:
             self.item_name_label.setToolTip(
                 "This item is necessary for the game to function properly and can't be removed.")
-            self.state_case_combo.setEnabled(False)
             self.case = MajorItemStateCase.STARTING_ITEM
+            self.state_case_combo.setEnabled(False)
         else:
-            if self._item.warning is not None:
-                self.warning_label.setText(self._item.warning)
-            else:
-                self.warning_label.setVisible(False)
             self.set_new_state(starting_state)
 
     def set_custom_fields_visible(self, visible: bool):
@@ -104,9 +112,34 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
     def case(self, value: MajorItemStateCase):
         new_index = self.state_case_combo.findData(value)
         if new_index != self.state_case_combo.currentIndex():
+            assert self.state_case_combo.isEnabled() or not self.isEnabled(), "Can't set case when locked"
             self.state_case_combo.setCurrentIndex(new_index)
         else:
             self._on_select_case(new_index)
+
+    def _state_from_case(self, case: MajorItemStateCase, included_ammo) -> MajorItemState | None:
+        if case == MajorItemStateCase.MISSING:
+            return MajorItemState(included_ammo=included_ammo)
+
+        elif case == MajorItemStateCase.VANILLA:
+            return MajorItemState(include_copy_in_original_location=True, included_ammo=included_ammo)
+
+        elif case == MajorItemStateCase.STARTING_ITEM:
+            return MajorItemState(num_included_in_starting_items=1, included_ammo=included_ammo)
+
+        elif case == MajorItemStateCase.SHUFFLED:
+            return MajorItemState(num_shuffled_pickups=len(self._item.progression),
+                                  included_ammo=included_ammo)
+
+        else:
+            return None
+
+    def _case_from_state(self, state: MajorItemState) -> MajorItemStateCase:
+        for case in enum_lib.iterate_enum(MajorItemStateCase):
+            if state == self._state_from_case(case, state.included_ammo):
+                return case
+
+        return MajorItemStateCase.CUSTOM
 
     @property
     def state(self) -> MajorItemState:
@@ -119,11 +152,11 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
                 included_ammo=self.included_ammo,
             )
         else:
-            return MajorItemState.from_case(self.case, self.included_ammo)
+            return self._state_from_case(self.case, self.included_ammo)
 
     def set_new_state(self, value: MajorItemState):
         if self.state != value:
-            self.case = value.case
+            self.case = self._case_from_state(value)
             self._update_for_state(value)
 
     def _update_for_state(self, state):
