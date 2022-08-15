@@ -134,7 +134,7 @@ jobs:
         uses: codecov/codecov-action@v3
         if: ${{ !matrix.executable }}
         with:
-          fail_ci_if_error: true
+          fail_ci_if_error: false  # Ideally this would be true, but codecov's action keep getting errors with GH api and it doesn't do retries
           files: ./coverage.xml
 
       - name: Upload artifacts
