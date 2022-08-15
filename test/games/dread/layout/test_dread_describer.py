@@ -28,17 +28,19 @@ def test_dread_format_params(has_artifacts):
     assert result == {
         "Difficulty": [
             "Damage Strictness: Medium",
+            "Damage Rooms: 20 damage per second",
             "Immediate Energy Part"
         ],
         "Game Changes": [
-            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia"
+            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
+            "Linear Damage Run Scaling",
         ],
         "Gameplay": [
             "Starting Location: Artaria - Intro Room"
         ],
         "Goal": ["3 Metroid DNA", "Prefers E.M.M.I."] if has_artifacts else ["Reach Itorash"],
         "Item Pool": [
-            "Size: 143 of 149" if has_artifacts else "Size: 140 of 149",
+            "Size: 148 of 149" if has_artifacts else "Size: 145 of 149",
             "No Pulse Radar",
             "Progressive Beam, Progressive Charge Beam, Progressive Missile, "
             "Progressive Bomb, Progressive Suit, Progressive Spin"
