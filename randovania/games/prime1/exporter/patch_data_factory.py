@@ -798,7 +798,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         seed = self.description.get_seed_for_player(self.players_config.player_index)
 
         boss_sizes = None
-        if self.configuration.random_boss_sizes and self.configuration.enemy_attributes is not None:
+        random_enemy_sizes = False
+        if self.configuration.enemy_attributes is not None:
+            if self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0 or self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0:
+                random_enemy_sizes = True
+        if self.configuration.random_boss_sizes and not random_enemy_sizes:
             def get_random_size(minimum, maximum):
                 if self.rng.choice([True, False]):
                     temp = [self.rng.uniform(minimum, 1.0), self.rng.uniform(minimum, 1.0)]
