@@ -168,6 +168,108 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
+  installer:
+    runs-on: windows-latest
+    needs: pytest
+    name: Build Windows Installer
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Download the executable
+        uses: actions/download-artifact@v3
+        with:
+          name: Randovania Windows Executable
+          path: packages/
+
+      - name: Get version
+        id: version
+        shell: bash
+        run: |
+          echo "::set-output name=version::$(ls packages/ | cut -f2 -d- | sed 's/.dev/./')"
+
+      - name: Extract executable
+        run: |
+          7z x packages/* -odist
+
+      - name: Rename the extracted package
+        shell: bash
+        run: |
+          mv dist/randovania-* dist/randovania
+
+      - name: import windows certificate
+        env:
+          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE_PASSWORD }}
+        run: |
+          New-Item -ItemType directory -Path certificate
+          Set-Content -Path certificate/tempCert.txt -Value $env:WINDOWS_CERTIFICATE
+          certutil -decode certificate/tempCert.txt certificate/certificate.pfx
+          Remove-Item -path certificate -include tempCert.txt
+          Import-PfxCertificate -FilePath certificate/certificate.pfx -CertStoreLocation Cert:\CurrentUser\My -Password (ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText)
+
+      - name: Deploy Advanced Installer
+        uses: caphyon/advinst-github-action@v1.0
+        with:
+          advinst-version: '19.7.1'
+          advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}
+          advinst-enable-automation: 'true'
+
+      - name: Make changes for dev installer
+        shell: pwsh
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') && !startsWith(github.ref, 'refs/heads/stable') }}
+        run: |
+          # Load the AIP project from checkout location
+          $aipPath = join-path $env:GITHUB_WORKSPACE "tools/Randovania Installer.aip";
+          Write-Host "AIP: $aipPath";
+          $advinst = new-object -com advancedinstaller;
+          $project = $advinst.LoadProject($aipPath);
+          $productDetails = $project.ProductDetails;
+
+          # Use dev upgrade code
+          $productDetails.UpgradeCode.UpgradeCode = "{7583BC7E-D9ED-4428-A9AD-AE60AE48D4A2}";
+          # Use dev name
+          $productDetails.Name = "Randovania Dev";
+          
+          # Save the changes
+          $project.Save();
+
+      - name: Create Windows installer
+        shell: pwsh
+        run: |
+          # Load the AIP project from checkout location
+          $aipPath = join-path $env:GITHUB_WORKSPACE "tools/Randovania Installer.aip";
+          Write-Host "AIP: $aipPath";
+          $advinst = new-object -com advancedinstaller;
+          $project = $advinst.LoadProject($aipPath);
+          $productDetails = $project.ProductDetails;
+          
+          # Bump the ProductVersion
+          $productDetails.Version = "${{ steps.version.outputs.version }}";
+          Write-Host "Version: $productDetails.Version";
+          
+          # Build the project
+          $project.Build();
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v3
+        with:
+          name: Randovania Windows Installer
+          if-no-files-found: error
+          path: |
+            dist/Randovania*Installer.exe
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@2.3.0
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/Randovania*Installer.exe
+          file_glob: true
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Release installer"
+
   lint:
     runs-on: 'windows-latest'
 
@@ -208,7 +310,9 @@ jobs:
 
   discord_alert:
     runs-on: 'ubuntu-latest'
-    needs: pytest
+    needs:
+      - pytest
+      - installer
     if: ${{ startsWith(github.ref, 'refs/heads/') }}
 
     steps:
