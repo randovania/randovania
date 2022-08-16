@@ -16,7 +16,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
     })
     seed = 103817502
     if use_enemy_attribute_randomizer:
-        enemy_attribute_randomizer = EnemyAttributeRandomizer(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False).as_json
+        enemy_attribute_randomizer = EnemyAttributeRandomizer(1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True).as_json
     else:
         enemy_attribute_randomizer = None
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
@@ -76,7 +76,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         assert not asset_cache_path.exists()
 
     if use_enemy_attribute_randomizer:
-        mock_enemy_data.assert_called_once_with(os.fspath(tmp_path.joinpath("input.iso")), os.fspath(tmp_path.joinpath("output.iso")), seed, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, False)
+        mock_enemy_data.assert_called_once_with(os.fspath(tmp_path.joinpath("input.iso")), os.fspath(tmp_path.joinpath("output.iso")), seed, 1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True)
     else:
         mock_enemy_data.assert_not_called()
 
