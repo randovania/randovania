@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Error messages when a permalink is incompatible have been improved with more details.
 - Changed: The Customize Preset dialog now creates each tab as you click then. This means the dialog is now faster to first open, but there's a short delay when opening certain tabs.
 - Changed: Progressive items now have their proper count as the simplified shuffled option.
+- Fixed: Hints can now once again be placed during generation.
 - Fixed: Exceptions when exporting a game now use the improved error dialog.
 - Fixed: Gracefully handle unsupported old versions of the preferences file.
 - Fixed: Excluding all copies of a progressive item, or the non-progressive equivalent, no longer hides them from the editor.
