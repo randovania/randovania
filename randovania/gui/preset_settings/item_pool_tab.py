@@ -33,8 +33,7 @@ from randovania.resolver.exceptions import InvalidConfiguration
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
     "For a total of {total} from this source."
     "\n{from_items} will be provided from other sources."
-    "\n{maximum} is the maximum you can have at once.\n"
-    "\nResources from sources like this are only considered by logic when using 'multi-pickup placement'."
+    "\n{maximum} is the maximum you can have at once."
 )
 
 
@@ -398,17 +397,17 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _create_progressive_widgets(self, item_database: ItemDatabase):
         self._progressive_widgets = []
 
-        all_progressive = self.game.gui.progressive_item_gui_tuples
+        all_progressive = list(self.game.gui.progressive_item_gui_tuples)
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
             self._boxes_for_category[item_database.major_items[progressive_item_name].item_category.name][:2]
-            for (progressive_item_name, non_progressive_items) in all_progressive
+            for progressive_item_name, non_progressive_items in all_progressive
         }
 
         for box, layout in layouts_with_lines:
             layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
-        for (progressive_item_name, non_progressive_items) in all_progressive:
+        for progressive_item_name, non_progressive_items in all_progressive:
             progressive_item = item_database.major_items[progressive_item_name]
             parent, layout, _ = self._boxes_for_category[progressive_item.item_category.name]
 

@@ -3,7 +3,8 @@
 import randovania
 from randovania.games.game import RandovaniaGame
 block_cipher = None
-icon_path = "randovania/data/icons/sky_temple_key_NqN_icon.ico"
+
+icon_path = "randovania/data/icons/executable_icon.ico"
 
 item_databases = [(f'randovania/games/{game.value}/item_database', f'games/{game.value}/item_database') for game in RandovaniaGame]
 presets = [(f'randovania/games/{game.value}/presets', f'games/{game.value}/presets') for game in RandovaniaGame]
