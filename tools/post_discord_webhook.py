@@ -51,7 +51,8 @@ async def post_to_discord():
     fields = [
         {
             "name": artifact.replace("Executable", "").replace("Randovania", "").strip(),
-            "value": f"[Download](https://nightly.link/{org_name}/{repo_name}/actions/runs/{run_id}/{artifact}.zip)",
+            "value": f"[Download](https://nightly.link/{org_name}/{repo_name}/"
+                     f"actions/runs/{run_id}/{artifact.replace(' ', '%20')}.zip)",
             "inline": True
         }
         for artifact in os.listdir("packages")
