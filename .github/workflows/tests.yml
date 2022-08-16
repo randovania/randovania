@@ -148,17 +148,6 @@ jobs:
             dist/randovania-*.tar.gz
             dist/randovania-*.7z
 
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@2.3.0
-        if: ${{ matrix.executable && startsWith(github.ref, 'refs/tags/v') }}
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/randovania-*
-          file_glob: true
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "Release executable"
-
       - name: Publish distribution 📦 to PyPI
         if: ${{ !matrix.executable && startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest' }}
         run: |
@@ -308,8 +297,35 @@ jobs:
           git diff --exit-code
           
 
+
+  release:
+    runs-on: 'ubuntu-latest'
+    name: Github Release
+    needs:
+      - pytest
+      - installer
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+    steps:
+      - name: Download the executables
+        uses: actions/download-artifact@v3
+        with:
+          path: packages/
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: packages/**
+          file_glob: true
+          tag: ${{ github.ref }}
+          overwrite: true
+          prerelease: true
+          body: "Release executable"
+
   discord_alert:
     runs-on: 'ubuntu-latest'
+    name: Discord Alert
     needs:
       - pytest
       - installer
@@ -325,6 +341,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
+      - name: Download the executables
+        uses: actions/download-artifact@v3
+        with:
+          path: packages/
 
       - name: Get pip cache dir
         id: pip-cache
