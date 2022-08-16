@@ -18,7 +18,8 @@ from randovania.generator import reach_lib
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
-from randovania.generator.filler.filler_logging import print_new_resources, print_retcon_loop_start
+from randovania.generator.filler.filler_logging import print_new_resources, print_retcon_loop_start, \
+    print_new_node_identifiers
 from randovania.generator.filler.pickup_list import (
     get_pickups_that_solves_unreachable,
     interesting_resources_for_reach, PickupCombinations,
@@ -82,7 +83,7 @@ class PlayerState:
             if self.hint_seen_count[hint_identifier] == 1:
                 self.hint_initial_pickups[hint_identifier] = frozenset(self.reach.state.collected_pickup_indices)
 
-        print_new_resources(self.game, self.reach, self.hint_seen_count, "Scan Asset")
+        print_new_node_identifiers(self.game, self.hint_seen_count, "Scan Asset")
 
     def _advance_event_seen_count(self):
         for resource, quantity in self.reach.state.resources.as_resource_gain():
