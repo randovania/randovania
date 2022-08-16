@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>880</width>
-    <height>122</height>
+    <height>88</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Item Configuration</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QGridLayout" name="root_layout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -38,27 +38,10 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="0" colspan="5">
-    <widget class="Line" name="separator_line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="4">
-    <widget class="QLabel" name="warning_label">
+   <item row="3" column="2">
+    <widget class="QLabel" name="priority_label">
      <property name="text">
-      <string/>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QCheckBox" name="vanilla_check">
-     <property name="text">
-      <string>In Vanilla</string>
+      <string>Priority for placement</string>
      </property>
     </widget>
    </item>
@@ -72,7 +55,6 @@
      </property>
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -87,12 +69,6 @@
       <string>As starting</string>
      </property>
     </widget>
-   </item>
-   <item row="1" column="4">
-    <widget class="ScrollProtectedComboBox" name="state_case_combo"/>
-   </item>
-   <item row="1" column="3">
-    <widget class="ScrollProtectedSpinBox" name="provided_ammo_spinbox"/>
    </item>
    <item row="1" column="1" colspan="2">
     <widget class="QLabel" name="provided_ammo_label">
@@ -110,6 +86,13 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="vanilla_check">
+     <property name="text">
+      <string>In Vanilla</string>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="4">
     <widget class="ScrollProtectedSpinBox" name="shuffled_spinbox">
      <property name="suffix">
@@ -123,15 +106,21 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="0" colspan="5">
+    <widget class="Line" name="separator_line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="3">
     <widget class="ScrollProtectedComboBox" name="priority_combo"/>
    </item>
-   <item row="3" column="2">
-    <widget class="QLabel" name="priority_label">
-     <property name="text">
-      <string>Priority for placement</string>
-     </property>
-    </widget>
+   <item row="1" column="4">
+    <widget class="ScrollProtectedComboBox" name="state_case_combo"/>
+   </item>
+   <item row="1" column="3">
+    <widget class="ScrollProtectedSpinBox" name="provided_ammo_spinbox"/>
    </item>
   </layout>
  </widget>

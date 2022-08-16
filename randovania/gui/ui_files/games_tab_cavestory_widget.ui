@@ -19,13 +19,38 @@
    </attribute>
    <layout class="QVBoxLayout" name="intro_layout">
     <item>
-     <widget class="QLabel" name="intro_label">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Navigate the floating island, finding items in all sorts of places, then make your way to one of the game's three endings! &lt;/p&gt;&lt;p&gt;The default preset starts with the Map System and Nikumaru Counter. Check the Map System from your inventory at any time to see how many items you have collected. Along the way, speak to Cthulhus and blue robots to receive hints on where items are hidden. &lt;/p&gt;&lt;p&gt;The objective is to achieve the Normal Ending - to do this, you need to save Sue in the Egg Corridor and biuld the rocket in Plantation. &lt;/p&gt;&lt;p&gt;For more details, check the FAQ and Differences tabs. To get started, use the Quick Generate button to generate a game using the default settings.&lt;/p&gt;&lt;p&gt;&amp;quot;Then play and have a fun!&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <widget class="QWidget" name="horizontalWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
       </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="game_cover_label">
+         <property name="text">
+          <string>[game cover]</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="intro_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Navigate the floating island, finding items in all sorts of places, then make your way to one of the game's three endings! &lt;/p&gt;&lt;p&gt;The default preset starts with the Map System and Nikumaru Counter. Check the Map System from your inventory at any time to see how many items you have collected. Along the way, speak to Cthulhus and blue robots to receive hints on where items are hidden. &lt;/p&gt;&lt;p&gt;The objective is to achieve the Normal Ending - to do this, you need to save Sue in the Egg Corridor and biuld the rocket in Plantation. &lt;/p&gt;&lt;p&gt;For more details, check the FAQ and Differences tabs. To get started, use the Quick Generate button to generate a game using the default settings.&lt;/p&gt;&lt;p&gt;&amp;quot;Then play and have a fun!&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
