@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- **Major** - Added: Enemy Attribute Rando. Enemy stat values such as speed and scale can be randomized within a range you specify.
 
 #### Patcher Changes
 

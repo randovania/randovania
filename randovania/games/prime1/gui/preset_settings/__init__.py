@@ -5,6 +5,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 
 
 def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.elevators_tab import PresetElevators
@@ -15,6 +16,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
+    from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     return [
         PresetTrickLevel,
@@ -25,6 +27,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPrimeGoal,
         PresetPrimeHints,
         PresetDockRando,
+        PresetEnemyAttributeRandomizer,
         PresetPrimePatches,
         PresetLocationPool,
         MetroidPresetItemPool,

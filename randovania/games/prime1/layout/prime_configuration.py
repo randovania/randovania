@@ -1,7 +1,8 @@
 import dataclasses
 from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackEnum
+from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.hint_configuration import HintConfiguration
@@ -20,6 +21,20 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     COMPETITIVE = "competitive"
     MINOR = "minor"
     MAJOR = "major"
+
+@dataclasses.dataclass(frozen=True)
+class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
+    enemy_rando_range_scale_low: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
+    enemy_rando_range_scale_high: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
+    enemy_rando_range_health_low: float = dataclasses.field(metadata={"min": 0.01, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_health_high: float = dataclasses.field(metadata={"min": 0.01, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_speed_low: float = dataclasses.field(metadata={"min": 0.0, "max": 250.0, "precision": 1.0})
+    enemy_rando_range_speed_high: float = dataclasses.field(metadata={"min": 0.0, "max": 250.0, "precision": 1.0})
+    enemy_rando_range_damage_low: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_damage_high: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_knockback_low: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_range_knockback_high: float = dataclasses.field(metadata={"min": 0.0, "max": 2500.0, "precision": 1.0})
+    enemy_rando_diff_xyz: bool
 
 
 @dataclasses.dataclass(frozen=True)
@@ -60,13 +75,15 @@ class PrimeConfiguration(BaseConfiguration):
     qol_pickup_scans: bool
     qol_cutscenes: LayoutCutsceneMode
 
+    enemy_attributes: EnemyAttributeRandomizer | None
+
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
 
     def dangerous_settings(self) -> list[str]:
         result = super().dangerous_settings()
-
+        
         if self.shuffle_item_pos:
             result.append("Shuffled Item Position")
 
@@ -87,6 +104,9 @@ class PrimeConfiguration(BaseConfiguration):
 
         if self.allow_underwater_movement_without_gravity:
             result.append("Dangerous Gravity Suit Logic")
+
+        if self.enemy_attributes is not None:
+            result.append("Dangerous Random Enemy Attributes")
 
         return result
 
