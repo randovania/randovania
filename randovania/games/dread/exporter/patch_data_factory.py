@@ -2,7 +2,7 @@ import logging
 import os
 
 from randovania.exporter import pickup_exporter, item_names
-from randovania.exporter.hints import guaranteed_item_hint
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -258,6 +258,14 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ])
 
         return text
+    
+    def _credits_spoiler(self) -> dict[str, str]:
+        return credits_spoiler.generic_credits(
+            self.configuration.major_items_configuration,
+            self.description.all_patches,
+            self.players_config,
+            DreadHintNamer(self.description.all_patches, self.players_config),
+        )
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
@@ -363,6 +371,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             ],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
+            "spoiler_log": self._credits_spoiler(),
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
