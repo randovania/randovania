@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from randovania.version import version
-from randovania.version_hash import git_hash
+from randovania.version_hash import git_hash, git_branch as _git_branch
 
 CONFIGURATION_FILE_PATH: Path | None = None
 
@@ -13,7 +13,16 @@ def is_frozen() -> bool:
 
 
 def is_dev_version():
-    return ".dev" in VERSION
+    return ".dev" in VERSION and _git_branch != "stable"
+
+
+def get_icon_path():
+    if is_dev_version():
+        icon_name = "dark_temple_key.ico"
+    else:
+        icon_name = "sky_temple_key_NqN_icon.ico"
+
+    return get_data_path().joinpath("icons", icon_name)
 
 
 def get_file_path() -> Path:

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
+    <width>501</width>
     <height>393</height>
    </rect>
   </property>
@@ -19,10 +19,32 @@
    </attribute>
    <layout class="QVBoxLayout" name="intro_layout">
     <item>
-     <widget class="QLabel" name="intro_label">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The Blank game is used by Randovania to serve as an example of how a game is integrated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <widget class="QWidget" name="horizontalWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="game_cover_label">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="intro_label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The Blank game is used by Randovania to serve as an example of how a game is integrated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
@@ -79,8 +101,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>432</width>
-         <height>368</height>
+         <width>495</width>
+         <height>361</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="faq_scroll_layout">

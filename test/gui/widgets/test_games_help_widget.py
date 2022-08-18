@@ -75,3 +75,19 @@ def test_showEvent_twice(skip_qtbot):
 
     # Assert
     widget._on_first_show.assert_called_once_with()
+
+
+def test_game_tab_created(skip_qtbot):
+    # Setup
+    game = RandovaniaGame.METROID_PRIME_ECHOES
+    widget = GamesHelpWidget()
+    widget.set_main_window(MagicMock())
+    widget.on_options_changed(MagicMock())
+
+    skip_qtbot.addWidget(widget)
+    widget.set_current_game(game)
+
+    # Run
+    widget.showEvent(None)
+    assert widget.current_game() is game
+    assert isinstance(widget.current_game_widget(), game.gui.game_tab)

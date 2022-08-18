@@ -28,6 +28,9 @@ class WindowManager(QMainWindow):
     def open_game_details(self, layout: LayoutDescription):
         raise NotImplemented()
 
+    def set_games_selector_visible(self, visible: bool):
+        raise NotImplemented()
+
     @property
     def main_window(self) -> QMainWindow:
         raise NotImplemented()

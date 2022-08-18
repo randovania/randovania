@@ -52,7 +52,7 @@ class GameLayout:
 
 @dataclass(frozen=True)
 class GameGui:
-    game_tab: Callable[[WindowManager, BackgroundTaskMixin, Options], BaseGameTabWidget]
+    game_tab: type[BaseGameTabWidget]
     """Provides a widget used by the main window to display help, faq and other details about this game."""
 
     tab_provider: Callable[[PresetEditor, WindowManager], Iterable[type[PresetTab]]]

@@ -368,6 +368,12 @@ def _calculate_hint_location_for_action(action: PickupEntry,
         ]
         if potential_hint_locations:
             return rng.choice(sorted(potential_hint_locations))
+        else:
+            debug.debug_print(
+                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.logbooks)}"
+            )
+    else:
+        debug.debug_print(f">> Pickup {action.name} was decided to not have a hint.")
     return None
 
 

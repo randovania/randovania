@@ -1,4 +1,4 @@
-from PySide6 import QtWidgets
+from PySide6 import QtWidgets, QtCore, QtGui
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import faq_lib, hints_text
@@ -9,8 +9,10 @@ from randovania.interface_common.options import Options
 
 
 class BaseGameTabWidget(QtWidgets.QTabWidget):
+    tab_intro: QtWidgets.QWidget
     tab_generate_game: GenerateGameWidget
     quick_generate_button: QtWidgets.QPushButton
+    game_cover_label: QtWidgets.QLabel | None = None
     faq_label: QtWidgets.QLabel | None = None
     hint_item_names_tree_widget: QtWidgets.QTableWidget | None = None
     hint_locations_tree_widget: QtWidgets.QTreeWidget | None = None
@@ -18,11 +20,21 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
     def __init__(self, window_manager: WindowManager, background_task: BackgroundTaskMixin, options: Options):
         super().__init__()
         self.setup_ui()
+        self._window_manager = window_manager
 
         game = self.game()
 
         background_task.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.quick_generate_button.clicked.connect(self.on_quick_generate)
+
+        return_button = QtWidgets.QPushButton("Back to games")
+        return_button.clicked.connect(self._return_to_list)
+        self.setCornerWidget(return_button, QtCore.Qt.Corner.TopLeftCorner)
+
+        if self.game_cover_label is not None:
+            self.game_cover_label.setPixmap(QtGui.QPixmap(game.data_path.joinpath('assets/cover.png').as_posix()))
+            self.game_cover_label.setScaledContents(True)
+            self.game_cover_label.setFixedSize(150, 200)
 
         if self.faq_label is not None:
             faq_lib.format_game_faq(game, self.faq_label)
@@ -41,6 +53,9 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
     @classmethod
     def game(cls) -> RandovaniaGame:
         raise NotImplementedError()
+
+    def _return_to_list(self):
+        self._window_manager.set_games_selector_visible(True)
 
     def on_options_changed(self, options: Options):
         self.tab_generate_game.on_options_changed(options)
