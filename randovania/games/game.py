@@ -12,8 +12,6 @@ import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
-    from PySide6 import QtWidgets
-
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory
     from randovania.game_description.game_patches import GamePatches
@@ -24,9 +22,11 @@ if typing.TYPE_CHECKING:
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
+    from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
+    from randovania.interface_common.options import PerGameOptions, Options
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -52,7 +52,10 @@ class GameLayout:
 
 @dataclass(frozen=True)
 class GameGui:
-    tab_provider: Callable[[PresetEditor, WindowManager], Iterable[PresetTab]]
+    game_tab: type[BaseGameTabWidget]
+    """Provides a widget used by the main window to display help, faq and other details about this game."""
+
+    tab_provider: Callable[[PresetEditor, WindowManager], Iterable[type[PresetTab]]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
     cosmetic_dialog: type[BaseCosmeticPatchesDialog]
@@ -67,9 +70,6 @@ class GameGui:
 
     spoiler_visualizer: tuple[type[GameDetailsTab], ...] = tuple()
     """Tuple of specializations of GameDetailsTab for providing extra details when visualizing a LayoutDescription."""
-
-    help_widget: Callable[[], QtWidgets.QWidget] | None = None
-    """(Optional) Provides a widget used by the main window to display help, faq and other details about this game."""
 
 
 @dataclass(frozen=True)

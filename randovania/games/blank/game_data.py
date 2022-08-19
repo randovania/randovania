@@ -12,6 +12,7 @@ def _gui() -> game.GameGui:
     from randovania.games.blank import gui
 
     return game.GameGui(
+        game_tab=gui.BlankGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.BlankCosmeticPatchesDialog,
         export_dialog=gui.BlankGameExportDialog,

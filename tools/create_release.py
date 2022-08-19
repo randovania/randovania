@@ -13,6 +13,7 @@ import aiohttp
 import markdown
 import tenacity
 
+import randovania
 from randovania import VERSION
 from randovania.cli import database
 from randovania.games import default_data
@@ -90,6 +91,9 @@ async def main():
         database.export_as_binary(
             default_data.read_json_then_binary(game)[1],
             _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"))
+
+    icon_path = randovania.get_icon_path()
+    shutil.copyfile(icon_path, icon_path.with_name("executable_icon.ico"))
 
     if is_production():
         server_suffix = "randovania"

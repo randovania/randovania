@@ -1,7 +1,5 @@
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 3
-
 
 def _migrate_v2(data: dict) -> dict:
     for item in data["items"].values():
@@ -10,11 +8,12 @@ def _migrate_v2(data: dict) -> dict:
     return data
 
 
-_MIGRATIONS = {
-    1: migration_lib.unsupported_migration,
-    2: _migrate_v2,
-}
+_MIGRATIONS = [
+    None,
+    _migrate_v2,
+]
+CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def migrate_current(data: dict):
-    return migration_lib.migrate_to_version(data, CURRENT_VERSION, _MIGRATIONS)
+    return migration_lib.apply_migrations(data, _MIGRATIONS)

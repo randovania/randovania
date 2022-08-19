@@ -1,5 +1,5 @@
 {
-    "schema_version": 34,
+    "schema_version": 36,
     "name": "Starter Preset",
     "uuid": "407e97ed-decb-4889-8ab7-943f86ae48a4",
     "description": "Basic preset.",
@@ -112,7 +112,7 @@
                     "ammo_count": [
                         2
                     ],
-                    "pickup_count": 70,
+                    "pickup_count": 75,
                     "requires_major_item": true
                 },
                 "Missile+ Tank": {
@@ -134,8 +134,6 @@
         "damage_strictness": 1.5,
         "pickup_model_style": "all-visible",
         "pickup_model_data_source": "etm",
-        "multi_pickup_placement": false,
-        "multi_pickup_new_weighting": false,
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
         "minimum_available_locations_for_hint_placement": 5,
@@ -172,7 +170,9 @@
         "artifacts": {
             "prefer_emmi": true,
             "prefer_major_bosses": true,
-            "required_artifacts": 9
-        }
+            "required_artifacts": 3
+        },
+        "linear_damage_runs": true,
+        "linear_dps": 20
     }
 }

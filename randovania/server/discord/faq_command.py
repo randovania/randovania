@@ -1,8 +1,4 @@
-import functools
-
 import discord
-from discord_slash import SlashContext, SlashCommandOptionType, SlashCommand
-from discord_slash.utils import manage_commands
 
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
@@ -10,47 +6,45 @@ from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog
 
 
-class FaqCommandCog(RandovaniaCog):
-    def __init__(self, configuration: dict, bot: RandovaniaBot):
-        self.configuration = configuration
-        self.bot = bot
+async def game_faq_entry(context: discord.ApplicationContext, question):
+    raise RuntimeError("Should not be called")
 
-    async def add_commands(self, slash: SlashCommand):
-        base_command = self.configuration.get("command_prefix", "") + "randovania-faq"
 
-        for game in enum_lib.iterate_enum(RandovaniaGame):
-            faq_entries = list(game.data.faq)
-            if not faq_entries:
-                continue
+def _shorten(n: str) -> str:
+    if len(n) > 100:
+        return n[:97] + "..."
+    return n
 
-            def _shorten(n: str) -> str:
-                if len(n) > 100:
-                    return n[:97] + "..."
-                return n
 
-            slash.add_subcommand(
-                functools.partial(self.faq_game_command, game=game),
-                base_command,
-                name=game.value,
-                description=f"Prints the answer to a FAQ for {game.long_name}.",
-                options=[
-                    manage_commands.create_option(
-                        "question", "Which question to answer?",
-                        option_type=SlashCommandOptionType.STRING,
-                        required=True,
-                        choices=[
-                            manage_commands.create_choice(f"question_{question_id}", _shorten(question))
-                            for question_id, (question, answer) in enumerate(faq_entries)
-                        ]
-                    )
-                ],
-            )
+class GameFaqMessage:
+    def __init__(self, game: RandovaniaGame):
+        self.game = game
 
-    async def faq_game_command(self, ctx: SlashContext, game: RandovaniaGame, question: str):
-        for qid, (question_text, answer) in enumerate(game.data.faq):
+    def create_command(self, parent) -> discord.SlashCommand:
+        result = discord.SlashCommand(
+            game_faq_entry,
+            name=self.game.value,
+            description=f"Prints the answer to a FAQ for {self.game.long_name}.",
+            parent=parent,
+            options=[discord.Option(
+                input_type=str,
+                name="question",
+                description="Which question to answer?",
+                required=True,
+                choices=[
+                    discord.OptionChoice(name=_shorten(question), value=f"question_{question_id}")
+                    for question_id, (question, answer) in enumerate(list(self.game.data.faq))
+                ]
+            )],
+        )
+        result.callback = self.callback
+        return result
+
+    async def callback(self, context: discord.ApplicationContext, question: str):
+        for qid, (question_text, answer) in enumerate(self.game.data.faq):
             if f"question_{qid}" == question:
-                await ctx.send(
-                    content=f"Requested by {ctx.author.display_name}.\n**{game.long_name}**",
+                await context.respond(
+                    content=f"Requested by {context.author.display_name}.\n**{self.game.long_name}**",
                     embed=discord.Embed(
                         title=question_text,
                         description=answer,
@@ -58,7 +52,28 @@ class FaqCommandCog(RandovaniaCog):
                 )
                 return
 
-        await ctx.send(content="Unknown question.", hidden=True)
+        await context.respond(content="Unknown question.", hidden=True)
+
+
+class FaqCommandCog(RandovaniaCog):
+    def __init__(self, configuration: dict, bot: RandovaniaBot):
+        self.configuration = configuration
+        self.bot = bot
+
+    async def add_commands(self):
+        base_command = self.configuration.get("command_prefix", "") + "randovania-faq"
+
+        group = self.bot.create_group(
+            base_command
+        )
+
+        for game in enum_lib.iterate_enum(RandovaniaGame):
+            faq_entries = list(game.data.faq)
+            if not faq_entries:
+                continue
+
+            faq_message = GameFaqMessage(game)
+            group.subcommands.append(faq_message.create_command(group))
 
 
 def setup(bot: RandovaniaBot):
