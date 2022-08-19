@@ -73,7 +73,7 @@ with everything ready to use. Just extract and run!
 1. Activate the virtual environment and generate the necessary configuration.json, as well as build a native application:
 
    ```console
-   $ . venv/bin/activate
+   $ . venv/Scripts/activate
    (venv) $ export PRODUCTION=true
    (venv) $ python tools/create_release.py
    ```
