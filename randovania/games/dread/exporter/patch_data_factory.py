@@ -53,11 +53,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
 
-        self.memo_data[
-            "Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank:g}."
+        tank = self.configuration.energy_per_tank
+        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
         if self.configuration.immediate_energy_parts:
-            self.memo_data[
-                "Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank / 4:g}."
+            self.memo_data["Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {tank / 4:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
@@ -147,35 +146,23 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             }
             model_names = alt_model
 
-        ammoconfig = self.configuration.ammo_configuration.items_state
-        pbammo = self.item_db.ammo["Power Bomb Tank"]
-
         def get_resource(res: ConditionalResources) -> dict:
-            item_id = "ITEM_NONE"
-            quantity = 1
-            ids = [_get_item_id_for_item(r) for r, q in res.resources]
-            for r, q in res.resources:
-                try:
-                    item_id = _get_item_id_for_item(r)
-                    quantity = q
-                    break
-                except KeyError:
-                    continue
+            item_id = _get_item_id_for_item(res.resources[0][0])
+            quantity = res.resources[0][1]
 
-            if "ITEM_WEAPON_POWER_BOMB" in ids:
-                item_id = "ITEM_WEAPON_POWER_BOMB"
+            # only main pbs have 2 elements in res.resources, everything else is just 1
+            if len(res.resources) != 1:
+                item_id = _get_item_id_for_item(res.resources[1][0])
+                assert item_id == "ITEM_WEAPON_POWER_BOMB"
+                assert len(res.resources) == 2
 
             # non-required mains
-            if (item_id == "ITEM_WEAPON_POWER_BOMB_MAX"
-                    and not ammoconfig[pbammo].requires_major_item):
+            if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not detail.original_pickup.respects_lock:
                 item_id = "ITEM_WEAPON_POWER_BOMB"
 
             return {"item_id": item_id, "quantity": quantity}
 
-        # ugly hack
         resources = [get_resource(res) for res in detail.conditional_resources]
-        if resources[0]["item_id"] == "ITEM_WEAPON_POWER_BOMB_MAX":
-            resources = [resources[-1]]
 
         pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
