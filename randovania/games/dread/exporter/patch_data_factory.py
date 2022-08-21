@@ -36,13 +36,40 @@ _ALTERNATIVE_MODELS = {
 }
 
 
-def _get_item_id_for_item(item: ItemResourceInfo) -> str:
+def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
     try:
         return item.extra["item_id"]
     except KeyError as e:
         raise KeyError(f"{item.long_name} has no item ID.") from e
+
+
+def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+    if not res.resources:
+        return {"item_id": "ITEM_NONE", "quantity": 0}
+
+    item_id = get_item_id_for_item(res.resources[0][0])
+    quantity = res.resources[0][1]
+
+    # only main pbs have 2 elements in res.resources, everything else is just 1
+    if len(res.resources) != 1:
+        item_id = get_item_id_for_item(res.resources[1][0])
+        assert item_id == "ITEM_WEAPON_POWER_BOMB"
+        assert len(res.resources) == 2
+
+    # non-required mains
+    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
+        item_id = "ITEM_WEAPON_POWER_BOMB"
+
+    return {"item_id": item_id, "quantity": quantity}
+
+
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
+    return [
+        convert_conditional_resource(detail.original_pickup.respects_lock, res)
+        for res in detail.conditional_resources
+    ]
 
 
 class DreadPatchDataFactory(BasePatchDataFactory):
@@ -65,7 +92,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         result = {}
         for resource, quantity in resources.as_resource_gain():
             try:
-                result[_get_item_id_for_item(resource)] = quantity
+                result[get_item_id_for_item(resource)] = quantity
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
@@ -146,23 +173,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             }
             model_names = alt_model
 
-        def get_resource(res: ConditionalResources) -> dict:
-            item_id = _get_item_id_for_item(res.resources[0][0])
-            quantity = res.resources[0][1]
-
-            # only main pbs have 2 elements in res.resources, everything else is just 1
-            if len(res.resources) != 1:
-                item_id = _get_item_id_for_item(res.resources[1][0])
-                assert item_id == "ITEM_WEAPON_POWER_BOMB"
-                assert len(res.resources) == 2
-
-            # non-required mains
-            if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not detail.original_pickup.respects_lock:
-                item_id = "ITEM_WEAPON_POWER_BOMB"
-
-            return {"item_id": item_id, "quantity": quantity}
-
-        resources = [get_resource(res) for res in detail.conditional_resources]
+        resources = get_resources_for_details(detail)
 
         pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
@@ -174,7 +185,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         details = {
             "pickup_type": pickup_type,
             "caption": hud_text,
-            "resources": resources
+            "resources": resources,
         }
 
         try:
