@@ -3076,6 +3076,36 @@
             "pickup_string_key": "GUI_ITEM_ACQUIRED_SPIDER_MAGNET"
         },
         {
+            "pickup_type": "cutscene",
+            "caption": "Nothing acquired.",
+            "resources": [
+                {
+                    "item_id": "ITEM_NONE",
+                    "quantity": 1
+                }
+            ],
+            "pickup_lua_callback": {
+                "scenario": "s040_aqua",
+                "function": "OnHydrogigaDead_CUSTOM",
+                "args": 0
+            }
+        },
+        {
+            "pickup_type": "cutscene",
+            "caption": "Nothing acquired.",
+            "resources": [
+                {
+                    "item_id": "ITEM_NONE",
+                    "quantity": 1
+                }
+            ],
+            "pickup_lua_callback": {
+                "scenario": "s020_magma",
+                "function": "OnCutscene81Ended",
+                "args": 0
+            }
+        },
+        {
             "pickup_type": "corex",
             "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
@@ -3189,36 +3219,6 @@
             "pickup_lua_callback": {
                 "scenario": "s020_magma",
                 "function": "OnKraidDeath_CUSTOM",
-                "args": 0
-            }
-        },
-        {
-            "pickup_type": "cutscene",
-            "caption": "Nothing acquired.",
-            "resources": [
-                {
-                    "item_id": "ITEM_NONE",
-                    "quantity": 1
-                }
-            ],
-            "pickup_lua_callback": {
-                "scenario": "s020_magma",
-                "function": "OnCutscene81Ended",
-                "args": 0
-            }
-        },
-        {
-            "pickup_type": "cutscene",
-            "caption": "Nothing acquired.",
-            "resources": [
-                {
-                    "item_id": "ITEM_NONE",
-                    "quantity": 1
-                }
-            ],
-            "pickup_lua_callback": {
-                "scenario": "s040_aqua",
-                "function": "OnHydrogigaDead_CUSTOM",
                 "args": 0
             }
         }
