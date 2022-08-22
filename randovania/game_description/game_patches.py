@@ -77,6 +77,7 @@ class GamePatches:
 
         for index, pickup in assignments:
             assert index not in new_pickup_assignment
+            assert self.game.world_list.node_from_pickup_index(index) is not None
             new_pickup_assignment[index] = pickup
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)

@@ -706,7 +706,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
         starting_memo = None
-        extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
+        extra_starting = item_names.additional_starting_items(self.configuration, db,
                                                               self.patches.starting_items)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
