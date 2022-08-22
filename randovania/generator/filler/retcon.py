@@ -166,17 +166,13 @@ def increment_considered_count(locations_weighted: WeightedLocations):
             filler_logging.print_new_pickup_index(player.index, player.game, location)
 
 
-def retcon_playthrough_filler(rng: Random,
-                              player_states: list[PlayerState],
-                              status_update: Callable[[str], None],
-                              ) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
-    """
-    Runs the retcon logic.
-    :param rng:
-    :param player_states:
-    :param status_update:
-    :return: A GamePatches for each player and a sequence of placed items.
-    """
+def _print_header(player_states: list[PlayerState]):
+    def _name_for_index(state: PlayerState, index: PickupIndex):
+        return state.game.world_list.node_name(
+            state.game.world_list.node_from_pickup_index(index),
+            with_world=True,
+        )
+
     debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
         "*" * 100,
         "\n".join(
@@ -195,13 +191,27 @@ def retcon_playthrough_filler(rng: Random,
             "Player {}: {}".format(
                 player_state.index,
                 pprint.pformat({
-                    player_state.game.world_list.node_from_pickup_index(index).node_index: target.pickup.name
+                    _name_for_index(player_state, index): target.pickup.name
                     for index, target in player_state.reach.state.patches.pickup_assignment.items()
                 })
             )
             for player_state in player_states
         )
     ))
+
+
+def retcon_playthrough_filler(rng: Random,
+                              player_states: list[PlayerState],
+                              status_update: Callable[[str], None],
+                              ) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
+    """
+    Runs the retcon logic.
+    :param rng:
+    :param player_states:
+    :param status_update:
+    :return: A GamePatches for each player and a sequence of placed items.
+    """
+    _print_header(player_states)
     last_message = "Starting."
 
     def action_report(message: str):
