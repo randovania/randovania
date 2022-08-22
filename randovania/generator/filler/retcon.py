@@ -190,6 +190,18 @@ def retcon_playthrough_filler(rng: Random,
             for player_state in player_states
         )
     ))
+    debug.debug_print("Static assignments:\n{}".format(
+        "\n".join(
+            "Player {}: {}".format(
+                player_state.index,
+                pprint.pformat({
+                    player_state.game.world_list.node_from_pickup_index(index).node_index: target.pickup.name
+                    for index, target in player_state.reach.state.patches.pickup_assignment.items()
+                })
+            )
+            for player_state in player_states
+        )
+    ))
     last_message = "Starting."
 
     def action_report(message: str):
