@@ -226,7 +226,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     useless_pickup = PickupEntry("Useless", useless_model, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
                                  progression=tuple())
 
-    patches = empty_patches.assign_new_pickups([
+    patches = dataclasses.replace(empty_patches, game=MagicMock())
+    patches = patches.assign_new_pickups([
         (PickupIndex(0), PickupTarget(pickup_a, 0)),
         (PickupIndex(2), PickupTarget(pickup_b, 0)),
         (PickupIndex(3), PickupTarget(pickup_a, 0)),
