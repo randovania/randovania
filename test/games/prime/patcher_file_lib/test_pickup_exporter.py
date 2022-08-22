@@ -1,3 +1,4 @@
+import dataclasses
 from random import Random
 from unittest.mock import MagicMock
 
@@ -93,6 +94,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     has_scan_text = model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}
     rng = Random(5000)
 
+    patches = dataclasses.replace(empty_patches, game=MagicMock())
     model_0 = MagicMock(spec=PickupModel)
     model_1 = MagicMock(spec=PickupModel)
     model_2 = MagicMock(spec=PickupModel)
@@ -118,7 +120,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
 
     useless_pickup = PickupEntry("P-Useless", model_0, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
                                  progression=((useless_resource, 1),))
-    patches = empty_patches.assign_new_pickups([
+    patches = patches.assign_new_pickups([
         (PickupIndex(0), PickupTarget(pickup_a, 0)),
         (PickupIndex(2), PickupTarget(pickup_b, 0)),
         (PickupIndex(3), PickupTarget(pickup_a, 0)),
