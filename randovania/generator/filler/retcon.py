@@ -159,9 +159,11 @@ def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -
 
 def increment_considered_count(locations_weighted: WeightedLocations):
     for player, location in locations_weighted.keys():
+        was_present = location in player.pickup_index_considered_count
         player.pickup_index_considered_count[location] += 1
-        filler_logging.print_new_pickup_index(player.index, player.game, player.reach, location,
-                                              player.pickup_index_considered_count[location])
+        if not was_present:
+            # if it wasn't present, thenwe get to log!
+            filler_logging.print_new_pickup_index(player.index, player.game, location)
 
 
 def retcon_playthrough_filler(rng: Random,
