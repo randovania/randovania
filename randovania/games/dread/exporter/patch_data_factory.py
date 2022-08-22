@@ -74,7 +74,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _starting_inventory_text(self, resources: ResourceCollection):
         result = [r"{c1}Random starting items:{c0}"]
-        items = item_names.additional_starting_items(self.configuration, self.game.resource_database, resources)
+        items = item_names.additional_starting_items(self.configuration, self.game, resources)
         if not items:
             return []
         result.extend(items)

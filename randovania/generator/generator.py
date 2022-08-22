@@ -64,7 +64,7 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
     )
 
     pool_results = pool_creator.calculate_pool_results(configuration,
-                                                       game.resource_database,
+                                                       game,
                                                        base_patches,
                                                        rng,
                                                        rng_required=rng_required)
