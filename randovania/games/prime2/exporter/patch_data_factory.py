@@ -691,7 +691,7 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
             for conversion in details.conversion
         ],
         "hud_text": hud_text,
-        "scan": details.description,
+        "scan": f"{details.name}. {details.description}".strip(),
         "model": model,
     }
 

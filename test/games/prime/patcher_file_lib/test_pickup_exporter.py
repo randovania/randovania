@@ -151,7 +151,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     assert len(result) == 5
     assert result[0] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(0),
-        description="P-A" if has_scan_text else "Unknown item",
+        name="P-A" if has_scan_text else "Unknown item",
+        description="",
         collection_text=["A acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ['Unknown item acquired!'],
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
@@ -161,7 +162,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     )
     assert result[1] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(1),
-        description="P-Useless" if has_scan_text else "Unknown item",
+        name="P-Useless" if has_scan_text else "Unknown item",
+        description="",
         collection_text=["Useless acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ['Unknown item acquired!'],
         conditional_resources=[ConditionalResources("Useless", None, ((useless_resource, 1),))],
         conversion=[],
@@ -171,7 +173,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     )
     assert result[2] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(2),
-        description="P-B. Provides the following in order: B, A" if has_scan_text else "Unknown item",
+        name="P-B" if has_scan_text else "Unknown item",
+        description="Provides the following in order: B, A." if has_scan_text else "",
         collection_text=["B acquired!", "A acquired!"] if model_style != PickupModelStyle.HIDE_ALL else [
             'Unknown item acquired!', 'Unknown item acquired!'],
         conditional_resources=[
@@ -185,7 +188,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     )
     assert result[3] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(3),
-        description="P-A" if has_scan_text else "Unknown item",
+        name="P-A" if has_scan_text else "Unknown item",
+        description="",
         collection_text=["A acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ['Unknown item acquired!'],
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
@@ -195,7 +199,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     )
     assert result[4] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(4),
-        description="P-C. Provides 2 B and 1 A" if has_scan_text else "Unknown item",
+        name="P-C" if has_scan_text else "Unknown item",
+        description="Provides 2 B and 1 A." if has_scan_text else "",
         collection_text=["P-C acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ['Unknown item acquired!'],
         conditional_resources=[ConditionalResources("P-C", None, (
             (resource_b, 2), (resource_a, 1),
@@ -272,7 +277,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     assert len(result) == 5
     assert result[0] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(0),
-        description="A",
+        name="A",
+        description="",
         collection_text=[memo_data["A"]],
         conditional_resources=[ConditionalResources("A", None, ())],
         conversion=[],
@@ -282,7 +288,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     )
     assert result[1] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(1),
-        description="A",
+        name="A",
+        description="",
         collection_text=[memo_data["A"]],
         conditional_resources=[ConditionalResources("Useless", None, ())],
         conversion=[],
@@ -292,7 +299,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     )
     assert result[2] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(2),
-        description="C",
+        name="C",
+        description="",
         collection_text=[memo_data["C"], memo_data["C"]],
         conditional_resources=[
             ConditionalResources("B", None, ((resource_b, 1),)),
@@ -305,7 +313,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     )
     assert result[3] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(3),
-        description="B",
+        name="B",
+        description="",
         collection_text=[memo_data["B"]],
         conditional_resources=[ConditionalResources("A", None, ())],
         conversion=[],
@@ -315,7 +324,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     )
     assert result[4] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(4),
-        description="A",
+        name="A",
+        description="",
         collection_text=[memo_data["A"]],
         conditional_resources=[ConditionalResources("C", None, ())],
         conversion=[],
@@ -332,10 +342,10 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
                                               None, False)
 
     # Run
-    result = pickup_exporter._pickup_scan(pickup)
+    result = pickup_exporter._pickup_description(pickup)
 
     # Assert
-    assert result == "Progressive Suit. Provides the following in order: Dark Suit, Light Suit"
+    assert result == "Provides the following in order: Dark Suit, Light Suit."
 
 
 @pytest.mark.parametrize(["item", "ammo", "result"], [
@@ -348,7 +358,7 @@ def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_da
     pickup = pickup_creator.create_ammo_expansion(expansion, ammo, False, echoes_resource_database)
 
     # Run
-    result = pickup_exporter._pickup_scan(pickup)
+    result = pickup_exporter._pickup_description(pickup)
 
     # Assert
     assert result == result
@@ -375,11 +385,12 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
                                   pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
-                                  "Scan Text", model)
+                                  "The Name", "Scan Text", model)
 
     # Assert
     assert data == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(10),
+        name="The Name",
         description="Scan Text",
         collection_text=['A acquired!', 'B acquired!'],
         conditional_resources=[
@@ -404,12 +415,13 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
                                   pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
-                                  "Scan Text", model)
+                                  "The Name", "Scan Text", model)
 
     # Assert
     assert data == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(10),
-        description="Your Scan Text",
+        name="Your The Name",
+        description="Scan Text",
         collection_text=['A acquired!', 'B acquired!'],
         conditional_resources=[
             ConditionalResources("A", None, ((resource_a, 1),)),
@@ -428,18 +440,17 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
     creator = pickup_exporter.PickupExporterMulti(solo, multi, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
 
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 1),
                                   pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
-                                  "Scan Text", model)
+                                  "The Name", "Scan Text", model)
 
     # Assert
     assert data == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(10),
-        description="Someone's Scan Text",
+        name="Someone's The Name",
+        description="Scan Text",
         collection_text=['Sent Cake to Someone!'],
         conditional_resources=[
             ConditionalResources(None, None, ((multi, 11),)),
