@@ -377,9 +377,9 @@ def _create_string_patches(hint_config: HintConfiguration,
 
 
 def _create_starting_popup(layout_configuration: EchoesConfiguration,
-                           resource_database: ResourceDatabase,
+                           game_description: GameDescription,
                            starting_items: ResourceCollection) -> list:
-    extra_items = item_names.additional_starting_items(layout_configuration, resource_database, starting_items)
+    extra_items = item_names.additional_starting_items(layout_configuration, game_description, starting_items)
     if extra_items:
         return [
             "Extra starting items:",
@@ -525,7 +525,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         # Add Spawn Point
         result["spawn_point"] = _create_spawn_point_field(self.patches, self.game)
 
-        result["starting_popup"] = _create_starting_popup(self.configuration, self.game.resource_database,
+        result["starting_popup"] = _create_starting_popup(self.configuration, self.game,
                                                           self.patches.starting_items)
 
         # Add the pickups

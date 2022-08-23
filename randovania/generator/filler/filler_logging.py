@@ -72,9 +72,8 @@ def print_new_node_identifiers(game: GameDescription,
                 print(f"-> New {label}: {world_list.node_name(node, with_world=True)}")
 
 
-def print_new_pickup_index(player: int, game: GameDescription, reach: GeneratorReach,
-                           location: PickupIndex, count: int):
-    if debug.debug_level() > 1 and count == 1:
+def print_new_pickup_index(player: int, game: GameDescription, location: PickupIndex):
+    if debug.debug_level() > 1:
         world_list = game.world_list
         node = world_list.node_from_pickup_index(location)
         print(f"-> New Pickup Index: Player {player}'s {world_list.node_name(node, with_world=True)}")

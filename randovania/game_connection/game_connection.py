@@ -29,6 +29,7 @@ class GameConnection(QObject, ConnectionBackend):
         self._notify_status()
 
     def set_executor(self, executor: MemoryOperationExecutor):
+        self.executor.disconnect()
         self.executor = executor
         self._notify_status()
 

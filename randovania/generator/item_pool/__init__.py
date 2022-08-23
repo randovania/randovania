@@ -14,3 +14,7 @@ class PoolResults:
     def __post_init__(self):
         if not isinstance(self.initial_resources, ResourceCollection):
             raise TypeError("initial_resources is not a ResourceCollection")
+
+        for key in self.assignment:
+            if not isinstance(key, PickupIndex):
+                raise TypeError(f"{key} is not a PickupIndex")

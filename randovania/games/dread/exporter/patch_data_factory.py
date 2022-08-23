@@ -36,13 +36,40 @@ _ALTERNATIVE_MODELS = {
 }
 
 
-def _get_item_id_for_item(item: ItemResourceInfo) -> str:
+def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
     try:
         return item.extra["item_id"]
     except KeyError as e:
         raise KeyError(f"{item.long_name} has no item ID.") from e
+
+
+def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+    if not res.resources:
+        return {"item_id": "ITEM_NONE", "quantity": 0}
+
+    item_id = get_item_id_for_item(res.resources[0][0])
+    quantity = res.resources[0][1]
+
+    # only main pbs have 2 elements in res.resources, everything else is just 1
+    if len(res.resources) != 1:
+        item_id = get_item_id_for_item(res.resources[1][0])
+        assert item_id == "ITEM_WEAPON_POWER_BOMB"
+        assert len(res.resources) == 2
+
+    # non-required mains
+    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
+        item_id = "ITEM_WEAPON_POWER_BOMB"
+
+    return {"item_id": item_id, "quantity": quantity}
+
+
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
+    return [
+        convert_conditional_resource(detail.original_pickup.respects_lock, res)
+        for res in detail.conditional_resources
+    ]
 
 
 class DreadPatchDataFactory(BasePatchDataFactory):
@@ -53,11 +80,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
 
-        self.memo_data[
-            "Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank:g}."
+        tank = self.configuration.energy_per_tank
+        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
         if self.configuration.immediate_energy_parts:
-            self.memo_data[
-                "Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank / 4:g}."
+            self.memo_data["Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {tank / 4:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
@@ -66,7 +92,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         result = {}
         for resource, quantity in resources.as_resource_gain():
             try:
-                result[_get_item_id_for_item(resource)] = quantity
+                result[get_item_id_for_item(resource)] = quantity
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
@@ -74,7 +100,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _starting_inventory_text(self, resources: ResourceCollection):
         result = [r"{c1}Random starting items:{c0}"]
-        items = item_names.additional_starting_items(self.configuration, self.game.resource_database, resources)
+        items = item_names.additional_starting_items(self.configuration, self.game, resources)
         if not items:
             return []
         result.extend(items)
@@ -147,35 +173,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             }
             model_names = alt_model
 
-        ammoconfig = self.configuration.ammo_configuration.items_state
-        pbammo = self.item_db.ammo["Power Bomb Tank"]
-
-        def get_resource(res: ConditionalResources) -> dict:
-            item_id = "ITEM_NONE"
-            quantity = 1
-            ids = [_get_item_id_for_item(r) for r, q in res.resources]
-            for r, q in res.resources:
-                try:
-                    item_id = _get_item_id_for_item(r)
-                    quantity = q
-                    break
-                except KeyError:
-                    continue
-
-            if "ITEM_WEAPON_POWER_BOMB" in ids:
-                item_id = "ITEM_WEAPON_POWER_BOMB"
-
-            # non-required mains
-            if (item_id == "ITEM_WEAPON_POWER_BOMB_MAX"
-                    and not ammoconfig[pbammo].requires_major_item):
-                item_id = "ITEM_WEAPON_POWER_BOMB"
-
-            return {"item_id": item_id, "quantity": quantity}
-
-        # ugly hack
-        resources = [get_resource(res) for res in detail.conditional_resources]
-        if resources[0]["item_id"] == "ITEM_WEAPON_POWER_BOMB_MAX":
-            resources = [resources[-1]]
+        resources = get_resources_for_details(detail)
 
         pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
@@ -187,7 +185,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         details = {
             "pickup_type": pickup_type,
             "caption": hud_text,
-            "resources": resources
+            "resources": resources,
         }
 
         try:

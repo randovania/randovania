@@ -25,6 +25,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
+        self.has_enemy_attribute_rando = patch_data["randEnemyAttributes"] is not None
+
         self._base_output_name = f"Prime Randomizer - {word_hash}"
         per_game = options.options_for_game(self._game)
         assert isinstance(per_game, PrimePerGameOptions)
@@ -37,6 +39,10 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         # Output format
         self.setup_multi_format(per_game.output_format)
+        if self.has_enemy_attribute_rando:
+            for radio in self.format_radio_buttons.values():
+                if not radio.isEnabled():
+                    radio.setToolTip("Format unavailable when Enemy Attribute Randomizer is enabled.")
 
         # Echoes input
         self.echoes_file_button.clicked.connect(self._on_echoes_file_button)
@@ -84,6 +90,13 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def valid_output_file_types(self) -> list[str]:
         return ["iso", "ciso", "gcz"]
 
+    @property
+    def available_output_file_types(self) -> list[str]:
+        if self.has_enemy_attribute_rando:
+            return ["iso"]
+        else:
+            return self.valid_output_file_types
+
     def save_options(self):
         with self._options as options:
             if self._has_spoiler:
@@ -102,7 +115,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
                 per_game,
                 input_path=self.input_file,
                 output_directory=self.output_file.parent,
-                output_format=self._selected_output_format,
+                output_format=(per_game.output_format if self.has_enemy_attribute_rando
+                               else self._selected_output_format),
                 use_external_models=use_external_models,
             ))
             if self._use_echoes_models:
@@ -140,7 +154,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
     # Output File
     def _on_output_file_button(self):
-        output_file = prompt_for_output_file(self, self.valid_output_file_types, self.default_output_name,
+        output_file = prompt_for_output_file(self, self.available_output_file_types, self.default_output_name,
                                              self.output_file_edit)
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
