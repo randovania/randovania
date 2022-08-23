@@ -43,20 +43,23 @@ def make_useless_stk_hint(key_number: int) -> list[str]:
 
 @pytest.mark.parametrize("multiworld", [False, True])
 @pytest.mark.parametrize("hide_area", [False, True])
-def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patches, default_echoes_configuration,
+def test_create_hints_all_placed(hide_area: bool, multiworld: bool,
+                                 echoes_game_patches,
+                                 prime_game_patches,
+                                 default_echoes_configuration,
                                  default_prime_configuration):
     # Setup
     echoes_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
-    patches = empty_patches.assign_new_pickups([
+    patches = echoes_game_patches.assign_new_pickups([
         (PickupIndex(17 + key),
          PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5 if multiworld else 9)
     ])
     patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
 
-    other_patches = empty_patches.assign_new_pickups([
+    other_patches = prime_game_patches.assign_new_pickups([
         (PickupIndex(17 + key),
          PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5, 9)

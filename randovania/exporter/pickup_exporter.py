@@ -29,7 +29,10 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
             resources.append(pickup.progression[0])
 
         lock = pickup.resource_lock
-        if pickup.respects_lock and not pickup.unlocks_resource and lock is not None:
+        # A lock that goes to the same item is ignored for the patcher, for simplification
+        if (pickup.respects_lock and not pickup.unlocks_resource
+                and lock is not None and lock.temporary_item != lock.item_to_lock):
+
             locked_resources = lock.convert_gain(resources)
             return [
                 ConditionalResources(

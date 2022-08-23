@@ -31,29 +31,30 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
-def test_create_starting_popup_empty(default_echoes_configuration, echoes_resource_database):
-    starting_items = ResourceCollection.with_database(echoes_resource_database)
+def test_create_starting_popup_empty(default_echoes_configuration, echoes_game_description):
+    starting_items = ResourceCollection.with_database(echoes_game_description.resource_database)
 
     # Run
     result = patch_data_factory._create_starting_popup(default_echoes_configuration,
-                                                       echoes_resource_database,
+                                                       echoes_game_description,
                                                        starting_items)
 
     # Assert
     assert result == []
 
 
-def test_create_starting_popup_items(default_echoes_configuration, echoes_resource_database):
-    starting_items = ResourceCollection.from_dict(echoes_resource_database, {
-        echoes_resource_database.get_item_by_name("Missile"): 15,
-        echoes_resource_database.energy_tank: 3,
-        echoes_resource_database.get_item_by_name("Dark Beam"): 1,
-        echoes_resource_database.get_item_by_name("Screw Attack"): 1,
+def test_create_starting_popup_items(default_echoes_configuration, echoes_game_description):
+    db = echoes_game_description.resource_database
+    starting_items = ResourceCollection.from_dict(db, {
+        db.get_item_by_name("Missile"): 15,
+        db.energy_tank: 3,
+        db.get_item_by_name("Dark Beam"): 1,
+        db.get_item_by_name("Screw Attack"): 1,
     })
 
     # Run
     result = patch_data_factory._create_starting_popup(default_echoes_configuration,
-                                                       echoes_resource_database,
+                                                       echoes_game_description,
                                                        starting_items)
 
     # Assert
@@ -466,12 +467,12 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
 
 
 @pytest.mark.parametrize("disable_hud_popup", [False, True])
-def test_create_pickup_all_from_pool(echoes_resource_database,
+def test_create_pickup_all_from_pool(echoes_game_description,
                                      default_echoes_configuration,
                                      disable_hud_popup: bool
                                      ):
     item_pool = pool_creator.calculate_pool_results(default_echoes_configuration,
-                                                    echoes_resource_database)
+                                                    echoes_game_description)
     index = PickupIndex(0)
     if disable_hud_popup:
         memo_data = patch_data_factory._simplified_memo_data()
