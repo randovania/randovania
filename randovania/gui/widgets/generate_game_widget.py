@@ -276,14 +276,18 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self._preset_menu.set_preset(preset)
         self._preset_menu.exec_(QtGui.QCursor.pos())
 
+    @property
+    def preset(self) -> VersionedPreset:
+        preset = self._current_preset_data
+        if preset is None:
+            preset = self._window_manager.preset_manager.default_preset_for_game(self.game)
+        return preset
+    
     # Generate seed
 
     def generate_new_layout(self, spoiler: bool, retries: int | None = None):
-        preset = self._current_preset_data
+        preset = self.preset
         num_players = self.num_players_spin_box.value()
-
-        if preset is None:
-            preset = self._window_manager.preset_manager.default_preset_for_game(self.game)
 
         self.generate_layout_from_permalink(
             permalink=Permalink.from_parameters(GeneratorParameters(
