@@ -19,6 +19,9 @@ class RemoteConnector:
     def game_enum(self) -> RandovaniaGame:
         raise NotImplementedError()
 
+    def description(self) -> str:
+        raise NotImplementedError()
+
     async def is_this_version(self, executor: MemoryOperationExecutor) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         raise NotImplementedError()

@@ -42,6 +42,9 @@ class PrimeRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self.version.game
 
+    def description(self):
+        return f"{self.game_enum.long_name}: {self.version.description}"
+
     async def is_this_version(self, executor: MemoryOperationExecutor) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
