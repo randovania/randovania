@@ -33,8 +33,9 @@ class DolphinExecutor(MemoryOperationExecutor):
 
         return self.dolphin.is_hooked()
 
-    async def disconnect(self):
-        raise NotImplementedError()
+    def disconnect(self):
+        # Nothing to do
+        pass
 
     def _test_still_hooked(self):
         try:

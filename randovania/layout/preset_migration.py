@@ -665,6 +665,11 @@ def _migrate_v35(preset: dict) -> dict:
         preset["configuration"]["linear_dps"] = 20
     return preset
 
+def _migrate_v36(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["enemy_attributes"] = None
+    return preset
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -702,6 +707,7 @@ _MIGRATIONS = [
     _migrate_v33,
     _migrate_v34,
     _migrate_v35,
+    _migrate_v36,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
