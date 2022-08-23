@@ -482,7 +482,7 @@ def test_create_pickup_all_from_pool(echoes_game_description,
 
     for item in item_pool.pickups:
         data = creator.export(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
-        for hud_text in data.hud_text:
+        for hud_text in data.collection_text:
             assert not hud_text.startswith("Locked")
 
 
@@ -492,8 +492,8 @@ def test_run_validated_hud_text():
     rng.randint.return_value = 0
     details = pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(0),
-        scan_text="scan",
-        hud_text=["Energy Transfer Module acquired!"],
+        description="scan",
+        collection_text=["Energy Transfer Module acquired!"],
         conditional_resources=[
             ConditionalResources(None, None, ()),
         ],

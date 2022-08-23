@@ -21,8 +21,8 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
     rng.randint.return_value = 0
     detail = pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(15),
-        scan_text="Your Missile Expansion. Provides 5 Missiles",
-        hud_text=["Missile Expansion acquired!"],
+        description="Your Missile Expansion. Provides 5 Missiles",
+        collection_text=["Missile Expansion acquired!"],
         conditional_resources=[ConditionalResources(
             None, None, (
                 (prime1_resource_database.get_item_by_name("Missile"), 6),

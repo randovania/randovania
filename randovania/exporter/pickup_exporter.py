@@ -98,11 +98,11 @@ def _get_all_hud_text(conditionals: list[ConditionalResources],
     ]
 
 
-def _calculate_hud_text(pickup: PickupEntry,
-                        visual_pickup: PickupEntry,
-                        model_style: PickupModelStyle,
-                        memo_data: dict[str, str],
-                        ) -> list[str]:
+def _calculate_collection_text(pickup: PickupEntry,
+                               visual_pickup: PickupEntry,
+                               model_style: PickupModelStyle,
+                               memo_data: dict[str, str],
+                               ) -> list[str]:
     """
     Calculates what the hud_text for a pickup should be
     :param pickup:
@@ -127,8 +127,8 @@ def _calculate_hud_text(pickup: PickupEntry,
 @dataclasses.dataclass(frozen=True)
 class ExportedPickupDetails:
     index: PickupIndex
-    scan_text: str
-    hud_text: list[str]
+    description: str
+    collection_text: list[str]
     conditional_resources: list[ConditionalResources]
     conversion: list[ResourceConversion]
     model: PickupModel
@@ -172,13 +172,13 @@ class PickupExporterSolo(PickupExporter):
                        pickup_target: PickupTarget,
                        visual_pickup: PickupEntry,
                        model_style: PickupModelStyle,
-                       scan_text: str,
+                       description: str,
                        model: PickupModel) -> ExportedPickupDetails:
         pickup = pickup_target.pickup
         return ExportedPickupDetails(
             index=original_index,
-            scan_text=scan_text,
-            hud_text=_calculate_hud_text(pickup, visual_pickup, model_style, self.memo_data),
+            description=description,
+            collection_text=_calculate_collection_text(pickup, visual_pickup, model_style, self.memo_data),
             conditional_resources=_conditional_resources_for_pickup(pickup),
             conversion=list(pickup.convert_resources),
             model=model,
@@ -204,7 +204,7 @@ class PickupExporterMulti(PickupExporter):
         if pickup_target.player == self.players_config.player_index:
             details = self.solo_creator.create_details(original_index, pickup_target, visual_pickup,
                                                        model_style, scan_text, model)
-            return dataclasses.replace(details, scan_text=f"Your {details.scan_text}")
+            return dataclasses.replace(details, description=f"Your {details.description}")
         else:
             other_name = self.players_config.player_names[pickup_target.player]
             if self.multiworld_item is not None:
@@ -214,8 +214,8 @@ class PickupExporterMulti(PickupExporter):
 
             return ExportedPickupDetails(
                 index=original_index,
-                scan_text=f"{other_name}'s {scan_text}",
-                hud_text=[f"Sent {pickup_target.pickup.name} to {other_name}!"],
+                description=f"{other_name}'s {scan_text}",
+                collection_text=[f"Sent {pickup_target.pickup.name} to {other_name}!"],
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,

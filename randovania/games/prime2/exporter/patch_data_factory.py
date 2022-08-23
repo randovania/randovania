@@ -666,7 +666,7 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
         # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
         model["name"] = "MissileExpansionPrime1"
 
-    hud_text = details.hud_text
+    hud_text = details.collection_text
     if hud_text == ["Energy Transfer Module acquired!"] and (
             rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
         hud_text = ["Run validated!"]
@@ -691,7 +691,7 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
             for conversion in details.conversion
         ],
         "hud_text": hud_text,
-        "scan": details.scan_text,
+        "scan": details.description,
         "model": model,
     }
 

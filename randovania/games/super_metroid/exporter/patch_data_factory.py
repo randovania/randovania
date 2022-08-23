@@ -55,8 +55,8 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
     else:
         model_name = "Nothing"
 
-    scan_text = detail.scan_text
-    hud_text = detail.hud_text[0]
+    scan_text = detail.description
+    hud_text = detail.collection_text[0]
     pickup_type = "Nothing"
     count = 0
 
