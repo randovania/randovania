@@ -116,7 +116,7 @@ class ConnectionBackend(ConnectionBase):
             self.logger.debug(f"Unable to probe for game version: {e}")
             return None
 
-        possible_connectors = [
+        possible_connectors: list[RemoteConnector] = [
             connectors
             for connectors, read_op in zip(all_connectors, read_first_ops)
             if first_ops_result.get(read_op) == connectors.version.build_string[:4]
@@ -129,7 +129,7 @@ class ConnectionBackend(ConnectionBase):
                 return None
 
             if is_version:
-                self.logger.info(f"identified game as {connector.game_enum.long_name}: {connector.version.description}")
+                self.logger.info(f"identified game as {connector.description()}")
                 return connector
 
     def get_current_inventory(self) -> Inventory:
