@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Exceptions when exporting a game now use the improved error dialog.
 - Fixed: Gracefully handle unsupported old versions of the preferences file.
 - Fixed: Excluding all copies of a progressive item, or the non-progressive equivalent, no longer hides them from the editor.
+- Fixed: Changing the selected backend while it's being used should no longer cause issues.
 
 ### Cave Story
 
