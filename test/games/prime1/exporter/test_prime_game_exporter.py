@@ -149,19 +149,20 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     exporter = PrimeGameExporter()
 
     # Run
-    exporter.export_game(
-        patch_data,
-        PrimeGameExportParams(
-            spoiler_output=tmp_path,
-            input_path=tmp_path.joinpath("input.iso"),
-            output_path=tmp_path.joinpath("output.iso"),
-            echoes_input_path=None,
-            asset_cache_path=tmp_path.joinpath("asset_cache_path"),
-            use_echoes_models=False,
-            cache_path=tmp_path.joinpath("cache_path"),
-        ),
-        progress_update
-    )
+    with pytest.raises(ValueError):
+        exporter.export_game(
+            patch_data,
+            PrimeGameExportParams(
+                spoiler_output=tmp_path,
+                input_path=tmp_path.joinpath("input.iso"),
+                output_path=tmp_path.joinpath("output.iso"),
+                echoes_input_path=None,
+                asset_cache_path=tmp_path.joinpath("asset_cache_path"),
+                use_echoes_models=False,
+                cache_path=tmp_path.joinpath("cache_path"),
+            ),
+            progress_update
+        )
 
     # Assert
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
