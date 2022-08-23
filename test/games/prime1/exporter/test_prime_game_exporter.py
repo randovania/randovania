@@ -7,6 +7,8 @@ import pytest
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams, adjust_model_names
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
+from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
+
 
 @pytest.mark.parametrize('use_echoes_models', [True, False])
 @pytest.mark.parametrize('use_enemy_attribute_randomizer', [False, True])
@@ -149,7 +151,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     exporter = PrimeGameExporter()
 
     # Run
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as exc:
         exporter.export_game(
             patch_data,
             PrimeGameExportParams(
@@ -165,6 +167,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
         )
 
     # Assert
+    assert str(exc.value) == "Couldn't find output file.\nAborting Enemy Stat Randomizer"
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(ANY, ANY)
 
