@@ -7,9 +7,6 @@ import pytest
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams, adjust_model_names
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
-from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
-
-
 @pytest.mark.parametrize('use_echoes_models', [True, False])
 @pytest.mark.parametrize('use_enemy_attribute_randomizer', [False, True])
 def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_randomizer):
