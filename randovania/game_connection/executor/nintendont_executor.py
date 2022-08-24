@@ -140,7 +140,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             self._socket_error = e
             return False
 
-    async def disconnect(self):
+    def disconnect(self):
         socket = self._socket
         self._socket = None
         if socket is not None:

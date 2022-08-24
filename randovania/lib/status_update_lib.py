@@ -40,6 +40,29 @@ class OffsetProgressUpdate:
         )
 
 
+class DynamicSplitProgressUpdate:
+    def __init__(self, status_update: ProgressUpdateCallable):
+        self.status_update = status_update
+        self.splits = {}
+
+    def update_splits(self):
+        total = sum(self.splits.values())
+        scale = 1.0 / total
+
+        offset = 0
+        for split, weight in self.splits.items():
+            this_scale = scale * weight
+            split.offset = offset
+            split.scale = this_scale
+            offset += this_scale
+
+    def create_split(self, weight: float = 1.0) -> ProgressUpdateCallable:
+        new_split = OffsetProgressUpdate(self.status_update, 0, 1)
+        self.splits[new_split] = weight
+        self.update_splits()
+        return new_split
+
+
 def create_progress_update_from_successive_messages(
         status_update: ProgressUpdateCallable,
         max_calls: int) -> Callable[[str], None]:
@@ -61,8 +84,8 @@ def split_progress_update(status_update: ProgressUpdateCallable, parts: int) -> 
     :param parts:
     :return:
     """
-    scale = 1.0 / parts
+    split = DynamicSplitProgressUpdate(status_update)
     return [
-        OffsetProgressUpdate(status_update, scale * i, scale)
-        for i in range(parts)
+        split.create_split()
+        for _ in range(parts)
     ]
