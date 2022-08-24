@@ -139,7 +139,7 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Door to Chozo Soldier Arena
-      Walljump (Beginner) or Use Spin Boost
+      Use Spin Boost
 
 > Door to Chozo Soldier Arena; Heals? False
   * Layers: default
@@ -176,6 +176,8 @@ Extra - asset_id: collision_camera_003
   * Pickup 114; Major Location? False
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
+  > Door to Chozo Soldier Arena
+      Lay Bomb
   > Tile Group (BOMB) 3
       Morph Ball
 
@@ -190,14 +192,10 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Door to Gyroscope Room
       Trivial
-  > Event - Elun - Ammo Recharge Room Blob
-      Diffusion Beam or Wave Beam
   > Ammo Recharge
       Trivial
   > Alcove
-      Diffusion Beam or Wave Beam
-  > Event - Release X
-      Diffusion Beam or Wave Beam
+      Diffusion Beam or Wave Beam or After Elun - Ammo Recharge Room Blob
 
 > Door to Plasma Beam Room (Lower); Heals? False
   * Layers: default
@@ -307,14 +305,12 @@ Extra - asset_id: collision_camera_003
       After Elun - Ammo Recharge Room Blob
   > Event - Elun - Ammo Recharge Room Blob
       Lay Bomb or Shoot Beam
+  > Dock from Purple Drapes
+      Trivial
 
 > Event - Release X; Heals? False
   * Layers: default
   * Event Elun - Release X Parasites
-  * Touching the exit of the Morphball launcher is enough to release the X. You
-don´t have to use the launcher.
-
-
   > Alcove
       Trivial
 
@@ -581,9 +577,7 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Gyroscope Room
-      Any of the following:
-          Ballspark
-          Movement (Beginner) and Lay Cross Comb
+      Ballspark or Lay Cross Comb
   > Tunnel to Bottom Morph Launcher
       Morph Ball
 

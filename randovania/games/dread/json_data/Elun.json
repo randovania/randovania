@@ -589,15 +589,6 @@
                                     {
                                         "type": "template",
                                         "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -644,7 +635,7 @@
                         "Tile Group (POWERBEAM)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Wall Jump requirements?",
                                 "items": []
                             }
                         },
@@ -750,6 +741,18 @@
                     "pickup_index": 114,
                     "major_location": false,
                     "connections": {
+                        "Door to Chozo Soldier Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
+                        },
                         "Tile Group (BOMB) 3": {
                             "type": "and",
                             "data": {
@@ -806,32 +809,6 @@
                                 "items": []
                             }
                         },
-                        "Event - Elun - Ammo Recharge Room Blob": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Diffusion",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Ammo Recharge": {
                             "type": "and",
                             "data": {
@@ -847,45 +824,36 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave",
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:db_reg_qt_001",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Diffusion",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Release X": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Diffusion",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Diffusion",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1375,6 +1343,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock from Purple Drapes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1386,7 +1361,7 @@
                         "y": -2099.58,
                         "z": 0.0
                     },
-                    "description": "Touching the exit of the Morphball launcher is enough to release the X. You\ndon\u00b4t have to use the launcher.\n\n",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
@@ -2144,8 +2119,16 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Chozo Soldier Arena": {
-                            "type": "template",
-                            "data": "Can Slide"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    }
+                                ]
+                            }
                         },
                         "Tile Group (BOMB)": {
                             "type": "resource",
@@ -2467,25 +2450,8 @@
                                         "data": "Ballspark"
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Cross Comb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Cross Comb"
                                     }
                                 ]
                             }
