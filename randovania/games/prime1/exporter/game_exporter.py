@@ -16,6 +16,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
+from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
 
 
@@ -170,17 +171,24 @@ class PrimeGameExporter(GameExporter):
         random_enemy_attributes = new_config.pop("randEnemyAttributes")
         random_enemy_attributes_seed = new_config.pop("seed")
 
-        assets_meta = {}
-        updaters = [progress_update]
+        split_updater = DynamicSplitProgressUpdate(progress_update)
+        asset_updater = None
+        enemy_updater = None
+
         if export_params.use_echoes_models:
-            updaters = status_update_lib.split_progress_update(progress_update, 2)
+            asset_updater = split_updater.create_split()
+        randomprime_updater = split_updater.create_split(weight=2.0)
+        if random_enemy_attributes is not None:
+            enemy_updater = split_updater.create_split()
+
+        assets_meta = {}
+        if export_params.use_echoes_models:
             assets_path = export_params.asset_cache_path
             assets_meta = asset_conversion.convert_prime2_pickups(export_params.echoes_input_path,
-                                                                  assets_path, updaters[0])
+                                                                  assets_path, asset_updater)
             new_config["externAssetsDir"] = os.fspath(assets_path)
         else:
             asset_conversion.delete_converted_assets(export_params.asset_cache_path)
-
 
         # Replace models
         adjust_model_names(new_config, assets_meta, export_params.use_echoes_models)
@@ -196,7 +204,7 @@ class PrimeGameExporter(GameExporter):
         try:
             py_randomprime.patch_iso_raw(
                 patch_as_str,
-                py_randomprime.ProgressNotifier(lambda percent, msg: updaters[-1](msg, percent)),
+                py_randomprime.ProgressNotifier(lambda percent, msg: randomprime_updater(msg, percent)),
             )
         except BaseException as e:
             if isinstance(e, Exception):
@@ -205,9 +213,19 @@ class PrimeGameExporter(GameExporter):
                 raise RuntimeError(f"randomprime panic: {e}") from e
 
         if random_enemy_attributes is not None:
-            PyRandom_Enemy_Attributes(new_config["inputIso"], new_config["outputIso"], random_enemy_attributes_seed, random_enemy_attributes['enemy_rando_range_scale_low'],
-                                                              random_enemy_attributes['enemy_rando_range_scale_high'], random_enemy_attributes['enemy_rando_range_health_low'],
-                                                              random_enemy_attributes['enemy_rando_range_health_high'], random_enemy_attributes['enemy_rando_range_speed_low'],
-                                                              random_enemy_attributes['enemy_rando_range_speed_high'], random_enemy_attributes['enemy_rando_range_damage_low'],
-                                                              random_enemy_attributes['enemy_rando_range_damage_high'], random_enemy_attributes['enemy_rando_range_knockback_low'],
-                                                              random_enemy_attributes['enemy_rando_range_knockback_high'], random_enemy_attributes['enemy_rando_diff_xyz'])
+            enemy_updater("Randomizing enemy attributes", 0)
+            PyRandom_Enemy_Attributes(
+                new_config["inputIso"], new_config["outputIso"], random_enemy_attributes_seed,
+                random_enemy_attributes['enemy_rando_range_scale_low'],
+                random_enemy_attributes['enemy_rando_range_scale_high'],
+                random_enemy_attributes['enemy_rando_range_health_low'],
+                random_enemy_attributes['enemy_rando_range_health_high'],
+                random_enemy_attributes['enemy_rando_range_speed_low'],
+                random_enemy_attributes['enemy_rando_range_speed_high'],
+                random_enemy_attributes['enemy_rando_range_damage_low'],
+                random_enemy_attributes['enemy_rando_range_damage_high'],
+                random_enemy_attributes['enemy_rando_range_knockback_low'],
+                random_enemy_attributes['enemy_rando_range_knockback_high'],
+                random_enemy_attributes['enemy_rando_diff_xyz'],
+            )
+            enemy_updater("Finished randomizing enemy attributes", 1)

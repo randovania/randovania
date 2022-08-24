@@ -29,19 +29,19 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     options.options_for_game.return_value = SuperMetroidPerGameOptions(
         cosmetic_patches=SuperMetroidCosmeticPatches.default(),
         output_directory=output_directory,
-        output_format="iso",
+        output_format="smc",
     )
 
     window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
-    mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
+    mock_prompt.return_value = tmp_path.joinpath("foo", "game.smc")
 
     # Run
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, expected_default_name + ".iso",
+    mock_prompt.assert_called_once_with(window, expected_default_name + ".smc",
                                         window.valid_output_file_types)
-    assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.iso"))
+    assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.smc"))
     assert tmp_path.joinpath("foo").is_dir()
 
 

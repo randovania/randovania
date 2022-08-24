@@ -5,6 +5,7 @@ import functools
 import json
 import logging
 import os
+import re
 import typing
 from functools import partial
 from pathlib import Path
@@ -121,6 +122,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.progress_update_signal.connect(self.update_progress)
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
+
+        self.multiworld_intro_label.linkActivated.connect(self._on_click_help_link)
 
         self.set_games_selector_visible(True)
 
@@ -659,3 +662,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.about_window is None:
             self.about_window = self._create_generic_window(AboutWidget(), "About Randovania")
         self.about_window.show()
+    
+    def _on_click_help_link(self, link: str):
+        tab_name = re.match(r"^help://(.+)$", link).group(1)
+        if tab_name is None:
+            return
+        self._on_menu_action_help()
+
+        tab = getattr(self.help_window.centralWidget(), tab_name, None)
+        if tab is not None:
+            self.help_window.centralWidget().setCurrentWidget(tab)

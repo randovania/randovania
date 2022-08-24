@@ -39,16 +39,74 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-544</y>
+         <y>0</y>
          <width>408</width>
-         <height>1098</height>
+         <height>1182</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="multiworld_scroll_contents_layout">
         <item row="0" column="0">
          <widget class="QLabel" name="multiworld_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiworld is a co-op multiplayer game mode for the randomizer.&lt;/p&gt;&lt;p&gt;In a multiworld game, each player has their own unique world filled with items destined for an specific player. When you collect an item, it is instantly delivered to the owner.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;How do I play multiworld?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;In the Play tab, either join a session or host a new one. Create one row for each player, customize their presets and then generate a game. Double check if the presets are correct and then start the session.&lt;/p&gt;&lt;p&gt;Each player exports their own ISO and opens it in Dolphin or Nintendont and keeps Randovania open.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;How do I send an item to someone else?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Certain items in your game will belong to some other player. After collected, you receive an alert that it was sent to someone else.&lt;/p&gt;&lt;p&gt;You must make sure that Randovania is connected to the game and the game session window is open. The History tab in the session can be used to confirm the item was detected and sent correctly.&lt;/p&gt;&lt;p&gt;WARNING: Collecting multiple items for other players in quick succession (less than 5s) will prevent Randovania from detecting either item, causing both to be lost until you reload a save file. Using Infinite Speed to collect multiple items at once will hit this limitation.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;What happens if I die, reload a save or crash?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;All received items you've lost are automatically re-delivered. Collecting some item you've already sent someone else has no effect and is perfectly safe.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;What happens if I disconnect from the server?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Randovania keeps track of everything you've collected and will send to the server as soon as it regains connection, even if restarted.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;What happens if Randovania disconnects from the game?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Do &lt;span style=&quot; font-style:italic;&quot;&gt;not&lt;/span&gt; collect any item if Randovania is not connected to your game (closed, error in connection) as it will be lost forever. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do all players have to play at the same time?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;No. All comunication between players is managed by Randovania's server.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Can I play on a Wii?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Yes. Connect your Wii to the same Wifi as your computer and open Homebrew Channel. Press the &amp;quot;Upload Nintendont to Homebrew Channel&amp;quot; button found in the &lt;span style=&quot; font-style:italic;&quot;&gt;Configure backend&lt;/span&gt; menu of the Game Session window.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Can different games be mixed in a session?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Yes. Items for another game will be appear using an equivalent model for your game, or the generic model (Nothing for Prime 1, Energy Transfer Module for Prime 2). &lt;/p&gt;&lt;p&gt;You can also provide a copy of the other game during the game export process to use the correct models from the other game.  Currently, this has some caveats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Non-vanilla item models aren't converted. This includes light and dark ammo expansions and translators in Echoes, and the Phazon Suit in Prime.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When loading a room with a Prime 1 item in Echoes, there may be a slight stutter in gameplay&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;How many players can play at the same time?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;While there are no hard limits, only up to 30 players have been confirmed to work.&lt;br/&gt;If planning a bigger session, contact Darkszero in the community Discord.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string># Multiworld
+
+Multiworld is a co-op multiplayer game mode for the randomizer.
+
+In a multiworld game, each player has their own unique world filled with items destined for an specific player. When you collect an item, it is instantly delivered to the owner.
+
+## How do I play multiworld?
+
+In the Play tab, either join a session or host a new one. Create one row for each player, customize their presets and then generate a game. Double check if the presets are correct and then start the session.
+
+Each player exports their own ISO and opens it in Dolphin or Nintendont and keeps Randovania open.
+
+## How do I send an item to someone else?
+
+Certain items in your game will belong to some other player. After collected, you receive an alert that it was sent to someone else.
+
+You must make sure that Randovania is connected to the game and the game session window is open. The History tab in the session can be used to confirm the item was detected and sent correctly.
+
+**WARNING**: Collecting multiple items for other players in quick succession (less than 5s) will prevent Randovania from detecting either item, causing both to be lost until you reload a save file. Using Infinite Speed to collect multiple items at once will hit this limitation.
+
+## What happens if I die, reload a save or crash?
+
+All received items you've lost are automatically re-delivered. Collecting some item you've already sent someone else has no effect and is perfectly safe.
+
+## What happens if I disconnect from the server?
+
+Randovania keeps track of everything you've collected and will send to the server as soon as it regains connection, even if restarted.
+
+## What happens if Randovania disconnects from the game?
+
+Do not collect any item if Randovania is not connected to your game (closed, error in connection) as it will be lost forever. 
+
+## Do all players have to play at the same time?
+
+No. All comunication between players is managed by Randovania's server.
+
+## Can I play on a Wii?
+
+Yes. Connect your Wii to the same Wifi as your computer and open Homebrew Channel. Press the &quot;Upload Nintendont to Homebrew Channel&quot; button found in the Configure backend menu of the Game Session window.
+
+## Can different games be mixed in a session?
+
+Yes. Items for another game will be appear using an equivalent model for your game, or the generic model (Nothing for Prime 1, Energy Transfer Module for Prime 2). 
+
+You can also provide a copy of the other game during the game export process to use the correct models from the other game. Currently, this has some caveats:
+
+ - Non-vanilla item models aren't converted. This includes light and dark ammo expansions and translators in Echoes, and the Phazon Suit in Prime.
+
+ - When loading a room with a Prime 1 item in Echoes, there may be a slight stutter in gameplay
+
+## How many players can play at the same time?
+
+While there are no hard limits, only up to 30 players have been confirmed to work.
+
+If planning a bigger session, contact Darkszero in the community Discord.
+</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -92,7 +150,7 @@
          <x>0</x>
          <y>0</y>
          <width>422</width>
-         <height>554</height>
+         <height>555</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="tracker_scroll_area_layout">
@@ -141,9 +199,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-302</y>
+         <y>0</y>
          <width>408</width>
-         <height>1030</height>
+         <height>974</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
