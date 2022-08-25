@@ -256,10 +256,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Cross Comb"
                                     }
                                 ]
                             }
@@ -373,15 +369,6 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -656,6 +643,15 @@
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
                                                             {
                                                                 "type": "template",
                                                                 "data": "Use Spin Boost"
@@ -1331,7 +1327,7 @@
                         "Door to Fan Room Access": {
                             "type": "and",
                             "data": {
-                                "comment": "Add Chozo fight requirements",
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -3502,12 +3498,10 @@
                             }
                         },
                         "Tunnel to Teleport to Burenia (Cyan) (Lower)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6187,13 +6181,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Navigation Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -6265,13 +6252,6 @@
                     "string_asset_id": 9,
                     "lore_type": "generic",
                     "connections": {
-                        "Door to Twin Robot Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Space Jump Room": {
                             "type": "and",
                             "data": {
@@ -6601,7 +6581,7 @@
                         "Door to Navigation Station": {
                             "type": "and",
                             "data": {
-                                "comment": "Add Chozo soldier requirements",
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -15247,60 +15227,13 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (POWERBOMB)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Central Platform": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Flash",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -15662,6 +15595,15 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
