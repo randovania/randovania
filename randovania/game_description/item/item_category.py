@@ -11,6 +11,11 @@ class ItemCategory:
     is_major: bool
     is_key: bool = False
 
+    def __post_init__(self):
+        assert self.name, "Name must not be empty"
+        assert self.long_name, "Long name must not be empty"
+        assert len(self.hint_details) == 2, "Hint details must be 2 elements"
+
     @classmethod
     def from_json(cls, name: str, value: dict) -> "ItemCategory":
         return cls(
@@ -48,14 +53,14 @@ class ItemCategory:
 
 USELESS_ITEM_CATEGORY = ItemCategory(
     name="useless",
-    long_name="",
+    long_name="Useless",
     hint_details=("an ", "Energy Transfer Module"),
     is_major=False
 )
 
 GENERIC_KEY_CATEGORY = ItemCategory(
     name="key",
-    long_name="",
+    long_name="Key",
     hint_details=("a ", "key"),
     is_major=False
 )
