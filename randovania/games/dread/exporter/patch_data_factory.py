@@ -178,8 +178,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
-        hud_text = detail.hud_text[0]
-        if len(set(detail.hud_text)) > 1:
+        hud_text = detail.collection_text[0]
+        if len(set(detail.collection_text)) > 1:
             hud_text = self.memo_data[detail.original_pickup.name]
 
         details = {
