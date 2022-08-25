@@ -50,13 +50,6 @@ _effect = {
 
 def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
                                  ) -> dict:
-    if detail.model.game == RandovaniaGame.SUPER_METROID:
-        model_name = detail.model.name
-    else:
-        model_name = "Nothing"
-
-    scan_text = detail.scan_text
-    hud_text = detail.hud_text[0]
     pickup_type = "Nothing"
     count = 0
 
