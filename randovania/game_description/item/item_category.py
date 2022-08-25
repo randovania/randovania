@@ -53,14 +53,14 @@ class ItemCategory:
 
 USELESS_ITEM_CATEGORY = ItemCategory(
     name="useless",
-    long_name="",
+    long_name="Useless",
     hint_details=("an ", "Energy Transfer Module"),
     is_major=False
 )
 
 GENERIC_KEY_CATEGORY = ItemCategory(
     name="key",
-    long_name="",
+    long_name="Key",
     hint_details=("a ", "key"),
     is_major=False
 )
