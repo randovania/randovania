@@ -52,7 +52,7 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_def: None
   > Dock to Purple EMMI Introduction
       Any of the following:
-          Grapple Beam or Space Jump
+          Grapple Beam or Space Jump or Simple IBJ
           Flash Shift and Use Spin Boost
 
 ----------------
@@ -73,8 +73,8 @@ Extra - asset_id: collision_camera_002
       Morph Ball
   > Right Alcove
       All of the following:
-          Morph Ball
-          Grapple Beam or Simple IBJ or Use Spin Boost
+          Morph Ball and Speed Booster and Disabled Door Lock Randomizer
+          Flash Shift or Grapple Beam or Simple IBJ or Use Spin Boost
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
@@ -126,11 +126,10 @@ Extra - asset_id: collision_camera_002
           Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
   > Ceiling Tunnel
       Any of the following:
-          Space Jump or Simple IBJ
+          Simple IBJ or Use Spin Boost
           All of the following:
-              Flash Shift
+              Flash Shift and Morph Ball
               Grapple Beam or Spider Magnet
-              Walljump (Beginner) or Use Spin Boost
 
 > Ceiling Tunnel; Heals? False
   * Layers: default
@@ -218,9 +217,7 @@ Extra - asset_id: collision_camera_004
   > Dock to Purple EMMI Introduction
       Trivial
   > Tunnel to Fan Room
-      Any of the following:
-          Grapple Beam or Space Jump or Speed Booster or Infinite Bomb Jump (Beginner)
-          Spider Magnet and Use Spin Boost
+      Flash Shift or Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
 
 > Tunnel to Fan Room; Heals? False
   * Layers: default
@@ -256,6 +253,9 @@ Extra - asset_id: collision_camera_005
 > Event - Quiet Robe; Heals? False
   * Layers: default
   * Event Quiet Robe
+  * Add Chozo Soldier requirements
+
+
   > Door to Fan Room Access
       Trivial
 
@@ -290,9 +290,7 @@ Extra - asset_id: collision_camera_006
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Cold Room (Small)
-      All of the following:
-          Morph Ball
-          Simple IBJ or Use Spin Boost
+      Morph Ball
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
@@ -323,12 +321,7 @@ Extra - asset_id: collision_camera_006
   > Door to Cold Room (Small)
       Morph Ball
   > Pickup (Missile+ Tank)
-      All of the following:
-          Ballspark
-          Any of the following:
-              # These methods are temporary until door rando is supported
-              Gravity Suit or Walljump (Beginner) or Simple IBJ or Use Spin Boost
-              Heat/Cold Runs (Beginner) and Cold Damage ≥ 30
+      Ballspark
   > Tile Group (WEIGHT)
       Trivial
 
@@ -336,7 +329,9 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Morph Ball Tunnel to Fan Room Access/Tunnel to Fan Room
   > Door to Cold Room (Small)
-      Speed Booster
+      Any of the following:
+          Speed Booster
+          Movement (Beginner) and Simple IBJ
 
 ----------------
 Teleport to Burenia (Cyan)
@@ -390,7 +385,7 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_name: teleporter_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Tunnel to Separate Tunnels Room (Lower)
-      Trivial
+      Morph Ball
 
 > Tunnel to Separate Tunnels Room (Lower); Heals? False
   * Layers: default
@@ -456,7 +451,7 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_005
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Tile Group (POWERBEAM) 3
-      Simple IBJ or Use Spin Boost
+      Trivial
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
@@ -774,7 +769,7 @@ Extra - asset_id: collision_camera_012
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Space Jump Room Access (Bottom)
-      Space Jump or Infinite Bomb Jump (Beginner)
+      Trivial
   > Start Point 2
       Trivial
 
@@ -869,7 +864,9 @@ Extra - asset_id: collision_camera_012
   > Underwater Ledge Left
       After Ferenia - db_reg_b2_001
   > Event - Blob from above (db_reg_b2_001)
-      Wave Beam
+      Any of the following:
+          Wave Beam
+          Diffusion Beam and Pseudo-Wave Beam (Beginner)
 
 > Start Point 1; Heals? False
   * Layers: default
@@ -988,7 +985,7 @@ Extra - asset_id: collision_camera_012
   > Underwater Ledge Left
       All of the following:
           Gravity Suit
-          Simple IBJ or Use Spin Boost
+          Flash Shift or Simple IBJ or Use Spin Boost
   > Underwater Ledge Right
       Any of the following:
           Grapple Beam or Spider Magnet
@@ -1189,7 +1186,7 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Tile Group (POWERBEAM) 2
-      Simple IBJ or Use Spin Boost
+      Trivial
 
 > Door to Space Jump Room (Mid); Heals? False
   * Layers: default
@@ -1250,7 +1247,7 @@ Extra - asset_id: collision_camera_015
   > Door to Space Jump Room (Mid)
       After Ferenia - Storm Missile Gate for SJ
   > Door to Space Jump Room (Top)
-      Simple IBJ or Use Spin Boost
+      Trivial
   > Tile Group (POWERBEAM) 1
       Trivial
   > Event - Storm Missile Gate
@@ -1432,11 +1429,9 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Center Ledge
-      All of the following:
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-          Simple IBJ or Use Spin Boost
+      Any of the following:
+          Gravity Suit
+          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
 
 > Door to Transport to Hanubia; Heals? False
   * Layers: default
@@ -1450,7 +1445,6 @@ Extra - asset_id: collision_camera_018
   > Life Recharge
       All of the following:
           Morph Ball
-          Speed Booster or Simple IBJ or Use Spin Boost
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
@@ -1490,14 +1484,10 @@ Extra - asset_id: collision_camera_018
           Simple IBJ or Use Spin Boost
   > Tile Group (POWERBEAM)
       All of the following:
-          Speed Booster
+          Speed Booster and Disabled Door Lock Randomizer
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-          Any of the following:
-              # Temporary until door rando
-              Charge Beam
-              Knowledge (Beginner) and Lay Power Bomb
 
 > Door to Cold Room (Storm Missile Gate) (Grapple); Heals? False
   * Layers: default
@@ -1520,7 +1510,7 @@ Extra - asset_id: collision_camera_018
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
           All of the following:
               # Temporary until door rando
-              Grapple Beam
+              Grapple Beam and Disabled Door Lock Randomizer
 
 > Event - Grapple Block (grapplepulloff1x2_002); Heals? False
   * Layers: default
@@ -3087,8 +3077,10 @@ Extra - asset_id: collision_camera_040
       Morph Ball and After Ferenia - Central Unit
   > Start Point
       Trivial
+  > Tile Group (POWERBOMB)
+      Flash Shift and Speed Booster
   > Central Platform
-      Flash Shift
+      Flash Shift or Speed Booster or Simple IBJ
 
 > Dock to Fan Room Access; Heals? False
   * Layers: default
@@ -3158,13 +3150,13 @@ Extra - asset_id: collision_camera_040
   > Dock to Purple EMMI Introduction Access
       Trivial
   > Tile Group (POWERBOMB)
-      Space Jump or Infinite Bomb Jump (Beginner)
+      Space Jump or Simple IBJ
   > Tile Group (WEIGHT) 1
       Can Slide
   > Tunnel to EMMI Zone Exit West
-      Any of the following:
-          Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Beginner)
+      All of the following:
+          After Ferenia - Central Unit
+          Flash Shift or Spin Boost or Simple IBJ
 
 ----------------
 Save Station Southeast
