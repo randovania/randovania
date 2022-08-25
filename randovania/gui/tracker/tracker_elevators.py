@@ -14,6 +14,7 @@ from randovania.patching.prime import elevators
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
+    from randovania.generator.filler.runner import PlayerPool
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.state import State
 
@@ -22,7 +23,7 @@ class TrackerElevatorsWidget(TrackerComponent):
     _elevator_id_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
 
     @classmethod
-    def create_for(cls, game_description: GameDescription, configuration: BaseConfiguration,
+    def create_for(cls, player_pool: PlayerPool, configuration: BaseConfiguration,
                    ) -> TrackerElevatorsWidget | None:
 
         if not hasattr(configuration, "elevators"):
@@ -31,7 +32,7 @@ class TrackerElevatorsWidget(TrackerComponent):
         elevators_config = getattr(configuration, "elevators")
         assert isinstance(elevators_config, TeleporterConfiguration)
 
-        return cls(game_description, elevators_config)
+        return cls(player_pool.game, elevators_config)
 
     def __init__(self, game_description: GameDescription, elevators_config: TeleporterConfiguration):
         super().__init__()

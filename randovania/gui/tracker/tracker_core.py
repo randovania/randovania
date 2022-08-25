@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-import collections
-import functools
 import json
-import math
 import typing
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -18,8 +15,8 @@ from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.gui.tracker.tracker_elevators import TrackerElevatorsWidget
+from randovania.gui.tracker.tracker_pickup_inventory import TrackerPickupInventory
 from randovania.gui.tracker.tracker_translators import TrackerTranslatorsWidget
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
@@ -120,7 +117,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.game_description, self._initial_state = bootstrap.logic_bootstrap(
             self.preset.configuration,
             player_pool.game,
-            pool_patches)
+            pool_patches,
+        )
         self.logic = Logic(self.game_description, self.preset.configuration)
         self.map_canvas.select_game(self.game_description.game)
 
@@ -139,11 +137,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             )
         ))
 
-        self.setup_pickups_box(player_pool.pickups)
         self.setup_possible_locations_tree()
 
-        for it in [TrackerElevatorsWidget, TrackerTranslatorsWidget]:
-            component = it.create_for(self.game_description, self.game_configuration)
+        for it in [TrackerPickupInventory, TrackerElevatorsWidget, TrackerTranslatorsWidget]:
+            component = it.create_for(player_pool, self.game_configuration)
             if component is not None:
                 self.tracker_components.append(component)
                 self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, component)
@@ -190,11 +187,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         needs_starting_location = len(self.game_configuration.starting_location.locations) > 1
 
         try:
-            pickup_name_to_pickup = {pickup.name: pickup for pickup in self._collected_pickups.keys()}
-            quantity_to_change = {
-                pickup_name_to_pickup[pickup_name]: quantity
-                for pickup_name, quantity in previous_state["collected_pickups"].items()
-            }
             previous_actions = [
                 self.game_description.region_list.node_by_identifier(
                     NodeIdentifier.from_string(identifier)
@@ -219,7 +211,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         for component, restored_state in zip(self.tracker_components, restored_states):
             component.apply_previous_state(restored_state)
 
-        self.bulk_change_quantity(quantity_to_change)
         self._add_new_actions(previous_actions)
 
         region_list = self.game_description.region_list
@@ -230,11 +221,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         return True
 
     def reset(self):
-        self.bulk_change_quantity({
-            pickup: 0
-            for pickup in self._collected_pickups.keys()
-        })
-
         for component in self.tracker_components:
             component.reset()
 
@@ -410,10 +396,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     node.identifier.as_string
                     for node in self._actions
                 ],
-                "collected_pickups": {
-                    pickup.name: quantity
-                    for pickup, quantity in self._collected_pickups.items()
-                },
                 "starting_location": self._initial_state.node.identifier.area_identifier.as_json,
             },
         )
@@ -480,132 +462,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             for node in region_list.iterate_nodes()
             if is_resource_node_present(node, self._initial_state)
         }
-
-    def _change_item_quantity(self, pickup: PickupEntry, use_quantity_as_bool: bool, quantity: int):
-        if use_quantity_as_bool:
-            if bool(quantity):
-                quantity = 1
-            else:
-                quantity = 0
-
-        self._collected_pickups[pickup] = quantity
-        if not self._during_setup:
-            self.update_locations_tree_for_reachable_nodes()
-
-    def bulk_change_quantity(self, new_quantity: dict[PickupEntry, int]):
-        self._during_setup = True
-        for pickup, quantity in new_quantity.items():
-            widget = self._widget_for_pickup[pickup]
-            if isinstance(widget, QtWidgets.QCheckBox):
-                widget.setChecked(quantity > 0)
-            else:
-                widget.setValue(quantity)
-        self._during_setup = False
-
-    def _create_widgets_with_quantity(self,
-                                      pickup: PickupEntry,
-                                      parent_widget: QtWidgets.QWidget,
-                                      parent_layout: QtWidgets.QGridLayout,
-                                      row: int,
-                                      quantity: int,
-                                      ):
-        label = QtWidgets.QLabel(parent_widget)
-        label.setText(pickup.name)
-        parent_layout.addWidget(label, row, 0)
-
-        spin_bix = ScrollProtectedSpinBox(parent_widget)
-        spin_bix.setMaximumWidth(50)
-        spin_bix.setMaximum(quantity)
-        spin_bix.valueChanged.connect(functools.partial(self._change_item_quantity, pickup, False))
-        self._widget_for_pickup[pickup] = spin_bix
-        parent_layout.addWidget(spin_bix, row, 1)
-
-    def setup_pickups_box(self, item_pool: list[PickupEntry]):
-
-        parent_widgets: dict[str, tuple[QtWidgets.QWidget, QtWidgets.QGridLayout]] = {
-            "expansion": (self.expansions_box, self.expansions_layout),
-            "energy_tank": (self.expansions_box, self.expansions_layout),
-            "translator": (self.translators_box, self.translators_layout),
-            "temple_key": (self.keys_box, self.keys_layout),
-            "sky_temple_key": (self.keys_box, self.keys_layout),
-        }
-        major_pickup_parent_widgets = (self.upgrades_box, self.upgrades_layout)
-
-        row_for_parent = {
-            self.expansions_box: 0,
-            self.translators_box: 0,
-            self.upgrades_box: 0,
-            self.keys_box: 0,
-        }
-        column_for_parent = {
-            self.translators_box: 0,
-            self.upgrades_box: 0,
-            self.keys_box: 0,
-        }
-        k_column_count = 2
-
-        pickup_by_name = {}
-        pickup_with_quantity: dict[PickupEntry, int] = {}
-
-        for pickup in item_pool:
-            if pickup.name in pickup_by_name:
-                pickup_with_quantity[pickup_by_name[pickup.name]] += 1
-            else:
-                pickup_by_name[pickup.name] = pickup
-                pickup_with_quantity[pickup] = 1
-
-        non_expansions_with_quantity = []
-        without_quantity_by_parent = collections.defaultdict(list)
-
-        for pickup, quantity in pickup_with_quantity.items():
-            self._collected_pickups[pickup] = 0
-            parent_widget, parent_layout = parent_widgets.get(pickup.pickup_category.name, major_pickup_parent_widgets)
-
-            row = row_for_parent[parent_widget]
-
-            if parent_widget is self.expansions_box:
-                self._create_widgets_with_quantity(pickup, parent_widget, parent_layout, row, quantity)
-                row_for_parent[parent_widget] += 1
-            else:
-                if quantity > 1:
-                    non_expansions_with_quantity.append((parent_widget, parent_layout, pickup, quantity))
-                else:
-                    without_quantity_by_parent[parent_widget].append((parent_layout, pickup))
-
-        for parent_widget, layouts in without_quantity_by_parent.items():
-            num_rows = math.ceil(len(layouts) / k_column_count)
-            for parent_layout, pickup in layouts:
-                check_box = QtWidgets.QCheckBox(parent_widget)
-                check_box.setText(pickup.name)
-                check_box.stateChanged.connect(functools.partial(self._change_item_quantity, pickup, True))
-                self._widget_for_pickup[pickup] = check_box
-
-                row = row_for_parent[parent_widget]
-                column = column_for_parent[parent_widget]
-                parent_layout.addWidget(check_box, row, column)
-                row += 1
-
-                if row >= num_rows:
-                    row = 0
-                    column += 1
-
-                row_for_parent[parent_widget] = row
-                column_for_parent[parent_widget] = column
-
-            # Prepare the rows for the spin boxes below
-            row_for_parent[parent_widget] = num_rows
-            column_for_parent[parent_widget] = 0
-
-        for parent_widget, parent_layout, pickup, quantity in non_expansions_with_quantity:
-            self._create_widgets_with_quantity(pickup, parent_widget, parent_layout,
-                                               row_for_parent[parent_widget],
-                                               quantity)
-            row_for_parent[parent_widget] += 1
-
-        for parent_widget, _ in parent_widgets.values():
-            # Nothing was added to this box
-            if row_for_parent[parent_widget] == column_for_parent.get(parent_widget) == 0:
-                parent_widget.setVisible(False)
 
     def state_for_current_configuration(self) -> State | None:
         state = self._initial_state.copy()

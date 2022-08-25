@@ -17,6 +17,7 @@ from randovania.gui.tracker.tracker_component import TrackerComponent
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
+    from randovania.generator.filler.runner import PlayerPool
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.state import State
 
@@ -25,12 +26,12 @@ class TrackerTranslatorsWidget(TrackerComponent):
     _translator_gate_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
 
     @classmethod
-    def create_for(cls, game_description: GameDescription, configuration: BaseConfiguration,
+    def create_for(cls, player_pool: PlayerPool, configuration: BaseConfiguration,
                    ) -> TrackerTranslatorsWidget | None:
         if configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
             return None
         assert isinstance(configuration, EchoesConfiguration)
-        return cls(game_description, configuration)
+        return cls(player_pool.game, configuration)
 
     def __init__(self, game_description: GameDescription, configuration: EchoesConfiguration):
         super().__init__()
