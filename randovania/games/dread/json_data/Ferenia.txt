@@ -51,9 +51,7 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Purple EMMI Introduction
-      Any of the following:
-          Grapple Beam or Space Jump or Simple IBJ
-          Flash Shift and Use Spin Boost
+      Grapple Beam or Spin Boost or Simple IBJ
 
 ----------------
 Total Recharge Station
@@ -73,8 +71,10 @@ Extra - asset_id: collision_camera_002
       Morph Ball
   > Right Alcove
       All of the following:
-          Morph Ball and Speed Booster and Disabled Door Lock Randomizer
-          Flash Shift or Grapple Beam or Simple IBJ or Use Spin Boost
+          Morph Ball
+          Any of the following:
+              Flash Shift or Grapple Beam or Simple IBJ or Use Spin Boost
+              Speed Booster and Disabled Door Lock Randomizer
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
@@ -123,13 +123,15 @@ Extra - asset_id: collision_camera_002
   > Door to Purple EMMI Introduction Access
       All of the following:
           Morph Ball
-          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Flash Shift or Spider Magnet or Simple IBJ or Use Spin Boost
+              Grapple Beam and Grapple Movement (Beginner)
   > Ceiling Tunnel
-      Any of the following:
-          Simple IBJ or Use Spin Boost
-          All of the following:
-              Flash Shift and Morph Ball
-              Grapple Beam or Spider Magnet
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Flash Shift or Simple IBJ or Use Spin Boost
+              Grapple Beam and Grapple Movement (Beginner)
 
 > Ceiling Tunnel; Heals? False
   * Layers: default
@@ -149,7 +151,9 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tunnel to Purple EMMI Introduction
-      Gravity Suit or Speed Booster
+      All of the following:
+          After Ferenia - Central Unit
+          Gravity Suit or Speed Booster
   > Center Platform
       Trivial
 
@@ -188,9 +192,15 @@ Extra - asset_id: collision_camera_003
 > Center Platform; Heals? False
   * Layers: default
   > Dock to Teleport to Burenia (Cyan)
-      Grapple Beam or Gravity Suit or Use Spin Boost
+      Any of the following:
+          Gravity Suit or Use Spin Boost
+          All of the following:
+              Flash Shift
+              Grapple Beam or Spider Magnet
   > Door to EMMI Zone Exit Middle (Charge)
-      Grapple Beam or Gravity Suit or Use Spin Boost
+      Any of the following:
+          Grapple Beam or Gravity Suit or Use Spin Boost
+          Flash Shift and Spider Magnet
 
 ----------------
 Fan Room Access
@@ -217,7 +227,9 @@ Extra - asset_id: collision_camera_004
   > Dock to Purple EMMI Introduction
       Trivial
   > Tunnel to Fan Room
-      Flash Shift or Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
 
 > Tunnel to Fan Room; Heals? False
   * Layers: default
@@ -331,7 +343,7 @@ Extra - asset_id: collision_camera_006
   > Door to Cold Room (Small)
       Any of the following:
           Speed Booster
-          Movement (Beginner) and Simple IBJ
+          Movement (Beginner) and Lay Cross Comb
 
 ----------------
 Teleport to Burenia (Cyan)
@@ -385,7 +397,7 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_name: teleporter_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Tunnel to Separate Tunnels Room (Lower)
-      Morph Ball
+      Trivial
 
 > Tunnel to Separate Tunnels Room (Lower); Heals? False
   * Layers: default
@@ -866,7 +878,7 @@ Extra - asset_id: collision_camera_012
   > Event - Blob from above (db_reg_b2_001)
       Any of the following:
           Wave Beam
-          Diffusion Beam and Pseudo-Wave Beam (Beginner)
+          Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
 
 > Start Point 1; Heals? False
   * Layers: default
@@ -983,15 +995,18 @@ Extra - asset_id: collision_camera_012
                   Gravity Suit
                   Space Jump or Infinite Bomb Jump (Beginner)
   > Underwater Ledge Left
-      All of the following:
-          Gravity Suit
-          Flash Shift or Simple IBJ or Use Spin Boost
+      Any of the following:
+          All of the following:
+              Gravity Suit
+              Flash Shift or Simple IBJ or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner) and Use Spin Boost
+          Grapple Beam and Grapple Movement (Intermediate)
   > Underwater Ledge Right
       Any of the following:
           Grapple Beam or Spider Magnet
           All of the following:
               Gravity Suit
-              Simple IBJ or Use Spin Boost
+              Flash Shift or Simple IBJ or Use Spin Boost
 
 > Underwater Ledge Left; Heals? False
   * Layers: default
@@ -1484,7 +1499,7 @@ Extra - asset_id: collision_camera_018
           Simple IBJ or Use Spin Boost
   > Tile Group (POWERBEAM)
       All of the following:
-          Speed Booster and Disabled Door Lock Randomizer
+          Speed Booster and Disabled Door Lock Randomizer and Open Charge Door
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
@@ -1504,13 +1519,10 @@ Extra - asset_id: collision_camera_018
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
   > Tile Group (POWERBEAM)
       All of the following:
-          Speed Booster
+          Grapple Beam and Speed Booster and Disabled Door Lock Randomizer
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-          All of the following:
-              # Temporary until door rando
-              Grapple Beam and Disabled Door Lock Randomizer
 
 > Event - Grapple Block (grapplepulloff1x2_002); Heals? False
   * Layers: default
@@ -3077,10 +3089,8 @@ Extra - asset_id: collision_camera_040
       Morph Ball and After Ferenia - Central Unit
   > Start Point
       Trivial
-  > Tile Group (POWERBOMB)
-      Flash Shift and Speed Booster
   > Central Platform
-      Flash Shift or Speed Booster or Simple IBJ
+      Flash Shift or Speed Booster or Lay Cross Comb
 
 > Dock to Fan Room Access; Heals? False
   * Layers: default
@@ -3089,7 +3099,7 @@ Extra - asset_id: collision_camera_040
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Purple EMMI Introduction Access
       All of the following:
-          Morph Ball and After Ferenia - Central Unit
+          Morph Ball
           Any of the following:
               Space Jump or Simple IBJ
               Walljump (Intermediate) and Use Spin Boost
@@ -3150,7 +3160,9 @@ Extra - asset_id: collision_camera_040
   > Dock to Purple EMMI Introduction Access
       Trivial
   > Tile Group (POWERBOMB)
-      Space Jump or Simple IBJ
+      Any of the following:
+          Space Jump or Simple IBJ
+          Flash Shift and Speed Booster
   > Tile Group (WEIGHT) 1
       Can Slide
   > Tunnel to EMMI Zone Exit West
