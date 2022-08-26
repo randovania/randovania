@@ -205,9 +205,7 @@ class TrackerPickupInventory(TrackerComponent):
 
     # As State
 
-    def fill_into_state(self, state: State) -> State | None:
+    def fill_into_state(self, state: State):
         for pickup, quantity in self._collected_pickups.items():
             for _ in range(quantity):
                 add_pickup_to_state(state, pickup)
-
-        return state

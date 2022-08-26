@@ -148,12 +148,10 @@ class TrackerElevatorsWidget(TrackerComponent):
             ],
         }
 
-    def fill_into_state(self, state: State) -> State | None:
+    def fill_into_state(self, state: State):
         region_list = state.region_list
         state.patches = state.patches.assign_dock_connections(
             (region_list.typed_node_by_identifier(teleporter, DockNode),
              region_list.default_node_for_area(combo.currentData()))
             for teleporter, combo in self._elevator_id_to_combo.items() if combo.currentData() is not None
         )
-
-        return state
