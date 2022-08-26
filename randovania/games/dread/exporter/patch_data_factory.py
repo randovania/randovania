@@ -373,13 +373,16 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
+            "constant_environment_damage": {
+                "heat": self.configuration.constant_heat_damage,
+                "cold": self.configuration.constant_cold_damage,
+                "lava": self.configuration.constant_lava_damage,
+            },
             "game_patches": {
                 "consistent_raven_beak_damage_table": True,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
-                "linear_damage_runs": self.configuration.linear_damage_runs,
-                "linear_dps": self.configuration.linear_dps
             },
             "door_patches": self._door_patches(),
             "objective": self._objective_patches(),

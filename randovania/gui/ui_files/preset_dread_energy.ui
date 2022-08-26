@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1383</width>
-    <height>890</height>
+    <width>514</width>
+    <height>434</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1381</width>
-         <height>888</height>
+         <width>502</width>
+         <height>454</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -148,30 +148,25 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="linear_damage_runs_box">
+         <widget class="QGroupBox" name="constant_environment_damage_box">
           <property name="title">
-           <string>Linear DPS Scaling for Damage Runs</string>
+           <string>Environmental Damage</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_5">
-           <property name="leftMargin">
-            <number>9</number>
-           </property>
-           <property name="topMargin">
-            <number>9</number>
-           </property>
-           <property name="rightMargin">
-            <number>9</number>
-           </property>
-           <property name="bottomMargin">
-            <number>9</number>
-           </property>
+          <layout class="QGridLayout" name="constant_environment_damage_layout">
+           <item row="4" column="0">
+            <widget class="QCheckBox" name="constant_heat_damage_check">
+             <property name="text">
+              <string>Use constant heat damage</string>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="1">
-            <widget class="QSpinBox" name="linear_dps_spin_box">
+            <widget class="QSpinBox" name="constant_heat_damage_spin_box">
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
              <property name="suffix">
-              <string> Damage per second</string>
+              <string> damage per second</string>
              </property>
              <property name="minimum">
               <number>0</number>
@@ -179,22 +174,70 @@
              <property name="maximum">
               <number>1000</number>
              </property>
+             <property name="value">
+              <number>10</number>
+             </property>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="linear_damage_runs_label">
+           <item row="5" column="0">
+            <widget class="QCheckBox" name="constant_cold_damage_check">
              <property name="text">
-              <string>When enabled, Cold and Heated rooms will no longer scale exponentially in damage, and instead will deal a set damage-per-second. This option is not currently logic-affecting.</string>
+              <string>Use constant cold damage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QSpinBox" name="constant_cold_damage_spin_box">
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="suffix">
+              <string> damage per second</string>
+             </property>
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QCheckBox" name="constant_lava_damage_check">
+             <property name="text">
+              <string>Use constant lava damage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QSpinBox" name="constant_lava_damage_spin_box">
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="suffix">
+              <string> damage per second</string>
+             </property>
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0" colspan="2">
+            <widget class="QLabel" name="constant_environment_damage_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, cold and heated rooms, or lava, will deal a fixed damage per second instead of the normal behavior of scaling up over time.&lt;/p&gt;&lt;p&gt;Logic always assume this setting is &lt;span style=&quot; font-weight:700;&quot;&gt;disabled&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QCheckBox" name="linear_damage_runs_check">
-             <property name="text">
-              <string>Linear DPS Scaling</string>
              </property>
             </widget>
            </item>
