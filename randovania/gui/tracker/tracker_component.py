@@ -2,6 +2,8 @@ from typing import Any
 
 from PySide6 import QtWidgets
 
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.region import Region
 from randovania.gui.tracker.tracker_state import TrackerState
 from randovania.resolver.state import State
 
@@ -23,4 +25,10 @@ class TrackerComponent(QtWidgets.QDockWidget):
         raise NotImplementedError
 
     def tracker_update(self, tracker_state: TrackerState):
+        pass
+
+    def focus_on_region(self, region: Region):
+        pass
+
+    def focus_on_area(self, area: Area):
         pass
