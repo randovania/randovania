@@ -21,8 +21,7 @@ if TYPE_CHECKING:
 class TrackerCanvasMap(TrackerComponent):
 
     @classmethod
-    def create_for(cls, player_pool: PlayerPool, configuration: BaseConfiguration,
-                   ) -> TrackerCanvasMap | None:
+    def create_for(cls, player_pool: PlayerPool, configuration: BaseConfiguration) -> TrackerCanvasMap:
         return cls(player_pool.game)
 
     def __init__(self, game_description: GameDescription):

@@ -12,3 +12,4 @@ if TYPE_CHECKING:
 class TrackerState:
     state: State
     nodes_in_reach: set[Node]
+    actions: tuple[Node, ...]
