@@ -701,6 +701,8 @@ Extra - asset_id: collision_camera_012
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Event - Activate Magnet Walls Button
+      Shoot Diffusion or Wave
   > Below Thermal Door
       After Cataris - Hallway Thermal Device
 
@@ -1182,10 +1184,10 @@ Extra - asset_id: collision_camera_015
       Any of the following:
           All of the following:
               Varia Suit
-              Spider Magnet or Space Jump or Simple IBJ
+              Spider Magnet or Simple IBJ or Use Spin Boost
           All of the following:
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
-              Spider Magnet or Space Jump
+              Spider Magnet or Use Spin Boost
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300 and Simple IBJ
 
 > Lava Room; Heals? False
@@ -1582,7 +1584,7 @@ Extra - asset_id: collision_camera_020
   > Tunnel to EMMI Zone Item Tunnel
       All of the following:
           After Cataris - Central Unit
-          Simple IBJ or Use Spin Boost
+          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
   > Tunnel to EMMI Zone East Tower Access (Upper)
       Trivial
   > Center Alcove
@@ -2501,7 +2503,7 @@ Extra - asset_id: collision_camera_028
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Upper Ledge
-      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -2749,14 +2751,16 @@ Extra - asset_id: collision_camera_032
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Hall Thermal Device Room
       Any of the following:
+          After Cataris - deviceheat_camerafar_000
           All of the following:
               After Cataris - Central Unit
               Any of the following:
                   Simple IBJ
-                  Morph Ball and Space Jump
-          All of the following:
-              After Cataris - deviceheat_camerafar_000
-              Spider Magnet or Use Spin Boost
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Space Jump
+                          Speed Booster and Disabled Door Lock Randomizer
   > Door to EMMI Zone East Tower Access (doorpowerpower_000)
       Trivial
 
@@ -3091,6 +3095,8 @@ Extra - asset_id: collision_camera_038
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_PistonLeft
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Thermal Device Room North (Mid)
+      Can Slide
 
 > Tunnel to Thermal Device Room North; Heals? False
   * Layers: default
@@ -3107,6 +3113,13 @@ Extra - asset_id: collision_camera_038
           All of the following:
               Heat/Cold Runs (Advanced) and Lava Damage ≥ 500
               Varia Suit or Heat Damage ≥ 500
+  > Event - Lower Lava Button
+      All of the following:
+          Shoot Diffusion or Wave
+          Any of the following:
+              Gravity Suit
+              Varia Suit and Heat/Cold Runs (Intermediate) and Lava Damage ≥ 200
+              Flash Shift and Heat/Cold Runs (Advanced) and Heat Damage ≥ 425 and Lava Damage ≥ 425
 
 > Dock to Thermal Device Room North (Mid); Heals? False
   * Layers: default
@@ -3799,7 +3812,7 @@ Extra - asset_id: collision_camera_046
   > Tunnel to EMMI Zone Tower East (2)
       All of the following:
           Morph Ball and After Cataris - Central Unit
-          Simple IBJ or Use Spin Boost
+          Speed Booster or Simple IBJ or Use Spin Boost
 
 > Door to Green EMMI Introduction (doorchargecharge_005); Heals? False
   * Layers: default
@@ -4615,7 +4628,7 @@ Extra - asset_id: collision_camera_055
 > Main Room; Heals? False
   * Layers: default
   > Tile Group (MISSILE)
-      Grapple Beam or Spider Magnet or Use Spin Boost
+      Grapple Beam or Spider Magnet or Speed Booster or Use Spin Boost
   > Tunnel to EMMI Zone Tower East
       Morph Ball
 
@@ -4940,7 +4953,9 @@ Extra - asset_id: collision_camera_063
 > Right Ledge; Heals? False
   * Layers: default
   > Tunnel to Diffusion Beam Room (top)
-      Spider Magnet or Space Jump
+      Any of the following:
+          Grapple Beam or Use Spin Boost
+          Spider Magnet and Before Elun - Release X Parasites
   > Tunnel to Diffusion Beam Room (bottom)
       All of the following:
           Morph Ball
