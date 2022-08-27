@@ -377,9 +377,9 @@ def _create_string_patches(hint_config: HintConfiguration,
 
 
 def _create_starting_popup(layout_configuration: EchoesConfiguration,
-                           resource_database: ResourceDatabase,
+                           game_description: GameDescription,
                            starting_items: ResourceCollection) -> list:
-    extra_items = item_names.additional_starting_items(layout_configuration, resource_database, starting_items)
+    extra_items = item_names.additional_starting_items(layout_configuration, game_description, starting_items)
     if extra_items:
         return [
             "Extra starting items:",
@@ -525,7 +525,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         # Add Spawn Point
         result["spawn_point"] = _create_spawn_point_field(self.patches, self.game)
 
-        result["starting_popup"] = _create_starting_popup(self.configuration, self.game.resource_database,
+        result["starting_popup"] = _create_starting_popup(self.configuration, self.game,
                                                           self.patches.starting_items)
 
         # Add the pickups
@@ -666,7 +666,7 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
         # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
         model["name"] = "MissileExpansionPrime1"
 
-    hud_text = details.hud_text
+    hud_text = details.collection_text
     if hud_text == ["Energy Transfer Module acquired!"] and (
             rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
         hud_text = ["Run validated!"]
@@ -691,7 +691,7 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
             for conversion in details.conversion
         ],
         "hud_text": hud_text,
-        "scan": details.scan_text,
+        "scan": f"{details.name}. {details.description}".strip(),
         "model": model,
     }
 

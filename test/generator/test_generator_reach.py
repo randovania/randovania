@@ -118,8 +118,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     game, initial_state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset())
     all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.iterate_nodes()))
-    pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
-                                                       game.resource_database)
+    pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 
     initial_state.resources.add_resource_gain(pool_results.initial_resources.as_resource_gain())
     for pickup in pool_results.pickups:

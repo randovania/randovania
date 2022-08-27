@@ -2,7 +2,7 @@ import logging
 import os
 
 from randovania.exporter import pickup_exporter, item_names
-from randovania.exporter.hints import guaranteed_item_hint
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -36,13 +36,40 @@ _ALTERNATIVE_MODELS = {
 }
 
 
-def _get_item_id_for_item(item: ItemResourceInfo) -> str:
+def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
     try:
         return item.extra["item_id"]
     except KeyError as e:
         raise KeyError(f"{item.long_name} has no item ID.") from e
+
+
+def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+    if not res.resources:
+        return {"item_id": "ITEM_NONE", "quantity": 0}
+
+    item_id = get_item_id_for_item(res.resources[0][0])
+    quantity = res.resources[0][1]
+
+    # only main pbs have 2 elements in res.resources, everything else is just 1
+    if len(res.resources) != 1:
+        item_id = get_item_id_for_item(res.resources[1][0])
+        assert item_id == "ITEM_WEAPON_POWER_BOMB"
+        assert len(res.resources) == 2
+
+    # non-required mains
+    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
+        item_id = "ITEM_WEAPON_POWER_BOMB"
+
+    return {"item_id": item_id, "quantity": quantity}
+
+
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
+    return [
+        convert_conditional_resource(detail.original_pickup.respects_lock, res)
+        for res in detail.conditional_resources
+    ]
 
 
 class DreadPatchDataFactory(BasePatchDataFactory):
@@ -53,11 +80,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
 
-        self.memo_data[
-            "Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank:g}."
+        tank = self.configuration.energy_per_tank
+        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
         if self.configuration.immediate_energy_parts:
-            self.memo_data[
-                "Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank / 4:g}."
+            self.memo_data["Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {tank / 4:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
@@ -66,7 +92,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         result = {}
         for resource, quantity in resources.as_resource_gain():
             try:
-                result[_get_item_id_for_item(resource)] = quantity
+                result[get_item_id_for_item(resource)] = quantity
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
@@ -74,7 +100,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _starting_inventory_text(self, resources: ResourceCollection):
         result = [r"{c1}Random starting items:{c0}"]
-        items = item_names.additional_starting_items(self.configuration, self.game.resource_database, resources)
+        items = item_names.additional_starting_items(self.configuration, self.game, resources)
         if not items:
             return []
         result.extend(items)
@@ -147,47 +173,19 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             }
             model_names = alt_model
 
-        ammoconfig = self.configuration.ammo_configuration.items_state
-        pbammo = self.item_db.ammo["Power Bomb Tank"]
-
-        def get_resource(res: ConditionalResources) -> dict:
-            item_id = "ITEM_NONE"
-            quantity = 1
-            ids = [_get_item_id_for_item(r) for r, q in res.resources]
-            for r, q in res.resources:
-                try:
-                    item_id = _get_item_id_for_item(r)
-                    quantity = q
-                    break
-                except KeyError:
-                    continue
-
-            if "ITEM_WEAPON_POWER_BOMB" in ids:
-                item_id = "ITEM_WEAPON_POWER_BOMB"
-
-            # non-required mains
-            if (item_id == "ITEM_WEAPON_POWER_BOMB_MAX"
-                    and not ammoconfig[pbammo].requires_major_item):
-                item_id = "ITEM_WEAPON_POWER_BOMB"
-
-            return {"item_id": item_id, "quantity": quantity}
-
-        # ugly hack
-        resources = [get_resource(res) for res in detail.conditional_resources]
-        if resources[0]["item_id"] == "ITEM_WEAPON_POWER_BOMB_MAX":
-            resources = [resources[-1]]
+        resources = get_resources_for_details(detail)
 
         pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
-        hud_text = detail.hud_text[0]
-        if len(set(detail.hud_text)) > 1:
+        hud_text = detail.collection_text[0]
+        if len(set(detail.collection_text)) > 1:
             hud_text = self.memo_data[detail.original_pickup.name]
 
         details = {
             "pickup_type": pickup_type,
             "caption": hud_text,
-            "resources": resources
+            "resources": resources,
         }
 
         try:
@@ -258,6 +256,14 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ])
 
         return text
+    
+    def _credits_spoiler(self) -> dict[str, str]:
+        return credits_spoiler.generic_credits(
+            self.configuration.major_items_configuration,
+            self.description.all_patches,
+            self.players_config,
+            DreadHintNamer(self.description.all_patches, self.players_config),
+        )
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
@@ -363,16 +369,20 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             ],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
+            "spoiler_log": self._credits_spoiler(),
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
+            "constant_environment_damage": {
+                "heat": self.configuration.constant_heat_damage,
+                "cold": self.configuration.constant_cold_damage,
+                "lava": self.configuration.constant_lava_damage,
+            },
             "game_patches": {
                 "consistent_raven_beak_damage_table": True,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
-                "linear_damage_runs": self.configuration.linear_damage_runs,
-                "linear_dps": self.configuration.linear_dps
             },
             "door_patches": self._door_patches(),
             "objective": self._objective_patches(),

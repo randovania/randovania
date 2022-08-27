@@ -32,7 +32,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="welcome_tab">
+      <widget class="QWidget" name="tab_welcome">
        <attribute name="title">
         <string>Welcome</string>
        </attribute>
@@ -205,25 +205,25 @@
         </item>
        </layout>
       </widget>
-      <widget class="QScrollArea" name="tab_play_new">
+      <widget class="QScrollArea" name="tab_game_list">
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
        <attribute name="title">
         <string>Games</string>
        </attribute>
-       <widget class="QWidget" name="play_new_contents">
+       <widget class="QWidget" name="game_list_contents">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>581</width>
-          <height>455</height>
+          <width>575</width>
+          <height>448</height>
          </rect>
         </property>
        </widget>
       </widget>
-      <widget class="GamesHelpWidget" name="games_tab">
+      <widget class="GamesHelpWidget" name="tab_game_details">
        <attribute name="title">
         <string>Games</string>
        </attribute>
@@ -300,7 +300,17 @@
         <item>
          <widget class="QLabel" name="multiworld_intro_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TODO: add an introduction to Multiworld and how to play.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Multiworld is a co-op multiplayer game mode for the randomizer.
+
+In a multiworld game, each player has their own unique world filled with items destined for an specific player. When you collect an item, it is instantly delivered to the owner.
+
+For more information, check [Randovania Help](help://tab_multiworld)!</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

@@ -15,18 +15,17 @@ if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.item_pool import PoolResults
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
-    from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
-    from randovania.interface_common.options import PerGameOptions, Options
+    from randovania.interface_common.options import PerGameOptions
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -52,7 +51,7 @@ class GameLayout:
 
 @dataclass(frozen=True)
 class GameGui:
-    game_tab: Callable[[WindowManager, BackgroundTaskMixin, Options], BaseGameTabWidget]
+    game_tab: type[BaseGameTabWidget]
     """Provides a widget used by the main window to display help, faq and other details about this game."""
 
     tab_provider: Callable[[PresetEditor, WindowManager], Iterable[type[PresetTab]]]
@@ -74,7 +73,7 @@ class GameGui:
 
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase, GamePatches, Random], None]
+    item_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription, GamePatches, Random], None]
     """Extends the base item pools with any specific item pools such as Artifacts."""
 
     bootstrap: Bootstrap

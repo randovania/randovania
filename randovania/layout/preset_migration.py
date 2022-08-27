@@ -666,6 +666,23 @@ def _migrate_v35(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v36(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["enemy_attributes"] = None
+    return preset
+
+
+def _migrate_v37(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        config = preset["configuration"]
+        damage = config.pop("linear_dps")
+        if not config.pop("linear_damage_runs"):
+            damage = None
+        config["constant_heat_damage"] = config["constant_cold_damage"] = config["constant_lava_damage"] = damage
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -702,6 +719,8 @@ _MIGRATIONS = [
     _migrate_v33,
     _migrate_v34,
     _migrate_v35,
+    _migrate_v36,
+    _migrate_v37,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

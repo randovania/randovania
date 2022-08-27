@@ -551,7 +551,7 @@
                 "extra": {}
             },
             "s040_aqua:default:db_reg_aq_009": {
-                "long_name": "Burenia - db_reg_aq_009",
+                "long_name": "Burenia - Ferenia Teleport Blob",
                 "extra": {}
             },
             "s040_aqua:default:db_reg_aq_001": {
@@ -591,11 +591,11 @@
                 "extra": {}
             },
             "s040_aqua:default:db_reg_aq_008": {
-                "long_name": "Burenia - db_reg_aq_008",
+                "long_name": "Burenia - Elevator Blob",
                 "extra": {}
             },
             "s040_aqua:default:db_reg_aq_011": {
-                "long_name": "Burenia - db_reg_aq_011",
+                "long_name": "Burenia - Recharge Blob",
                 "extra": {}
             },
             "s040_aqua:default:db_reg_aq_012": {
@@ -711,7 +711,7 @@
                 "extra": {}
             },
             "s040_aqua:default:grapplepulloff1x2_004": {
-                "long_name": "Burenia - grapplepulloff1x2_004",
+                "long_name": "Burenia - Ghavoran Transport Grapple Block",
                 "extra": {}
             },
             "s040_aqua:default:grapplepulloff1x2_003": {
@@ -723,7 +723,7 @@
                 "extra": {}
             },
             "s040_aqua:default:grapplepulloff1x2_001": {
-                "long_name": "Burenia - grapplepulloff1x2_001",
+                "long_name": "Burenia - Ferenia Teleport Grapple Block",
                 "extra": {}
             },
             "s040_aqua:default:grapplepulloff1x2_006": {
@@ -1029,6 +1029,10 @@
             "DaironFereniaTransportSpeedBlocks": {
                 "long_name": "Dairon - Ferenia Transport Speed Blocks Destroyed",
                 "extra": {}
+            },
+            "Drogyga": {
+                "long_name": "Drogyga",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1055,11 +1059,6 @@
             "IBJ": {
                 "long_name": "Infinite Bomb Jump",
                 "description": "By chaining and timing bomb jumps it`s possible to reach the top of a room.",
-                "extra": {}
-            },
-            "HBJ": {
-                "long_name": "Horizontal Bomb Jump",
-                "description": "Standing on a bomb while morphed will blast you in a certain direction. This also works midair.",
                 "extra": {}
             },
             "WBJ": {
@@ -1115,6 +1114,21 @@
             "FrozenEnemy": {
                 "long_name": "Stand on Frozen Enemy",
                 "description": "After you receive the ice missiles you\u00b4ll be able to freeze some enemies in place allowing you to reach certain spots.",
+                "extra": {}
+            },
+            "GrappleMovement": {
+                "long_name": "Grapple Movement",
+                "description": "A category of movement that captures the usages of Grapple Beam for using magnets without Spider Magnet or jumping from the tether, or Grapple Boost.",
+                "extra": {}
+            },
+            "CrossSkip": {
+                "long_name": "Cross Bomb Skip",
+                "description": "There are sets of crumble blocks that you must use Cross Bomb to roll across. All of these can be skipped with the right tools.",
+                "extra": {}
+            },
+            "TunnelSlope": {
+                "long_name": "Climb Sloped Tunnels",
+                "description": "There are various tunnels that contain slopes in the game, many of which can also be ascended with bombs or good movement.",
                 "extra": {}
             }
         },
@@ -2257,6 +2271,19 @@
         },
         "damage_reductions": [
             {
+                "name": "Damage",
+                "reductions": [
+                    {
+                        "name": "Varia",
+                        "multiplier": 0.75
+                    },
+                    {
+                        "name": "Gravity",
+                        "multiplier": 0.5
+                    }
+                ]
+            },
+            {
                 "name": "Heat",
                 "reductions": [
                     {
@@ -2273,6 +2300,10 @@
                 "name": "Lava",
                 "reductions": [
                     {
+                        "name": "Varia",
+                        "multiplier": 0.75
+                    },
+                    {
                         "name": "Gravity",
                         "multiplier": 0.0
                     }
@@ -2281,6 +2312,10 @@
             {
                 "name": "Cold",
                 "reductions": [
+                    {
+                        "name": "Varia",
+                        "multiplier": 0.75
+                    },
                     {
                         "name": "Gravity",
                         "multiplier": 0.0

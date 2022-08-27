@@ -54,7 +54,7 @@ def test_cs_item_pool_creator(default_cs_configuration: CSConfiguration, puppies
 
     result = pool_creator.calculate_pool_results(
         default_cs_configuration,
-        game_description.resource_database,
+        game_description,
         base_patches,
         rng
     )

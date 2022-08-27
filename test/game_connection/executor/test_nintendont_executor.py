@@ -134,18 +134,18 @@ async def test_connect_invalid_ip(executor: NintendontExecutor):
     assert "encoding with 'idna' codec failed" in str(executor._socket_error)
 
 
-async def test_disconnect_not_connected(executor: NintendontExecutor):
-    await executor.disconnect()
+def test_disconnect_not_connected(executor: NintendontExecutor):
+    executor.disconnect()
     assert executor._socket is None
 
 
-async def test_disconnect_connected(executor: NintendontExecutor):
+def test_disconnect_connected(executor: NintendontExecutor):
     # Setup
     socket = MagicMock()
     executor._socket = socket
 
     # Run
-    await executor.disconnect()
+    executor.disconnect()
 
     # Assert
     assert executor._socket is None

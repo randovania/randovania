@@ -25,20 +25,25 @@ def test_dread_format_params(has_artifacts):
     result = RandovaniaGame.METROID_DREAD.data.layout.preset_describer.format_params(configuration)
 
     # Assert
-    assert result == {
+    assert dict(result) == {
         "Difficulty": [
             "Damage Strictness: Medium",
             "Immediate Energy Part"
         ],
         "Game Changes": [
-            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia"
+            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
+        ],
+        "Environmental Damage": [
+            "Heat: Constant 20 dmg/s",
+            "Cold: Constant 20 dmg/s",
+            "Lava: Constant 20 dmg/s",
         ],
         "Gameplay": [
             "Starting Location: Artaria - Intro Room"
         ],
         "Goal": ["3 Metroid DNA", "Prefers E.M.M.I."] if has_artifacts else ["Reach Itorash"],
         "Item Pool": [
-            "Size: 143 of 149" if has_artifacts else "Size: 140 of 149",
+            "Size: 148 of 149" if has_artifacts else "Size: 145 of 149",
             "No Pulse Radar",
             "Progressive Beam, Progressive Charge Beam, Progressive Missile, "
             "Progressive Bomb, Progressive Suit, Progressive Spin"

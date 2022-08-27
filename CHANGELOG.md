@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.6.0] - 2022-09-01
 
+- **Major** - Added: An installer is now provided for Windows. With it rdvgame files are associated to open with Randovania, for ease of use. A shortcut for opening just the auto tracker is also provided.
 - Changed: The multi-pickup placement, using the new weighting, is now the default mode. The old behavior has been removed.
 - Changed: Error messages when a permalink is incompatible have been improved with more details.
-- Changed: The Customize Preset dialog now creates each tab as you click then. This means the dialog is now faster to first open, but there's a short delay when opening certain tabs. 
+- Changed: The Customize Preset dialog now creates each tab as you click then. This means the dialog is now faster to first open, but there's a short delay when opening certain tabs.
+- Changed: Progressive items now have their proper count as the simplified shuffled option.
+- Fixed: Hints can now once again be placed during generation.
 - Fixed: Exceptions when exporting a game now use the improved error dialog.
 - Fixed: Gracefully handle unsupported old versions of the preferences file.
+- Fixed: Excluding all copies of a progressive item, or the non-progressive equivalent, no longer hides them from the editor.
+- Fixed: Changing the selected backend while it's being used should no longer cause issues.
 
 ### Cave Story
 
@@ -27,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- **Major** - Added: Enemy Attribute Rando. Enemy stat values such as speed and scale can be randomized within a range you specify.
 
 #### Patcher Changes
 

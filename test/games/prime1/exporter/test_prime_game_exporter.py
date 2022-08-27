@@ -5,19 +5,26 @@ from unittest.mock import MagicMock, ANY
 import pytest
 
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams, adjust_model_names
-
+from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 @pytest.mark.parametrize('use_echoes_models', [True, False])
-def test_patch_game(mocker, tmp_path, use_echoes_models):
+@pytest.mark.parametrize('use_enemy_attribute_randomizer', [False, True])
+def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_randomizer):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
     })
+    seed = 103817502
+    if use_enemy_attribute_randomizer:
+        enemy_attribute_randomizer = EnemyAttributeRandomizer(1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True).as_json
+    else:
+        enemy_attribute_randomizer = None
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
+    mock_enemy_data: MagicMock = mocker.patch("randovania.games.prime1.exporter.game_exporter.PyRandom_Enemy_Attributes")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
-    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None"}
+    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
+                  "randEnemyAttributes": enemy_attribute_randomizer, "seed": seed}
     progress_update = MagicMock()
-
     echoes_input_path = tmp_path.joinpath("echoes.iso")
     asset_cache_path = tmp_path.joinpath("internal_copies", "prime1", "prime2_models")
 
@@ -66,6 +73,11 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
         mock_asset_convert.assert_called_once_with(echoes_input_path, asset_cache_path, ANY)
     else:
         assert not asset_cache_path.exists()
+
+    if use_enemy_attribute_randomizer:
+        mock_enemy_data.assert_called_once_with(os.fspath(tmp_path.joinpath("input.iso")), os.fspath(tmp_path.joinpath("output.iso")), seed, 1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True)
+    else:
+        mock_enemy_data.assert_not_called()
 
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(',', ': ')), ANY)
@@ -136,21 +148,23 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     exporter = PrimeGameExporter()
 
     # Run
-    exporter.export_game(
-        patch_data,
-        PrimeGameExportParams(
-            spoiler_output=tmp_path,
-            input_path=tmp_path.joinpath("input.iso"),
-            output_path=tmp_path.joinpath("output.iso"),
-            echoes_input_path=None,
-            asset_cache_path=tmp_path.joinpath("asset_cache_path"),
-            use_echoes_models=False,
-            cache_path=tmp_path.joinpath("cache_path"),
-        ),
-        progress_update
-    )
+    with pytest.raises(ValueError) as exc:
+        exporter.export_game(
+            patch_data,
+            PrimeGameExportParams(
+                spoiler_output=tmp_path,
+                input_path=tmp_path.joinpath("input.iso"),
+                output_path=tmp_path.joinpath("output.iso"),
+                echoes_input_path=None,
+                asset_cache_path=tmp_path.joinpath("asset_cache_path"),
+                use_echoes_models=False,
+                cache_path=tmp_path.joinpath("cache_path"),
+            ),
+            progress_update
+        )
 
     # Assert
+    assert str(exc.value) == "Couldn't find output file.\nAborting Enemy Stat Randomizer"
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(ANY, ANY)
 

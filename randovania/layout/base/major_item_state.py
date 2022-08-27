@@ -8,7 +8,6 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
-from randovania.lib import enum_lib
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
 DEFAULT_MAXIMUM_SHUFFLED = (2, 10, 99)
@@ -84,31 +83,6 @@ class MajorItemState:
             if ammo > db.get_item(ammo_index).max_capacity:
                 raise ValueError(
                     f"Including more than maximum capacity for ammo {ammo_index}. Included: {ammo}; Max: {db.get_item(ammo_index).max_capacity}")
-
-    @classmethod
-    def from_case(cls, case: MajorItemStateCase, included_ammo: tuple[int, ...]) -> MajorItemState | None:
-        if case == MajorItemStateCase.MISSING:
-            return MajorItemState(included_ammo=included_ammo)
-
-        elif case == MajorItemStateCase.VANILLA:
-            return MajorItemState(include_copy_in_original_location=True, included_ammo=included_ammo)
-
-        elif case == MajorItemStateCase.STARTING_ITEM:
-            return MajorItemState(num_included_in_starting_items=1, included_ammo=included_ammo)
-
-        elif case == MajorItemStateCase.SHUFFLED:
-            return MajorItemState(num_shuffled_pickups=1, included_ammo=included_ammo)
-
-        else:
-            return None
-
-    @property
-    def case(self) -> MajorItemStateCase:
-        for case in enum_lib.iterate_enum(MajorItemStateCase):
-            if self == MajorItemState.from_case(case, self.included_ammo):
-                return case
-
-        return MajorItemStateCase.CUSTOM
 
     @property
     def as_json(self) -> dict:

@@ -742,7 +742,9 @@ Extra - asset_id: collision_camera_006
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Teleport to Dairon (Lower)
-      Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
   > Start Point
       Can Slide
 
@@ -1069,19 +1071,19 @@ Extra - polygon: [[-1200.0, 2200.0], [-5200.0, 2200.0], [-5200.0, -5600.0], [-48
 Extra - asset_id: collision_camera_010
 > Door to EMMI Zone Exit Northwest; Heals? False
   * Layers: default
-  * Wave Beam Door to EMMI Zone Exit Northwest/Dock from EMMI Zone Hub
+  * Wave Beam Door to EMMI Zone Exit Northwest/Door to EMMI Zone Hub
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  > Door to EMMI Zone Exit Southwest (DoorFrame_004)
+  > Door to EMMI Zone Exit Southwest (Upper)
       Trivial
 
-> Door to EMMI Zone Exit Southwest (DoorFrame_004); Heals? False
+> Door to EMMI Zone Exit Southwest (Upper); Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Exit Southwest/Door to EMMI Zone Hub (DoorFrame_004)
+  * Access Open to EMMI Zone Exit Southwest/Door to EMMI Zone Hub (Upper)
   * Extra - actor_name: DoorFrame_004
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1089,68 +1091,91 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to EMMI Zone Exit Northwest
-      Space Jump or Speed Booster or Simple IBJ
-  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
+      Any of the following:
+          Space Jump or Simple IBJ
+          Speed Booster and Disabled Door Lock Randomizer
+  > Door to EMMI Zone Exit Southwest (Lower)
       Trivial
-  > Door to Wide Beam Block Room (DoorFrame_007)
+  > Door to Wide Beam Block Room (Upper)
       Flash Shift
 
-> Door to EMMI Zone Exit Southwest (DoorFrame_005); Heals? False
+> Door to EMMI Zone Exit Southwest (Lower); Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Exit Southwest/Door to EMMI Zone Hub (DoorFrame_005)
+  * Access Open to EMMI Zone Exit Southwest/Door to EMMI Zone Hub (Lower)
   * Extra - actor_name: DoorFrame_005
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit Southwest (DoorFrame_004)
-      Simple IBJ or Use Spin Boost
-  > Door to Wide Beam Block Room (DoorFrame_006)
+  > Door to EMMI Zone Exit Southwest (Upper)
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
+  > Door to Wide Beam Block Room (Lower)
       Trivial
   > Next to Water Device
       Trivial
 
-> Door to Wide Beam Block Room (DoorFrame_006); Heals? False
+> Door to Wide Beam Block Room (Lower); Heals? False
   * Layers: default
-  * Access Open to Wide Beam Block Room/Door to EMMI Zone Hub (DoorFrame_006)
+  * Access Open to Wide Beam Block Room/Door to EMMI Zone Hub (Lower)
   * Extra - actor_name: DoorFrame_006
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
+  > Door to EMMI Zone Exit Southwest (Lower)
       Trivial
-  > Door to Wide Beam Block Room (DoorFrame_007)
-      Speed Booster or Simple IBJ or Use Spin Boost
+  > Door to Wide Beam Block Room (Upper)
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
   > Pickup (Power Bomb Tank)
       Ballspark
   > Tunnel to Wide Beam Block Room
       Trivial
 
-> Door to Wide Beam Block Room (DoorFrame_007); Heals? False
+> Door to Wide Beam Block Room (Upper); Heals? False
   * Layers: default
-  * Access Open to Wide Beam Block Room/Door to EMMI Zone Hub (DoorFrame_007)
+  * Access Open to Wide Beam Block Room/Door to EMMI Zone Hub (Upper)
   * Extra - actor_name: DoorFrame_007
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Wide Beam Block Room (DoorFrame_006)
+  > Door to EMMI Zone Exit Southwest (Upper)
+      Flash Shift
+  > Door to Wide Beam Block Room (Lower)
       Trivial
   > Door to EMMI Zone Ballspark Hallway
       Any of the following:
-          Spider Magnet or Space Jump or Speed Booster or Simple IBJ
-          Flash Shift and After Artaria - Central Unit and Walljump (Intermediate)
+          # Some methods are made harder due to the EMMI being present. These are covered by Intermediate Movement
+          Spider Magnet or Space Jump or Simple IBJ
+          Speed Booster and Disabled Door Lock Randomizer
+          All of the following:
+              Flash Shift and Walljump (Intermediate)
+              After Artaria - Central Unit or Movement (Intermediate)
+          All of the following:
+              Morph Ball and Single-wall Wall Jump (Advanced)
+              After Artaria - Central Unit or Movement (Intermediate)
+          Missiles ≥ 5 and After Artaria - Central Unit and Stand on Frozen Enemy (Expert) and Shoot Ice Missile and Use Spin Boost
+          All of the following:
+              Grapple Beam and Grapple Movement (Intermediate)
+              After Artaria - Central Unit or Movement (Intermediate)
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 19; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
-  > Door to Wide Beam Block Room (DoorFrame_007)
+  > Door to EMMI Zone Exit Northwest
+      Flash Shift and Movement (Beginner)
+  > Door to EMMI Zone Exit Southwest (Upper)
+      Trivial
+  > Door to Wide Beam Block Room (Upper)
       Trivial
   > Door to EMMI Zone Ballspark Hallway
       Flash Shift or Grapple Beam or Spider Magnet or Space Jump
@@ -1168,21 +1193,25 @@ Extra - asset_id: collision_camera_010
       All of the following:
           # very dumb triple flash shift off of frozen enemy.
           Flash Shift and Stand on Frozen Enemy (Advanced) and Shoot Ice Missile
-          After Artaria - Central Unit or After Elun - Release X Parasites
-  > Door to Wide Beam Block Room (DoorFrame_007)
+          After Artaria - Central Unit or Movement (Intermediate)
+  > Door to Wide Beam Block Room (Upper)
       Trivial
   > Pickup (Power Bomb Tank)
       All of the following:
           Morph Ball
           Any of the following:
-              Grapple Beam or Space Jump
-              Spider Magnet and Use Spin Boost
+              Space Jump
+              Grapple Beam and Movement (Intermediate)
               All of the following:
-                  Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
-                  After Artaria - Central Unit or After Elun - Release X Parasites
+                  Spider Magnet
+                  Grapple Beam or Use Spin Boost
+              All of the following:
+                  After Artaria - Central Unit and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
                   Flash Shift or Spider Magnet or Lay Cross Comb or Use Spin Boost
   > Tunnel to EMMI Zone Exit Northwest
-      Ballspark
+      All of the following:
+          # Item beyond logically unattainable with Door Lock Rando enabled
+          Disabled Door Lock Randomizer and Ballspark
 
 > Event - Water Device; Heals? False
   * Layers: default
@@ -1197,13 +1226,13 @@ Extra - asset_id: collision_camera_010
 > Tunnel to Wide Beam Block Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Wide Beam Block Room/Tunnel to EMMI Zone Hub
-  > Door to Wide Beam Block Room (DoorFrame_006)
+  > Door to Wide Beam Block Room (Lower)
       Trivial
 
 > Tunnel to EMMI Zone Exit Northwest; Heals? False
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Exit Northwest/Tunnel to EMMI Zone Hub
-  > Door to EMMI Zone Exit Southwest (DoorFrame_004)
+  > Door to EMMI Zone Exit Southwest (Upper)
       Trivial
 
 > Dock to EMMI Zone Exit South; Heals? False
@@ -1216,16 +1245,16 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Slide Tunnel to EMMI Zone Exit South/Tunnel to EMMI Zone Hub
   > Next to Water Device
-      Morph Ball and Speed Booster and Speedbooster Conservation (Beginner)
+      Speedbooster Conservation (Beginner) and Ballspark
 
 > Next to Water Device; Heals? False
   * Layers: default
-  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
+  > Door to EMMI Zone Exit Southwest (Lower)
       Trivial
   > Event - Water Device
       Trivial
   > Dock to EMMI Zone Exit South
-      Simple IBJ or Use Spin Boost
+      Walljump (Intermediate) or Simple IBJ or Use Spin Boost
   > Tunnel to EMMI Zone Exit South
       Any of the following:
           Morph Ball
@@ -1233,7 +1262,7 @@ Extra - asset_id: collision_camera_010
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
-  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
+  > Door to EMMI Zone Exit Southwest (Lower)
       Trivial
 
 ----------------
@@ -2152,6 +2181,9 @@ Extra - asset_id: collision_camera_020
                       All of the following:
                           # Minimum: 35 Normal Missiles
                           Missiles ≥ 40
+          Any of the following:
+              # Energy Requirements
+              Combat (Beginner) or Normal Damage ≥ 199
 
 > Pickup (Phantom Cloak); Heals? False
   * Layers: default
@@ -2736,7 +2768,9 @@ Extra - asset_id: collision_camera_029
   > Ledge above lava
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 200
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Lava Damage ≥ 200
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -2761,7 +2795,11 @@ Extra - asset_id: collision_camera_029
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Pickup (Missile+ Tank)
-      Gravity Suit and Lava Damage ≥ 200
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Lava Damage ≥ 200
   > Tile Group (POWERBEAM)
       Any of the following:
           Varia Suit
@@ -2923,15 +2961,13 @@ Extra - asset_id: collision_camera_032
   * Extra - right_shield_def: None
   > Door to Transport to Dairon
       Any of the following:
-          Space Jump or Infinite Bomb Jump (Intermediate)
+          Use Spin Boost
           All of the following:
               Grapple Beam
-              Spider Magnet or Movement (Beginner)
-          All of the following:
-              Flash Shift
-              Any of the following:
-                  Walljump (Intermediate)
-                  Spider Magnet and Movement (Beginner)
+              Spider Magnet or Grapple Movement (Beginner)
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          Flash Shift and Movement (Beginner)
+          Speed Booster and Disabled Door Lock Randomizer
   > Door to Grapple Beam Tutorial
       Trivial
 
@@ -2958,12 +2994,11 @@ Extra - asset_id: collision_camera_032
   * Extra - right_shield_def: None
   > Door to Save Station North
       Any of the following:
-          Space Jump or Walljump (Intermediate) or Simple IBJ
+          Flash Shift or Walljump (Intermediate) or Simple IBJ or Use Spin Boost
           All of the following:
-              Spider Magnet
-              Grapple Beam or Use Spin Boost
-          Grapple Beam and Movement (Beginner)
-          Flash Shift and Walljump (Beginner)
+              Grapple Beam
+              Spider Magnet or Grapple Movement (Beginner)
+          Speed Booster and Disabled Door Lock Randomizer
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -3091,8 +3126,9 @@ Extra - asset_id: collision_camera_048
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Exit Northwest
       Any of the following:
-          Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Beginner)
+          Spider Magnet or Simple IBJ or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
+          Speed Booster and Disabled Door Lock Randomizer
   > Event - EMMI Single Use Slide
       Before Artaria - EMMI Single Use Slide and Can Slide
   > Start Point
@@ -3159,8 +3195,7 @@ Extra - asset_id: collision_camera_048
   * Open Passage to EMMI Zone Exit Northwest/Dock to EMMI Zone Dome
   > Door to EMMI Zone Exit North
       Any of the following:
-          Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Beginner)
+          Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
           Morph Ball and Single-wall Wall Jump (Beginner)
 
 > Below Slide; Heals? False
@@ -3172,9 +3207,7 @@ Extra - asset_id: collision_camera_048
   > Tunnel to EMMI Zone Exit North
       Morph Ball and After Artaria - Slide Alternative Blob
   > Event - EMMI Single Use Slide
-      All of the following:
-          # TODO: Take a look at what happens if Samus rolls through the one-use slide tunnel, then create a new nde for that if appropriate
-          Morph Ball and Before Artaria - EMMI Single Use Slide
+      Morph Ball and Before Artaria - EMMI Single Use Slide
 
 > Tunnel to EMMI Zone Exit North; Heals? False
   * Layers: default
@@ -3195,7 +3228,7 @@ Extra - asset_id: collision_camera_048
   > Door to EMMI Zone Exit North
       Trivial
   > Event - Slide Alternative Blob (Above)
-      Pseudo-Wave Beam (Intermediate)
+      Wave Beam or Pseudo-Wave Beam (Intermediate)
 
 > Event - Slide Alternative Blob (Above); Heals? False
   * Layers: default
@@ -3352,22 +3385,18 @@ Extra - asset_id: collision_camera_051
   * EMMI Door to Teleport to Cataris/Dock to EMMI Zone Exit Northwest
   * Extra - actor_name: DoorEmmy03
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock from EMMI Zone Hub
+  > Door to EMMI Zone Hub
       Any of the following:
-          Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift or Simple IBJ or Use Spin Boost
           Morph Ball and Single-wall Wall Jump (Beginner)
   > Door to EMMI Zone Dome
       Trivial
   > Tunnel to Teleport to Cataris
       Lay Bomb
-  > Dock to EMMI Zone Dome
-      Any of the following:
-          # this is a "trivial walljump", should be replaced with just trivial if we decide on that.
-          Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
-> Dock from EMMI Zone Hub; Heals? False
+> Door to EMMI Zone Hub; Heals? False
   * Layers: default
-  * Blocked Passage to EMMI Zone Hub/Door to EMMI Zone Exit Northwest
+  * Access Locked to EMMI Zone Hub/Door to EMMI Zone Exit Northwest
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3388,6 +3417,12 @@ Extra - asset_id: collision_camera_051
   * Extra - right_shield_def: None
   > Dock to Teleport to Cataris
       Trivial
+  > Door to EMMI Zone Hub
+      Speed Booster and Disabled Door Lock Randomizer
+  > Dock to EMMI Zone Dome
+      Any of the following:
+          Flash Shift or Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -3932,9 +3967,9 @@ Extra - asset_id: collision_camera_061
   * Extra - actor_name: DoorEmmy01
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to EMMI Zone Hub
-      Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
+      Trivial
   > Tunnel to EMMI Zone Hub
-      Morph Ball and Speed Booster and Movement (Beginner)
+      Speedbooster Conservation (Beginner) and Ballspark
 
 > Dock to EMMI Zone Hub; Heals? False
   * Layers: default
@@ -4363,37 +4398,37 @@ Wide Beam Block Room
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': -3300.0, 'y2': -1100.0}
 Extra - polygon: [[800.0, -1100.0], [-1300.0, -1100.0], [-1300.0, -3300.0], [800.0, -3300.0]]
 Extra - asset_id: collision_camera_069
-> Door to EMMI Zone Hub (DoorFrame_006); Heals? False
+> Door to EMMI Zone Hub (Lower); Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Hub/Door to Wide Beam Block Room (DoorFrame_006)
+  * Access Open to EMMI Zone Hub/Door to Wide Beam Block Room (Lower)
   * Extra - actor_name: DoorFrame_006
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Hub (DoorFrame_007)
+  > Door to EMMI Zone Hub (Upper)
       After Artaria - EMMI Wide Beam Block
   > Event - EMMI Wide Beam Block
-      All of the following:
-          Push Wide Beam Block
-          Spider Magnet or Movement (Beginner)
+      Push Wide Beam Block
   > Tunnel to EMMI Zone Hub
       Trivial
 
-> Door to EMMI Zone Hub (DoorFrame_007); Heals? False
+> Door to EMMI Zone Hub (Upper); Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Hub/Door to Wide Beam Block Room (DoorFrame_007)
+  * Access Open to EMMI Zone Hub/Door to Wide Beam Block Room (Upper)
   * Extra - actor_name: DoorFrame_007
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Hub (DoorFrame_006)
+  > Door to EMMI Zone Hub (Lower)
       After Artaria - EMMI Wide Beam Block
   > Door to EMMI Zone Spinner
       After Artaria - EMMI Wide Beam Block
+  > Event - EMMI Wide Beam Block
+      Wave Beam and Push Wide Beam Block
 
 > Door to EMMI Zone Spinner; Heals? False
   * Layers: default
@@ -4404,24 +4439,24 @@ Extra - asset_id: collision_camera_069
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Hub (DoorFrame_007)
+  > Door to EMMI Zone Hub (Upper)
       After Artaria - EMMI Wide Beam Block
 
 > Event - EMMI Wide Beam Block; Heals? False
   * Layers: default
   * Event Artaria - EMMI Wide Beam Block
-  > Door to EMMI Zone Hub (DoorFrame_006)
+  > Door to EMMI Zone Hub (Lower)
       Trivial
 
 > Tunnel to EMMI Zone Hub; Heals? False
   * Layers: default
   * Slide Tunnel to EMMI Zone Hub/Tunnel to Wide Beam Block Room
-  > Door to EMMI Zone Hub (DoorFrame_006)
+  > Door to EMMI Zone Hub (Lower)
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
-  > Door to EMMI Zone Hub (DoorFrame_006)
+  > Door to EMMI Zone Hub (Lower)
       Trivial
 
 ----------------
@@ -4734,14 +4769,18 @@ Extra - asset_id: collision_camera_075
   * EMMI Door to Water Reservoir/Dock to EMMI Zone Exit Southwest
   * Extra - actor_name: DoorEmmy02
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to EMMI Zone Hub (DoorFrame_004)
-      Simple IBJ or Use Spin Boost
-  > Door to EMMI Zone Hub (DoorFrame_005)
+  > Door to EMMI Zone Hub (Upper)
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          All of the following:
+              Speed Booster and Disabled Door Lock Randomizer
+              Gravity Suit or Before Artaria - Water Reservoir Blob
+  > Door to EMMI Zone Hub (Lower)
       Can Slide
 
-> Door to EMMI Zone Hub (DoorFrame_004); Heals? False
+> Door to EMMI Zone Hub (Upper); Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Hub/Door to EMMI Zone Exit Southwest (DoorFrame_004)
+  * Access Open to EMMI Zone Hub/Door to EMMI Zone Exit Southwest (Upper)
   * Extra - actor_name: DoorFrame_004
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4750,21 +4789,19 @@ Extra - asset_id: collision_camera_075
   * Extra - right_shield_def: None
   > Dock to Water Reservoir
       Trivial
-  > Door to EMMI Zone Hub (DoorFrame_005)
+  > Door to EMMI Zone Hub (Lower)
       Trivial
 
-> Door to EMMI Zone Hub (DoorFrame_005); Heals? False
+> Door to EMMI Zone Hub (Lower); Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Hub/Door to EMMI Zone Exit Southwest (DoorFrame_005)
+  * Access Open to EMMI Zone Hub/Door to EMMI Zone Exit Southwest (Lower)
   * Extra - actor_name: DoorFrame_005
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Water Reservoir
-      Morph Ball
-  > Door to EMMI Zone Hub (DoorFrame_004)
+  > Door to EMMI Zone Hub (Upper)
       Trivial
 
 > Start Point; Heals? False; Spawn Point
@@ -4897,7 +4934,7 @@ Extra - asset_id: collision_camera_078
                   Flash Shift
                   Grapple Beam or Walljump (Beginner)
               Morph Ball and Single-wall Wall Jump (Beginner)
-              Speed Booster and Open Charge Door
+              Speed Booster and Disabled Door Lock Randomizer and Open Charge Door
   > Door to Transport to Cataris
       All of the following:
           Morph Ball
@@ -5738,7 +5775,7 @@ Extra - asset_id: collision_camera_089
   > Door to Grapple Beam Room
       Trivial
   > Door to Spider Beam Tower
-      Flash Shift or Grapple Beam
+      Flash Shift
 
 > Door to Grapple Beam Room; Heals? False
   * Layers: default
@@ -5750,7 +5787,9 @@ Extra - asset_id: collision_camera_089
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Spider Beam Tower
-      Grapple Beam or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Grapple Beam or Simple IBJ or Use Spin Boost
+          Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
 
 > Door to Spider Beam Tower; Heals? False
   * Layers: default

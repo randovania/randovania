@@ -53,7 +53,7 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Navigation Station North
+  > Start Point
       Morph Ball
 
 > Door to Navigation Station North; Heals? False
@@ -65,8 +65,6 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Burenia Hub to Dairon
-      Morph Ball
   > Door to Map Station
       Morph Ball and After Quiet Robe
   > Start Point
@@ -98,6 +96,8 @@ Extra - asset_id: collision_camera_001
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_DoorProfessor
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Burenia Hub to Dairon
+      Can Slide
   > Door to Navigation Station North
       Trivial
 
@@ -292,7 +292,9 @@ Extra - asset_id: collision_camera_002
   > Pickup (Energy Part)
       Any of the following:
           Speed Booster
-          Horizontal Bomb Jump (Beginner) and Lay Cross Comb
+          All of the following:
+              # A grounded bomb jump horizontally to get past the fan
+              Infinite Bomb Jump (Beginner) and Lay Cross Comb
           Flash Shift and Movement (Beginner)
   > Tile Group (POWERBEAM)
       Trivial
@@ -466,9 +468,9 @@ Extra - asset_id: collision_camera_005
 
 > Tunnel to Underneath Drogyga (Upper); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Underneath Drogyga/Tunnel to Drogyga Eyedoor (Upper)
+  * Slide Tunnel to Underneath Drogyga/Tunnel to Drogyga Eyedoor (Upper)
   > Center Platform
-      Grapple Beam or Morph Ball or Walljump (Beginner) or Shoot Ice Missile or Simple IBJ or Use Spin Boost
+      Trivial
 
 > Tunnel to Underneath Drogyga (Lower); Heals? False
   * Layers: default
@@ -480,8 +482,12 @@ Extra - asset_id: collision_camera_005
   * Layers: default
   > Door to Drogyga Access
       Any of the following:
-          Grapple Beam or Space Jump or Simple IBJ
-          Flash Shift and Spider Magnet and Use Spin Boost
+          Space Jump or Simple IBJ
+          Grapple Beam and Grapple Movement (Beginner)
+          All of the following:
+              Spider Magnet
+              Flash Shift or Grapple Beam or Use Spin Boost
+          Flash Shift and Use Spin Boost
   > Tunnel to Underneath Drogyga (Upper)
       Trivial
 
@@ -499,12 +505,12 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Pull Grapple Block (grapplepulloff1x2_004)
+  > Event - Ghavoran Transport Grapple Block
       Grapple Beam
   > Tunnel to Underneath Drogyga (Lower)
       Trivial
   > Tunnel to Upper Burenia Hub
-      Morph Ball and After Burenia - grapplepulloff1x2_004
+      Morph Ball and After Burenia - Ghavoran Transport Grapple Block
 
 > Door to Save Station North; Heals? False
   * Layers: default
@@ -515,32 +521,32 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Elevator Blob (db_reg_aq_008)
-      Shoot Beam
+  > Event - Elevator Blob
+      Lay Bomb or Shoot Beam
   > Elevator to Ghavoran - Transport to Burenia
-      After Burenia - db_reg_aq_008
+      After Burenia - Elevator Blob
   > Tunnel to Underneath Drogyga (Upper)
       Trivial
 
-> Event - Elevator Blob (db_reg_aq_008); Heals? False
+> Event - Elevator Blob; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_008
+  * Event Burenia - Elevator Blob
   * Extra - actor_name: db_reg_aq_008
   * Extra - actor_def: actordef:actors/props/db_reg_aq_008/charclasses/db_reg_aq_008.bmsad
   > Door to Save Station North
       Trivial
 
-> Event - Recharge Blob from left (db_reg_aq_011); Heals? False
+> Event - Recharge Blob from Left; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_011
+  * Event Burenia - Recharge Blob
   * Extra - actor_name: db_reg_aq_011
   * Extra - actor_def: actordef:actors/props/db_reg_aq_010/charclasses/db_reg_aq_010.bmsad
   > Tunnel to Underneath Drogyga (Upper)
       Trivial
 
-> Event - Pull Grapple Block (grapplepulloff1x2_004); Heals? False
+> Event - Ghavoran Transport Grapple Block; Heals? False
   * Layers: default
-  * Event Burenia - grapplepulloff1x2_004
+  * Event Burenia - Ghavoran Transport Grapple Block
   * Extra - actor_name: grapplepulloff1x2_004
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Underneath Drogyga
@@ -556,8 +562,8 @@ Extra - asset_id: collision_camera_006
   * Extra - start_point_actor_name: elevator_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Save Station North
-      After Burenia - db_reg_aq_008
-  > Event - Elevator Blob (db_reg_aq_008)
+      After Burenia - Elevator Blob
+  > Event - Elevator Blob
       Shoot Diffusion or Wave
 
 > Energy Recharge; Heals? True
@@ -567,27 +573,13 @@ Extra - asset_id: collision_camera_006
   * Extra - start_point_actor_name: energyrecharge_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Tunnel to Underneath Drogyga (Upper)
-      After Burenia - db_reg_aq_011 and Can Slide
+      After Burenia - Recharge Blob and Can Slide
   > Tunnel to Underneath Drogyga (Lower)
       Trivial
-  > Event - Recharge Blob from right (db_reg_aq_011)
+  > Event - Recharge Blob from Right
       Any of the following:
           Wave Beam or Pseudo-Wave Beam (Intermediate)
           Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_004
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_032
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
 
 > Tunnel to Underneath Drogyga (Upper); Heals? False
   * Layers: default
@@ -597,18 +589,23 @@ Extra - asset_id: collision_camera_006
           Space Jump
           All of the following:
               Spider Magnet
-              Grapple Beam or Use Spin Boost
+              Grapple Beam or Simple IBJ or Use Spin Boost
           All of the following:
               Flash Shift
-              Grapple Beam or Simple IBJ
-  > Event - Recharge Blob from left (db_reg_aq_011)
-      Shoot Beam
+              Spider Magnet or Simple IBJ
+          Grapple Beam and Grapple Movement (Advanced)
+          All of the following:
+              Speed Booster and After Burenia - Recharge Blob and Can Slide
+              Flash Shift or Spider Magnet
+          Bomb and Infinite Bomb Jump (Advanced) and Lay Cross Comb
+  > Event - Recharge Blob from Left
+      Lay Bomb or Shoot Beam
   > Energy Recharge
-      Morph Ball and After Burenia - db_reg_aq_011
+      Morph Ball and After Burenia - Recharge Blob
 
 > Tunnel to Underneath Drogyga (Lower); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Underneath Drogyga/Tunnel to Transport to Ghavoran (Lower)
+  * Slide Tunnel to Underneath Drogyga/Tunnel to Transport to Ghavoran (Lower)
   > Door to Underneath Drogyga
       Trivial
   > Energy Recharge
@@ -618,11 +615,11 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Morph Ball Tunnel to Upper Burenia Hub/Tunnel to Transport to Ghavoran
   > Door to Underneath Drogyga
-      Morph Ball and After Burenia - grapplepulloff1x2_004
+      Morph Ball and After Burenia - Ghavoran Transport Grapple Block
 
-> Event - Recharge Blob from right (db_reg_aq_011); Heals? False
+> Event - Recharge Blob from Right; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_011
+  * Event Burenia - Recharge Blob
   > Energy Recharge
       Trivial
 
@@ -649,52 +646,40 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Water Bottom
-      Morph Ball
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_002
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Left of Grapple Blocks
-      Trivial
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_035
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Water Bottom
-      Trivial
+      All of the following:
+          Morph Ball
+          Gravity Suit or Before Drogyga or Perform WBJ
 
 > Dock to Drogyga Arena; Heals? False
   * Layers: default
   * Open Passage to Drogyga Arena/Dock to Underneath Drogyga
-  > Tile Group (WEIGHT) 1
-      Trivial
+  > Left of Grapple Blocks
+      Can Slide
 
 > Left of Grapple Blocks; Heals? False
   * Layers: default
   > Tunnel to Transport to Ghavoran (Upper)
-      Flash Shift or Grapple Beam or Space Jump
+      Any of the following:
+          Flash Shift or Grapple Beam or Space Jump
+          All of the following:
+              Speed Booster
+              Gravity Suit or Before Drogyga
   > Water Bottom
       Trivial
 
 > Tunnel to Transport to Ghavoran (Upper); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Transport to Ghavoran/Tunnel to Underneath Drogyga (Upper)
-  > Tile Group (WEIGHT) 2
-      Trivial
   > Left of Grapple Blocks
       Flash Shift or Grapple Beam or Space Jump
+  > Water Bottom
+      Trivial
 
 > Tunnel to Drogyga Eyedoor (Upper); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Drogyga Eyedoor/Tunnel to Underneath Drogyga (Upper)
+  * Slide Tunnel to Drogyga Eyedoor/Tunnel to Underneath Drogyga (Upper)
   > Tunnel to Transport to Ghavoran (Lower)
-      Morph Ball
+      Can Slide
 
 > Tunnel to Drogyga Eyedoor (Lower); Heals? False
   * Layers: default
@@ -704,24 +689,24 @@ Extra - asset_id: collision_camera_007
 
 > Tunnel to Transport to Ghavoran (Lower); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Transport to Ghavoran/Tunnel to Underneath Drogyga (Lower)
+  * Slide Tunnel to Transport to Ghavoran/Tunnel to Underneath Drogyga (Lower)
   > Tunnel to Drogyga Eyedoor (Upper)
-      Morph Ball
+      Can Slide
 
 > Water Bottom; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
-          Gravity Suit or Water Bomb Jump (Beginner)
+          Gravity Suit or Before Drogyga or Perform WBJ
   > Left of Grapple Blocks
       Any of the following:
           Grapple Beam
           All of the following:
-              Gravity Suit
-              Spider Magnet or Simple IBJ or Use Spin Boost
+              Gravity Suit or Before Drogyga
+              Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
           All of the following:
-              Water Bomb Jump (Beginner)
+              After Drogyga and Perform WBJ
               Spider Magnet or Lay Cross Comb
 
 ----------------
@@ -767,10 +752,10 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
   > Door to Drogyga Eyedoor
       Trivial
-  > Event - Pull Grapple Block (grapplepulloff1x2_001)
+  > Event - Ferenia Teleport Grapple Block
       Grapple Beam
   > Ammo Recharge Alcove
-      Morph Ball and After Burenia - grapplepulloff1x2_001
+      Morph Ball and After Burenia - Ferenia Teleport Grapple Block
 
 > Door to Drogyga Eyedoor; Heals? False
   * Layers: default
@@ -784,7 +769,18 @@ Extra - asset_id: collision_camera_008
   > Door to Map Station
       Trivial
   > Tile Group (MISSILE)
-      Flash Shift or Space Jump
+      Any of the following:
+          Flash Shift or Space Jump
+          All of the following:
+              # Carry it from the Map Station, or alternatively from the suction enemy below
+              Speed Booster
+              Any of the following:
+                  Disabled Door Lock Randomizer
+                  Morph Ball and After Burenia - Ferenia Teleport Grapple Block and Knowledge (Beginner) and Speedbooster Conservation (Intermediate)
+          All of the following:
+              # You can stand on the edge of a flash gate without it closing
+              Knowledge (Beginner)
+              Movement (Beginner) or Lay Cross Comb or Use Spin Boost
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
@@ -794,17 +790,17 @@ Extra - asset_id: collision_camera_008
   > Tile Group (WEIGHT) 1
       Morph Ball
 
-> Event - Blob to Teleport (db_reg_aq_009); Heals? False
+> Event - Ferenia Teleport Blob; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_009
+  * Event Burenia - Ferenia Teleport Blob
   * Extra - actor_name: db_reg_aq_009
   * Extra - actor_def: actordef:actors/props/db_reg_aq_009/charclasses/db_reg_aq_009.bmsad
   > Lower Left Ledge
       Trivial
 
-> Event - Pull Grapple Block (grapplepulloff1x2_001); Heals? False
+> Event - Ferenia Teleport Grapple Block; Heals? False
   * Layers: default
-  * Event Burenia - grapplepulloff1x2_001
+  * Event Burenia - Ferenia Teleport Grapple Block
   * Extra - actor_name: grapplepulloff1x2_001
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Map Station
@@ -870,15 +866,10 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
+  > Door to Drogyga Eyedoor
+      Trivial
   > Tile Group (WEIGHT) 2
       Morph Ball
-
-> Tile Group (WEIGHT) 3; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_030
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
 
 > Tile Group (WEIGHT) 4; Heals? False
   * Layers: default
@@ -894,13 +885,23 @@ Extra - asset_id: collision_camera_008
   > Door to Navigation Station North
       Trivial
   > Door to Main Hub Tower Top
-      Flash Shift or Grapple Beam or Gravity Suit or Ice Missile or Spider Magnet or Use Spin Boost
-  > Event - Blob to Teleport (db_reg_aq_009)
+      Any of the following:
+          Flash Shift or Grapple Beam or Gravity Suit or Spider Magnet or Use Spin Boost
+          Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+          All of the following:
+              # Use the suction enemy above to build the speed, or come from the Navigation Station
+              Speed Booster
+              Knowledge (Beginner) or Disabled Door Lock Randomizer
+          Slide and Slide Jump (Beginner)
+          All of the following:
+              # Diagonal WBJ
+              Water Bomb Jump (Intermediate) and Perform WBJ
+  > Event - Ferenia Teleport Blob
       Shoot Diffusion or Wave
   > Tile Group (BOMB)
       After Burenia - Storm Missile Gate for Teleport
   > Event - Storm Missile Gate
-      After Burenia - db_reg_aq_009 and Activate Storm Missile Locks
+      After Burenia - Ferenia Teleport Blob and Activate Storm Missile Locks
 
 > Event - Storm Missile Gate; Heals? False
   * Layers: default
@@ -913,7 +914,7 @@ Extra - asset_id: collision_camera_008
   > Door to Navigation Station North
       Can Slide
   > Door to Map Station
-      Morph Ball and After Burenia - grapplepulloff1x2_001
+      Morph Ball and After Burenia - Ferenia Teleport Grapple Block
   > Ammo Recharge
       Trivial
 
@@ -1110,8 +1111,36 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
       Trivial
   > Pickup (Energy Tank)
       All of the following:
-          Flash Shift and Morph Ball
-          Grapple Beam or Spider Magnet or Walljump (Beginner)
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Use Spin Boost
+                  Movement (Intermediate) or Slide Jump (Beginner)
+              All of the following:
+                  Speed Booster and Disabled Door Lock Randomizer
+                  Spider Magnet or Movement (Beginner)
+              All of the following:
+                  Flash Shift
+                  Any of the following:
+                      Spider Magnet
+                      All of the following:
+                          Movement (Beginner)
+                          Walljump (Beginner) or Use Spin Boost
+              All of the following:
+                  Grapple Beam
+                  Any of the following:
+                      Spider Magnet
+                      All of the following:
+                          Movement (Beginner)
+                          Walljump (Beginner) or Use Spin Boost
+              All of the following:
+                  Lay Cross Comb
+                  Any of the following:
+                      Spider Magnet
+                      All of the following:
+                          Movement (Intermediate)
+                          Walljump (Beginner) or Use Spin Boost
+                      Damage Boost (Beginner) and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
 
 ----------------
 Main Hub Tower Middle
@@ -2822,31 +2851,33 @@ Extra - asset_id: collision_camera_028
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Hydrogiga_Dead
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > After Fight
+  > Event - Drogyga
       All of the following:
-          # TODO: Flesh out fight requirements
-          Shoot Beam
           Any of the following:
-              Grapple Beam
-              Gravity Suit and Space Jump
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_031
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Before Fight
-      Trivial
+              # Methods of fighting; beam damage does not damage the core, even plasma and wave
+              Shoot Charge Beam or Shoot Missile
+          Any of the following:
+              # Activate the switches
+              All of the following:
+                  # Magnetless
+                  Gravity Suit and Space Jump
+              All of the following:
+                  # Gravityless
+                  Grapple Beam
+                  Flash Shift or Spider Magnet or Space Jump
+          Any of the following:
+              # Energy Requirements
+              Combat (Beginner) or Normal Damage ≥ 399
 
 > Dock to Drogyga Access; Heals? False
   * Layers: default
   * Open Passage to Drogyga Access/Dock to Drogyga Arena
-  > Tile Group (WEIGHT)
+  > Before Fight
       Trivial
 
-> After Fight; Heals? False
+> Event - Drogyga; Heals? False
   * Layers: default
+  * Event Drogyga
   > Pickup (Drogyga)
       Trivial
 
@@ -2856,7 +2887,7 @@ Extra - asset_id: collision_camera_028
 
 > Pickup (Drogyga); Heals? False
   * Layers: default
-  * Pickup 150; Major Location? False
+  * Pickup 140; Major Location? False
   * Extra - pickup_type: cutscene
   * Extra - callback_function: OnHydrogigaDead_CUSTOM
   * Extra - boss_hint_name: Drogyga
@@ -2877,12 +2908,12 @@ Extra - asset_id: collision_camera_029
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Pull Grapple Block
+  > Event - Drogyga Access Grapple Block
       Grapple Beam
   > Dock to Drogyga Arena
       Morph Ball and After Burenia - Drogyga Access Grapple Block
 
-> Event - Pull Grapple Block; Heals? False
+> Event - Drogyga Access Grapple Block; Heals? False
   * Layers: default
   * Event Burenia - Drogyga Access Grapple Block
   * Extra - actor_name: grapplepulloff1x2_006
@@ -2893,8 +2924,6 @@ Extra - asset_id: collision_camera_029
 > Dock to Drogyga Arena; Heals? False
   * Layers: default
   * Open Passage to Drogyga Arena/Dock to Drogyga Access
-  > Door to Drogyga Eyedoor
-      Morph Ball and After Burenia - Drogyga Access Grapple Block
 
 ----------------
 Save Station North

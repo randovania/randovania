@@ -7,6 +7,7 @@ import pytest
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 
+from randovania.games.game import RandovaniaGame
 from randovania.gui.main_window import MainWindow
 from randovania.gui.widgets.about_widget import AboutWidget
 from randovania.gui.widgets.randovania_help_widget import RandovaniaHelpWidget
@@ -212,3 +213,30 @@ def test_on_menu_action_about(default_main_window, monkeypatch):
     assert default_main_window.about_window.windowTitle() == "About Randovania"
     assert isinstance(default_main_window.about_window.centralWidget(), AboutWidget)
     mock_show.assert_called_once_with()
+
+
+def test_on_options_changed(default_main_window):
+    default_main_window.on_options_changed()
+
+
+def test_select_game_and_selector_visibility(default_main_window, skip_qtbot):
+    # Select game
+    default_main_window._select_game(RandovaniaGame.METROID_PRIME_ECHOES)
+    assert default_main_window.main_tab_widget.currentWidget() is default_main_window.tab_game_details
+
+    # Ensure nothing changed
+    default_main_window.set_games_selector_visible(False)
+    assert default_main_window.main_tab_widget.currentWidget() is default_main_window.tab_game_details
+
+    # Changing to games selector should select the games list
+    default_main_window.set_games_selector_visible(True)
+    assert default_main_window.main_tab_widget.currentWidget() is default_main_window.tab_game_list
+
+    # And changing back to the game
+    default_main_window.set_games_selector_visible(False)
+    assert default_main_window.main_tab_widget.currentWidget() is default_main_window.tab_game_details
+
+    # Setting to true on main tab shouldn't change current widget
+    default_main_window.main_tab_widget.setCurrentWidget(default_main_window.tab_welcome)
+    default_main_window.set_games_selector_visible(True)
+    assert default_main_window.main_tab_widget.currentWidget() is default_main_window.tab_welcome
