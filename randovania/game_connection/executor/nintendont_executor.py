@@ -221,7 +221,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                 self.logger.warning(f"Unable to send {len(requests)} requests to {self._ip}:{self._port}: {e}")
                 self._socket_error = MemoryOperationException(f"Unable to send {len(requests)} requests: {e}")
 
-            await self.disconnect()
+            self.disconnect()
             raise self._socket_error from e
 
         return all_responses
