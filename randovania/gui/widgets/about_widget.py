@@ -37,6 +37,8 @@ class AboutWidget(QtWidgets.QTextBrowser):
 
         # Remove all hardcoded link color
         about_document.setHtml(about_document.toHtml().replace("color:#0000ff;", ""))
+        # Set links to open in a browser
+        self.setOpenExternalLinks(True)
         
         cursor = self.textCursor()
         cursor.setPosition(0)
