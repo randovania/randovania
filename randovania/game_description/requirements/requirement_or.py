@@ -80,5 +80,9 @@ class RequirementOr(RequirementArrayBase):
         return " or "
 
     @classmethod
+    def combinator_title(cls):
+        return "Any"
+
+    @classmethod
     def _str_no_items(cls):
         return "Impossible"

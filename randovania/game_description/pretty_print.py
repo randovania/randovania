@@ -48,19 +48,25 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
     ]
     sorted_templates = list(sorted(item.template_name for item in template_requirements))
 
-    if isinstance(requirement, RequirementOr):
-        title = "Any"
-    else:
-        title = "All"
-
+    merged_this_resources = pretty_resources + sorted_templates
     if len(other_requirements) == 0 and requirement.comment is None:
-        yield level, requirement.combinator().join(pretty_resources + sorted_templates)
+        yield level, requirement.combinator().join(merged_this_resources)
+
+    elif requirement.comment is None and len(other_requirements) == 1 and merged_this_resources:
+        other = other_requirements[0]
+        yield level, "{}{}{} of the following:".format(
+            requirement.combinator().join(merged_this_resources),
+            requirement.combinator(),
+            requirement.combinator_title().lower(),
+        )
+        yield from pretty_print_requirement(other, level + 1)
+
     else:
-        yield level, f"{title} of the following:"
+        yield level, f"{requirement.combinator_title()} of the following:"
         if requirement.comment is not None:
             yield level + 1, f"# {requirement.comment}"
         if pretty_resources or sorted_templates:
-            yield level + 1, requirement.combinator().join(pretty_resources + sorted_templates)
+            yield level + 1, requirement.combinator().join(merged_this_resources)
         for item in other_requirements:
             yield from pretty_print_requirement(item, level + 1)
 

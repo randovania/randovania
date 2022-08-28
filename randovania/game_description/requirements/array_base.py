@@ -69,7 +69,11 @@ class RequirementArrayBase(Requirement):
             return self._str_no_items()
 
     @classmethod
-    def combinator(cls):
+    def combinator(cls) -> str:
+        raise NotImplementedError()
+
+    @classmethod
+    def combinator_title(cls) -> str:
         raise NotImplementedError()
 
     @classmethod
