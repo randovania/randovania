@@ -44,7 +44,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
         row = 2
         for trick in sorted(self.game_description.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick not in tricks_in_use:
+            if trick not in tricks_in_use or trick.extra.get("hide_from_ui"):
                 continue
 
             if row > 1:
