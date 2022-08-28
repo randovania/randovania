@@ -2,6 +2,8 @@ import dataclasses
 import io
 import logging
 import math
+import shutil
+import tempfile
 from pathlib import Path
 
 import PIL.Image
@@ -60,16 +62,16 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
                 dot.edge(source.name, target_node.name, dir=direction)
                 known_edges.add((source.name, target_node.name))
 
+    output_dir = tempfile.mkdtemp()
     try:
-        p = Path(dot.render(format="png", cleanup=True))
+        p = Path(dot.render(directory=output_dir, format="png", cleanup=True))
+        return io.BytesIO(p.read_bytes())
+
     except graphviz.backend.ExecutableNotFound as e:
         logging.info("Unable to render graph for %s: %s", area.name, str(e))
         return None
-
-    try:
-        return io.BytesIO(p.read_bytes())
     finally:
-        p.unlink()
+        shutil.rmtree(output_dir)
 
 
 def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:

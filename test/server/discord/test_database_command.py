@@ -1,4 +1,5 @@
 import io
+import os
 from pathlib import Path
 from unittest.mock import MagicMock, AsyncMock, ANY, call
 
@@ -73,13 +74,14 @@ async def test_on_database_world_selected():
     )
 
 
-async def test_on_database_area_selected(echoes_game_description, mocker):
+async def test_on_database_area_selected(tmp_path, echoes_game_description, mocker):
     # Setup
+    mocker.patch("tempfile.mkdtemp", return_value=os.fspath(tmp_path))
     mock_file: MagicMock = mocker.patch("discord.File")
     mock_digraph: MagicMock = mocker.patch("graphviz.Digraph")
     dot: MagicMock = mock_digraph.return_value
-    dot.render.return_value = "bar"
-    Path("bar").write_bytes(b"1234")
+    dot.render.return_value = os.fspath(tmp_path / "bar")
+    Path(tmp_path / "bar").write_bytes(b"1234")
 
     db = echoes_game_description
     world = echoes_game_description.world_list.worlds[2]
@@ -115,12 +117,12 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
         for node in area.nodes
         if not node.is_derived_node
     ])
-    dot.render.assert_called_once_with(format="png", cleanup=True)
+    dot.render.assert_called_once_with(directory=os.fspath(tmp_path), format="png", cleanup=True)
     mock_file.assert_called_once_with(ANY, filename=f"{area.name}_graph.png")
     v = mock_file.call_args[0][0]
     assert isinstance(v, io.BytesIO)
     assert v.getvalue() == b"1234"
-    assert not Path("bar").is_file()
+    assert not tmp_path.exists()
 
 
 async def test_on_area_node_selection(echoes_game_description, mocker):
