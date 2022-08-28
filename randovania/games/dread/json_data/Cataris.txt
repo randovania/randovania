@@ -701,10 +701,16 @@ Extra - asset_id: collision_camera_012
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Event - Activate Magnet Walls Button
-      Shoot Diffusion or Wave
   > Below Thermal Door
       After Cataris - Hallway Thermal Device
+  > Event - Activate Magnet Walls Button (Below)
+      Shoot Diffusion or Wave
+
+> Event - Activate Magnet Walls Button (Below); Heals? False
+  * Layers: default
+  * Event Cataris - Move Magnet Walls Button
+  > Above Thermal Door
+      Trivial
 
 ----------------
 Tall Magnet Walls Access
@@ -1183,12 +1189,15 @@ Extra - asset_id: collision_camera_015
   > Tunnel to Double Obsydomithon Room
       Any of the following:
           All of the following:
-              Varia Suit
-              Spider Magnet or Simple IBJ or Use Spin Boost
+              Any of the following:
+                  Varia Suit
+                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
+              Any of the following:
+                  Spider Magnet or Space Jump
+                  Spin Boost and Walljump (Beginner)
           All of the following:
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
-              Spider Magnet or Use Spin Boost
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300 and Simple IBJ
+              Simple IBJ
+              Varia Suit or Heat/Cold Runs (Intermediate) or Cold Damage ≥ 300
 
 > Lava Room; Heals? False
   * Layers: default
@@ -3103,6 +3112,10 @@ Extra - asset_id: collision_camera_038
   * Slide Tunnel to Thermal Device Room North/Tunnel to Lava Button West
   > Dock to Thermal Device Room North (Bottom)
       Gravity Suit or After Cataris - Lower Lava Button or Lava Damage ≥ 400
+  > Event - Lower Lava Button (Above)
+      All of the following:
+          # Built off of this node so as not to add more heat/lava run damage stuff to change later since no planned settings should affect this
+          Shoot Diffusion or Wave
 
 > Dock to Thermal Device Room North (Bottom); Heals? False
   * Layers: default
@@ -3113,13 +3126,6 @@ Extra - asset_id: collision_camera_038
           All of the following:
               Heat/Cold Runs (Advanced) and Lava Damage ≥ 500
               Varia Suit or Heat Damage ≥ 500
-  > Event - Lower Lava Button
-      All of the following:
-          Shoot Diffusion or Wave
-          Any of the following:
-              Gravity Suit
-              Varia Suit and Heat/Cold Runs (Intermediate) and Lava Damage ≥ 200
-              Flash Shift and Heat/Cold Runs (Advanced) and Heat Damage ≥ 425 and Lava Damage ≥ 425
 
 > Dock to Thermal Device Room North (Mid); Heals? False
   * Layers: default
@@ -3132,6 +3138,12 @@ Extra - asset_id: collision_camera_038
   * Event Cataris - Lower Lava Button
   > Dock to Thermal Device Room North (Mid)
       Can Slide
+
+> Event - Lower Lava Button (Above); Heals? False
+  * Layers: default
+  * Event Cataris - Lower Lava Button
+  > Tunnel to Thermal Device Room North
+      Trivial
 
 ----------------
 Dairon Transport Access
@@ -4954,8 +4966,9 @@ Extra - asset_id: collision_camera_063
   * Layers: default
   > Tunnel to Diffusion Beam Room (top)
       Any of the following:
-          Grapple Beam or Use Spin Boost
+          Simple IBJ or Use Spin Boost
           Spider Magnet and Before Elun - Release X Parasites
+          Grapple Beam and Grapple Movement (Beginner)
   > Tunnel to Diffusion Beam Room (bottom)
       All of the following:
           Morph Ball
