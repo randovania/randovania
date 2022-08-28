@@ -13845,42 +13845,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Experiment Z-57 Test Chamber": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Magnet",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Tunnel to EMMI Zone Exit West": {
@@ -14554,7 +14522,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2_005)": {
+                "Event - Hidden Shortcut Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -14674,7 +14642,7 @@
                                 ]
                             }
                         },
-                        "Event - Pull Grapple Block (grapplepulloff1x2_005)": {
+                        "Event - Hidden Shortcut Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -15172,11 +15140,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB)": {
-                            "type": "and",
+                        "Room Center": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -15269,40 +15246,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -9800.0,
-                        "y": -3100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_005",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Dock to Shinespark Tutorial": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Room Center": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        }
-                    }
-                },
                 "Dock to Lake Puzzle Room": {
                     "node_type": "dock",
                     "heal": false,
@@ -15360,7 +15303,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Tunnel Speed Blocks Destroyed": {
+                        "Event - Storm Gate Speed Blocks Destroyed": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15421,6 +15364,22 @@
                     ],
                     "extra": {},
                     "connections": {
+                        "Dock to Shinespark Tutorial": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
@@ -15473,8 +15432,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -15485,15 +15444,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (BOMB)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
                             }
                         },
                         "Dock to Lake Puzzle Room": {
@@ -15509,7 +15459,7 @@
                             "type": "template",
                             "data": "Activate Storm Missile Locks"
                         },
-                        "Event - Tunnel Speed Blocks Destroyed": {
+                        "Event - Storm Gate Speed Blocks Destroyed": {
                             "type": "and",
                             "data": {
                                 "comment": "You can destroy the blocks from this side by quickly descending or resetting your spark after laying a bomb",
@@ -15524,42 +15474,79 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "From above",
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Power Bomb"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Speedbooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Speedbooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "From below",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "DaironStormMissileGate",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -15570,7 +15557,7 @@
                         }
                     }
                 },
-                "Event - Tunnel Speed Blocks Destroyed": {
+                "Event - Storm Gate Speed Blocks Destroyed": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -15866,7 +15853,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2_003)": {
+                "Event - Lake Puzzle Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -15892,28 +15879,6 @@
                             }
                         }
                     }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5700.0,
-                        "y": -3200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_006",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
@@ -15968,19 +15933,43 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
+                                            "type": "events",
+                                            "name": "s030_baselab:default:grapplepulloff1x2_003",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:grapplepulloff1x2_003",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -16049,6 +16038,50 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "DaironStormMissileGate",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -16069,7 +16102,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - Pull Grapple Block (grapplepulloff1x2_003)": {
+                        "Event - Lake Puzzle Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16086,7 +16119,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Power Bombs require desyncing the beam blocks",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -16140,13 +16173,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -16232,59 +16260,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to EMMI Zone Exit West": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -16319,59 +16296,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Burenia Upper Transport Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         },
                         "Tunnel to Central Unit Access": {
                             "type": "and",
@@ -16510,7 +16436,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Unit Access (doorchargecharge_000)": {
+                        "Door to Central Unit Access (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16545,7 +16471,7 @@
                         }
                     }
                 },
-                "Door to Central Unit Access (doorchargecharge_000)": {
+                "Door to Central Unit Access (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16569,97 +16495,43 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "Central Unit Access",
-                        "node_name": "Door to EMMI Zone Exit South (doorchargecharge_000)"
+                        "node_name": "Door to EMMI Zone Exit South (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Burenia Lower Transport Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DaironCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DaironCU",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Upper Area": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Magnet",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
-                            }
-                        },
-                        "Submerged Area": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Cross Comb"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
                 },
-                "Door to Central Unit Access (doorframe_000)": {
+                "Door to Central Unit Access (Open)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16683,7 +16555,7 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "Central Unit Access",
-                        "node_name": "Door to EMMI Zone Exit South (doorframe_000)"
+                        "node_name": "Door to EMMI Zone Exit South (Open)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -16723,14 +16595,14 @@
                                 "negate": false
                             }
                         },
-                        "Door to Central Unit Access (doorchargecharge_000)": {
+                        "Door to Central Unit Access (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Central Unit Access (doorframe_000)": {
+                        "Door to Central Unit Access (Open)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -16797,48 +16669,15 @@
                     "extra": {},
                     "connections": {
                         "Dock to Burenia Lower Transport Access": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
-                        "Door to Central Unit Access (doorchargecharge_000)": {
+                        "Door to Central Unit Access (Charge)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -16869,6 +16708,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Perform WBJ"
                                     }
                                 ]
                             }
@@ -17107,8 +16950,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Upper Transport to Burenia": {
-                            "type": "template",
-                            "data": "Can Slide"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -17143,65 +16991,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to EMMI Zone Exit Southwest": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 }
@@ -17238,7 +17029,7 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Door to EMMI Zone Exit South (doorchargecharge_000)": {
+                "Door to EMMI Zone Exit South (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17262,7 +17053,7 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "EMMI Zone Exit South",
-                        "node_name": "Door to Central Unit Access (doorchargecharge_000)"
+                        "node_name": "Door to Central Unit Access (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -17305,7 +17096,7 @@
                     "pickup_index": 72,
                     "major_location": true,
                     "connections": {
-                        "Door to EMMI Zone Exit South (doorframe_000)": {
+                        "Door to EMMI Zone Exit South (Open)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -17316,7 +17107,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Exit South (doorframe_000)": {
+                "Door to EMMI Zone Exit South (Open)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17340,7 +17131,7 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "EMMI Zone Exit South",
-                        "node_name": "Door to Central Unit Access (doorframe_000)"
+                        "node_name": "Door to Central Unit Access (Open)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -17378,11 +17169,11 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to EMMI Zone Exit South (doorchargecharge_000)": {
+                        "Door to EMMI Zone Exit South (Charge)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Door to EMMI Zone Exit South (doorframe_000)": {
+                        "Door to EMMI Zone Exit South (Open)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -17569,7 +17360,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Exit South (doorchargecharge_000)": {
+                        "Door to EMMI Zone Exit South (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,

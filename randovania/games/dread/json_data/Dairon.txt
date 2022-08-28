@@ -2436,7 +2436,7 @@ Extra - asset_id: collision_camera_027
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Experiment Z-57 Test Chamber
-      Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ
+      Trivial
   > Tunnel to EMMI Zone Exit West
       Trivial
 
@@ -2591,11 +2591,11 @@ Extra - asset_id: collision_camera_030
   > Tile Group (POWERBEAM) 1
       Morph Ball
   > Tile Group (POWERBEAM) 2
-      Morph Ball and After Dairon - grapplepulloff1x2_005
+      Morph Ball and After Dairon - Hidden Shortcut Grapple Block
 
-> Event - Pull Grapple Block (grapplepulloff1x2_005); Heals? False
+> Event - Hidden Shortcut Grapple Block; Heals? False
   * Layers: default
-  * Event Dairon - grapplepulloff1x2_005
+  * Event Dairon - Hidden Shortcut Grapple Block
   * Extra - actor_name: grapplepulloff1x2_005
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Tile Group (POWERBEAM) 2
@@ -2623,8 +2623,8 @@ Extra - asset_id: collision_camera_030
   > Door to Experiment Z-57 Test Chamber
       Trivial
   > Pickup (Missile Tank)
-      Morph Ball and After Dairon - grapplepulloff1x2_005
-  > Event - Pull Grapple Block (grapplepulloff1x2_005)
+      Morph Ball and After Dairon - Hidden Shortcut Grapple Block
+  > Event - Hidden Shortcut Grapple Block
       Grapple Beam
 
 > Tunnel to Save Station West Tunnels (Bottom); Heals? False
@@ -2740,8 +2740,8 @@ Extra - asset_id: collision_camera_033
   * EMMI Door to Shinespark Tutorial/Dock to Storm Missile Gate Room
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (BOMB)
-      Trivial
+  > Room Center
+      Lay Bomb or Lay Power Bomb
 
 > Door to Ammo Recharge Station; Heals? False
   * Layers: default
@@ -2765,18 +2765,6 @@ Extra - asset_id: collision_camera_033
   > Room Center
       Trivial
 
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_005
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Dock to Shinespark Tutorial
-      Trivial
-  > Room Center
-      Can Slide
-
 > Dock to Lake Puzzle Room; Heals? False
   * Layers: default
   * Open Passage to Lake Puzzle Room/Dock to Storm Missile Gate Room
@@ -2786,7 +2774,7 @@ Extra - asset_id: collision_camera_033
 > Tunnel to Ammo Recharge Station; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Ammo Recharge Station/Tunnel to Storm Missile Gate Room
-  > Event - Tunnel Speed Blocks Destroyed
+  > Event - Storm Gate Speed Blocks Destroyed
       Speed Booster and Can Slide
 
 > Event - Storm Missile Gate; Heals? False
@@ -2797,6 +2785,8 @@ Extra - asset_id: collision_camera_033
 
 > Room Center; Heals? False
   * Layers: default
+  > Dock to Shinespark Tutorial
+      Lay Bomb or Lay Power Bomb
   > Door to Ammo Recharge Station
       Trivial
   > Pickup (Missile+ Tank)
@@ -2804,21 +2794,25 @@ Extra - asset_id: collision_camera_033
           Speed Booster
           Any of the following:
               Lay Bomb or Lay Power Bomb
-              After Dairon - Storm Gate Speed Blocks Destroyed and Walljump (Beginner)
-  > Tile Group (BOMB)
-      Morph Ball
+              After Dairon - Storm Gate Speed Blocks Destroyed and Movement (Intermediate)
   > Dock to Lake Puzzle Room
       After Dairon - Storm Missile Gate
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
-  > Event - Tunnel Speed Blocks Destroyed
+  > Event - Storm Gate Speed Blocks Destroyed
       All of the following:
           # You can destroy the blocks from this side by quickly descending or resetting your spark after laying a bomb
           Ballspark
-          Movement (Intermediate) or Speedbooster Conservation (Beginner)
-          Power Bombs or Lay Bomb
+          Any of the following:
+              All of the following:
+                  # From above
+                  Lay Bomb or Lay Power Bomb
+                  Movement (Intermediate) or Speedbooster Conservation (Beginner)
+              All of the following:
+                  # From below
+                  After Dairon - Storm Missile Gate and Movement (Intermediate)
 
-> Event - Tunnel Speed Blocks Destroyed; Heals? False
+> Event - Storm Gate Speed Blocks Destroyed; Heals? False
   * Layers: default
   * Event Dairon - Storm Gate Speed Blocks Destroyed
   > Door to Ammo Recharge Station
@@ -2881,20 +2875,13 @@ Extra - asset_id: collision_camera_035
   > Above Grapple Block
       Morph Ball
 
-> Event - Pull Grapple Block (grapplepulloff1x2_003); Heals? False
+> Event - Lake Puzzle Grapple Block; Heals? False
   * Layers: default
-  * Event Dairon - grapplepulloff1x2_003
+  * Event Dairon - Lake Puzzle Grapple Block
   * Extra - actor_name: grapplepulloff1x2_003
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Ledge
       Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_006
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -2909,26 +2896,33 @@ Extra - asset_id: collision_camera_035
   > Pickup (Power Bomb Tank)
       Morph Ball
   > Ledge
-      Morph Ball and After Dairon - grapplepulloff1x2_003
+      All of the following:
+          After Dairon - Lake Puzzle Grapple Block
+          Any of the following:
+              Lay Bomb
+              Power Bombs ≥ 2 and Lay Power Bomb
 
 > Dock to Storm Missile Gate Room; Heals? False
   * Layers: default
   * Open Passage to Storm Missile Gate Room/Dock to Lake Puzzle Room
   > Ledge
       Any of the following:
-          Simple IBJ or Use Spin Boost
+          Walljump (Intermediate) or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
+          Speed Booster and After Dairon - Storm Missile Gate and Movement (Intermediate)
 
 > Ledge; Heals? False
   * Layers: default
-  > Event - Pull Grapple Block (grapplepulloff1x2_003)
+  > Event - Lake Puzzle Grapple Block
       All of the following:
           Grapple Beam
-          Lay Cross Comb or Lay Power Bomb
+          Any of the following:
+              # Power Bombs require desyncing the beam blocks
+              Lay Cross Comb or Lay Power Bomb
   > Above Grapple Block
       All of the following:
-          Morph Ball and After Dairon - grapplepulloff1x2_003
-          Cross Bomb or Gravity Suit or Space Jump
+          Morph Ball and After Dairon - Lake Puzzle Grapple Block
+          Cross Bomb or Gravity Suit or Use Spin Boost
   > Dock to Storm Missile Gate Room
       Trivial
 
@@ -2943,9 +2937,7 @@ Extra - asset_id: collision_camera_036
   * Extra - actor_name: dooremmy_010
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Exit West
-      All of the following:
-          Can Slide
-          Grapple Beam or Morph Ball or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Can Slide
 
 > Door to EMMI Zone Exit West; Heals? False
   * Layers: default
@@ -2957,9 +2949,7 @@ Extra - asset_id: collision_camera_036
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Burenia Upper Transport Access
-      All of the following:
-          Can Slide
-          Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Can Slide
   > Tunnel to Central Unit Access
       Trivial
 
@@ -2987,14 +2977,14 @@ Extra - asset_id: collision_camera_037
   * EMMI Door to Burenia Lower Transport Access/Dock to EMMI Zone Exit South
   * Extra - actor_name: dooremmy_012
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to Central Unit Access (doorchargecharge_000)
+  > Door to Central Unit Access (Charge)
       Morph Ball and After Dairon - Central Unit
   > Submerged Area
       Trivial
 
-> Door to Central Unit Access (doorchargecharge_000); Heals? False
+> Door to Central Unit Access (Charge); Heals? False
   * Layers: default
-  * Charge Beam Door to Central Unit Access/Door to EMMI Zone Exit South (doorchargecharge_000)
+  * Charge Beam Door to Central Unit Access/Door to EMMI Zone Exit South (Charge)
   * Extra - actor_name: doorchargecharge_000
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3002,15 +2992,13 @@ Extra - asset_id: collision_camera_037
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Burenia Lower Transport Access
-      After Dairon - Central Unit
+      After Dairon - Central Unit and Can Slide
   > Upper Area
-      Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
-  > Submerged Area
-      Flash Shift or Movement (Beginner) or Lay Cross Comb
+      Trivial
 
-> Door to Central Unit Access (doorframe_000); Heals? False
+> Door to Central Unit Access (Open); Heals? False
   * Layers: default
-  * Access Open to Central Unit Access/Door to EMMI Zone Exit South (doorframe_000)
+  * Access Open to Central Unit Access/Door to EMMI Zone Exit South (Open)
   * Extra - actor_name: doorframe_000
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3024,9 +3012,9 @@ Extra - asset_id: collision_camera_037
   * Layers: default
   > Dock to Ammo Recharge Station
       Speed Booster
-  > Door to Central Unit Access (doorchargecharge_000)
+  > Door to Central Unit Access (Charge)
       Trivial
-  > Door to Central Unit Access (doorframe_000)
+  > Door to Central Unit Access (Open)
       Speed Booster
   > Submerged Area
       Trivial
@@ -3036,11 +3024,9 @@ Extra - asset_id: collision_camera_037
 > Submerged Area; Heals? False
   * Layers: default
   > Dock to Burenia Lower Transport Access
-      All of the following:
-          Gravity Suit
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
-  > Door to Central Unit Access (doorchargecharge_000)
-      Grapple Beam or Gravity Suit or Spider Magnet
+      Gravity Suit
+  > Door to Central Unit Access (Charge)
+      Grapple Beam or Gravity Suit or Spider Magnet or Perform WBJ
 
 > Tunnel to Central Unit Access; Heals? False
   * Layers: default
@@ -3084,7 +3070,7 @@ Extra - asset_id: collision_camera_039
   * Extra - actor_name: dooremmy_010
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Upper Transport to Burenia
-      Can Slide
+      Morph Ball
 
 > Door to Upper Transport to Burenia; Heals? False
   * Layers: default
@@ -3096,9 +3082,7 @@ Extra - asset_id: collision_camera_039
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Exit Southwest
-      All of the following:
-          Morph Ball
-          Grapple Beam or Spider Magnet or Space Jump or Walljump (Beginner)
+      Can Slide
 
 ----------------
 Central Unit Access
@@ -3106,9 +3090,9 @@ Central Unit Access
 Extra - total_boundings: {'x1': -18100.0, 'x2': -12850.0, 'y1': -8300.0, 'y2': -4300.0}
 Extra - polygon: [[-12850.0, -4300.0], [-18100.0, -4300.0], [-18100.0, -8300.0], [-12850.0, -8300.0]]
 Extra - asset_id: collision_camera_040
-> Door to EMMI Zone Exit South (doorchargecharge_000); Heals? False
+> Door to EMMI Zone Exit South (Charge); Heals? False
   * Layers: default
-  * Charge Beam Door to EMMI Zone Exit South/Door to Central Unit Access (doorchargecharge_000)
+  * Charge Beam Door to EMMI Zone Exit South/Door to Central Unit Access (Charge)
   * Extra - actor_name: doorchargecharge_000
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3125,12 +3109,12 @@ Extra - asset_id: collision_camera_040
   * Pickup 72; Major Location? True
   * Extra - actor_name: item_energyfragment_003
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Door to EMMI Zone Exit South (doorframe_000)
+  > Door to EMMI Zone Exit South (Open)
       Morph Ball
 
-> Door to EMMI Zone Exit South (doorframe_000); Heals? False
+> Door to EMMI Zone Exit South (Open); Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Exit South/Door to Central Unit Access (doorframe_000)
+  * Access Open to EMMI Zone Exit South/Door to Central Unit Access (Open)
   * Extra - actor_name: doorframe_000
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3146,9 +3130,9 @@ Extra - asset_id: collision_camera_040
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_SpeedBooster
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to EMMI Zone Exit South (doorchargecharge_000)
+  > Door to EMMI Zone Exit South (Charge)
       Can Slide
-  > Door to EMMI Zone Exit South (doorframe_000)
+  > Door to EMMI Zone Exit South (Open)
       Speed Booster
   > Door to Central Unit
       Morph Ball or Speed Booster or Use Spin Boost
@@ -3184,7 +3168,7 @@ Extra - asset_id: collision_camera_040
 > Tunnel to EMMI Zone Exit South; Heals? False
   * Layers: default
   * Dairon EMMI Tunnel to EMMI Zone Exit South/Tunnel to Central Unit Access
-  > Door to EMMI Zone Exit South (doorchargecharge_000)
+  > Door to EMMI Zone Exit South (Charge)
       Trivial
 
 > Tunnel to EMMI Zone Exit Southwest; Heals? False
