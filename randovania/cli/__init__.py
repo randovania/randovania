@@ -45,7 +45,7 @@ def _run_args(parser, args):
         parser.print_help()
         raise SystemExit(1)
 
-    logging.info("Executing from args...")
+    logging.debug("Executing from args...")
     return args.func(args) or 0
 
 
@@ -67,6 +67,6 @@ def run_cli(argv):
         if gui.has_gui and not args:
             args = ["gui", "main"]
 
-        logging.info("Creating parsers...")
+        logging.debug("Creating parsers...")
         parser = _create_parser()
         raise SystemExit(_run_args(parser, parser.parse_args(args)))
