@@ -1288,10 +1288,9 @@ Extra - asset_id: collision_camera_011
               All of the following:
                   Gravity Suit
                   Simple IBJ or Use Spin Boost
+              Movement (Intermediate) and Lay Cross Comb
   > Tile Group (BOMB) 3
-      Any of the following:
-          Space Jump or Infinite Bomb Jump (Intermediate)
-          Gravity Suit and Simple IBJ
+      Space Jump or Simple IBJ
   > Under Teleportal
       Trivial
 
@@ -1366,11 +1365,17 @@ Extra - asset_id: collision_camera_011
   * Extra - start_point_actor_name: PRP_CV_EnergyStation002_WeightPlate
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Event - Early SA Shortcut Blob
-      Morph Ball and Wave Beam
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Wave Beam
+              Slide and Pseudo-Wave Beam (Beginner) and Slide Jump (Beginner)
   > Door to Varia Suit Tutorial South
       All of the following:
           After Artaria - Thermal Device
-          Space Jump or Simple IBJ
+          Any of the following:
+              Space Jump or Simple IBJ
+              Walljump (Intermediate) and Use Spin Boost
   > Teleporter to Cataris - Teleport to Artaria (Red)
       Trivial
   > Tile Group (BOMB) 1
@@ -1388,7 +1393,7 @@ Extra - asset_id: collision_camera_011
   > Event - Early SA Shortcut Blob
       Pseudo-Wave Beam (Intermediate)
   > Energy Recharge
-      Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Trivial
   > Tile Group (POWERBEAM)
       All of the following:
           Morph Ball
@@ -1462,7 +1467,9 @@ Extra - asset_id: collision_camera_011
   > Pickup (Missile Tank, Supers-locked)
       Morph Ball
   > Door to Chain Reaction Access
-      Trivial
+      All of the following:
+          # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
+          Open Charge Door
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -1507,12 +1514,14 @@ Extra - asset_id: collision_camera_011
           All of the following:
               Gravity Suit
               Any of the following:
-                  Speed Booster or Simple IBJ or Use Spin Boost
-                  Flash Shift and Walljump (Beginner)
+                  Flash Shift or Simple IBJ or Use Spin Boost
+                  Speed Booster and Disabled Door Lock Randomizer
                   Morph Ball and Single-wall Wall Jump (Intermediate)
-          Speed Booster and Movement (Beginner) and Use Spin Boost
+          Speed Booster and Movement (Beginner) and Disabled Door Lock Randomizer and Use Spin Boost
   > Event - Destroy Post Chain Reaction Debris (Below)
-      After Artaria - Chain Reaction Device and Shoot Beam
+      All of the following:
+          After Artaria - Chain Reaction Device
+          Lay Bomb or Shoot Beam
   > Teleporter to Cataris - Teleport to Artaria (Red)
       All of the following:
           Morph Ball
@@ -1542,6 +1551,8 @@ Extra - asset_id: collision_camera_012
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Teleport to Cataris
+      Trivial
   > Save Station
       Trivial
 
@@ -1554,7 +1565,7 @@ Extra - asset_id: collision_camera_012
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Save Station
+  > Door to Waterfall
       Trivial
 
 > Save Station; Heals? False; Spawn Point
@@ -2581,8 +2592,14 @@ Extra - asset_id: collision_camera_026
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Next to Door
-      Trivial
+  > Start Point
+      All of the following:
+          # TODO: Find heat values after constand damage numbers are decided on
+          Morph Ball and Varia Suit and After Artaria - Chain Reaction Device
+  > Tunnel to Shutter Platform Puzzle
+      All of the following:
+          # TODO: Find heat values after constant damage numbers are decided on
+          Varia Suit and After Artaria - Chain Reaction Device
 
 > Door to Chain Reaction Access; Heals? False
   * Layers: default
@@ -2593,7 +2610,7 @@ Extra - asset_id: collision_camera_026
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Chain Reaction Device
+  > Start Point
       Before Artaria - Chain Reaction Device
 
 > Door to Varia Suit Tutorial South; Heals? False
@@ -2606,7 +2623,11 @@ Extra - asset_id: collision_camera_026
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Start Point
-      After Artaria - Chain Reaction Device
+      All of the following:
+          After Artaria - Chain Reaction Device
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
 > Event - Chain Reaction Device; Heals? False
   * Layers: default
@@ -2618,70 +2639,35 @@ Extra - asset_id: collision_camera_026
   > Tunnel to Shutter Platform Puzzle
       All of the following:
           Morph Ball
-          Spider Magnet or Walljump (Beginner) or Use Spin Boost
+          Lay Bomb or Lay Power Bomb or Shoot Beam
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChainReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Varia Suit Tutorial North
+      All of the following:
+          # TODO: Find heat values after constant damage numbers are decided on
+          Morph Ball and Varia Suit and After Artaria - Chain Reaction Device
+          Flash Shift or Simple IBJ or Use Spin Boost
+  > Door to Chain Reaction Access
+      Before Artaria - Chain Reaction Device
   > Door to Varia Suit Tutorial South
       All of the following:
           After Artaria - Chain Reaction Device
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Next to Door
-      All of the following:
-          # TODO: Segregate this room logically so heat logic is handled alongside the heat device event
-          After Artaria - Chain Reaction Device
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_033
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_034
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_036
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-
-> Tile Group (POWERBEAM) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_037
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
+  > Event - Chain Reaction Device
+      Before Artaria - Chain Reaction Device
 
 > Tunnel to Shutter Platform Puzzle; Heals? False
   * Layers: default
   * Slide Tunnel to Shutter Platform Puzzle/Tunnel to Chain Reaction Room
-
-> Next to Door; Heals? False
-  * Layers: default
   > Door to Varia Suit Tutorial North
-      After Artaria - Chain Reaction Device
-  > Start Point
-      Trivial
-  > Tunnel to Shutter Platform Puzzle
-      Morph Ball and Varia Suit
+      All of the following:
+          # TODO: Find heat values after constant damage numbers are decided on
+          Varia Suit and After Artaria - Chain Reaction Device
 
 ----------------
 Varia Suit Tutorial South
@@ -2737,10 +2723,6 @@ Extra - asset_id: collision_camera_029
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM)
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
   > Ledge above lava
       Any of the following:
           Varia Suit
@@ -2816,7 +2798,7 @@ Extra - asset_id: collision_camera_030
   * Pickup 14; Major Location? False
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
-  > Tile Group (SPEEDBOOST)
+  > Tile Group (BOMB)
       Morph Ball
 
 > Door to Varia Suit Room; Heals? False
@@ -2849,6 +2831,8 @@ Extra - asset_id: collision_camera_030
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Tile Group (POWERBEAM)
       Trivial
+  > Tunnel to Chain Reaction Room
+      Bomb and Morph Ball and Climb Sloped Tunnels (Advanced)
 
 > Tile Group (BOMB); Heals? False
   * Layers: default
@@ -2857,10 +2841,12 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (Energy Tank)
+      All of the following:
+          Ballspark
+          Flash Shift or Movement (Beginner) or Lay Cross Comb or Use Spin Boost
   > Door to Varia Suit Room
       Morph Ball and After Artaria - Chain Reaction Grapple Block
-  > Tile Group (SPEEDBOOST)
-      Flash Shift
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -2872,18 +2858,6 @@ Extra - asset_id: collision_camera_030
   > Door to Varia Suit Room
       Trivial
   > Start Point
-      Trivial
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Energy Tank)
-      Morph Ball
-  > Tile Group (BOMB)
       Trivial
 
 > Tunnel to Chain Reaction Room; Heals? False
@@ -2918,6 +2892,8 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_def: None
   > Door to Shutter Platform Puzzle
       Trivial
+  > Start Point
+      Morph Ball
 
 > Door to Shutter Platform Puzzle; Heals? False
   * Layers: default
@@ -2933,8 +2909,6 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_def: None
   > Door to Varia Suit Tutorial North
       Trivial
-  > Start Point
-      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -2943,7 +2917,7 @@ Extra - asset_id: collision_camera_031
   > Pickup (Varia Suit)
       Trivial
   > Door to Varia Suit Tutorial North
-      Morph Ball
+      Can Slide
 
 ----------------
 Spider Beam Tower
@@ -3571,7 +3545,7 @@ Extra - asset_id: collision_camera_055
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Room Middle
-      Morph Ball
+      Can Slide
 
 > Door to Teleport to Cataris; Heals? False
   * Layers: default
@@ -3584,22 +3558,6 @@ Extra - asset_id: collision_camera_055
   * Extra - right_shield_def: None
   > Room Middle
       Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_028
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_029
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
 
 > Tunnel to Teleport to Cataris (Morph Puzzle); Heals? False
   * Layers: default
@@ -3626,7 +3584,7 @@ Extra - asset_id: collision_camera_055
   > Door to Teleport to Cataris
       All of the following:
           # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
-          Shoot Charge Beam
+          Open Charge Door
   > Tunnel to Teleport to Cataris (Tunnel)
       Trivial
 
@@ -3720,6 +3678,8 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_def: None
   > Right of Rotatable
       After Artaria - Waterfall Rotatable
+  > Event - Waterfall Rotatable (Above)
+      Wave Beam
 
 > Door to Freezer; Heals? False
   * Layers: default
@@ -3731,7 +3691,7 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Event - Waterfall Rotatable
-      Wave Beam or Shoot Diffusion Beam
+      Shoot Diffusion or Wave
   > Start Point
       After Artaria - Waterfall Rotatable
 
@@ -3754,11 +3714,15 @@ Extra - asset_id: collision_camera_056
   * Layers: default
   * Open Passage to Water Tunnel under Map/Dock to Waterfall
   > Door to Map Station
-      Gravity Suit or After Artaria - Water Reservoir Blob
+      Gravity Suit or After Artaria - Water Reservoir Blob or Perform WBJ
   > Right of Rotatable
       All of the following:
-          Gravity Suit
-          Space Jump or Simple IBJ
+          Any of the following:
+              Gravity Suit
+              After Artaria - Water Reservoir Blob and Perform WBJ
+          Any of the following:
+              Simple IBJ or Use Spin Boost
+              Flash Shift and Walljump (Intermediate)
 
 > Dock to Red Chozo Arena; Heals? False
   * Layers: default
@@ -3769,7 +3733,11 @@ Extra - asset_id: collision_camera_056
   > Door to Save Station West
       Trivial
   > Door to Behind Waterfall
-      Flash Shift or Use Spin Boost
+      Any of the following:
+          Flash Shift or Movement (Advanced) or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
+          Movement (Beginner) and Lay Cross Comb
+          Bomb and Morph Ball and Infinite Bomb Jump (Intermediate)
   > Right of Rotatable
       Trivial
 
@@ -3780,7 +3748,17 @@ Extra - asset_id: collision_camera_056
   > Dock to Water Tunnel under Map
       Trivial
   > Tower Middle
-      Use Spin Boost
+      Any of the following:
+          Use Spin Boost
+          Speed Booster and After Artaria - Waterfall Rotatable and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer and Shoot Plasma Beam
+  > Event - Waterfall Rotatable (Above)
+      Wave Beam
+
+> Event - Waterfall Rotatable (Above); Heals? False
+  * Layers: default
+  * Event Artaria - Waterfall Rotatable
+  > Right of Rotatable
+      Trivial
 
 ----------------
 Water Tunnel under Map
@@ -3821,7 +3799,7 @@ Extra - asset_id: collision_camera_058
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Map Station
+  > Door to Waterfall
       Trivial
 
 > Door to Waterfall; Heals? False
@@ -3833,6 +3811,8 @@ Extra - asset_id: collision_camera_058
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Water Reservoir
+      Trivial
   > Map Station
       Trivial
 
@@ -3940,13 +3920,13 @@ Extra - asset_id: collision_camera_060
   > Dock to Water Tunnel under Map
       After Artaria - Water Reservoir Blob and Can Slide Underwater
   > Event - Water Reservoir Blob (Back)
-      Wave Beam
+      Wave Beam or Pseudo-Wave Beam (Intermediate)
 
 > Dock to Water Tunnel under Map; Heals? False
   * Layers: default
   * Open Passage to Water Tunnel under Map/Dock to Water Reservoir
   > Event - Water Reservoir Blob (Front)
-      Shoot Beam
+      Lay Bomb or Shoot Beam
   > Start Point
       Morph Ball and After Artaria - Water Reservoir Blob
 

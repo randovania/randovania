@@ -6332,6 +6332,27 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Cross Comb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6354,34 +6375,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -6658,12 +6653,55 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Pseudo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Slide",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Slide",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6700,6 +6738,27 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6787,28 +6846,10 @@
                             }
                         },
                         "Energy Recharge": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Tile Group (POWERBEAM)": {
@@ -7159,8 +7200,13 @@
                         "Door to Chain Reaction Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Open Charge Door"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7403,15 +7449,6 @@
                                                                 "data": "Simple IBJ"
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "and",
                                                                 "data": {
                                                                     "comment": null,
@@ -7420,7 +7457,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "items",
-                                                                                "name": "Flash",
+                                                                                "name": "Speed",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -7428,13 +7465,22 @@
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
+                                                                                "type": "misc",
+                                                                                "name": "DoorLocks",
                                                                                 "amount": 1,
-                                                                                "negate": false
+                                                                                "negate": true
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
@@ -7495,6 +7541,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -7508,16 +7563,28 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
                                             "name": "s010_cave:default:ev_chainreaction_deviceheat",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7667,6 +7734,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Teleport to Cataris": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Save Station": {
                             "type": "and",
                             "data": {
@@ -7706,7 +7780,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Save Station": {
+                        "Door to Waterfall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12655,11 +12729,65 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Next to Door": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: Find heat values after constand damage numbers are decided on",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Shutter Platform Puzzle": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Find heat values after constant damage numbers are decided on",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12694,7 +12822,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Chain Reaction Device": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -12736,12 +12864,63 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Start Point": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s010_cave:default:ev_chainreaction_deviceheat",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Heat",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12786,26 +12965,16 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "data": "Shoot Beam"
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 }
                                             ]
                                         }
@@ -12832,6 +13001,75 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
+                        "Door to Varia Suit Tutorial North": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Find heat values after constant damage numbers are decided on",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Chain Reaction Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
                         "Door to Varia Suit Tutorial South": {
                             "type": "and",
                             "data": {
@@ -12892,155 +13130,16 @@
                                 ]
                             }
                         },
-                        "Next to Door": {
-                            "type": "and",
+                        "Event - Chain Reaction Device": {
+                            "type": "resource",
                             "data": {
-                                "comment": "TODO: Segregate this room logically so heat logic is handled alongside the heat device event",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 300,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                "amount": 1,
+                                "negate": true
                             }
                         }
                     }
-                },
-                "Tile Group (POWERBEAM) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10300.0,
-                        "y": 8000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_033",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10300.0,
-                        "y": 8800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_034",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
-                },
-                "Tile Group (POWERBEAM) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11800.0,
-                        "y": 7300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_036",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
-                },
-                "Tile Group (POWERBEAM) 4": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -9500.0,
-                        "y": 6600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_037",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
                 },
                 "Tunnel to Shutter Platform Puzzle": {
                     "node_type": "dock",
@@ -13064,48 +13163,17 @@
                     "default_dock_weakness": "Slide Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Next to Door": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8535.300668151447,
-                        "y": 8425.501113585746,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
                     "connections": {
                         "Door to Varia Suit Tutorial North": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s010_cave:default:ev_chainreaction_deviceheat",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Start Point": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel to Shutter Platform Puzzle": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
+                                "comment": "TODO: Find heat values after constant damage numbers are decided on",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
+                                            "name": "Varia",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13113,8 +13181,8 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Varia",
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13429,49 +13497,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 30,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Ledge above lava": {
                             "type": "or",
                             "data": {
@@ -14004,7 +14029,7 @@
                     "pickup_index": 14,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
+                        "Tile Group (BOMB)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -14139,6 +14164,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tunnel to Chain Reaction Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "TunnelSlope",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -14163,6 +14223,52 @@
                         ]
                     },
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Varia Suit Room": {
                             "type": "and",
                             "data": {
@@ -14187,15 +14293,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Flash",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -14229,45 +14326,6 @@
                             }
                         },
                         "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -17000.0,
-                        "y": 9700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14406,6 +14464,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -14445,15 +14512,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Start Point": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
@@ -14482,13 +14540,8 @@
                             }
                         },
                         "Door to Varia Suit Tutorial North": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 }
@@ -17590,13 +17643,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Room Middle": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -17638,50 +17686,6 @@
                             }
                         }
                     }
-                },
-                "Tile Group (POWERBEAM) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12700.0,
-                        "y": 2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_028",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -13600.0,
-                        "y": 2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_029",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
                 },
                 "Tunnel to Teleport to Cataris (Morph Puzzle)": {
                     "node_type": "dock",
@@ -17815,7 +17819,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Shoot Charge Beam"
+                                        "data": "Open Charge Door"
                                     }
                                 ]
                             }
@@ -18164,6 +18168,15 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Event - Waterfall Rotatable (Above)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -18198,25 +18211,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Waterfall Rotatable": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Diffusion Beam"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
                         },
                         "Start Point": {
                             "type": "resource",
@@ -18343,40 +18339,102 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Perform WBJ"
                                     }
                                 ]
                             }
                         },
                         "Right of Rotatable": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Perform WBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "s010_cave:default:PRP_DB_CV_008",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Flash",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -18449,6 +18507,97 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -18493,8 +18642,97 @@
                             }
                         },
                         "Tower Middle": {
-                            "type": "template",
-                            "data": "Use Spin Boost"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Plasma Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s010_cave:default:db_dif_cv_002",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Waterfall Rotatable (Above)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Waterfall Rotatable (Above)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16600.0,
+                        "y": -1800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "s010_cave:default:db_dif_cv_002",
+                    "connections": {
+                        "Right of Rotatable": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -18692,7 +18930,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Map Station": {
+                        "Door to Waterfall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -18731,6 +18969,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Water Reservoir": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Map Station": {
                             "type": "and",
                             "data": {
@@ -19142,12 +19387,29 @@
                             }
                         },
                         "Event - Water Reservoir Blob (Back)": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -19176,8 +19438,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Water Reservoir Blob (Front)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Start Point": {
                             "type": "and",
