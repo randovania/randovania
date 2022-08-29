@@ -323,7 +323,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
         else:
             # FIXME: isn't that condition always true?
-            pass
+            debug.debug_print(f"ERROR! Assigned {action.name} to {pickup_index}, but location wasn't collected!")
 
         spoiler_entry = pickup_placement_spoiler_entry(current_player.index, action, index_owner_state.game,
                                                        pickup_index, hint_location, index_owner_state.index,

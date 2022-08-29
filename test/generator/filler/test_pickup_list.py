@@ -6,6 +6,8 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.filler import pickup_list
+from randovania.generator.item_pool import pickup_creator
+from randovania.resolver.state import State, StateGameData
 
 
 def test_requirement_lists_without_satisfied_resources(echoes_game_description, default_echoes_preset,
@@ -118,3 +120,33 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     # Assert
     mock_req_lists.assert_called_once_with(reach.state, [possible_set], {resource})
     assert result == tuple()
+
+
+def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_database, echoes_game_patches):
+    # Setup
+    db = echoes_game_description.resource_database
+    missile_expansion = pickup_creator.create_ammo_expansion(
+        echoes_item_database.ammo["Missile Expansion"],
+        [5],
+        False,
+        db,
+    )
+    pool = [missile_expansion] * 5
+
+    requirement = RequirementList([
+        ResourceRequirement.create(db.get_item("Missile"), 10, False),
+    ])
+
+    resources = ResourceCollection.with_database(db)
+    resources.set_resource(db.get_item("MissileLauncher"), 1)
+    resources.set_resource(db.get_item("Missile"), 5)
+
+    state = State(resources, (), 99, None, echoes_game_patches, None, StateGameData(
+        db, echoes_game_description.world_list, 100, 99,
+    ))
+
+    # Run
+    result = pickup_list.pickups_to_solve_list(pool, requirement, state)
+
+    # Assert
+    assert result == [missile_expansion]
