@@ -75,7 +75,7 @@ class Ammo:
 
 AMMO_ITEM_CATEGORY = ItemCategory(
     name="expansion",
-    long_name="",
+    long_name="Expansion",
     hint_details=("an ", "expansion"),
     is_major=False
 )

@@ -370,7 +370,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self._connected = True
         return True
 
-    async def disconnect(self):
+    def disconnect(self):
         self._connected = False
 
     def is_connected(self) -> bool:

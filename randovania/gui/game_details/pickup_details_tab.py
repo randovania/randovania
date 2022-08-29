@@ -62,7 +62,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 
         extra_items = item_names.additional_starting_items(configuration,
-                                                           game_description.resource_database,
+                                                           game_description,
                                                            patches.starting_items)
 
         self.spoiler_starting_location_label.setText("Starting Location: {}".format(

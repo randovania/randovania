@@ -5,7 +5,8 @@
         "map_min_x": 28,
         "map_max_x": 46,
         "map_min_y": 24,
-        "map_max_y": 66
+        "map_max_y": 66,
+        "scenario_id": "s050_forest"
     },
     "areas": {
         "Transport to Burenia": {
@@ -1817,7 +1818,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Bomb horizontally to reach the item",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1832,7 +1833,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "HBJ",
+                                                                    "name": "IBJ",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
@@ -12259,6 +12260,58 @@
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 699,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 349,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]

@@ -523,6 +523,10 @@ Extra - asset_id: collision_camera_009
           Any of the following:
               Shoot Charge Beam and Shoot Wide Beam
               Missiles ≥ 30 and Shoot Super Missile
+          Any of the following:
+              # Energy Requirements
+              Combat (Intermediate) or Normal Damage ≥ 699
+              Combat (Beginner) and Normal Damage ≥ 349
 
 > Z-57 Room; Heals? False
   * Layers: default
@@ -544,7 +548,7 @@ Extra - asset_id: collision_camera_009
 
 > Pickup (Z-57); Heals? False
   * Layers: default
-  * Pickup 149; Major Location? False
+  * Pickup 141; Major Location? False
   * Extra - pickup_type: cutscene
   * Extra - callback_function: OnCutscene81Ended
   * Extra - boss_hint_name: Experiment Z-57
@@ -858,7 +862,9 @@ Extra - asset_id: collision_camera_015
   > Lava Room
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 1000
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 1000
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -936,7 +942,9 @@ Extra - asset_id: collision_camera_015
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Lava Room
-      Gravity Suit or Lava Damage ≥ 200
+      Any of the following:
+          Gravity Suit
+          Heat/Cold Runs (Intermediate) and Lava Damage ≥ 200
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Layers: default
@@ -1185,7 +1193,9 @@ Extra - asset_id: collision_camera_015
   > Door to Artaria Transport Access
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 600
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 1000
   > Teleporter to Artaria - Screw Attack Room
       All of the following:
           Gravity Suit
@@ -4096,7 +4106,16 @@ Extra - asset_id: collision_camera_049
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Above Z-57 Fight
-      Flash Shift or Gravity Suit or Lava Damage ≥ 500 or Use Spin Boost
+      All of the following:
+          Any of the following:
+              # Get through the room
+              Varia Suit
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 200
+          Any of the following:
+              # Reach the door
+              Flash Shift or Gravity Suit or Simple IBJ or Use Spin Boost
+              Slide and Slide Jump (Intermediate)
+              Heat/Cold Runs (Beginner) and Lava Damage ≥ 200
 
 ----------------
 Teleport to Dairon
@@ -4222,7 +4241,7 @@ Extra - asset_id: collision_camera_051
   > Dock to Underlava Puzzle Room 1
       Any of the following:
           Gravity Suit and Can Slide
-          Morph Ball and Lava Damage ≥ 600
+          Morph Ball and Heat/Cold Runs (Intermediate) and Lava Damage ≥ 600
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Layers: default
@@ -4274,7 +4293,7 @@ Extra - asset_id: collision_camera_051
   > Tile Group (POWERBEAM) 1
       Any of the following:
           Gravity Suit and Can Slide
-          Morph Ball and Lava Damage ≥ 500
+          Morph Ball and Heat/Cold Runs (Intermediate) and Lava Damage ≥ 600
 
 > Event - Wave Beam Blob (db_reg_mg_021); Heals? False
   * Layers: default
@@ -4499,16 +4518,22 @@ Extra - asset_id: collision_camera_053
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Below Lava
-      Gravity Suit or Lava Damage ≥ 400
+      Any of the following:
+          Gravity Suit
+          Heat/Cold Runs (Intermediate) and Lava Damage ≥ 400
 
 > Below Lava; Heals? False
   * Layers: default
   > Event - Lava Grapple Block (grapplepulloff1x2_000)
       All of the following:
           Grapple Beam
-          Gravity Suit or Lava Damage ≥ 400
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 400
   > Above Lava
-      Gravity Suit or Lava Damage ≥ 500
+      Any of the following:
+          Gravity Suit
+          Heat/Cold Runs (Intermediate) and Lava Damage ≥ 500
 
 > Tunnel to Dropdown Pit; Heals? False
   * Layers: default
@@ -4532,9 +4557,7 @@ Extra - asset_id: collision_camera_053
   > Pickup (Energy Part)
       All of the following:
           Gravity Suit and After Cataris - grapplepulloff1x2_000 and Ballspark
-          Any of the following:
-              Flash Shift or Simple IBJ or Use Spin Boost
-              Speedbooster Conservation (Intermediate) and Walljump (Beginner)
+          Flash Shift or Speedbooster Conservation (Beginner) or Simple IBJ or Use Spin Boost
 
 ----------------
 Underlava Puzzle Room 1
@@ -4771,7 +4794,9 @@ Extra - asset_id: collision_camera_061
   > Safe Ledge
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 400
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Lava Damage ≥ 400
 
 > Tunnel to Above Kraid; Heals? False
   * Layers: default
@@ -4794,7 +4819,9 @@ Extra - asset_id: collision_camera_061
   > Tile Group (BOMB)
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 400
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Lava Damage ≥ 400
   > Tunnel to Teleport to Dairon
       All of the following:
           After Cataris - db_reg_mg_021
@@ -4917,7 +4944,9 @@ Extra - asset_id: collision_camera_063
   > Tunnel to Diffusion Beam Room (bottom)
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 1000
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 1000
 
 > Dock to Above Kraid; Heals? False
   * Layers: default
@@ -4935,7 +4964,9 @@ Extra - asset_id: collision_camera_063
   > Right Ledge
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 1000
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 1000
 
 > Event - Kraid; Heals? False
   * Layers: default
@@ -4950,6 +4981,9 @@ Extra - asset_id: collision_camera_063
           All of the following:
               # Kraid cannon kill. Cross Bombs & Power Bombs do NOT work.
               Bomb and Morph Ball
+              Any of the following:
+                  # Energy Requirements
+                  Combat (Beginner) or Normal Damage ≥ 299
           All of the following:
               Any of the following:
                   # Requirement for getting to Kraid's mouth in phase 2
@@ -4960,6 +4994,9 @@ Extra - asset_id: collision_camera_063
                   All of the following:
                       # Shoot Beam required to farm for Missiles
                       Missiles and Shoot Beam
+              Any of the following:
+                  # Energy Requirements
+                  Combat (Beginner) or Normal Damage ≥ 299
 
 > Pickup (Kraid); Heals? False
   * Layers: default

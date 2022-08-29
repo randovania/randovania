@@ -245,7 +245,7 @@ def decode(game_modifications: list[dict],
            ) -> dict[int, GamePatches]:
     all_games = {index: filtered_database.game_description_for_layout(configuration)
                  for index, configuration in layout_configurations.items()}
-    all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index].resource_database)
+    all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index])
                  for index, configuration in layout_configurations.items()}
     return {
         index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index])
