@@ -150,7 +150,7 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tunnel to Purple EMMI Introduction
-      Gravity Suit or Speed Booster
+      Gravity Suit or Speed Booster or Perform WBJ
   > Center Platform
       Trivial
 
@@ -177,8 +177,6 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_def: None
   > Door to EMMI Zone Exit Middle (Power)
       Trivial
-  > Center Platform
-      Trivial
 
 > Tunnel to Purple EMMI Introduction; Heals? False
   * Layers: default
@@ -189,9 +187,11 @@ Extra - asset_id: collision_camera_003
 > Center Platform; Heals? False
   * Layers: default
   > Dock to Teleport to Burenia (Cyan)
-      Grapple Beam or Gravity Suit or Use Spin Boost
+      Flash Shift or Grapple Beam or Gravity Suit or Spider Magnet or Lay Cross Comb
+  > Door to EMMI Zone Exit Middle (Power)
+      Trivial
   > Door to EMMI Zone Exit Middle (Charge)
-      Grapple Beam or Gravity Suit or Use Spin Boost
+      Flash Shift or Grapple Beam or Gravity Suit or Spider Magnet or Lay Cross Comb
 
 ----------------
 Fan Room Access
@@ -1450,7 +1450,6 @@ Extra - asset_id: collision_camera_018
   > Life Recharge
       All of the following:
           Morph Ball
-          Speed Booster or Simple IBJ or Use Spin Boost
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
@@ -1658,9 +1657,7 @@ Extra - asset_id: collision_camera_019
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
   > Bomb Ledge
-      All of the following:
-          Screw Attack
-          Walljump (Beginner) or Use Spin Boost
+      Screw Attack
 
 > Event - Grapple Block (grapplepulloff1x2_000); Heals? False
   * Layers: default
@@ -1802,9 +1799,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Energy Recharge Station (Gate)
-      All of the following:
-          Morph Ball
-          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+      Morph Ball
   > Dock to Map Station Access (dooremmy_005)
       Morph Ball and After Ferenia - Central Unit
 
@@ -1818,7 +1813,7 @@ Extra - asset_id: collision_camera_021
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Map Station Access (dooremmy_005)
-      Grapple Beam or Gravity Suit
+      Grapple Beam or Gravity Suit or Spider Magnet or Perform WBJ
 
 > Dock to Map Station Access (dooremmy_005); Heals? False
   * Layers: default
@@ -1865,7 +1860,7 @@ Extra - asset_id: collision_camera_022
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Center Platform
-      Simple IBJ or Use Spin Boost
+      Trivial
 
 > Door to Storm Missile Tutorial; Heals? False
   * Layers: default
@@ -1891,7 +1886,7 @@ Extra - asset_id: collision_camera_022
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Center Platform
-      Simple IBJ or Use Spin Boost
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Layers: default
@@ -2018,6 +2013,8 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Save Station Southeast
       Trivial
+  > Tile Group (MISSILE)
+      Trivial
 
 > Door to Storm Missile Tutorial; Heals? False
   * Layers: default
@@ -2071,6 +2068,8 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
+  > Tile Group (WEIGHT)
+      Can Slide
 
 > Tunnel to Escue Eyedoor Room; Heals? False
   * Layers: default
@@ -2206,7 +2205,7 @@ Extra - asset_id: collision_camera_027
       All of the following:
           Any of the following:
               # Requirements for dodging attacks. Not needed if at least beginner combat.
-              Flash Shift or Screw Attack or Combat (Beginner) or Walljump (Beginner) or Use Spin Boost
+              Flash Shift or Screw Attack or Combat (Beginner) or Use Spin Boost
           Any of the following:
               # Requirements for killing Escue
               Screw Attack
@@ -2294,7 +2293,9 @@ Extra - asset_id: collision_camera_028
   > Door to Cold Room (Energy Recharge Station)
       Trivial
   > Event - Wave Blob (db_reg_b2_005)
-      Wave Beam
+      Any of the following:
+          Wave Beam
+          Pseudo-Wave Beam (Beginner) and Shoot Beam
   > Elevator to Hanubia - Transport to Ferenia
       After Ferenia - db_reg_b2_005
 
@@ -2318,7 +2319,9 @@ Extra - asset_id: collision_camera_028
   > Door to Save Station North
       After Ferenia - db_reg_b2_005
   > Event - Wave Blob (db_reg_b2_005)
-      Wave Beam
+      Any of the following:
+          Wave Beam
+          Pseudo-Wave Beam (Beginner) and Shoot Beam
   > Tile Group (WEIGHT)
       Trivial
 
@@ -2572,7 +2575,7 @@ Extra - asset_id: collision_camera_031
   > Door to EMMI Zone Exit East Access
       Can Slide
   > Tunnel to Purple EMMI Arena
-      Simple IBJ or Use Spin Boost
+      Flash Shift or Slide Jump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Door to EMMI Zone Exit East Access; Heals? False
   * Layers: default
@@ -2666,7 +2669,7 @@ Extra - asset_id: collision_camera_032
           Flash Shift or Spider Magnet or Space Jump
           All of the following:
               Gravity Suit
-              Simple IBJ or Use Spin Boost
+              Flash Shift or Simple IBJ or Use Spin Boost
 
 > Dock to Path to Escue; Heals? False
   * Layers: default
@@ -2805,7 +2808,7 @@ Extra - asset_id: collision_camera_034
   > Tile Group (BOMB) 2
       Trivial
 
-> Tunnel to Central Unit Access; Heals? False
+> Tunnel to Central Unit Access (Top); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Central Unit Access/Tunnel to Purple EMMI Arena (Top)
   * Extra - actor_name: tunnelframe_000
@@ -2847,7 +2850,9 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
   > Door to Wave Beam Tutorial
-      Gravity Suit or After Ferenia - Wave Emmi Lower Water
+      Any of the following:
+          Gravity Suit or After Ferenia - Wave Emmi Lower Water
+          Lay Cross Comb and Perform WBJ
 
 > Tile Group (POWERBOMB); Heals? False
   * Layers: default
@@ -2856,6 +2861,8 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
+  > Tunnel to Central Unit Access (Middle)
+      Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Layers: default
@@ -2942,23 +2949,17 @@ Extra - asset_id: collision_camera_034
       All of the following:
           After Ferenia - db_reg_b2_007 and After Ferenia - db_reg_b2_008 and After Ferenia - db_reg_b2_009
           Gravity Suit or After Ferenia - Wave Emmi Lower Water
-          Space Jump or Simple IBJ
-  > Tunnel to Central Unit Access
-      All of the following:
-          Before Ferenia - Central Unit
-          Gravity Suit or After Ferenia - Wave Emmi Lower Water
-          Space Jump or Infinite Bomb Jump (Beginner)
+  > Tunnel to Central Unit Access (Top)
+      Any of the following:
+          All of the following:
+              Gravity Suit and Before Ferenia - Wave Emmi Lower Water
+              Space Jump or Walljump (Intermediate) or Simple IBJ
+          Speed Booster and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
   > Lower-Right Alcove
       After Ferenia - Central Unit and Can Slide
 
 > Lower-Left Alcove; Heals? False
   * Layers: default
-  > Start Point
-      All of the following:
-          Morph Ball and After Ferenia - Central Unit
-          Any of the following:
-              Simple IBJ or Use Spin Boost
-              Slide and Slide Jump (Intermediate) and Walljump (Intermediate)
   > Tile Group (POWERBEAM) 1
       Morph Ball
   > Start Wave EMMI Ledge
@@ -2997,6 +2998,14 @@ Extra - asset_id: collision_camera_034
   > Tile Group (POWERBEAM) 2
       Morph Ball
 
+> Tunnel to Central Unit Access (Middle); Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Central Unit Access/Tunnel to Purple EMMI Arena (Middle)
+  > Tile Group (POWERBOMB)
+      Morph Ball
+  > Upper-right Alcove
+      Trivial
+
 ----------------
 Central Unit
 (Valid Starting Location)
@@ -3032,7 +3041,7 @@ Extra - polygon: [[11550.0, 5900.0], [9450.0, 5900.0], [9450.0, 2600.0], [11550.
 Extra - asset_id: collision_camera_038_A
 > Tunnel to Purple EMMI Arena (Top); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Purple EMMI Arena/Tunnel to Central Unit Access
+  * Morph Ball Tunnel to Purple EMMI Arena/Tunnel to Central Unit Access (Top)
   * Extra - actor_name: tunnelframe_000
   * Extra - actor_def: actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad
   * Extra - actor_layer: Emmy
@@ -3058,6 +3067,8 @@ Extra - asset_id: collision_camera_038_A
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Tunnel to Purple EMMI Arena (Bottom)
       After Ferenia - Wave Emmi Lower Water and Lay Bomb
+  > Tunnel to Purple EMMI Arena (Middle)
+      After Ferenia - Wave Emmi Lower Water
 
 > Dock to Central Unit; Heals? False
   * Layers: default
@@ -3074,6 +3085,12 @@ Extra - asset_id: collision_camera_038_A
   * Event Ferenia - Wave Emmi Lower Water
   > Start Point 2
       Trivial
+
+> Tunnel to Purple EMMI Arena (Middle); Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Purple EMMI Arena/Tunnel to Central Unit Access (Middle)
+  > Start Point 2
+      After Ferenia - Wave Emmi Lower Water
 
 ----------------
 Purple EMMI Introduction
