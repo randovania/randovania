@@ -9,9 +9,9 @@ def main():
     multiprocessing.freeze_support()
 
     import randovania
-    randovania.setup_logging('INFO', None)
+    randovania.setup_logging('INFO', None, quiet=True)
 
-    logging.info("Starting Randovania...")
+    logging.debug("Starting Randovania...")
 
     from randovania import cli
     cli.run_cli(sys.argv)
