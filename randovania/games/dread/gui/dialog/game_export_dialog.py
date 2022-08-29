@@ -46,7 +46,14 @@ def decode_path(s: str | None) -> Path | None:
 
 
 def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
-    from ctypes import windll
+    try:
+        from ctypes import windll
+    except ImportError:
+        if platform.system() == "Windows":
+            raise
+        else:
+            yield from []
+            return
 
     drive_types = [
         'Not identified', 'Not Mounted', 'Removable', 'HDD', 'Network',

@@ -498,6 +498,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self._connections_visualizer.deleteLater()
             self._connections_visualizer = None
 
+        self.area_view_canvas.set_connected_node(current_connection_node)
+
         if current_connection_node is None or current_node is None:
             assert len(self.current_area.nodes) <= 1 or not self.edit_mode
             return

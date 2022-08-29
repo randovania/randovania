@@ -31,29 +31,30 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
-def test_create_starting_popup_empty(default_echoes_configuration, echoes_resource_database):
-    starting_items = ResourceCollection.with_database(echoes_resource_database)
+def test_create_starting_popup_empty(default_echoes_configuration, echoes_game_description):
+    starting_items = ResourceCollection.with_database(echoes_game_description.resource_database)
 
     # Run
     result = patch_data_factory._create_starting_popup(default_echoes_configuration,
-                                                       echoes_resource_database,
+                                                       echoes_game_description,
                                                        starting_items)
 
     # Assert
     assert result == []
 
 
-def test_create_starting_popup_items(default_echoes_configuration, echoes_resource_database):
-    starting_items = ResourceCollection.from_dict(echoes_resource_database, {
-        echoes_resource_database.get_item_by_name("Missile"): 15,
-        echoes_resource_database.energy_tank: 3,
-        echoes_resource_database.get_item_by_name("Dark Beam"): 1,
-        echoes_resource_database.get_item_by_name("Screw Attack"): 1,
+def test_create_starting_popup_items(default_echoes_configuration, echoes_game_description):
+    db = echoes_game_description.resource_database
+    starting_items = ResourceCollection.from_dict(db, {
+        db.get_item_by_name("Missile"): 15,
+        db.energy_tank: 3,
+        db.get_item_by_name("Dark Beam"): 1,
+        db.get_item_by_name("Screw Attack"): 1,
     })
 
     # Run
     result = patch_data_factory._create_starting_popup(default_echoes_configuration,
-                                                       echoes_resource_database,
+                                                       echoes_game_description,
                                                        starting_items)
 
     # Assert
@@ -375,7 +376,7 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
     # Assert
     assert result == {
         "pickup_index": 0,
-        "scan": "Seeker Launcher",
+        "scan": "Seeker Launcher.",
         "model": {"game": "prime2", "name": "SeekerLauncher"},
         "hud_text": ["Seeker Launcher acquired, but the Missile Launcher is required to use it.",
                      "Seeker Launcher acquired!"],
@@ -424,7 +425,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
     # Assert
     assert result == {
         "pickup_index": 0,
-        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
+        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": hud_text,
         'resources': [{'amount': 2, 'index': 72},
@@ -455,7 +456,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
     # Assert
     assert result == {
         "pickup_index": 0,
-        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
+        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": ["Power Bomb Expansion acquired!"],
         'resources': [{'amount': 2, 'index': 43},
@@ -466,12 +467,12 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
 
 
 @pytest.mark.parametrize("disable_hud_popup", [False, True])
-def test_create_pickup_all_from_pool(echoes_resource_database,
+def test_create_pickup_all_from_pool(echoes_game_description,
                                      default_echoes_configuration,
                                      disable_hud_popup: bool
                                      ):
     item_pool = pool_creator.calculate_pool_results(default_echoes_configuration,
-                                                    echoes_resource_database)
+                                                    echoes_game_description)
     index = PickupIndex(0)
     if disable_hud_popup:
         memo_data = patch_data_factory._simplified_memo_data()
@@ -481,7 +482,7 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
 
     for item in item_pool.pickups:
         data = creator.export(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
-        for hud_text in data.hud_text:
+        for hud_text in data.collection_text:
             assert not hud_text.startswith("Locked")
 
 
@@ -491,8 +492,9 @@ def test_run_validated_hud_text():
     rng.randint.return_value = 0
     details = pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(0),
-        scan_text="scan",
-        hud_text=["Energy Transfer Module acquired!"],
+        name="Energy Transfer Module",
+        description="scan",
+        collection_text=["Energy Transfer Module acquired!"],
         conditional_resources=[
             ConditionalResources(None, None, ()),
         ],

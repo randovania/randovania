@@ -46,6 +46,7 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
             hints_text.update_hint_locations(game, self.hint_locations_tree_widget)
 
         self.tab_generate_game.setup_ui(game, window_manager, background_task, options)
+        self._update_quick_generate_text()
 
     def setup_ui(self):
         raise NotImplementedError()
@@ -53,12 +54,18 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
     @classmethod
     def game(cls) -> RandovaniaGame:
         raise NotImplementedError()
+    
+    def _update_quick_generate_text(self):
+        preset_name = self.tab_generate_game.preset.name
+        text = f"Quick Generate ({preset_name})"
+        self.quick_generate_button.setText(text)
 
     def _return_to_list(self):
         self._window_manager.set_games_selector_visible(True)
 
     def on_options_changed(self, options: Options):
         self.tab_generate_game.on_options_changed(options)
+        self._update_quick_generate_text()
 
     def on_quick_generate(self):
         self.tab_generate_game.generate_new_layout(spoiler=True)

@@ -14,8 +14,15 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.interface_common.options import Options
 
 
+@pytest.fixture()
+def patch_data():
+    return {
+        "randEnemyAttributes": None,
+    }
+
+
 @pytest.mark.parametrize("has_output_dir", [False, True])
-def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_dir):
+def test_on_output_file_button_exists(skip_qtbot, patch_data, tmp_path, mocker, has_output_dir):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -34,7 +41,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         output_format="iso",
     )
 
-    window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
+    window = PrimeGameExportDialog(options, patch_data, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -47,7 +54,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     assert tmp_path.joinpath("foo").is_dir()
 
 
-def test_on_output_file_button_cancel(skip_qtbot, tmp_path, mocker):
+def test_on_output_file_button_cancel(skip_qtbot, patch_data, tmp_path, mocker):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -57,7 +64,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmp_path, mocker):
         output_directory=None,
         output_format="iso",
     )
-    window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
+    window = PrimeGameExportDialog(options, patch_data, "MyHash", True, [])
     mock_prompt.return_value = None
     assert window.output_file_edit.text() == ""
 
@@ -70,12 +77,12 @@ def test_on_output_file_button_cancel(skip_qtbot, tmp_path, mocker):
 
 
 @pytest.mark.parametrize("is_prime_multi", [False, True])
-def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
+def test_save_options(skip_qtbot, patch_data, tmp_path, is_prime_multi):
     options = Options(tmp_path)
     games = [RandovaniaGame.METROID_PRIME]
     if is_prime_multi:
         games.append(RandovaniaGame.METROID_PRIME_ECHOES)
-    window = PrimeGameExportDialog(options, {}, "MyHash", True, games)
+    window = PrimeGameExportDialog(options, patch_data, "MyHash", True, games)
     window.output_file_edit.setText("somewhere/game.iso")
 
     if is_prime_multi:
@@ -94,7 +101,7 @@ def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
 
 
 @pytest.mark.parametrize("test_echoes", [False, True])
-def test_on_input_file_button(skip_qtbot, tmp_path, mocker, test_echoes):
+def test_on_input_file_button(skip_qtbot, patch_data, tmp_path, mocker, test_echoes):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file", autospec=True,
@@ -123,7 +130,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, test_echoes):
         mocker.patch("randovania.games.prime2.gui.dialog.game_export_dialog.has_internal_copy", return_value=False)
         games.append(RandovaniaGame.METROID_PRIME_ECHOES)
 
-    window = PrimeGameExportDialog(options, {}, "MyHash", True, games)
+    window = PrimeGameExportDialog(options, patch_data, "MyHash", True, games)
 
     if test_echoes:
         button = window.echoes_file_button
@@ -162,7 +169,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, test_echoes):
 
 @pytest.mark.parametrize("is_echoes_multi", [False, True])
 @pytest.mark.parametrize("use_external_models", [False, True])
-def test_get_game_export_params(skip_qtbot, tmp_path, is_echoes_multi, use_external_models):
+def test_get_game_export_params(skip_qtbot, patch_data, tmp_path, is_echoes_multi, use_external_models):
     # Setup
     games = [RandovaniaGame.METROID_PRIME]
     echoes_path = None
@@ -192,7 +199,7 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_echoes_multi, use_exter
         ),
     ]
 
-    window = PrimeGameExportDialog(options, {}, "MyHash", True, games)
+    window = PrimeGameExportDialog(options, patch_data, "MyHash", True, games)
 
     # Run
     result = window.get_game_export_params()

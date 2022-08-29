@@ -60,7 +60,7 @@ class PresetTab(QtWidgets.QMainWindow):
 
         return persist
 
-    def _persist_float(self, attribute_name: str):
+    def _persist_argument(self, attribute_name: str):
         def persist(value: float):
             with self._editor as options:
                 options.set_configuration_field(attribute_name, value)

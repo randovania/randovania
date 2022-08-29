@@ -29,7 +29,10 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
             resources.append(pickup.progression[0])
 
         lock = pickup.resource_lock
-        if pickup.respects_lock and not pickup.unlocks_resource and lock is not None:
+        # A lock that goes to the same item is ignored for the patcher, for simplification
+        if (pickup.respects_lock and not pickup.unlocks_resource
+                and lock is not None and lock.temporary_item != lock.item_to_lock):
+
             locked_resources = lock.convert_gain(resources)
             return [
                 ConditionalResources(
@@ -53,27 +56,27 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
             ]
 
 
-def _pickup_scan(pickup: PickupEntry) -> str:
+def _pickup_description(pickup: PickupEntry) -> str:
     if not pickup.item_category.is_expansion:
         if len(pickup.progression) > 1:
-            return "{}. Provides the following in order: {}".format(
-                pickup.name, ", ".join(conditional.name for conditional in pickup.conditional_resources))
+            return "Provides the following in order: {}.".format(
+                ", ".join(conditional.name for conditional in pickup.conditional_resources)
+            )
         else:
-            return pickup.name
+            return ""
 
     ammo_desc = [
         item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), quantity, True)
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
-        return "{}. Provides {}{}{}".format(
-            pickup.name,
+        return "Provides {}{}{}.".format(
             ", ".join(ammo_desc[:-1]),
             " and " if len(ammo_desc) > 1 else "",
             ammo_desc[-1],
         )
     else:
-        return pickup.name
+        return ""
 
 
 def _get_single_hud_text(pickup_name: str,
@@ -95,11 +98,11 @@ def _get_all_hud_text(conditionals: list[ConditionalResources],
     ]
 
 
-def _calculate_hud_text(pickup: PickupEntry,
-                        visual_pickup: PickupEntry,
-                        model_style: PickupModelStyle,
-                        memo_data: dict[str, str],
-                        ) -> list[str]:
+def _calculate_collection_text(pickup: PickupEntry,
+                               visual_pickup: PickupEntry,
+                               model_style: PickupModelStyle,
+                               memo_data: dict[str, str],
+                               ) -> list[str]:
     """
     Calculates what the hud_text for a pickup should be
     :param pickup:
@@ -124,8 +127,9 @@ def _calculate_hud_text(pickup: PickupEntry,
 @dataclasses.dataclass(frozen=True)
 class ExportedPickupDetails:
     index: PickupIndex
-    scan_text: str
-    hud_text: list[str]
+    name: str
+    description: str
+    collection_text: list[str]
     conditional_resources: list[ConditionalResources]
     conversion: list[ResourceConversion]
     model: PickupModel
@@ -139,7 +143,8 @@ class PickupExporter:
                        pickup_target: PickupTarget,
                        visual_pickup: PickupEntry,
                        model_style: PickupModelStyle,
-                       scan_text: str,
+                       name: str,
+                       description: str,
                        model: PickupModel) -> ExportedPickupDetails:
         raise NotImplementedError()
 
@@ -152,12 +157,14 @@ class PickupExporter:
         model_pickup = pickup_target.pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
 
         if model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}:
-            scan_text = _pickup_scan(pickup_target.pickup)
+            name = pickup_target.pickup.name
+            description = _pickup_description(pickup_target.pickup)
         else:
-            scan_text = visual_pickup.name
+            name = visual_pickup.name
+            description = ""
 
         return self.create_details(original_index, pickup_target, visual_pickup,
-                                   model_style, scan_text, model_pickup.model)
+                                   model_style, name, description, model_pickup.model)
 
 
 class PickupExporterSolo(PickupExporter):
@@ -169,13 +176,15 @@ class PickupExporterSolo(PickupExporter):
                        pickup_target: PickupTarget,
                        visual_pickup: PickupEntry,
                        model_style: PickupModelStyle,
-                       scan_text: str,
+                       name: str,
+                       description: str,
                        model: PickupModel) -> ExportedPickupDetails:
         pickup = pickup_target.pickup
         return ExportedPickupDetails(
             index=original_index,
-            scan_text=scan_text,
-            hud_text=_calculate_hud_text(pickup, visual_pickup, model_style, self.memo_data),
+            name=name,
+            description=description,
+            collection_text=_calculate_collection_text(pickup, visual_pickup, model_style, self.memo_data),
             conditional_resources=_conditional_resources_for_pickup(pickup),
             conversion=list(pickup.convert_resources),
             model=model,
@@ -196,24 +205,29 @@ class PickupExporterMulti(PickupExporter):
                        pickup_target: PickupTarget,
                        visual_pickup: PickupEntry,
                        model_style: PickupModelStyle,
-                       scan_text: str,
+                       name: str,
+                       description: str,
                        model: PickupModel) -> ExportedPickupDetails:
         if pickup_target.player == self.players_config.player_index:
             details = self.solo_creator.create_details(original_index, pickup_target, visual_pickup,
-                                                       model_style, scan_text, model)
-            return dataclasses.replace(details, scan_text=f"Your {details.scan_text}")
+                                                       model_style, name, description, model)
+            return dataclasses.replace(details, name=f"Your {details.name}")
         else:
             other_name = self.players_config.player_names[pickup_target.player]
+            if self.multiworld_item is not None:
+                resources = ((self.multiworld_item, original_index.index + 1),)
+            else:
+                resources = tuple()
+
             return ExportedPickupDetails(
                 index=original_index,
-                scan_text=f"{other_name}'s {scan_text}",
-                hud_text=[f"Sent {pickup_target.pickup.name} to {other_name}!"],
+                name=f"{other_name}'s {name}",
+                description=description,
+                collection_text=[f"Sent {pickup_target.pickup.name} to {other_name}!"],
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,
-                    resources=(
-                        (self.multiworld_item, original_index.index + 1),
-                    ),
+                    resources=resources,
                 )],
                 conversion=[],
                 model=model,

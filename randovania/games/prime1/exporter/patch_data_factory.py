@@ -106,8 +106,8 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
                                      rng: Random) -> dict:
     model = detail.model.as_json
 
-    scan_text = detail.scan_text
-    hud_text = detail.hud_text[0]
+    name = detail.name
+    collection_text = detail.collection_text[0]
     pickup_type = "Nothing"
     count = 0
 
@@ -119,17 +119,17 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         break
 
     if (model["name"] == "Missile" and not detail.other_player
-            and "Missile Expansion" in hud_text
+            and "Missile Expansion" in collection_text
             and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
         model["name"] = "Shiny Missile"
-        hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
-        scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        name = name.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
         "model": model,
-        "scanText": scan_text,
-        "hudmemoText": hud_text,
+        "scanText": f"{name}. {detail.description}".strip(),
+        "hudmemoText": collection_text,
         "currIncrease": count,
         "maxIncrease": count,
         "respawn": False,
@@ -706,7 +706,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
         starting_memo = None
-        extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
+        extra_starting = item_names.additional_starting_items(self.configuration, db,
                                                               self.patches.starting_items)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
