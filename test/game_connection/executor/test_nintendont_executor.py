@@ -1,5 +1,5 @@
 import asyncio
-from unittest.mock import MagicMock, AsyncMock, call
+from unittest.mock import MagicMock, AsyncMock, call, patch
 
 import pytest
 
@@ -153,13 +153,16 @@ def test_disconnect_connected(executor: NintendontExecutor):
 
 
 @pytest.mark.parametrize("use_timeout", [False, True])
-async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use_timeout):
+async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use_timeout, mocker):
     # Setup
+    mock_disconnect = mocker.patch(
+        "randovania.game_connection.executor.nintendont_executor.NintendontExecutor.disconnect"
+    )
+
     socket = AsyncMock()
     socket.writer.write = MagicMock()
     socket.writer.drain.side_effect = asyncio.TimeoutError() if use_timeout else OSError("test-exp")
     executor._socket = socket
-    executor.disconnect = AsyncMock()
     reqs = [RequestBatch()]
     if use_timeout:
         msg = "Timeout when reading response"
@@ -172,4 +175,4 @@ async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use
 
     # Assert
     assert executor._socket_error is x.value
-    executor.disconnect.assert_awaited_once_with()
+    mock_disconnect.assert_called_once_with()
