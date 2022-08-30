@@ -91,22 +91,22 @@ def test_click_on_preset_tree(tab, skip_qtbot, tmp_path):
     assert tab._current_preset_data.get_preset() == preset.get_preset()
 
 
-def test_generate_new_seed(tab, mocker):
+async def test_generate_new_seed(tab, mocker):
     # Setup
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=12341234)
 
     tab.create_preset_tree = MagicMock()
     tab.create_preset_tree.current_preset_data = tab._window_manager.preset_manager.default_preset
-    tab.generate_layout_from_permalink = MagicMock()
+    tab.generate_layout_from_permalink = AsyncMock()
 
     spoiler = MagicMock(spec=bool)
     retries = MagicMock(spec=int)
 
     # Run
-    tab.generate_new_layout(spoiler, retries)
+    await tab.generate_new_layout(spoiler, retries)
 
     # Assert
-    tab.generate_layout_from_permalink.assert_called_once_with(
+    tab.generate_layout_from_permalink.assert_awaited_once_with(
         permalink=Permalink.from_parameters(
             GeneratorParameters(
                 seed_number=12341234,
