@@ -18,34 +18,29 @@
     <string>Introduction</string>
    </attribute>
    <layout class="QVBoxLayout" name="intro_layout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
     <item>
-     <widget class="QWidget" name="horizontalWidget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="game_cover_label">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="intro_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Navigate ZDR, collecting your lost items to cure your &amp;quot;physical amnesia&amp;quot;, and collecting Metroid DNA to complete your transformation into a Metroid before fighting Raven Beak in Itorash.&lt;/p&gt;&lt;p&gt;The default settings start with the Pulse Radar - use this to identify hidden blocks if you're unsure where they might be.&lt;/p&gt;&lt;p&gt;Raven Beak won't fight you unless you've become sufficiently Metroid - to this end, you'll need to defeat certain major bosses and EMMIs to find Metroid DNA. The default settings require 3 Metroid DNA before Raven Beak will fight you.&lt;/p&gt;&lt;p&gt;ADAM stations in Itorash as well as the uppermost part of Dairon will provide hints as to the locations of the Metroid DNA. Other ADAM stations provide generic hints for any items.&lt;/p&gt;&lt;p&gt;To get started, use the Quick Generate button below to generate a seed using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QHBoxLayout" name="intro_cover_layout">
+      <item>
+       <widget class="QLabel" name="game_cover_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="intro_label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Navigate ZDR, collecting your lost items to cure your &amp;quot;physical amnesia&amp;quot;, and collecting Metroid DNA to complete your transformation into a Metroid before fighting Raven Beak in Itorash.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The default settings start with the Pulse Radar - use this to identify hidden blocks if you're unsure where they might be.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Raven Beak won't fight you unless you've become sufficiently Metroid - to this end, you'll need to defeat certain major bosses and EMMIs to find Metroid DNA. The default settings require 3 Metroid DNA before Raven Beak will fight you.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;ADAM stations in Itorash as well as the uppermost part of Dairon will provide hints as to the locations of the Metroid DNA. Other ADAM stations provide generic hints for any items.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button below to generate a seed using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QPushButton" name="quick_generate_button">
@@ -102,7 +97,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>364</height>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -153,7 +148,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>364</height>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="differences_scroll_layout_3">
@@ -207,7 +202,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>364</height>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -264,7 +259,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>364</height>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -348,7 +343,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>364</height>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_scroll_layout">
