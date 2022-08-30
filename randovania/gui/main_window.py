@@ -22,7 +22,7 @@ from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
-from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
+from randovania.layout.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
 from randovania.interface_common.options import Options
@@ -234,7 +234,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 return
 
     def dropEvent(self, event: QtGui.QDropEvent):
-        from randovania.layout.versioned_preset import VersionedPreset
 
         for url in event.mimeData().urls():
             path = Path(url.toLocalFile())

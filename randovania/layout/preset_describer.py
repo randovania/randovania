@@ -85,7 +85,7 @@ class GamePresetDescriber:
                 major_items.maximum_random_starting_items,
             )
 
-        template_strings["Logic Settings"].append(configuration.trick_level.pretty_description)
+        template_strings["Logic Settings"].append(configuration.trick_level.pretty_description(game_description))
         template_strings["Logic Settings"].append(
             f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
 
