@@ -3,7 +3,6 @@ import datetime
 import logging
 import random
 import uuid
-from functools import partial
 from pathlib import Path
 from typing import Callable
 
@@ -26,7 +25,6 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.exceptions import GenerationFailure
 
 
 def persist_layout(history_dir: Path, description: LayoutDescription):
@@ -138,9 +136,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self._preset_menu = PresetMenu(self)
 
         # Signals
-        self.create_generate_button.clicked.connect(partial(self.generate_new_layout, True))
-        self.create_generate_no_retry_button.clicked.connect(partial(self.generate_new_layout, True, retries=0))
-        self.create_generate_race_button.clicked.connect(partial(self.generate_new_layout, False))
+        self.create_generate_button.clicked.connect(self.generate_new_layout_regular)
+        self.create_generate_no_retry_button.clicked.connect(self.generate_new_layout_no_retry)
+        self.create_generate_race_button.clicked.connect(self.generate_new_layout_race)
         self.create_preset_tree.itemSelectionChanged.connect(self._on_select_preset)
         self.create_preset_tree.customContextMenuRequested.connect(self._on_tree_context_menu)
 
@@ -282,14 +280,26 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         if preset is None:
             preset = self._window_manager.preset_manager.default_preset_for_game(self.game)
         return preset
-    
+
     # Generate seed
 
-    def generate_new_layout(self, spoiler: bool, retries: int | None = None):
+    @asyncSlot()
+    async def generate_new_layout_regular(self):
+        return await self.generate_new_layout(spoiler=True)
+
+    @asyncSlot()
+    async def generate_new_layout_no_retry(self):
+        return await self.generate_new_layout(spoiler=True, retries=0)
+
+    @asyncSlot()
+    async def generate_new_layout_race(self):
+        return await self.generate_new_layout(spoiler=False)
+
+    async def generate_new_layout(self, spoiler: bool, retries: int | None = None):
         preset = self.preset
         num_players = self.num_players_spin_box.value()
 
-        self.generate_layout_from_permalink(
+        return await self.generate_layout_from_permalink(
             permalink=Permalink.from_parameters(GeneratorParameters(
                 seed_number=random.randint(0, 2 ** 31),
                 spoiler=spoiler,
@@ -298,24 +308,26 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             retries=retries,
         )
 
-    def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None):
+    async def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None):
         def work(progress_update: ProgressUpdateCallable):
-            try:
-                layout = simplified_patcher.generate_layout(progress_update=progress_update,
-                                                            parameters=permalink.parameters,
-                                                            options=self._options,
-                                                            retries=retries)
-                progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
-                persist_layout(self._options.game_history_path, layout)
-                self._window_manager.open_game_details(layout)
-
-            except GenerationFailure as generate_exception:
-                self.failure_handler.handle_failure(generate_exception)
-                progress_update(f"Generation Failure: {generate_exception}", -1)
+            return simplified_patcher.generate_layout(progress_update=progress_update,
+                                                      parameters=permalink.parameters,
+                                                      options=self._options,
+                                                      retries=retries)
 
         if self._window_manager.is_preview_mode:
             logging.info(f"Permalink: {permalink.as_base64_str}")
-        self._background_task.run_in_background_thread(work, "Creating a seed...")
+
+        try:
+            layout = await self._background_task.run_in_background_async(work, "Creating a game...")
+            self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 1)
+            persist_layout(self._options.game_history_path, layout)
+            self._window_manager.open_game_details(layout)
+
+        except Exception as e:
+            await self.failure_handler.handle_exception(
+                e, self._background_task.progress_update_signal.emit
+            )
 
     def on_options_changed(self, options: Options):
         if not self._has_set_from_last_selected:
