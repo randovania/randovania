@@ -11,9 +11,10 @@ from randovania.lib import json_lib
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config-path", type=Path, required=True)
-    parser.add_argument("--report-title", type=str, required=True)
-    parser.add_argument("--rdvgames-archive", type=Path, required=True)
-    parser.add_argument("--report-path", type=Path, required=True)
+    parser.add_argument("--title", type=str, required=True)
+    parser.add_argument("--field", type=str, action='append',
+                        help="Add a field to the embed. Title and value split by a :")
+    parser.add_argument("--attach", type=Path, action='append')
     parser.add_argument("--channel", type=int, required=True)
     return parser
 
@@ -25,17 +26,19 @@ async def main():
     configuration = json_lib.read_path(config_path)
     bot_config = configuration["discord_bot"]
 
-    report = json_lib.read_path(args.report_path)
-
     embed = discord.Embed(
-        title=args.report_title,
+        title=args.title,
         description=f"Generated with Randovania {randovania.VERSION}",
     )
-    embed.add_field(name="Success count", value=str(report["seed_count"]))
+    for data in args.field:
+        assert isinstance(data, str)
+        name, value = data.split(":", 1)
+        print(f"Adding field {name} with {value}")
+        embed.add_field(name=name, value=value)
 
     files = [
-        discord.File(fp=args.rdvgames_archive),
-        discord.File(fp=args.report_path, filename="report.json"),
+        discord.File(fp=f)
+        for f in args.attach
     ]
 
     print("Preparing to connect with discord")
