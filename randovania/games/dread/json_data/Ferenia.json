@@ -231,31 +231,14 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Space",
+                                            "name": "Spin",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -357,6 +340,15 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
                                                         "name": "Grapple",
                                                         "amount": 1,
                                                         "negate": false
@@ -364,11 +356,37 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "data": "Simple IBJ"
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Simple IBJ"
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -562,49 +580,20 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Grapple",
+                                                        "name": "Flash",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Ceiling Tunnel": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -620,15 +609,40 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Magnet",
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
                                                         ]
                                                     }
-                                                },
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Ceiling Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -639,25 +653,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
                                                 }
                                             ]
                                         }
@@ -954,7 +955,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Gravity",
+                                            "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -963,7 +964,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Grapple",
+                                            "name": "Gravity",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -984,7 +985,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Gravity",
+                                            "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -993,7 +994,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Grapple",
+                                            "name": "Gravity",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1118,22 +1119,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
                                     },
                                     {
                                         "type": "resource",
@@ -1145,12 +1132,33 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -1159,8 +1167,39 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1317,7 +1356,7 @@
                         "y": -6888.88,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Add Chozo Soldier requirements\n\n",
                     "layers": [
                         "default"
                     ],
@@ -1449,36 +1488,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Cold Room (Small)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1586,74 +1601,6 @@
                                     {
                                         "type": "template",
                                         "data": "Ballspark"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "These methods are temporary until door rando is supported",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Gravity",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Suitless",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "Cold",
-                                                                                "amount": 30,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -1691,12 +1638,41 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Cold Room (Small)": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2180,19 +2156,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Tile Group (POWERBEAM) 3": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -3760,29 +3727,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Space Jump Room Access (Bottom)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Start Point 2": {
@@ -4173,12 +4121,50 @@
                             }
                         },
                         "Event - Blob from above (db_reg_b2_001)": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Diffusion Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4704,31 +4690,104 @@
                             }
                         },
                         "Underwater Ledge Left": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Simple IBJ"
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4785,6 +4844,15 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Simple IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -5863,19 +5931,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Tile Group (POWERBEAM) 2": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6084,19 +6143,10 @@
                             }
                         },
                         "Door to Space Jump Room (Top)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Tile Group (POWERBEAM) 1": {
@@ -6788,22 +6838,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -6852,31 +6886,6 @@
                                             "name": "Morph",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     },
                                     {
@@ -7200,42 +7209,17 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Temporary until door rando",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Charge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Power Bomb"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Open Charge Door"
                                     }
                                 ]
                             }
@@ -7375,7 +7359,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Temporary until door rando",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7384,6 +7368,15 @@
                                                         "name": "Grapple",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -15262,12 +15255,33 @@
                             }
                         },
                         "Central Platform": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Flash",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Cross Comb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -15313,15 +15327,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "FereniaCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -15361,6 +15366,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "FereniaCU",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -15591,12 +15605,54 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -15607,20 +15663,12 @@
                             "data": "Can Slide"
                         },
                         "Tunnel to EMMI Zone Exit West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -15636,10 +15684,35 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
+                                                        "type": "items",
+                                                        "name": "Spin",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Cross Comb"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
