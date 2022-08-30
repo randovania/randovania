@@ -1,4 +1,5 @@
 from PySide6 import QtWidgets, QtCore, QtGui
+from qasync import asyncSlot
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import faq_lib, hints_text
@@ -67,8 +68,9 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
         self.tab_generate_game.on_options_changed(options)
         self._update_quick_generate_text()
 
-    def on_quick_generate(self):
-        self.tab_generate_game.generate_new_layout(spoiler=True)
+    @asyncSlot()
+    async def on_quick_generate(self):
+        await self.tab_generate_game.generate_new_layout(spoiler=True)
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.quick_generate_button.setEnabled(value)
