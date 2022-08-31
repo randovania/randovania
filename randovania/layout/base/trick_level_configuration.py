@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import collections
 import copy
 import dataclasses
@@ -6,9 +8,11 @@ from typing import Iterator
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
+from randovania.layout.lib import trick_lib
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
@@ -63,14 +67,17 @@ class TrickLevelConfiguration(BitPackValue):
 
         return cls(minimal_logic, specific_levels, game)
 
-    @property
-    def pretty_description(self) -> str:
+    def pretty_description(self, database: GameDescription) -> str:
         if self.minimal_logic:
             return "Minimal Logic"
 
+        tricks_in_use = trick_lib.used_tricks(database)
+
         count_at_difficulties = collections.defaultdict(list)
-        for trick in _all_tricks(default_database.resource_database_for(self.game)):
-            count_at_difficulties[self.level_for_trick(trick)].append(trick.long_name)
+        for trick in _all_tricks(database.resource_database):
+            level = self.level_for_trick(trick)
+            if trick in tricks_in_use and not trick.hide_from_ui or level != LayoutTrickLevel.DISABLED:
+                count_at_difficulties[level].append(trick.long_name)
 
         if len(count_at_difficulties) == 1:
             for level in count_at_difficulties.keys():

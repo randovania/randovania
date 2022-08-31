@@ -8,7 +8,8 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup, ResourceDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel
-from randovania.gui.lib import trick_lib, signal_handling
+from randovania.gui.lib import signal_handling
+from randovania.layout.lib import trick_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -44,7 +45,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
         row = 2
         for trick in sorted(self.game_description.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick not in tricks_in_use or trick.extra.get("hide_from_ui"):
+            if trick not in tricks_in_use or trick.hide_from_ui:
                 continue
 
             if row > 1:
