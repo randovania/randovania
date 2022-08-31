@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Gracefully handle unsupported old versions of the preferences file.
 - Fixed: Excluding all copies of a progressive item, or the non-progressive equivalent, no longer hides them from the editor.
 - Fixed: Changing the selected backend while it's being used should no longer cause issues.
-- Fixed: Unexpected exceptions during generation now properly 
+- Fixed: Unexpected exceptions during generation now properly display an error message.
+- Fixed: Trick usage in preset summary now ignores tricks that are hidden from the UI.
 
 ### Cave Story
 
