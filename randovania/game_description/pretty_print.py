@@ -54,12 +54,19 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
 
     elif requirement.comment is None and len(other_requirements) == 1 and merged_this_resources:
         other = other_requirements[0]
-        yield level, "{}{}{} of the following:".format(
-            requirement.combinator().join(merged_this_resources),
-            requirement.combinator(),
-            requirement.combinator_title().lower(),
-        )
-        yield from pretty_print_requirement(other, level + 1)
+        nested_result = list(pretty_print_requirement(other, level + 1))
+        count_in_next_level = sum(1 for it in nested_result if it[0] == level + 1)
+
+        if count_in_next_level <= 1:
+            title = f" {requirement.combinator().strip()}:"
+        else:
+            title = "{}{} of the following:".format(
+                requirement.combinator(),
+                requirement.combinator_title().lower(),
+            )
+
+        yield level, requirement.combinator().join(merged_this_resources) + title
+        yield from nested_result
 
     else:
         yield level, f"{requirement.combinator_title()} of the following:"

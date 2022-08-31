@@ -8,7 +8,6 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 
 
@@ -84,12 +83,12 @@ def test_pretty_print_requirement_array_one_row_and_nested_array(echoes_resource
       All of the following:
           # Root comment
           Power Beam
-          Dark Beam or any of the following:
+          Dark Beam or:
               Annihilator Beam and Light Beam
 """
     else:
         assert lines == """
-      Power Beam and all of the following:
-          Dark Beam or any of the following:
+      Power Beam and:
+          Dark Beam or:
               Annihilator Beam and Light Beam
 """

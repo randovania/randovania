@@ -161,7 +161,7 @@ class ConnectionsVisualizer:
         parents: list[tuple[QGroupBox, QVBoxLayout]] = [(self.parent, self.grid_layout)]
 
         for depth, text in randovania.game_description.pretty_print.pretty_print_requirement(requirement):
-            if "of the following" in text:
+            if "of the following" in text or text.endswith(":"):
                 parent = parents[depth]
                 group_box = QGroupBox(parent[0])
                 group_box.setContentsMargins(8, 0, 2, 6)
