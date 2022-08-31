@@ -31,6 +31,10 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
     @classmethod
     def uses_patches_tab(cls) -> bool:
         return False
+    
+    def _update_slider_max(self):
+        self.dna_slider.setMaximum(self.num_preferred_locations)
+        self.dna_slider.setEnabled(self.num_preferred_locations > 0)
 
     def _edit_config(self, call: Callable[[DreadArtifactConfig], DreadArtifactConfig]):
         config = self._editor.configuration
@@ -41,18 +45,29 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
                 "artifacts",
                 call(config.artifacts)
             )
+    
+    @property
+    def num_preferred_locations(self) -> int:
+        preferred = 0
+        if self.prefer_emmi_check.isChecked():
+            preferred += 6
+        if self.prefer_major_bosses_check.isChecked():
+            preferred += 6
+        return preferred
 
     def _on_prefer_emmi(self, value: bool):
         def edit(config: DreadArtifactConfig):
             return dataclasses.replace(config, prefer_emmi=value)
 
         self._edit_config(edit)
+        self._update_slider_max()
 
     def _on_prefer_major_bosses(self, value: bool):
         def edit(config: DreadArtifactConfig):
             return dataclasses.replace(config, prefer_major_bosses=value)
 
         self._edit_config(edit)
+        self._update_slider_max()
 
     def _on_dna_slider_changed(self):
         self.dna_slider_label.setText(f"{self.dna_slider.value()} DNA")
