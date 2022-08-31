@@ -80,9 +80,9 @@ def test_set_level_for_trick_remove(echoes_resource_database):
     assert config.level_for_trick(trick) == LayoutTrickLevel.DISABLED
 
 
-def test_pretty_description_minimal_logic():
+def test_pretty_description_minimal_logic(echoes_game_description):
     config = TrickLevelConfiguration(True, {}, RandovaniaGame.METROID_PRIME_ECHOES)
-    assert config.pretty_description == "Minimal Logic"
+    assert config.pretty_description(echoes_game_description) == "Minimal Logic"
 
 
 @pytest.mark.parametrize(["levels", "expected"], [
@@ -93,6 +93,6 @@ def test_pretty_description_minimal_logic():
       "AirUnderwater": LayoutTrickLevel.ADVANCED},
      "Enabled tricks: 22 at Disabled, Air Underwater at Advanced, 2 at Hypermode"),
 ])
-def test_pretty_description_tricks_echoes(levels, expected):
+def test_pretty_description_tricks_echoes(echoes_game_description, levels, expected):
     config = TrickLevelConfiguration(False, levels, RandovaniaGame.METROID_PRIME_ECHOES)
-    assert config.pretty_description == expected
+    assert config.pretty_description(echoes_game_description) == expected
