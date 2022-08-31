@@ -51,10 +51,6 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_def: None
   > Total Recharge
       Trivial
-  > Elevator to Hanubia
-      Any of the following:
-          Space Jump or Speed Booster or Spin Boost
-          Infinite Bomb Jump (Beginner) and Lay Bomb
 
 > Start Point; Heals? False
   * Layers: default
@@ -72,7 +68,9 @@ Extra - asset_id: collision_camera_001
   > Door to Save Station
       Metroid DNA 1 and Metroid DNA 10 and Metroid DNA 11 and Metroid DNA 12 and Metroid DNA 2 and Metroid DNA 3 and Metroid DNA 4 and Metroid DNA 5 and Metroid DNA 6 and Metroid DNA 7 and Metroid DNA 8 and Metroid DNA 9
   > Artifact Gate
-      Speed Booster or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Speed Booster or Walljump (Intermediate) or Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
 
 > Elevator to Hanubia; Heals? False; Spawn Point
   * Layers: default
@@ -86,7 +84,9 @@ Extra - asset_id: collision_camera_001
   > Start Point
       Trivial
   > Artifact Gate
-      Speed Booster or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Speed Booster or Walljump (Intermediate) or Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
 
 > Artifact Gate; Heals? False
   * Layers: default
@@ -113,14 +113,11 @@ Extra - asset_id: collision_camera_002
       Lay Power Bomb
   > Elevator to Raven Beak Arena
       All of the following:
-          Main Power Bomb and Morph Ball
-          Any of the following:
-              Space Jump or Speed Booster or Spin Boost
-              Infinite Bomb Jump (Beginner) and Lay Bomb
-  > Tile Group (POWERBOMB)
-      All of the following:
           After Itorash - block_pbcolumn_000
-          Speed Booster or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Space Jump or Speed Booster or Simple IBJ
+              Spin Boost and Walljump (Beginner)
+              Flash Shift and Walljump (Intermediate)
 
 > Event - Breakable (block_pbcolumn_000); Heals? False
   * Layers: default
@@ -137,8 +134,6 @@ Extra - asset_id: collision_camera_002
   > Elevator to Raven Beak Arena
       Trivial
   > Tile Group (WEIGHT)
-      Trivial
-  > Tile Group (POWERBOMB)
       Trivial
 
 > Elevator to Raven Beak Arena; Heals? False
@@ -160,18 +155,6 @@ Extra - asset_id: collision_camera_002
   > Door to Save Station
       Trivial
 
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Event - Breakable (block_pbcolumn_000)
-      Lay Power Bomb
-  > Start Point
-      Trivial
-
 ----------------
 Elevator Cutscene
 Extra - total_boundings: {'x1': 3400.0, 'x2': 6700.0, 'y1': -2500.0, 'y2': 1900.0}
@@ -189,13 +172,39 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   > Boss - Raven Beak
       All of the following:
-          # TODO: accurate boss requirements incl. Combat tricks
-          Wave Beam and Shoot Beam
+          # TODO: flesh out phase 2 and 3 fight requirements. phase 1 should more or less get the job done for now though
           Any of the following:
               # Energy Requirements
               Combat (Advanced) or Normal Damage ≥ 799
               Combat (Beginner) and Normal Damage ≥ 549
               Combat (Intermediate) and Normal Damage ≥ 299
+          All of the following:
+              # Methods of dodging
+              Any of the following:
+                  # Phase 1 and 3
+                  Flash Shift or Combat (Beginner)
+              Any of the following:
+                  # Phase 2
+                  Space Jump or Combat (Intermediate)
+          All of the following:
+              # Methods of fighting
+              Any of the following:
+                  # Phase 1
+                  All of the following:
+                      # 52 wave shots
+                      Wave Beam
+                  All of the following:
+                      # 83 plasma shots
+                      Combat (Beginner) and Shoot Plasma Beam
+                  All of the following:
+                      # 167 wide shots
+                      Combat (Advanced) and Shoot Wide Beam
+                  All of the following:
+                      # 500 power beam shots
+                      Combat (Hypermode) and Shoot Beam
+                  Missiles ≥ 34 and Shoot Ice Missile
+                  Missiles ≥ 45 and Combat (Intermediate) and Shoot Super Missile
+                  Missiles ≥ 134 and Combat (Expert) and Shoot Missile
 
 > Boss - Raven Beak; Heals? False
   * Layers: default
