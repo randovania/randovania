@@ -68,8 +68,13 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "Using an Energy Recharge Station heals me to 299, but my energy maximum is 249. Which one is correct?",
-            "The 299 is a display error. You can always see the correct value in the inventory screen."
-        )
+            "The 299 is a display error. You can always see the correct value in the inventory screen.",
+        ),
+        (
+            "Why is this pickup not animating, or displaying visual effects?",
+            "While progressive pickups update to have the correct model, "
+            "due to limitations these models are not animated or have any additional effects.",
+        ),
     ],
 
     layout=game.GameLayout(
