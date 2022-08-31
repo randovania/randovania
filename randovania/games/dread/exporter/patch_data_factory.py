@@ -188,29 +188,32 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "resources": resources,
         }
 
-        try:
-            if pickup_type == "actor":
-                if "map_icon_actor" in pickup_node.extra:
-                    map_icon.update({
-                        "original_actor": self._teleporter_ref_for(pickup_node, "map_icon_actor")
-                    })
-                details.update({
-                    "pickup_actor": self._teleporter_ref_for(pickup_node),
-                    "model": model_names,
-                    "map_icon": map_icon,
-                })
-            else:
-                details["pickup_lua_callback"] = self._callback_ref_for(pickup_node)
-                if pickup_type != "cutscene":
-                    details.update({
-                        "pickup_actordef": pickup_node.extra["actor_def"],
-                        "pickup_string_key": pickup_node.extra["string_key"],
-                    })
+        if pickup_type == "actor":
+            pickup_actor = self._teleporter_ref_for(pickup_node)
 
-            return details
-        except KeyError as e:
-            logging.warning(e)
-            return None
+            # Progressive models currently crash when placed in Hanubia.
+            # See https://github.com/randovania/open-dread-rando/issues/141
+            if pickup_actor["scenario"] == "s080_shipyard":
+                model_names = [model_names[0]]
+
+            if "map_icon_actor" in pickup_node.extra:
+                map_icon.update({
+                    "original_actor": self._teleporter_ref_for(pickup_node, "map_icon_actor")
+                })
+            details.update({
+                "pickup_actor": pickup_actor,
+                "model": model_names,
+                "map_icon": map_icon,
+            })
+        else:
+            details["pickup_lua_callback"] = self._callback_ref_for(pickup_node)
+            if pickup_type != "cutscene":
+                details.update({
+                    "pickup_actordef": pickup_node.extra["actor_def"],
+                    "pickup_string_key": pickup_node.extra["string_key"],
+                })
+
+        return details
 
     def _encode_hints(self) -> list[dict]:
         namer = DreadHintNamer(self.description.all_patches, self.players_config)
