@@ -53,6 +53,9 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
             continue
 
         for target_node, requirement in target.items():
+            if target_node.is_derived_node:
+                continue
+
             direction = None
             if source in area.connections.get(target_node):
                 direction = "both"
