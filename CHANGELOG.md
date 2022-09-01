@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Changing the selected backend while it's being used should no longer cause issues.
 - Fixed: Unexpected exceptions during generation now properly display an error message.
 - Fixed: Trick usage in preset summary now ignores tricks that are hidden from the UI.
+- Fixed: /database-inspect command no longer shows EventPickup nodes.
 
 ### Cave Story
 
