@@ -149,7 +149,7 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tunnel to Purple EMMI Introduction
-      Gravity Suit or Speed Booster or Perform WBJ
+      Gravity Suit or Speed Booster or Perform WBJ or Use Spin Boost
   > Center Platform
       Trivial
 
@@ -186,11 +186,16 @@ Extra - asset_id: collision_camera_003
 > Center Platform; Heals? False
   * Layers: default
   > Dock to Teleport to Burenia (Cyan)
-      Flash Shift or Grapple Beam or Gravity Suit or Spider Magnet or Lay Cross Comb
+      Any of the following:
+          Flash Shift or Gravity Suit or Spider Magnet or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
+          Lay Cross Comb and Perform WBJ
   > Door to EMMI Zone Exit Middle (Power)
       Trivial
   > Door to EMMI Zone Exit Middle (Charge)
-      Flash Shift or Grapple Beam or Gravity Suit or Spider Magnet or Lay Cross Comb
+      Any of the following:
+          Flash Shift or Gravity Suit or Spider Magnet or Lay Cross Comb or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
 
 ----------------
 Fan Room Access
@@ -218,10 +223,10 @@ Extra - asset_id: collision_camera_004
       Trivial
   > Tunnel to Fan Room
       Any of the following:
-          Speed Booster or Simple IBJ or Use Spin Boost
-          Grapple Beam and Grapple Movement (Beginner)
-          Flash Shift and Walljump (Beginner)
-          Grapple Beam and Spider Magnet
+          Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          All of the following:
+              Grapple Beam
+              Spider Magnet or Grapple Movement (Beginner)
 
 > Tunnel to Fan Room; Heals? False
   * Layers: default
@@ -245,7 +250,7 @@ Extra - asset_id: collision_camera_005
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Event - Quiet Robe
-      Trivial
+      Fight Silver Robot
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -257,9 +262,6 @@ Extra - asset_id: collision_camera_005
 > Event - Quiet Robe; Heals? False
   * Layers: default
   * Event Quiet Robe
-  * Add Chozo Soldier requirements
-
-
   > Door to Fan Room Access
       Trivial
 
@@ -2008,8 +2010,6 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Save Station Southeast
       Trivial
-  > Tile Group (MISSILE)
-      Trivial
 
 > Door to Storm Missile Tutorial; Heals? False
   * Layers: default
@@ -2055,16 +2055,6 @@ Extra - asset_id: collision_camera_025
   * Extra - tile_types: ('WEIGHT',)
   > Door to Storm Missile Tutorial
       Trivial
-
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_060
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Tile Group (WEIGHT)
-      Can Slide
 
 > Tunnel to Escue Eyedoor Room; Heals? False
   * Layers: default
@@ -2290,7 +2280,7 @@ Extra - asset_id: collision_camera_028
   > Event - Wave Blob (db_reg_b2_005)
       Any of the following:
           Wave Beam
-          Pseudo-Wave Beam (Beginner) and Shoot Beam
+          Slide and Pseudo-Wave Beam (Beginner) and Shoot Beam
   > Elevator to Hanubia - Transport to Ferenia
       After Ferenia - db_reg_b2_005
 
@@ -2570,7 +2560,9 @@ Extra - asset_id: collision_camera_031
   > Door to EMMI Zone Exit East Access
       Can Slide
   > Tunnel to Purple EMMI Arena
-      Flash Shift or Slide Jump (Beginner) or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Slide and Slide Jump (Beginner)
 
 > Door to EMMI Zone Exit East Access; Heals? False
   * Layers: default
@@ -2664,7 +2656,7 @@ Extra - asset_id: collision_camera_032
           Flash Shift or Spider Magnet or Space Jump
           All of the following:
               Gravity Suit
-              Flash Shift or Simple IBJ or Use Spin Boost
+              Simple IBJ or Use Spin Boost
 
 > Dock to Path to Escue; Heals? False
   * Layers: default
@@ -2856,6 +2848,8 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
+  > Upper-right Alcove
+      Trivial
   > Tunnel to Central Unit Access (Middle)
       Trivial
 
@@ -2949,12 +2943,19 @@ Extra - asset_id: collision_camera_034
           All of the following:
               Gravity Suit and Before Ferenia - Wave Emmi Lower Water
               Space Jump or Walljump (Intermediate) or Simple IBJ
-          Speed Booster and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
+          Speed Booster and Wave Beam and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
+          Gravity Suit and Spin Boost and Walljump (Beginner)
   > Lower-Right Alcove
       After Ferenia - Central Unit and Can Slide
 
 > Lower-Left Alcove; Heals? False
   * Layers: default
+  > Start Point
+      All of the following:
+          Morph Ball and After Ferenia - Central Unit
+          Any of the following:
+              Simple IBJ or Use Spin Boost
+              Slide and Slide Jump (Intermediate) and Walljump (Intermediate)
   > Tile Group (POWERBEAM) 1
       Morph Ball
   > Start Wave EMMI Ledge
@@ -2998,8 +2999,6 @@ Extra - asset_id: collision_camera_034
   * Morph Ball Tunnel to Central Unit Access/Tunnel to Purple EMMI Arena (Middle)
   > Tile Group (POWERBOMB)
       Morph Ball
-  > Upper-right Alcove
-      Trivial
 
 ----------------
 Central Unit
@@ -3061,7 +3060,7 @@ Extra - asset_id: collision_camera_038_A
   * Extra - start_point_actor_name: SP_Checkpoint_EmmySancPhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Tunnel to Purple EMMI Arena (Bottom)
-      After Ferenia - Wave Emmi Lower Water and Lay Bomb
+      After Ferenia - Wave Emmi Lower Water
   > Tunnel to Purple EMMI Arena (Middle)
       After Ferenia - Wave Emmi Lower Water
 
