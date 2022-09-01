@@ -133,7 +133,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
-            self.preset.configuration.trick_level.pretty_description,
+            self.preset.configuration.trick_level.pretty_description(self.game_description),
             ", ".join(
                 resource.short_name
                 for resource, _ in pool_patches.starting_items.as_resource_gain()

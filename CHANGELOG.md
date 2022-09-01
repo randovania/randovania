@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.6.0] - 2022-09-01
 
 - **Major** - Added: An installer is now provided for Windows. With it rdvgame files are associated to open with Randovania, for ease of use. A shortcut for opening just the auto tracker is also provided.
+- **Major** - Changed: The UI has been significantly revamped, with each game having their own section and an easy to use selector.
 - Changed: The multi-pickup placement, using the new weighting, is now the default mode. The old behavior has been removed.
 - Changed: Error messages when a permalink is incompatible have been improved with more details.
 - Changed: The Customize Preset dialog now creates each tab as you click then. This means the dialog is now faster to first open, but there's a short delay when opening certain tabs.
@@ -17,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Gracefully handle unsupported old versions of the preferences file.
 - Fixed: Excluding all copies of a progressive item, or the non-progressive equivalent, no longer hides them from the editor.
 - Fixed: Changing the selected backend while it's being used should no longer cause issues.
+- Fixed: Unexpected exceptions during generation now properly display an error message.
+- Fixed: Trick usage in preset summary now ignores tricks that are hidden from the UI.
 
 ### Cave Story
 
