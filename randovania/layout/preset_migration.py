@@ -683,6 +683,12 @@ def _migrate_v37(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v38(preset: dict) -> dict:
+    # New version since we don't write the base_preset_uuid to the preset itself anymore
+    # But leave it there to migrate easily to options
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -721,6 +727,7 @@ _MIGRATIONS = [
     _migrate_v35,
     _migrate_v36,
     _migrate_v37,
+    _migrate_v38,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

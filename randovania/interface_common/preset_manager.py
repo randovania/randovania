@@ -56,6 +56,8 @@ class PresetManager:
             preset.uuid: preset
             for preset in [VersionedPreset.from_file_sync(f) for f in read_preset_list()]
         }
+        for preset in self.included_presets.values():
+            preset.is_included_preset = True
 
         self.custom_presets = {}
         if data_dir is not None:
@@ -142,3 +144,6 @@ class PresetManager:
 
     def _file_name_for_preset(self, preset: VersionedPreset) -> Path:
         return self._data_dir.joinpath(f"{preset.uuid}.{preset.file_extension()}")
+
+    def is_included_preset_uuid(self, the_uid: uuid.UUID) -> bool:
+        return the_uid in self.included_presets

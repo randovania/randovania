@@ -210,7 +210,6 @@ async def test_round_trip_generated_patches(default_preset):
     preset = dataclasses.replace(
         default_preset,
         uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
-        base_preset_uuid=default_preset.uuid,
         configuration=dataclasses.replace(
             default_preset.configuration,
             trick_level=TrickLevelConfiguration(

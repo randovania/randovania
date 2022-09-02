@@ -11,9 +11,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game_enum):
     window_manager = MagicMock()
 
     base = preset_manager.default_preset_for_game(game_enum).get_preset()
-    preset = dataclasses.replace(base,
-                                 uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
-                                 base_preset_uuid=base.uuid)
+    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
     editor = PresetEditor(preset)
     window = CustomizePresetDialog(window_manager, editor)
 

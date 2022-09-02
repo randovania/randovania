@@ -155,7 +155,7 @@ class RowWidget:
             self.name.setText(f"({preset.game.short_name}) {preset.name}")
         else:
             self.name.setText(preset.name)
-        self.export_menu.setEnabled(preset.base_preset_uuid is not None)
+        self.export_menu.setEnabled(not preset.is_included_preset)
 
 
 _PRESET_COLUMNS = 3
@@ -496,7 +496,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         row_index = self.rows.index(row)
         old_preset = self._game_session.presets[row_index].get_preset()
-        if old_preset.base_preset_uuid is None:
+        if self._preset_manager.is_included_preset_uuid(old_preset.uuid):
             old_preset = old_preset.fork()
 
         editor = PresetEditor(old_preset)
