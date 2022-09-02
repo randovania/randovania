@@ -187,14 +187,13 @@ Extra - asset_id: collision_camera_003
   * Layers: default
   > Dock to Teleport to Burenia (Cyan)
       Any of the following:
-          Flash Shift or Gravity Suit or Spider Magnet or Use Spin Boost
+          Flash Shift or Gravity Suit or Spider Magnet or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
-          Lay Cross Comb and Perform WBJ
   > Door to EMMI Zone Exit Middle (Power)
       Trivial
   > Door to EMMI Zone Exit Middle (Charge)
       Any of the following:
-          Flash Shift or Gravity Suit or Spider Magnet or Lay Cross Comb or Use Spin Boost
+          Flash Shift or Gravity Suit or Spider Magnet or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
 
 ----------------
@@ -1319,8 +1318,12 @@ Extra - asset_id: collision_camera_017
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point 1
-      Trivial
+  > Door to Energy Recharge Station (Gate)
+      No Storm Missile or After  Ferenia - Twin Robot Fight
+  > Door to Navigation Station
+      No Storm Missile or After  Ferenia - Twin Robot Fight
+  > Event - Twin Robot Fight
+      Storm Missile and Fight Twin Robots
 
 > Door to Energy Recharge Station (Gate); Heals? False
   * Layers: default
@@ -1331,8 +1334,12 @@ Extra - asset_id: collision_camera_017
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point 1
-      Trivial
+  > Door to Teleport to Burenia (Cyan)
+      No Storm Missile or After  Ferenia - Twin Robot Fight
+  > Door to Navigation Station
+      No Storm Missile or After  Ferenia - Twin Robot Fight
+  > Event - Twin Robot Fight
+      Storm Missile and Fight Twin Robots
 
 > Door to Cold Room (Energy Recharge Station); Heals? False
   * Layers: default
@@ -1355,12 +1362,16 @@ Extra - asset_id: collision_camera_017
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Teleport to Burenia (Cyan)
+      No Storm Missile or After  Ferenia - Twin Robot Fight
+  > Door to Energy Recharge Station (Gate)
+      No Storm Missile or After  Ferenia - Twin Robot Fight
   > Door to Space Jump Room Access
-      Trivial
-  > Start Point 1
       Trivial
   > Start Point 2
       Trivial
+  > Event - Twin Robot Fight
+      Storm Missile and Fight Twin Robots
 
 > Door to Space Jump Room Access; Heals? False
   * Layers: default
@@ -1422,6 +1433,12 @@ Extra - asset_id: collision_camera_017
       Trivial
   > Pickup (Power Bomb Tank)
       Morph Ball
+
+> Event - Twin Robot Fight; Heals? False
+  * Layers: default
+  * Event  Ferenia - Twin Robot Fight
+  > Start Point 1
+      After  Ferenia - Twin Robot Fight
 
 ----------------
 Cold Room (Energy Recharge Station)
@@ -2306,7 +2323,7 @@ Extra - asset_id: collision_camera_028
   > Event - Wave Blob (db_reg_b2_005)
       Any of the following:
           Wave Beam
-          Pseudo-Wave Beam (Beginner) and Shoot Beam
+          Slide and Pseudo-Wave Beam (Beginner) and Shoot Beam
   > Tile Group (WEIGHT)
       Trivial
 
@@ -2941,7 +2958,7 @@ Extra - asset_id: collision_camera_034
   > Tunnel to Central Unit Access (Top)
       Any of the following:
           All of the following:
-              Gravity Suit and Before Ferenia - Wave Emmi Lower Water
+              Gravity Suit or After Ferenia - Wave Emmi Lower Water
               Space Jump or Walljump (Intermediate) or Simple IBJ
           Speed Booster and Wave Beam and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
           Gravity Suit and Spin Boost and Walljump (Beginner)
