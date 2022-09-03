@@ -2591,9 +2591,7 @@ Extra - asset_id: collision_camera_031
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Purple EMMI Arena
-      All of the following:
-          Morph Ball and After Ferenia - db_reg_b2_006
-          Simple IBJ or Use Spin Boost
+      Morph Ball and After Ferenia - db_reg_b2_006
   > Event - Wave Blob from left (db_reg_b2_006)
       Shoot Beam
 
@@ -2755,65 +2753,24 @@ Extra - asset_id: collision_camera_034
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  > Event - Blob 2 (db_reg_b2_008)
-      After Ferenia - db_reg_b2_007 and Shoot Beam
-  > Event - Blob 3 (db_reg_b2_009)
-      After Ferenia - db_reg_b2_007 and After Ferenia - db_reg_b2_008 and Shoot Beam
-  > Event - Blob 1 (db_reg_b2_007)
-      Shoot Beam
-
-> Event - Blob 2 (db_reg_b2_008); Heals? False
-  * Layers: default
-  * Event Ferenia - db_reg_b2_008
-  * Extra - actor_name: db_reg_b2_008
-  * Extra - actor_def: actordef:actors/props/db_reg_b2_008/charclasses/db_reg_b2_008.bmsad
-  > Door to Wave Beam Tutorial
-      Trivial
-
-> Event - Chase Blob 1 (db_reg_b2_011); Heals? False
-  * Layers: default
-  * Event Ferenia - db_reg_b2_011
-  * Extra - actor_name: db_reg_b2_011
-  * Extra - actor_def: actordef:actors/props/db_reg_b2_011/charclasses/db_reg_b2_011.bmsad
-  > Lower-Left Alcove
-      Trivial
-
-> Event - Blob 3 (db_reg_b2_009); Heals? False
-  * Layers: default
-  * Event Ferenia - db_reg_b2_009
-  * Extra - actor_name: db_reg_b2_009
-  * Extra - actor_def: actordef:actors/props/db_reg_b2_009/charclasses/db_reg_b2_009.bmsad
-  > Upper-right Alcove
-      Trivial
-
-> Event - Blob 1 (db_reg_b2_007); Heals? False
-  * Layers: default
-  * Event Ferenia - db_reg_b2_007
-  * Extra - actor_name: db_reg_b2_007
-  * Extra - actor_def: actordef:actors/props/db_reg_b2_007/charclasses/db_reg_b2_007.bmsad
-  > Door to Wave Beam Tutorial
-      Trivial
-
-> Event - Chase Blob 2 (db_reg_b2_010); Heals? False
-  * Layers: default
-  * Event Ferenia - db_reg_b2_010
-  * Extra - actor_name: db_reg_b2_010
-  * Extra - actor_def: actordef:actors/props/db_reg_b2_010/charclasses/db_reg_b2_010.bmsad
-  > Tile Group (BOMB) 2
-      Trivial
-
-> Tunnel to Central Unit Access (Top); Heals? False
-  * Layers: default
-  * Morph Ball Tunnel to Central Unit Access/Tunnel to Purple EMMI Arena (Top)
-  * Extra - actor_name: tunnelframe_000
-  * Extra - actor_def: actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad
-  * Extra - actor_layer: Emmy
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
-  > Upper-right Alcove
-      Trivial
+  > Event - Ferenia Central Unit
+      All of the following:
+          Any of the following:
+              # Requirements to reach the CU
+              Gravity Suit or Space Jump or Walljump (Intermediate)
+              Walljump (Beginner) and Use Spin Boost
+              Speed Booster and Wave Beam and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
+          All of the following:
+              # Requirements to destroy the CU and the EMMI
+              Destroy Central Unit and Lay Bomb
+              Any of the following:
+                  Combat (Advanced)
+                  All of the following:
+                      Push Wide Beam Block
+                      Any of the following:
+                          Shoot Diffusion or Wave
+                          Slide and Pseudo-Wave Beam (Beginner)
+                      Cross Bomb or Flash Shift or Movement (Beginner) or Use Spin Boost
 
 > Tunnel to Wave Beam Tutorial; Heals? False
   * Layers: default
@@ -2825,165 +2782,12 @@ Extra - asset_id: collision_camera_034
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (WEIGHT) 1
-      Morph Ball
-
-> Start Point; Heals? False; Spawn Point
-  * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_WaveBeam
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Lower-Left Alcove
-      Morph Ball and After Ferenia - Central Unit
-  > Lower-Right Alcove
-      Trivial
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Wave Beam Tutorial
-      Any of the following:
-          Gravity Suit or After Ferenia - Wave Emmi Lower Water
-          Lay Cross Comb and Perform WBJ
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_010
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Upper-right Alcove
-      Trivial
-  > Tunnel to Central Unit Access (Middle)
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_070
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Lower-Left Alcove
-      Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_068
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Event - Chase Blob 1 (db_reg_b2_011)
-      After Ferenia - Wave EMMI Wide Beam Block 1 and Shoot Diffusion or Wave
-  > Tile Group (POWERBEAM) 2
-      Morph Ball
-  > Event - Wide Beam Block 1
-      Push Wide Beam Block
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_069
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Start Wave EMMI Ledge
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_032
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Start Wave EMMI Ledge
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_043
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Event - Chase Blob 2 (db_reg_b2_010)
-      Shoot Beam
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Lower-Right Alcove
-      After Ferenia - db_reg_b2_010 and Can Slide
-
-> Dock from Central Unit Access; Heals? False
-  * Layers: default
-  * Blocked Passage to Central Unit Access/Tunnel to Purple EMMI Arena (Bottom)
-  > Start Wave EMMI Ledge
-      Trivial
-
-> Event - Wide Beam Block 1; Heals? False
-  * Layers: default
-  * Event Ferenia - Wave EMMI Wide Beam Block 1
-  > Tile Group (BOMB) 1
-      Trivial
-
-> Event - Wide Beam Block 2; Heals? False
-  * Layers: default
-  * Event Ferenia - Wave EMMI Wide Beam Block 2
-  > Lower-Right Alcove
-      Trivial
-
-> Upper-right Alcove; Heals? False
-  * Layers: default
   > Door to Wave Beam Tutorial
       All of the following:
-          After Ferenia - db_reg_b2_007 and After Ferenia - db_reg_b2_008 and After Ferenia - db_reg_b2_009
-          Gravity Suit or After Ferenia - Wave Emmi Lower Water
-  > Tunnel to Central Unit Access (Top)
-      Any of the following:
-          All of the following:
-              Gravity Suit or After Ferenia - Wave Emmi Lower Water
-              Space Jump or Walljump (Intermediate) or Simple IBJ
-          Speed Booster and Wave Beam and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
-          Gravity Suit and Spin Boost and Walljump (Beginner)
-  > Lower-Right Alcove
-      After Ferenia - Central Unit and Can Slide
-
-> Lower-Left Alcove; Heals? False
-  * Layers: default
-  > Start Point
-      All of the following:
-          Morph Ball and After Ferenia - Central Unit
+          Morph Ball
           Any of the following:
-              Simple IBJ or Use Spin Boost
-              Slide and Slide Jump (Intermediate) and Walljump (Intermediate)
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Start Wave EMMI Ledge
-      Morph Ball and After Ferenia - Central Unit
-
-> Lower-Right Alcove; Heals? False
-  * Layers: default
-  > Event - Chase Blob 2 (db_reg_b2_010)
-      Wave Beam
-  > Start Point
-      Flash Shift
-  > Tile Group (WEIGHT) 2
-      Trivial
-  > Tile Group (BOMB) 2
-      After Ferenia - db_reg_b2_010 and Can Slide
-  > Event - Wide Beam Block 2
-      Push Wide Beam Block
-  > Upper-right Alcove
-      Morph Ball and After Ferenia - Central Unit
-  > Pickup (Wave Beam)
-      After Ferenia - Central Unit
+              Gravity Suit or Lay Cross Comb
+              Spin Boost and Water Bomb Jump (Intermediate) and Lay Bomb
 
 > Pickup (Wave Beam); Heals? False
   * Layers: default
@@ -2993,19 +2797,14 @@ Extra - asset_id: collision_camera_034
   * Extra - string_key: GUI_ITEM_ACQUIRED_WAVE_BEAM
   * Extra - callback_function: OnEmmySancDead
   * Extra - boss_hint_name: E.M.M.I.-06WB
-  > Lower-Right Alcove
+  > Door to Wave Beam Tutorial
       Trivial
 
-> Start Wave EMMI Ledge; Heals? False
+> Event - Ferenia Central Unit; Heals? False
   * Layers: default
-  > Tile Group (POWERBEAM) 2
-      Morph Ball
-
-> Tunnel to Central Unit Access (Middle); Heals? False
-  * Layers: default
-  * Morph Ball Tunnel to Central Unit Access/Tunnel to Purple EMMI Arena (Middle)
-  > Tile Group (POWERBOMB)
-      Morph Ball
+  * Event Ferenia - Central Unit
+  > Pickup (Wave Beam)
+      Trivial
 
 ----------------
 Central Unit
@@ -3017,22 +2816,6 @@ Extra - asset_id: collision_camera_035
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmySancPhase2_CURoom
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Central Unit Access
-      Trivial
-  > Event - Ferenia Central Unit
-      Destroy Central Unit
-
-> Dock to Central Unit Access; Heals? False
-  * Layers: default
-  * EMMI Door to Central Unit Access/Dock to Central Unit
-  > Start Point
-      Trivial
-
-> Event - Ferenia Central Unit; Heals? False
-  * Layers: default
-  * Event Ferenia - Central Unit
-  > Start Point
-      Trivial
 
 ----------------
 Central Unit Access
@@ -3040,59 +2823,6 @@ Central Unit Access
 Extra - total_boundings: {'x1': 9450.0, 'x2': 11550.0, 'y1': 2600.0, 'y2': 5900.0}
 Extra - polygon: [[11550.0, 5900.0], [9450.0, 5900.0], [9450.0, 2600.0], [11550.0, 2600.0]]
 Extra - asset_id: collision_camera_038_A
-> Tunnel to Purple EMMI Arena (Top); Heals? False
-  * Layers: default
-  * Morph Ball Tunnel to Purple EMMI Arena/Tunnel to Central Unit Access (Top)
-  * Extra - actor_name: tunnelframe_000
-  * Extra - actor_def: actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad
-  * Extra - actor_layer: Emmy
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
-  > Start Point 1
-      Trivial
-
-> Start Point 1; Heals? False
-  * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Central Unit
-      Trivial
-  > Event - Lower Water
-      After Ferenia - Central Unit and Shoot Beam
-
-> Start Point 2; Heals? False; Spawn Point
-  * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_EmmySancPhase2
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Tunnel to Purple EMMI Arena (Bottom)
-      After Ferenia - Wave Emmi Lower Water
-  > Tunnel to Purple EMMI Arena (Middle)
-      After Ferenia - Wave Emmi Lower Water
-
-> Dock to Central Unit; Heals? False
-  * Layers: default
-  * EMMI Door to Central Unit/Dock to Central Unit Access
-  > Start Point 1
-      Trivial
-
-> Tunnel to Purple EMMI Arena (Bottom); Heals? False
-  * Layers: default
-  * Morph Ball Launcher to Purple EMMI Arena/Dock from Central Unit Access
-
-> Event - Lower Water; Heals? False
-  * Layers: default
-  * Event Ferenia - Wave Emmi Lower Water
-  > Start Point 2
-      Trivial
-
-> Tunnel to Purple EMMI Arena (Middle); Heals? False
-  * Layers: default
-  * Morph Ball Tunnel to Purple EMMI Arena/Tunnel to Central Unit Access (Middle)
-  > Start Point 2
-      After Ferenia - Wave Emmi Lower Water
-
 ----------------
 Purple EMMI Introduction
 (Valid Starting Location)
