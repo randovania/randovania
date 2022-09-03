@@ -143,8 +143,13 @@ async def create_split_worlds(db: GameDescription) -> list[SplitWorld]:
             if is_dark_world and world.dark_name is None:
                 continue
 
-            areas = sorted((area for area in world.areas if area.in_dark_aether == is_dark_world),
-                           key=lambda it: it.name)
+            areas = sorted(
+                (
+                    area for area in world.areas
+                    if area.in_dark_aether == is_dark_world and area.nodes
+                ),
+                key=lambda it: it.name,
+            )
             name = world.correct_name(is_dark_world)
             if len(areas) > 25:
                 per_part = math.ceil(len(areas) / math.ceil(len(areas) / 25))
