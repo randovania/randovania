@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EchoesHelpWidget</class>
- <widget class="QTabWidget" name="EchoesHelpWidget">
+ <class>EchoesGameTabWidget</class>
+ <widget class="QTabWidget" name="EchoesGameTabWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,6 +13,59 @@
   <property name="currentIndex">
    <number>0</number>
   </property>
+  <widget class="QWidget" name="tab_intro">
+   <attribute name="title">
+    <string>Introduction</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="intro_layout">
+    <item>
+     <layout class="QHBoxLayout" name="intro_cover_layout">
+      <item>
+       <widget class="QLabel" name="game_cover_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="intro_label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Navigate Aether and Dark Aether in search of the Sky Temple Keys, then defeat Emperor Ing and Dark Samus to finish!&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The totems in Sky Temple Gateway can be scanned to receive hints on the locations of each Sky Temple Key. Additionally, Keybearer corpses can be scanned to receive hints for the corresponding Flying Ing Cache, and Luminoth Lore can be scanned to receive generic hints for any items or locations. &lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="quick_generate_button">
+      <property name="text">
+       <string>Quick generate</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="intro_spacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="GenerateGameWidget" name="tab_generate_game">
+   <attribute name="title">
+    <string>Play</string>
+   </attribute>
+  </widget>
   <widget class="QWidget" name="faq_tab">
    <attribute name="title">
     <string>FAQ</string>
@@ -41,7 +94,7 @@
          <x>0</x>
          <y>0</y>
          <width>440</width>
-         <height>364</height>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -91,8 +144,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>123</width>
-         <height>3942</height>
+         <width>430</width>
+         <height>732</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="differences_scroll_layout_3">
@@ -247,8 +300,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>3486</height>
+         <width>430</width>
+         <height>672</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -377,8 +430,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>386</height>
+         <width>440</width>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -465,8 +518,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>352</height>
+         <width>440</width>
+         <height>370</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_scroll_layout">
@@ -504,6 +557,14 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GenerateGameWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

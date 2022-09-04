@@ -91,9 +91,9 @@ class State:
     @property
     def collected_hints(self) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():
-            if isinstance(resource, NodeIdentifier) and count > 0:
-                if isinstance(self.world_list.node_by_identifier(resource), LogbookNode):
-                    yield resource
+            if isinstance(resource, NodeResourceInfo) and count > 0:
+                if isinstance(self.world_list.node_by_identifier(resource.node_identifier), LogbookNode):
+                    yield resource.node_identifier
 
     @property
     def collected_events(self) -> Iterator[ResourceInfo]:

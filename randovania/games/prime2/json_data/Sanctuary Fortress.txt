@@ -566,23 +566,19 @@ Extra - in_dark_aether: False
   * Layers: default
   * Normal Door to Central Area Transport West/Door to Main Research
   * Extra - dock_index: 0
-  > Door to Transit Station
-      Use Screw Attack (Space Jump)
-  > Door to Torvus Transport Access
+  > Next to Door to Central Area Transport West
       Trivial
-  > Pickup (Missile)
-      Movement (Advanced) and Use Screw Attack (Space Jump)
 
 > Door to Transit Station; Heals? False
   * Layers: default
   * Normal Door to Transit Station/Door to Main Research
   * Extra - dock_index: 2
-  > Door to Central Area Transport West
-      After Caretaker Drone and Use Screw Attack (Space Jump)
   > Door to Torvus Transport Access
       Trivial
   > Pickup (Missile)
       Space Jump Boots and Standable Terrain (Expert)
+  > Next to Door to Central Area Transport West
+      Use Screw Attack (Space Jump)
 
 > Portal to Staging Area; Heals? False
   * Layers: default
@@ -595,8 +591,6 @@ Extra - in_dark_aether: False
   * Layers: default
   * Power Bomb Blast Shield to Torvus Transport Access/Door to Main Research
   * Extra - dock_index: 1
-  > Door to Central Area Transport West
-      Scan Visor and Space Jump Boots and After Caretaker Drone and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
   > Door to Transit Station
       Any of the following:
           Morph Ball and Spider Ball
@@ -608,6 +602,8 @@ Extra - in_dark_aether: False
       Morph Ball Bomb and Morph Ball and Spider Ball
   > Lore Scan
       Trivial
+  > Next to Door to Central Area Transport West
+      Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
 
 > Pickup (Missile); Heals? False
   * Layers: default
@@ -618,9 +614,9 @@ Extra - in_dark_aether: False
 > Event - Caretaker Drone; Heals? False
   * Layers: default
   * Event Caretaker Drone
-  > Door to Central Area Transport West
-      Trivial
   > Door to Torvus Transport Access
+      Trivial
+  > Next to Door to Central Area Transport West
       Trivial
 
 > Lore Scan; Heals? False
@@ -629,6 +625,17 @@ Extra - in_dark_aether: False
   * Extra - translator: Cobalt
   > Door to Torvus Transport Access
       Trivial
+
+> Next to Door to Central Area Transport West; Heals? False
+  * Layers: default
+  > Door to Central Area Transport West
+      After Caretaker Drone
+  > Door to Transit Station
+      Use Screw Attack (Space Jump)
+  > Door to Torvus Transport Access
+      Trivial
+  > Pickup (Missile)
+      Movement (Advanced) and Use Screw Attack (Space Jump)
 
 ----------------
 Hive Portal Chamber
@@ -957,7 +964,11 @@ Extra - in_dark_aether: False
           Morph Ball Bomb and Morph Ball and After Spider Guardian
           Boost Ball or Spider Ball
   > Event - Spider Guardian
-      Morph Ball Bomb and Boost Ball and Morph Ball and After Dynamo Works Quads Gone
+      All of the following:
+          Morph Ball Bomb and Boost Ball and Morph Ball and After Dynamo Works Quads Gone
+          Any of the following:
+              # Spider Guardian is a Difficult Boss.
+              Energy Tank or Combat (Intermediate)
 
 > Portal to Hive Dynamo Works; Heals? False
   * Layers: default

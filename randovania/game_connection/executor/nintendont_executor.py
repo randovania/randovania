@@ -140,7 +140,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             self._socket_error = e
             return False
 
-    async def disconnect(self):
+    def disconnect(self):
         socket = self._socket
         self._socket = None
         if socket is not None:
@@ -221,7 +221,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                 self.logger.warning(f"Unable to send {len(requests)} requests to {self._ip}:{self._port}: {e}")
                 self._socket_error = MemoryOperationException(f"Unable to send {len(requests)} requests: {e}")
 
-            await self.disconnect()
+            self.disconnect()
             raise self._socket_error from e
 
         return all_responses

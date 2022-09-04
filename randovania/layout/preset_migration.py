@@ -6,8 +6,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 34
-
 
 def _migrate_v1(preset: dict) -> dict:
     layout_configuration = preset["layout_configuration"]
@@ -654,46 +652,81 @@ def _migrate_v33(preset: dict) -> dict:
     return preset
 
 
-_MIGRATIONS = {
-    1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
-    2: _migrate_v2,  # v1.2.2-71-g0fbabe91
-    3: _migrate_v3,  # v1.2.2-563-g50f4d07a
-    4: _migrate_v4,  # v1.2.2-832-gec9b8004
-    5: _migrate_v5,  # v2.0.2-15-g1096103d
-    6: _migrate_v6,  # v2.1.2-61-g8bb33489
-    7: _migrate_v7,  # v2.3.0-27-g6b4168b8
-    8: _migrate_v8,  # v2.5.2-39-g3cf0b27d
-    9: _migrate_v9,  # v2.6.1-33-gf0b8ec32
-    10: _migrate_v10,  # v2.6.1-416-g358711ce
-    11: _migrate_v11,  # v2.6.1-494-g086eb8cf
-    12: _migrate_v12,  # v3.0.2-13-gdffb4b9a
-    13: _migrate_v13,  # v3.1.3-122-g9f50c418
-    14: _migrate_v14,  # v3.2.1-44-g11823eac
-    15: _migrate_v15,  # v3.2.1-203-g6e303090
-    16: _migrate_v16,  # v3.2.1-363-g3a93b533
-    17: _migrate_v17,
-    18: _migrate_v18,
-    19: _migrate_v19,  # v3.3.0dev721
-    20: _migrate_v20,
-    21: _migrate_v21,
-    22: _migrate_v22,
-    23: _migrate_v23,
-    24: _migrate_v24,
-    25: _migrate_v25,
-    26: _migrate_v26,
-    27: _migrate_v27,
-    28: _migrate_v28,
-    29: _migrate_v29,
-    30: _migrate_v30,
-    31: _migrate_v31,
-    32: _migrate_v32,
-    33: _migrate_v33,
-}
+def _migrate_v34(preset: dict) -> dict:
+    preset["configuration"].pop("multi_pickup_placement")
+    preset["configuration"].pop("multi_pickup_new_weighting")
+
+    return preset
+
+
+def _migrate_v35(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["linear_damage_runs"] = False
+        preset["configuration"]["linear_dps"] = 20
+    return preset
+
+
+def _migrate_v36(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["enemy_attributes"] = None
+    return preset
+
+
+def _migrate_v37(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        config = preset["configuration"]
+        damage = config.pop("linear_dps")
+        if not config.pop("linear_damage_runs"):
+            damage = None
+        config["constant_heat_damage"] = config["constant_cold_damage"] = config["constant_lava_damage"] = damage
+
+    return preset
+
+
+_MIGRATIONS = [
+    _migrate_v1,  # v1.1.1-247-gaf9e4a69
+    _migrate_v2,  # v1.2.2-71-g0fbabe91
+    _migrate_v3,  # v1.2.2-563-g50f4d07a
+    _migrate_v4,  # v1.2.2-832-gec9b8004
+    _migrate_v5,  # v2.0.2-15-g1096103d
+    _migrate_v6,  # v2.1.2-61-g8bb33489
+    _migrate_v7,  # v2.3.0-27-g6b4168b8
+    _migrate_v8,  # v2.5.2-39-g3cf0b27d
+    _migrate_v9,  # v2.6.1-33-gf0b8ec32
+    _migrate_v10,  # v2.6.1-416-g358711ce
+    _migrate_v11,  # v2.6.1-494-g086eb8cf
+    _migrate_v12,  # v3.0.2-13-gdffb4b9a
+    _migrate_v13,  # v3.1.3-122-g9f50c418
+    _migrate_v14,  # v3.2.1-44-g11823eac
+    _migrate_v15,  # v3.2.1-203-g6e303090
+    _migrate_v16,  # v3.2.1-363-g3a93b533
+    _migrate_v17,
+    _migrate_v18,
+    _migrate_v19,  # v3.3.0dev721
+    _migrate_v20,
+    _migrate_v21,
+    _migrate_v22,
+    _migrate_v23,
+    _migrate_v24,
+    _migrate_v25,
+    _migrate_v26,
+    _migrate_v27,
+    _migrate_v28,
+    _migrate_v29,
+    _migrate_v30,
+    _migrate_v31,
+    _migrate_v32,
+    _migrate_v33,
+    _migrate_v34,
+    _migrate_v35,
+    _migrate_v36,
+    _migrate_v37,
+]
+CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def convert_to_current_version(preset: dict) -> dict:
-    return migration_lib.migrate_to_version(
+    return migration_lib.apply_migrations(
         preset,
-        CURRENT_VERSION,
         _MIGRATIONS,
     )

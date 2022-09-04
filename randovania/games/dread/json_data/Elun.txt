@@ -139,7 +139,7 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Door to Chozo Soldier Arena
-      Walljump (Beginner) or Use Spin Boost
+      Trivial
 
 > Door to Chozo Soldier Arena; Heals? False
   * Layers: default
@@ -152,8 +152,6 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_def: None
   > Door to Purple Drapes
       Trivial
-  > Pickup (Energy Tank)
-      Lay Bomb
   > Tile Group (POWERBEAM)
       Trivial
   > Tile Group (BOMB) 1
@@ -178,8 +176,6 @@ Extra - asset_id: collision_camera_003
   * Pickup 114; Major Location? False
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
-  > Door to Chozo Soldier Arena
-      Lay Bomb
   > Tile Group (BOMB) 3
       Morph Ball
 
@@ -195,9 +191,11 @@ Extra - asset_id: collision_camera_003
   > Door to Gyroscope Room
       Trivial
   > Event - Elun - Ammo Recharge Room Blob
-      Wave Beam
+      Shoot Diffusion or Wave
   > Ammo Recharge
       Trivial
+  > Alcove
+      After Elun - Ammo Recharge Room Blob
 
 > Door to Plasma Beam Room (Lower); Heals? False
   * Layers: default
@@ -306,14 +304,14 @@ Extra - asset_id: collision_camera_003
   > Door to Plasma Beam Room (Upper)
       After Elun - Ammo Recharge Room Blob
   > Event - Elun - Ammo Recharge Room Blob
-      Shoot Beam
+      Lay Bomb or Shoot Beam
   > Dock from Purple Drapes
       Trivial
 
 > Event - Release X; Heals? False
   * Layers: default
   * Event Elun - Release X Parasites
-  * TODO: Verify exiting this morph ball launcher releases the X
+  * Event is triggered by just touching it. No need to use the Morphball launcher
 
 
   > Alcove
@@ -351,7 +349,7 @@ Extra - asset_id: collision_camera_004
   > Door to Ammo Recharge Station
       After Elun Chozo Soldier Fight
   > Event - Chozo Soldier Fight
-      Trivial
+      Fight Chozo-X
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -516,9 +514,7 @@ Extra - asset_id: collision_camera_007
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Chozo Soldier Arena
-      All of the following:
-          Can Slide
-          Grapple Beam or Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
+      Can Slide
   > Tile Group (BOMB)
       Morph Ball
 
@@ -584,7 +580,9 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Gyroscope Room
-      Ballspark
+      Any of the following:
+          Ballspark
+          Movement (Beginner) and Lay Cross Comb
   > Tunnel to Bottom Morph Launcher
       Morph Ball
 

@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from randovania.version import version
-from randovania.version_hash import git_hash
+from randovania.version_hash import git_hash, git_branch as _git_branch
 
 CONFIGURATION_FILE_PATH: Path | None = None
 
@@ -13,7 +13,16 @@ def is_frozen() -> bool:
 
 
 def is_dev_version():
-    return ".dev" in VERSION
+    return ".dev" in VERSION and _git_branch != "stable"
+
+
+def get_icon_path():
+    if is_dev_version():
+        icon_name = "dark_temple_key.ico"
+    else:
+        icon_name = "sky_temple_key_NqN_icon.ico"
+
+    return get_data_path().joinpath("icons", icon_name)
 
 
 def get_file_path() -> Path:
@@ -28,6 +37,18 @@ def get_readme() -> Path:
     if is_frozen():
         return get_data_path().joinpath("README.md")
     return get_file_path().parent.joinpath("README.md")
+
+
+def get_readme_section(section: str) -> str:
+    readme = get_readme().read_text()
+
+    start_comment = f"<!-- Begin {section} -->\n"
+    end_comment = f"<!-- End {section} -->"
+
+    start = readme.find(start_comment) + len(start_comment)
+    end = readme.find(end_comment)
+
+    return readme[start:end]
 
 
 def get_data_path() -> Path:
@@ -56,7 +77,7 @@ def get_configuration() -> dict:
             raise
 
 
-def setup_logging(default_level: str, log_to_file: Path | None):
+def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = False):
     import logging.config
     import logging.handlers
     import time
@@ -128,7 +149,8 @@ def setup_logging(default_level: str, log_to_file: Path | None):
             'handlers': list(handlers.keys()),
         },
     })
-    logging.info("Logging initialized with level %s for version %s.", default_level, VERSION)
+    if not quiet:
+        logging.info("Logging initialized with level %s for version %s.", default_level, VERSION)
 
 
 __version__ = version

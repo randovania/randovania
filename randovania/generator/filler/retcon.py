@@ -159,22 +159,20 @@ def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -
 
 def increment_considered_count(locations_weighted: WeightedLocations):
     for player, location in locations_weighted.keys():
+        was_present = location in player.pickup_index_considered_count
         player.pickup_index_considered_count[location] += 1
-        filler_logging.print_new_pickup_index(player.index, player.game, player.reach, location,
-                                              player.pickup_index_considered_count[location])
+        if not was_present:
+            # if it wasn't present, thenwe get to log!
+            filler_logging.print_new_pickup_index(player.index, player.game, location)
 
 
-def retcon_playthrough_filler(rng: Random,
-                              player_states: list[PlayerState],
-                              status_update: Callable[[str], None],
-                              ) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
-    """
-    Runs the retcon logic.
-    :param rng:
-    :param player_states:
-    :param status_update:
-    :return: A GamePatches for each player and a sequence of placed items.
-    """
+def _print_header(player_states: list[PlayerState]):
+    def _name_for_index(state: PlayerState, index: PickupIndex):
+        return state.game.world_list.node_name(
+            state.game.world_list.node_from_pickup_index(index),
+            with_world=True,
+        )
+
     debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
         "*" * 100,
         "\n".join(
@@ -188,6 +186,32 @@ def retcon_playthrough_filler(rng: Random,
             for player_state in player_states
         )
     ))
+    debug.debug_print("Static assignments:\n{}".format(
+        "\n".join(
+            "Player {}: {}".format(
+                player_state.index,
+                pprint.pformat({
+                    _name_for_index(player_state, index): target.pickup.name
+                    for index, target in player_state.reach.state.patches.pickup_assignment.items()
+                })
+            )
+            for player_state in player_states
+        )
+    ))
+
+
+def retcon_playthrough_filler(rng: Random,
+                              player_states: list[PlayerState],
+                              status_update: Callable[[str], None],
+                              ) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
+    """
+    Runs the retcon logic.
+    :param rng:
+    :param player_states:
+    :param status_update:
+    :return: A GamePatches for each player and a sequence of placed items.
+    """
+    _print_header(player_states)
     last_message = "Starting."
 
     def action_report(message: str):
@@ -219,7 +243,7 @@ def retcon_playthrough_filler(rng: Random,
         if new_pickups:
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):
-                if i > 0 and current_player.configuration.multi_pickup_new_weighting:
+                if i > 0:
                     current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
                     current_player.advance_scan_asset_seen_count()
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
@@ -233,8 +257,6 @@ def retcon_playthrough_filler(rng: Random,
                 current_player.pickups_left.remove(new_pickup)
 
             current_player.num_actions += 1
-            if not current_player.configuration.multi_pickup_new_weighting:
-                increment_considered_count(all_locations_weighted)
 
         last_message = f"{sum(player.num_actions for player in player_states)} actions performed."
         status_update(last_message)
@@ -280,8 +302,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
         index_owner_state, pickup_index = select_element_with_weight(locations_weighted, rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
 
-        if current_player.configuration.multi_pickup_new_weighting:
-            increment_considered_count(all_locations_weighted)
+        increment_considered_count(all_locations_weighted)
         all_locations_weighted.pop((index_owner_state, pickup_index))
 
         # Place a hint for the new item
@@ -371,6 +392,12 @@ def _calculate_hint_location_for_action(action: PickupEntry,
         ]
         if potential_hint_locations:
             return rng.choice(sorted(potential_hint_locations))
+        else:
+            debug.debug_print(
+                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.logbooks)}"
+            )
+    else:
+        debug.debug_print(f">> Pickup {action.name} was decided to not have a hint.")
     return None
 
 

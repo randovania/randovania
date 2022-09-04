@@ -85,16 +85,12 @@ class GamePresetDescriber:
                 major_items.maximum_random_starting_items,
             )
 
-        template_strings["Logic Settings"].append(configuration.trick_level.pretty_description)
+        template_strings["Logic Settings"].append(configuration.trick_level.pretty_description(game_description))
         template_strings["Logic Settings"].append(
             f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
 
         if randomization_mode != RandomizationMode.FULL:
             template_strings["Item Placement"].append(f"Randomization Mode: {randomization_mode.value}")
-        if configuration.multi_pickup_placement:
-            template_strings["Item Placement"].append("Multi-pickup placement")
-            if configuration.multi_pickup_new_weighting:
-                template_strings["Item Placement"].append("New multi-pickup weighting")
 
         # Starting Items
         if random_starting_items != "0":

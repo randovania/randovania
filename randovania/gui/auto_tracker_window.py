@@ -16,7 +16,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.clickable_label import ClickableLabel
+from randovania.gui.lib.tracker_item_image import TrackerItemImage
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.pixmap_lib import paint_with_opacity
 from randovania.interface_common.options import Options
@@ -34,7 +34,7 @@ class FieldToCheck(Enum):
 
 @dataclasses.dataclass(frozen=True)
 class Element:
-    labels: list[QtWidgets.QLabel | ClickableLabel | ClickableLabel]
+    labels: list[QtWidgets.QLabel | TrackerItemImage | TrackerItemImage]
     resources: list[ItemResourceInfo]
     text_template: str
     minimum_to_check: int
@@ -145,7 +145,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
                     capacity += current.capacity
                     max_capacity += resource.max_capacity
 
-                if isinstance(label, ClickableLabel):
+                if isinstance(label, TrackerItemImage):
                     fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
                     value_target = element.minimum_to_check
                     value = fields[element.field_to_check.value]
@@ -226,8 +226,8 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
                         logging.error("Tracker asset not found: %s", image_path)
                     pixmap = QtGui.QPixmap(str(image_path))
 
-                    label = ClickableLabel(self.inventory_group, paint_with_opacity(pixmap, 0.3),
-                                           paint_with_opacity(pixmap, 1.0))
+                    label = TrackerItemImage(self.inventory_group, paint_with_opacity(pixmap, 0.3),
+                                             paint_with_opacity(pixmap, 1.0))
                     label.set_checked(False)
                     label.set_ignore_mouse_events(True)
                     label.setVisible(visible)

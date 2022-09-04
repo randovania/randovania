@@ -6,9 +6,7 @@ import re
 import subprocess
 
 import discord
-from discord.ext import commands
-from discord_slash import ComponentContext, ButtonStyle, SlashCommand
-from discord_slash.utils import manage_components
+from discord.ui import Button
 
 import randovania
 from randovania.layout import preset_describer, layout_description
@@ -67,7 +65,7 @@ def get_version(original_permalink: str, randovania_version: bytes) -> str | Non
 async def look_for_permalinks(message: discord.Message):
     embed = None
     multiple_permalinks = False
-    components = []
+    view = None
 
     for word in possible_links_re.finditer(message.content):
         try:
@@ -75,12 +73,16 @@ async def look_for_permalinks(message: discord.Message):
             randovania_version = permalink.randovania_version
             games = [preset.game for preset in permalink.parameters.presets]
             seed_hash = permalink.seed_hash
+            error_message = None
 
         except UnsupportedPermalink as e:
             permalink = None
             randovania_version = e.randovania_version
             games = e.games
             seed_hash = e.seed_hash
+            error_message = f"\n\nPermalink incompatible with Randovania {randovania.VERSION}"
+            if e.__cause__ is not None:
+                error_message += f"\n{e.__cause__}"
 
         except (ValueError, UnsupportedPermalink):
             # TODO: handle the incorrect version permalink
@@ -94,7 +96,13 @@ async def look_for_permalinks(message: discord.Message):
             multiple_permalinks = True
             continue
 
-        word_hash = layout_description.shareable_word_hash(seed_hash, games)
+        if seed_hash is not None:
+            pretty_hash = "Seed Hash: {} ({})".format(
+                layout_description.shareable_word_hash(seed_hash, games),
+                base64.b32encode(seed_hash).decode(),
+            )
+        else:
+            pretty_hash = "Unknown seed hash"
 
         player_count = len(games)
         embed = discord.Embed(title=f"`{word.group(1)}`",
@@ -105,26 +113,18 @@ async def look_for_permalinks(message: discord.Message):
             if permalink is not None:
                 _add_preset_description_to_embed(embed, permalink.parameters.get_preset(0))
 
-        embed.description += " for Randovania {}\nSeed Hash: {} ({})".format(
-            version,
-            word_hash,
-            base64.b32encode(seed_hash).decode(),
-        )
+        embed.description += f" for Randovania {version}\n{pretty_hash}"
 
         if permalink is not None:
-            components.append(manage_components.create_actionrow(manage_components.create_button(
-                style=ButtonStyle.secondary,
-                label="Attach presets",
-                custom_id="attach_presets_of_permalink",
-            )))
+            view = RequestPresetsView()
         else:
-            embed.description += f"\nPermalink incompatible with Randovania {randovania.VERSION}"
+            embed.description += error_message
 
     if embed is not None:
         content = None
         if multiple_permalinks:
             content = "Multiple permalinks found, using only the first."
-        await message.reply(content=content, embed=embed, components=components, mention_author=False)
+        await message.reply(content=content, embed=embed, view=view, mention_author=False)
 
 
 async def reply_for_preset(message: discord.Message, versioned_preset: VersionedPreset):
@@ -175,40 +175,18 @@ async def reply_for_layout_description(message: discord.Message, description: La
     await message.reply(embed=embed, mention_author=False)
 
 
-class PermalinkLookupCog(RandovaniaCog):
-    def __init__(self, configuration: dict, bot: RandovaniaBot):
-        self.configuration = configuration
-        self.bot = bot
+class RequestPresetsView(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
 
-    async def add_commands(self, slash: SlashCommand):
-        slash.add_component_callback(
-            self.on_request_presets,
-            components=["attach_presets_of_permalink"],
-            use_callback_name=False,
-        )
-
-    @commands.Cog.listener()
-    async def on_message(self, message: discord.Message):
-        if message.author == self.bot.user:
-            return
-
-        for attachment in message.attachments:
-            filename: str = attachment.filename
-            if filename.endswith(VersionedPreset.file_extension()):
-                data = await attachment.read()
-                versioned_preset = VersionedPreset(json.loads(data.decode("utf-8")))
-                await reply_for_preset(message, versioned_preset)
-
-            elif filename.endswith(LayoutDescription.file_extension()):
-                data = await attachment.read()
-                description = LayoutDescription.from_json_dict(json.loads(data.decode("utf-8")))
-                await reply_for_layout_description(message, description)
-
-        await look_for_permalinks(message)
-
-    async def on_request_presets(self, ctx: ComponentContext):
+    @discord.ui.button(
+        label="Attach presets",
+        style=discord.ButtonStyle.secondary,
+        custom_id="attach_presets_of_permalink",
+    )
+    async def button_callback(self, button: Button, interaction: discord.Interaction):
         try:
-            title = ctx.origin_message.embeds[0].title
+            title = (await interaction.original_message()).embeds[0].title
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
@@ -227,10 +205,38 @@ class PermalinkLookupCog(RandovaniaCog):
                     discord.File(data, filename=f"Player {player + 1}'s Preset.{VersionedPreset.file_extension()}")
                 )
 
-        await ctx.edit_origin(
-            components=[],
+        await interaction.edit_original_message(
+            view=None,
             files=files,
         )
+
+
+class PermalinkLookupCog(RandovaniaCog):
+    def __init__(self, configuration: dict, bot: RandovaniaBot):
+        self.configuration = configuration
+        self.bot = bot
+
+    async def add_commands(self):
+        self.bot.add_view(RequestPresetsView())
+
+    @discord.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        if message.author == self.bot.user:
+            return
+
+        for attachment in message.attachments:
+            filename: str = attachment.filename
+            if filename.endswith(VersionedPreset.file_extension()):
+                data = await attachment.read()
+                versioned_preset = VersionedPreset(json.loads(data.decode("utf-8")))
+                await reply_for_preset(message, versioned_preset)
+
+            elif filename.endswith(LayoutDescription.file_extension()):
+                data = await attachment.read()
+                description = LayoutDescription.from_json_dict(json.loads(data.decode("utf-8")))
+                await reply_for_layout_description(message, description)
+
+        await look_for_permalinks(message)
 
 
 def setup(bot: RandovaniaBot):

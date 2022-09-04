@@ -8,6 +8,7 @@ from typing import Iterator
 
 from PySide6 import QtWidgets, QtGui
 
+import randovania
 from randovania import get_data_path
 
 
@@ -169,7 +170,7 @@ def set_default_window_icon(window: QtWidgets.QWidget):
     :param window:
     :return:
     """
-    window.setWindowIcon(QtGui.QIcon(str(get_data_path().joinpath("icons", "sky_temple_key_NqN_icon.ico"))))
+    window.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
 
 
 def set_combo_with_value(combo: QtWidgets.QComboBox, value):

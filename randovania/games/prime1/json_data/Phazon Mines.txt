@@ -365,12 +365,8 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
           Any of the following:
               Combat (Intermediate) or Normal Damage ≥ 125
               Shoot Ice Beam and Shoot Wave Beam
-  > Event - Mine Security Station Doors Unlocked
-      All of the following:
-          Before Mine Security Station Unlock Doors and Shoot Wave Beam
-          Any of the following:
-              Charge Beam or Combat (Advanced)
-              Combat (Intermediate) and Normal Damage ≥ 125
+  > Wave Pirate Shootout
+      Trivial
 
 > Door to Security Access B; Heals? False
   * Layers: default
@@ -387,12 +383,8 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
       After Mine Security Station Barrier
   > Event - Mine Security Station Barrier Opened
       Morph Ball and Power Bomb and Scan Visor
-  > Event - Mine Security Station Doors Unlocked
-      All of the following:
-          Before Mine Security Station Unlock Doors and Shoot Wave Beam
-          Any of the following:
-              Charge Beam or Combat (Advanced)
-              Combat (Intermediate) and Normal Damage ≥ 125
+  > Wave Pirate Shootout
+      Trivial
 
 > Door to Storage Depot A; Heals? False
   * Layers: default
@@ -400,7 +392,9 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Extra - dock_index: 2
   * Extra - nonstandard: False
   > Door to Security Access B
-      After Mine Security Station Barrier
+      After Mine Security Station Barrier and After Mine Security Station Unlock Doors
+  > Wave Pirate Shootout
+      Trivial
 
 > Event - Mine Security Station Barrier Opened; Heals? False
   * Layers: default
@@ -420,6 +414,15 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
       Trivial
   > Door to Security Access B
       Trivial
+
+> Wave Pirate Shootout; Heals? False
+  * Layers: default
+  > Event - Mine Security Station Doors Unlocked
+      All of the following:
+          Before Mine Security Station Unlock Doors and Shoot Wave Beam
+          Any of the following:
+              Charge Beam or Combat (Advanced)
+              Combat (Intermediate) and Normal Damage ≥ 125
 
 ----------------
 Research Access

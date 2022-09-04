@@ -6,6 +6,8 @@ from typing import Iterator, TypeVar, Callable
 
 import bitstruct
 
+from randovania.lib import type_lib
+
 T = TypeVar("T")
 
 ARBITRARY_INT_SIZE_LIMITS = (4, 16, 128, 1024)
@@ -196,7 +198,14 @@ class BitPackDataclass(BitPackValue):
                 continue
 
             item = getattr(self, field.name)
-            bit_pack_value = _get_bit_pack_value_for(item, field.type)
+
+            resolved_type, optional = type_lib.resolve_optional(field.type)
+            if optional:
+                yield from encode_bool(item is not None)
+                if item is None:
+                    continue
+
+            bit_pack_value = _get_bit_pack_value_for(item, resolved_type)
 
             if reference is not None:
                 reference_item = getattr(reference, field.name)
@@ -213,7 +222,10 @@ class BitPackDataclass(BitPackValue):
             should_encode = True
 
             if bit_pack_value.bit_pack_skip_if_equals() and reference_item is not None:
-                reference_pack_value = _get_bit_pack_value_for(reference_item, field.type)
+                # reference_item being None means: no reference, or it's None in reference.
+                # for second case, if we reached this point `item` is not None, so it's obviously different
+
+                reference_pack_value = _get_bit_pack_value_for(reference_item, resolved_type)
                 encoded_reference = list(reference_pack_value.bit_pack_encode(field_meta))
                 should_encode = encoded_item != encoded_reference
                 yield from encode_bool(should_encode)
@@ -230,10 +242,17 @@ class BitPackDataclass(BitPackValue):
             if not field.init:
                 continue
 
-            bit_pack_value = _get_bit_pack_value_for_type(field.type)
+            resolved_type, optional = type_lib.resolve_optional(field.type)
 
-            should_decode = True
-            if reference is not None:
+            if optional:
+                should_decode = decode_bool(decoder)
+            else:
+                should_decode = True
+
+            item = None
+            bit_pack_value = _get_bit_pack_value_for_type(resolved_type)
+
+            if reference is not None and should_decode:
                 reference_item = getattr(reference, field.name)
                 if bit_pack_value.bit_pack_skip_if_equals() and not decode_bool(decoder):
                     item = reference_item

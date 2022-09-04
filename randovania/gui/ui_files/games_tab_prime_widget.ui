@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PrimeHelpWidget</class>
- <widget class="QTabWidget" name="PrimeHelpWidget">
+ <class>PrimeGameTabWidget</class>
+ <widget class="QTabWidget" name="PrimeGameTabWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,6 +13,59 @@
   <property name="currentIndex">
    <number>0</number>
   </property>
+  <widget class="QWidget" name="tab_intro">
+   <attribute name="title">
+    <string>Introduction</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="intro_layout">
+    <item>
+     <layout class="QHBoxLayout" name="intro_cover_layout">
+      <item>
+       <widget class="QLabel" name="game_cover_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="intro_label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Explore Tallon IV, acquiring items as you hunt for the Chozo artifacts. Collect them all to unlock the path to the Impact Crater and Metroid Prime.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Scanning the statues in the Artifact Temple will provide hints for each artifact's location. Additionally, the entrance room of the Impact Crater has a hint for the Phazon Suit's location.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The default settings skip the frigate tutorial by starting at the Landing Site in Tallon Overworld, shuffle two Charge Beams into the item pool, and require 6 artifacts to unlock the Impact Crater. &lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="quick_generate_button">
+      <property name="text">
+       <string>Quick generate</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="intro_spacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="GenerateGameWidget" name="tab_generate_game">
+   <attribute name="title">
+    <string>Play</string>
+   </attribute>
+  </widget>
   <widget class="QWidget" name="faq_tab">
    <attribute name="title">
     <string>FAQ</string>
@@ -41,7 +94,7 @@
          <x>0</x>
          <y>0</y>
          <width>432</width>
-         <height>361</height>
+         <height>367</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_10">
@@ -95,7 +148,7 @@
          <x>0</x>
          <y>0</y>
          <width>432</width>
-         <height>361</height>
+         <height>367</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout_4">
@@ -159,7 +212,7 @@
          <x>0</x>
          <y>0</y>
          <width>432</width>
-         <height>361</height>
+         <height>367</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout_4">
@@ -218,6 +271,14 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GenerateGameWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

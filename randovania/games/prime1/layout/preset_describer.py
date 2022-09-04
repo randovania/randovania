@@ -44,6 +44,35 @@ class PrimePresetDescriber(GamePresetDescriber):
         superheated_probability = describe_probability(configuration.superheated_probability, "superheated")
         submerged_probability = describe_probability(configuration.submerged_probability, "submerged")
 
+        def attribute_in_range(rand_range, attribute):
+            if rand_range[0] == 1.0 and rand_range[1] == 1.0:
+                return None
+            elif rand_range[0] > rand_range[1]:
+                rand_range = (rand_range[1], rand_range[0])
+
+            return "Random {0} within range {1} - {2}".format(attribute, rand_range[0], rand_range[1])
+
+        def different_xyz_randomization(diff_xyz):
+            if enemy_rando_range_scale is None:
+                return None
+            elif diff_xyz:
+                return "Enemies will be stretched randomly"
+
+        if configuration.enemy_attributes is not None:
+            enemy_rando_range_scale = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_scale_low, configuration.enemy_attributes.enemy_rando_range_scale_high], "Size")
+            enemy_rando_range_health = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_health_low, configuration.enemy_attributes.enemy_rando_range_health_high], "Health")
+            enemy_rando_range_speed = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_speed_low, configuration.enemy_attributes.enemy_rando_range_speed_high], "Speed")
+            enemy_rando_range_damage = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_damage_low, configuration.enemy_attributes.enemy_rando_range_damage_high], "Damage")
+            enemy_rando_range_knockback = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_knockback_low, configuration.enemy_attributes.enemy_rando_range_knockback_high], "Knockback")
+            enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_attributes.enemy_rando_diff_xyz)
+        else:
+            enemy_rando_range_scale = None
+            enemy_rando_range_health = None
+            enemy_rando_range_speed = None
+            enemy_rando_range_damage = None
+            enemy_rando_range_knockback = None
+            enemy_rando_diff_xyz = None
+
         extra_message_tree = {
             "Difficulty": [
                 {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},
@@ -111,9 +140,21 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     cutscene_removal: cutscene_removal is not None,
+                },
+                {
+                    enemy_rando_range_scale: enemy_rando_range_scale is not None,
+                    enemy_rando_range_health: enemy_rando_range_health is not None,
+                    enemy_rando_range_speed: enemy_rando_range_speed is not None,
+                    enemy_rando_range_damage: enemy_rando_range_damage is not None,
+                    enemy_rando_range_knockback: enemy_rando_range_knockback is not None,
+                    enemy_rando_diff_xyz: enemy_rando_diff_xyz is not None,
                 }
             ],
         }
+        if enemy_rando_range_scale is not None:
+            for listing in extra_message_tree["Game Changes"]:
+                if "Random Boss Sizes" in listing.keys():
+                    listing["Random Boss Sizes"] = False
 
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 

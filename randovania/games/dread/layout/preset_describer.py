@@ -1,10 +1,48 @@
 from randovania.game_description.item.major_item import MajorItem
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree, message_for_required_mains, handle_progressive_expected_counts, has_shuffled_item,
 )
+
+
+def describe_artifacts(artifacts: DreadArtifactConfig) -> list[dict[str, bool]]:
+    has_artifacts = artifacts.required_artifacts > 0
+    if has_artifacts:
+        return [
+            {
+                f"{artifacts.required_artifacts} Metroid DNA": True,
+            },
+            {
+                "Prefers E.M.M.I.": artifacts.prefer_emmi,
+                "Prefers major bosses": artifacts.prefer_major_bosses,
+            }
+        ]
+    else:
+        return [
+            {
+                "Reach Itorash": True,
+            }
+        ]
+
+
+def _format_environmental_damage(configuration: DreadConfiguration):
+    def format_dmg(value: int | None):
+        if value is None:
+            return "Unmodified"
+        elif value == 0:
+            return "Removed"
+        else:
+            return f"Constant {value} dmg/s"
+        pass
+
+    return [
+        {f"{name}: {format_dmg(dmg)}": True}
+        for name, dmg in [("Heat", configuration.constant_heat_damage),
+                          ("Cold", configuration.constant_cold_damage),
+                          ("Lava", configuration.constant_lava_damage)]
+    ]
 
 
 class DreadPresetDescriber(GamePresetDescriber):
@@ -14,14 +52,14 @@ class DreadPresetDescriber(GamePresetDescriber):
         major_items = configuration.major_items_configuration
         template_strings = super().format_params(configuration)
 
-        if configuration.energy_per_tank != 100:
-            template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
-
         extra_message_tree = {
             "Difficulty": [
                 {
                     "Immediate Energy Part": configuration.immediate_energy_parts,
-                }
+                },
+                {
+                    f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100
+                },
             ],
             "Item Pool": [
                 {
@@ -36,6 +74,7 @@ class DreadPresetDescriber(GamePresetDescriber):
             "Gameplay": [
                 {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
             ],
+            "Goal": describe_artifacts(configuration.artifacts),
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_configuration,
@@ -50,12 +89,8 @@ class DreadPresetDescriber(GamePresetDescriber):
                 {
                     "X Starts Released": configuration.x_starts_released,
                 },
-                {
-                    f"Requires {configuration.artifacts.required_artifacts} Metroid DNA": True,
-                    "Prefer E.M.M.I. for DNA": configuration.artifacts.prefer_emmi,
-                    "Prefer major bosses for DNA": configuration.artifacts.prefer_major_bosses,
-                }
-            ]
+            ],
+            "Environmental Damage": _format_environmental_damage(configuration),
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 

@@ -6,6 +6,7 @@ from PySide6 import QtWidgets, QtCore
 
 from randovania.exporter import item_names
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
@@ -19,6 +20,7 @@ from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
@@ -31,8 +33,7 @@ from randovania.resolver.exceptions import InvalidConfiguration
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
     "For a total of {total} from this source."
     "\n{from_items} will be provided from other sources."
-    "\n{maximum} is the maximum you can have at once.\n"
-    "\nResources from sources like this are only considered by logic when using 'multi-pickup placement'."
+    "\n{maximum} is the maximum you can have at once."
 )
 
 
@@ -57,8 +58,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     _progressive_widgets: list[ProgressiveItemWidget]
 
-    def __init__(self, editor: PresetEditor):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
@@ -396,17 +397,17 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _create_progressive_widgets(self, item_database: ItemDatabase):
         self._progressive_widgets = []
 
-        all_progressive = self.game.gui.progressive_item_gui_tuples
+        all_progressive = list(self.game.gui.progressive_item_gui_tuples)
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
             self._boxes_for_category[item_database.major_items[progressive_item_name].item_category.name][:2]
-            for (progressive_item_name, non_progressive_items) in all_progressive
+            for progressive_item_name, non_progressive_items in all_progressive
         }
 
         for box, layout in layouts_with_lines:
             layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
-        for (progressive_item_name, non_progressive_items) in all_progressive:
+        for progressive_item_name, non_progressive_items in all_progressive:
             progressive_item = item_database.major_items[progressive_item_name]
             parent, layout, _ = self._boxes_for_category[progressive_item.item_category.name]
 

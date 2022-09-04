@@ -7,7 +7,9 @@ from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import common_qt_lib, signal_handling
-from randovania.gui.preset_settings.preset_tab import PresetTab, PresetEditor
+from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.preset_settings.preset_tab import PresetTab
+from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
@@ -15,8 +17,8 @@ from randovania.layout.preset import Preset
 
 
 class PresetGeneration(PresetTab, Ui_PresetGeneration):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription) -> None:
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         # Game-specific Settings
@@ -28,8 +30,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             self.game_specific_group.setVisible(False)
 
         # Item Placement
-        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
-        signal_handling.on_checked(self.multi_pickup_new_weighting_check, self._persist_multi_pickup_new_weighting)
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
         signal_handling.on_checked(self.local_first_progression_check, self._persist_local_first_progression)
 
@@ -61,9 +61,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration
 
-        self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
-        self.multi_pickup_new_weighting_check.setEnabled(layout.multi_pickup_placement)
-        self.multi_pickup_new_weighting_check.setChecked(layout.multi_pickup_new_weighting)
         self.local_first_progression_check.setChecked(layout.first_progression_must_be_local)
         self.check_major_minor.setChecked(
             layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
@@ -88,14 +85,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     @property
     def game_specific_widgets(self) -> Iterable[QWidget] | None:
         return None
-
-    def _persist_multi_pickup_placement(self, value: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("multi_pickup_placement", value)
-
-    def _persist_multi_pickup_new_weighting(self, value: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("multi_pickup_new_weighting", value)
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL

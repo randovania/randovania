@@ -1,11 +1,13 @@
 import dataclasses
 
+from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
@@ -13,10 +15,10 @@ from randovania.layout.preset import Preset
 
 class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
-    def __init__(self, editor: PresetEditor, game_enum: RandovaniaGame):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
-        self.game_enum = game_enum
+        self.game_enum = game_description.game
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
         signal_handling.on_checked(self.dangerous_tank_check, self._persist_dangerous_tank)
@@ -33,8 +35,8 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
             signal_handling.on_checked(self.safe_zone_logic_heal_check, self._persist_safe_zone_logic_heal)
             self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
-            self.varia_suit_spin_box.valueChanged.connect(self._persist_float("varia_suit_damage"))
-            self.dark_suit_spin_box.valueChanged.connect(self._persist_float("dark_suit_damage"))
+            self.varia_suit_spin_box.valueChanged.connect(self._persist_argument("varia_suit_damage"))
+            self.dark_suit_spin_box.valueChanged.connect(self._persist_argument("dark_suit_damage"))
         else:
             self.dark_aether_box.setVisible(False)
             self.safe_zone_box.setVisible(False)
@@ -50,7 +52,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
             signal_handling.on_checked(self.progressive_damage_reduction_check, self._persist_progressive_damage)
             signal_handling.on_checked(self.heated_damage_varia_check, self._persist_heat_protection_only_varia)
-            self.heated_damage_spin.valueChanged.connect(self._persist_float("heat_damage"))
+            self.heated_damage_spin.valueChanged.connect(self._persist_argument("heat_damage"))
 
         else:
             self.progressive_damage_reduction_check.setVisible(False)

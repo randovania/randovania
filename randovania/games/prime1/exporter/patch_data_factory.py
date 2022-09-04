@@ -23,6 +23,8 @@ from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.layout_description import LayoutDescription
+from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -104,8 +106,8 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
                                      rng: Random) -> dict:
     model = detail.model.as_json
 
-    scan_text = detail.scan_text
-    hud_text = detail.hud_text[0]
+    name = detail.name
+    collection_text = detail.collection_text[0]
     pickup_type = "Nothing"
     count = 0
 
@@ -117,17 +119,17 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         break
 
     if (model["name"] == "Missile" and not detail.other_player
-            and "Missile Expansion" in hud_text
+            and "Missile Expansion" in collection_text
             and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
         model["name"] = "Shiny Missile"
-        hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
-        scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        name = name.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
         "model": model,
-        "scanText": scan_text,
-        "hudmemoText": hud_text,
+        "scanText": f"{name}. {detail.description}".strip(),
+        "hudmemoText": collection_text,
         "currIncrease": count,
         "maxIncrease": count,
         "respawn": False,
@@ -704,7 +706,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
         starting_memo = None
-        extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
+        extra_starting = item_names.additional_starting_items(self.configuration, db,
                                                               self.patches.starting_items)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
@@ -796,7 +798,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         seed = self.description.get_seed_for_player(self.players_config.player_index)
 
         boss_sizes = None
-        if self.configuration.random_boss_sizes:
+        random_enemy_sizes = False
+        if self.configuration.enemy_attributes is not None:
+            if self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0 or self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0:
+                random_enemy_sizes = True
+        if self.configuration.random_boss_sizes and not random_enemy_sizes:
             def get_random_size(minimum, maximum):
                 if self.rng.choice([True, False]):
                     temp = [self.rng.uniform(minimum, 1.0), self.rng.uniform(minimum, 1.0)]
@@ -902,6 +908,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
 
+            "randEnemyAttributes": self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None,
+            
             # TODO
             # "externAssetsDir": path_to_converted_assets,
         }

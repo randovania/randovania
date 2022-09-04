@@ -15,13 +15,12 @@ from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib
+from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
-from randovania.generator.filler.filler_logging import print_new_resources, print_retcon_loop_start
 from randovania.generator.filler.pickup_list import (
     get_pickups_that_solves_unreachable,
-    get_pickups_with_interesting_resources,
     interesting_resources_for_reach, PickupCombinations,
 )
 from randovania.layout.base.available_locations import RandomizationMode
@@ -75,6 +74,7 @@ class PlayerState:
 
         self.advance_scan_asset_seen_count()
         self._advance_event_seen_count()
+        self._log_new_pickup_index()
         self._calculate_potential_actions()
 
     def advance_scan_asset_seen_count(self):
@@ -83,26 +83,28 @@ class PlayerState:
             if self.hint_seen_count[hint_identifier] == 1:
                 self.hint_initial_pickups[hint_identifier] = frozenset(self.reach.state.collected_pickup_indices)
 
-        print_new_resources(self.game, self.reach, self.hint_seen_count, "Scan Asset")
+        filler_logging.print_new_node_identifiers(self.game, self.hint_seen_count, "Scan Asset")
 
     def _advance_event_seen_count(self):
         for resource, quantity in self.reach.state.resources.as_resource_gain():
             if resource.resource_type == ResourceType.EVENT and quantity > 0:
                 self.event_seen_count[resource] += 1
 
-        print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
+        filler_logging.print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
+
+    def _log_new_pickup_index(self):
+        for index in self.reach.state.collected_pickup_indices:
+            if index not in self.pickup_index_considered_count:
+                self.pickup_index_considered_count[index] = 0
+                filler_logging.print_new_pickup_index(self.index, self.game, index)
 
     def _calculate_potential_actions(self):
         uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
-        if self.configuration.multi_pickup_placement:
-            get_pickups = get_pickups_that_solves_unreachable
-        else:
-            get_pickups = get_pickups_with_interesting_resources
 
         usable_pickups = [pickup for pickup in self.pickups_left
                           if self.num_actions >= pickup.required_progression]
-        pickups = get_pickups(usable_pickups, self.reach, uncollected_resource_nodes)
-        print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
+        pickups = get_pickups_that_solves_unreachable(usable_pickups, self.reach, uncollected_resource_nodes)
+        filler_logging.print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
 

@@ -5,8 +5,6 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 13
-
 
 def _migrate_v1(json_dict: dict) -> dict:
     for game in json_dict["game_modifications"]:
@@ -272,25 +270,25 @@ def _migrate_v12(json_dict: dict) -> dict:
     return json_dict
 
 
-_MIGRATIONS = {
-    1: _migrate_v1,  # v2.2.0-6-gbfd37022
-    2: _migrate_v2,  # v2.4.2-16-g735569fd
-    3: _migrate_v3,  # v2.5.2-183-gbf62a4ef
-    4: _migrate_v4,  # v3.2.1-40-g94ed9301
-    5: _migrate_v5,  # v3.2.1-203-g6e303090
-    6: _migrate_v6,
-    7: _migrate_v7,  # v3.3.0dev721
-    8: _migrate_v8,
-    9: _migrate_v9,
-    10: _migrate_v10,
-    11: _migrate_v11,
-    12: _migrate_v12,
-}
+_MIGRATIONS = [
+    _migrate_v1,  # v2.2.0-6-gbfd37022
+    _migrate_v2,  # v2.4.2-16-g735569fd
+    _migrate_v3,  # v2.5.2-183-gbf62a4ef
+    _migrate_v4,  # v3.2.1-40-g94ed9301
+    _migrate_v5,  # v3.2.1-203-g6e303090
+    _migrate_v6,
+    _migrate_v7,  # v3.3.0dev721
+    _migrate_v8,
+    _migrate_v9,
+    _migrate_v10,
+    _migrate_v11,
+    _migrate_v12,
+]
+CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def convert_to_current_version(json_dict: dict) -> dict:
-    return migration_lib.migrate_to_version(
+    return migration_lib.apply_migrations(
         json_dict,
-        CURRENT_VERSION,
         _MIGRATIONS,
     )

@@ -4,6 +4,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator.filler.filler_library import UncollectedState, find_node_with_resource
 from randovania.generator.generator_reach import GeneratorReach
@@ -28,9 +29,12 @@ def print_retcon_loop_start(game: GameDescription,
             extra = ""
 
         print("\n===============================")
-        print("\n>>> Player {}: From {}, {} open pickup indices, {} open events{}".format(
+        print(("\n>>> Player {}: From {}, {} reachable nodes, {} safe nodes, "
+               "{} open pickup indices, {} open events{}").format(
             player_index,
             game.world_list.node_name(reach.state.node, with_world=True),
+            sum(1 for n in reach.nodes if reach.is_reachable_node(n)),
+            sum(1 for n in reach.nodes if reach.is_safe_node(n)),
             len(current_uncollected.indices),
             len(current_uncollected.events),
             extra
@@ -56,9 +60,20 @@ def print_new_resources(game: GameDescription,
                 print(f"-> New {label}: {world_list.node_name(node, with_world=True)}")
 
 
-def print_new_pickup_index(player: int, game: GameDescription, reach: GeneratorReach,
-                           location: PickupIndex, count: int):
-    if debug.debug_level() > 1 and count == 1:
+def print_new_node_identifiers(game: GameDescription,
+                               seen_count: dict[NodeIdentifier, int],
+                               label: str,
+                               ):
+    if debug.debug_level() > 1:
+        world_list = game.world_list
+        for identifier, count in seen_count.items():
+            if count == 1:
+                node = world_list.node_by_identifier(identifier)
+                print(f"-> New {label}: {world_list.node_name(node, with_world=True)}")
+
+
+def print_new_pickup_index(player: int, game: GameDescription, location: PickupIndex):
+    if debug.debug_level() > 1:
         world_list = game.world_list
         node = world_list.node_from_pickup_index(location)
         print(f"-> New Pickup Index: Player {player}'s {world_list.node_name(node, with_world=True)}")

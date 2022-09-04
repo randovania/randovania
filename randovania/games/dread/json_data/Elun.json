@@ -5,7 +5,8 @@
         "map_min_x": 98,
         "map_max_x": 147,
         "map_min_y": 278,
-        "map_max_y": 239
+        "map_max_y": 239,
+        "scenario_id": "s060_quarantine"
     },
     "areas": {
         "Bridge Gate": {
@@ -581,24 +582,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Chozo Soldier Arena": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -638,18 +625,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    }
-                                ]
                             }
                         },
                         "Tile Group (POWERBEAM)": {
@@ -761,18 +736,6 @@
                     "pickup_index": 114,
                     "major_location": false,
                     "connections": {
-                        "Door to Chozo Soldier Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    }
-                                ]
-                            }
-                        },
                         "Tile Group (BOMB) 3": {
                             "type": "and",
                             "data": {
@@ -830,19 +793,23 @@
                             }
                         },
                         "Event - Elun - Ammo Recharge Room Blob": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
                         },
                         "Ammo Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Alcove": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s060_quarantine:default:db_reg_qt_001",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1315,8 +1282,20 @@
                             }
                         },
                         "Event - Elun - Ammo Recharge Room Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Dock from Purple Drapes": {
                             "type": "and",
@@ -1335,7 +1314,7 @@
                         "y": -2099.58,
                         "z": 0.0
                     },
-                    "description": "TODO: Verify exiting this morph ball launcher releases the X\n\n",
+                    "description": "Event is triggered by just touching it. No need to use the Morphball launcher\n\n",
                     "layers": [
                         "default"
                     ],
@@ -1488,11 +1467,8 @@
                             }
                         },
                         "Event - Chozo Soldier Fight": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: Chozo Soldier Requirements",
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Fight Chozo-X"
                         }
                     }
                 },
@@ -2100,54 +2076,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Slide"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -2463,8 +2391,37 @@
                     },
                     "connections": {
                         "Door to Gyroscope Room": {
-                            "type": "template",
-                            "data": "Ballspark"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Tunnel to Bottom Morph Launcher": {
                             "type": "and",

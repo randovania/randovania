@@ -1,19 +1,19 @@
-import functools
+import dataclasses
 import io
 import logging
 import math
+import shutil
+import tempfile
 from pathlib import Path
-from typing import NamedTuple
 
 import PIL.Image
 import discord
 import graphviz
 from PIL import ImageDraw
 from discord import Embed
-from discord_slash import SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle, SlashCommand
-from discord_slash.utils import manage_commands, manage_components
+from discord.ext.commands import Converter, Context
 
-from randovania.game_description import pretty_print, default_database
+from randovania.game_description import default_database, pretty_print
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import NodeLocation, Node
@@ -24,10 +24,20 @@ from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog
 
 
-class SplitWorld(NamedTuple):
+@dataclasses.dataclass()
+class AreaWidget:
+    area: Area
+    command_id: str
+    view: discord.ui.View = None
+
+
+@dataclasses.dataclass()
+class SplitWorld:
     world: World
     name: str
-    areas: list[Area]
+    areas: list[AreaWidget]
+    command_id: str
+    view: discord.ui.View = None
 
 
 def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
@@ -43,6 +53,9 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
             continue
 
         for target_node, requirement in target.items():
+            if target_node.is_derived_node:
+                continue
+
             direction = None
             if source in area.connections.get(target_node):
                 direction = "both"
@@ -52,16 +65,16 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
                 dot.edge(source.name, target_node.name, dir=direction)
                 known_edges.add((source.name, target_node.name))
 
+    output_dir = tempfile.mkdtemp()
     try:
-        p = Path(dot.render(format="png", cleanup=True))
+        p = Path(dot.render(directory=output_dir, format="png", cleanup=True))
+        return io.BytesIO(p.read_bytes())
+
     except graphviz.backend.ExecutableNotFound as e:
         logging.info("Unable to render graph for %s: %s", area.name, str(e))
         return None
-
-    try:
-        return io.BytesIO(p.read_bytes())
     finally:
-        p.unlink()
+        shutil.rmtree(output_dir)
 
 
 def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
@@ -94,7 +107,7 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
 
         for node in area.nodes:
             if node.location is None or node.is_derived_node:
-                return None
+                continue
 
             p = location_to_pos(node.location)
             draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(255, 255, 255, 255), width=5)
@@ -114,13 +127,29 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
 async def create_split_worlds(db: GameDescription) -> list[SplitWorld]:
     world_options = []
 
+    def create_id():
+        return f"{db.game.value}_world_{len(world_options)}"
+
+    def create_areas(a):
+        return [
+            AreaWidget(
+                it, f"{create_id()}_area_{i}"
+            )
+            for i, it in enumerate(a)
+        ]
+
     for world in db.world_list.worlds:
         for is_dark_world in [False, True]:
             if is_dark_world and world.dark_name is None:
                 continue
 
-            areas = sorted((area for area in world.areas if area.in_dark_aether == is_dark_world),
-                           key=lambda it: it.name)
+            areas = sorted(
+                (
+                    area for area in world.areas
+                    if area.in_dark_aether == is_dark_world and area.nodes
+                ),
+                key=lambda it: it.name,
+            )
             name = world.correct_name(is_dark_world)
             if len(areas) > 25:
                 per_part = math.ceil(len(areas) / math.ceil(len(areas) / 25))
@@ -129,187 +158,65 @@ async def create_split_worlds(db: GameDescription) -> list[SplitWorld]:
                     areas_part = areas[:per_part]
                     del areas[:per_part]
 
-                    world_options.append(SplitWorld(world, "{} ({}-{})".format(name, areas_part[0].name[:2],
-                                                                               areas_part[-1].name[:2]), areas_part))
+                    world_options.append(SplitWorld(
+                        world, "{} ({}-{})".format(name, areas_part[0].name[:2],
+                                                   areas_part[-1].name[:2]),
+                        create_areas(areas_part),
+                        create_id(),
+                    ))
             else:
-                world_options.append(SplitWorld(world, name, areas))
+                world_options.append(SplitWorld(world, name, create_areas(areas), create_id()))
 
-    world_options.sort(key=lambda it: it[1])
+    world_options.sort(key=lambda it: it.name)
     return world_options
 
 
-class DatabaseCommandCog(RandovaniaCog):
-    _split_worlds: dict[RandovaniaGame, list[SplitWorld]]
+class EnumConverter(Converter):
+    async def convert(self, ctx: Context, argument: str):
+        return RandovaniaGame(argument)
 
-    def __init__(self, configuration: dict, bot: RandovaniaBot):
-        self.configuration = configuration
-        self.bot = bot
-        self._split_worlds = {}
-        self._on_database_component_listener = {}
 
-    async def add_commands(self, slash: SlashCommand):
-        slash.add_slash_command(
-            self.database_command,
-            name=self.configuration.get("command_prefix", "") + "database-inspect",
-            description="Consult the Randovania's logic database for one specific room.",
-            guild_ids=None,
-            options=[
-                manage_commands.create_option(
-                    "game", "The game's database to check.",
-                    option_type=SlashCommandOptionType.STRING,
-                    required=True,
-                    choices=[manage_commands.create_choice(game.value, game.long_name)
-                             for game in enum_lib.iterate_enum(RandovaniaGame)]
-                )
-            ],
-        )
+_GameChoices = discord.Option(
+    str,
+    description="The game's database to check.",
+    choices=[
+        discord.OptionChoice(name=game.long_name, value=game.value)
+        for game in enum_lib.iterate_enum(RandovaniaGame)
+    ]
+)
+_GameChoices.converter = EnumConverter()
+_GameChoices._raw_type = RandovaniaGame
 
-        def add_id(custom_id: str, call, **kwargs):
-            self._on_database_component_listener[custom_id] = functools.partial(call, **kwargs)
 
-        for game in enum_lib.iterate_enum(RandovaniaGame):
-            db = default_database.game_description_for(game)
-            world_options = await create_split_worlds(db)
-            self._split_worlds[game] = world_options
+class SelectNodesItem(discord.ui.Select):
+    def __init__(self, game: RandovaniaGame, area: AreaWidget):
+        self.game = game
+        self.area = area
 
-            add_id(f"{game.value}_world", self.on_database_world_selected, game=game)
-            add_id(f"back_to_{game.value}", self.on_database_back_to_game, game=game)
+        options = [
+            discord.SelectOption(label=node.name)
+            for node in self.valid_nodes()
+        ]
 
-            for i, split_world in enumerate(world_options):
-                add_id(f"{game.value}_world_{i}", self.on_database_area_selected, game=game, split_world=split_world,
-                       world_id=i)
-                for j, area in enumerate(split_world.areas):
-                    add_id(f"{game.value}_world_{i}_area_{j}", self.on_area_node_selection, game=game, area=area)
-
-        slash.add_component_callback(
-            self.on_database_component,
-            components=list(self._on_database_component_listener.keys()),
-            use_callback_name=False,
-        )
-
-    def _message_components_for_game(self, game: RandovaniaGame):
-        options = []
-        for i, (world, world_name, areas) in enumerate(self._split_worlds[game]):
-            custom_id = f"{game.value}_world_{i}"
-            options.append(manage_components.create_select_option(world_name, value=custom_id))
-
-        action_row = manage_components.create_actionrow(manage_components.create_select(
+        super().__init__(
+            custom_id=area.command_id,
+            placeholder="Choose the nodes",
             options=options,
-            custom_id=f"{game.value}_world",
-            placeholder="Choose your region",
-        ))
-        embed = Embed(title=f"{game.long_name} Database", description="Choose the world subset to visualize.")
-        logging.info("Responding requesting list of worlds for game %s.", game.long_name)
-        return embed, [action_row],
-
-    async def database_command(self, ctx: SlashContext, game: str):
-        game = RandovaniaGame(game)
-        embed, components = self._message_components_for_game(game)
-        await ctx.send(embed=embed, components=components, hidden=True)
-
-    async def on_database_component(self, ctx: ComponentContext):
-        await self._on_database_component_listener[ctx.custom_id](ctx)
-
-    async def on_database_back_to_game(self, ctx: ComponentContext, game: RandovaniaGame):
-        embed, components = self._message_components_for_game(game)
-        await ctx.edit_origin(embed=embed, components=components, hidden=True)
-
-    async def on_database_world_selected(self, ctx: ComponentContext, game: RandovaniaGame):
-        option_selected = ctx.selected_options[0]
-
-        valid_items = [
-            it
-            for i, it in enumerate(self._split_worlds[game])
-            if f"{game.value}_world_{i}" == option_selected
-        ]
-        if not valid_items:
-            return await ctx.edit_origin(
-                components=[], embeds=[],
-                content=f"Invalid selected option, unable to find given world subset '{option_selected}'."
-            )
-        index = self._split_worlds[game].index(valid_items[0])
-        world, world_name, areas = valid_items[0]
-
-        select = manage_components.create_select(
-            options=[
-                manage_components.create_select_option(area.name, value=f"area_{i}")
-                for i, area in sorted(enumerate(areas), key=lambda it: it[1].name)
-            ],
-            custom_id=f"{game.value}_world_{index}",
-            placeholder="Choose the room",
-        )
-        action_row = manage_components.create_actionrow(select)
-        back_row = manage_components.create_actionrow(manage_components.create_button(
-            style=ButtonStyle.secondary,
-            label="Back",
-            custom_id=f"back_to_{game.value}",
-        ))
-
-        embed = Embed(title=f"{game.long_name} Database",
-                      description=f"Choose the room in {world_name} to visualize.")
-        logging.info("Responding to area selection for section %s with %d options.", world_name, len(areas))
-        await ctx.edit_origin(
-            embed=embed,
-            components=[
-                action_row,
-                back_row,
-            ],
+            max_values=min(10, len(options)),
         )
 
-    async def on_database_area_selected(self, ctx: ComponentContext, game: RandovaniaGame, split_world: SplitWorld,
-                                        world_id: int):
-        option_selected = ctx.selected_options[0]
+    def valid_nodes(self):
+        return [node for node in sorted(self.area.area.nodes, key=lambda it: it.name)
+                if not node.is_derived_node]
 
-        valid_items = [
-            area
-            for i, area in enumerate(split_world.areas)
-            if f"area_{i}" == option_selected
-        ]
-        if not valid_items:
-            return await ctx.edit_origin(
-                components=[], embeds=[],
-                content=f"Invalid selected option, unable to find given area '{option_selected}'."
-            )
+    async def callback(self, interaction: discord.Interaction):
+        r = interaction.response
+        assert isinstance(r, discord.InteractionResponse)
 
-        area = valid_items[0]
-        db = default_database.game_description_for(game)
+        await r.defer()
 
-        title = f"{game.long_name}: {db.world_list.area_name(area)}"
-        valid_nodes = [node for node in sorted(area.nodes, key=lambda it: it.name)
-                       if not node.is_derived_node]
-
-        select = manage_components.create_select(
-            options=[
-                manage_components.create_select_option(node.name, value=node.name)
-                for node in valid_nodes
-            ],
-            max_values=min(10, len(valid_nodes)),
-            custom_id=f"{game.value}_world_{world_id}_{option_selected}",
-            placeholder="Choose the room",
-        )
-        action_row = manage_components.create_actionrow(select)
-
-        files = []
-
-        area_image = render_area_with_pillow(area, game.data_path)
-        if area_image is not None:
-            files.append(discord.File(area_image, filename=f"{area.name}_image.png"))
-
-        area_graph = render_area_with_graphviz(area)
-        if area_graph is not None:
-            files.append(discord.File(area_graph, filename=f"{area.name}_graph.png"))
-
-        logging.info("Responding to area for %s with %d attachments.", area.name, len(files))
-        await ctx.send(
-            content=f"**{title}**\nRequested by {ctx.author.display_name}.",
-            files=files,
-            components=[
-                action_row,
-            ],
-        )
-
-    async def on_area_node_selection(self, ctx: ComponentContext, game: RandovaniaGame, area: Area):
-        db = default_database.game_description_for(game)
+        db = default_database.game_description_for(self.game)
+        original_message = await interaction.original_message()
 
         def snipped_message(n: str) -> str:
             return f"\n{n}: *Skipped*\n"
@@ -317,14 +224,14 @@ class DatabaseCommandCog(RandovaniaCog):
         body_by_node = {}
         embeds = []
 
-        for node in sorted(area.nodes, key=lambda it: it.name):
-            if node.name not in ctx.selected_options:
+        for node in sorted(self.area.area.nodes, key=lambda it: it.name):
+            if node.name not in self.values:
                 continue
 
             name = node.name
             if node.heal:
                 name += " (Heals)"
-            if area.default_node == node.name:
+            if self.area.area.default_node == node.name:
                 name += "; Spawn Point"
 
             body = pretty_print.pretty_print_node_type(node, db.world_list) + "\n"
@@ -360,7 +267,7 @@ class DatabaseCommandCog(RandovaniaCog):
             body_by_node[name] = body
 
         snipped = "*(message too long, skipped)*"
-        space_left = 6000 - len(ctx.origin_message.content)
+        space_left = 6000 - len(original_message.content)
         for name, body in body_by_node.items():
             space_left -= len(name) + len(snipped)
 
@@ -377,10 +284,183 @@ class DatabaseCommandCog(RandovaniaCog):
                 description=body,
             ))
 
-        logging.info("Updating visible nodes of %s: %s", area.name, str(ctx.selected_options))
-        await ctx.edit_origin(
+        logging.info("Updating visible nodes of %s: %s", self.area.area.name, str(self.values))
+        await original_message.edit(
             embeds=embeds,
         )
+
+
+class SelectAreaItem(discord.ui.Select):
+    def __init__(self, game: RandovaniaGame, split_world: SplitWorld):
+        self.game = game
+        self.split_world = split_world
+
+        options = [
+            discord.SelectOption(
+                label=area.area.name,
+                value=area.command_id,
+            )
+            for area in split_world.areas
+        ]
+        super().__init__(
+            custom_id=split_world.command_id,
+            placeholder="Choose the room",
+            options=options,
+        )
+
+    async def callback(self, interaction: discord.Interaction):
+        r = interaction.response
+        assert isinstance(r, discord.InteractionResponse)
+        option_selected = self.values[0]
+
+        valid_items = [
+            area for area in self.split_world.areas
+            if area.command_id == option_selected
+        ]
+        if not valid_items:
+            await r.defer()
+            return await interaction.edit_original_message(
+                view=None, embeds=[],
+                content=f"Invalid selected option, unable to find given world subset '{option_selected}'."
+            )
+        area = valid_items[0]
+
+        db = default_database.game_description_for(self.game)
+        title = f"{self.game.long_name}: {db.world_list.area_name(area.area)}"
+
+        files = []
+
+        area_image = render_area_with_pillow(area.area, self.game.data_path)
+        if area_image is not None:
+            files.append(discord.File(area_image, filename=f"{area.area.name}_image.png"))
+
+        area_graph = render_area_with_graphviz(area.area)
+        if area_graph is not None:
+            files.append(discord.File(area_graph, filename=f"{area.area.name}_graph.png"))
+
+        logging.info("Responding to area for %s with %d attachments.", area.area.name, len(files))
+        await r.send_message(
+            content=f"**{title}**\nRequested by {interaction.user.display_name}.",
+            files=files,
+            view=area.view,
+        )
+
+
+class SelectSplitWorldItem(discord.ui.Select):
+    def __init__(self, game: RandovaniaGame, split_worlds: list[SplitWorld]):
+        self.game = game
+        self.split_worlds = split_worlds
+
+        options = [
+            discord.SelectOption(label=split_world.name, value=split_world.command_id)
+            for split_world in split_worlds
+        ]
+
+        super().__init__(
+            custom_id=f"{game.value}_world",
+            placeholder="Choose your region",
+            options=options,
+        )
+
+    async def callback(self, interaction: discord.Interaction):
+        r = interaction.response
+        assert isinstance(r, discord.InteractionResponse)
+
+        # defer is needed to be able to edit the original message.
+        await r.defer()
+
+        option_selected = self.values[0]
+
+        valid_items = [
+            it
+            for it in self.split_worlds
+            if it.command_id == option_selected
+        ]
+        if not valid_items:
+            return await interaction.edit_original_message(
+                view=None, embeds=[],
+                content=f"Invalid selected option, unable to find given world subset '{option_selected}'."
+            )
+        split_world = valid_items[0]
+
+        embed = Embed(title=f"{self.game.long_name} Database",
+                      description=f"Choose the room in {split_world.name} to visualize.")
+
+        logging.info("Responding to area selection for section %s with %d options.",
+                     split_world.name, len(split_world.areas))
+        return await interaction.edit_original_message(
+            embed=embed,
+            view=split_world.view,
+        )
+
+
+class BackToGameButton(discord.ui.Button):
+    def __init__(self, game: RandovaniaGame, response_view: discord.ui.View):
+        self.game = game
+        self.response_view = response_view
+
+        super().__init__(
+            label="Back",
+            custom_id=f"back_to_{game.value}",
+        )
+
+    async def callback(self, interaction: discord.Interaction):
+        # defer is needed to be able to edit the original message.
+        await interaction.response.defer()
+        return await interaction.edit_original_message(
+            embed=Embed(title=f"{self.game.long_name} Database", description="Choose the world subset to visualize."),
+            view=self.response_view,
+        )
+
+
+class DatabaseCommandCog(RandovaniaCog):
+    _split_worlds: dict[RandovaniaGame, list[SplitWorld]]
+    _select_split_world_view: dict[RandovaniaGame, discord.ui.View]
+
+    def __init__(self, configuration: dict, bot: RandovaniaBot):
+        self.configuration = configuration
+        self.bot = bot
+        self._split_worlds = {}
+        self._select_split_world_view = {}
+        self._on_database_component_listener = {}
+
+    @discord.commands.slash_command()
+    async def database_inspect(self, context: discord.ApplicationContext, game: _GameChoices):
+        """Consult the Randovania's logic database for one specific room."""
+        assert isinstance(game, RandovaniaGame)
+
+        embed = Embed(title=f"{game.long_name} Database", description="Choose the world subset to visualize.")
+        view = self._select_split_world_view[game]
+        logging.info("Responding requesting list of worlds for game %s.", game.long_name)
+
+        await context.respond(embed=embed, view=view, ephemeral=True)
+
+    async def add_commands(self):
+        for game in enum_lib.iterate_enum(RandovaniaGame):
+            db = default_database.game_description_for(game)
+            world_options = await create_split_worlds(db)
+            self._split_worlds[game] = world_options
+
+            view = discord.ui.View(
+                SelectSplitWorldItem(game, world_options),
+                timeout=None,
+            )
+            self.bot.add_view(view)
+            self._select_split_world_view[game] = view
+
+            for split_world in world_options:
+                split_world.view = discord.ui.View(
+                    SelectAreaItem(game, split_world),
+                    BackToGameButton(game, view),
+                    timeout=None,
+                )
+                self.bot.add_view(split_world.view)
+                for area in split_world.areas:
+                    area.view = discord.ui.View(
+                        SelectNodesItem(game, area),
+                        timeout=None,
+                    )
+                    self.bot.add_view(area.view)
 
 
 def setup(bot: RandovaniaBot):

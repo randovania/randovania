@@ -113,7 +113,7 @@ def create_dark_temple_key(key_number: int,
     """
     TEMPLE_KEY_CATEGORY = ItemCategory(
         name="temple_key",
-        long_name="",
+        long_name="Dark Temple Key",
         hint_details=("a ", "red Temple Key"),
         is_major=False,
         is_key=True
@@ -143,7 +143,7 @@ def create_sky_temple_key(key_number: int,
     """
     SKY_TEMPLE_KEY_CATEGORY = ItemCategory(
         name="sky_temple_key",
-        long_name="",
+        long_name="Sky Temple Key",
         hint_details=("a ", "Sky Temple Key"),
         is_major=False,
         is_key=True
@@ -166,8 +166,8 @@ def create_dread_artifact(artifact_number: int,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:
     DREAD_ARTIFACT_CATEGORY = ItemCategory(
-        name="artifact",
-        long_name="",
+        name="dna",
+        long_name="Metroid DNA",
         hint_details=("some ", "Metroid DNA"),
         is_major=False,
         is_key=True
@@ -178,7 +178,7 @@ def create_dread_artifact(artifact_number: int,
         progression=((resource_database.get_item(f"Artifact{artifact_number+1}"), 1),),
         model=PickupModel(
             game=resource_database.game_enum,
-            name="rando_artifact"
+            name=f"DNA_{artifact_number + 1}"
         ),
         item_category=DREAD_ARTIFACT_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
@@ -191,7 +191,7 @@ def create_energy_cell(cell_index: int,
                        ) -> PickupEntry:
     ENERGY_CELL_CATEGORY = ItemCategory(
         name="energy_cell",
-        long_name="",
+        long_name="Energy Cell",
         hint_details=("an ", "energy cell"),
         is_major=False,
         is_key=True
@@ -222,7 +222,7 @@ def create_artifact(artifact_index: int,
                     ) -> PickupEntry:
     ARTIFACT_CATEGORY = ItemCategory(
         name="artifact",
-        long_name="",
+        long_name="Artifact",
         hint_details=("an ", "artifact"),
         is_major=False,
         is_key=True

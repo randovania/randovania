@@ -44,14 +44,13 @@ def get_locations_for_major_pickups_and_keys(
     return results
 
 
-def prime_trilogy_credits(
+def generic_credits(
         major_items_configuration: MajorItemsConfiguration,
         all_patches: dict[int, GamePatches],
         players_config: PlayersConfiguration,
         namer: HintNamer,
-        title: str,
-        pickup_name_format: str,
-) -> str:
+        pickup_name_format: str = "{}",
+) -> dict[str, str]:
     major_name_order = {
         pickup.name: index
         for index, pickup in enumerate(major_items_configuration.items_state.keys())
@@ -68,12 +67,30 @@ def prime_trilogy_credits(
         for pickup, entries in details.items()
     }
 
-    credits_lines = [
-        "{}\n{}".format(
-            pickup_name_format.format(pickup.name),
-            "\n".join(major_pickups_spoiler[pickup]) or "Nowhere"
-        )
+    return {
+        pickup_name_format.format(pickup.name):
+        "\n".join(major_pickups_spoiler[pickup]) or "Nowhere"
         for pickup in sorted(major_pickups_spoiler.keys(), key=sort_pickup)
-    ]
+    }
+
+
+def prime_trilogy_credits(
+        major_items_configuration: MajorItemsConfiguration,
+        all_patches: dict[int, GamePatches],
+        players_config: PlayersConfiguration,
+        namer: HintNamer,
+        title: str,
+        pickup_name_format: str,
+) -> str:
+    credit_items = generic_credits(
+        major_items_configuration,
+        all_patches,
+        players_config,
+        namer,
+        pickup_name_format
+    )
+
+    credits_lines = [f"{pickup}\n{location}" for pickup, location in credit_items.items()]
+
     credits_lines.insert(0, title)
     return "\n\n".join(credits_lines)

@@ -21,7 +21,7 @@ def _gui():
         export_dialog=gui.CSGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(gui.CSHintDetailsTab,),
-        help_widget=lambda: gui.CSHelpWidget(),
+        game_tab=gui.CSGameTabWidget,
     )
 
 

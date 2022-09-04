@@ -65,7 +65,9 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
 
     sum_damage = sum(req.damage(state.resources, state.resource_database) for req in damage)
     if state.energy < sum_damage:
-        tank_count = (sum_damage - state.energy) // state.game_data.energy_per_tank
+        # A requirement for many "Energy Tanks" is added,
+        # which is then decreased by how many tanks is in the state by pickups_to_solve_list
+        tank_count = sum_damage // state.game_data.energy_per_tank
         yield items + [ResourceRequirement.create(state.resource_database.energy_tank, tank_count + 1, False)]
         # FIXME: get the required items for reductions (aka suits)
     else:
@@ -171,22 +173,3 @@ def get_pickups_that_solves_unreachable(pickups_left: list[PickupEntry],
 
     return tuple(result)
 
-
-def get_pickups_with_interesting_resources(pickup_pool: list[PickupEntry],
-                                           reach: GeneratorReach,
-                                           uncollected_resource_nodes: list[ResourceNode],
-                                           ) -> PickupCombinations:
-    """Old logic. Given pickup list and a reach, gets these that gives at least one of the interesting resources."""
-    interesting_resources = interesting_resources_for_reach(reach)
-    progression_pickups = []
-
-    for pickup in pickup_pool:
-        if pickup in progression_pickups:
-            continue
-        if _resources_in_pickup(pickup, reach.state.resources).intersection(interesting_resources):
-            progression_pickups.append(pickup)
-
-    return tuple(
-        (pickup,)
-        for pickup in progression_pickups
-    )
