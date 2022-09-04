@@ -43,7 +43,6 @@ from randovania.network_client.network_client import ConnectionState, UnableToCo
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
-from randovania.resolver.exceptions import GenerationFailure
 
 logger = logging.getLogger(__name__)
 
@@ -989,22 +988,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, True)
         self._generating_game = True
         try:
-            layout = await self.run_in_background_async(generate_layout, "Creating a seed...")
+            layout = await self.run_in_background_async(generate_layout, "Creating a game...")
             self.update_progress(f"Finished generating, uploading...", 100)
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 
         except Exception as e:
             await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
-
-            message = "Error"
-            if isinstance(e, GenerationFailure):
-                message = "Generation Failure"
-                self.failure_handler.handle_failure(e)
-            else:
-                logger.exception("Unable to generate")
-
-            self.update_progress(f"{message}: {e}", -1)
+            await self.failure_handler.handle_exception(
+                e, self.update_progress,
+            )
 
         finally:
             self._generating_game = False

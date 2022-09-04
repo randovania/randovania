@@ -77,7 +77,7 @@ def get_configuration() -> dict:
             raise
 
 
-def setup_logging(default_level: str, log_to_file: Path | None):
+def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = False):
     import logging.config
     import logging.handlers
     import time
@@ -149,7 +149,8 @@ def setup_logging(default_level: str, log_to_file: Path | None):
             'handlers': list(handlers.keys()),
         },
     })
-    logging.info("Logging initialized with level %s for version %s.", default_level, VERSION)
+    if not quiet:
+        logging.info("Logging initialized with level %s for version %s.", default_level, VERSION)
 
 
 __version__ = version
