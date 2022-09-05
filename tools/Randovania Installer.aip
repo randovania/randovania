@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="19.7.1" version="19.7.1" Modules="professional" RootPath=".." Language="en" Id="{370A9BFE-2004-4093-B731-5DC292A8CF36}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="19.7.1" version="19.8.1" Modules="professional" RootPath=".." Language="en" Id="{370A9BFE-2004-4093-B731-5DC292A8CF36}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
     <ROW Name="MigrationUninstallCode" Value="{0E1FAF99-6B2D-45B4-A2CF-64EB38A51D48}"/>
@@ -8,7 +8,7 @@
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
-    <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.7.1 build e09f3004" ValueLocId="-"/>
+    <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.8.1 build ff1d5dfa" ValueLocId="-"/>
     <ROW Property="ALLUSERS" Value="1" MultiBuildValue="DefaultBuild:"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
@@ -81,7 +81,7 @@
     <ROW Directory="PixTone_Dir" Directory_Parent="data_1_Dir" DefaultDir="PixTone"/>
     <ROW Directory="PySide6_Dir" Directory_Parent="randovania_Dir" DefaultDir="PySide6"/>
     <ROW Directory="QoL_Dir" Directory_Parent="Patches_Dir" DefaultDir="QoL"/>
-    <ROW Directory="RandovaniaData_Dir" Directory_Parent="LocalAppDataFolder" DefaultDir="RANDOV~2|[|ProductName] Install"/>
+    <ROW Directory="Random_Enemy_Attributes_Dir" Directory_Parent="randovania_Dir" DefaultDir="RANDOM~1|Random_Enemy_Attributes"/>
     <ROW Directory="Resource_Dir" Directory_Parent="data_1_Dir" DefaultDir="Resource"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="ScriptSource_1_Dir" Directory_Parent="Stage_Dir" DefaultDir="SCRIPT~1|ScriptSource"/>
@@ -100,8 +100,6 @@
     <ROW Directory="__pycache___2_Dir" Directory_Parent="item_database_4_Dir" DefaultDir="__PYCA~1|__pycache__"/>
     <ROW Directory="__pycache___3_Dir" Directory_Parent="item_database_5_Dir" DefaultDir="__PYCA~1|__pycache__"/>
     <ROW Directory="__pycache___Dir" Directory_Parent="item_database_1_Dir" DefaultDir="__PYCA~1|__pycache__"/>
-    <ROW Directory="actors_1_Dir" Directory_Parent="textures_Dir" DefaultDir="actors"/>
-    <ROW Directory="actors_Dir" Directory_Parent="romfs_Dir" DefaultDir="actors"/>
     <ROW Directory="afm_Dir" Directory_Parent="fonts_Dir" DefaultDir="afm"/>
     <ROW Directory="aiohttp_Dir" Directory_Parent="randovania_Dir" DefaultDir="aiohttp"/>
     <ROW Directory="assets_1_Dir" Directory_Parent="cave_story_Dir" DefaultDir="assets"/>
@@ -113,7 +111,6 @@
     <ROW Directory="assets_Dir" Directory_Parent="blank_Dir" DefaultDir="assets"/>
     <ROW Directory="axes_grid_Dir" Directory_Parent="sample_data_Dir" DefaultDir="AXES_G~1|axes_grid"/>
     <ROW Directory="backends_Dir" Directory_Parent="matplotlib_Dir" DefaultDir="backends"/>
-    <ROW Directory="benchmarks_Dir" Directory_Parent="jsonschema_Dir" DefaultDir="BENCHM~1|benchmarks"/>
     <ROW Directory="binary_data_Dir" Directory_Parent="data_Dir" DefaultDir="BINARY~1|binary_data"/>
     <ROW Directory="bindings_Dir" Directory_Parent="hazmat_Dir" DefaultDir="bindings"/>
     <ROW Directory="blank_Dir" Directory_Parent="games_Dir" DefaultDir="blank"/>
@@ -131,12 +128,9 @@
     <ROW Directory="default_state_4_Dir" Directory_Parent="item_database_6_Dir" DefaultDir="DEFAUL~1|default_state"/>
     <ROW Directory="default_state_Dir" Directory_Parent="item_database_1_Dir" DefaultDir="DEFAUL~1|default_state"/>
     <ROW Directory="dread_Dir" Directory_Parent="games_Dir" DefaultDir="dread"/>
-    <ROW Directory="dread_depackager_Dir" Directory_Parent="files_Dir" DefaultDir="DREAD_~1|dread_depackager"/>
     <ROW Directory="dulwich_Dir" Directory_Parent="randovania_Dir" DefaultDir="dulwich"/>
     <ROW Directory="encoding_Dir" Directory_Parent="tcl_Dir" DefaultDir="encoding"/>
-    <ROW Directory="exefs_patches_Dir" Directory_Parent="files_Dir" DefaultDir="EXEFS_~1|exefs_patches"/>
     <ROW Directory="fft_Dir" Directory_Parent="numpy_Dir" DefaultDir="fft"/>
-    <ROW Directory="files_Dir" Directory_Parent="open_dread_rando_Dir" DefaultDir="files"/>
     <ROW Directory="fonts_Dir" Directory_Parent="mpldata_Dir" DefaultDir="fonts"/>
     <ROW Directory="frozendict_Dir" Directory_Parent="randovania_Dir" DefaultDir="FROZEN~1|frozendict"/>
     <ROW Directory="frozenlist_Dir" Directory_Parent="randovania_Dir" DefaultDir="FROZEN~2|frozenlist"/>
@@ -149,20 +143,10 @@
     <ROW Directory="http1.0_Dir" Directory_Parent="tcl_Dir" DefaultDir="http1.0"/>
     <ROW Directory="icon_Dir" Directory_Parent="assets_1_Dir" DefaultDir="icon"/>
     <ROW Directory="iconengines_Dir" Directory_Parent="plugins_Dir" DefaultDir="ICONEN~1|iconengines"/>
-    <ROW Directory="icons_1_Dir" Directory_Parent="minimap_Dir" DefaultDir="icons"/>
     <ROW Directory="icons_Dir" Directory_Parent="data_Dir" DefaultDir="icons"/>
     <ROW Directory="imageformats_Dir" Directory_Parent="plugins_Dir" DefaultDir="IMAGEF~1|imageformats"/>
     <ROW Directory="images_1_Dir" Directory_Parent="tk_Dir" DefaultDir="images"/>
     <ROW Directory="images_Dir" Directory_Parent="mpldata_Dir" DefaultDir="images"/>
-    <ROW Directory="imats_1_Dir" Directory_Parent="model_Dir" DefaultDir="imats"/>
-    <ROW Directory="imats_2_Dir" Directory_Parent="models_1_Dir" DefaultDir="imats"/>
-    <ROW Directory="imats_3_Dir" Directory_Parent="models_2_Dir" DefaultDir="imats"/>
-    <ROW Directory="imats_4_Dir" Directory_Parent="models_3_Dir" DefaultDir="imats"/>
-    <ROW Directory="imats_5_Dir" Directory_Parent="models_4_Dir" DefaultDir="imats"/>
-    <ROW Directory="imats_Dir" Directory_Parent="models_Dir" DefaultDir="imats"/>
-    <ROW Directory="issue232_Dir" Directory_Parent="benchmarks_Dir" DefaultDir="issue232"/>
-    <ROW Directory="item_cube_Dir" Directory_Parent="items_Dir" DefaultDir="ITEM_C~1|item_cube"/>
-    <ROW Directory="item_cube_broken_Dir" Directory_Parent="items_Dir" DefaultDir="ITEM_C~2|item_cube_broken"/>
     <ROW Directory="item_database_1_Dir" Directory_Parent="cave_story_Dir" DefaultDir="ITEM_D~1|item_database"/>
     <ROW Directory="item_database_2_Dir" Directory_Parent="dread_Dir" DefaultDir="ITEM_D~1|item_database"/>
     <ROW Directory="item_database_3_Dir" Directory_Parent="prime1_Dir" DefaultDir="ITEM_D~1|item_database"/>
@@ -170,18 +154,8 @@
     <ROW Directory="item_database_5_Dir" Directory_Parent="prime3_Dir" DefaultDir="ITEM_D~1|item_database"/>
     <ROW Directory="item_database_6_Dir" Directory_Parent="super_metroid_Dir" DefaultDir="ITEM_D~1|item_database"/>
     <ROW Directory="item_database_Dir" Directory_Parent="blank_Dir" DefaultDir="ITEM_D~1|item_database"/>
-    <ROW Directory="items_1_Dir" Directory_Parent="actors_1_Dir" DefaultDir="items"/>
-    <ROW Directory="items_Dir" Directory_Parent="actors_Dir" DefaultDir="items"/>
-    <ROW Directory="itemsphere_1_Dir" Directory_Parent="items_1_Dir" DefaultDir="ITEMSP~1|itemsphere"/>
-    <ROW Directory="itemsphere_Dir" Directory_Parent="items_Dir" DefaultDir="ITEMSP~1|itemsphere"/>
-    <ROW Directory="jsonschema4.9.1.distinfo_Dir" Directory_Parent="randovania_Dir" DefaultDir="JSONSC~1.DIS|jsonschema-4.9.1.dist-info"/>
-    <ROW Directory="jsonschema_Dir" Directory_Parent="randovania_Dir" DefaultDir="JSONSC~1|jsonschema"/>
-    <ROW Directory="keystone_Dir" Directory_Parent="randovania_Dir" DefaultDir="keystone"/>
     <ROW Directory="kiwisolver_Dir" Directory_Parent="randovania_Dir" DefaultDir="KIWISO~1|kiwisolver"/>
-    <ROW Directory="levels_Dir" Directory_Parent="files_Dir" DefaultDir="levels"/>
-    <ROW Directory="licenses_Dir" Directory_Parent="jsonschema4.9.1.distinfo_Dir" DefaultDir="licenses"/>
     <ROW Directory="linalg_Dir" Directory_Parent="numpy_Dir" DefaultDir="linalg"/>
-    <ROW Directory="lua_libraries_Dir" Directory_Parent="files_Dir" DefaultDir="LUA_LI~1|lua_libraries"/>
     <ROW Directory="lupa_Dir" Directory_Parent="randovania_Dir" DefaultDir="lupa"/>
     <ROW Directory="maps_1_Dir" Directory_Parent="assets_1_Dir" DefaultDir="maps"/>
     <ROW Directory="maps_2_Dir" Directory_Parent="assets_2_Dir" DefaultDir="maps"/>
@@ -189,20 +163,6 @@
     <ROW Directory="maps_Dir" Directory_Parent="assets_Dir" DefaultDir="maps"/>
     <ROW Directory="markupsafe_Dir" Directory_Parent="randovania_Dir" DefaultDir="MARKUP~1|markupsafe"/>
     <ROW Directory="matplotlib_Dir" Directory_Parent="randovania_Dir" DefaultDir="MATPLO~1|matplotlib"/>
-    <ROW Directory="mercury_engine_data_structures_Dir" Directory_Parent="randovania_Dir" DefaultDir="MERCUR~1|mercury_engine_data_structures"/>
-    <ROW Directory="minimap_Dir" Directory_Parent="system_Dir" DefaultDir="minimap"/>
-    <ROW Directory="model_1_Dir" Directory_Parent="item_cube_broken_Dir" DefaultDir="model"/>
-    <ROW Directory="model_Dir" Directory_Parent="item_cube_Dir" DefaultDir="model"/>
-    <ROW Directory="models_1_Dir" Directory_Parent="powerup_bomb_Dir" DefaultDir="models"/>
-    <ROW Directory="models_2_Dir" Directory_Parent="powerup_doublejump_Dir" DefaultDir="models"/>
-    <ROW Directory="models_3_Dir" Directory_Parent="powerup_supermissile_Dir" DefaultDir="models"/>
-    <ROW Directory="models_4_Dir" Directory_Parent="powerup_widebeam_Dir" DefaultDir="models"/>
-    <ROW Directory="models_5_Dir" Directory_Parent="itemsphere_1_Dir" DefaultDir="models"/>
-    <ROW Directory="models_6_Dir" Directory_Parent="powerup_bomb_1_Dir" DefaultDir="models"/>
-    <ROW Directory="models_7_Dir" Directory_Parent="powerup_doublejump_1_Dir" DefaultDir="models"/>
-    <ROW Directory="models_8_Dir" Directory_Parent="powerup_supermissile_1_Dir" DefaultDir="models"/>
-    <ROW Directory="models_9_Dir" Directory_Parent="powerup_widebeam_1_Dir" DefaultDir="models"/>
-    <ROW Directory="models_Dir" Directory_Parent="itemsphere_Dir" DefaultDir="models"/>
     <ROW Directory="mp1_Dir" Directory_Parent="gameimages_Dir" DefaultDir="mp1"/>
     <ROW Directory="mp2_Dir" Directory_Parent="gameimages_Dir" DefaultDir="mp2"/>
     <ROW Directory="mp3_Dir" Directory_Parent="gameimages_Dir" DefaultDir="mp3"/>
@@ -214,7 +174,6 @@
     <ROW Directory="networkinformation_Dir" Directory_Parent="plugins_Dir" DefaultDir="NETWOR~1|networkinformation"/>
     <ROW Directory="nintendont_Dir" Directory_Parent="data_Dir" DefaultDir="NINTEN~1|nintendont"/>
     <ROW Directory="numpy_Dir" Directory_Parent="randovania_Dir" DefaultDir="numpy"/>
-    <ROW Directory="open_dread_rando_Dir" Directory_Parent="randovania_Dir" DefaultDir="OPEN_D~1|open_dread_rando"/>
     <ROW Directory="opt0.4_Dir" Directory_Parent="tcl_Dir" DefaultDir="opt0.4"/>
     <ROW Directory="pdfcorefonts_Dir" Directory_Parent="fonts_Dir" DefaultDir="PDFCOR~1|pdfcorefonts"/>
     <ROW Directory="platform_Dir" Directory_Parent="__Dir" DefaultDir="platform"/>
@@ -222,14 +181,6 @@
     <ROW Directory="platforms_Dir" Directory_Parent="plugins_Dir" DefaultDir="PLATFO~2|platforms"/>
     <ROW Directory="plot_directive_Dir" Directory_Parent="mpldata_Dir" DefaultDir="PLOT_D~1|plot_directive"/>
     <ROW Directory="plugins_Dir" Directory_Parent="PySide6_Dir" DefaultDir="plugins"/>
-    <ROW Directory="powerup_bomb_1_Dir" Directory_Parent="items_1_Dir" DefaultDir="POWERU~1|powerup_bomb"/>
-    <ROW Directory="powerup_bomb_Dir" Directory_Parent="items_Dir" DefaultDir="POWERU~1|powerup_bomb"/>
-    <ROW Directory="powerup_doublejump_1_Dir" Directory_Parent="items_1_Dir" DefaultDir="POWERU~2|powerup_doublejump"/>
-    <ROW Directory="powerup_doublejump_Dir" Directory_Parent="items_Dir" DefaultDir="POWERU~2|powerup_doublejump"/>
-    <ROW Directory="powerup_supermissile_1_Dir" Directory_Parent="items_1_Dir" DefaultDir="POWERU~3|powerup_supermissile"/>
-    <ROW Directory="powerup_supermissile_Dir" Directory_Parent="items_Dir" DefaultDir="POWERU~3|powerup_supermissile"/>
-    <ROW Directory="powerup_widebeam_1_Dir" Directory_Parent="items_1_Dir" DefaultDir="POWERU~4|powerup_widebeam"/>
-    <ROW Directory="powerup_widebeam_Dir" Directory_Parent="items_Dir" DefaultDir="POWERU~4|powerup_widebeam"/>
     <ROW Directory="pre_edited_cs_Dir" Directory_Parent="randovania_Dir" DefaultDir="PRE_ED~1|pre_edited_cs"/>
     <ROW Directory="presets_1_Dir" Directory_Parent="cave_story_Dir" DefaultDir="presets"/>
     <ROW Directory="presets_2_Dir" Directory_Parent="dread_Dir" DefaultDir="presets"/>
@@ -244,26 +195,16 @@
     <ROW Directory="psutil_Dir" Directory_Parent="randovania_Dir" DefaultDir="psutil"/>
     <ROW Directory="py_randomprime_Dir" Directory_Parent="randovania_Dir" DefaultDir="PY_RAN~1|py_randomprime"/>
     <ROW Directory="random_Dir" Directory_Parent="numpy_Dir" DefaultDir="random"/>
-    <ROW Directory="randovania_Dir" Directory_Parent="RandovaniaData_Dir" DefaultDir="RANDOV~1|randovania"/>
-    <ROW Directory="romfs_Dir" Directory_Parent="files_Dir" DefaultDir="romfs"/>
+    <ROW Directory="randovania_Dir" Directory_Parent="APPDIR" DefaultDir="RANDOV~1|randovania"/>
     <ROW Directory="sample_data_Dir" Directory_Parent="mpldata_Dir" DefaultDir="SAMPLE~1|sample_data"/>
-    <ROW Directory="schemas_Dir" Directory_Parent="jsonschema_Dir" DefaultDir="schemas"/>
-    <ROW Directory="setuptools63.4.3.distinfo_Dir" Directory_Parent="randovania_Dir" DefaultDir="SETUPT~1.DIS|setuptools-63.4.3.dist-info"/>
+    <ROW Directory="setuptools65.1.1.distinfo_Dir" Directory_Parent="randovania_Dir" DefaultDir="SETUPT~2.DIS|setuptools-65.1.1.dist-info"/>
     <ROW Directory="shiboken6_Dir" Directory_Parent="randovania_Dir" DefaultDir="SHIBOK~1|shiboken6"/>
     <ROW Directory="stylelib_Dir" Directory_Parent="mpldata_Dir" DefaultDir="stylelib"/>
     <ROW Directory="styles_Dir" Directory_Parent="plugins_Dir" DefaultDir="styles"/>
     <ROW Directory="super_metroid_Dir" Directory_Parent="games_Dir" DefaultDir="SUPER_~1|super_metroid"/>
-    <ROW Directory="system_Dir" Directory_Parent="textures_Dir" DefaultDir="system"/>
     <ROW Directory="tcl8_Dir" Directory_Parent="randovania_Dir" DefaultDir="tcl8"/>
     <ROW Directory="tcl_Dir" Directory_Parent="randovania_Dir" DefaultDir="tcl"/>
-    <ROW Directory="templates_Dir" Directory_Parent="open_dread_rando_Dir" DefaultDir="TEMPLA~1|templates"/>
     <ROW Directory="text_unidecode_Dir" Directory_Parent="randovania_Dir" DefaultDir="TEXT_U~1|text_unidecode"/>
-    <ROW Directory="textures_1_Dir" Directory_Parent="models_5_Dir" DefaultDir="textures"/>
-    <ROW Directory="textures_2_Dir" Directory_Parent="models_6_Dir" DefaultDir="textures"/>
-    <ROW Directory="textures_3_Dir" Directory_Parent="models_7_Dir" DefaultDir="textures"/>
-    <ROW Directory="textures_4_Dir" Directory_Parent="models_8_Dir" DefaultDir="textures"/>
-    <ROW Directory="textures_5_Dir" Directory_Parent="models_9_Dir" DefaultDir="textures"/>
-    <ROW Directory="textures_Dir" Directory_Parent="romfs_Dir" DefaultDir="textures"/>
     <ROW Directory="tk_Dir" Directory_Parent="randovania_Dir" DefaultDir="tk"/>
     <ROW Directory="tls_Dir" Directory_Parent="plugins_Dir" DefaultDir="tls"/>
     <ROW Directory="tracker_Dir" Directory_Parent="gui_assets_Dir" DefaultDir="tracker"/>
@@ -299,7 +240,6 @@
     <ROW Component="Beulah" ComponentId="{00138C68-6DE4-488C-A532-4B094087FC10}" Directory_="North_Dakota_Dir" Attributes="0" KeyPath="Beulah" Type="0"/>
     <ROW Component="Buenos_Aires" ComponentId="{47FB9AB6-9E12-4F90-91A9-AE8F5B4F3279}" Directory_="Argentina_Dir" Attributes="0" KeyPath="Buenos_Aires" Type="0"/>
     <ROW Component="CET" ComponentId="{1651DAB9-3148-49FD-9B84-7876A4FC953C}" Directory_="tzdata_Dir" Attributes="0" KeyPath="CET" Type="0"/>
-    <ROW Component="COPYING" ComponentId="{05CC0514-B1FD-408B-88B1-32D6F45DF5D7}" Directory_="licenses_Dir" Attributes="0" KeyPath="COPYING" Type="0"/>
     <ROW Component="CURSOR_IKA.png" ComponentId="{9E0A5883-F7D7-4395-AD9D-562B2EE3638D}" Directory_="CURSOR_Dir" Attributes="0" KeyPath="CURSOR_IKA.png" Type="0"/>
     <ROW Component="Casey" ComponentId="{143514B6-6A80-44E6-BD19-E1B80DF2F182}" Directory_="Antarctica_Dir" Attributes="0" KeyPath="Casey" Type="0"/>
     <ROW Component="Chaco.bmp" ComponentId="{5881C3B9-5FDF-42BF-9448-A2760495C53F}" Directory_="mychar_Dir" Attributes="0" KeyPath="Chaco.bmp" Type="0"/>
@@ -329,6 +269,7 @@
     <ROW Component="Qt6Svg.dll" ComponentId="{9D20DD4C-7365-4F12-8517-9A633F04F91E}" Directory_="randovania_Dir" Attributes="256" KeyPath="Qt6Svg.dll"/>
     <ROW Component="Qt6Widgets.dll" ComponentId="{791D656A-CB81-44E7-9053-8FD2E60CDED7}" Directory_="randovania_Dir" Attributes="256" KeyPath="Qt6Widgets.dll"/>
     <ROW Component="QtCore.pyd" ComponentId="{1F2F509C-F952-45F5-B064-34A5EF5E25DC}" Directory_="PySide6_Dir" Attributes="256" KeyPath="QtCore.pyd" Type="0"/>
+    <ROW Component="Random_Enemy_Attributes.cp310win_amd64.pyd" ComponentId="{41CAD457-3481-49FA-BBD9-BD07748C0ECE}" Directory_="Random_Enemy_Attributes_Dir" Attributes="256" KeyPath="Random_Enemy_Attributes.cp310win_amd64.pyd" Type="0"/>
     <ROW Component="Randomizer.exe" ComponentId="{EC86AA6A-E975-488B-A8E9-DC88C883FD9A}" Directory_="ClarisPrimeRandomizer_Dir" Attributes="0" KeyPath="Randomizer.exe"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{391F9A5B-EE6F-49F4-9CC3-D09B6FDABC95}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="Shiboken.pyd" ComponentId="{910C0143-5279-46FF-87C1-3C69EA9ABA73}" Directory_="shiboken6_Dir" Attributes="256" KeyPath="Shiboken.pyd" Type="0"/>
@@ -411,12 +352,10 @@
     <ROW Component="backsymbolic.svg" ComponentId="{05564615-AE3B-45F7-A9B6-BF6979C75214}" Directory_="images_Dir" Attributes="0" KeyPath="backsymbolic.svg" Type="0"/>
     <ROW Component="base_library.zip" ComponentId="{8559D3A3-F30A-4AA6-BE8B-CB81EC83ED25}" Directory_="randovania_Dir" Attributes="0" KeyPath="base_library.zip" Type="0"/>
     <ROW Component="bgerror.tcl" ComponentId="{C133F1E4-E479-48EB-B9A3-0004DADD4451}" Directory_="tk_Dir" Attributes="0" KeyPath="bgerror.tcl" Type="0"/>
-    <ROW Component="bit.lua" ComponentId="{B0D48A13-54A5-43A6-B9E8-99BB883FABA5}" Directory_="lua_libraries_Dir" Attributes="0" KeyPath="bit.lua" Type="0"/>
     <ROW Component="bit_generator.cp310win_amd64.pyd" ComponentId="{8F44E0EB-6C03-43FD-8F78-FE88B3244D68}" Directory_="random_Dir" Attributes="256" KeyPath="bit_generator.cp310win_amd64.pyd" Type="0"/>
     <ROW Component="bivariate_normal.npy" ComponentId="{F1C827EA-9AF0-4DA2-BCDD-6082268E25DE}" Directory_="axes_grid_Dir" Attributes="0" KeyPath="bivariate_normal.npy" Type="0"/>
     <ROW Component="bmh.mplstyle" ComponentId="{4717818F-4736-4C1F-B480-C9F4B7510B16}" Directory_="stylelib_Dir" Attributes="0" KeyPath="bmh.mplstyle" Type="0"/>
     <ROW Component="boost_ball.gif" ComponentId="{E979BFF7-9A46-45FC-9C7A-629059B4D5D3}" Directory_="mp3_Dir" Attributes="0" KeyPath="boost_ball.gif_2" Type="0"/>
-    <ROW Component="boss_powerup_template.lua" ComponentId="{E29E50C2-AC0B-45D2-B41D-9C5F7D145F80}" Directory_="templates_Dir" Attributes="0" KeyPath="boss_powerup_template.lua" Type="0"/>
     <ROW Component="cacert.pem" ComponentId="{ED2F3B80-A1F7-4FED-8666-18FF1B980DC7}" Directory_="certifi_Dir" Attributes="0" KeyPath="cacert.pem" Type="0"/>
     <ROW Component="cheap_charge.ips" ComponentId="{62467A52-15D1-4C39-982B-E281242EBF6A}" Directory_="Tweaks_Dir" Attributes="0" KeyPath="cheap_charge.ips" Type="0"/>
     <ROW Component="classic.rdvpreset" ComponentId="{2D70D7DD-BBAE-42AF-B458-B014FEFE22F0}" Directory_="presets_1_Dir" Attributes="0" KeyPath="classic.rdvpreset" Type="0"/>
@@ -433,21 +372,17 @@
     <ROW Component="cover.png_6" ComponentId="{0DBA7E36-06B8-4A26-A30D-C86533BEAAB8}" Directory_="assets_6_Dir" Attributes="0" KeyPath="cover.png_6" Type="0"/>
     <ROW Component="cs.msg" ComponentId="{2E7DD09D-F9D5-4A75-A52F-A99C4CDC238A}" Directory_="msgs_1_Dir" Attributes="0" KeyPath="cs.msg_1" Type="0"/>
     <ROW Component="custom_music.ips" ComponentId="{6652E7F4-6308-4ED3-ABB4-8E423C47700C}" Directory_="Music_Dir" Attributes="0" KeyPath="custom_music.ips" Type="0"/>
-    <ROW Component="custom_scenario.lua" ComponentId="{9341586D-E02F-4D44-8759-C0E4CEA26C8B}" Directory_="files_Dir" Attributes="0" KeyPath="custom_scenario.lua" Type="0"/>
     <ROW Component="dachora_pit.ips" ComponentId="{D32E2C9E-2BEF-4184-8E36-76205905E6DD}" Directory_="MapChanges_Dir" Attributes="0" KeyPath="dachora_pit.ips" Type="0"/>
     <ROW Component="darkszero_deluxe.rdvpreset" ComponentId="{328C7C1D-08F7-49F7-B03C-AFC4FE7FCA9B}" Directory_="presets_4_Dir" Attributes="0" KeyPath="darkszero_deluxe.rdvpreset" Type="0"/>
     <ROW Component="dat" ComponentId="{E6F31243-1718-4C80-911A-91B6C96B9AF4}" Directory_="Org_Dir" Attributes="0" KeyPath="dat" Type="0"/>
     <ROW Component="data.bin" ComponentId="{02420D46-5422-4E23-A3B1-E957F786C779}" Directory_="text_unidecode_Dir" Attributes="0" KeyPath="data.bin" Type="0"/>
     <ROW Component="data_x_x2_x3.csv" ComponentId="{E888C862-A55D-45E5-95A5-95D48F0AA655}" Directory_="sample_data_Dir" Attributes="0" KeyPath="data_x_x2_x3.csv" Type="0"/>
     <ROW Component="databaseexample.png" ComponentId="{18D04F7A-1B7E-4C4D-8731-EBD463896598}" Directory_="gui_assets_Dir" Attributes="0" KeyPath="databaseexample.png" Type="0"/>
-    <ROW Component="debug_input.s" ComponentId="{34B8B68D-2163-46A0-9018-C215CAAF8A2E}" Directory_="exefs_patches_Dir" Attributes="0" KeyPath="debug_input.s" Type="0"/>
     <ROW Component="disable_gt_code.ips" ComponentId="{CA9ECE0E-ED78-402A-A6EB-935A85B82C6A}" Directory_="Fixes_Dir" Attributes="0" KeyPath="disable_gt_code.ips" Type="0"/>
     <ROW Component="door_transition.ips" ComponentId="{7D0229E3-669B-4202-8C5A-C9FB6AD59CD2}" Directory_="MandatoryPatches_Dir" Attributes="0" KeyPath="door_transition.ips" Type="0"/>
-    <ROW Component="draft201909.json" ComponentId="{C947B024-2E6B-4F50-958C-0CBDBDB51151}" Directory_="schemas_Dir" Attributes="0" KeyPath="draft201909.json" Type="0"/>
-    <ROW Component="dread_types.json" ComponentId="{D755803B-9005-47D1-BE97-A5C8C9D6751C}" Directory_="mercury_engine_data_structures_Dir" Attributes="0" KeyPath="dread_types.json" Type="0"/>
-    <ROW Component="entry_points.txt" ComponentId="{9570C37F-9C36-4EBB-B0B2-7E7796D73B6A}" Directory_="jsonschema4.9.1.distinfo_Dir" Attributes="0" KeyPath="entry_points.txt" Type="0"/>
-    <ROW Component="entry_points.txt_1" ComponentId="{19CF13AF-5241-4E7B-8A5A-498E1475785F}" Directory_="setuptools63.4.3.distinfo_Dir" Attributes="0" KeyPath="entry_points.txt_1" Type="0"/>
+    <ROW Component="dread.7z" ComponentId="{064881C7-BD42-432C-A2D8-EC108CEB0B21}" Directory_="gameimages_Dir" Attributes="0" KeyPath="dread.7z" Type="0"/>
     <ROW Component="entry_points.txt_2" ComponentId="{DDA7E447-B4D3-46F2-A5A8-CF9AB3D06E2C}" Directory_="wheel0.37.1.distinfo_Dir" Attributes="0" KeyPath="entry_points.txt_2" Type="0"/>
+    <ROW Component="entry_points.txt_3" ComponentId="{B64EC80E-9126-40D2-B30E-F371CADEE573}" Directory_="setuptools65.1.1.distinfo_Dir" Attributes="0" KeyPath="entry_points.txt_3" Type="0"/>
     <ROW Component="font" ComponentId="{D14616D3-795D-454D-BF5B-39591450BCAF}" Directory_="Font_Dir" Attributes="0" KeyPath="font" Type="0"/>
     <ROW Component="ft2font.cp310win_amd64.pyd" ComponentId="{3BAE1F49-AE1F-45A1-A9B1-993C0AF8AC25}" Directory_="matplotlib_Dir" Attributes="256" KeyPath="ft2font.cp310win_amd64.pyd" Type="0"/>
     <ROW Component="gitignore" ComponentId="{A4B63908-428E-4A4A-80F6-7CAE8F54EE5F}" Directory_="binary_data_Dir" Attributes="0" KeyPath="gitignore" Type="0"/>
@@ -456,10 +391,6 @@
     <ROW Component="hash_words.json" ComponentId="{A690F5C7-B4E6-44A2-81FC-44E5087444FC}" Directory_="hash_words_Dir" Attributes="0" KeyPath="hash_words.json" Type="0"/>
     <ROW Component="http.tcl" ComponentId="{E7F97045-E8FF-49D6-ACDA-6C84A86E60B9}" Directory_="http1.0_Dir" Attributes="0" KeyPath="http.tcl" Type="0"/>
     <ROW Component="http2.9.5.tm" ComponentId="{8C730087-3494-4EB2-A256-FBE1DFE197D2}" Directory_="__2_Dir" Attributes="0" KeyPath="http2.9.5.tm" Type="0"/>
-    <ROW Component="icons.bctex" ComponentId="{43245D72-B0FB-44C9-91A9-EBDFF9B7C13E}" Directory_="icons_1_Dir" Attributes="0" KeyPath="icons.bctex" Type="0"/>
-    <ROW Component="issue.json" ComponentId="{0652F8A2-862E-4783-B8CB-AF928A654B4F}" Directory_="issue232_Dir" Attributes="0" KeyPath="issue.json" Type="0"/>
-    <ROW Component="itemcube_camo.bcmdl" ComponentId="{19343F90-9AF9-499F-AF16-F879C8869BDF}" Directory_="model_1_Dir" Attributes="0" KeyPath="itemcube_camo.bcmdl" Type="0"/>
-    <ROW Component="itemcube_camo.bsmat" ComponentId="{0F1C6B38-0ADE-49E8-B8CF-6F8816E772D9}" Directory_="imats_1_Dir" Attributes="0" KeyPath="itemcube_camo.bsmat" Type="0"/>
     <ROW Component="itemdatabase.json" ComponentId="{0E07DBD4-C3FD-4836-BAE9-FFB70BF201C7}" Directory_="item_database_Dir" Attributes="0" KeyPath="itemdatabase.json" Type="0"/>
     <ROW Component="itemdatabase.json_1" ComponentId="{9C098930-D998-4F2F-82A0-8AFEB2744F69}" Directory_="item_database_1_Dir" Attributes="0" KeyPath="itemdatabase.json_1" Type="0"/>
     <ROW Component="itemdatabase.json_2" ComponentId="{047C2369-61E5-47E3-80D9-0F202AC2290F}" Directory_="item_database_2_Dir" Attributes="0" KeyPath="itemdatabase.json_2" Type="0"/>
@@ -467,7 +398,6 @@
     <ROW Component="itemdatabase.json_4" ComponentId="{974B2D53-7ED7-4DA0-854B-FE720CE1FB3A}" Directory_="item_database_4_Dir" Attributes="0" KeyPath="itemdatabase.json_4" Type="0"/>
     <ROW Component="itemdatabase.json_5" ComponentId="{477CA273-BCD3-4F4F-8922-9BCB110EA9BB}" Directory_="item_database_5_Dir" Attributes="0" KeyPath="itemdatabase.json_5" Type="0"/>
     <ROW Component="itemdatabase.json_6" ComponentId="{CD0B5E0D-2D84-4B68-B9ED-1530DAB0A30B}" Directory_="item_database_6_Dir" Attributes="0" KeyPath="itemdatabase.json_6" Type="0"/>
-    <ROW Component="keystone.dll" ComponentId="{E4CDEB10-3503-493B-B4E2-DBB6F2D3B489}" Directory_="keystone_Dir" Attributes="256" KeyPath="keystone.dll"/>
     <ROW Component="kpsewhich.lua" ComponentId="{028224B5-68BE-4772-8EC7-A0E6B74E44F9}" Directory_="mpldata_Dir" Attributes="0" KeyPath="kpsewhich.lua" Type="0"/>
     <ROW Component="lapack_lite.cp310win_amd64.pyd" ComponentId="{2DE2D667-B04E-4F62-AD2C-0AE3FB184BDA}" Directory_="linalg_Dir" Attributes="256" KeyPath="lapack_lite.cp310win_amd64.pyd" Type="0"/>
     <ROW Component="libcrypto1_1.dll" ComponentId="{EDF9B78E-0715-43E1-99C1-617A78E6702F}" Directory_="randovania_Dir" Attributes="256" KeyPath="libcrypto1_1.dll"/>
@@ -478,25 +408,12 @@
     <ROW Component="logo.eps" ComponentId="{13F3DA30-87BD-4A23-80D9-592A7401446E}" Directory_="images_1_Dir" Attributes="0" KeyPath="logo.eps" Type="0"/>
     <ROW Component="lzo2.dll" ComponentId="{0DD0DDFF-C86D-4B76-8966-60EA49ED88FB}" Directory_="ClarisEchoesMenu_Dir" Attributes="0" KeyPath="lzo2.dll"/>
     <ROW Component="lzo2.dll_1" ComponentId="{754DFAB7-F9BF-433A-B855-29987F06919A}" Directory_="ClarisPrimeRandomizer_Dir" Attributes="0" KeyPath="lzo2.dll_1"/>
-    <ROW Component="main.npdm" ComponentId="{4BC2B116-0FD0-439F-AEAD-FE0CC8D7DE9B}" Directory_="dread_depackager_Dir" Attributes="0" KeyPath="main.npdm" Type="0"/>
     <ROW Component="msgcat1.6.1.tm" ComponentId="{AE071B3E-CB9C-467C-A3A6-8880C656AE76}" Directory_="__1_Dir" Attributes="0" KeyPath="msgcat1.6.1.tm" Type="0"/>
     <ROW Component="opengl32sw.dll" ComponentId="{1FC724C9-9DB0-459D-B636-640C55BBE34C}" Directory_="randovania_Dir" Attributes="256" KeyPath="opengl32sw.dll"/>
     <ROW Component="optparse.tcl" ComponentId="{F842BA2B-C158-4C76-A41F-165616A8D0A4}" Directory_="opt0.4_Dir" Attributes="0" KeyPath="optparse.tcl" Type="0"/>
     <ROW Component="platform1.0.18.tm" ComponentId="{4C77A2C8-B911-42DE-91C4-E1FA913B8BFE}" Directory_="__Dir" Attributes="0" KeyPath="platform1.0.18.tm" Type="0"/>
     <ROW Component="plot_directive.css" ComponentId="{C9E4C04E-58C3-457A-AD16-29C944C3F44E}" Directory_="plot_directive_Dir" Attributes="0" KeyPath="plot_directive.css" Type="0"/>
-    <ROW Component="powerup_doublejump_mp_magnet01.bsmat" ComponentId="{2381E692-80FA-4B3C-8665-9CCB76C1FF53}" Directory_="imats_3_Dir" Attributes="0" KeyPath="powerup_doublejump_mp_magnet01.bsmat" Type="0"/>
-    <ROW Component="powerup_ice__missile.bcmdl" ComponentId="{551586D4-74C0-4D6B-B169-7A46DEA3F9AC}" Directory_="models_3_Dir" Attributes="0" KeyPath="powerup_ice__missile.bcmdl" Type="0"/>
-    <ROW Component="powerup_ice__missile_bc.bctex" ComponentId="{C036BBCE-2FCB-4FD3-946F-7893562F14A2}" Directory_="textures_4_Dir" Attributes="0" KeyPath="powerup_ice__missile_bc.bctex" Type="0"/>
-    <ROW Component="powerup_ice__missile_mp_opaque_01.bsmat" ComponentId="{928B2549-9A4F-4D79-AB49-1CFDA5AB4CC4}" Directory_="imats_4_Dir" Attributes="0" KeyPath="powerup_ice__missile_mp_opaque_01.bsmat" Type="0"/>
-    <ROW Component="powerup_magnet.bcmdl" ComponentId="{1DD360C6-2DF3-496B-BD69-C3769ACB5F83}" Directory_="models_2_Dir" Attributes="0" KeyPath="powerup_magnet.bcmdl" Type="0"/>
-    <ROW Component="powerup_morph.bcmdl" ComponentId="{1446205D-1B1F-44B1-BC57-C9C0265D0AF2}" Directory_="models_1_Dir" Attributes="0" KeyPath="powerup_morph.bcmdl" Type="0"/>
-    <ROW Component="powerup_morphat.bctex" ComponentId="{B5446F9C-3596-4758-AB6B-64902002EBBF}" Directory_="textures_2_Dir" Attributes="0" KeyPath="powerup_morphat.bctex" Type="0"/>
-    <ROW Component="powerup_morphhologram.bsmat" ComponentId="{206A6361-542F-4FF9-AEC6-55F828089BE7}" Directory_="imats_2_Dir" Attributes="0" KeyPath="powerup_morphhologram.bsmat" Type="0"/>
-    <ROW Component="powerup_spi_magnet_bc.bctex" ComponentId="{C6669476-6501-4F6F-B7DF-6048CAAD8D00}" Directory_="textures_3_Dir" Attributes="0" KeyPath="powerup_spi_magnet_bc.bctex" Type="0"/>
-    <ROW Component="powerup_wavebeam.bcmdl" ComponentId="{506F1BC0-6F33-4666-B409-CAC09BB81EAC}" Directory_="models_4_Dir" Attributes="0" KeyPath="powerup_wavebeam.bcmdl" Type="0"/>
-    <ROW Component="powerup_wavebeam_autoilum.bsmat" ComponentId="{15DE4048-7476-4907-BB7D-8848284EC617}" Directory_="imats_5_Dir" Attributes="0" KeyPath="powerup_wavebeam_autoilum.bsmat" Type="0"/>
     <ROW Component="prime1gamethreelines.json" ComponentId="{13E7204A-023F-4259-8CCF-022A8EDB7633}" Directory_="tracker_Dir" Attributes="0" KeyPath="prime1gamethreelines.json" Type="0"/>
-    <ROW Component="pup_wavebeam_bc.bctex" ComponentId="{0BF371C3-B809-440E-A26A-93800A9BB9D6}" Directory_="textures_5_Dir" Attributes="0" KeyPath="pup_wavebeam_bc.bctex" Type="0"/>
     <ROW Component="pxa" ComponentId="{B7B01798-E26E-40AD-B581-60D73E73D838}" Directory_="Stage_Dir" Attributes="0" KeyPath="pxa" Type="0"/>
     <ROW Component="pxt" ComponentId="{A5D6BF6A-EEAE-4812-B7A8-54E18151214A}" Directory_="PixTone_Dir" Attributes="0" KeyPath="pxt" Type="0"/>
     <ROW Component="py.typed" ComponentId="{E13A89CD-4614-44A3-9021-5D4333388CB1}" Directory_="frozendict_Dir" Attributes="0" KeyPath="py.typed_1" Type="0"/>
@@ -526,14 +443,10 @@
     <ROW Component="qwindows.dll" ComponentId="{D3ABDF7F-0D35-441B-8A28-45D6221AEADD}" Directory_="platforms_Dir" Attributes="256" KeyPath="qwindows.dll"/>
     <ROW Component="qwindowsvistastyle.dll" ComponentId="{40AAF2B6-6D51-4018-9B50-3140B87068CD}" Directory_="styles_Dir" Attributes="256" KeyPath="qwindowsvistastyle.dll"/>
     <ROW Component="randovania.exe" ComponentId="{4AE7E6E9-E570-49AD-93A6-C4F8603794DF}" Directory_="randovania_Dir" Attributes="256" KeyPath="randovania.exe"/>
-    <ROW Component="readme.txt" ComponentId="{D12B4146-A1C9-4A41-BBB0-F9C47FFF921A}" Directory_="levels_Dir" Attributes="0" KeyPath="readme.txt_4" Type="0"/>
     <ROW Component="rust.pyd" ComponentId="{7F0DA395-4212-4848-811F-CACE69CB06FE}" Directory_="py_randomprime_Dir" Attributes="256" KeyPath="rust.pyd" Type="0"/>
     <ROW Component="shell1.1.4.tm" ComponentId="{FE0C9DDF-ECC9-494B-AA2B-E5D280DE878B}" Directory_="platform_Dir" Attributes="0" KeyPath="shell1.1.4.tm" Type="0"/>
     <ROW Component="shiboken6.abi3.dll" ComponentId="{2586E17F-B39B-4AD2-A4C4-6CCB938FC245}" Directory_="randovania_Dir" Attributes="256" KeyPath="shiboken6.abi3.dll"/>
     <ROW Component="sky_temple_key_NqN_icon.ico" ComponentId="{D0CAED75-8B28-4F4B-93CE-99F5D1B763D6}" Directory_="icons_Dir" Attributes="0" KeyPath="sky_temple_key_NqN_icon.ico" Type="0"/>
-    <ROW Component="speed_booster.bcmdl" ComponentId="{B5C74779-7545-4FF5-AE20-D5B98A9B32C6}" Directory_="models_Dir" Attributes="0" KeyPath="speed_booster.bcmdl" Type="0"/>
-    <ROW Component="speedboost_at.bctex" ComponentId="{57558866-6C83-41DC-8D60-0DC1F8BAF726}" Directory_="textures_1_Dir" Attributes="0" KeyPath="speedboost_at.bctex" Type="0"/>
-    <ROW Component="speedboost_mp_opaque_01.bsmat" ComponentId="{1B4515DC-C0D7-42DF-8C6E-E06843B9859B}" Directory_="imats_Dir" Attributes="0" KeyPath="speedboost_mp_opaque_01.bsmat" Type="0"/>
     <ROW Component="stageconv.exe" ComponentId="{2EB1883B-FBC2-4CBE-8C0A-4A244B9A0964}" Directory_="data_1_Dir" Attributes="256" KeyPath="stageconv.exe"/>
     <ROW Component="starter_preset.rdvpreset" ComponentId="{BF0607FC-26FF-43C1-A66A-24E37E107686}" Directory_="presets_Dir" Attributes="0" KeyPath="starter_preset.rdvpreset" Type="0"/>
     <ROW Component="starter_preset.rdvpreset_1" ComponentId="{948533D2-D84E-4A91-8050-9BB8642F3EAC}" Directory_="presets_2_Dir" Attributes="0" KeyPath="starter_preset.rdvpreset_2" Type="0"/>
@@ -547,8 +460,8 @@
     <ROW Component="zlib1.dll" ComponentId="{21A5F0CF-6EFE-4D7D-9F1B-AEDC47A154DD}" Directory_="ClarisPrimeRandomizer_Dir" Attributes="0" KeyPath="zlib1.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+    <ROW Feature="Randovania" Title="MainFeature" Description="This installs the application itself." Display="3" Level="1" Attributes="24"/>
+    <ATTRIBUTE name="CurrentFeature" value="Randovania"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="apimswincoreconsolel110.dll" Component_="apimswincoreconsolel110.dll" FileName="API-MS~1.DLL|api-ms-win-core-console-l1-1-0.dll" Attributes="0" SourcePath="dist\randovania\api-ms-win-core-console-l1-1-0.dll" SelfReg="false"/>
@@ -1202,22 +1115,6 @@
     <ROW File="itemdatabase.json_6" Component_="itemdatabase.json_6" FileName="ITEM-D~1.JSO|item-database.json" Attributes="0" SourcePath="dist\randovania\games\super_metroid\item_database\item-database.json" SelfReg="false"/>
     <ROW File="starter_preset.rdvpreset_6" Component_="starter_preset.rdvpreset_3" FileName="STARTE~1.RDV|starter_preset.rdvpreset" Attributes="0" SourcePath="dist\randovania\games\super_metroid\presets\starter_preset.rdvpreset" SelfReg="false"/>
     <ROW File="_greenlet.cp310win_amd64.pyd" Component_="_greenlet.cp310win_amd64.pyd" FileName="_GREEN~1.PYD|_greenlet.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\greenlet\_greenlet.cp310-win_amd64.pyd" SelfReg="false"/>
-    <ROW File="issue.json" Component_="issue.json" FileName="ISSUE~1.JSO|issue.json" Attributes="0" SourcePath="dist\randovania\jsonschema\benchmarks\issue232\issue.json" SelfReg="false"/>
-    <ROW File="draft201909.json" Component_="draft201909.json" FileName="DRAFT2~1.JSO|draft2019-09.json" Attributes="0" SourcePath="dist\randovania\jsonschema\schemas\draft2019-09.json" SelfReg="false"/>
-    <ROW File="draft202012.json" Component_="draft201909.json" FileName="DRAFT2~2.JSO|draft2020-12.json" Attributes="0" SourcePath="dist\randovania\jsonschema\schemas\draft2020-12.json" SelfReg="false"/>
-    <ROW File="draft3.json" Component_="draft201909.json" FileName="DRAFT3~1.JSO|draft3.json" Attributes="0" SourcePath="dist\randovania\jsonschema\schemas\draft3.json" SelfReg="false"/>
-    <ROW File="draft4.json" Component_="draft201909.json" FileName="DRAFT4~1.JSO|draft4.json" Attributes="0" SourcePath="dist\randovania\jsonschema\schemas\draft4.json" SelfReg="false"/>
-    <ROW File="draft6.json" Component_="draft201909.json" FileName="DRAFT6~1.JSO|draft6.json" Attributes="0" SourcePath="dist\randovania\jsonschema\schemas\draft6.json" SelfReg="false"/>
-    <ROW File="draft7.json" Component_="draft201909.json" FileName="DRAFT7~1.JSO|draft7.json" Attributes="0" SourcePath="dist\randovania\jsonschema\schemas\draft7.json" SelfReg="false"/>
-    <ROW File="vocabularies.json" Component_="draft201909.json" FileName="VOCABU~1.JSO|vocabularies.json" Attributes="0" SourcePath="dist\randovania\jsonschema\schemas\vocabularies.json" SelfReg="false"/>
-    <ROW File="entry_points.txt" Component_="entry_points.txt" FileName="ENTRY_~1.TXT|entry_points.txt" Attributes="0" SourcePath="dist\randovania\jsonschema-4.9.1.dist-info\entry_points.txt" SelfReg="false"/>
-    <ROW File="INSTALLER_1" Component_="entry_points.txt" FileName="INSTAL~1|INSTALLER" Attributes="0" SourcePath="dist\randovania\jsonschema-4.9.1.dist-info\INSTALLER" SelfReg="false"/>
-    <ROW File="COPYING" Component_="COPYING" FileName="COPYING" Attributes="0" SourcePath="dist\randovania\jsonschema-4.9.1.dist-info\licenses\COPYING" SelfReg="false"/>
-    <ROW File="METADATA_1" Component_="entry_points.txt" FileName="METADATA" Attributes="0" SourcePath="dist\randovania\jsonschema-4.9.1.dist-info\METADATA" SelfReg="false"/>
-    <ROW File="RECORD_1" Component_="entry_points.txt" FileName="RECORD" Attributes="0" SourcePath="dist\randovania\jsonschema-4.9.1.dist-info\RECORD" SelfReg="false"/>
-    <ROW File="REQUESTED_1" Component_="entry_points.txt" FileName="REQUES~1|REQUESTED" Attributes="0" SourcePath="dist\randovania\jsonschema-4.9.1.dist-info\REQUESTED" SelfReg="false"/>
-    <ROW File="WHEEL_1" Component_="entry_points.txt" FileName="WHEEL" Attributes="0" SourcePath="dist\randovania\jsonschema-4.9.1.dist-info\WHEEL" SelfReg="false"/>
-    <ROW File="keystone.dll" Component_="keystone.dll" FileName="keystone.dll" Attributes="0" SourcePath="dist\randovania\keystone\keystone.dll" SelfReg="false"/>
     <ROW File="_cext.cp310win_amd64.pyd" Component_="_cext.cp310win_amd64.pyd" FileName="_CEXTC~1.PYD|_cext.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\kiwisolver\_cext.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="libcrypto1_1.dll" Component_="libcrypto1_1.dll" FileName="LIBCRY~1.DLL|libcrypto-1_1.dll" Attributes="0" SourcePath="dist\randovania\libcrypto-1_1.dll" SelfReg="false"/>
     <ROW File="libffi7.dll" Component_="libffi7.dll" FileName="libffi-7.dll" Attributes="0" SourcePath="dist\randovania\libffi-7.dll" SelfReg="false"/>
@@ -1433,9 +1330,6 @@
     <ROW File="_path.cp310win_amd64.pyd" Component_="ft2font.cp310win_amd64.pyd" FileName="_PATHC~1.PYD|_path.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\matplotlib\_path.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="_qhull.cp310win_amd64.pyd" Component_="ft2font.cp310win_amd64.pyd" FileName="_QHULL~1.PYD|_qhull.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\matplotlib\_qhull.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="_tri.cp310win_amd64.pyd" Component_="ft2font.cp310win_amd64.pyd" FileName="_TRICP~1.PYD|_tri.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\matplotlib\_tri.cp310-win_amd64.pyd" SelfReg="false"/>
-    <ROW File="dread_types.json" Component_="dread_types.json" FileName="DREAD_~1.JSO|dread_types.json" Attributes="0" SourcePath="dist\randovania\mercury_engine_data_structures\dread_types.json" SelfReg="false"/>
-    <ROW File="property_names.json" Component_="dread_types.json" FileName="PROPER~1.JSO|property_names.json" Attributes="0" SourcePath="dist\randovania\mercury_engine_data_structures\property_names.json" SelfReg="false"/>
-    <ROW File="resource_names.json" Component_="dread_types.json" FileName="RESOUR~1.JSO|resource_names.json" Attributes="0" SourcePath="dist\randovania\mercury_engine_data_structures\resource_names.json" SelfReg="false"/>
     <ROW File="mp2hudcolor.cp310win_amd64.pyd" Component_="base_library.zip" FileName="MP2HUD~1.PYD|mp2hudcolor.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\mp2hudcolor.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="MSVCP140.dll" Component_="MSVCP140.dll" FileName="MSVCP140.dll" Attributes="0" SourcePath="dist\randovania\MSVCP140.dll" SelfReg="false"/>
     <ROW File="MSVCP140_1.dll" Component_="MSVCP140_1.dll" FileName="MSVCP1~1.DLL|MSVCP140_1.dll" Attributes="0" SourcePath="dist\randovania\MSVCP140_1.dll" SelfReg="false"/>
@@ -1456,60 +1350,6 @@
     <ROW File="_philox.cp310win_amd64.pyd" Component_="bit_generator.cp310win_amd64.pyd" FileName="_PHILO~1.PYD|_philox.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\numpy\random\_philox.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="_sfc64.cp310win_amd64.pyd" Component_="bit_generator.cp310win_amd64.pyd" FileName="_SFC64~1.PYD|_sfc64.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\numpy\random\_sfc64.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="opengl32sw.dll" Component_="opengl32sw.dll" FileName="OPENGL~1.DLL|opengl32sw.dll" Attributes="0" SourcePath="dist\randovania\opengl32sw.dll" SelfReg="false"/>
-    <ROW File="custom_scenario.lua" Component_="custom_scenario.lua" FileName="CUSTOM~1.LUA|custom_scenario.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\custom_scenario.lua" SelfReg="false"/>
-    <ROW File="main.npdm" Component_="main.npdm" FileName="MAIN~1.NPD|main.npdm" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\dread_depackager\main.npdm" SelfReg="false"/>
-    <ROW File="README.md_1" Component_="main.npdm" FileName="README.md" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\dread_depackager\README.md" SelfReg="false"/>
-    <ROW File="subsdk9" Component_="main.npdm" FileName="subsdk9" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\dread_depackager\subsdk9" SelfReg="false"/>
-    <ROW File="debug_input.s" Component_="debug_input.s" FileName="DEBUG_~1.S|debug_input.s" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\exefs_patches\debug_input.s" SelfReg="false"/>
-    <ROW File="readme.txt_4" Component_="readme.txt" FileName="readme.txt" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\readme.txt" SelfReg="false"/>
-    <ROW File="s010_cave.lc.lua" Component_="readme.txt" FileName="S010_C~1.LUA|s010_cave.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s010_cave.lc.lua" SelfReg="false"/>
-    <ROW File="s020_magma.lc.lua" Component_="readme.txt" FileName="S020_M~1.LUA|s020_magma.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s020_magma.lc.lua" SelfReg="false"/>
-    <ROW File="s030_baselab.lc.lua" Component_="readme.txt" FileName="S030_B~1.LUA|s030_baselab.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s030_baselab.lc.lua" SelfReg="false"/>
-    <ROW File="s040_aqua.lc.lua" Component_="readme.txt" FileName="S040_A~1.LUA|s040_aqua.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s040_aqua.lc.lua" SelfReg="false"/>
-    <ROW File="s050_forest.lc.lua" Component_="readme.txt" FileName="S050_F~1.LUA|s050_forest.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s050_forest.lc.lua" SelfReg="false"/>
-    <ROW File="s060_quarantine.lc.lua" Component_="readme.txt" FileName="S060_Q~1.LUA|s060_quarantine.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s060_quarantine.lc.lua" SelfReg="false"/>
-    <ROW File="s070_basesanc.lc.lua" Component_="readme.txt" FileName="S070_B~1.LUA|s070_basesanc.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s070_basesanc.lc.lua" SelfReg="false"/>
-    <ROW File="s080_shipyard.lc.lua" Component_="readme.txt" FileName="S080_S~1.LUA|s080_shipyard.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s080_shipyard.lc.lua" SelfReg="false"/>
-    <ROW File="s090_skybase.lc.lua" Component_="readme.txt" FileName="S090_S~1.LUA|s090_skybase.lc.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\levels\s090_skybase.lc.lua" SelfReg="false"/>
-    <ROW File="bit.lua" Component_="bit.lua" FileName="bit.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\lua_libraries\bit.lua" SelfReg="false"/>
-    <ROW File="input_handling.lua" Component_="bit.lua" FileName="INPUT_~1.LUA|input_handling.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\lua_libraries\input_handling.lua" SelfReg="false"/>
-    <ROW File="randomizer_powerup.lua" Component_="custom_scenario.lua" FileName="RANDOM~1.LUA|randomizer_powerup.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\randomizer_powerup.lua" SelfReg="false"/>
-    <ROW File="speedboost_mp_opaque_01.bsmat" Component_="speedboost_mp_opaque_01.bsmat" FileName="SPEEDB~1.BSM|speedboost_mp_opaque_01.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\itemsphere\models\imats\speedboost_mp_opaque_01.bsmat" SelfReg="false"/>
-    <ROW File="speed_booster.bcmdl" Component_="speed_booster.bcmdl" FileName="SPEED_~1.BCM|speed_booster.bcmdl" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\itemsphere\models\speed_booster.bcmdl" SelfReg="false"/>
-    <ROW File="itemcube_camo.bsmat" Component_="itemcube_camo.bsmat" FileName="ITEMCU~1.BSM|itemcube_camo.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\item_cube\model\imats\itemcube_camo.bsmat" SelfReg="false"/>
-    <ROW File="itemcube_sonr.bsmat" Component_="itemcube_camo.bsmat" FileName="ITEMCU~2.BSM|itemcube_sonr.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\item_cube\model\imats\itemcube_sonr.bsmat" SelfReg="false"/>
-    <ROW File="itemcube_camo.bcmdl" Component_="itemcube_camo.bcmdl" FileName="ITEMCU~1.BCM|itemcube_camo.bcmdl" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\item_cube_broken\model\itemcube_camo.bcmdl" SelfReg="false"/>
-    <ROW File="itemcube_sonr.bcmdl" Component_="itemcube_camo.bcmdl" FileName="ITEMCU~2.BCM|itemcube_sonr.bcmdl" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\item_cube_broken\model\itemcube_sonr.bcmdl" SelfReg="false"/>
-    <ROW File="powerup_morphhologram.bsmat" Component_="powerup_morphhologram.bsmat" FileName="POWERU~1.BSM|powerup_morphhologram.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_bomb\models\imats\powerup_morphhologram.bsmat" SelfReg="false"/>
-    <ROW File="powerup_morphmaterial.bsmat" Component_="powerup_morphhologram.bsmat" FileName="POWERU~2.BSM|powerup_morphmaterial.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_bomb\models\imats\powerup_morphmaterial.bsmat" SelfReg="false"/>
-    <ROW File="powerup_morph.bcmdl" Component_="powerup_morph.bcmdl" FileName="POWERU~1.BCM|powerup_morph.bcmdl" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_bomb\models\powerup_morph.bcmdl" SelfReg="false"/>
-    <ROW File="powerup_doublejump_mp_magnet01.bsmat" Component_="powerup_doublejump_mp_magnet01.bsmat" FileName="POWERU~1.BSM|powerup_doublejump_mp_magnet01.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_doublejump\models\imats\powerup_doublejump_mp_magnet01.bsmat" SelfReg="false"/>
-    <ROW File="powerup_doublejump_mp_white__01.bsmat" Component_="powerup_doublejump_mp_magnet01.bsmat" FileName="POWERU~2.BSM|powerup_doublejump_mp_white__01.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_doublejump\models\imats\powerup_doublejump_mp_white__01.bsmat" SelfReg="false"/>
-    <ROW File="powerup_magnet.bcmdl" Component_="powerup_magnet.bcmdl" FileName="POWERU~1.BCM|powerup_magnet.bcmdl" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_doublejump\models\powerup_magnet.bcmdl" SelfReg="false"/>
-    <ROW File="powerup_ice__missile_mp_opaque_01.bsmat" Component_="powerup_ice__missile_mp_opaque_01.bsmat" FileName="POWERU~1.BSM|powerup_ice__missile_mp_opaque_01.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_supermissile\models\imats\powerup_ice__missile_mp_opaque_01.bsmat" SelfReg="false"/>
-    <ROW File="powerup_ice__missile.bcmdl" Component_="powerup_ice__missile.bcmdl" FileName="POWERU~1.BCM|powerup_ice__missile.bcmdl" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_supermissile\models\powerup_ice__missile.bcmdl" SelfReg="false"/>
-    <ROW File="powerup_wavebeam_autoilum.bsmat" Component_="powerup_wavebeam_autoilum.bsmat" FileName="POWERU~1.BSM|powerup_wavebeam_autoilum.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_widebeam\models\imats\powerup_wavebeam_autoilum.bsmat" SelfReg="false"/>
-    <ROW File="powerup_wavebeam_bola.bsmat" Component_="powerup_wavebeam_autoilum.bsmat" FileName="POWERU~2.BSM|powerup_wavebeam_bola.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_widebeam\models\imats\powerup_wavebeam_bola.bsmat" SelfReg="false"/>
-    <ROW File="powerup_wavebeam_cangrejo.bsmat" Component_="powerup_wavebeam_autoilum.bsmat" FileName="POWERU~3.BSM|powerup_wavebeam_cangrejo.bsmat" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_widebeam\models\imats\powerup_wavebeam_cangrejo.bsmat" SelfReg="false"/>
-    <ROW File="powerup_wavebeam.bcmdl" Component_="powerup_wavebeam.bcmdl" FileName="POWERU~1.BCM|powerup_wavebeam.bcmdl" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\actors\items\powerup_widebeam\models\powerup_wavebeam.bcmdl" SelfReg="false"/>
-    <ROW File="speedboost_at.bctex" Component_="speedboost_at.bctex" FileName="SPEEDB~1.BCT|speedboost_at.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\itemsphere\models\textures\speedboost_at.bctex" SelfReg="false"/>
-    <ROW File="speedboost_bc.bctex" Component_="speedboost_at.bctex" FileName="SPEEDB~2.BCT|speedboost_bc.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\itemsphere\models\textures\speedboost_bc.bctex" SelfReg="false"/>
-    <ROW File="speedboost_nm.bctex" Component_="speedboost_at.bctex" FileName="SPEEDB~3.BCT|speedboost_nm.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\itemsphere\models\textures\speedboost_nm.bctex" SelfReg="false"/>
-    <ROW File="powerup_morphat.bctex" Component_="powerup_morphat.bctex" FileName="POWERU~1.BCT|powerup_morphat.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\powerup_bomb\models\textures\powerup_morphat.bctex" SelfReg="false"/>
-    <ROW File="powerup_morphbc.bctex" Component_="powerup_morphat.bctex" FileName="POWERU~2.BCT|powerup_morphbc.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\powerup_bomb\models\textures\powerup_morphbc.bctex" SelfReg="false"/>
-    <ROW File="powerup_morphnm.bctex" Component_="powerup_morphat.bctex" FileName="POWERU~3.BCT|powerup_morphnm.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\powerup_bomb\models\textures\powerup_morphnm.bctex" SelfReg="false"/>
-    <ROW File="powerup_spi_magnet_bc.bctex" Component_="powerup_spi_magnet_bc.bctex" FileName="POWERU~1.BCT|powerup_spi_magnet_bc.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\powerup_doublejump\models\textures\powerup_spi_magnet_bc.bctex" SelfReg="false"/>
-    <ROW File="powerup_ice__missile_bc.bctex" Component_="powerup_ice__missile_bc.bctex" FileName="POWERU~1.BCT|powerup_ice__missile_bc.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\powerup_supermissile\models\textures\powerup_ice__missile_bc.bctex" SelfReg="false"/>
-    <ROW File="pup_wavebeam_bc.bctex" Component_="pup_wavebeam_bc.bctex" FileName="PUP_WA~1.BCT|pup_wavebeam_bc.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\actors\items\powerup_widebeam\models\textures\pup_wavebeam_bc.bctex" SelfReg="false"/>
-    <ROW File="icons.bctex" Component_="icons.bctex" FileName="ICONS~1.BCT|icons.bctex" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\romfs\textures\system\minimap\icons\icons.bctex" SelfReg="false"/>
-    <ROW File="schema.json" Component_="custom_scenario.lua" FileName="SCHEMA~1.JSO|schema.json" Attributes="0" SourcePath="dist\randovania\open_dread_rando\files\schema.json" SelfReg="false"/>
-    <ROW File="boss_powerup_template.lua" Component_="boss_powerup_template.lua" FileName="BOSS_P~1.LUA|boss_powerup_template.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\templates\boss_powerup_template.lua" SelfReg="false"/>
-    <ROW File="custom_core_x.lua" Component_="boss_powerup_template.lua" FileName="CUSTOM~1.LUA|custom_core_x.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\templates\custom_core_x.lua" SelfReg="false"/>
-    <ROW File="custom_core_x_superquetzoa.lua" Component_="boss_powerup_template.lua" FileName="CUSTOM~2.LUA|custom_core_x_superquetzoa.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\templates\custom_core_x_superquetzoa.lua" SelfReg="false"/>
-    <ROW File="custom_init.lua" Component_="boss_powerup_template.lua" FileName="CUSTOM~3.LUA|custom_init.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\templates\custom_init.lua" SelfReg="false"/>
-    <ROW File="progressive_model_template.lua" Component_="boss_powerup_template.lua" FileName="PROGRE~1.LUA|progressive_model_template.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\templates\progressive_model_template.lua" SelfReg="false"/>
-    <ROW File="randomizer_progressive_template.lua" Component_="boss_powerup_template.lua" FileName="RANDOM~1.LUA|randomizer_progressive_template.lua" Attributes="0" SourcePath="dist\randovania\open_dread_rando\templates\randomizer_progressive_template.lua" SelfReg="false"/>
-    <ROW File="template_powerup_bmsad.json" Component_="boss_powerup_template.lua" FileName="TEMPLA~1.JSO|template_powerup_bmsad.json" Attributes="0" SourcePath="dist\randovania\open_dread_rando\templates\template_powerup_bmsad.json" SelfReg="false"/>
     <ROW File="_imaging.cp310win_amd64.pyd" Component_="_imaging.cp310win_amd64.pyd" FileName="_IMAGI~1.PYD|_imaging.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\PIL\_imaging.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="_imagingtk.cp310win_amd64.pyd" Component_="_imaging.cp310win_amd64.pyd" FileName="_IMAGI~2.PYD|_imagingtk.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\PIL\_imagingtk.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="_webp.cp310win_amd64.pyd" Component_="_imaging.cp310win_amd64.pyd" FileName="_WEBPC~1.PYD|_webp.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\PIL\_webp.cp310-win_amd64.pyd" SelfReg="false"/>
@@ -2227,7 +2067,6 @@
     <ROW File="DoConfig.exe" Component_="DoConfig.exe" FileName="DoConfig.exe" Attributes="0" SourcePath="dist\randovania\pre_edited_cs\DoConfig.exe" SelfReg="false"/>
     <ROW File="Doukutsu.exe" Component_="Doukutsu.exe" FileName="Doukutsu.exe" Attributes="0" SourcePath="dist\randovania\pre_edited_cs\Doukutsu.exe" SelfReg="false"/>
     <ROW File="_psutil_windows.cp310win_amd64.pyd" Component_="_psutil_windows.cp310win_amd64.pyd" FileName="_PSUTI~1.PYD|_psutil_windows.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\psutil\_psutil_windows.cp310-win_amd64.pyd" SelfReg="false"/>
-    <ROW File="pvectorc.cp310win_amd64.pyd" Component_="base_library.zip" FileName="PVECTO~1.PYD|pvectorc.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\pvectorc.cp310-win_amd64.pyd" SelfReg="false"/>
     <ROW File="pyexpat.pyd" Component_="base_library.zip" FileName="pyexpat.pyd" Attributes="0" SourcePath="dist\randovania\pyexpat.pyd" SelfReg="false"/>
     <ROW File="qsvgicon.dll" Component_="qsvgicon.dll" FileName="qsvgicon.dll" Attributes="0" SourcePath="dist\randovania\PySide6\plugins\iconengines\qsvgicon.dll" SelfReg="false"/>
     <ROW File="qgif.dll" Component_="qgif.dll" FileName="qgif.dll" Attributes="0" SourcePath="dist\randovania\PySide6\plugins\imageformats\qgif.dll" SelfReg="false"/>
@@ -2296,14 +2135,6 @@
     <ROW File="Qt6Widgets.dll" Component_="Qt6Widgets.dll" FileName="QT6WID~1.DLL|Qt6Widgets.dll" Attributes="0" SourcePath="dist\randovania\Qt6Widgets.dll" SelfReg="false"/>
     <ROW File="randovania.exe" Component_="randovania.exe" FileName="RANDOV~1.EXE|randovania.exe" Attributes="0" SourcePath="dist\randovania\randovania.exe" SelfReg="false" DigSign="true"/>
     <ROW File="select.pyd" Component_="base_library.zip" FileName="select.pyd" Attributes="0" SourcePath="dist\randovania\select.pyd" SelfReg="false"/>
-    <ROW File="entry_points.txt_1" Component_="entry_points.txt_1" FileName="ENTRY_~1.TXT|entry_points.txt" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\entry_points.txt" SelfReg="false"/>
-    <ROW File="INSTALLER_2" Component_="entry_points.txt_1" FileName="INSTAL~1|INSTALLER" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\INSTALLER" SelfReg="false"/>
-    <ROW File="LICENSE_1" Component_="entry_points.txt_1" FileName="LICENSE" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\LICENSE" SelfReg="false"/>
-    <ROW File="METADATA_2" Component_="entry_points.txt_1" FileName="METADATA" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\METADATA" SelfReg="false"/>
-    <ROW File="RECORD_2" Component_="entry_points.txt_1" FileName="RECORD" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\RECORD" SelfReg="false"/>
-    <ROW File="REQUESTED_2" Component_="entry_points.txt_1" FileName="REQUES~1|REQUESTED" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\REQUESTED" SelfReg="false"/>
-    <ROW File="top_level.txt_1" Component_="entry_points.txt_1" FileName="TOP_LE~1.TXT|top_level.txt" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\top_level.txt" SelfReg="false"/>
-    <ROW File="WHEEL_2" Component_="entry_points.txt_1" FileName="WHEEL" Attributes="0" SourcePath="dist\randovania\setuptools-63.4.3.dist-info\WHEEL" SelfReg="false"/>
     <ROW File="Shiboken.pyd" Component_="Shiboken.pyd" FileName="Shiboken.pyd" Attributes="0" SourcePath="dist\randovania\shiboken6\Shiboken.pyd" SelfReg="false"/>
     <ROW File="shiboken6.abi3.dll" Component_="shiboken6.abi3.dll" FileName="SHIBOK~1.DLL|shiboken6.abi3.dll" Attributes="0" SourcePath="dist\randovania\shiboken6.abi3.dll" SelfReg="false"/>
     <ROW File="colorblind.ips" Component_="colorblind.ips" FileName="COLORB~1.IPS|colorblind.ips" Attributes="0" SourcePath="dist\randovania\SuperDuperMetroid\Patches\Accessibility\colorblind.ips" SelfReg="false"/>
@@ -3317,6 +3148,16 @@
     <ROW File="dark_temple_key.png" Component_="sky_temple_key_NqN_icon.ico" FileName="DARK_T~1.PNG|dark_temple_key.png" Attributes="0" SourcePath="dist\randovania\data\icons\dark_temple_key.png" SelfReg="false"/>
     <ROW File="executable_icon.ico" Component_="sky_temple_key_NqN_icon.ico" FileName="EXECUT~1.ICO|executable_icon.ico" Attributes="0" SourcePath="dist\randovania\data\icons\executable_icon.ico" SelfReg="false"/>
     <ROW File="_frozenlist.cp310win_amd64.pyd" Component_="_frozenlist.cp310win_amd64.pyd" FileName="_FROZE~1.PYD|_frozenlist.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\frozenlist\_frozenlist.cp310-win_amd64.pyd" SelfReg="false"/>
+    <ROW File="dread.7z" Component_="dread.7z" FileName="dread.7z" Attributes="0" SourcePath="dist\randovania\data\gui_assets\tracker\game-images\dread.7z" SelfReg="false"/>
+    <ROW File="Random_Enemy_Attributes.cp310win_amd64.pyd" Component_="Random_Enemy_Attributes.cp310win_amd64.pyd" FileName="RANDOM~1.PYD|Random_Enemy_Attributes.cp310-win_amd64.pyd" Attributes="0" SourcePath="dist\randovania\Random_Enemy_Attributes\Random_Enemy_Attributes.cp310-win_amd64.pyd" SelfReg="false"/>
+    <ROW File="entry_points.txt_3" Component_="entry_points.txt_3" FileName="ENTRY_~1.TXT|entry_points.txt" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\entry_points.txt" SelfReg="false"/>
+    <ROW File="INSTALLER_4" Component_="entry_points.txt_3" FileName="INSTAL~1|INSTALLER" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\INSTALLER" SelfReg="false"/>
+    <ROW File="LICENSE_2" Component_="entry_points.txt_3" FileName="LICENSE" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\LICENSE" SelfReg="false"/>
+    <ROW File="METADATA_4" Component_="entry_points.txt_3" FileName="METADATA" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\METADATA" SelfReg="false"/>
+    <ROW File="RECORD_4" Component_="entry_points.txt_3" FileName="RECORD" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\RECORD" SelfReg="false"/>
+    <ROW File="REQUESTED_4" Component_="entry_points.txt_3" FileName="REQUES~1|REQUESTED" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\REQUESTED" SelfReg="false"/>
+    <ROW File="top_level.txt_3" Component_="entry_points.txt_3" FileName="TOP_LE~1.TXT|top_level.txt" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\top_level.txt" SelfReg="false"/>
+    <ROW File="WHEEL_4" Component_="entry_points.txt_3" FileName="WHEEL" Attributes="0" SourcePath="dist\randovania\setuptools-65.1.1.dist-info\WHEEL" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -3329,13 +3170,11 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1"/>
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1" Subject="CN=Randovania"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
-    <ROW Fragment="ConfigureDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\ConfigureDlg.aip"/>
-    <ROW Fragment="CustomizePage.aip" Path="&lt;AI_THEMES&gt;classic\fragments\CustomizePage.aip"/>
-    <ROW Fragment="FolderPage.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderPage.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
     <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
     <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
     <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
@@ -3364,10 +3203,10 @@
     <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
-    <ROW Dialog_="ConfigureDlg" Control="ConfigureDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="FolderDlg" Control="FolderDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
-    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="ConfigureDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
@@ -3385,19 +3224,17 @@
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="2" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="3" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="4" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="ConfigureDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL" Ordering="0" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="ConfigureDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL" Ordering="1" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="ConfigureDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL" Ordering="2" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="ConfigureDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="2" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Tab" Event="SpawnDialog" Argument="CustomizePage" Condition="( AiTabPage ) AND ( 1 )" Ordering="0"/>
-    <ROW Dialog_="ConfigureDlg" Control_="Tab" Event="SpawnDialog" Argument="FolderPage" Condition="( AiTabPage ) AND ( NOT Installed )" Ordering="1"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="202" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="203" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="204" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="FolderDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL" Ordering="0" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="FolderDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL" Ordering="1" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="FolderDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL" Ordering="2" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="FolderDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="2" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -3430,284 +3267,256 @@
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
-    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[RandovaniaData_Dir]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[LocalAppDataFolder][ProductName] Install"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiExtComponent">
-    <ROW Extension="rdvgame" Component_="randovania.exe" ProgId_="[|Manufacturer].[|ProductName]" Feature_="MainFeature" Options="32"/>
+    <ROW Extension="rdvgame" Component_="randovania.exe" ProgId_="[|Manufacturer].[|ProductName]" Feature_="Randovania" Options="32"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
-    <ROW Feature_="MainFeature" Component_="APPDIR"/>
-    <ROW Feature_="MainFeature" Component_="ProductInformation"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreconsolel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoredatetimel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoredebugl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreerrorhandlingl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorefilel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorefilel120.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorefilel210.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorehandlel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreheapl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreinterlockedl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorelibraryloaderl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorelocalizationl120.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorememoryl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorenamedpipel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreprocessenvironmentl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreprocessthreadsl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreprocessthreadsl111.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreprofilel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorertlsupportl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincorestringl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoresynchl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoresynchl120.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoresysinfol110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoretimezonel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincoreutill110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtconiol110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtconvertl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtenvironmentl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtfilesysteml110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtheapl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtlocalel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtmathl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtprocessl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtruntimel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtstdiol110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtstringl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrttimel110.dll"/>
-    <ROW Feature_="MainFeature" Component_="apimswincrtutilityl110.dll"/>
-    <ROW Feature_="MainFeature" Component_="base_library.zip"/>
-    <ROW Feature_="MainFeature" Component_="tsc_file.lua"/>
-    <ROW Feature_="MainFeature" Component_="cacert.pem"/>
-    <ROW Feature_="MainFeature" Component_="_openssl.pyd"/>
-    <ROW Feature_="MainFeature" Component_="INSTALLER"/>
-    <ROW Feature_="MainFeature" Component_="gitignore"/>
-    <ROW Feature_="MainFeature" Component_="EchoesMenu.exe"/>
-    <ROW Feature_="MainFeature" Component_="liblzo2.dylib"/>
-    <ROW Feature_="MainFeature" Component_="lzo2.dll"/>
-    <ROW Feature_="MainFeature" Component_="gitignore_1"/>
-    <ROW Feature_="MainFeature" Component_="lzo2.dll_1"/>
-    <ROW Feature_="MainFeature" Component_="Randomizer.exe"/>
-    <ROW Feature_="MainFeature" Component_="zlib1.dll"/>
-    <ROW Feature_="MainFeature" Component_="configuration.json"/>
-    <ROW Feature_="MainFeature" Component_="databaseexample.png"/>
-    <ROW Feature_="MainFeature" Component_="artifact.gif"/>
-    <ROW Feature_="MainFeature" Component_="amber_translator.gif"/>
-    <ROW Feature_="MainFeature" Component_="boost_ball.gif"/>
-    <ROW Feature_="MainFeature" Component_="prime1gamethreelines.json"/>
-    <ROW Feature_="MainFeature" Component_="hash_words.json"/>
-    <ROW Feature_="MainFeature" Component_="sky_temple_key_NqN_icon.ico"/>
-    <ROW Feature_="MainFeature" Component_="gitignore_2"/>
-    <ROW Feature_="MainFeature" Component_="_diff_tree.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="py.typed"/>
-    <ROW Feature_="MainFeature" Component_="cover.png"/>
-    <ROW Feature_="MainFeature" Component_="Square.png"/>
-    <ROW Feature_="MainFeature" Component_="itemdatabase.json"/>
-    <ROW Feature_="MainFeature" Component_="starter_preset.rdvpreset"/>
-    <ROW Feature_="MainFeature" Component_="cover.png_1"/>
-    <ROW Feature_="MainFeature" Component_="AlienMedal.png"/>
-    <ROW Feature_="MainFeature" Component_="Almond.png"/>
-    <ROW Feature_="MainFeature" Component_="Chaco.bmp"/>
-    <ROW Feature_="MainFeature" Component_="ammo.json"/>
-    <ROW Feature_="MainFeature" Component_="itemdatabase.json_1"/>
-    <ROW Feature_="MainFeature" Component_="classic.rdvpreset"/>
-    <ROW Feature_="MainFeature" Component_="cover.png_2"/>
-    <ROW Feature_="MainFeature" Component_="Artaria.png"/>
-    <ROW Feature_="MainFeature" Component_="itemdatabase.json_2"/>
-    <ROW Feature_="MainFeature" Component_="starter_preset.rdvpreset_1"/>
-    <ROW Feature_="MainFeature" Component_="cover.png_3"/>
-    <ROW Feature_="MainFeature" Component_="ammo.json_1"/>
-    <ROW Feature_="MainFeature" Component_="itemdatabase.json_3"/>
-    <ROW Feature_="MainFeature" Component_="april_fools_2022.rdvpreset"/>
-    <ROW Feature_="MainFeature" Component_="cover.png_4"/>
-    <ROW Feature_="MainFeature" Component_="ammo.json_2"/>
-    <ROW Feature_="MainFeature" Component_="itemdatabase.json_4"/>
-    <ROW Feature_="MainFeature" Component_="darkszero_deluxe.rdvpreset"/>
-    <ROW Feature_="MainFeature" Component_="cover.png_5"/>
-    <ROW Feature_="MainFeature" Component_="ammo.json_3"/>
-    <ROW Feature_="MainFeature" Component_="itemdatabase.json_5"/>
-    <ROW Feature_="MainFeature" Component_="starter_preset.rdvpreset_2"/>
-    <ROW Feature_="MainFeature" Component_="cover.png_6"/>
-    <ROW Feature_="MainFeature" Component_="F8.png"/>
-    <ROW Feature_="MainFeature" Component_="ammo.json_4"/>
-    <ROW Feature_="MainFeature" Component_="itemdatabase.json_6"/>
-    <ROW Feature_="MainFeature" Component_="starter_preset.rdvpreset_3"/>
-    <ROW Feature_="MainFeature" Component_="_greenlet.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="issue.json"/>
-    <ROW Feature_="MainFeature" Component_="draft201909.json"/>
-    <ROW Feature_="MainFeature" Component_="entry_points.txt"/>
-    <ROW Feature_="MainFeature" Component_="COPYING"/>
-    <ROW Feature_="MainFeature" Component_="keystone.dll"/>
-    <ROW Feature_="MainFeature" Component_="_cext.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="libcrypto1_1.dll"/>
-    <ROW Feature_="MainFeature" Component_="libffi7.dll"/>
-    <ROW Feature_="MainFeature" Component_="libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortranwin_amd64.dll"/>
-    <ROW Feature_="MainFeature" Component_="libssl1_1.dll"/>
-    <ROW Feature_="MainFeature" Component_="_lupa.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="_speedups.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="_backend_agg.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="ft2font.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="cmex10.afm"/>
-    <ROW Feature_="MainFeature" Component_="CourierBold.afm"/>
-    <ROW Feature_="MainFeature" Component_="cmb10.ttf"/>
-    <ROW Feature_="MainFeature" Component_="backsymbolic.svg"/>
-    <ROW Feature_="MainFeature" Component_="kpsewhich.lua"/>
-    <ROW Feature_="MainFeature" Component_="plot_directive.css"/>
-    <ROW Feature_="MainFeature" Component_="bivariate_normal.npy"/>
-    <ROW Feature_="MainFeature" Component_="data_x_x2_x3.csv"/>
-    <ROW Feature_="MainFeature" Component_="bmh.mplstyle"/>
-    <ROW Feature_="MainFeature" Component_="dread_types.json"/>
-    <ROW Feature_="MainFeature" Component_="MSVCP140.dll"/>
-    <ROW Feature_="MainFeature" Component_="MSVCP140_1.dll"/>
-    <ROW Feature_="MainFeature" Component_="MSVCP140_2.dll"/>
-    <ROW Feature_="MainFeature" Component_="_multidict.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="_multiarray_tests.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="_pocketfft_internal.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="lapack_lite.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="bit_generator.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="opengl32sw.dll"/>
-    <ROW Feature_="MainFeature" Component_="custom_scenario.lua"/>
-    <ROW Feature_="MainFeature" Component_="main.npdm"/>
-    <ROW Feature_="MainFeature" Component_="debug_input.s"/>
-    <ROW Feature_="MainFeature" Component_="readme.txt"/>
-    <ROW Feature_="MainFeature" Component_="bit.lua"/>
-    <ROW Feature_="MainFeature" Component_="speedboost_mp_opaque_01.bsmat"/>
-    <ROW Feature_="MainFeature" Component_="speed_booster.bcmdl"/>
-    <ROW Feature_="MainFeature" Component_="itemcube_camo.bsmat"/>
-    <ROW Feature_="MainFeature" Component_="itemcube_camo.bcmdl"/>
-    <ROW Feature_="MainFeature" Component_="powerup_morphhologram.bsmat"/>
-    <ROW Feature_="MainFeature" Component_="powerup_morph.bcmdl"/>
-    <ROW Feature_="MainFeature" Component_="powerup_doublejump_mp_magnet01.bsmat"/>
-    <ROW Feature_="MainFeature" Component_="powerup_magnet.bcmdl"/>
-    <ROW Feature_="MainFeature" Component_="powerup_ice__missile_mp_opaque_01.bsmat"/>
-    <ROW Feature_="MainFeature" Component_="powerup_ice__missile.bcmdl"/>
-    <ROW Feature_="MainFeature" Component_="powerup_wavebeam_autoilum.bsmat"/>
-    <ROW Feature_="MainFeature" Component_="powerup_wavebeam.bcmdl"/>
-    <ROW Feature_="MainFeature" Component_="speedboost_at.bctex"/>
-    <ROW Feature_="MainFeature" Component_="powerup_morphat.bctex"/>
-    <ROW Feature_="MainFeature" Component_="powerup_spi_magnet_bc.bctex"/>
-    <ROW Feature_="MainFeature" Component_="powerup_ice__missile_bc.bctex"/>
-    <ROW Feature_="MainFeature" Component_="pup_wavebeam_bc.bctex"/>
-    <ROW Feature_="MainFeature" Component_="icons.bctex"/>
-    <ROW Feature_="MainFeature" Component_="boss_powerup_template.lua"/>
-    <ROW Feature_="MainFeature" Component_="_imaging.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="Config.dat"/>
-    <ROW Feature_="MainFeature" Component_="Arms.bmp"/>
-    <ROW Feature_="MainFeature" Component_="font"/>
-    <ROW Feature_="MainFeature" Component_="Npc0.bmp"/>
-    <ROW Feature_="MainFeature" Component_="dat"/>
-    <ROW Feature_="MainFeature" Component_="pxt"/>
-    <ROW Feature_="MainFeature" Component_="Credit01.png"/>
-    <ROW Feature_="MainFeature" Component_="CURSOR_IKA.png"/>
-    <ROW Feature_="MainFeature" Component_="ICON_MINI.png"/>
-    <ROW Feature_="MainFeature" Component_="Access.org"/>
-    <ROW Feature_="MainFeature" Component_="Wave.dat"/>
-    <ROW Feature_="MainFeature" Component_="ArmsItem.txt"/>
-    <ROW Feature_="MainFeature" Component_="pxa"/>
-    <ROW Feature_="MainFeature" Component_="txt"/>
-    <ROW Feature_="MainFeature" Component_="stageconv.exe"/>
-    <ROW Feature_="MainFeature" Component_="DoConfig.exe"/>
-    <ROW Feature_="MainFeature" Component_="Doukutsu.exe"/>
-    <ROW Feature_="MainFeature" Component_="_psutil_windows.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="qsvgicon.dll"/>
-    <ROW Feature_="MainFeature" Component_="qgif.dll"/>
-    <ROW Feature_="MainFeature" Component_="qicns.dll"/>
-    <ROW Feature_="MainFeature" Component_="qico.dll"/>
-    <ROW Feature_="MainFeature" Component_="qjpeg.dll"/>
-    <ROW Feature_="MainFeature" Component_="qpdf.dll"/>
-    <ROW Feature_="MainFeature" Component_="qsvg.dll"/>
-    <ROW Feature_="MainFeature" Component_="qtga.dll"/>
-    <ROW Feature_="MainFeature" Component_="qtiff.dll"/>
-    <ROW Feature_="MainFeature" Component_="qwbmp.dll"/>
-    <ROW Feature_="MainFeature" Component_="qwebp.dll"/>
-    <ROW Feature_="MainFeature" Component_="qnetworklistmanager.dll"/>
-    <ROW Feature_="MainFeature" Component_="qtvirtualkeyboardplugin.dll"/>
-    <ROW Feature_="MainFeature" Component_="qdirect2d.dll"/>
-    <ROW Feature_="MainFeature" Component_="qminimal.dll"/>
-    <ROW Feature_="MainFeature" Component_="qoffscreen.dll"/>
-    <ROW Feature_="MainFeature" Component_="qwindows.dll"/>
-    <ROW Feature_="MainFeature" Component_="qwindowsvistastyle.dll"/>
-    <ROW Feature_="MainFeature" Component_="qcertonlybackend.dll"/>
-    <ROW Feature_="MainFeature" Component_="qopensslbackend.dll"/>
-    <ROW Feature_="MainFeature" Component_="qschannelbackend.dll"/>
-    <ROW Feature_="MainFeature" Component_="QtCore.pyd"/>
-    <ROW Feature_="MainFeature" Component_="qtbase_ar.qm"/>
-    <ROW Feature_="MainFeature" Component_="pyside6.abi3.dll"/>
-    <ROW Feature_="MainFeature" Component_="python3.dll"/>
-    <ROW Feature_="MainFeature" Component_="python310.dll"/>
-    <ROW Feature_="MainFeature" Component_="rust.pyd"/>
-    <ROW Feature_="MainFeature" Component_="Qt6Core.dll"/>
-    <ROW Feature_="MainFeature" Component_="Qt6Gui.dll"/>
-    <ROW Feature_="MainFeature" Component_="Qt6Network.dll"/>
-    <ROW Feature_="MainFeature" Component_="Qt6Qml.dll"/>
-    <ROW Feature_="MainFeature" Component_="Qt6Svg.dll"/>
-    <ROW Feature_="MainFeature" Component_="Qt6Widgets.dll"/>
-    <ROW Feature_="MainFeature" Component_="randovania.exe"/>
-    <ROW Feature_="MainFeature" Component_="entry_points.txt_1"/>
-    <ROW Feature_="MainFeature" Component_="Shiboken.pyd"/>
-    <ROW Feature_="MainFeature" Component_="shiboken6.abi3.dll"/>
-    <ROW Feature_="MainFeature" Component_="colorblind.ips"/>
-    <ROW Feature_="MainFeature" Component_="animals.ips"/>
-    <ROW Feature_="MainFeature" Component_="disable_gt_code.ips"/>
-    <ROW Feature_="MainFeature" Component_="door_transition.ips"/>
-    <ROW Feature_="MainFeature" Component_="dachora_pit.ips"/>
-    <ROW Feature_="MainFeature" Component_="custom_music.ips"/>
-    <ROW Feature_="MainFeature" Component_="aim_any_button.ips"/>
-    <ROW Feature_="MainFeature" Component_="cheap_charge.ips"/>
-    <ROW Feature_="MainFeature" Component_="VramItems.bin"/>
-    <ROW Feature_="MainFeature" Component_="auto.tcl"/>
-    <ROW Feature_="MainFeature" Component_="ascii.enc"/>
-    <ROW Feature_="MainFeature" Component_="http.tcl"/>
-    <ROW Feature_="MainFeature" Component_="af.msg"/>
-    <ROW Feature_="MainFeature" Component_="optparse.tcl"/>
-    <ROW Feature_="MainFeature" Component_="Abidjan"/>
-    <ROW Feature_="MainFeature" Component_="Adak"/>
-    <ROW Feature_="MainFeature" Component_="Buenos_Aires"/>
-    <ROW Feature_="MainFeature" Component_="Indianapolis"/>
-    <ROW Feature_="MainFeature" Component_="Louisville"/>
-    <ROW Feature_="MainFeature" Component_="Beulah"/>
-    <ROW Feature_="MainFeature" Component_="Casey"/>
-    <ROW Feature_="MainFeature" Component_="Longyearbyen"/>
-    <ROW Feature_="MainFeature" Component_="Aden"/>
-    <ROW Feature_="MainFeature" Component_="Azores"/>
-    <ROW Feature_="MainFeature" Component_="ACT"/>
-    <ROW Feature_="MainFeature" Component_="Acre"/>
-    <ROW Feature_="MainFeature" Component_="Atlantic"/>
-    <ROW Feature_="MainFeature" Component_="CET"/>
-    <ROW Feature_="MainFeature" Component_="Continental"/>
-    <ROW Feature_="MainFeature" Component_="GMT"/>
-    <ROW Feature_="MainFeature" Component_="Amsterdam"/>
-    <ROW Feature_="MainFeature" Component_="Antananarivo"/>
-    <ROW Feature_="MainFeature" Component_="BajaNorte"/>
-    <ROW Feature_="MainFeature" Component_="Apia"/>
-    <ROW Feature_="MainFeature" Component_="AST4"/>
-    <ROW Feature_="MainFeature" Component_="Alaska"/>
-    <ROW Feature_="MainFeature" Component_="shell1.1.4.tm"/>
-    <ROW Feature_="MainFeature" Component_="platform1.0.18.tm"/>
-    <ROW Feature_="MainFeature" Component_="msgcat1.6.1.tm"/>
-    <ROW Feature_="MainFeature" Component_="http2.9.5.tm"/>
-    <ROW Feature_="MainFeature" Component_="tcl86t.dll"/>
-    <ROW Feature_="MainFeature" Component_="data.bin"/>
-    <ROW Feature_="MainFeature" Component_="bgerror.tcl"/>
-    <ROW Feature_="MainFeature" Component_="logo.eps"/>
-    <ROW Feature_="MainFeature" Component_="cs.msg"/>
-    <ROW Feature_="MainFeature" Component_="altTheme.tcl"/>
-    <ROW Feature_="MainFeature" Component_="tk86t.dll"/>
-    <ROW Feature_="MainFeature" Component_="ucrtbase.dll"/>
-    <ROW Feature_="MainFeature" Component_="VCRUNTIME140.dll"/>
-    <ROW Feature_="MainFeature" Component_="VCRUNTIME140_1.dll"/>
-    <ROW Feature_="MainFeature" Component_="entry_points.txt_2"/>
-    <ROW Feature_="MainFeature" Component_="_quoting_c.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
-    <ROW Feature_="MainFeature" Component_="AI_ExePath"/>
-    <ROW Feature_="MainFeature" Component_="_helpers.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="_frozenlist.cp310win_amd64.pyd"/>
-    <ROW Feature_="MainFeature" Component_="__pycache__"/>
-    <ROW Feature_="MainFeature" Component_="__pycache___1"/>
-    <ROW Feature_="MainFeature" Component_="__pycache___2"/>
-    <ROW Feature_="MainFeature" Component_="__pycache___3"/>
+    <ROW Feature_="Randovania" Component_="APPDIR"/>
+    <ROW Feature_="Randovania" Component_="ProductInformation"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreconsolel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoredatetimel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoredebugl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreerrorhandlingl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorefilel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorefilel120.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorefilel210.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorehandlel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreheapl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreinterlockedl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorelibraryloaderl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorelocalizationl120.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorememoryl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorenamedpipel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreprocessenvironmentl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreprocessthreadsl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreprocessthreadsl111.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreprofilel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorertlsupportl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincorestringl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoresynchl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoresynchl120.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoresysinfol110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoretimezonel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincoreutill110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtconiol110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtconvertl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtenvironmentl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtfilesysteml110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtheapl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtlocalel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtmathl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtprocessl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtruntimel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtstdiol110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtstringl110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrttimel110.dll"/>
+    <ROW Feature_="Randovania" Component_="apimswincrtutilityl110.dll"/>
+    <ROW Feature_="Randovania" Component_="base_library.zip"/>
+    <ROW Feature_="Randovania" Component_="tsc_file.lua"/>
+    <ROW Feature_="Randovania" Component_="cacert.pem"/>
+    <ROW Feature_="Randovania" Component_="_openssl.pyd"/>
+    <ROW Feature_="Randovania" Component_="INSTALLER"/>
+    <ROW Feature_="Randovania" Component_="gitignore"/>
+    <ROW Feature_="Randovania" Component_="EchoesMenu.exe"/>
+    <ROW Feature_="Randovania" Component_="liblzo2.dylib"/>
+    <ROW Feature_="Randovania" Component_="lzo2.dll"/>
+    <ROW Feature_="Randovania" Component_="gitignore_1"/>
+    <ROW Feature_="Randovania" Component_="lzo2.dll_1"/>
+    <ROW Feature_="Randovania" Component_="Randomizer.exe"/>
+    <ROW Feature_="Randovania" Component_="zlib1.dll"/>
+    <ROW Feature_="Randovania" Component_="configuration.json"/>
+    <ROW Feature_="Randovania" Component_="databaseexample.png"/>
+    <ROW Feature_="Randovania" Component_="artifact.gif"/>
+    <ROW Feature_="Randovania" Component_="amber_translator.gif"/>
+    <ROW Feature_="Randovania" Component_="boost_ball.gif"/>
+    <ROW Feature_="Randovania" Component_="prime1gamethreelines.json"/>
+    <ROW Feature_="Randovania" Component_="hash_words.json"/>
+    <ROW Feature_="Randovania" Component_="sky_temple_key_NqN_icon.ico"/>
+    <ROW Feature_="Randovania" Component_="gitignore_2"/>
+    <ROW Feature_="Randovania" Component_="_diff_tree.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="py.typed"/>
+    <ROW Feature_="Randovania" Component_="cover.png"/>
+    <ROW Feature_="Randovania" Component_="Square.png"/>
+    <ROW Feature_="Randovania" Component_="itemdatabase.json"/>
+    <ROW Feature_="Randovania" Component_="starter_preset.rdvpreset"/>
+    <ROW Feature_="Randovania" Component_="cover.png_1"/>
+    <ROW Feature_="Randovania" Component_="AlienMedal.png"/>
+    <ROW Feature_="Randovania" Component_="Almond.png"/>
+    <ROW Feature_="Randovania" Component_="Chaco.bmp"/>
+    <ROW Feature_="Randovania" Component_="ammo.json"/>
+    <ROW Feature_="Randovania" Component_="itemdatabase.json_1"/>
+    <ROW Feature_="Randovania" Component_="classic.rdvpreset"/>
+    <ROW Feature_="Randovania" Component_="cover.png_2"/>
+    <ROW Feature_="Randovania" Component_="Artaria.png"/>
+    <ROW Feature_="Randovania" Component_="itemdatabase.json_2"/>
+    <ROW Feature_="Randovania" Component_="starter_preset.rdvpreset_1"/>
+    <ROW Feature_="Randovania" Component_="cover.png_3"/>
+    <ROW Feature_="Randovania" Component_="ammo.json_1"/>
+    <ROW Feature_="Randovania" Component_="itemdatabase.json_3"/>
+    <ROW Feature_="Randovania" Component_="april_fools_2022.rdvpreset"/>
+    <ROW Feature_="Randovania" Component_="cover.png_4"/>
+    <ROW Feature_="Randovania" Component_="ammo.json_2"/>
+    <ROW Feature_="Randovania" Component_="itemdatabase.json_4"/>
+    <ROW Feature_="Randovania" Component_="darkszero_deluxe.rdvpreset"/>
+    <ROW Feature_="Randovania" Component_="cover.png_5"/>
+    <ROW Feature_="Randovania" Component_="ammo.json_3"/>
+    <ROW Feature_="Randovania" Component_="itemdatabase.json_5"/>
+    <ROW Feature_="Randovania" Component_="starter_preset.rdvpreset_2"/>
+    <ROW Feature_="Randovania" Component_="cover.png_6"/>
+    <ROW Feature_="Randovania" Component_="F8.png"/>
+    <ROW Feature_="Randovania" Component_="ammo.json_4"/>
+    <ROW Feature_="Randovania" Component_="itemdatabase.json_6"/>
+    <ROW Feature_="Randovania" Component_="starter_preset.rdvpreset_3"/>
+    <ROW Feature_="Randovania" Component_="_greenlet.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="_cext.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="libcrypto1_1.dll"/>
+    <ROW Feature_="Randovania" Component_="libffi7.dll"/>
+    <ROW Feature_="Randovania" Component_="libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortranwin_amd64.dll"/>
+    <ROW Feature_="Randovania" Component_="libssl1_1.dll"/>
+    <ROW Feature_="Randovania" Component_="_lupa.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="_speedups.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="_backend_agg.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="ft2font.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="cmex10.afm"/>
+    <ROW Feature_="Randovania" Component_="CourierBold.afm"/>
+    <ROW Feature_="Randovania" Component_="cmb10.ttf"/>
+    <ROW Feature_="Randovania" Component_="backsymbolic.svg"/>
+    <ROW Feature_="Randovania" Component_="kpsewhich.lua"/>
+    <ROW Feature_="Randovania" Component_="plot_directive.css"/>
+    <ROW Feature_="Randovania" Component_="bivariate_normal.npy"/>
+    <ROW Feature_="Randovania" Component_="data_x_x2_x3.csv"/>
+    <ROW Feature_="Randovania" Component_="bmh.mplstyle"/>
+    <ROW Feature_="Randovania" Component_="MSVCP140.dll"/>
+    <ROW Feature_="Randovania" Component_="MSVCP140_1.dll"/>
+    <ROW Feature_="Randovania" Component_="MSVCP140_2.dll"/>
+    <ROW Feature_="Randovania" Component_="_multidict.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="_multiarray_tests.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="_pocketfft_internal.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="lapack_lite.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="bit_generator.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="opengl32sw.dll"/>
+    <ROW Feature_="Randovania" Component_="_imaging.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="Config.dat"/>
+    <ROW Feature_="Randovania" Component_="Arms.bmp"/>
+    <ROW Feature_="Randovania" Component_="font"/>
+    <ROW Feature_="Randovania" Component_="Npc0.bmp"/>
+    <ROW Feature_="Randovania" Component_="dat"/>
+    <ROW Feature_="Randovania" Component_="pxt"/>
+    <ROW Feature_="Randovania" Component_="Credit01.png"/>
+    <ROW Feature_="Randovania" Component_="CURSOR_IKA.png"/>
+    <ROW Feature_="Randovania" Component_="ICON_MINI.png"/>
+    <ROW Feature_="Randovania" Component_="Access.org"/>
+    <ROW Feature_="Randovania" Component_="Wave.dat"/>
+    <ROW Feature_="Randovania" Component_="ArmsItem.txt"/>
+    <ROW Feature_="Randovania" Component_="pxa"/>
+    <ROW Feature_="Randovania" Component_="txt"/>
+    <ROW Feature_="Randovania" Component_="stageconv.exe"/>
+    <ROW Feature_="Randovania" Component_="DoConfig.exe"/>
+    <ROW Feature_="Randovania" Component_="Doukutsu.exe"/>
+    <ROW Feature_="Randovania" Component_="_psutil_windows.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="qsvgicon.dll"/>
+    <ROW Feature_="Randovania" Component_="qgif.dll"/>
+    <ROW Feature_="Randovania" Component_="qicns.dll"/>
+    <ROW Feature_="Randovania" Component_="qico.dll"/>
+    <ROW Feature_="Randovania" Component_="qjpeg.dll"/>
+    <ROW Feature_="Randovania" Component_="qpdf.dll"/>
+    <ROW Feature_="Randovania" Component_="qsvg.dll"/>
+    <ROW Feature_="Randovania" Component_="qtga.dll"/>
+    <ROW Feature_="Randovania" Component_="qtiff.dll"/>
+    <ROW Feature_="Randovania" Component_="qwbmp.dll"/>
+    <ROW Feature_="Randovania" Component_="qwebp.dll"/>
+    <ROW Feature_="Randovania" Component_="qnetworklistmanager.dll"/>
+    <ROW Feature_="Randovania" Component_="qtvirtualkeyboardplugin.dll"/>
+    <ROW Feature_="Randovania" Component_="qdirect2d.dll"/>
+    <ROW Feature_="Randovania" Component_="qminimal.dll"/>
+    <ROW Feature_="Randovania" Component_="qoffscreen.dll"/>
+    <ROW Feature_="Randovania" Component_="qwindows.dll"/>
+    <ROW Feature_="Randovania" Component_="qwindowsvistastyle.dll"/>
+    <ROW Feature_="Randovania" Component_="qcertonlybackend.dll"/>
+    <ROW Feature_="Randovania" Component_="qopensslbackend.dll"/>
+    <ROW Feature_="Randovania" Component_="qschannelbackend.dll"/>
+    <ROW Feature_="Randovania" Component_="QtCore.pyd"/>
+    <ROW Feature_="Randovania" Component_="qtbase_ar.qm"/>
+    <ROW Feature_="Randovania" Component_="pyside6.abi3.dll"/>
+    <ROW Feature_="Randovania" Component_="python3.dll"/>
+    <ROW Feature_="Randovania" Component_="python310.dll"/>
+    <ROW Feature_="Randovania" Component_="rust.pyd"/>
+    <ROW Feature_="Randovania" Component_="Qt6Core.dll"/>
+    <ROW Feature_="Randovania" Component_="Qt6Gui.dll"/>
+    <ROW Feature_="Randovania" Component_="Qt6Network.dll"/>
+    <ROW Feature_="Randovania" Component_="Qt6Qml.dll"/>
+    <ROW Feature_="Randovania" Component_="Qt6Svg.dll"/>
+    <ROW Feature_="Randovania" Component_="Qt6Widgets.dll"/>
+    <ROW Feature_="Randovania" Component_="randovania.exe"/>
+    <ROW Feature_="Randovania" Component_="Shiboken.pyd"/>
+    <ROW Feature_="Randovania" Component_="shiboken6.abi3.dll"/>
+    <ROW Feature_="Randovania" Component_="colorblind.ips"/>
+    <ROW Feature_="Randovania" Component_="animals.ips"/>
+    <ROW Feature_="Randovania" Component_="disable_gt_code.ips"/>
+    <ROW Feature_="Randovania" Component_="door_transition.ips"/>
+    <ROW Feature_="Randovania" Component_="dachora_pit.ips"/>
+    <ROW Feature_="Randovania" Component_="custom_music.ips"/>
+    <ROW Feature_="Randovania" Component_="aim_any_button.ips"/>
+    <ROW Feature_="Randovania" Component_="cheap_charge.ips"/>
+    <ROW Feature_="Randovania" Component_="VramItems.bin"/>
+    <ROW Feature_="Randovania" Component_="auto.tcl"/>
+    <ROW Feature_="Randovania" Component_="ascii.enc"/>
+    <ROW Feature_="Randovania" Component_="http.tcl"/>
+    <ROW Feature_="Randovania" Component_="af.msg"/>
+    <ROW Feature_="Randovania" Component_="optparse.tcl"/>
+    <ROW Feature_="Randovania" Component_="Abidjan"/>
+    <ROW Feature_="Randovania" Component_="Adak"/>
+    <ROW Feature_="Randovania" Component_="Buenos_Aires"/>
+    <ROW Feature_="Randovania" Component_="Indianapolis"/>
+    <ROW Feature_="Randovania" Component_="Louisville"/>
+    <ROW Feature_="Randovania" Component_="Beulah"/>
+    <ROW Feature_="Randovania" Component_="Casey"/>
+    <ROW Feature_="Randovania" Component_="Longyearbyen"/>
+    <ROW Feature_="Randovania" Component_="Aden"/>
+    <ROW Feature_="Randovania" Component_="Azores"/>
+    <ROW Feature_="Randovania" Component_="ACT"/>
+    <ROW Feature_="Randovania" Component_="Acre"/>
+    <ROW Feature_="Randovania" Component_="Atlantic"/>
+    <ROW Feature_="Randovania" Component_="CET"/>
+    <ROW Feature_="Randovania" Component_="Continental"/>
+    <ROW Feature_="Randovania" Component_="GMT"/>
+    <ROW Feature_="Randovania" Component_="Amsterdam"/>
+    <ROW Feature_="Randovania" Component_="Antananarivo"/>
+    <ROW Feature_="Randovania" Component_="BajaNorte"/>
+    <ROW Feature_="Randovania" Component_="Apia"/>
+    <ROW Feature_="Randovania" Component_="AST4"/>
+    <ROW Feature_="Randovania" Component_="Alaska"/>
+    <ROW Feature_="Randovania" Component_="shell1.1.4.tm"/>
+    <ROW Feature_="Randovania" Component_="platform1.0.18.tm"/>
+    <ROW Feature_="Randovania" Component_="msgcat1.6.1.tm"/>
+    <ROW Feature_="Randovania" Component_="http2.9.5.tm"/>
+    <ROW Feature_="Randovania" Component_="tcl86t.dll"/>
+    <ROW Feature_="Randovania" Component_="data.bin"/>
+    <ROW Feature_="Randovania" Component_="bgerror.tcl"/>
+    <ROW Feature_="Randovania" Component_="logo.eps"/>
+    <ROW Feature_="Randovania" Component_="cs.msg"/>
+    <ROW Feature_="Randovania" Component_="altTheme.tcl"/>
+    <ROW Feature_="Randovania" Component_="tk86t.dll"/>
+    <ROW Feature_="Randovania" Component_="ucrtbase.dll"/>
+    <ROW Feature_="Randovania" Component_="VCRUNTIME140.dll"/>
+    <ROW Feature_="Randovania" Component_="VCRUNTIME140_1.dll"/>
+    <ROW Feature_="Randovania" Component_="entry_points.txt_2"/>
+    <ROW Feature_="Randovania" Component_="_quoting_c.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="SHORTCUTDIR"/>
+    <ROW Feature_="Randovania" Component_="AI_ExePath"/>
+    <ROW Feature_="Randovania" Component_="_helpers.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="_frozenlist.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="__pycache__"/>
+    <ROW Feature_="Randovania" Component_="__pycache___1"/>
+    <ROW Feature_="Randovania" Component_="__pycache___2"/>
+    <ROW Feature_="Randovania" Component_="__pycache___3"/>
+    <ROW Feature_="Randovania" Component_="dread.7z"/>
+    <ROW Feature_="Randovania" Component_="Random_Enemy_Attributes.cp310win_amd64.pyd"/>
+    <ROW Feature_="Randovania" Component_="entry_points.txt_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="executable_icon.exe" SourcePath="dist\randovania\data\icons\executable_icon.ico" Index="0"/>
@@ -3784,6 +3593,6 @@
     <ROW Extension_="rdvgame" Component_="randovania.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="gui game &quot;%1&quot;"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
-    <ROW Directory_="randovania_Dir" SourcePath="dist\randovania" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store|*.pyc" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="randovania_Dir" SourcePath="dist\randovania" Feature="Randovania" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store|*.pyc" ExcludeFlags="6" FileAddOptions="4"/>
   </COMPONENT>
 </DOCUMENT>
