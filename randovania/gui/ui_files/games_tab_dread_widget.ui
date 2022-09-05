@@ -6,46 +6,59 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>446</width>
-    <height>396</height>
+    <width>637</width>
+    <height>497</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="currentIndex">
    <number>0</number>
   </property>
   <widget class="QWidget" name="tab_intro">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <attribute name="title">
     <string>Introduction</string>
    </attribute>
    <layout class="QVBoxLayout" name="intro_layout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
     <item>
-     <widget class="QWidget" name="horizontalWidget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="game_cover_label">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="intro_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Navigate ZDR, collecting your lost items to cure your &amp;quot;physical amnesia&amp;quot;, and collecting Metroid DNA to complete your transformation into a Metroid before fighting Raven Beak in Itorash.&lt;/p&gt;&lt;p&gt;The default settings start with the Pulse Radar - use this to identify hidden blocks if you're unsure where they might be.&lt;/p&gt;&lt;p&gt;Raven Beak won't fight you unless you've become sufficiently Metroid - to this end, you'll need to defeat certain major bosses and EMMIs to find Metroid DNA. The default settings require 3 Metroid DNA before Raven Beak will fight you.&lt;/p&gt;&lt;p&gt;ADAM stations in Itorash as well as the uppermost part of Dairon will provide hints as to the locations of the Metroid DNA. Other ADAM stations provide generic hints for any items.&lt;/p&gt;&lt;p&gt;To get started, use the Quick Generate button below to generate a seed using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QHBoxLayout" name="intro_cover_layout">
+      <item>
+       <widget class="QLabel" name="game_cover_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="intro_label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Navigate ZDR, collecting your lost items to cure your &amp;quot;physical amnesia&amp;quot;, and collecting Metroid DNA to complete your transformation into a Metroid before fighting Raven Beak in Itorash.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The default settings start with the Pulse Radar - use this to identify hidden blocks if you're unsure where they might be.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Raven Beak won't fight you unless you've become sufficiently Metroid - to this end, you'll need to defeat certain major bosses and EMMIs to find Metroid DNA. The default settings require 3 Metroid DNA before Raven Beak will fight you.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;ADAM stations in Itorash as well as the uppermost part of Dairon will provide hints as to the locations of the Metroid DNA. Other ADAM stations provide generic hints for any items.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Don't forget to check out our list of &lt;a href=&quot;tab://Known Crashes&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;known crashes&lt;/span&gt;&lt;/a&gt;, as well at the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt;. If you're curious, check the &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;differences&lt;/span&gt;&lt;/a&gt; with the original game.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button below to generate a seed using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QPushButton" name="quick_generate_button">
@@ -101,8 +114,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>440</width>
-         <height>364</height>
+         <width>631</width>
+         <height>471</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -125,56 +138,136 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="differences_tab">
+  <widget class="QScrollArea" name="differences_tab">
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
    <attribute name="title">
     <string>Differences</string>
    </attribute>
-   <layout class="QVBoxLayout" name="differences_tab_layout">
-    <property name="leftMargin">
-     <number>0</number>
+   <widget class="QWidget" name="differences_contents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>631</width>
+      <height>471</height>
+     </rect>
     </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QScrollArea" name="differences_scroll_area">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="differences_scroll_contents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>440</width>
-         <height>364</height>
-        </rect>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="differences_label">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania makes some changes to the original game in order to improve the game experience or to simply fix bugs in the original game.&lt;/p&gt;&lt;p&gt;Many of these changes are optional and can be disabled in the many options Randovania provides, but the following are &lt;span style=&quot; font-weight:600;&quot;&gt;always&lt;/span&gt; there:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;White and Yellow EMMis are patrolling their zones by default, with no cutscene based first encounter. Please note this makes where you would first encounter them significantly harder to navigate.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Blue and Purple EMMIs do not require the X to be released (Quiet Robe does nothing in the original game!).&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Checkpoints for collecting items in major locations, such as Charge Beam room, were removed in order to avoid softlocks.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Checkpoints after defeating Corpius and Kraid were removed in order to avoid softlocks.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Raven Beak takes damage consistently between all beams and missiles, in order to not incentivize players to avoid picking an upgrade.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
-       <layout class="QVBoxLayout" name="differences_scroll_layout_3">
-        <item>
-         <widget class="QLabel" name="differences_label">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania makes some changes to the original game in order to improve the game experience or to simply fix bugs in the original game.&lt;/p&gt;&lt;p&gt;Many of these changes are optional and can be disabled in the many options Randovania provides, but the following are &lt;span style=&quot; font-weight:600;&quot;&gt;always&lt;/span&gt; there:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;White and Yellow EMMis are patrolling their zones by default, with no cutscene based first encounter. Please note this makes where you would first encounter them significantly harder to navigate.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Blue and Purple EMMIs do not require the X to be released (Quiet Robe does nothing in the original game!).&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Checkpoints for collecting items in major locations, such as Charge Beam room, were removed in order to avoid softlocks.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Checkpoints after defeating Corpius and Kraid were removed in order to avoid softlocks.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Raven Beak takes damage consistently between all beams and missiles, in order to not incentivize players to avoid picking an upgrade.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
       </widget>
-     </widget>
-    </item>
-   </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QScrollArea" name="known_crashes_tab">
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <attribute name="title">
+    <string>Known Crashes</string>
+   </attribute>
+   <widget class="QWidget" name="known_crashes_contents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>621</width>
+      <height>502</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="known_crashes_layout">
+     <item>
+      <widget class="QLabel" name="known_crashes_label">
+       <property name="text">
+        <string>Metroid Dread is known to crash in some circumstances. Make sure to read the following list and how to avoid these.
+
+
+---
+
+
+## After using warp to start in a Save Station.
+
+
+Occasionally after using warp to start, the game crashes at the end of the loading screen. It is not known what circumstances cause the warp to crash.
+
+
+### Workaround
+
+
+Always save before using warp to start so no progression is lost. After the crash, try again.
+
+
+----
+
+## Crash after collecting a suit upgrade
+
+Changing the suit model while a visual effect is present on Samus crashes the game, and the certain room transitions causes the suit model to update.
+
+The following situations are triggers visual effects:
+* Charging a spark or shinesparking.
+* Charging a Power Bomb.
+* Being in a heated/cold room.
+* Using any Aeion ability.
+
+### Workaround
+
+Manually update your suit model by pressing ZL+ZR+D-Pad Up in a known safe state.
+
+----
+
+## Random crashes in Ryujinx
+
+
+It has been reported that Metroid Dread in Ryujinx would crash at any point, with no indication, when using the Memory Manager Mode &quot;Host Unchecked&quot;.
+
+
+### Workaround
+
+
+In Ryujinx configuration, do not use &quot;Host Unchecked&quot;.
+
+
+----
+
+
+## Crash in Waterfall room in Artaria
+
+
+Rare crashes in the Waterfall room in West Artaria has been reported when playing on console. No reason has been found.
+
+
+### Workaround
+
+
+Save in the Save Station immediately west of Red Teleportal.
+
+</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::MarkdownText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QWidget" name="hints_tab">
    <attribute name="title">
@@ -206,8 +299,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>440</width>
-         <height>364</height>
+         <width>631</width>
+         <height>471</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -263,8 +356,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>440</width>
-         <height>364</height>
+         <width>631</width>
+         <height>471</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -347,8 +440,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>440</width>
-         <height>364</height>
+         <width>631</width>
+         <height>471</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_scroll_layout">

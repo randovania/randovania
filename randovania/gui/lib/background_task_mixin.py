@@ -2,7 +2,6 @@ import asyncio
 import asyncio.futures
 import concurrent.futures
 import threading
-import traceback
 
 from PySide6.QtCore import Signal
 
@@ -42,9 +41,6 @@ class BackgroundTaskMixin:
                 target(progress_update=progress_update, **_kwargs)
             except AbortBackgroundTask:
                 pass
-            except Exception as e:
-                traceback.print_exc()
-                progress_update(f"Error: {e}", None)
             finally:
                 self._background_thread = None
                 self.background_tasks_button_lock_signal.emit(True)

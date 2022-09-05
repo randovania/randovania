@@ -50,7 +50,7 @@ def test_get_version_failure_unknown(mocker):
 
 @pytest.mark.parametrize("is_solo", [False, True])
 @pytest.mark.parametrize("has_multiple", [False, True])
-async def test_look_for_permalinks(mocker, is_solo, has_multiple):
+async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version):
     preset = MagicMock()
     preset.game = RandovaniaGame.METROID_PRIME_ECHOES
     permalink_1 = MagicMock()
@@ -65,6 +65,14 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
 
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
     mock_create_actionrow = mocker.patch("randovania.server.discord.preset_lookup.RequestPresetsView")
+
+    if is_dev_version:
+        mocked_git_describe = "v4.0.0-123"
+        mocked_rdv_version = "4.1.0.dev123"
+    else:
+        mocked_git_describe = "v4.0.0"
+        mocked_rdv_version = "4.0.0"
+    mocker.patch("randovania.server.discord.preset_lookup._git_describe", return_value=mocked_git_describe)
 
     mock_describe: MagicMock = mocker.patch("randovania.layout.preset_describer.describe",
                                             return_value=[
@@ -107,8 +115,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     suffix = f"Seed Hash: Elevator Key Checkpoint (LBMFQWCY)"
     if is_solo:
         split_desc = embed.description.split("\n")
-        split_desc[0] = split_desc[0].split(" for Randovania")[0]
-        assert split_desc == ["Metroid Prime 2: Echoes permalink", suffix]
+        assert split_desc == [f"Metroid Prime 2: Echoes permalink for Randovania {mocked_rdv_version}", suffix]
         embed.add_field.assert_has_calls([
             call(name="General", value="Foo\nBar", inline=True),
             call(name="Other", value="X\nY", inline=True),
@@ -117,6 +124,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     content = None
     if has_multiple:
         content = "Multiple permalinks found, using only the first."
+
     message.reply.assert_awaited_once_with(
         content=content,
         embed=embed,

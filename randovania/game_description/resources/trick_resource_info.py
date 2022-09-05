@@ -16,3 +16,7 @@ class TrickResourceInfo:
 
     def __str__(self):
         return self.long_name
+
+    @property
+    def hide_from_ui(self) -> bool:
+        return self.extra.get("hide_from_ui", False)

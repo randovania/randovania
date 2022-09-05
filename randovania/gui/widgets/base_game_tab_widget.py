@@ -1,4 +1,7 @@
+import re
+
 from PySide6 import QtWidgets, QtCore, QtGui
+from qasync import asyncSlot
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import faq_lib, hints_text
@@ -13,6 +16,7 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
     tab_generate_game: GenerateGameWidget
     quick_generate_button: QtWidgets.QPushButton
     game_cover_label: QtWidgets.QLabel | None = None
+    intro_label: QtWidgets.QLabel | None = None
     faq_label: QtWidgets.QLabel | None = None
     hint_item_names_tree_widget: QtWidgets.QTableWidget | None = None
     hint_locations_tree_widget: QtWidgets.QTreeWidget | None = None
@@ -36,6 +40,9 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
             self.game_cover_label.setScaledContents(True)
             self.game_cover_label.setFixedSize(150, 200)
 
+        if self.intro_label is not None:
+            self.intro_label.linkActivated.connect(self._on_intro_label_link_clicked)
+
         if self.faq_label is not None:
             faq_lib.format_game_faq(game, self.faq_label)
 
@@ -54,7 +61,15 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
     @classmethod
     def game(cls) -> RandovaniaGame:
         raise NotImplementedError()
-    
+
+    def _on_intro_label_link_clicked(self, link: str):
+        if (info := re.match(r"^tab://(.+)$", link)) is not None:
+            target_tab_name = info.group(1)
+            for i in range(self.count()):
+                if self.tabText(i) == target_tab_name:
+                    self.setCurrentIndex(i)
+                    return
+
     def _update_quick_generate_text(self):
         preset_name = self.tab_generate_game.preset.name
         text = f"Quick Generate ({preset_name})"
@@ -67,8 +82,9 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
         self.tab_generate_game.on_options_changed(options)
         self._update_quick_generate_text()
 
-    def on_quick_generate(self):
-        self.tab_generate_game.generate_new_layout(spoiler=True)
+    @asyncSlot()
+    async def on_quick_generate(self):
+        await self.tab_generate_game.generate_new_layout(spoiler=True)
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.quick_generate_button.setEnabled(value)

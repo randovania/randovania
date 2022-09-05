@@ -5,6 +5,7 @@ import pytest
 import randovania
 from randovania.game_description import pretty_print, default_database
 from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.games.game import RandovaniaGame
@@ -53,3 +54,44 @@ def test_pretty_print_requirement_array_combinable(mock_print_requirement: Magic
     # Assert
     assert result == [(3, "Power Beam and Shoot Sunburst")]
     mock_print_requirement.assert_not_called()
+
+
+@pytest.mark.parametrize("has_comment", [False, True])
+def test_pretty_print_requirement_array_one_row_and_nested_array(echoes_resource_database, has_comment: bool):
+    req = RequirementAnd([
+        ResourceRequirement.simple(echoes_resource_database.item[0]),
+        RequirementOr([
+            ResourceRequirement.simple(echoes_resource_database.item[1]),
+            RequirementAnd([
+                ResourceRequirement.simple(echoes_resource_database.item[2]),
+                ResourceRequirement.simple(echoes_resource_database.item[3]),
+            ]),
+        ])
+    ], comment="Root comment" if has_comment else None)
+
+    # Run
+    result = list(pretty_print.pretty_print_requirement(req))
+    lines = "\n".join(
+        "      {}{}".format("    " * level, text)
+        for level, text in result
+    )
+    lines = f"\n{lines}\n"
+
+    # Assert
+    if has_comment:
+        assert lines == """
+      All of the following:
+          # Root comment
+          Power Beam
+          Any of the following:
+              Dark Beam
+              Annihilator Beam and Light Beam
+"""
+    else:
+        assert lines == """
+      All of the following:
+          Power Beam
+          Any of the following:
+              Dark Beam
+              Annihilator Beam and Light Beam
+"""
