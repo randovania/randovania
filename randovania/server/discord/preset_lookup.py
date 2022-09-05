@@ -25,12 +25,16 @@ def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
         embed.add_field(name=category, value="\n".join(items), inline=True)
 
 
+def _git_describe(randovania_version: bytes) -> str:
+    return subprocess.run(
+        ["git", "describe", "--tags", randovania_version.hex()],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+
+
 def get_version(original_permalink: str, randovania_version: bytes) -> str | None:
     try:
-        version_raw = subprocess.run(
-            ["git", "describe", "--tags", randovania_version.hex()],
-            check=True, capture_output=True, text=True,
-        ).stdout.strip()
+        version_raw = _git_describe(randovania_version)
         version_split = version_raw.split("-")
 
         is_dev_version = randovania.is_dev_version()
