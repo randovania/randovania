@@ -1296,8 +1296,11 @@ Extra - asset_id: collision_camera_011
                   Gravity Suit
                   Simple IBJ or Use Spin Boost
               Movement (Intermediate) and Lay Cross Comb
+              Speed Booster and Disabled Door Lock Randomizer
   > Tile Group (BOMB) 3
-      Space Jump or Simple IBJ
+      Any of the following:
+          Space Jump or Simple IBJ
+          Speed Booster and Disabled Door Lock Randomizer
   > Under Teleportal
       Trivial
 
@@ -1383,6 +1386,9 @@ Extra - asset_id: collision_camera_011
           Any of the following:
               Space Jump or Simple IBJ
               Walljump (Intermediate) and Use Spin Boost
+              All of the following:
+                  Gravity Suit and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer and Ballspark
+                  After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
   > Teleporter to Cataris - Teleport to Artaria (Red)
       Trivial
   > Tile Group (BOMB) 1
@@ -3617,6 +3623,8 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_def: None
   > Dock to Water Tunnel under Map
       Trivial
+  > Event - Prepare Speeboost in Map Station
+      Disabled Door Lock Randomizer
 
 > Door to Save Station West; Heals? False
   * Layers: default
@@ -3724,12 +3732,14 @@ Extra - asset_id: collision_camera_056
       Gravity Suit or After Artaria - Water Reservoir Blob or Perform WBJ
   > Right of Rotatable
       All of the following:
+          Speed Booster
           Any of the following:
               Gravity Suit
               After Artaria - Water Reservoir Blob and Perform WBJ
           Any of the following:
               Simple IBJ or Use Spin Boost
               Flash Shift and Walljump (Intermediate)
+          Gravity Suit or After Artaria - Prepare Speedboost in Map Station
 
 > Dock to Red Chozo Arena; Heals? False
   * Layers: default
@@ -3765,6 +3775,12 @@ Extra - asset_id: collision_camera_056
   * Layers: default
   * Event Artaria - Waterfall Rotatable
   > Right of Rotatable
+      Trivial
+
+> Event - Prepare Speeboost in Map Station; Heals? False
+  * Layers: default
+  * Event Artaria - Prepare Speedboost in Map Station
+  > Door to Map Station
       Trivial
 
 ----------------
