@@ -299,6 +299,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Speed Booster blocks Destroyed": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -776,6 +785,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Wide Beam Block - Adjacent": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Top Floor": {
@@ -9632,8 +9650,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -9651,6 +9669,10 @@
                                             "amount": 4,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Missile"
                                     }
                                 ]
                             }
@@ -15462,7 +15484,7 @@
                         "Event - Storm Gate Speed Blocks Destroyed": {
                             "type": "and",
                             "data": {
-                                "comment": "You can destroy the blocks from this side by quickly descending or resetting your spark after laying a bomb",
+                                "comment": "You can destroy the blocks from this side by resetting the spark up above after using a bomb, or charging one in the tight space opened up by the storm gate",
                                 "items": [
                                     {
                                         "type": "template",
@@ -15495,29 +15517,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Speedbooster",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -15541,7 +15546,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "Speedbooster",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
