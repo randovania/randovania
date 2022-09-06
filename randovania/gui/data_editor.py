@@ -766,6 +766,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)
         self.layers_editor.set_edit_mode(self.edit_mode)
+        self.setWindowTitle(
+            "Data Editor" if self.edit_mode else "Data Visualizer"
+        )
 
     @property
     def current_world(self) -> World:
