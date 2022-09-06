@@ -1,5 +1,6 @@
 import argparse
 import asyncio
+import traceback
 from pathlib import Path
 
 import discord
@@ -31,8 +32,15 @@ async def main():
         description=f"Generated with Randovania {randovania.VERSION}",
     )
     for data in args.field:
-        assert isinstance(data, str)
-        name, value = data.split(":", 1)
+        try:
+            data = str(data)
+            name, value = data.split(":", 1)
+
+        except ValueError:
+            traceback.print_exc()
+            name = "Missing Title"
+            value = data
+
         print(f"Adding field {name} with {value}")
         embed.add_field(name=name, value=value)
 
