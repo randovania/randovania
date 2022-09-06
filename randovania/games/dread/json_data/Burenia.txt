@@ -148,13 +148,13 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Fan Platform - Above
-      All of the following:
-          # Temporary until door rando
-          Speed Booster
+      After Burenia - Dairon Hub Speed Blocks Destroyed
   > Fan Platform - Below
-      Morph Ball and After Burenia - grapplepulloff1x2_000
+      Morph Ball and After Burenia - Dairon Hub Grapple Block
   > Raft - Top Water Level
       Can Slide Underwater
+  > Event - Dairon Hub Speed Blocks Destroyed
+      Speed Booster and Disabled Door Lock Randomizer
 
 > Door to Underwater Horseshoe; Heals? False
   * Layers: default
@@ -166,15 +166,13 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Lower Transport to Dairon
-      After Burenia - db_reg_aq_001 and After Burenia - db_reg_aq_002 and After Burenia - db_reg_aq_007
+      After Burenia - Dairon Hub Water Blob Right and After Burenia - Dairon Hub Water Blob Left and After Burenia - Dairon Hub Transport Blob
   > Raft - Top Water Level
-      All of the following:
-          After Burenia - db_reg_aq_001 or After Burenia - db_reg_aq_002
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      After Burenia - Dairon Hub Water Blob Right or After Burenia - Dairon Hub Water Blob Left
   > Water Bottom
       Any of the following:
           Can Slide Underwater
-          After Burenia - db_reg_aq_001 and After Burenia - db_reg_aq_002
+          After Burenia - Dairon Hub Water Blob Right and After Burenia - Dairon Hub Water Blob Left
 
 > Door to Lower Transport to Dairon; Heals? False
   * Layers: default
@@ -186,11 +184,15 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Underwater Horseshoe
-      After Burenia - db_reg_aq_001 and After Burenia - db_reg_aq_002 and After Burenia - db_reg_aq_007
-  > Event - Transport Blob from door (db_reg_aq_007)
-      Shoot Beam
+      After Burenia - Dairon Hub Water Blob Right and After Burenia - Dairon Hub Water Blob Left and After Burenia - Dairon Hub Transport Blob
+  > Event - Transport Blob from Door
+      Lay Bomb or Shoot Beam
   > Water Bottom
-      After Burenia - db_reg_aq_007
+      All of the following:
+          After Burenia - Dairon Hub Transport Blob
+          Any of the following:
+              Before Burenia - Dairon Hub Water Blob Right and Before Burenia - Dairon Hub Water Blob Left
+              After Burenia - Dairon Hub Water Blob Right and After Burenia - Dairon Hub Water Blob Left
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -198,7 +200,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Bottom-left Corner
-      After Burenia - db_reg_aq_002
+      After Burenia - Dairon Hub Water Blob Left
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
@@ -208,33 +210,33 @@ Extra - asset_id: collision_camera_002
   > Fan Platform - Above
       Trivial
 
-> Event - Water Blob Right, adjacent (db_reg_aq_001); Heals? False
+> Event - Water Blob Right, Adjacent; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_001
+  * Event Burenia - Dairon Hub Water Blob Right
   * Extra - actor_name: db_reg_aq_001
   * Extra - actor_def: actordef:actors/props/db_reg_aq_001/charclasses/db_reg_aq_001.bmsad
   > Tile Group (BOMB)
       Trivial
 
-> Event - Water Blob Left, adjacent (db_reg_aq_002); Heals? False
+> Event - Water Blob Left, Adjacent; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_002
+  * Event Burenia - Dairon Hub Water Blob Left
   * Extra - actor_name: db_reg_aq_002
   * Extra - actor_def: actordef:actors/props/db_reg_aq_002/charclasses/db_reg_aq_002.bmsad
   > Bottom-left Corner
       Trivial
 
-> Event - Transport Blob from door (db_reg_aq_007); Heals? False
+> Event - Transport Blob from Door; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_007
+  * Event Burenia - Dairon Hub Transport Blob
   * Extra - actor_name: db_reg_aq_007
   * Extra - actor_def: actordef:actors/props/db_reg_aq_007/charclasses/db_reg_aq_007.bmsad
   > Door to Lower Transport to Dairon
       Trivial
 
-> Event - Pull Grapple Block (grapplepulloff1x2_000); Heals? False
+> Event - Dairon Hub Grapple Block; Heals? False
   * Layers: default
-  * Event Burenia - grapplepulloff1x2_000
+  * Event Burenia - Dairon Hub Grapple Block
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Fan Platform - Below
@@ -247,8 +249,10 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Event - Water Blob Right, adjacent (db_reg_aq_001)
-      Morph Ball and Shoot Beam
+  > Event - Water Blob Right, Adjacent
+      All of the following:
+          Morph Ball
+          Lay Bomb or Shoot Beam
   > Water Bottom
       Morph Ball
 
@@ -268,14 +272,10 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   > Pickup (Missile Tank)
       All of the following:
-          After Burenia - db_reg_aq_002
-          Any of the following:
-              Grapple Beam
-              All of the following:
-                  Gravity Suit
-                  Walljump (Beginner) or Simple IBJ or Use Spin Boost
-  > Event - Water Blob Left, adjacent (db_reg_aq_002)
-      Shoot Beam
+          After Burenia - Dairon Hub Water Blob Left
+          Grapple Beam or Gravity Suit or Movement (Intermediate)
+  > Event - Water Blob Left, Adjacent
+      Lay Bomb or Shoot Beam
   > Water Bottom
       Can Slide Underwater
 
@@ -285,25 +285,28 @@ Extra - asset_id: collision_camera_002
       All of the following:
           Morph Ball
           Any of the following:
-              Grapple Beam or Spider Magnet or Space Jump
+              Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+              Grapple Beam and Grapple Movement (Beginner)
               Walljump (Beginner) and Use Spin Boost
   > Door to Upper Burenia Hub
-      Speed Booster
+      After Burenia - Dairon Hub Speed Blocks Destroyed
   > Pickup (Energy Part)
       Any of the following:
           Speed Booster
           All of the following:
-              # A grounded bomb jump horizontally to get past the fan
+              # A grounded bomb jump with cross bombs to get past the fan
               Infinite Bomb Jump (Beginner) and Lay Cross Comb
           Flash Shift and Movement (Beginner)
   > Tile Group (POWERBEAM)
       Trivial
+  > Event - Dairon Hub Speed Blocks Destroyed
+      Speed Booster
 
 > Fan Platform - Below; Heals? False
   * Layers: default
   > Door to Upper Burenia Hub
-      Morph Ball and After Burenia - grapplepulloff1x2_000
-  > Event - Pull Grapple Block (grapplepulloff1x2_000)
+      Morph Ball and After Burenia - Dairon Hub Grapple Block
+  > Event - Dairon Hub Grapple Block
       Grapple Beam
   > Tile Group (POWERBEAM)
       Trivial
@@ -313,19 +316,22 @@ Extra - asset_id: collision_camera_002
 > Raft - Top Water Level; Heals? False
   * Layers: default
   > Door to Upper Burenia Hub
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit or Spider Magnet or After Burenia - Dairon Hub Water Blob Right or After Burenia - Dairon Hub Water Blob Left or Movement (Beginner) or Perform WBJ
+              Grapple Beam and Grapple Movement (Beginner)
+              Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
   > Door to Underwater Horseshoe
-      After Burenia - db_reg_aq_001 or After Burenia - db_reg_aq_002
+      After Burenia - Dairon Hub Water Blob Right or After Burenia - Dairon Hub Water Blob Left
   > Fan Platform - Below
-      Any of the following:
-          Gravity Suit or Water Bomb Jump (Beginner)
-          After Burenia - db_reg_aq_001 and After Burenia - db_reg_aq_002
-  > Event - Transport Blob from above (db_reg_aq_007)
+      Gravity Suit or After Burenia - Dairon Hub Water Blob Right or After Burenia - Dairon Hub Water Blob Left or Perform WBJ
+  > Event - Transport Blob from Above
       Wave Beam
 
-> Event - Transport Blob from above (db_reg_aq_007); Heals? False
+> Event - Transport Blob from Above; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_007
+  * Event Burenia - Dairon Hub Transport Blob
   > Raft - Top Water Level
       Trivial
 
@@ -334,40 +340,48 @@ Extra - asset_id: collision_camera_002
   > Door to Underwater Horseshoe
       Any of the following:
           Morph Ball
-          Gravity Suit and After Burenia - db_reg_aq_001 and After Burenia - db_reg_aq_002
+          Gravity Suit and After Burenia - Dairon Hub Water Blob Right and After Burenia - Dairon Hub Water Blob Left
   > Door to Lower Transport to Dairon
       All of the following:
-          Gravity Suit
+          Gravity Suit and After Burenia - Dairon Hub Transport Blob
           Any of the following:
               Simple IBJ or Use Spin Boost
-              After Burenia - db_reg_aq_001 and After Burenia - db_reg_aq_002
+              After Burenia - Dairon Hub Water Blob Right and After Burenia - Dairon Hub Water Blob Left
   > Tile Group (BOMB)
       Morph Ball
   > Bottom-left Corner
       Can Slide Underwater
-  > Event - Water Blob Left, through gap (db_reg_aq_002)
+  > Event - Water Blob Left, Through Wall
       Shoot Diffusion or Wave
-  > Event - Water Blob Right, through wall (db_reg_aq_001)
+  > Event - Water Blob Right, Through Wall
       Wave Beam
-  > Event - Transport Blob from below (db_reg_aq_007)
-      Shoot Diffusion or Wave
+  > Event - Transport Blob from Below
+      Any of the following:
+          Shoot Diffusion or Wave
+          Morph Ball and Pseudo-Wave Beam (Beginner) and Shoot Charge Beam
 
-> Event - Water Blob Left, through gap (db_reg_aq_002); Heals? False
+> Event - Water Blob Left, Through Wall; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_002
+  * Event Burenia - Dairon Hub Water Blob Left
   > Water Bottom
       Trivial
 
-> Event - Water Blob Right, through wall (db_reg_aq_001); Heals? False
+> Event - Water Blob Right, Through Wall; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_001
+  * Event Burenia - Dairon Hub Water Blob Right
   > Water Bottom
       Trivial
 
-> Event - Transport Blob from below (db_reg_aq_007); Heals? False
+> Event - Transport Blob from Below; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_001
+  * Event Burenia - Dairon Hub Water Blob Right
   > Water Bottom
+      Trivial
+
+> Event - Dairon Hub Speed Blocks Destroyed; Heals? False
+  * Layers: default
+  * Event Burenia - Dairon Hub Speed Blocks Destroyed
+  > Fan Platform - Above
       Trivial
 
 ----------------
@@ -1001,7 +1015,9 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   > Tile Group (POWERBEAM)
       All of the following:
           Morph Ball
-          Grapple Beam or Spider Magnet or Use Spin Boost
+          Any of the following:
+              Flash Shift or Grapple Beam or Spider Magnet or Use Spin Boost
+              Speed Booster and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer
   > Upper Left Magnet Wall
       Morph Ball
 
@@ -1053,7 +1069,9 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   > Tile Group (WEIGHT)
       Trivial
   > Upper Left Magnet Wall
-      Flash Shift and Morph Ball
+      All of the following:
+          Morph Ball
+          Flash Shift or Use Spin Boost
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -1070,21 +1088,13 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   > Door to Flash Shift Room (Lower)
       Trivial
 
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-
 > Tile Group (WEIGHT); Heals? False
   * Layers: default
   * Extra - actor_name: breakabletilegroup_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Door to Save Station Middle
+  > Upper Left Magnet Wall
       Morph Ball
 
 > Tile Group (POWERBEAM); Heals? False
@@ -1102,11 +1112,12 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
 > Upper Left Magnet Wall; Heals? False
   * Layers: default
   > Door to Underwater Horseshoe
-      Flash Shift or Spider Magnet or Slide Jump (Beginner) or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Spider Magnet or Slide Jump (Beginner) or Simple IBJ or Use Spin Boost
+          Speed Booster and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
+          Morph Ball and Single-wall Wall Jump (Beginner)
   > Door to Teleport to Ferenia
-      All of the following:
-          Morph Ball
-          Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
+      Morph Ball
   > Door to Save Station Middle
       Trivial
   > Pickup (Energy Tank)
@@ -1121,26 +1132,17 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
                   Spider Magnet or Movement (Beginner)
               All of the following:
                   Flash Shift
-                  Any of the following:
-                      Spider Magnet
-                      All of the following:
-                          Movement (Beginner)
-                          Walljump (Beginner) or Use Spin Boost
+                  Spider Magnet or Movement (Intermediate)
               All of the following:
                   Grapple Beam
-                  Any of the following:
-                      Spider Magnet
-                      All of the following:
-                          Movement (Beginner)
-                          Walljump (Beginner) or Use Spin Boost
+                  Spider Magnet or Grapple Movement (Intermediate)
               All of the following:
                   Lay Cross Comb
                   Any of the following:
-                      Spider Magnet
-                      All of the following:
-                          Movement (Intermediate)
-                          Walljump (Beginner) or Use Spin Boost
+                      Spider Magnet or Movement (Intermediate)
                       Damage Boost (Beginner) and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
+  > Tile Group (WEIGHT)
+      Trivial
 
 ----------------
 Main Hub Tower Middle
@@ -1197,9 +1199,11 @@ Extra - asset_id: collision_camera_010
   > Tunnel to Teleport to Ghavoran (Upper Tunnel)
       Trivial
   > Left of Central Grapple Block
-      Morph Ball and After Burenia - grapplepulloff1x2_005
+      Morph Ball and After Burenia - Main Hub Middle Grapple Block
   > Dock to Main Hub Tower Top (Right)
       Trivial
+  > Event - Main Hub Middle Graple Block (Back)
+      Gravity Suit and Break/Move Grapple Block from Behind
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -1209,9 +1213,9 @@ Extra - asset_id: collision_camera_010
   > Giant Water Bottom
       Trivial
 
-> Event - Pull Central Grapple Block (grapplepulloff1x2_005); Heals? False
+> Event - Main Hub Middle Grapple Block (Front); Heals? False
   * Layers: default
-  * Event Burenia - grapplepulloff1x2_005
+  * Event Burenia - Main Hub Middle Grapple Block
   * Extra - actor_name: grapplepulloff1x2_005
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Left of Central Grapple Block
@@ -1221,15 +1225,22 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Morph Ball Tunnel to Teleport to Ghavoran/Tunnel to Main Hub Tower Middle (Upper)
   > Door to Teleport to Ghavoran (Plasma)
-      Grapple Beam or Gravity Suit or Spider Magnet or Water Bomb Jump (Beginner)
+      Any of the following:
+          Gravity Suit or Spider Magnet or Perform WBJ
+          Grapple Beam and Grapple Movement (Beginner)
+          Morph Ball and Movement (Beginner)
   > Upper Water Ledge - Right
-      Gravity Suit or Water Bomb Jump (Beginner) or Use Spin Boost
+      Any of the following:
+          Gravity Suit or Perform WBJ or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
 
 > Tunnel to Teleport to Ghavoran (Lower Tunnel); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Teleport to Ghavoran/Tunnel to Main Hub Tower Middle (Lower)
   > Door to Teleport to Ghavoran (Charge)
-      Gravity Suit
+      All of the following:
+          Gravity Suit
+          Speed Booster or Simple IBJ or Use Spin Boost
   > Missile Tank Plus Platform
       Horizontal Water Movement
   > Giant Water Bottom
@@ -1238,9 +1249,9 @@ Extra - asset_id: collision_camera_010
 > Mid-Left Spider Magnet Pit; Heals? False
   * Layers: default
   > Left of Central Grapple Block
-      Gravity Suit or Spider Magnet or Water Bomb Jump (Beginner)
+      Gravity Suit or Spider Magnet or Perform WBJ
   > Upper Water Ledge - Left
-      Grapple Beam or Gravity Suit or Spider Magnet or Water Bomb Jump (Beginner) or Use Spin Boost
+      Grapple Beam or Gravity Suit or Spider Magnet or Perform WBJ or Use Spin Boost
   > Dock to Main Hub Tower Top (Left)
       All of the following:
           Gravity Suit or Spider Magnet
@@ -1251,8 +1262,8 @@ Extra - asset_id: collision_camera_010
 > Left of Central Grapple Block; Heals? False
   * Layers: default
   > Door to Teleport to Ghavoran (Plasma)
-      Morph Ball and After Burenia - grapplepulloff1x2_005
-  > Event - Pull Central Grapple Block (grapplepulloff1x2_005)
+      Morph Ball and After Burenia - Main Hub Middle Grapple Block
+  > Event - Main Hub Middle Grapple Block (Front)
       Grapple Beam
   > Mid-Left Spider Magnet Pit
       Trivial
@@ -1262,7 +1273,7 @@ Extra - asset_id: collision_camera_010
   > Door to Energy Recharge South
       All of the following:
           After Burenia - Hub Magnet Wall
-          Gravity Suit or Water Bomb Jump (Beginner)
+          Gravity Suit or Perform WBJ
   > Door to Teleport to Ghavoran (Charge)
       Space Jump and After Burenia - Hub Magnet Wall
   > Pickup (Missile+ Tank)
@@ -1276,7 +1287,7 @@ Extra - asset_id: collision_camera_010
               Grapple Beam
               All of the following:
                   Gravity Suit
-                  Simple IBJ or Use Spin Boost
+                  Flash Shift or Simple IBJ or Use Spin Boost
 
 > Giant Water Bottom; Heals? False
   * Layers: default
@@ -1284,6 +1295,10 @@ Extra - asset_id: collision_camera_010
       Gravity Suit and Speed Booster
   > Tunnel to Teleport to Ghavoran (Lower Tunnel)
       Trivial
+  > Missile Tank Plus Platform
+      Any of the following:
+          Gravity Suit
+          Grapple Beam and Grapple Movement (Beginner)
   > Upper Water Ledge - Left
       All of the following:
           Gravity Suit
@@ -1322,19 +1337,19 @@ Extra - asset_id: collision_camera_010
 > Falling from above; Heals? False
   * Layers: default
   > Door to Teleport to Ghavoran (Charge)
-      Any of the following:
-          Space Jump
-          Flash Shift and Gravity Suit
+      Horizontal Water Movement
   > Missile Tank Plus Platform
       Trivial
   > Event - Lower Magnet Wall
-      Flash Shift and Gravity Suit and Spider Magnet
+      Spider Magnet and Horizontal Water Movement
 
 > Dock to Main Hub Tower Top (Left); Heals? False
   * Layers: default
   * Open Passage to Main Hub Tower Top/Dock to Main Hub Tower Middle (Left)
-  > Left of Central Grapple Block
+  > Mid-Left Spider Magnet Pit
       Trivial
+  > Left of Central Grapple Block
+      Movement (Beginner)
 
 > Dock to Main Hub Tower Top (Right); Heals? False
   * Layers: default
@@ -1345,6 +1360,12 @@ Extra - asset_id: collision_camera_010
 > Dock to Main Hub Tower Bottom; Heals? False
   * Layers: default
   * Open Passage to Main Hub Tower Bottom/Dock from Main Hub Tower Middle
+
+> Event - Main Hub Middle Graple Block (Back); Heals? False
+  * Layers: default
+  * Event Burenia - Main Hub Middle Grapple Block
+  > Door to Teleport to Ghavoran (Plasma)
+      Trivial
 
 ----------------
 Main Hub Tower Bottom
@@ -1717,11 +1738,15 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Early Gravity Speedboost Room 1 (Lower)
-      Speed Booster and After Burenia - Early Gravity Energy Part
+      After Burenia - Ghavoran Teleoport Speed Blocks Destroyed
   > Top of Enky Shaft
       After Burenia - Ghavoran Teleport Enky
   > Event - Destroy all Enkys
       Destroy Enky
+  > Event - Ghavoran Teleport Speed Blocks Destroyed
+      All of the following:
+          # Proceeding down from here will be logically impossible with door rando enabled
+          Speed Booster and Disabled Door Lock Randomizer
 
 > Door to Early Gravity Speedboost Room 1 (Lower); Heals? False
   * Layers: default
@@ -1733,7 +1758,7 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Early Gravity Speedboost Room 1 (Upper)
-      Speed Booster and After Burenia - Early Gravity Energy Part
+      After Burenia - Ghavoran Teleoport Speed Blocks Destroyed
 
 > Door to Main Hub Tower Middle (Charge); Heals? False
   * Layers: default
@@ -1762,7 +1787,7 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Door to Gravity Suit Tower
       Trivial
-  > Event - Blob through floor (db_reg_aq_012)
+  > Event - Ghavoran Teleport Blob, through Floor
       Wave Beam
 
 > Door to Gravity Suit Tower; Heals? False
@@ -1781,9 +1806,9 @@ Extra - asset_id: collision_camera_015
   > Tile Group (BOMB)
       Trivial
 
-> Event - Blob from nearby (db_reg_aq_012); Heals? False
+> Event - Ghavoran Teleport Blob, Adjacent; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_012
+  * Event Burenia - Ghavoran Teleport Blob
   * Extra - actor_name: db_reg_aq_012
   * Extra - actor_def: actordef:actors/props/db_reg_aq_011/charclasses/db_reg_aq_011.bmsad
   > Upper Water Platform
@@ -1832,28 +1857,40 @@ Extra - asset_id: collision_camera_015
   * Layers: default
   > Door to Main Hub Tower Middle (Charge)
       Trivial
-  > Event - Blob from nearby (db_reg_aq_012)
-      Shoot Beam
+  > Event - Ghavoran Teleport Blob, Adjacent
+      Lay Bomb or Shoot Beam
   > Tunnel to Main Hub Tower Middle (Upper)
-      Morph Ball and After Burenia - db_reg_aq_012
+      Morph Ball and After Burenia - Ghavoran Teleport Blob
 
-> Event - Blob through floor (db_reg_aq_012); Heals? False
+> Event - Ghavoran Teleport Blob, through Floor; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_012
+  * Event Burenia - Ghavoran Teleport Blob
   > Door to Main Hub Tower Middle (Plasma)
       Trivial
 
 > Tunnel to Main Hub Tower Middle (Upper); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Main Hub Tower Middle/Tunnel to Teleport to Ghavoran (Upper Tunnel)
+  > Door to Main Hub Tower Middle (Plasma)
+      All of the following:
+          Wave Beam and Disabled Door Lock Randomizer and Can Slide Underwater
+          Any of the following:
+              Gravity Suit or Spider Magnet or Movement (Beginner) or Perform WBJ
+              Grapple Beam and Grapple Movement (Beginner)
   > Upper Water Platform
-      Morph Ball and After Burenia - db_reg_aq_012
+      Morph Ball and After Burenia - Ghavoran Teleport Blob
 
 > Tunnel to Main Hub Tower Middle (Lower); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Main Hub Tower Middle/Tunnel to Teleport to Ghavoran (Lower Tunnel)
   > Door to Main Hub Tower Middle (Charge)
       Morph Ball
+
+> Event - Ghavoran Teleport Speed Blocks Destroyed; Heals? False
+  * Layers: default
+  * Event Burenia - Ghavoran Teleoport Speed Blocks Destroyed
+  > Door to Early Gravity Speedboost Room 1 (Upper)
+      Trivial
 
 ----------------
 Navigation Station South
@@ -1995,8 +2032,6 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_def: None
   > Pickup (Energy Part)
       Trivial
-  > Event - Early Gravity Energy Part
-      Trivial
 
 > Door to Teleport to Ghavoran (Lower); Heals? False
   * Layers: default
@@ -2036,7 +2071,7 @@ Extra - asset_id: collision_camera_018
   > Pickup (Missile+ Tank)
       Trivial
   > Dock to Early Gravity Speedboost Room 2 (Lower)
-      Trivial
+      After Burenia - Early Gravity Speed Blocks Destroyed
   > Tunnel to Gravity Suit Tower
       Morph Ball
 
@@ -2056,22 +2091,16 @@ Extra - asset_id: collision_camera_018
   > Water Bottom
       Trivial
   > Dock to Early Gravity Speedboost Room 2 (Upper)
-      Any of the following:
-          Space Jump or Speed Booster
-          Flash Shift and Use Spin Boost
+      Speed Booster or Use Spin Boost
 
 > Water Bottom; Heals? False
   * Layers: default
   > Tile Group (POWERBEAM) 2
       Any of the following:
-          Space Jump
-          Spider Magnet and Use Spin Boost
-          Gravity Suit and Simple IBJ
-          Grapple Beam and Walljump (Beginner)
+          Spider Magnet or Simple IBJ
+          Grapple Beam and Grapple Movement (Beginner)
   > Dock to Early Gravity Speedboost Room 2 (Upper)
-      Any of the following:
-          Space Jump
-          Flash Shift and Use Spin Boost
+      Use Spin Boost
 
 > Dock to Early Gravity Speedboost Room 2 (Upper); Heals? False
   * Layers: default
@@ -2085,23 +2114,13 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 2/Dock to Early Gravity Speedboost Room 1 (Lower)
   > Tile Group (POWERBEAM) 1
-      Speed Booster
+      After Burenia - Early Gravity Speed Blocks Destroyed
 
 > Tunnel to Gravity Suit Tower; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Gravity Suit Tower/Tunnel to Early Gravity Speedboost Room 1
   > Tile Group (POWERBEAM) 1
       Morph Ball
-
-> Event - Early Gravity Energy Part; Heals? False
-  * Layers: default
-  * Event Burenia - Early Gravity Energy Part
-  * Event added to account for door rando as it would otherwise be impossible to
-use the speed blocks just outside
-
-
-  > Door to Teleport to Ghavoran (Upper)
-      Trivial
 
 ----------------
 Early Gravity Speedboost Room 2
@@ -2122,16 +2141,16 @@ Extra - asset_id: collision_camera_019
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 1/Dock to Early Gravity Speedboost Room 2 (Lower)
   > Slope Top
-      Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      After Burenia - Early Gravity Speed Blocks Destroyed
 
 > Water Pit; Heals? False
   * Layers: default
   > Dock to Early Gravity Speedboost Room 1 (Upper)
       Any of the following:
-          Gravity Suit and Simple IBJ
+          Simple IBJ
           All of the following:
               Spider Magnet
-              Water Bomb Jump (Beginner) or Use Spin Boost
+              Gravity Suit or Lay Bomb
   > Slope Top
       Use Spin Boost
 
@@ -2139,13 +2158,22 @@ Extra - asset_id: collision_camera_019
   * Layers: default
   > Dock to Early Gravity Speedboost Room 1 (Upper)
       Any of the following:
-          Space Jump
+          Use Spin Boost
           All of the following:
-              Spider Magnet or Walljump (Beginner)
-              Flash Shift or Grapple Beam or Use Spin Boost
+              Grapple Beam
+              Spider Magnet or Grapple Movement (Beginner)
+          Flash Shift and Walljump (Beginner)
   > Dock to Early Gravity Speedboost Room 1 (Lower)
-      Speed Booster
+      After Burenia - Early Gravity Speed Blocks Destroyed
   > Water Pit
+      Trivial
+  > Event - Early Gravity Speed Blocks Destroyed
+      Speed Booster and After Burenia - Ghavoran Teleoport Speed Blocks Destroyed
+
+> Event - Early Gravity Speed Blocks Destroyed; Heals? False
+  * Layers: default
+  * Event Burenia - Early Gravity Speed Blocks Destroyed
+  > Dock to Early Gravity Speedboost Room 1 (Lower)
       Trivial
 
 ----------------
