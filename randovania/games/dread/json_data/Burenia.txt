@@ -1298,7 +1298,7 @@ Extra - asset_id: collision_camera_010
   > Missile Tank Plus Platform
       Any of the following:
           Gravity Suit
-          Grapple Beam and Grapple Movement (Beginner)
+          Grapple Beam and Before Burenia - Hub Magnet Wall and Grapple Movement (Beginner)
   > Upper Water Ledge - Left
       All of the following:
           Gravity Suit
@@ -1380,28 +1380,28 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Alcove across grapple block
-      After Burenia - db_reg_aq_003
+  > Alcove Across Grapple Block
+      After Burenia - Main Hub Bottom Blob
   > Ledge above Grapple Block
       Trivial
-  > Event - Shoot Blob from above (db_reg_aq_003)
+  > Event - Main Hub Bottom Blob, Above
       Wave Beam
 
-> Door to Save Station South Access (doorpowerpower_022); Heals? False
+> Door to Save Station South Access (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Save Station South Access/Door to Main Hub Tower Bottom (doorpowerpower_022)
+  * Power Beam Door to Save Station South Access/Door to Main Hub Tower Bottom (Upper)
   * Extra - actor_name: doorpowerpower_022
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Alcove across grapple block
+  > Alcove Across Grapple Block
       Trivial
 
-> Door to Save Station South Access (doorpowerpower_023); Heals? False
+> Door to Save Station South Access (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Save Station South Access/Door to Main Hub Tower Bottom (doorpowerpower_023)
+  * Power Beam Door to Save Station South Access/Door to Main Hub Tower Bottom (Lower)
   * Extra - actor_name: doorpowerpower_023
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1411,7 +1411,7 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   > Tile Group (SCREWATTACK)
       Trivial
   > Water Space Jump Platform
-      Horizontal Water Movement
+      Space Jump
 
 > Door to Storm Missile Gate Room; Heals? False
   * Layers: default
@@ -1422,27 +1422,31 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Alcove across grapple block
-      Morph Ball and After Burenia - grapplepulloff1x2_003 and Horizontal Water Movement
+  > Alcove Across Grapple Block
+      All of the following:
+          Morph Ball and After Burenia - Main Hub Bottom Blob
+          Any of the following:
+              Use Spin Boost
+              Flash Shift and Gravity Suit
   > Ledge above Grapple Block
-      Gravity Suit and Morph Ball and After Burenia - grapplepulloff1x2_003
+      Gravity Suit and Morph Ball and After Burenia - Destroy Gravity Suit Floor
   > Water Space Jump Platform
-      Morph Ball and After Burenia - grapplepulloff1x2_003
+      Morph Ball and After Burenia - Destroy Gravity Suit Floor
 
-> Event - Shoot Blob from alcove (db_reg_aq_003); Heals? False
+> Event - Main Hub Bottom Blob, Left; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_003
+  * Event Burenia - Main Hub Bottom Blob
   * Extra - actor_name: db_reg_aq_003
   * Extra - actor_def: actordef:actors/props/db_reg_aq_003/charclasses/db_reg_aq_003.bmsad
-  > Alcove across grapple block
+  > Alcove Across Grapple Block
       Trivial
 
-> Event - Pull Lower-Right Grapple Block (grapplepulloff1x2_003); Heals? False
+> Event - Main Hub Bottom Grapple Block; Heals? False
   * Layers: default
-  * Event Burenia - grapplepulloff1x2_003
+  * Event Burenia - Destroy Gravity Suit Floor
   * Extra - actor_name: grapplepulloff1x2_003
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Alcove across grapple block
+  > Alcove Across Grapple Block
       Trivial
 
 > Tile Group (SCREWATTACK); Heals? False
@@ -1452,18 +1456,16 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Save Station South Access (doorpowerpower_023)
+  > Door to Save Station South Access (Lower)
       All of the following:
           Gravity Suit
-          Simple IBJ or Use Spin Boost
+          Speed Booster or Simple IBJ or Use Spin Boost
   > Dock to Gravity Suit Room Access
       Trivial
   > Tunnel to Storm Missile Gate Room
       Morph Ball
   > Water Space Jump Platform
-      Any of the following:
-          Morph Ball
-          Gravity Suit and Use Spin Boost
+      Gravity Suit or Morph Ball
 
 > Dock to Gravity Suit Room Access; Heals? False
   * Layers: default
@@ -1471,7 +1473,9 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   > Tile Group (SCREWATTACK)
       All of the following:
           Gravity Suit
-          Space Jump or Speed Booster or Simple IBJ
+          Any of the following:
+              Space Jump or Speed Booster or Simple IBJ
+              Flash Shift and Walljump (Beginner) and Use Spin Boost
   > Tunnel to Storm Missile Gate Room
       All of the following:
           Gravity Suit
@@ -1483,56 +1487,76 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   > Tile Group (SCREWATTACK)
       Morph Ball
 
-> Alcove across grapple block; Heals? False
+> Alcove Across Grapple Block; Heals? False
   * Layers: default
-  > Door to Save Station South Access (doorpowerpower_022)
+  > Door to Save Station South Access (Upper)
       Gravity Suit
   > Door to Storm Missile Gate Room
-      Morph Ball and After Burenia - grapplepulloff1x2_003 and Horizontal Water Movement
-  > Event - Shoot Blob from alcove (db_reg_aq_003)
-      Shoot Beam
-  > Event - Pull Lower-Right Grapple Block (grapplepulloff1x2_003)
-      Grapple Beam and After Burenia - db_reg_aq_003
+      All of the following:
+          Morph Ball and After Burenia - Destroy Gravity Suit Floor
+          Any of the following:
+              Use Spin Boost
+              Speed Booster and Disabled Door Lock Randomizer
+              Flash Shift and Gravity Suit
+  > Event - Main Hub Bottom Blob, Left
+      Lay Bomb or Shoot Beam
+  > Event - Main Hub Bottom Grapple Block
+      Grapple Beam and After Burenia - Main Hub Bottom Blob
+  > Ledge above Grapple Block
+      Flash Shift and Gravity Suit and After Burenia - Main Hub Bottom Blob
+  > Water Space Jump Platform
+      After Burenia - Main Hub Bottom Blob
 
 > Ledge above Grapple Block; Heals? False
   * Layers: default
   > Door to Energy Recharge South
       All of the following:
           Gravity Suit
-          Any of the following:
-              Simple IBJ or Use Spin Boost
-              Flash Shift and Walljump (Beginner)
+          Flash Shift or Simple IBJ or Use Spin Boost
   > Door to Storm Missile Gate Room
-      Morph Ball and After Burenia - grapplepulloff1x2_003
-  > Alcove across grapple block
-      After Burenia - db_reg_aq_003 and Use Spin Boost
-  > Event - Shoot Blob from right (db_reg_aq_003)
+      Morph Ball and After Burenia - Destroy Gravity Suit Floor
+  > Alcove Across Grapple Block
+      All of the following:
+          After Burenia - Main Hub Bottom Blob
+          Gravity Suit or Use Spin Boost
+  > Event - Main Hub Bottom Blob, Right
       Shoot Diffusion or Wave
   > Water Space Jump Platform
       Trivial
 
-> Event - Shoot Blob from above (db_reg_aq_003); Heals? False
+> Event - Main Hub Bottom Blob, Above; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_003
+  * Event Burenia - Main Hub Bottom Blob
   > Door to Energy Recharge South
       Trivial
 
-> Event - Shoot Blob from right (db_reg_aq_003); Heals? False
+> Event - Main Hub Bottom Blob, Right; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_003
+  * Event Burenia - Main Hub Bottom Blob
   > Ledge above Grapple Block
       Trivial
 
 > Water Space Jump Platform; Heals? False
   * Layers: default
-  > Door to Save Station South Access (doorpowerpower_023)
+  > Door to Save Station South Access (Lower)
       Horizontal Water Movement
+  > Door to Storm Missile Gate Room
+      All of the following:
+          Gravity Suit and Morph Ball and After Burenia - Destroy Gravity Suit Floor
+          Speed Booster or Single-wall Wall Jump (Beginner) or Simple IBJ or Use Spin Boost
   > Tile Group (SCREWATTACK)
       Trivial
+  > Alcove Across Grapple Block
+      All of the following:
+          Gravity Suit and After Burenia - Main Hub Bottom Blob
+          Flash Shift or Simple IBJ or Use Spin Boost
   > Ledge above Grapple Block
       All of the following:
           Gravity Suit
-          Simple IBJ or Use Spin Boost
+          Any of the following:
+              Simple IBJ or Use Spin Boost
+              Morph Ball and Single-wall Wall Jump (Intermediate)
+              Flash Shift and Walljump (Intermediate)
 
 > Dock from Main Hub Tower Middle; Heals? False
   * Layers: default
@@ -1673,7 +1697,7 @@ Extra - asset_id: collision_camera_013
   > Pickup (Missile Tank)
       Can Slide Underwater
   > Tile Group (BOMB) 1
-      Morph Ball
+      Gravity Suit and Morph Ball
 
 ----------------
 Flash Shift Room
@@ -1972,9 +1996,7 @@ Extra - asset_id: collision_camera_017
   * Extra - start_point_actor_name: elevator_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Navigation Station South
-      Flash Shift or Gravity Suit or Water Bomb Jump (Beginner) or Use Spin Boost
-  > Tile Group (SCREWATTACK) 1
-      Morph Ball
+      Trivial
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Layers: default
@@ -1987,22 +2009,6 @@ Extra - asset_id: collision_camera_017
       Trivial
   > Tile Group (SCREWATTACK) 2
       Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_038
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_039
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
 
 > Tile Group (SCREWATTACK) 2; Heals? False
   * Layers: default
@@ -2194,13 +2200,22 @@ Extra - asset_id: collision_camera_021
   > Door to Ammo Recharge South (Lower)
       All of the following:
           After Burenia - Destroy Gravity Suit Floor
-          Gravity Suit or Space Jump
+          Any of the following:
+              Space Jump
+              All of the following:
+                  Gravity Suit
+                  Any of the following:
+                      Simple IBJ or Use Spin Boost
+                      Speed Booster and Disabled Door Lock Randomizer
   > Tile Group (POWERBOMB)
       Trivial
   > Breakable Floor
       All of the following:
           Gravity Suit and After Burenia - Destroy Gravity Suit Floor
-          Simple IBJ or Use Spin Boost
+          Any of the following:
+              Simple IBJ or Use Spin Boost
+              Speed Booster and Disabled Door Lock Randomizer
+              Slide and Slide Jump (Beginner)
 
 > Door to Navigation Station South; Heals? False
   * Layers: default
@@ -2214,13 +2229,17 @@ Extra - asset_id: collision_camera_021
   > Start Point 4
       Trivial
   > Tile Group (SCREWATTACK) 2
-      Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Simple IBJ or Use Spin Boost
+          All of the following:
+              Speed Booster
+              Before Burenia - Destroy Gravity Suit Floor or Disabled Door Lock Randomizer
   > Breakable Floor
       After Burenia - Destroy Gravity Suit Floor
 
 > Door to Ammo Recharge South (Lower); Heals? False
   * Layers: default
-  * Access Open to Ammo Recharge South/Door to Gravity Suit Tower (Upper)
+  * Access Open to Ammo Recharge South/Door to Gravity Suit Tower (Lower)
   * Extra - actor_name: doorframepresence
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2284,7 +2303,7 @@ Extra - asset_id: collision_camera_021
 
 > Door to Ammo Recharge South (Upper); Heals? False
   * Layers: default
-  * Access Open to Ammo Recharge South/Door to Gravity Suit Tower (Lower)
+  * Access Open to Ammo Recharge South/Door to Gravity Suit Tower (Upper)
   * Extra - actor_name: doorframepresence_000
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2294,37 +2313,39 @@ Extra - asset_id: collision_camera_021
   > Start Point 1
       Trivial
   > Breakable Floor
-      After Burenia - Destroy Gravity Suit Floor
+      Before Burenia - Destroy Gravity Suit Floor or Horizontal Water Movement
   > Tunnel to Ammo Recharge South
       Morph Ball
+  > Blob Alcove
+      Morph Ball and Horizontal Water Movement
 
-> Event - Blob #1 (ev_demolition_db_001); Heals? False
+> Event - Break Floor Blob 1; Heals? False
   * Layers: default
-  * Event Burenia - ev_demolition_db_001
+  * Event Burenia - Break Floor Blob 1
   * Extra - actor_name: ev_demolition_db_001
   * Extra - actor_def: actordef:actors/props/ev_demolition_db_001/charclasses/ev_demolition_db_001.bmsad
   > Blob Alcove
       Trivial
 
-> Event - Blob #2 (ev_demolition_db_002); Heals? False
+> Event - Break Floor Blob 2; Heals? False
   * Layers: default
-  * Event Burenia - ev_demolition_db_002
+  * Event Burenia - Break Floor Blob 2
   * Extra - actor_name: ev_demolition_db_002
   * Extra - actor_def: actordef:actors/props/ev_demolition_db_002/charclasses/ev_demolition_db_002.bmsad
   > Blob Alcove
       Trivial
 
-> Event - Blob #3 (ev_demolition_db_003); Heals? False
+> Event - Break Floor Blob 3; Heals? False
   * Layers: default
-  * Event Burenia - ev_demolition_db_003
+  * Event Burenia - Break Floor Blob 3
   * Extra - actor_name: ev_demolition_db_003
   * Extra - actor_def: actordef:actors/props/ev_demolition_db_003/charclasses/ev_demolition_db_003.bmsad
   > Blob Alcove
       Trivial
 
-> Event - Early Gravity Blob (db_reg_aq_005); Heals? False
+> Event - Early Gravity Blob; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_005
+  * Event Burenia - Early Gravity Blob
   * Extra - actor_name: db_reg_aq_005
   * Extra - actor_def: actordef:actors/props/db_reg_aq_005/charclasses/db_reg_aq_005.bmsad
   > Tile Group (WEIGHT)
@@ -2343,23 +2364,8 @@ Extra - asset_id: collision_camera_021
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Start Point 3
       All of the following:
-          Any of the following:
-              # ways to get up
-              Space Jump or Simple IBJ
-          Any of the following:
-              # Combat tricks
-              All of the following:
-                  # Max difficulty
-                  Combat (Advanced)
-              All of the following:
-                  # less than vanilla requirements
-                  Combat (Intermediate) and Shoot Charge Beam and Shoot Super Missile and Shoot Wide Beam
-              All of the following:
-                  # Vanilla requirements
-                  Shoot Ice Missile and Shoot Plasma Beam
-              All of the following:
-                  # PB cheese
-                  Combat (Beginner) and Lay Power Bomb
+          Morph Ball
+          Space Jump or Simple IBJ
   > Shaft Base
       Trivial
 
@@ -2368,9 +2374,13 @@ Extra - asset_id: collision_camera_021
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_2RCW
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Teleport to Ghavoran
-      Trivial
+      After Burenia - Twin Robot Fight
   > Start Point 2
-      Space Jump or Simple IBJ
+      All of the following:
+          Morph Ball and After Burenia - Twin Robot Fight
+          Space Jump or Simple IBJ
+  > Event - Twin Robot Fight
+      Fight Twin Robots
 
 > Start Point 4; Heals? False; Spawn Point
   * Layers: default
@@ -2378,14 +2388,6 @@ Extra - asset_id: collision_camera_021
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station South
       Trivial
-
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
 
 > Tile Group (POWERBOMB); Heals? False
   * Layers: default
@@ -2405,10 +2407,10 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Event - Early Gravity Blob (db_reg_aq_005)
+  > Event - Early Gravity Blob
       Lay Bomb or Shoot Beam
   > Breakable Floor
-      Morph Ball and After Burenia - db_reg_aq_005
+      Morph Ball and After Burenia - Early Gravity Blob
 
 > Tile Group (SCREWATTACK) 2; Heals? False
   * Layers: default
@@ -2422,11 +2424,11 @@ Extra - asset_id: collision_camera_021
   > Pickup (Missile+ Tank)
       Trivial
   > Tile Group (POWERBEAM) 1
-      Simple IBJ or Use Spin Boost
+      Trivial
   > Tile Group (POWERBEAM) 2
-      Simple IBJ or Use Spin Boost
+      Trivial
   > Tile Group (SCREWATTACK) 4
-      Simple IBJ or Use Spin Boost
+      Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Layers: default
@@ -2439,14 +2441,6 @@ Extra - asset_id: collision_camera_021
       Trivial
   > Shaft Base
       Trivial
-
-> Tile Group (SCREWATTACK) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_021
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
 
 > Tile Group (MISSILE); Heals? False
   * Layers: default
@@ -2497,7 +2491,9 @@ Extra - asset_id: collision_camera_021
   > Door to Navigation Station South
       All of the following:
           Gravity Suit and After Burenia - Destroy Gravity Suit Floor
-          Space Jump or Speed Booster or Simple IBJ
+          Any of the following:
+              Space Jump or Simple IBJ
+              Speed Booster and Disabled Door Lock Randomizer
   > Dock to Ammo Recharge South
       Any of the following:
           Space Jump or Before Burenia - Destroy Gravity Suit Floor
@@ -2505,7 +2501,11 @@ Extra - asset_id: collision_camera_021
               Gravity Suit
               Flash Shift or Use Spin Boost
   > Blob Alcove
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Gravity Suit or After Burenia - Early Gravity Blob or Damage Boost (Advanced) or Perform WBJ
+  > Event - Early Gravity Blob through Wall
+      Wave Beam
 
 > Tunnel to Ammo Recharge South; Heals? False
   * Layers: default
@@ -2521,7 +2521,7 @@ Extra - asset_id: collision_camera_021
   > Door to Ammo Recharge South (Lower)
       After Burenia - Destroy Gravity Suit Floor
   > Breakable Floor
-      Before Burenia - Destroy Gravity Suit Floor
+      Before Burenia - Destroy Gravity Suit Floor or Horizontal Water Movement
 
 > Event - Break Floor; Heals? False
   * Layers: default
@@ -2531,21 +2531,33 @@ Extra - asset_id: collision_camera_021
 
 > Blob Alcove; Heals? False
   * Layers: default
-  > Event - Blob #1 (ev_demolition_db_001)
-      Shoot Beam
-  > Event - Blob #2 (ev_demolition_db_002)
-      After Burenia - ev_demolition_db_001 and Shoot Beam
-  > Event - Blob #3 (ev_demolition_db_003)
-      After Burenia - ev_demolition_db_002 and Shoot Diffusion or Wave
+  > Door to Navigation Station South
+      All of the following:
+          Flash Shift and Gravity Suit and After Burenia - Destroy Gravity Suit Floor
+          Any of the following:
+              Walljump (Advanced)
+              Walljump (Intermediate) and Use Spin Boost
+  > Event - Break Floor Blob 1
+      Lay Bomb or Shoot Beam
+  > Event - Break Floor Blob 2
+      After Burenia - Break Floor Blob 1 and Shoot Beam
+  > Event - Break Floor Blob 3
+      After Burenia - Break Floor Blob 2 and Shoot Diffusion or Wave
   > Breakable Floor
       Morph Ball
   > Event - Break Floor
-      Grapple Beam and After Burenia - ev_demolition_db_003
+      Grapple Beam and After Burenia - Break Floor Blob 3
 
 > Shaft Base; Heals? False
   * Layers: default
   > Start Point 2
-      Space Jump or Infinite Bomb Jump (Intermediate)
+      Any of the following:
+          Space Jump
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          Flash Shift and Walljump (Intermediate) and Use Spin Boost
+          All of the following:
+              Speed Booster and Speedbooster Conservation (Intermediate)
+              Before Burenia - Destroy Gravity Suit Floor or Disabled Door Lock Randomizer
   > Tile Group (POWERBEAM) 1
       Trivial
   > Tile Group (POWERBEAM) 2
@@ -2553,12 +2565,24 @@ Extra - asset_id: collision_camera_021
   > Tile Group (SCREWATTACK) 4
       Trivial
 
+> Event - Early Gravity Blob through Wall; Heals? False
+  * Layers: default
+  * Event Burenia - Early Gravity Blob
+  > Breakable Floor
+      Trivial
+
+> Event - Twin Robot Fight; Heals? False
+  * Layers: default
+  * Event Burenia - Twin Robot Fight
+  > Start Point 3
+      Trivial
+
 ----------------
 Ammo Recharge South
 Extra - total_boundings: {'x1': 9000.0, 'x2': 11100.0, 'y1': -10900.0, 'y2': -8800.0}
 Extra - polygon: [[11100.0, -8800.0], [9000.0, -8800.0], [9000.0, -10900.0], [11100.0, -10900.0]]
 Extra - asset_id: collision_camera_022
-> Door to Gravity Suit Tower (Upper); Heals? False
+> Door to Gravity Suit Tower (Lower); Heals? False
   * Layers: default
   * Sensor Lock Door to Gravity Suit Tower/Door to Ammo Recharge South (Lower)
   * Extra - actor_name: doorframepresence
@@ -2567,12 +2591,12 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Gravity Suit Tower (Lower)
+  > Door to Gravity Suit Tower (Upper)
       Trivial
   > Ammo Recharge
       Trivial
 
-> Door to Gravity Suit Tower (Lower); Heals? False
+> Door to Gravity Suit Tower (Upper); Heals? False
   * Layers: default
   * Sensor Lock Door to Gravity Suit Tower/Door to Ammo Recharge South (Upper)
   * Extra - actor_name: doorframepresence_000
@@ -2581,7 +2605,7 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Gravity Suit Tower (Upper)
+  > Door to Gravity Suit Tower (Lower)
       Trivial
 
 > Ammo Recharge; Heals? False; Spawn Point
@@ -2590,7 +2614,7 @@ Extra - asset_id: collision_camera_022
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: ammorecharge_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
-  > Door to Gravity Suit Tower (Upper)
+  > Door to Gravity Suit Tower (Lower)
       Trivial
 
 > Tunnel to Gravity Suit Tower; Heals? False
@@ -2624,7 +2648,7 @@ the blast shield issue.
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Event - Blob from above (db_reg_aq_004)
+  > Event - Gravity Suit Blob, Above
       Shoot Diffusion or Wave
   > Start Point
       Trivial
@@ -2656,13 +2680,13 @@ the blast shield issue.
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Tunnel to Gravity Suit Room Access (Upper)
-      Morph Ball and After Burenia - db_reg_aq_004
-  > Event - Blob from right (db_reg_aq_004)
+      Morph Ball and After Burenia - Gravity Suit Blob
+  > Event - Gravity Suit Blob, Right
       Lay Bomb or Shoot Beam
 
-> Event - Blob from above (db_reg_aq_004); Heals? False
+> Event - Gravity Suit Blob, Above; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_004
+  * Event Burenia - Gravity Suit Blob
   * Extra - actor_name: db_reg_aq_004
   * Extra - actor_def: actordef:actors/props/db_reg_aq_004/charclasses/db_reg_aq_004.bmsad
   > Door to Gravity Suit Tower (Upper)
@@ -2681,14 +2705,14 @@ the blast shield issue.
   * Layers: default
   * Morph Ball Tunnel to Gravity Suit Room Access/Tunnel to Gravity Suit Room (Upper)
   > Door to Gravity Suit Tower (Lower)
-      Morph Ball and After Burenia - db_reg_aq_004
+      Morph Ball and After Burenia - Gravity Suit Blob
 
 > Tunnel to Gravity Suit Room Access (Lower); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Gravity Suit Room Access/Tunnel to Gravity Suit Room (Lower)
   > Tile Group (POWERBOMB)
       Morph Ball
-  > Event - Blob from below (db_reg_aq_004)
+  > Event - Gravity Suit Blob, Below
       Shoot Diffusion or Wave
 
 > Tile Group (POWERBOMB); Heals? False
@@ -2700,19 +2724,17 @@ the blast shield issue.
   > Pickup (Power Bomb Tank)
       Gravity Suit and Ballspark
   > Tunnel to Gravity Suit Room Access (Lower)
-      All of the following:
-          Morph Ball
-          Gravity Suit or Water Bomb Jump (Beginner)
+      Morph Ball
 
-> Event - Blob from right (db_reg_aq_004); Heals? False
+> Event - Gravity Suit Blob, Right; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_004
+  * Event Burenia - Gravity Suit Blob
   > Door to Gravity Suit Tower (Lower)
       Trivial
 
-> Event - Blob from below (db_reg_aq_004); Heals? False
+> Event - Gravity Suit Blob, Below; Heals? False
   * Layers: default
-  * Event Burenia - db_reg_aq_004
+  * Event Burenia - Gravity Suit Blob
   > Tunnel to Gravity Suit Room Access (Lower)
       Trivial
 
@@ -2759,10 +2781,11 @@ Extra - asset_id: collision_camera_025
       All of the following:
           After Burenia - Storm Missile Gate for Etank
           Any of the following:
-              Gravity Suit or Water Bomb Jump (Beginner)
+              Gravity Suit or Perform WBJ
               All of the following:
-                  Flash Shift
+                  Flash Shift or Space Jump
                   Grapple Beam or Spider Magnet
+              Grapple Beam and Grapple Movement (Beginner) and Use Spin Boost
   > Tile Group (POWERBEAM)
       Morph Ball
   > Event - Storm Missile Gate
@@ -2814,12 +2837,12 @@ Extra - asset_id: collision_camera_026
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Main Hub Tower Bottom (doorpowerpower_022)
+  > Door to Main Hub Tower Bottom (Upper)
       Trivial
 
-> Door to Main Hub Tower Bottom (doorpowerpower_022); Heals? False
+> Door to Main Hub Tower Bottom (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Main Hub Tower Bottom/Door to Save Station South Access (doorpowerpower_022)
+  * Power Beam Door to Main Hub Tower Bottom/Door to Save Station South Access (Upper)
   * Extra - actor_name: doorpowerpower_022
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2828,19 +2851,19 @@ Extra - asset_id: collision_camera_026
   * Extra - right_shield_def: None
   > Door to Save Station South
       Trivial
-  > Door to Main Hub Tower Bottom (doorpowerpower_023)
+  > Door to Main Hub Tower Bottom (Lower)
       Can Slide Underwater
 
-> Door to Main Hub Tower Bottom (doorpowerpower_023); Heals? False
+> Door to Main Hub Tower Bottom (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Main Hub Tower Bottom/Door to Save Station South Access (doorpowerpower_023)
+  * Power Beam Door to Main Hub Tower Bottom/Door to Save Station South Access (Lower)
   * Extra - actor_name: doorpowerpower_023
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Main Hub Tower Bottom (doorpowerpower_022)
+  > Door to Main Hub Tower Bottom (Upper)
       Morph Ball
 
 ----------------
