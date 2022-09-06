@@ -1931,11 +1931,11 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Shoot Blob above Kraid, from below (db_reg_mg_019)
+  > Event - Blob above Kraid, from below
       Shoot Beam
-  > Tile Group (WEIGHT)
+  > Dock to Kraid Arena
       All of the following:
-          Before Cataris - Rubble Before Kraid and Can Slide
+          Before Kraid and Can Slide
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
@@ -1946,15 +1946,15 @@ Extra - asset_id: collision_camera_024
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Event - Ceiling Blob (breakablemag010); Heals? False
+> Event - Ceiling Blob; Heals? False
   * Layers: default
   * Event Cataris - breakablemag010
   * Extra - actor_name: breakablemag010
   * Extra - actor_def: actordef:actors/props/breakablemag010/charclasses/breakablemag010.bmsad
-  > Tile Group (POWERBEAM) 2
+  > Right Tile Barrier
       Trivial
 
-> Event - Shoot Blob above Kraid, from below (db_reg_mg_019); Heals? False
+> Event - Blob above Kraid, from below; Heals? False
   * Layers: default
   * Event Cataris - db_reg_mg_019
   * Extra - actor_name: db_reg_mg_019
@@ -1962,23 +1962,14 @@ Extra - asset_id: collision_camera_024
   > Door to Kraid Eyedoor Room
       Trivial
 
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_033
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Event - Rubble before Kraid
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
+> Left Tile Barrier; Heals? False
   * Layers: default
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_058
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
+  > Right Tile Barrier
       All of the following:
           Morph Ball
           Any of the following:
@@ -1987,16 +1978,16 @@ Extra - asset_id: collision_camera_024
   > Center Room
       Trivial
 
-> Tile Group (POWERBEAM) 2; Heals? False
+> Right Tile Barrier; Heals? False
   * Layers: default
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_059
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Event - Ceiling Blob (breakablemag010)
+  > Event - Ceiling Blob
       Morph Ball and Shoot Beam
-  > Tile Group (POWERBEAM) 1
+  > Left Tile Barrier
       All of the following:
           Morph Ball
           Any of the following:
@@ -2012,6 +2003,8 @@ Extra - asset_id: collision_camera_024
 > Dock to Kraid Arena; Heals? False
   * Layers: default
   * Open Passage to Kraid Arena/Dock to Above Kraid
+  > Door to Kraid Eyedoor Room
+      Trivial
 
 > Tunnel to Heated U-Turn (bottom); Heals? False
   * Layers: default
@@ -2051,7 +2044,7 @@ Extra - asset_id: collision_camera_024
 > Tunnel to Kraid Eyedoor Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Kraid Eyedoor Room/Tunnel to Above Kraid
-  > Tile Group (POWERBEAM) 2
+  > Right Tile Barrier
       All of the following:
           Morph Ball and After Cataris - breakablemag010
           Any of the following:
@@ -2068,12 +2061,6 @@ Extra - asset_id: collision_camera_024
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Event - Rubble before Kraid; Heals? False
-  * Layers: default
-  * Event Cataris - Rubble Before Kraid
-  > Dock to Kraid Arena
-      Trivial
-
 > Center Room; Heals? False
   * Layers: default
   > Door to Kraid Eyedoor Room
@@ -2082,7 +2069,7 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Tile Group (POWERBEAM) 1
+  > Left Tile Barrier
       Trivial
   > Left Room
       All of the following:
@@ -2090,10 +2077,10 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Event - Shoot Blob above Kraid, from left (db_reg_mg_019)
+  > Event - Blob above Kraid, from left
       Shoot Diffusion or Wave
 
-> Event - Shoot Blob above Kraid, from left (db_reg_mg_019); Heals? False
+> Event - Blob above Kraid, from left; Heals? False
   * Layers: default
   * Event Cataris - db_reg_mg_019
   > Center Room
@@ -3666,7 +3653,7 @@ Extra - asset_id: collision_camera_044
 
 > Tunnel to Kraid Arena (top); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (top)
+  * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (Top)
   > Event - Diffusion Tutorial Blob (db_dif_mg_002)
       Morph Ball and Shoot Diffusion or Wave
   > Tunnel to Teleport to Dairon
@@ -3678,7 +3665,7 @@ Extra - asset_id: collision_camera_044
 
 > Tunnel to Kraid Arena (bottom); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (bottom)
+  * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (Bottom)
   > Tile Group (BOMB) 1
       Morph Ball
 
@@ -4935,53 +4922,18 @@ Extra - asset_id: collision_camera_063
   > Right Ledge
       Trivial
 
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_034
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (WEIGHT) 2
-      Trivial
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_035
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Left Ledge
-      After Kraid
-  > Before Kraid Fight
-      Before Kraid
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_072
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Right Ledge
-      Lay Bomb
-
-> Left Ledge; Heals? False
-  * Layers: default
-  > Tile Group (BOMB)
-      Lay Bomb
-  > Right Ledge
-      Gravity Suit or Space Jump or Lava Damage ≥ 1500
-
 > Right Ledge; Heals? False
   * Layers: default
-  > Tunnel to Diffusion Beam Room (top)
+  > Start Point
+      Trivial
+  > Tunnel to Diffusion Beam Room (Top)
       Any of the following:
           Simple IBJ or Use Spin Boost
           Spider Magnet and Before Elun - Release X Parasites
           All of the following:
               Grapple Beam
               Spider Magnet or Grapple Movement (Beginner)
-  > Tunnel to Diffusion Beam Room (bottom)
+  > Tunnel to Diffusion Beam Room (Bottom)
       All of the following:
           Morph Ball
           Any of the following:
@@ -4991,31 +4943,6 @@ Extra - asset_id: collision_camera_063
 > Dock to Above Kraid; Heals? False
   * Layers: default
   * Open Passage to Above Kraid/Dock to Kraid Arena
-  > Tile Group (WEIGHT) 1
-      Trivial
-
-> Tunnel to Diffusion Beam Room (top); Heals? False
-  * Layers: default
-  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (top)
-
-> Tunnel to Diffusion Beam Room (bottom); Heals? False
-  * Layers: default
-  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (bottom)
-  > Right Ledge
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 1000
-
-> Event - Kraid; Heals? False
-  * Layers: default
-  * Event Kraid
-  > Pickup (Kraid)
-      Trivial
-
-> Before Kraid Fight; Heals? False
-  * Layers: default
   > Event - Kraid
       Any of the following:
           All of the following:
@@ -5037,6 +4964,28 @@ Extra - asset_id: collision_camera_063
               Any of the following:
                   # Energy Requirements
                   Combat (Beginner) or Normal Damage ≥ 299
+
+> Tunnel to Diffusion Beam Room (Top); Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (top)
+  > Right Ledge
+      Trivial
+
+> Tunnel to Diffusion Beam Room (Bottom); Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (bottom)
+  > Right Ledge
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 1000
+
+> Event - Kraid; Heals? False
+  * Layers: default
+  * Event Kraid
+  > Pickup (Kraid)
+      Trivial
 
 > Pickup (Kraid); Heals? False
   * Layers: default
