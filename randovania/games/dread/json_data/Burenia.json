@@ -7871,6 +7871,32 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Prepare Speedboost in Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -8479,29 +8505,12 @@
                                                     "data": "Use Spin Boost"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "DoorLocks",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "events",
+                                                        "name": "BureniaPrepareSpeedSave",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -9061,6 +9070,30 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Energy Recharge South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Prepare Speedboost in Save Station": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4250.0,
+                        "y": -8100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "BureniaPrepareSpeedSave",
+                    "connections": {
+                        "Door to Save Station South Access (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
