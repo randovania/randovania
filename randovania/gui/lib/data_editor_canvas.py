@@ -168,7 +168,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         else:
             min_x, min_y = math.inf, math.inf
             max_x, max_y = -math.inf, -math.inf
-            for node in area.nodes:
+            for node in area.actual_nodes:
                 if node.location is None:
                     continue
                 min_x = min(min_x, node.location.x)
@@ -240,7 +240,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def _nodes_at_position(self, qt_local_position: QPointF):
         return [
             node
-            for node in self.area.nodes
+            for node in self.area.actual_nodes
             if node.location is not None and (
                     self.game_loc_to_qt_local(node.location) - qt_local_position).manhattanLength() < 10
         ]
@@ -433,7 +433,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 return
 
             for target_node, requirement in area.connections[source_node].items():
-                if target_node.location is None:
+                if target_node.location is None or target_node.is_derived_node:
                     continue
 
                 if not self.is_connection_visible(requirement):
@@ -476,7 +476,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         painter.setBrush(brush)
 
         if self._show_all_connections_action.isChecked() or self.visible_nodes is not None:
-            for node in area.nodes:
+            for node in area.actual_nodes:
                 if node != self.highlighted_node:
                     draw_connections_from(node, None)
 
@@ -485,7 +485,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         painter.setPen(QtGui.Qt.white)
 
-        for node in area.nodes:
+        for node in area.actual_nodes:
             if node.location is None:
                 continue
 
