@@ -11114,7 +11114,7 @@
                                 ]
                             }
                         },
-                        "Event - Right Blob from above (db_reg_b1_002)": {
+                        "Event - Right Blob, Above": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11466,7 +11466,7 @@
                                 ]
                             }
                         },
-                        "Freezer Center": {
+                        "Freezer Navigation": {
                             "type": "or",
                             "data": {
                                 "comment": "TODO? Add event for destroying speed blocks for room rando",
@@ -11524,8 +11524,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -13950.0,
-                        "y": 5300.0,
+                        "x": -13967.319908905669,
+                        "y": 5406.915977466138,
                         "z": 0.0
                     },
                     "description": "",
@@ -11631,7 +11631,7 @@
                                 ]
                             }
                         },
-                        "Event - Hidden Blob from left (db_reg_b1_001)": {
+                        "Event - Hidden Blob, Inside": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11699,7 +11699,7 @@
                                 ]
                             }
                         },
-                        "Freezer Center": {
+                        "Freezer Navigation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11948,7 +11948,7 @@
                                 ]
                             }
                         },
-                        "Freezer Center": {
+                        "Freezer Navigation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12028,7 +12028,7 @@
                         }
                     }
                 },
-                "Event - Hidden Blob from left (db_reg_b1_001)": {
+                "Event - Hidden Blob, Inside": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12057,7 +12057,7 @@
                         }
                     }
                 },
-                "Event - Right Blob from right (db_reg_b1_002)": {
+                "Event - Right Blob, Below": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12243,7 +12243,7 @@
                                 ]
                             }
                         },
-                        "Freezer Center": {
+                        "Freezer Navigation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12637,7 +12637,7 @@
                         }
                     }
                 },
-                "Event - Hidden Blob through wall (db_reg_b1_001)": {
+                "Event - Hidden Blob, Outside": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12652,7 +12652,7 @@
                     "extra": {},
                     "event_name": "s030_baselab:default:db_reg_b1_001",
                     "connections": {
-                        "Freezer Center": {
+                        "Freezer Navigation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12665,8 +12665,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -12149.642021203359,
-                        "y": 4819.964202120336,
+                        "x": -11816.039759135529,
+                        "y": 4788.039264208529,
                         "z": 0.0
                     },
                     "description": "",
@@ -12993,6 +12993,285 @@
                                 ]
                             }
                         },
+                        "Freezer Navigation": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DisabledFreezer",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Beside the Blob": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10436.713479278535,
+                        "y": 6097.6731378218365,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Map Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:db_reg_b1_002",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Power Switch 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Right Blob, Below": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Right Blob, Above": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10828.01,
+                        "y": 6744.51,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "s030_baselab:default:db_reg_b1_002",
+                    "connections": {
+                        "Door to Map Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Freezer Navigation": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12399.72,
+                        "y": 4941.14,
+                        "z": 0.0
+                    },
+                    "description": "Helper node to connect to the parts of the Freezer we don't want to access\nwhile disabled\n\n",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
                         "Door to Energy Recharge Station West (Upper)": {
                             "type": "and",
                             "data": {
@@ -13243,7 +13522,7 @@
                                 ]
                             }
                         },
-                        "Event - Hidden Blob through wall (db_reg_b1_001)": {
+                        "Event - Hidden Blob, Outside": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -13251,242 +13530,31 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
-                    }
-                },
-                "Beside the Blob": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10436.713479278535,
-                        "y": 6097.6731378218365,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Door to Map Station": {
-                            "type": "and",
+                        },
+                        "Freezer Center": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:db_reg_b1_002",
+                                            "type": "misc",
+                                            "name": "DisabledFreezer",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s030_baselab:default:powergenerator_002",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 30,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Door to Power Switch 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 200,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s030_baselab:default:powergenerator_002",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Right Blob from right (db_reg_b1_002)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s030_baselab:default:powergenerator_002",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 30,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Right Blob from above (db_reg_b1_002)": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10828.01,
-                        "y": 6744.51,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "s030_baselab:default:db_reg_b1_002",
-                    "connections": {
-                        "Door to Map Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
