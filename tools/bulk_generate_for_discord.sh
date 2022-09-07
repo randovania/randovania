@@ -25,7 +25,8 @@ mkdir -p "$OUTPUT_PATH"
 # Batch generate
 python -m randovania layout batch-distribute --process-count "${PROCESS_COUNT}" "$permalink" "${TARGET_SEED_COUNT}" "$RDVGAME_PATH" | tee "$GENERATION_LOG_PATH"
 generated_count=$(find "$RDVGAME_PATH/" -type f | wc -l)
-failed_count=$(grep -c "Timeout reached when validating possibility" "$GENERATION_LOG_PATH")
+failed_count=$((TARGET_SEED_COUNT - generated_count))
+timed_out_count=$(grep -c "Timeout reached when validating possibility" "$GENERATION_LOG_PATH")
 
 # Analyze
 python tools/log_analyzer.py "$RDVGAME_PATH" "$REPORT_PATH"
@@ -40,7 +41,7 @@ python tools/send_report_to_discord.py \
     --config-path "${CONFIGURATION_PATH}" \
     --title "Batch report for ${TARGET_GAME}" \
     --field "Generated:${generated_count} out of ${TARGET_SEED_COUNT}" \
+    --field "Timed out:${timed_out_count} out of ${failed_count} failures" \
     --field "Preset:${TARGET_PRESET}" \
-    --field "${failed_count} timed out" \
     --attach games.tar.gz \
     --channel "${TARGET_CHANNEL}"

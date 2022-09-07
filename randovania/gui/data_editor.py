@@ -254,10 +254,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         is_first = True
-        for node in sorted(current_area.nodes, key=lambda x: x.name):
-            if node.is_derived_node:
-                continue
-
+        for node in sorted(current_area.actual_nodes, key=lambda x: x.name):
             button = QRadioButton(self.nodes_scroll_contents)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
@@ -464,8 +461,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 self.other_node_connection_combo.currentIndexChanged.disconnect(self.update_connections)
             self.other_node_connection_combo.clear()
 
-        for node in sorted(self.current_area.nodes, key=lambda x: x.name):
-            if node is current_node or node.is_derived_node:
+        for node in sorted(self.current_area.actual_nodes, key=lambda x: x.name):
+            if node is current_node:
                 continue
 
             if not self.edit_mode and node not in self.current_area.connections[current_node]:
@@ -501,7 +498,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.set_connected_node(current_connection_node)
 
         if current_connection_node is None or current_node is None:
-            assert len(self.current_area.nodes) <= 1 or not self.edit_mode
+            assert len(list(self.current_area.actual_nodes)) <= 1 or not self.edit_mode
             return
 
         requirement = self.current_area.connections[current_node].get(self.current_connection_node,
@@ -769,6 +766,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)
         self.layers_editor.set_edit_mode(self.edit_mode)
+        self.setWindowTitle(
+            "Data Editor" if self.edit_mode else "Data Visualizer"
+        )
 
     @property
     def current_world(self) -> World:

@@ -10228,11 +10228,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Shoot Blob above Kraid, from below (db_reg_mg_019)": {
+                        "Event - Blob above Kraid, from below": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
-                        "Tile Group (WEIGHT)": {
+                        "Dock to Kraid Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10245,7 +10245,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "CatarisKraidRubble",
+                                            "name": "Kraid",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -10367,7 +10367,7 @@
                         }
                     }
                 },
-                "Event - Ceiling Blob (breakablemag010)": {
+                "Event - Ceiling Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -10385,7 +10385,7 @@
                     },
                     "event_name": "s020_magma:default:breakablemag010",
                     "connections": {
-                        "Tile Group (POWERBEAM) 2": {
+                        "Right Tile Barrier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10394,12 +10394,12 @@
                         }
                     }
                 },
-                "Event - Shoot Blob above Kraid, from below (db_reg_mg_019)": {
+                "Event - Blob above Kraid, from below": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15600.0,
-                        "y": -3700.0,
+                        "x": -15434.62590912364,
+                        "y": -3771.3365689218112,
                         "z": 0.0
                     },
                     "description": "",
@@ -10421,42 +10421,12 @@
                         }
                     }
                 },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -16000.0,
-                        "y": -3900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_033",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Event - Rubble before Kraid": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 1": {
+                "Left Tile Barrier": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -15800.0,
-                        "y": -3400.0,
+                        "x": -15750.892921437317,
+                        "y": -3389.180595709454,
                         "z": 0.0
                     },
                     "description": "",
@@ -10472,7 +10442,7 @@
                         ]
                     },
                     "connections": {
-                        "Tile Group (POWERBEAM) 2": {
+                        "Right Tile Barrier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10541,12 +10511,12 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM) 2": {
+                "Right Tile Barrier": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -14300.0,
-                        "y": -3000.0,
+                        "x": -14257.41,
+                        "y": -2993.85,
                         "z": 0.0
                     },
                     "description": "",
@@ -10562,7 +10532,7 @@
                         ]
                     },
                     "connections": {
-                        "Event - Ceiling Blob (breakablemag010)": {
+                        "Event - Ceiling Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10583,7 +10553,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (POWERBEAM) 1": {
+                        "Left Tile Barrier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10736,7 +10706,15 @@
                     "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Kraid Eyedoor Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tunnel to Heated U-Turn (bottom)": {
                     "node_type": "dock",
@@ -11070,7 +11048,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM) 2": {
+                        "Right Tile Barrier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11226,30 +11204,6 @@
                         }
                     }
                 },
-                "Event - Rubble before Kraid": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -15714.29,
-                        "y": -4000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "CatarisKraidRubble",
-                    "connections": {
-                        "Dock to Kraid Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Center Room": {
                     "node_type": "generic",
                     "heal": false,
@@ -11328,7 +11282,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (POWERBEAM) 1": {
+                        "Left Tile Barrier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11390,13 +11344,13 @@
                                 ]
                             }
                         },
-                        "Event - Shoot Blob above Kraid, from left (db_reg_mg_019)": {
+                        "Event - Blob above Kraid, from left": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         }
                     }
                 },
-                "Event - Shoot Blob above Kraid, from left (db_reg_mg_019)": {
+                "Event - Blob above Kraid, from left": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -19265,7 +19219,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Kraid Arena",
-                        "node_name": "Tunnel to Diffusion Beam Room (top)"
+                        "node_name": "Tunnel to Diffusion Beam Room (Top)"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "override_default_open_requirement": null,
@@ -19371,7 +19325,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Kraid Arena",
-                        "node_name": "Tunnel to Diffusion Beam Room (bottom)"
+                        "node_name": "Tunnel to Diffusion Beam Room (Bottom)"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "override_default_open_requirement": null,
@@ -26870,159 +26824,6 @@
                         }
                     }
                 },
-                "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -16100.0,
-                        "y": -4200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_034",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (WEIGHT) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -16600.0,
-                        "y": -5000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_035",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Left Ledge": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Kraid",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Before Kraid Fight": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Kraid",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -17500.0,
-                        "y": -7000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_072",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Right Ledge": {
-                            "type": "template",
-                            "data": "Lay Bomb"
-                        }
-                    }
-                },
-                "Left Ledge": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -16737.93,
-                        "y": -6619.93,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Tile Group (BOMB)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
-                        },
-                        "Right Ledge": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Lava",
-                                            "amount": 1500,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Right Ledge": {
                     "node_type": "generic",
                     "heal": false,
@@ -27037,7 +26838,14 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Tunnel to Diffusion Beam Room (top)": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Diffusion Beam Room (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -27122,7 +26930,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Diffusion Beam Room (bottom)": {
+                        "Tunnel to Diffusion Beam Room (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -27206,162 +27014,6 @@
                     "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {
-                        "Tile Group (WEIGHT) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Diffusion Beam Room (top)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12254.84,
-                        "y": -5100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "world_name": "Cataris",
-                        "area_name": "Diffusion Beam Room",
-                        "node_name": "Tunnel to Kraid Arena (top)"
-                    },
-                    "default_dock_weakness": "Morph Ball Tunnel",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Tunnel to Diffusion Beam Room (bottom)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12294.94,
-                        "y": -7590.32,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "world_name": "Cataris",
-                        "area_name": "Diffusion Beam Room",
-                        "node_name": "Tunnel to Kraid Arena (bottom)"
-                    },
-                    "default_dock_weakness": "Morph Ball Tunnel",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Right Ledge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Lava",
-                                                                    "amount": 1000,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Kraid": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -15000.0,
-                        "y": -5500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "Kraid",
-                    "connections": {
-                        "Pickup (Kraid)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Before Kraid Fight": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -16000.0,
-                        "y": -5500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
                     "connections": {
                         "Event - Kraid": {
                             "type": "or",
@@ -27514,6 +27166,147 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Diffusion Beam Room (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12401.42,
+                        "y": -5087.05,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Cataris",
+                        "area_name": "Diffusion Beam Room",
+                        "node_name": "Tunnel to Kraid Arena (top)"
+                    },
+                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Right Ledge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Diffusion Beam Room (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12407.11,
+                        "y": -7571.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Cataris",
+                        "area_name": "Diffusion Beam Room",
+                        "node_name": "Tunnel to Kraid Arena (bottom)"
+                    },
+                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Right Ledge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 1000,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Kraid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15326.243969179808,
+                        "y": -5425.053410433741,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Kraid",
+                    "connections": {
+                        "Pickup (Kraid)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

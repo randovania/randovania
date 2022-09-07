@@ -631,20 +631,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Fan Platform - Above": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": "Temporary until door rando",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "BureniaDaironSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Fan Platform - Below": {
@@ -676,6 +668,32 @@
                         "Raft - Top Water Level": {
                             "type": "template",
                             "data": "Can Slide Underwater"
+                        },
+                        "Event - Dairon Hub Speed Blocks Destroyed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -745,59 +763,26 @@
                             }
                         },
                         "Raft - Top Water Level": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s040_aqua:default:db_reg_aq_001",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s040_aqua:default:db_reg_aq_002",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "events",
+                                            "name": "s040_aqua:default:db_reg_aq_001",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "events",
+                                            "name": "s040_aqua:default:db_reg_aq_002",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -908,17 +893,98 @@
                                 ]
                             }
                         },
-                        "Event - Transport Blob from door (db_reg_aq_007)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Transport Blob from Door": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Water Bottom": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "s040_aqua:default:db_reg_aq_007",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_007",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_001",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_007",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_002",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_001",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -981,7 +1047,7 @@
                         }
                     }
                 },
-                "Event - Water Blob Right, adjacent (db_reg_aq_001)": {
+                "Event - Water Blob Right, Adjacent": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1008,7 +1074,7 @@
                         }
                     }
                 },
-                "Event - Water Blob Left, adjacent (db_reg_aq_002)": {
+                "Event - Water Blob Left, Adjacent": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1035,7 +1101,7 @@
                         }
                     }
                 },
-                "Event - Transport Blob from door (db_reg_aq_007)": {
+                "Event - Transport Blob from Door": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1062,7 +1128,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2_000)": {
+                "Event - Dairon Hub Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1110,7 +1176,7 @@
                         ]
                     },
                     "connections": {
-                        "Event - Water Blob Right, adjacent (db_reg_aq_001)": {
+                        "Event - Water Blob Right, Adjacent": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1125,8 +1191,20 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1222,45 +1300,21 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Gravity",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Spin Boost"
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Simple IBJ"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -1269,9 +1323,21 @@
                                 ]
                             }
                         },
-                        "Event - Water Blob Left, adjacent (db_reg_aq_002)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Water Blob Left, Adjacent": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Water Bottom": {
                             "type": "template",
@@ -1313,12 +1379,29 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -1359,6 +1442,19 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
                                                 }
                                             ]
                                         }
@@ -1369,8 +1465,8 @@
                         "Door to Upper Burenia Hub": {
                             "type": "resource",
                             "data": {
-                                "type": "items",
-                                "name": "Speed",
+                                "type": "events",
+                                "name": "BureniaDaironSpeedBlocks",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1392,7 +1488,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "A grounded bomb jump horizontally to get past the fan",
+                                            "comment": "A grounded bomb jump with cross bombs to get past the fan",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1445,6 +1541,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Dairon Hub Speed Blocks Destroyed": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1488,7 +1593,7 @@
                                 ]
                             }
                         },
-                        "Event - Pull Grapple Block (grapplepulloff1x2_000)": {
+                        "Event - Dairon Hub Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1528,12 +1633,124 @@
                     "extra": {},
                     "connections": {
                         "Door to Upper Burenia Hub": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Ice Missile"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Perform WBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_001",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_002",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Underwater Horseshoe": {
@@ -1577,44 +1794,31 @@
                                         }
                                     },
                                     {
+                                        "type": "template",
+                                        "data": "Perform WBJ"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
+                                            "type": "events",
+                                            "name": "s040_aqua:default:db_reg_aq_002",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s040_aqua:default:db_reg_aq_002",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s040_aqua:default:db_reg_aq_001",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "events",
+                                            "name": "s040_aqua:default:db_reg_aq_001",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
                             }
                         },
-                        "Event - Transport Blob from above (db_reg_aq_007)": {
+                        "Event - Transport Blob from Above": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1625,7 +1829,7 @@
                         }
                     }
                 },
-                "Event - Transport Blob from above (db_reg_aq_007)": {
+                "Event - Transport Blob from Above": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1743,7 +1947,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "s040_aqua:default:db_reg_aq_001",
+                                                                    "name": "s040_aqua:default:db_reg_aq_002",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -1752,7 +1956,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "s040_aqua:default:db_reg_aq_002",
+                                                                    "name": "s040_aqua:default:db_reg_aq_001",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -1769,6 +1973,15 @@
                                                     "data": "Simple IBJ"
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:db_reg_aq_007",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -1787,11 +2000,11 @@
                             "type": "template",
                             "data": "Can Slide Underwater"
                         },
-                        "Event - Water Blob Left, through gap (db_reg_aq_002)": {
+                        "Event - Water Blob Left, Through Wall": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
-                        "Event - Water Blob Right, through wall (db_reg_aq_001)": {
+                        "Event - Water Blob Right, Through Wall": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1800,13 +2013,51 @@
                                 "negate": false
                             }
                         },
-                        "Event - Transport Blob from below (db_reg_aq_007)": {
-                            "type": "template",
-                            "data": "Shoot Diffusion or Wave"
+                        "Event - Transport Blob from Below": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Charge Beam"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
-                "Event - Water Blob Left, through gap (db_reg_aq_002)": {
+                "Event - Water Blob Left, Through Wall": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1830,7 +2081,7 @@
                         }
                     }
                 },
-                "Event - Water Blob Right, through wall (db_reg_aq_001)": {
+                "Event - Water Blob Right, Through Wall": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1854,7 +2105,7 @@
                         }
                     }
                 },
-                "Event - Transport Blob from below (db_reg_aq_007)": {
+                "Event - Transport Blob from Below": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1870,6 +2121,30 @@
                     "event_name": "s040_aqua:default:db_reg_aq_001",
                     "connections": {
                         "Water Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Dairon Hub Speed Blocks Destroyed": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 4400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "BureniaDaironSpeedBlocks",
+                    "connections": {
+                        "Fan Platform - Above": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5197,6 +5472,50 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -5387,12 +5706,24 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -5456,28 +5787,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2200.0,
-                        "y": 3400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {}
-                },
                 "Tile Group (WEIGHT)": {
                     "node_type": "generic",
                     "heal": false,
@@ -5499,7 +5808,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Save Station Middle": {
+                        "Upper Left Magnet Wall": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5604,26 +5913,9 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Teleport to Ferenia": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -5631,7 +5923,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Magnet",
+                                                        "name": "Speed",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -5640,20 +5932,42 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Walljump",
+                                                        "name": "Speedbooster",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -5662,6 +5976,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Teleport to Ferenia": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Save Station Middle": {
@@ -5809,41 +6132,12 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Walljump",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Use Spin Boost"
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -5881,41 +6175,12 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Walljump",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Use Spin Boost"
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "tricks",
+                                                                                "name": "GrappleMovement",
+                                                                                "amount": 2,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -5939,16 +6204,7 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Magnet",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
@@ -5962,24 +6218,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Walljump",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Use Spin Boost"
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "items",
+                                                                                            "name": "Magnet",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -5990,6 +6234,10 @@
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Shoot Ice Missile"
+                                                                                    },
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
@@ -6007,10 +6255,6 @@
                                                                                             "amount": 2,
                                                                                             "negate": false
                                                                                         }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Shoot Ice Missile"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -6025,6 +6269,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Tile Group (WEIGHT)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6302,6 +6553,27 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Main Hub Middle Graple Block (Back)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Break/Move Grapple Block from Behind"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -6333,12 +6605,12 @@
                         }
                     }
                 },
-                "Event - Pull Central Grapple Block (grapplepulloff1x2_005)": {
+                "Event - Main Hub Middle Grapple Block (Front)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -2950.0,
-                        "y": -3050.0,
+                        "x": -3050.0,
+                        "y": -2950.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -6407,21 +6679,59 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "template",
+                                        "data": "Perform WBJ"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6446,12 +6756,33 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "template",
+                                        "data": "Perform WBJ"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6483,12 +6814,45 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Teleport to Ghavoran (Charge)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Missile Tank Plus Platform": {
@@ -6542,13 +6906,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Perform WBJ"
                                     }
                                 ]
                             }
@@ -6575,25 +6934,20 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Magnet",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
+                                        "type": "template",
+                                        "data": "Perform WBJ"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
+                                            "type": "items",
+                                            "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6719,7 +7073,7 @@
                                 ]
                             }
                         },
-                        "Event - Pull Central Grapple Block (grapplepulloff1x2_005)": {
+                        "Event - Main Hub Middle Grapple Block (Front)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6780,13 +7134,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Perform WBJ"
                                                 }
                                             ]
                                         }
@@ -6888,6 +7237,15 @@
                                                                         {
                                                                             "type": "template",
                                                                             "data": "Simple IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Flash",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -6948,6 +7306,49 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Missile Tank Plus Platform": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Upper Water Ledge - Left": {
@@ -7174,47 +7575,8 @@
                     "extra": {},
                     "connections": {
                         "Door to Teleport to Ghavoran (Charge)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Horizontal Water Movement"
                         },
                         "Missile Tank Plus Platform": {
                             "type": "and",
@@ -7232,28 +7594,14 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Magnet",
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Horizontal Water Movement"
                                     }
                                 ]
                             }
@@ -7283,11 +7631,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Left of Central Grapple Block": {
+                        "Mid-Left Spider Magnet Pit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Left of Central Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "Movement",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -7347,6 +7704,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Event - Main Hub Middle Graple Block (Back)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2650.0,
+                        "y": -3150.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "s040_aqua:default:grapplepulloff1x2_005",
+                    "connections": {
+                        "Door to Teleport to Ghavoran (Plasma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -9076,29 +9457,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Early Gravity Speedboost Room 1 (Lower)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BureniaEarlyGravEPart",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "BureniaGreenSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Top of Enky Shaft": {
@@ -9113,6 +9477,32 @@
                         "Event - Destroy all Enkys": {
                             "type": "template",
                             "data": "Destroy Enky"
+                        },
+                        "Event - Ghavoran Teleport Speed Blocks Destroyed": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Proceeding down from here will be logically impossible with door rando enabled",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -9147,29 +9537,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Early Gravity Speedboost Room 1 (Upper)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BureniaEarlyGravEPart",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "BureniaGreenSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -9290,7 +9663,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Blob through floor (db_reg_aq_012)": {
+                        "Event - Ghavoran Teleport Blob, through Floor": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9354,7 +9727,7 @@
                         }
                     }
                 },
-                "Event - Blob from nearby (db_reg_aq_012)": {
+                "Event - Ghavoran Teleport Blob, Adjacent": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9534,9 +9907,21 @@
                                 "items": []
                             }
                         },
-                        "Event - Blob from nearby (db_reg_aq_012)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Ghavoran Teleport Blob, Adjacent": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Tunnel to Main Hub Tower Middle (Upper)": {
                             "type": "and",
@@ -9566,7 +9951,7 @@
                         }
                     }
                 },
-                "Event - Blob through floor (db_reg_aq_012)": {
+                "Event - Ghavoran Teleport Blob, through Floor": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9613,6 +9998,101 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Main Hub Tower Middle (Plasma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Perform WBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide Underwater"
+                                    }
+                                ]
+                            }
+                        },
                         "Upper Water Platform": {
                             "type": "and",
                             "data": {
@@ -9671,6 +10151,30 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Ghavoran Teleport Speed Blocks Destroyed": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1200.0,
+                        "y": -4950.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "BureniaGreenSpeedBlocks",
+                    "connections": {
+                        "Door to Early Gravity Speedboost Room 1 (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -10199,13 +10703,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Early Gravity Energy Part": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -10330,10 +10827,12 @@
                             }
                         },
                         "Dock to Early Gravity Speedboost Room 2 (Lower)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "BureniaEarlyGravSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Tunnel to Gravity Suit Tower": {
@@ -10449,34 +10948,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
                                     }
                                 ]
                             }
@@ -10503,57 +10976,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
@@ -10571,54 +10993,33 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Walljump",
+                                                        "name": "GrappleMovement",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
                                             ]
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to Early Gravity Speedboost Room 2 (Upper)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Space",
+                                            "name": "Magnet",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Early Gravity Speedboost Room 2 (Upper)": {
+                            "type": "template",
+                            "data": "Use Spin Boost"
                         }
                     }
                 },
@@ -10684,8 +11085,8 @@
                         "Tile Group (POWERBEAM) 1": {
                             "type": "resource",
                             "data": {
-                                "type": "items",
-                                "name": "Speed",
+                                "type": "events",
+                                "name": "BureniaEarlyGravSpeedBlocks",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -10722,30 +11123,6 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Early Gravity Energy Part": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3400.0,
-                        "y": -5200.0,
-                        "z": 0.0
-                    },
-                    "description": "Event added to account for door rando as it would otherwise be impossible to\nuse the speed blocks just outside\n\n",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "BureniaEarlyGravEPart",
-                    "connections": {
-                        "Door to Teleport to Ghavoran (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -10874,37 +11251,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Slope Top": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "BureniaEarlyGravSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -10929,25 +11281,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     },
                                     {
                                         "type": "and",
@@ -10955,33 +11290,33 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WBJ",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Magnet",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -11016,19 +11351,23 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
                                     },
                                     {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
                                                 {
                                                     "type": "or",
                                                     "data": {
@@ -11047,42 +11386,38 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Walljump",
+                                                                    "name": "GrappleMovement",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
                                                         ]
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Grapple",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -11094,13 +11429,63 @@
                         "Dock to Early Gravity Speedboost Room 1 (Lower)": {
                             "type": "resource",
                             "data": {
-                                "type": "items",
-                                "name": "Speed",
+                                "type": "events",
+                                "name": "BureniaEarlyGravSpeedBlocks",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
                         "Water Pit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Early Gravity Speed Blocks Destroyed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BureniaGreenSpeedBlocks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Early Gravity Speed Blocks Destroyed": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1511.81,
+                        "y": -7930.4,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "BureniaEarlyGravSpeedBlocks",
+                    "connections": {
+                        "Dock to Early Gravity Speedboost Room 1 (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
