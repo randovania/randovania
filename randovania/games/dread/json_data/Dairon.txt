@@ -582,7 +582,7 @@ Extra - asset_id: collision_camera_007
 
 > Event - Electric Generator; Heals? False; Spawn Point
   * Layers: default
-  * Event Dairon - powergenerator_001
+  * Event Dairon - Power Switch 1
   * Extra - actor_name: powergenerator_001
   * Extra - actor_def: actordef:actors/props/powergenerator/charclasses/powergenerator.bmsad
   * Extra - start_point_actor_name: powergenerator_001_platform
@@ -2061,7 +2061,7 @@ Extra - asset_id: collision_camera_024
 
 > Event - Electric Generator; Heals? False; Spawn Point
   * Layers: default
-  * Event Dairon - powergenerator_002
+  * Event Dairon - Power Switch 2
   * Extra - actor_name: powergenerator_002
   * Extra - actor_def: actordef:actors/props/powergenerator/charclasses/powergenerator.bmsad
   * Extra - start_point_actor_name: powergenerator_002_platform
@@ -2094,23 +2094,33 @@ Extra - asset_id: collision_camera_025
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Power Switch 2
+      Any of the following:
+          Gravity Suit or Spider Magnet or Speed Booster or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
+          Flash Shift and Walljump (Beginner)
+          All of the following:
+              Can Slide
+              Any of the following:
+                  Wave Beam
+                  Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
   > Freezer Center
       Any of the following:
-          Gravity Suit or Before Dairon - powergenerator_002
+          Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
   > Beside the Blob
       All of the following:
           After Dairon - db_reg_b1_002
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Event - Right Blob from above (db_reg_b1_002)
+  > Event - Freezer Right Blob, Above
       All of the following:
           Any of the following:
               Wave Beam
               Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
 > Door to Power Switch 2; Heals? False
@@ -2124,13 +2134,13 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_def: None
   > Freezer Center
       Any of the following:
-          Gravity Suit or Before Dairon - powergenerator_002
+          Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
   > Beside the Blob
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
 
 > Door to Energy Recharge Station West (Upper); Heals? False
@@ -2142,17 +2152,18 @@ Extra - asset_id: collision_camera_025
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Energy Recharge Station West (Lower)
+  > Freezer Center
       All of the following:
-          Morph Ball and After Dairon - powergenerator_002
+          After Dairon - Freezer Speed Blocks Destroyed
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
+  > Left Blob Alcove
+      All of the following:
+          Morph Ball and After Dairon - Freezer Speed Blocks Destroyed and After Dairon - Freezer Hidden Blob
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 120
-  > Freezer Center
-      Any of the following:
-          # TODO? Add event for destroying speed blocks for room rando
-          Gravity Suit or Before Dairon - powergenerator_002
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
 
 > Door to Energy Recharge Station West (Lower); Heals? False
   * Layers: default
@@ -2163,22 +2174,8 @@ Extra - asset_id: collision_camera_025
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (Missile Tank - Upper)
-      All of the following:
-          After Dairon - Freezer Hidden Left Blob or Can Slide
-          Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
-  > Event - Hidden Blob from left (db_reg_b1_001)
-      Any of the following:
-          Gravity Suit or Before Dairon - powergenerator_002 or Lay Bomb or Shoot Beam
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
-  > Freezer Center
-      All of the following:
-          Morph Ball and After Dairon - Freezer Hidden Left Blob
-          Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
+  > Left Blob Alcove
+      Trivial
 
 > Pickup (Missile Tank - Lower); Heals? False
   * Layers: default
@@ -2189,7 +2186,7 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
 > Pickup (Missile Tank - Upper); Heals? False
@@ -2197,30 +2194,24 @@ Extra - asset_id: collision_camera_025
   * Pickup 76; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Energy Recharge Station West (Lower)
+  > Left Blob Alcove
       All of the following:
-          After Dairon - powergenerator_002
           Any of the following:
               Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 20
-  > Freezer Center
-      All of the following:
-          Morph Ball and After Dairon - Freezer Hidden Left Blob
-          Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
+              Heat/Cold Runs (Beginner) and Cold Damage ≥ 20
+          Morph Ball or After Dairon - Freezer Hidden Left Blob
 
-> Event - Hidden Blob from left (db_reg_b1_001); Heals? False
+> Event - Freezer Hidden Blob, Adjacent; Heals? False
   * Layers: default
-  * Event Dairon - Freezer Hidden Left Blob
+  * Event Dairon - Freezer Hidden Blob
   * Extra - actor_name: db_reg_b1_001
   * Extra - actor_def: actordef:actors/props/db_reg_b1_001/charclasses/db_reg_b1_001.bmsad
-  > Door to Energy Recharge Station West (Lower)
-      After Dairon - powergenerator_002
+  > Left Blob Alcove
+      Trivial
 
-> Event - Right Blob from right (db_reg_b1_002); Heals? False
+> Event - Freezer Right Blob, Adjacent; Heals? False
   * Layers: default
-  * Event Dairon - db_reg_b1_002
+  * Event Dairon - Freezer Right Blob
   * Extra - actor_name: db_reg_b1_002
   * Extra - actor_def: actordef:actors/props/db_reg_b1_002/charclasses/db_reg_b1_002.bmsad
   > Beside the Blob
@@ -2237,17 +2228,17 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 70
   > Bottom-Left Corner
       All of the following:
           Speed Booster
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
   > Freezer Center
       Any of the following:
-          Gravity Suit or Before Dairon - powergenerator_002
+          Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
 
 > Tile Group (WEIGHT); Heals? False
@@ -2260,7 +2251,7 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Speed Booster
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
 > Bottom-Left Corner; Heals? False
@@ -2269,25 +2260,24 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
   > Tile Group (SCREWATTACK)
       All of the following:
           Speed Booster
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-          Space Jump or Walljump (Beginner) or Simple IBJ
   > Tile Group (WEIGHT)
       All of the following:
           Ballspark
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 70
 
-> Event - Hidden Blob through wall (db_reg_b1_001); Heals? False
+> Event - Freezer Hidden Blob through Wall; Heals? False
   * Layers: default
-  * Event Dairon - Freezer Hidden Left Blob
+  * Event Dairon - Freezer Hidden Blob
   > Freezer Center
       Trivial
 
@@ -2296,46 +2286,45 @@ Extra - asset_id: collision_camera_025
   > Door to Map Station
       All of the following:
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 150
-          Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
+          Any of the following:
+              Space Jump or Speed Booster or Simple IBJ
+              All of the following:
+                  Walljump (Beginner)
+                  Flash Shift or Use Spin Boost
+              Morph Ball and Single-wall Wall Jump (Intermediate)
   > Door to Power Switch 2
       Any of the following:
-          All of the following:
-              After Dairon - powergenerator_002
-              Any of the following:
-                  Gravity Suit
-                  Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
-          All of the following:
-              Before Dairon - powergenerator_002
-              Any of the following:
-                  Spider Magnet or Space Jump or Speed Booster
-                  Grapple Beam and Movement (Beginner)
-                  All of the following:
-                      Gravity Suit
-                      Spin Boost or Walljump (Beginner) or Simple IBJ
-                  Flash Shift and Walljump (Beginner)
+          Gravity Suit
+          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
   > Door to Energy Recharge Station West (Upper)
       All of the following:
-          Speed Booster and After Dairon - powergenerator_002
+          After Dairon - Freezer Speed Blocks Destroyed and After Dairon - Power Switch 2
           Any of the following:
               Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
-          Space Jump or Movement (Intermediate)
-  > Pickup (Missile Tank - Upper)
-      All of the following:
-          Morph Ball and After Dairon - Freezer Hidden Left Blob
-          Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
   > Tile Group (SCREWATTACK)
       All of the following:
           Speed Booster
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Event - Hidden Blob through wall (db_reg_b1_001)
+  > Event - Freezer Hidden Blob through Wall
       Wave Beam
+  > Left Blob Alcove
+      All of the following:
+          Morph Ball and After Dairon - Freezer Hidden Left Blob
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+  > Event - Freezer Speed Blocks Destroyed
+      All of the following:
+          Speed Booster
+          Space Jump or Movement (Intermediate)
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
 
 > Beside the Blob; Heals? False
   * Layers: default
@@ -2343,26 +2332,55 @@ Extra - asset_id: collision_camera_025
       All of the following:
           After Dairon - db_reg_b1_002
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
   > Door to Power Switch 2
       All of the following:
           Can Slide
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
-  > Event - Right Blob from right (db_reg_b1_002)
+  > Event - Freezer Right Blob, Adjacent
       All of the following:
           Shoot Beam
           Any of the following:
-              Gravity Suit or Before Dairon - powergenerator_002
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
 
-> Event - Right Blob from above (db_reg_b1_002); Heals? False
+> Event - Freezer Right Blob, Above; Heals? False
   * Layers: default
-  * Event Dairon - db_reg_b1_002
+  * Event Dairon - Freezer Right Blob
   > Door to Map Station
       Trivial
+
+> Left Blob Alcove; Heals? False
+  * Layers: default
+  > Door to Energy Recharge Station West (Lower)
+      After Dairon - powergenerator_002
+  > Pickup (Missile Tank - Upper)
+      All of the following:
+          After Dairon - Freezer Hidden Left Blob or Can Slide
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Cold Damage ≥ 30
+  > Event - Freezer Hidden Blob, Adjacent
+      All of the following:
+          Lay Bomb or Shoot Beam
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Cold Damage ≥ 30
+  > Freezer Center
+      All of the following:
+          Morph Ball and After Dairon - Freezer Hidden Left Blob
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
+
+> Event - Freezer Speed Blocks Destroyed; Heals? False
+  * Layers: default
+  * Event Dairon - Freezer Speed Blocks Destroyed
+  > Door to Energy Recharge Station West (Upper)
+      After Dairon - Power Switch 2
 
 ----------------
 Test Chamber Access
