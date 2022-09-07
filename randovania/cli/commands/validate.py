@@ -18,8 +18,9 @@ def validate_command_logic(args):
         raise ValueError(f"Validator does not support layouts with more than 1 player.")
 
     output_file = None
-    if args.write_to is not None:
-        output_file = typing.cast(Path, args.write_to).open("w")
+    write_to: Path | None = args.write_to
+    if write_to is not None:
+        output_file = write_to.open("w", encoding="utf-8")
 
         def write_to_log(*a):
             output_file.write("    ".join(str(t) for t in a) + "\n")

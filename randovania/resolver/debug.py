@@ -67,18 +67,26 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
         print_function(f"{_indent(1)}> {n(state.node, world_list=world_list)} for {resources}")
 
 
-def log_checking_satisfiable_actions():
+def log_checking_satisfiable_actions(state: "State", actions: list[tuple[ResourceNode, int]]):
     if _DEBUG_LEVEL > 1:
         print_function(f"{_indent()}# Satisfiable Actions")
+        for action, _ in actions:
+            print_function(f"{_indent(-1)}= {n(action, world_list=state.world_list)}")
 
 
-def log_rollback(state: "State", has_action, possible_action: bool):
+def log_rollback(state: "State", has_action, possible_action: bool,
+                 additional_requirements: RequirementSet | None = None):
     global _current_indent
     if _DEBUG_LEVEL > 0:
-        print_function("{}* Rollback {}; Had action? {}; Possible Action? {}".format(
+        show_reqs = _DEBUG_LEVEL > 1 and additional_requirements is not None
+        print_function("{}* Rollback {}; Had action? {}; Possible Action? {}{}".format(
             _indent(),
             n(state.node, world_list=state.world_list),
-            has_action, possible_action))
+            has_action, possible_action,
+            "; Additional Requirements:" if show_reqs else "",
+        ))
+        if show_reqs:
+            print_requirement_set(additional_requirements, -1)
     _current_indent -= 1
 
 
@@ -88,7 +96,7 @@ def log_skip_action_missing_requirement(node: Node, game: "GameDescription", req
             print_function(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, same additional")
         else:
             print_function(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, missing additional:")
-            requirement_set.pretty_print(_indent(-1))
+            print_requirement_set(requirement_set, -1)
             _last_printed_additional[node] = requirement_set
 
 
@@ -117,3 +125,12 @@ def with_level(level: int):
 def debug_print(message: str):
     if _DEBUG_LEVEL > 0:
         print_function(message)
+
+
+def debug_print_indent(message: str, indent: int = 0):
+    if _DEBUG_LEVEL > 0:
+        print_function(_indent(indent) + message)
+
+
+def print_requirement_set(requirement_set: RequirementSet, indent: int = 0):
+    requirement_set.pretty_print(_indent(indent), print_function=print_function)
