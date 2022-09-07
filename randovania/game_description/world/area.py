@@ -27,6 +27,12 @@ class Area:
         return hash(("area", self.name))
 
     @property
+    def actual_nodes(self) -> Iterator[Node]:
+        for node in self.nodes:
+            if not node.is_derived_node:
+                yield node
+
+    @property
     def in_dark_aether(self) -> bool:
         return self.extra.get("in_dark_aether", False)
 

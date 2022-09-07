@@ -151,6 +151,7 @@ class ResolverReach:
     def satisfiable_actions(self,
                             state: State,
                             victory_condition: Requirement,
+                            actions: list[tuple[ResourceNode, int]],
                             ) -> Iterator[tuple[ResourceNode, int]]:
 
         interesting_resources = calculate_interesting_resources(
@@ -160,7 +161,7 @@ class ResolverReach:
             state.resource_database)
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
-        for action, energy in self.possible_actions(state):
+        for action, energy in actions:
             for resource, amount in action.resource_gain_on_collect(state.node_context()):
                 if resource in interesting_resources:
                     yield action, energy
