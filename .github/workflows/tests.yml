@@ -220,6 +220,10 @@ jobs:
           $productDetails.UpgradeCode.UpgradeCode = "{7583BC7E-D9ED-4428-A9AD-AE60AE48D4A2}";
           # Use dev name
           $productDetails.Name = "Randovania Dev";
+          $productDetails.Version = "${{ steps.version.outputs.version }}";
+          
+          # manually update appdir
+          $project.InstallParameters.ApplicationFolder = "[LocalAppDataFolder][ProductName] Install";
           
           # Save the changes
           $project.Save();
