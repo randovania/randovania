@@ -8038,6 +8038,15 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -8505,12 +8514,64 @@
                                                     "data": "Use Spin Boost"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "events",
-                                                        "name": "BureniaPrepareSpeedSave",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "BureniaPrepareSpeedSave",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Speedbooster",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -11902,7 +11963,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -12002,7 +12063,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -12180,7 +12241,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                                                    "name": "BureniaDestroyGravitySuitFloor",
                                                                     "amount": 1,
                                                                     "negate": true
                                                                 }
@@ -12198,7 +12259,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                "name": "BureniaDestroyGravitySuitFloor",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -12239,7 +12300,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                "name": "BureniaDestroyGravitySuitFloor",
                                 "amount": 1,
                                 "negate": true
                             }
@@ -12248,7 +12309,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                "name": "BureniaDestroyGravitySuitFloor",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -12350,7 +12411,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -12509,7 +12570,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -13214,7 +13275,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                "name": "BureniaDestroyGravitySuitFloor",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -13237,7 +13298,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13301,7 +13362,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -13484,7 +13545,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                "name": "BureniaDestroyGravitySuitFloor",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -13493,7 +13554,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                "name": "BureniaDestroyGravitySuitFloor",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -13507,7 +13568,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -13534,7 +13595,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "event_name": "s040_aqua:default:grapplepulloff1x2_003",
+                    "event_name": "BureniaDestroyGravitySuitFloor",
                     "connections": {
                         "Blob Alcove": {
                             "type": "and",
@@ -13624,7 +13685,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13847,7 +13908,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                                                    "name": "BureniaDestroyGravitySuitFloor",
                                                                     "amount": 1,
                                                                     "negate": true
                                                                 }
