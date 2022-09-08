@@ -15,25 +15,25 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: 'ubuntu-latest'
-            python: '3.10'
-            executable: false
-            name: 'Linux'
-
-          - os: 'ubuntu-latest'
-            python: '3.10'
-            executable: true
-            name: 'Linux Executable'
-
-          - os: 'macos-latest'
-            python: '3.10'
-            executable: false
-            name: 'macOS'
-
-          - os: 'macos-latest'
-            python: '3.10'
-            executable: true
-            name: 'macOS Executable'
+#          - os: 'ubuntu-latest'
+#            python: '3.10'
+#            executable: false
+#            name: 'Linux'
+#
+#          - os: 'ubuntu-latest'
+#            python: '3.10'
+#            executable: true
+#            name: 'Linux Executable'
+#
+#          - os: 'macos-latest'
+#            python: '3.10'
+#            executable: false
+#            name: 'macOS'
+#
+#          - os: 'macos-latest'
+#            python: '3.10'
+#            executable: true
+#            name: 'macOS Executable'
 
           - os: 'windows-latest'
             python: '3.10'
@@ -44,11 +44,11 @@ jobs:
             python: '3.10'
             executable: true
             name: 'Windows Executable'
-
-          - os: 'windows-latest'
-            python: '3.10'
-            executable: false
-            name: 'Resolver'
+#
+#          - os: 'windows-latest'
+#            python: '3.10'
+#            executable: false
+#            name: 'Resolver'
 
     runs-on: ${{ matrix.os }}
 
@@ -161,7 +161,7 @@ jobs:
     runs-on: windows-latest
     needs: pytest
     name: Build Windows Installer
-    if: ${{ startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v') }}
+#    if: ${{ startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v') }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
