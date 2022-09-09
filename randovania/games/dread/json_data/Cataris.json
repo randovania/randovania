@@ -2516,13 +2516,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -7752,82 +7747,40 @@
                             }
                         },
                         "Top Ledge": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 50,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 50,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -13484,41 +13437,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Ghavoran Teleport Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         },
                         "Dock to Long Mouth Statue Room (Upper)": {
                             "type": "resource",
@@ -16211,30 +16131,8 @@
                             }
                         },
                         "Event - Top Blob": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Diffusion",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
                         },
                         "Event - Bottom Blob, adjacent": {
                             "type": "template",
@@ -18699,7 +18597,7 @@
                                 ]
                             }
                         },
-                        "Event - Diffusion Tutorial Blob": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
@@ -18886,7 +18784,7 @@
                         }
                     }
                 },
-                "Event - Diffusion Tutorial Blob": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -18913,7 +18811,7 @@
                         }
                     }
                 },
-                "Event - PB Tank Grapple Block": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -19354,7 +19252,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Diffusion Tutorial Blob": {
+                        "Event - Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19656,7 +19554,7 @@
                                 ]
                             }
                         },
-                        "Event - PB Tank Grapple Block": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
