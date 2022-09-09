@@ -81,12 +81,12 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Breakable (Pull Grapple Block)
+  > Event - Grapple Block
       Grapple Beam
   > Tile Group (BOMB) 1
       Trivial
   > Tile Group (SCREWATTACK) 2
-      Morph Ball and After Hanubia - grapplepulloff1x2_000
+      Morph Ball and After Hanubia - Ferenia Shortcut Grapple Block
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -104,9 +104,9 @@ Extra - asset_id: collision_camera_002
   > Tile Group (BOMB) 4
       Trivial
 
-> Event - Breakable (Pull Grapple Block); Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Hanubia - grapplepulloff1x2_000
+  * Event Hanubia - Ferenia Shortcut Grapple Block
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Transport to Ferenia
@@ -163,10 +163,10 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
   > Door to Transport to Ferenia
-      Morph Ball and After Hanubia - grapplepulloff1x2_000
+      Morph Ball and After Hanubia - Ferenia Shortcut Grapple Block
   > Tunnel to Speedboost Puzzle Room
       Trivial
-  > Event - Breakable (Pull Grapple Block)
+  > Event - Grapple Block
       Break/Move Grapple Block from Behind
 
 > Tile Group (BOMB) 3; Heals? False
@@ -304,9 +304,9 @@ Extra - asset_id: collision_camera_004
   > Next to Hyper Block
       Trivial
 
-> Event - Breakable (Glass Tube); Heals? False
+> Event - Glass Tube; Heals? False
   * Layers: default
-  * Event Hanubia - block_pbtube
+  * Event Hanubia - Entrance Glass Tube
   * Extra - actor_name: block_pbtube
   * Extra - actor_def: actordef:actors/props/block_pbtube_001/charclasses/block_pbtube_001.bmsad
   > Inside breakable tube
@@ -324,7 +324,7 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   > Door to Total Recharge Station North
       Before Escape Sequence
-  > Event - Breakable (Glass Tube)
+  > Event - Glass Tube
       Speed Booster and Lay Power Bomb
   > Dock to Ship Room
       After Escape Sequence
@@ -335,15 +335,15 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   > Door to Navigation Station
       Before Escape Sequence
-  > Event - Breakable (Glass Tube)
+  > Event - Glass Tube
       Lay Power Bomb
   > Dock to Escape Room 3
       After Escape Sequence
   > Next to Hyper Block
-      Speed Booster and After Hanubia - block_pbtube
+      Speed Booster and After Hanubia - Entrance Glass Tube
   > Tile Group (SCREWATTACK)
       All of the following:
-          After Hanubia - block_pbtube
+          After Hanubia - Entrance Glass Tube
           Space Jump or Simple IBJ
 
 > Dock to Ship Room; Heals? False
@@ -374,7 +374,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: breakabletilegroup_031
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
-  > Event - Breakable (Glass Tube)
+  > Event - Glass Tube
       Lay Power Bomb
   > Next to Hyper Block
       Trivial
@@ -394,8 +394,10 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Gold Chozo Fight
-      Trivial
+  > Door to Transport to Itorash
+      After Hanubia - Gold Chozo Fight
+  > Event - Gold Chozo Fight
+      Fight Gold Chozo-X
 
 > Door to Transport to Itorash; Heals? False
   * Layers: default
@@ -406,15 +408,21 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Gold Chozo Fight
-      Trivial
+  > Door to Total Recharge Station North
+      After Hanubia - Gold Chozo Fight
+  > Event - Gold Chozo Fight
+      Fight Gold Chozo-X
 
-> Gold Chozo Fight; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_CWX_Elite
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Total Recharge Station North
+  > Door to Transport to Itorash
       Trivial
+
+> Event - Gold Chozo Fight; Heals? False
+  * Layers: default
+  * Event Hanubia - Gold Chozo Fight
   > Door to Transport to Itorash
       Trivial
 
@@ -433,10 +441,10 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Pull Grapple Block (grapplepulloff1x2_001)
+  > Event - Grapple Block
       Grapple Beam
   > Start Point
-      Morph Ball and After Hanubia - grapplepulloff1x2_001
+      Morph Ball and After Hanubia - Total Recharge Station North Grapple Block
 
 > Door to Gold Chozo Warrior Arena; Heals? False
   * Layers: default
@@ -458,9 +466,9 @@ Extra - asset_id: collision_camera_006
   > Tile Group (MISSILE)
       Morph Ball
 
-> Event - Pull Grapple Block (grapplepulloff1x2_001); Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Hanubia - grapplepulloff1x2_001
+  * Event Hanubia - Total Recharge Station North Grapple Block
   * Extra - actor_name: grapplepulloff1x2_001
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Entrance Tall Room
@@ -471,7 +479,7 @@ Extra - asset_id: collision_camera_006
   * Extra - start_point_actor_name: SP_Checkpoint_EliteChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Entrance Tall Room
-      Morph Ball and After Hanubia - grapplepulloff1x2_001
+      Morph Ball and After Hanubia - Total Recharge Station North Grapple Block
   > Door to Gold Chozo Warrior Arena
       Trivial
   > Total Recharge
@@ -623,11 +631,11 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   * Morph Ball Tunnel to Ferenia Shortcut/Tunnel to Speedboost Puzzle Room
   > Start Point 1
-      Morph Ball and After Hanubia - grapplepulloff1x2
+      Morph Ball and After Hanubia - Speedbooster Puzzle Room Grapple Block
 
-> Event - Pull Grapple Block (grapplepulloff1x2); Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Hanubia - grapplepulloff1x2
+  * Event Hanubia - Speedbooster Puzzle Room Grapple Block
   * Extra - actor_name: grapplepulloff1x2
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Start Point 1
@@ -640,8 +648,8 @@ Extra - asset_id: collision_camera_009
   > Door to Tank Room
       Trivial
   > Tunnel to Ferenia Shortcut
-      Morph Ball and After Hanubia - grapplepulloff1x2
-  > Event - Pull Grapple Block (grapplepulloff1x2)
+      Morph Ball and After Hanubia - Speedbooster Puzzle Room Grapple Block
+  > Event - Grapple Block
       Grapple Beam
   > Tile Group (BOMB) 1
       Morph Ball
@@ -874,30 +882,30 @@ EMMI Zone Exit East
 Extra - total_boundings: {'x1': 10400.0, 'x2': 13500.0, 'y1': -2200.0, 'y2': 500.0}
 Extra - polygon: [[13500.0, 500.0], [10400.0, 500.0], [10400.0, -1300.0], [10700.0, -1300.0], [10700.0, -2200.0], [13500.0, -2200.0]]
 Extra - asset_id: collision_camera_013
-> Dock to Total Recharge Station East (dooremmy_002); Heals? False
+> Dock to Total Recharge Station East (Upper); Heals? False
   * Layers: default
-  * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (dooremmy_002)
+  * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (Upper)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Event - Break PB Tube (block_pbtube_2)
+  > Event - Break EMMI Zone Exit East PB Tube
       Lay Power Bomb
   > Tunnel to Central Unit
-      After Hanubia - block_pbtube_2
+      After Hanubia - EMMI Zone PB Block
 
-> Dock to Total Recharge Station East (dooremmy_003); Heals? False
+> Dock to Total Recharge Station East (Lower); Heals? False
   * Layers: default
-  * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (dooremmy_003)
+  * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (Lower)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tunnel to Orange EMMI Introduction
       Trivial
 
-> Event - Break PB Tube (block_pbtube_2); Heals? False
+> Event - Break EMMI Zone Exit East PB Tube; Heals? False
   * Layers: default
-  * Event Hanubia - block_pbtube_2
+  * Event Hanubia - EMMI Zone PB Block
   * Extra - actor_name: block_pbtube_2
   * Extra - actor_def: actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad
-  > Dock to Total Recharge Station East (dooremmy_002)
+  > Dock to Total Recharge Station East (Upper)
       Trivial
   > Tunnel to Central Unit
       Trivial
@@ -905,13 +913,13 @@ Extra - asset_id: collision_camera_013
 > Tunnel to Central Unit; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit East
-  > Dock to Total Recharge Station East (dooremmy_002)
-      After Hanubia - block_pbtube_2
+  > Dock to Total Recharge Station East (Upper)
+      After Hanubia - EMMI Zone PB Block
 
 > Tunnel to Orange EMMI Introduction; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Orange EMMI Introduction/Tunnel to EMMI Zone Exit East
-  > Dock to Total Recharge Station East (dooremmy_003)
+  > Dock to Total Recharge Station East (Lower)
       Trivial
 
 ----------------
@@ -938,9 +946,9 @@ Extra - asset_id: collision_camera_014
   > Start Point
       Trivial
 
-> Event - Red Chozo Warrior Fight; Heals? False
+> Event - Red Chozo Fight; Heals? False
   * Layers: default
-  * Event Hanubia Red Chozo Fight
+  * Event Hanubia - Red Chozo Fight
   > Pickup (Power Bomb)
       Trivial
 
@@ -960,28 +968,28 @@ Extra - asset_id: collision_camera_014
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door from EMMI Zone Exit West
-      After Hanubia Red Chozo Fight
+      After Hanubia - Red Chozo Fight
   > Tunnel to EMMI Zone Exit East
-      After Hanubia Red Chozo Fight
-  > Event - Red Chozo Warrior Fight
-      Trivial
+      After Hanubia - Red Chozo Fight
+  > Event - Red Chozo Fight
+      Fight Red Chozo-X
 
 ----------------
 Total Recharge Station East
 Extra - total_boundings: {'x1': 13400.0, 'x2': 16800.0, 'y1': -4000.0, 'y2': -100.0}
 Extra - polygon: [[16800.0, -100.0], [13400.0, -100.0], [13400.0, -4000.0], [16100.0, -4000.0], [16800.0, -3700.0]]
 Extra - asset_id: collision_camera_015
-> Dock to EMMI Zone Exit East (dooremmy_002); Heals? False
+> Dock to EMMI Zone Exit East (Upper); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (dooremmy_002)
+  * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (Upper)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (POWERBOMB) 2
       Trivial
 
-> Dock to EMMI Zone Exit East (dooremmy_003); Heals? False
+> Dock to EMMI Zone Exit East (Lower); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (dooremmy_003)
+  * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (Lower)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Total Recharge
@@ -1001,7 +1009,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  > Dock to EMMI Zone Exit East (dooremmy_003)
+  > Dock to EMMI Zone Exit East (Lower)
       Trivial
 
 > Tile Group (POWERBOMB) 1; Heals? False
@@ -1010,7 +1018,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: breakabletilegroup_035
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to EMMI Zone Exit East (dooremmy_003)
+  > Dock to EMMI Zone Exit East (Lower)
       Before Escape Sequence
   > Tile Group (POWERBOMB) 2
       Simple IBJ or Use Spin Boost
@@ -1023,7 +1031,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: breakabletilegroup_037
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to EMMI Zone Exit East (dooremmy_002)
+  > Dock to EMMI Zone Exit East (Upper)
       Trivial
   > Tile Group (POWERBOMB) 1
       Trivial
@@ -1034,7 +1042,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: breakabletilegroup_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to EMMI Zone Exit East (dooremmy_003)
+  > Dock to EMMI Zone Exit East (Lower)
       Trivial
   > Dock to Escape Room 2
       Trivial

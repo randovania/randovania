@@ -21014,12 +21014,10 @@
                             }
                         },
                         "Door to Thermal Device (Upper)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "ArtariaThermalItemDoor",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -21273,9 +21271,21 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (MISSILE)": {
-                            "type": "template",
-                            "data": "Can Slide"
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Missile"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -21367,23 +21377,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Thermal Device": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (MISSILE)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Open Item Door": {
+                        "Door to Path to Thermal Device (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -21398,16 +21392,50 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam"
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "MissileAmmo",
-                                                        "amount": 2,
+                                                        "name": "Morph",
+                                                        "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MissileAmmo",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Beam"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -21415,61 +21443,8 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Tile Group (MISSILE)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 19200.0,
-                        "y": 1600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_049",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "MISSILE"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Path to Thermal Device (Upper)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
                         },
-                        "Start Point": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        }
-                    }
-                },
-                "Event - Open Item Door": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 18900.4,
-                        "y": 1600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "ArtariaThermalItemDoor",
-                    "connections": {
-                        "Start Point": {
+                        "Event - Thermal Device": {
                             "type": "and",
                             "data": {
                                 "comment": null,
