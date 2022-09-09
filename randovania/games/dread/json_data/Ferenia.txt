@@ -155,7 +155,7 @@ Extra - asset_id: collision_camera_003
 
 > Door to EMMI Zone Exit Middle (Power); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Exit Middle/Door to EMMI Zone Exit West (doorpowerpower_016)
+  * Power Beam Door to EMMI Zone Exit Middle/Door to EMMI Zone Exit West (Lower)
   * Extra - actor_name: doorpowerpower_016
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -167,7 +167,7 @@ Extra - asset_id: collision_camera_003
 
 > Door to EMMI Zone Exit Middle (Charge); Heals? False
   * Layers: default
-  * Access Locked to EMMI Zone Exit Middle/Door to EMMI Zone Exit West (doorclosedcharge_004)
+  * Access Locked to EMMI Zone Exit Middle/Door to EMMI Zone Exit West (Upper)
   * Extra - actor_name: doorclosedcharge_004
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -433,13 +433,13 @@ Extra - asset_id: collision_camera_008
   > Door to Fan Room
       Trivial
   > Tunnel to Speedboost Slopes Maze
-      After Ferenia - db_reg_b2_003
+      After Ferenia - Speedboster Slope Maze Blob
 
 > Tunnel to Speedboost Slopes Maze; Heals? False
   * Layers: default
   * Slide Tunnel to Speedboost Slopes Maze/Tunnel to Transport to Dairon
   > Elevator to Dairon - West Transport to Ferenia
-      After Ferenia - db_reg_b2_003
+      After Ferenia - Speedboster Slope Maze Blob
 
 ----------------
 Speedboost Slopes Maze
@@ -466,17 +466,17 @@ Extra - asset_id: collision_camera_009
   > Ledge above Slope
       Trivial
 
-> Event - Blob to Elevator (db_reg_b2_003); Heals? False
+> Event - Speedbooster Slope Maze Blob; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_003
+  * Event Ferenia - Speedboster Slope Maze Blob
   * Extra - actor_name: db_reg_b2_003
   * Extra - actor_def: actordef:actors/props/db_reg_b2_003/charclasses/db_reg_b2_003.bmsad
   > Bottom
       Trivial
 
-> Event - Grapple Block (grapplepulloff1x2_003); Heals? False
+> Event - Speedboost Slope Maze Grapple Block; Heals? False
   * Layers: default
-  * Event Ferenia - grapplepulloff1x2_003
+  * Event Ferenia - Speedboost Slope Maze Grapple Block
   * Extra - actor_name: grapplepulloff1x2_003
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Grapple Block Ledge
@@ -548,40 +548,40 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   > Pickup (Energy Part)
       All of the following:
-          After Ferenia - db_reg_b2_003 and Ballspark
+          After Ferenia - Speedboster Slope Maze Blob and Ballspark
           Flash Shift or Speedbooster Conservation (Beginner) or Use Spin Boost
   > Tile Group (POWERBEAM) 4
       Morph Ball
   > Bottom
       Can Slide
   > Grapple Block Ledge
-      Morph Ball and After Ferenia - grapplepulloff1x2_003
+      Morph Ball and After Ferenia - Speedboost Slope Maze Grapple Block
 
 > Tunnel to Transport to Dairon; Heals? False
   * Layers: default
   * Slide Tunnel to Transport to Dairon/Tunnel to Speedboost Slopes Maze
   > Bottom
-      After Ferenia - db_reg_b2_003
+      After Ferenia - Speedboster Slope Maze Blob
 
 > Bottom; Heals? False
   * Layers: default
-  > Event - Blob to Elevator (db_reg_b2_003)
+  > Event - Speedbooster Slope Maze Blob
       Shoot Beam
   > Ledge above Slope
       All of the following:
           Morph Ball
           Speed Booster or Use Spin Boost
   > Tunnel to Transport to Dairon
-      After Ferenia - db_reg_b2_003
+      After Ferenia - Speedboster Slope Maze Blob
 
 > Grapple Block Ledge; Heals? False
   * Layers: default
-  > Event - Grapple Block (grapplepulloff1x2_003)
+  > Event - Speedboost Slope Maze Grapple Block
       Grapple Beam
   > Tile Group (POWERBEAM) 2
       Trivial
   > Ledge above Slope
-      Morph Ball and After Ferenia - grapplepulloff1x2_003
+      Morph Ball and After Ferenia - Speedboost Slope Maze Grapple Block
 
 ----------------
 Cold Room (Small)
@@ -851,9 +851,9 @@ Extra - asset_id: collision_camera_012
           Lay Bomb or Lay Power Bomb
           Movement (Beginner) and Can Slide
 
-> Event - Blob from below (db_reg_b2_001); Heals? False
+> Event - Space Jump Room Blob, below; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_001
+  * Event Ferenia - Space Jump Room Blob
   * Extra - actor_name: db_reg_b2_001
   * Extra - actor_def: actordef:actors/props/db_reg_b2_001/charclasses/db_reg_b2_001.bmsad
   > Underwater Ledge Left
@@ -867,8 +867,8 @@ Extra - asset_id: collision_camera_012
   > Door to Space Jump Room Access (Top)
       Trivial
   > Underwater Ledge Left
-      After Ferenia - db_reg_b2_001
-  > Event - Blob from above (db_reg_b2_001)
+      After Ferenia - Space Jump Room Blob
+  > Event - Space Jump Room Blob, above
       Any of the following:
           Wave Beam
           Morph Ball and Pseudo-Wave Beam (Advanced) and Shoot Diffusion Beam
@@ -1003,11 +1003,11 @@ Extra - asset_id: collision_camera_012
 
 > Underwater Ledge Left; Heals? False
   * Layers: default
-  > Event - Blob from below (db_reg_b2_001)
+  > Event - Space Jump Room Blob, below
       Shoot Beam
   > Dock to Transport to Ghavoran
       All of the following:
-          After Ferenia - db_reg_b2_001
+          After Ferenia - Space Jump Room Blob
           Any of the following:
               All of the following:
                   Gravity Suit
@@ -1035,9 +1035,9 @@ Extra - asset_id: collision_camera_012
   > Underwater Bottom
       Trivial
 
-> Event - Blob from above (db_reg_b2_001); Heals? False
+> Event - Space Jump Room Blob, above; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_001
+  * Event Ferenia - Space Jump Room Blob
   > Dock to Transport to Ghavoran
       Trivial
 
@@ -1063,11 +1063,11 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tile Group (WEIGHT) 2
-      Morph Ball and After Ferenia - db_reg_b2_004
+      Morph Ball and After Ferenia - Pitfall Puzzle Blob
 
-> Event - Blob from below (db_reg_b2_004); Heals? False
+> Event - Pitfall Puzzle Blob 1, below; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_004
+  * Event Ferenia - Pitfall Puzzle Blob
   * Extra - actor_name: db_reg_b2_004
   * Extra - actor_def: actordef:actors/props/db_reg_b2_004/charclasses/db_reg_b2_004.bmsad
   > Tile Group (WEIGHT) 2
@@ -1081,11 +1081,11 @@ Extra - asset_id: collision_camera_013
   * Extra - tile_types: ('WEIGHT',)
   > Pickup (Missile Tank)
       All of the following:
-          Morph Ball and After Ferenia - db_reg_b2_004
+          Morph Ball and After Ferenia - Pitfall Puzzle Blob
           Any of the following:
               Space Jump
               Flash Shift and Use Spin Boost
-  > Event - Blob from below (db_reg_b2_004)
+  > Event - Pitfall Puzzle Blob 1, below
       Shoot Diffusion or Wave
   > Tile Group (WEIGHT) 2
       Trivial
@@ -1118,7 +1118,7 @@ Extra - asset_id: collision_camera_013
       Trivial
   > Bottom
       Trivial
-  > Event - Blob from right (db_reg_b2_004)
+  > Event - Pitfall Puzzle Blob 2, right
       Wave Beam
 
 > Tunnel to Space Jump Room (Lower); Heals? False
@@ -1134,9 +1134,9 @@ Extra - asset_id: collision_camera_013
   > Tunnel to Space Jump Room (Upper)
       Simple IBJ or Use Spin Boost
 
-> Event - Blob from right (db_reg_b2_004); Heals? False
+> Event - Pitfall Puzzle Blob 2, right; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_004
+  * Event Ferenia - Pitfall Puzzle Blob
   > Tunnel to Space Jump Room (Upper)
       Trivial
 
@@ -1525,9 +1525,9 @@ Extra - asset_id: collision_camera_018
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
-> Event - Grapple Block (grapplepulloff1x2_002); Heals? False
+> Event - Tunnel to Cold Room Grapple Block; Heals? False
   * Layers: default
-  * Event Ferenia - grapplepulloff1x2_002
+  * Event Ferenia - Tunnel to Cold Room Grapple Block
   * Extra - actor_name: grapplepulloff1x2_002
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Tile Group (POWERBEAM)
@@ -1595,7 +1595,7 @@ Extra - asset_id: collision_camera_018
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Event - Grapple Block (grapplepulloff1x2_002)
+  > Event - Tunnel to Cold Room Grapple Block
       All of the following:
           Grapple Beam
           Any of the following:
@@ -1603,7 +1603,7 @@ Extra - asset_id: collision_camera_018
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
   > Tunnel to Cold Room (Storm Missile Gate)
       All of the following:
-          After Ferenia - grapplepulloff1x2_002 and Ballspark
+          After Ferenia - Tunnel to Cold Room Grapple Block and Ballspark
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
@@ -1626,7 +1626,7 @@ Extra - asset_id: collision_camera_018
   * Morph Ball Tunnel to Cold Room (Storm Missile Gate)/Tunnel to Cold Room (Energy Recharge Station)
   > Tile Group (POWERBEAM)
       All of the following:
-          Morph Ball and After Ferenia - grapplepulloff1x2_002
+          Morph Ball and After Ferenia - Tunnel to Cold Room Grapple Block
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
@@ -1658,14 +1658,14 @@ Extra - asset_id: collision_camera_019
       After Ferenia - Storm Missile Gate by Robot Fight
   > Life Recharge
       Trivial
-  > Event - Storm Missile Gate
+  > Event - Storm Missile Gate by Robot Fight
       Activate Storm Missile Locks
   > Bomb Ledge
       Screw Attack
 
-> Event - Grapple Block (grapplepulloff1x2_000); Heals? False
+> Event - Recharge Station Secret Grapple Block; Heals? False
   * Layers: default
-  * Event Ferenia - grapplepulloff1x2_000
+  * Event Ferenia - Recharge Station Secret Grapple Block
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Bomb Ledge
@@ -1696,7 +1696,7 @@ Extra - asset_id: collision_camera_019
   > Dock to EMMI Zone Exit Middle
       Trivial
 
-> Event - Storm Missile Gate; Heals? False
+> Event - Storm Missile Gate by Robot Fight; Heals? False
   * Layers: default
   * Event Ferenia - Storm Missile Gate by Robot Fight
   > Dock to EMMI Zone Exit Middle
@@ -1707,14 +1707,14 @@ Extra - asset_id: collision_camera_019
   * Morph Ball Tunnel to Energy Recharge Station Secret/Tunnel to Energy Recharge Station (Gate)
   > Tile Group (WEIGHT)
       All of the following:
-          After Ferenia - grapplepulloff1x2_000
+          After Ferenia - Recharge Station Secret Grapple Block
           Lay Bomb or Lay Power Bomb
 
 > Bomb Ledge; Heals? False
   * Layers: default
   > Dock to EMMI Zone Exit Middle
       Screw Attack
-  > Event - Grapple Block (grapplepulloff1x2_000)
+  > Event - Recharge Station Secret Grapple Block
       All of the following:
           Grapple Beam and Morph Ball
           Any of the following:
@@ -1732,7 +1732,7 @@ Extra - asset_id: collision_camera_019
       Trivial
   > Tunnel to Energy Recharge Station Secret
       All of the following:
-          Morph Ball and After Ferenia - grapplepulloff1x2_000
+          Morph Ball and After Ferenia - Recharge Station Secret Grapple Block
           Any of the following:
               # Destroy bomb blocks
               Bomb or Cross Bomb or Power Bombs ≥ 2
@@ -1782,7 +1782,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Exit East Access
       Trivial
-  > Dock to Map Station Access (dooremmy_004)
+  > Dock to Map Station Access (Upper)
       Morph Ball
 
 > Door to EMMI Zone Exit East Access; Heals? False
@@ -1797,17 +1797,17 @@ Extra - asset_id: collision_camera_021
   > Dock to Energy Recharge Station (Gate)
       Trivial
 
-> Dock to Map Station Access (dooremmy_004); Heals? False
+> Dock to Map Station Access (Upper); Heals? False
   * Layers: default
-  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Middle (dooremmy_004)
+  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Middle (Upper)
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Energy Recharge Station (Gate)
       Morph Ball
-  > Dock to Map Station Access (dooremmy_005)
+  > Dock to Map Station Access (Lower)
       Morph Ball and After Ferenia - Central Unit
 
-> Door to EMMI Zone Exit West (doorpowerpower_016); Heals? False
+> Door to EMMI Zone Exit West (Lower); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Exit West/Door to EMMI Zone Exit Middle (Power)
   * Extra - actor_name: doorpowerpower_016
@@ -1816,24 +1816,24 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Map Station Access (dooremmy_005)
+  > Dock to Map Station Access (Lower)
       Grapple Beam or Gravity Suit or Spider Magnet or Perform WBJ
 
-> Dock to Map Station Access (dooremmy_005); Heals? False
+> Dock to Map Station Access (Lower); Heals? False
   * Layers: default
-  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Middle (dooremmy_005)
+  * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Middle (Lower)
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to Map Station Access (dooremmy_004)
+  > Dock to Map Station Access (Upper)
       All of the following:
           Morph Ball and After Ferenia - Central Unit
           Space Jump or Speed Booster or Simple IBJ
-  > Door to EMMI Zone Exit West (doorpowerpower_016)
+  > Door to EMMI Zone Exit West (Lower)
       Grapple Beam or Gravity Suit
-  > Door to EMMI Zone Exit West (doorclosedcharge_004)
+  > Door to EMMI Zone Exit West (Upper)
       Can Slide
 
-> Door to EMMI Zone Exit West (doorclosedcharge_004); Heals? False
+> Door to EMMI Zone Exit West (Upper); Heals? False
   * Layers: default
   * Charge Beam Door to EMMI Zone Exit West/Door to EMMI Zone Exit Middle (Charge)
   * Extra - actor_name: doorclosedcharge_004
@@ -1842,7 +1842,7 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Map Station Access (dooremmy_005)
+  > Dock to Map Station Access (Lower)
       Can Slide
 
 ----------------
@@ -1850,17 +1850,17 @@ Map Station Access
 Extra - total_boundings: {'x1': -500.0, 'x2': 1600.0, 'y1': -3802.5, 'y2': -300.0}
 Extra - polygon: [[1600.0, -300.0], [-500.0, -300.0], [-500.0, -3802.5], [1600.0, -3802.5]]
 Extra - asset_id: collision_camera_022
-> Dock to EMMI Zone Exit Middle (dooremmy_004); Heals? False
+> Dock to EMMI Zone Exit Middle (Upper); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit Middle/Dock to Map Station Access (dooremmy_004)
+  * EMMI Door to EMMI Zone Exit Middle/Dock to Map Station Access (Upper)
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Storm Missile Tutorial
       Trivial
 
-> Dock to EMMI Zone Exit Middle (dooremmy_005); Heals? False
+> Dock to EMMI Zone Exit Middle (Lower); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit Middle/Dock to Map Station Access (dooremmy_005)
+  * EMMI Door to EMMI Zone Exit Middle/Dock to Map Station Access (Lower)
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Center Platform
@@ -1875,7 +1875,7 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to EMMI Zone Exit Middle (dooremmy_004)
+  > Dock to EMMI Zone Exit Middle (Upper)
       Trivial
   > Tile Group (BOMB)
       Trivial
@@ -1906,7 +1906,7 @@ Extra - asset_id: collision_camera_022
 
 > Center Platform; Heals? False
   * Layers: default
-  > Dock to EMMI Zone Exit Middle (dooremmy_005)
+  > Dock to EMMI Zone Exit Middle (Lower)
       Trivial
   > Door to Map Station
       Trivial
@@ -1996,10 +1996,10 @@ Extra - asset_id: collision_camera_024
   * Slide Tunnel to Path to Escue/Tunnel to Storm Missile Tutorial
   > Door to Map Station Access
       After Ferenia - Storm Missile Gate Tutorial
-  > Event - Storm Missile Gate
+  > Event - Storm Missile Gate Tutorial
       Activate Storm Missile Locks
 
-> Event - Storm Missile Gate; Heals? False
+> Event - Storm Missile Gate Tutorial; Heals? False
   * Layers: default
   * Event Ferenia - Storm Missile Gate Tutorial
   > Tunnel to Path to Escue
@@ -2284,16 +2284,16 @@ Extra - asset_id: collision_camera_028
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Door to Cold Room (Energy Recharge Station)
       Trivial
-  > Event - Wave Blob (db_reg_b2_005)
+  > Event - Elevator to Hanubia Blob
       Any of the following:
           Wave Beam
           Slide and Pseudo-Wave Beam (Beginner) and Shoot Beam
   > Elevator to Hanubia - Transport to Ferenia
-      After Ferenia - db_reg_b2_005
+      After Ferenia - Elevator to Hanubia Blob
 
-> Event - Wave Blob (db_reg_b2_005); Heals? False
+> Event - Elevator to Hanubia Blob; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_005
+  * Event Ferenia - Elevator to Hanubia Blob
   * Extra - actor_name: db_reg_b2_005
   * Extra - actor_def: actordef:actors/props/db_reg_b2_005/charclasses/db_reg_b2_005.bmsad
   > Door to Save Station North
@@ -2309,8 +2309,8 @@ Extra - asset_id: collision_camera_028
   * Extra - start_point_actor_name: elevator_shipyard_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Save Station North
-      After Ferenia - db_reg_b2_005
-  > Event - Wave Blob (db_reg_b2_005)
+      After Ferenia - Elevator to Hanubia Blob
+  > Event - Elevator to Hanubia Blob
       Any of the following:
           Wave Beam
           Slide and Pseudo-Wave Beam (Beginner) and Shoot Beam
@@ -2481,7 +2481,7 @@ Extra - asset_id: collision_camera_030
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
   > Tile Group (BOMB)
       Can Slide
-  > Event - Storm Missile Gate
+  > Event - Storm Missile Gate Cold Room
       All of the following:
           Activate Storm Missile Locks
           Any of the following:
@@ -2524,7 +2524,7 @@ Extra - asset_id: collision_camera_030
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
 
-> Event - Storm Missile Gate; Heals? False
+> Event - Storm Missile Gate Cold Room; Heals? False
   * Layers: default
   * Event Ferenia - Storm Missile Gate Cold
   > Tile Group (SCREWATTACK) 3
@@ -2555,8 +2555,8 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Dock to Save Station North
-      Morph Ball and After Ferenia - db_reg_b2_006
-  > Event - Wave Blob from right (db_reg_b2_006)
+      Morph Ball and After Ferenia - Wave Beam Tutorial Blob
+  > Event - Wave Beam Tutorial Blob, right
       Wave Beam
 
 > Dock to Cold Room (Storm Missile Gate); Heals? False
@@ -2591,13 +2591,13 @@ Extra - asset_id: collision_camera_031
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Purple EMMI Arena
-      Morph Ball and After Ferenia - db_reg_b2_006
-  > Event - Wave Blob from left (db_reg_b2_006)
+      Morph Ball and After Ferenia - Wave Beam Tutorial Blob
+  > Event - Wave Beam Tutorial Blob, left
       Shoot Beam
 
-> Event - Wave Blob from left (db_reg_b2_006); Heals? False
+> Event - Wave Beam Tutorial Blob, left; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_006
+  * Event Ferenia - Wave Beam Tutorial Blob
   * Extra - actor_name: db_reg_b2_006
   * Extra - actor_def: actordef:actors/props/db_reg_b2_006/charclasses/db_reg_b2_006.bmsad
   > Dock to Save Station North
@@ -2616,9 +2616,9 @@ Extra - asset_id: collision_camera_031
   > Dock to Cold Room (Storm Missile Gate)
       Trivial
 
-> Event - Wave Blob from right (db_reg_b2_006); Heals? False
+> Event - Wave Beam Tutorial Blob, right; Heals? False
   * Layers: default
-  * Event Ferenia - db_reg_b2_006
+  * Event Ferenia - Wave Beam Tutorial Blob
   > Door to Purple EMMI Arena
       Trivial
 
@@ -2633,7 +2633,7 @@ EMMI Zone Exit East
 Extra - total_boundings: {'x1': 2500.0, 'x2': 6600.0, 'y1': -300.0, 'y2': 1800.0}
 Extra - polygon: [[6600.0, 1800.0], [2500.0, 1800.0], [2500.0, -300.0], [6600.0, -300.0]]
 Extra - asset_id: collision_camera_032
-> Door to EMMI Zone Exit East Access (doorpowerpower_017); Heals? False
+> Door to EMMI Zone Exit East Access (Lower); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Exit East Access/Door to EMMI Zone Exit East (Power)
   * Extra - actor_name: doorpowerpower_017
@@ -2642,10 +2642,10 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit East Access (doorclosedcharge_001)
+  > Door to EMMI Zone Exit East Access (Upper)
       Morph Ball
 
-> Door to EMMI Zone Exit East Access (doorclosedcharge_001); Heals? False
+> Door to EMMI Zone Exit East Access (Upper); Heals? False
   * Layers: default
   * Charge Beam Door to EMMI Zone Exit East Access/Door to EMMI Zone Exit East (Charge)
   * Extra - actor_name: doorclosedcharge_001
@@ -2654,7 +2654,7 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit East Access (doorpowerpower_017)
+  > Door to EMMI Zone Exit East Access (Lower)
       Morph Ball
   > Dock to Path to Escue
       Any of the following:
@@ -2668,7 +2668,7 @@ Extra - asset_id: collision_camera_032
   * EMMI Door to Path to Escue/Dock to EMMI Zone Exit East
   * Extra - actor_name: dooremmy_006
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to EMMI Zone Exit East Access (doorclosedcharge_001)
+  > Door to EMMI Zone Exit East Access (Upper)
       Trivial
 
 ----------------
@@ -2690,7 +2690,7 @@ Extra - asset_id: collision_camera_033
 
 > Door to EMMI Zone Exit East (Power); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Exit East/Door to EMMI Zone Exit East Access (doorpowerpower_017)
+  * Power Beam Door to EMMI Zone Exit East/Door to EMMI Zone Exit East Access (Lower)
   * Extra - actor_name: doorpowerpower_017
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2702,7 +2702,7 @@ Extra - asset_id: collision_camera_033
 
 > Door to EMMI Zone Exit East (Charge); Heals? False
   * Layers: default
-  * Access Locked to EMMI Zone Exit East/Door to EMMI Zone Exit East Access (doorclosedcharge_001)
+  * Access Locked to EMMI Zone Exit East/Door to EMMI Zone Exit East Access (Upper)
   * Extra - actor_name: doorclosedcharge_001
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2880,16 +2880,16 @@ Extra - asset_id: collision_camera_040
   > Central Platform
       Trivial
 
-> Tile Group (WEIGHT) 1; Heals? False
+> Connection to Fan Room Access 1; Heals? False
   * Layers: default
   * Extra - actor_name: breakabletilegroup_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (WEIGHT) 2
+  > Connection to Fan Room Access 2
       Trivial
 
-> Tile Group (WEIGHT) 2; Heals? False
+> Connection to Fan Room Access 2; Heals? False
   * Layers: default
   * Extra - actor_name: breakabletilegroup_051
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
@@ -2914,7 +2914,7 @@ Extra - asset_id: collision_camera_040
           All of the following:
               Speed Booster
               Flash Shift or Lay Cross Comb
-  > Tile Group (WEIGHT) 1
+  > Connection to Fan Room Access 1
       Can Slide
   > Tunnel to EMMI Zone Exit West
       Any of the following:
