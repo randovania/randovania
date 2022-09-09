@@ -278,7 +278,7 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Elevator to Ferenia - East Transport to Darion
       After Dairon - Pull Grapple Block below Ferenia Elevator
-  > Event - Pull Grapple Block below Elevator to Ferenia
+  > Event - Grapple Block 
       Grapple Beam
 
 > Elevator to Ferenia - East Transport to Darion; Heals? False; Spawn Point
@@ -292,10 +292,10 @@ Extra - asset_id: collision_camera_003
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Dock to EMMI Zone Exit East
       After Dairon - Pull Grapple Block below Ferenia Elevator
-  > Event - Pull Grapple Block below Elevator to Ferenia
+  > Event - Grapple Block 
       Break/Move Grapple Block from Behind
 
-> Event - Pull Grapple Block below Elevator to Ferenia; Heals? False
+> Event - Grapple Block ; Heals? False
   * Layers: default
   * Event Dairon - Pull Grapple Block below Ferenia Elevator
   > Dock to EMMI Zone Exit East
@@ -320,7 +320,7 @@ Extra - asset_id: collision_camera_004
               All of the following:
                   Flash Shift
                   Lay Cross Comb or Use Spin Boost
-  > Event - Big Hub Blob
+  > Event -  Blob
       Lay Bomb or Shoot Beam
   > Dock to Hub Access
       Trivial
@@ -338,7 +338,7 @@ Extra - asset_id: collision_camera_004
       Flash Shift or After Dairon - Big Hub Blob
   > Door to Total Recharge Station East
       Trivial
-  > Event - Big Hub Blob
+  > Event -  Blob
       Shoot Diffusion or Wave
 
 > Door to Total Recharge Station East; Heals? False
@@ -363,7 +363,7 @@ Extra - asset_id: collision_camera_004
   > Dock to Yellow EMMI Introduction
       Trivial
 
-> Event - Big Hub Blob; Heals? False
+> Event -  Blob; Heals? False
   * Layers: default
   * Event Dairon - Big Hub Blob
   * Extra - actor_name: db_reg_b1_005
@@ -371,7 +371,7 @@ Extra - asset_id: collision_camera_004
   > Door to Wide Beam Room
       Trivial
 
-> Event - Big Hub Grapple Block; Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
   * Event Dairon - Big Hub Grapple Block
   * Extra - actor_name: grapplepulloff1x2_007
@@ -405,7 +405,7 @@ Extra - asset_id: collision_camera_004
       Speed Booster or After Dairon - Wide Beam Block Hub or Simple IBJ or Use Spin Boost
   > Door to Total Recharge Station East
       Trivial
-  > Event - Big Hub Grapple Block
+  > Event - Grapple Block
       Grapple Beam
   > Tile Group (BOMB)
       Morph Ball and After Dairon - Big Hub Grapple Block
@@ -640,7 +640,7 @@ Extra - asset_id: collision_camera_008
       Trivial
   > Tile Group (POWERBEAM) 2
       Trivial
-  > Event - Teleport to Cataris Blob ,through wall
+  > Event - Blob, through wall
       Wave Beam
 
 > Door to Power Switch 1; Heals? False
@@ -671,7 +671,7 @@ Extra - asset_id: collision_camera_008
   > Door to Power Switch 1
       After Dairon - Power Switch 1
 
-> Event - Teleport to Cataris Blob, from teleporter; Heals? False
+> Event -vBlob, from teleporter; Heals? False
   * Layers: default
   * Event Dairon - Teleport to Cataris Blob
   * Extra - actor_name: db_dif_b1_001
@@ -688,7 +688,7 @@ Extra - asset_id: collision_camera_008
   * Extra - target_spawn_point: teleport_baselab_000_platform
   * Extra - start_point_actor_name: teleport_magma_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Event - Teleport to Cataris Blob, from teleporter
+  > Event -vBlob, from teleporter
       Shoot Diffusion or Wave
   > Bottom-Left Corner
       After Dairon - Teleport to Cataris Blob
@@ -729,7 +729,7 @@ Extra - asset_id: collision_camera_008
   * Layers: default
   > Door to Early Grapple Access
       Morph Ball and After Dairon - Power Switch 1
-  > Event - Teleport to Cataris Blob, from teleporter
+  > Event -vBlob, from teleporter
       Shoot Diffusion or Wave
   > Teleporter to Cataris - Teleport to Dairon
       All of the following:
@@ -742,7 +742,7 @@ Extra - asset_id: collision_camera_008
   > Tile Group (POWERBEAM) 2
       Trivial
 
-> Event - Teleport to Cataris Blob ,through wall; Heals? False
+> Event - Blob, through wall; Heals? False
   * Layers: default
   * Event Dairon - Teleport to Cataris Blob
   > Door to Total Recharge Station East
@@ -988,13 +988,15 @@ Extra - asset_id: collision_camera_011
                   # heat runs
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
 
-> Event - Transport to Artaria Grapple Block; Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
   * Event Dairon - Transport to Artaria Grapple Block
   * Extra - actor_name: grapplepulloff1x2_006
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Start Point
-      Trivial
+  > Elevator to Artaria - Transport to Dairon
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Beginner) and Cold Damage ≥ 50
 
 > Elevator to Artaria - Transport to Dairon; Heals? False; Spawn Point
   * Layers: default
@@ -1005,11 +1007,22 @@ Extra - asset_id: collision_camera_011
   * Extra - target_spawn_point: elevator_baselab_000_platform
   * Extra - start_point_actor_name: elevator_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  > Start Point
+  > Event - Grapple Block
+      All of the following:
+          Grapple Beam
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
+  > Tile Group (POWERBEAM)
       Any of the following:
-          # Loading time in Heat Room; can still expect you to get back onto elevator with 0 tanks
           Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 300
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
+  > Tunnel to Hub Access
+      All of the following:
+          After Dairon - Transport to Artaria Grapple Block
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -1019,10 +1032,6 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Early Grapple Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-  > Start Point
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
@@ -1065,35 +1074,12 @@ Extra - asset_id: collision_camera_011
 > Tunnel to Hub Access; Heals? False
   * Layers: default
   * Morph Ball Launcher to Hub Access/Dock from Transport to Artaria
-  > Start Point
-      All of the following:
-          After Dairon - Transport to Artaria Grapple Block
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-
-> Start Point; Heals? False
-  * Layers: default
-  > Event - Transport to Artaria Grapple Block
-      All of the following:
-          Grapple Beam
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
   > Elevator to Artaria - Transport to Dairon
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
-  > Tile Group (POWERBEAM)
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-  > Tunnel to Hub Access
       All of the following:
           After Dairon - Transport to Artaria Grapple Block
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
+              Heat/Cold Runs (Beginner) and Cold Damage ≥ 50
 
 ----------------
 Early Grapple Room
@@ -1761,7 +1747,7 @@ Extra - asset_id: collision_camera_020
           Any of the following:
               Lay Cross Comb
               Speedbooster Conservation (Intermediate) and Ballspark
-  > Event - Cross Bomb Puzzle Grapple Block
+  > Event -  Grapple Block
       Grapple Beam
 
 > Pickup (Missile Tank); Heals? False
@@ -1772,7 +1758,7 @@ Extra - asset_id: collision_camera_020
   > Tile Group (WEIGHT) 4
       Trivial
 
-> Event - Cross Bomb Puzzle Grapple Block; Heals? False
+> Event -  Grapple Block; Heals? False
   * Layers: default
   * Event Dairon - Cross Bomb Puzzle Grapple Block
   * Extra - actor_name: grapplepulloff1x2_002
