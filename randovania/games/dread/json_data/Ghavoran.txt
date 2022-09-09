@@ -1969,6 +1969,16 @@ Extra - asset_id: collision_camera_024
 > Tunnel to Above Pulse Radar; Heals? False
   * Layers: default
   * Slide Tunnel to Above Pulse Radar/Tunnel to Golzuna Tower
+  > Door to Above Golzuna
+      All of the following:
+          Morph Ball and Disabled Door Lock Randomizer
+          Any of the following:
+              Knowledge (Beginner) and Lay Power Bomb
+              All of the following:
+                  Shoot Charge Beam
+                  Any of the following:
+                      # The pseudo for this is a melee pseudo next to the tunnel
+                      Wave Beam or Pseudo-Wave Beam (Beginner)
   > Tile Group (POWERBEAM) 1
       Can Slide
 
@@ -3217,12 +3227,16 @@ Extra - asset_id: collision_camera_039
   * Pickup 106; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Door to Golzuna Tower
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # Movement is for shooting the block while on the ledge, pseudo is performed in the little alcove under the block with a melee pseudo
+              Wave Beam or Movement (Beginner) or Pseudo-Wave Beam (Beginner) or Lay Bomb or Lay Power Bomb
   > Tile Group (WEIGHT)
       Morph Ball
-  > Tile Group (POWERBEAM) 1
-      Can Slide
-  > Tile Group (POWERBEAM) 2
-      Lay Bomb or Lay Power Bomb
+  > Tunnel to Golzuna Tower
+      Morph Ball
 
 > Door to Golzuna Tower; Heals? False
   * Layers: default
@@ -3233,8 +3247,8 @@ Extra - asset_id: collision_camera_039
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 2
-      Can Slide
+  > Pickup (Missile Tank)
+      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -3254,48 +3268,6 @@ Extra - asset_id: collision_camera_039
   > Start Point
       Trivial
 
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tile Group (POWERBEAM) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              # Movement option is for shooting the block while hanging on the ledge. Pseudo-wave is performed in the tunnel section to the right of the block
-              Wave Beam or Movement (Beginner) or Pseudo-Wave Beam (Beginner)
-  > Tile Group (POWERBEAM) 3
-      Can Slide
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_046
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Pickup (Missile Tank)
-      Can Slide
-  > Door to Golzuna Tower
-      Morph Ball
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_029
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Tunnel to Golzuna Tower
-      Can Slide
-
 > Dock to Pulse Radar Room; Heals? False
   * Layers: default
   * Open Passage to Pulse Radar Room/Dock to Above Pulse Radar
@@ -3303,8 +3275,8 @@ Extra - asset_id: collision_camera_039
 > Tunnel to Golzuna Tower; Heals? False
   * Layers: default
   * Slide Tunnel to Golzuna Tower/Tunnel to Above Pulse Radar
-  > Tile Group (POWERBEAM) 3
-      Can Slide
+  > Pickup (Missile Tank)
+      Morph Ball
 
 ----------------
 Save Station East
