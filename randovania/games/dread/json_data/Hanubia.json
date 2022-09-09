@@ -319,7 +319,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Breakable (Pull Grapple Block)": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -430,7 +430,7 @@
                         }
                     }
                 },
-                "Event - Breakable (Pull Grapple Block)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -664,7 +664,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Breakable (Pull Grapple Block)": {
+                        "Event - Grapple Block": {
                             "type": "template",
                             "data": "Break/Move Grapple Block from Behind"
                         }
@@ -1155,7 +1155,7 @@
                         }
                     }
                 },
-                "Event - Breakable (Glass Tube)": {
+                "Event - Glass Tube": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1277,7 +1277,7 @@
                                 "negate": true
                             }
                         },
-                        "Event - Breakable (Glass Tube)": {
+                        "Event - Glass Tube": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1339,7 +1339,7 @@
                                 "negate": true
                             }
                         },
-                        "Event - Breakable (Glass Tube)": {
+                        "Event - Glass Tube": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
@@ -1526,7 +1526,7 @@
                         ]
                     },
                     "connections": {
-                        "Event - Breakable (Glass Tube)": {
+                        "Event - Glass Tube": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
@@ -1542,7 +1542,7 @@
             }
         },
         "Gold Chozo Warrior Arena": {
-            "default_node": "Gold Chozo Fight",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1602,12 +1602,18 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Gold Chozo Fight": {
-                            "type": "and",
+                        "Door to Transport to Itorash": {
+                            "type": "resource",
                             "data": {
-                                "comment": "TODO: fight requirements",
-                                "items": []
+                                "type": "events",
+                                "name": "GoldChozoFight",
+                                "amount": 1,
+                                "negate": false
                             }
+                        },
+                        "Event - Gold Chozo Fight": {
+                            "type": "template",
+                            "data": "Fight Gold Chozo-X"
                         }
                     }
                 },
@@ -1641,21 +1647,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Gold Chozo Fight": {
-                            "type": "and",
+                        "Door to Total Recharge Station North": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "GoldChozoFight",
+                                "amount": 1,
+                                "negate": false
                             }
+                        },
+                        "Event - Gold Chozo Fight": {
+                            "type": "template",
+                            "data": "Fight Gold Chozo-X"
                         }
                     }
                 },
-                "Gold Chozo Fight": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5250.0,
-                        "y": 3350.0,
+                        "x": 4814.039621016365,
+                        "y": 3418.6339299533,
                         "z": 0.0
                     },
                     "description": "",
@@ -1667,13 +1679,30 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Total Recharge Station North": {
+                        "Door to Transport to Itorash": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        },
+                        }
+                    }
+                },
+                "Event - Gold Chozo Fight": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5255.04,
+                        "y": 3446.2,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "GoldChozoFight",
+                    "connections": {
                         "Door to Transport to Itorash": {
                             "type": "and",
                             "data": {
@@ -1746,7 +1775,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Pull Grapple Block (grapplepulloff1x2_001)": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1852,7 +1881,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2_001)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2545,7 +2574,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2622,7 +2651,7 @@
                                 ]
                             }
                         },
-                        "Event - Pull Grapple Block (grapplepulloff1x2)": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3670,7 +3699,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Dock to Total Recharge Station East (dooremmy_002)": {
+                "Dock to Total Recharge Station East (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3690,13 +3719,13 @@
                     "default_connection": {
                         "world_name": "Hanubia",
                         "area_name": "Total Recharge Station East",
-                        "node_name": "Dock to EMMI Zone Exit East (dooremmy_002)"
+                        "node_name": "Dock to EMMI Zone Exit East (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Break PB Tube (block_pbtube_2)": {
+                        "Event - Break EMMI Zone Exit East PB Tube": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
@@ -3711,7 +3740,7 @@
                         }
                     }
                 },
-                "Dock to Total Recharge Station East (dooremmy_003)": {
+                "Dock to Total Recharge Station East (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3731,7 +3760,7 @@
                     "default_connection": {
                         "world_name": "Hanubia",
                         "area_name": "Total Recharge Station East",
-                        "node_name": "Dock to EMMI Zone Exit East (dooremmy_003)"
+                        "node_name": "Dock to EMMI Zone Exit East (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -3746,7 +3775,7 @@
                         }
                     }
                 },
-                "Event - Break PB Tube (block_pbtube_2)": {
+                "Event - Break EMMI Zone Exit East PB Tube": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3764,7 +3793,7 @@
                     },
                     "event_name": "s080_shipyard:default:block_pbtube_2",
                     "connections": {
-                        "Dock to Total Recharge Station East (dooremmy_002)": {
+                        "Dock to Total Recharge Station East (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3803,7 +3832,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Total Recharge Station East (dooremmy_002)": {
+                        "Dock to Total Recharge Station East (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3837,7 +3866,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Total Recharge Station East (dooremmy_003)": {
+                        "Dock to Total Recharge Station East (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3950,7 +3979,7 @@
                         }
                     }
                 },
-                "Event - Red Chozo Warrior Fight": {
+                "Event - Red Chozo Fight": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4040,12 +4069,9 @@
                                 "negate": false
                             }
                         },
-                        "Event - Red Chozo Warrior Fight": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: fight requirements",
-                                "items": []
-                            }
+                        "Event - Red Chozo Fight": {
+                            "type": "template",
+                            "data": "Fight Red Chozo-X"
                         }
                     }
                 }
@@ -4086,7 +4112,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Dock to EMMI Zone Exit East (dooremmy_002)": {
+                "Dock to EMMI Zone Exit East (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4106,7 +4132,7 @@
                     "default_connection": {
                         "world_name": "Hanubia",
                         "area_name": "EMMI Zone Exit East",
-                        "node_name": "Dock to Total Recharge Station East (dooremmy_002)"
+                        "node_name": "Dock to Total Recharge Station East (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -4121,7 +4147,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit East (dooremmy_003)": {
+                "Dock to EMMI Zone Exit East (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4141,7 +4167,7 @@
                     "default_connection": {
                         "world_name": "Hanubia",
                         "area_name": "EMMI Zone Exit East",
-                        "node_name": "Dock to Total Recharge Station East (dooremmy_003)"
+                        "node_name": "Dock to Total Recharge Station East (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -4214,7 +4240,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit East (dooremmy_003)": {
+                        "Dock to EMMI Zone Exit East (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4243,7 +4269,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit East (dooremmy_003)": {
+                        "Dock to EMMI Zone Exit East (Lower)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4299,7 +4325,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit East (dooremmy_002)": {
+                        "Dock to EMMI Zone Exit East (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4335,7 +4361,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit East (dooremmy_003)": {
+                        "Dock to EMMI Zone Exit East (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
