@@ -26,8 +26,8 @@ Extra - asset_id: collision_camera_000
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Tunnel to Total Recharge Station South
-      Morph Ball and After Cataris - breakablemag002
-  > Event - Missile Tank Blob through wall (breakablemag002)
+      Morph Ball and After Cataris - Artaria Transport Blob
+  > Event - Artaria Transport Blob through Wall
       Shoot Diffusion or Wave
   > Mid-Level
       Trivial
@@ -40,9 +40,9 @@ Extra - asset_id: collision_camera_000
   > Tunnel to Total Recharge Station South
       Trivial
 
-> Event - Missile Tank Blob (breakablemag002); Heals? False
+> Event - Artaria Transport Blob, adjacent; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag002
+  * Event Cataris - Artaria Transport Blob
   * Extra - actor_name: breakablemag002
   * Extra - actor_def: actordef:actors/props/breakablemag002/charclasses/breakablemag002.bmsad
   > Tunnel to Total Recharge Station South
@@ -90,15 +90,15 @@ Extra - asset_id: collision_camera_000
   * Layers: default
   * Morph Ball Tunnel to Total Recharge Station South/Tunnel to Transport to Artaria
   > Door to Navigation Station Southeast
-      Morph Ball and After Cataris - breakablemag002
+      Morph Ball and After Cataris - Artaria Transport Blob
   > Pickup (Missile Tank)
       Trivial
-  > Event - Missile Tank Blob (breakablemag002)
-      Shoot Beam
+  > Event - Artaria Transport Blob, adjacent
+      Lay Bomb or Shoot Beam
 
-> Event - Missile Tank Blob through wall (breakablemag002); Heals? False
+> Event - Artaria Transport Blob through Wall; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag002
+  * Event Cataris - Artaria Transport Blob
   > Door to Navigation Station Southeast
       Trivial
 
@@ -259,7 +259,7 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   * Morph Ball Launcher to Above Z-57 Fight/Dock from Thermal Device Room South
   > Start Point
-      Morph Ball
+      Morph Ball and After Cataris - First Thermal Device
 
 > Front of Thermal Door; Heals? False
   * Layers: default
@@ -349,14 +349,14 @@ Extra - asset_id: collision_camera_007
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Breakable (breakablemag001)
-      Wave Beam
+  > Event - First Device Blob
+      Shoot Diffusion or Wave
   > Tunnel to Transport to Artaria
-      After Cataris - breakablemag001
+      After Cataris - First Device Blob
 
-> Event - Breakable (breakablemag001); Heals? False
+> Event - First Device Blob; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag001
+  * Event Cataris - First Device Blob
   * Extra - actor_name: breakablemag001
   * Extra - actor_def: actordef:actors/props/breakablemag001/charclasses/breakablemag001.bmsad
   > Tunnel to Transport to Artaria
@@ -387,13 +387,13 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Morph Ball Tunnel to Transport to Artaria/Tunnel to Total Recharge Station South
   > Door to Thermal Device Room South (Top)
-      After Cataris - breakablemag001
-  > Event - Breakable (breakablemag001)
-      Shoot Beam
+      After Cataris - First Device Blob
+  > Event - First Device Blob
+      Lay Bomb or Shoot Beam
   > Total Recharge
       Trivial
   > Tile Group (POWERBEAM)
-      Trivial
+      Can Slide
 
 > Next to Thermal Door; Heals? False
   * Layers: default
@@ -434,10 +434,10 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_def: None
   > Door to Z-57 Heat Room East
       Trivial
-  > Event - Blob (breakablemag003)
-      Shoot Beam
+  > Event - Z-57 Blob
+      Lay Bomb or Shoot Beam
   > Tunnel to Dropdown Pit
-      After Cataris - breakablemag003 and Can Slide
+      After Cataris - Z-57 Blob and Can Slide
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -445,11 +445,11 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: item_missiletank_008
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Pickup Corner
-      Trivial
+      Morph Ball
 
-> Event - Blob (breakablemag003); Heals? False
+> Event - Z-57 Blob; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag003
+  * Event Cataris - Z-57 Blob
   * Extra - actor_name: breakablemag003
   * Extra - actor_def: actordef:actors/props/breakablemag003/charclasses/breakablemag003.bmsad
   > Door to Z-57 Heat Room West (Right)
@@ -497,13 +497,13 @@ Extra - asset_id: collision_camera_009
   > Tile Group (SCREWATTACK) 2
       Trivial
   > Between Thermal Gates
-      Trivial
+      After Cataris - First Thermal Device
 
 > Tunnel to Dropdown Pit; Heals? False
   * Layers: default
   * Slide Tunnel to Dropdown Pit/Tunnel to Above Z-57 Fight
   > Door to Z-57 Heat Room West (Right)
-      Morph Ball and After Cataris - breakablemag003
+      Morph Ball and After Cataris - Z-57 Blob
 
 > Dock to Thermal Device Room South; Heals? False
   * Layers: default
@@ -542,7 +542,7 @@ Extra - asset_id: collision_camera_009
   > Tile Group (SCREWATTACK) 1
       Trivial
   > Center Hall
-      Trivial
+      After Cataris - First Thermal Device
   > Z-57 Room
       After Cataris - First Thermal Device
 
@@ -560,7 +560,7 @@ EMMI Zone Exit East
 Extra - total_boundings: {'x1': 4400.0, 'x2': 8500.0, 'y1': -1300.0, 'y2': 1800.0}
 Extra - polygon: [[8500.0, 1800.0], [4400.0, 1800.0], [4400.0, -1300.0], [8500.0, -1300.0]]
 Extra - asset_id: collision_camera_010
-> Door to EMMI Zone Tower East (doorpowerpower_016); Heals? False
+> Door to EMMI Zone Tower East (Power); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone Exit East (Power)
   * Extra - actor_name: doorpowerpower_016
@@ -569,20 +569,22 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Tower East (doorclosedcharge_001)
+  > Door to EMMI Zone Tower East (Charge)
       Trivial
   > Tunnel to EMMI Zone Tower East
-      Spider Magnet or Infinite Bomb Jump (Beginner) or Use Spin Boost
+      Any of the following:
+          Flash Shift or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
 
 > Dock to Tall Magnet Walls Access; Heals? False
   * Layers: default
   * EMMI Door to Tall Magnet Walls Access/Dock to EMMI Zone Exit East
   * Extra - actor_name: dooremmy
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to EMMI Zone Tower East (doorclosedcharge_001)
+  > Door to EMMI Zone Tower East (Charge)
       After Cataris - Hallway Thermal Device
 
-> Door to EMMI Zone Tower East (doorclosedcharge_001); Heals? False
+> Door to EMMI Zone Tower East (Charge); Heals? False
   * Layers: default
   * Charge Beam Door to EMMI Zone Tower East/Door to EMMI Zone Exit East (Charge)
   * Extra - actor_name: doorclosedcharge_001
@@ -591,15 +593,15 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Tower East (doorpowerpower_016)
-      Flash Shift or Speed Booster or Can Slide
+  > Door to EMMI Zone Tower East (Power)
+      Flash Shift or Speed Booster or Movement (Beginner) or Can Slide or Lay Cross Comb or Use Spin Boost
   > Dock to Tall Magnet Walls Access
       After Cataris - Hallway Thermal Device
 
 > Tunnel to EMMI Zone Tower East; Heals? False
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone Exit East
-  > Door to EMMI Zone Tower East (doorpowerpower_016)
+  > Door to EMMI Zone Tower East (Power)
       Trivial
 
 ----------------
@@ -1431,25 +1433,25 @@ Extra - asset_id: collision_camera_019
   > Top Ledge
       After Cataris - Green EMMI Access Blob
 
-> Event - First Tunnel Blob (breakablemag004); Heals? False
+> Event - First Tunnel Blob, in tunnel; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag004
+  * Event Cataris - Z-57 First Tunnel Blob
   * Extra - actor_name: breakablemag004
   * Extra - actor_def: actordef:actors/props/breakablemag004/charclasses/breakablemag004.bmsad
-  > Right Platform
+  > Tiny Alcove
       Trivial
 
-> Event - Second Tunnel Blob (breakablemag014); Heals? False
+> Event - Second Tunnel Blob; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag014
+  * Event Cataris - Z-57 Second Tunnel Blob
   * Extra - actor_name: breakablemag014
   * Extra - actor_def: actordef:actors/props/breakablemag014/charclasses/breakablemag014.bmsad
   > Tiny Alcove
       Trivial
 
-> Event - Open Passage Blob (breakablemag013); Heals? False
+> Event - Open Passage Blob; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag013
+  * Event Cataris - Z-57 Open Passage Blob
   * Extra - actor_name: breakablemag013
   * Extra - actor_def: actordef:actors/props/breakablemag013/charclasses/breakablemag013.bmsad
   > Right Platform
@@ -1460,7 +1462,7 @@ Extra - asset_id: collision_camera_019
   * Open Passage to Z-57 Heat Room West (Right)/Dock to Z-57 Heat Room West (Left)
   > Right Platform
       All of the following:
-          After Cataris - breakablemag013
+          After Cataris - Z-57 Open Passage Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
@@ -1469,16 +1471,14 @@ Extra - asset_id: collision_camera_019
   * Layers: default
   > Tiny Alcove
       All of the following:
-          Morph Ball and After Cataris - breakablemag004
+          Morph Ball and After Cataris - Z-57 First Tunnel Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Top Ledge
-      All of the following:
-          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Right Platform
       Any of the following:
           Varia Suit
@@ -1489,29 +1489,29 @@ Extra - asset_id: collision_camera_019
   * Morph Ball Tunnel to Z-57 Heat Room West (Right)/Tunnel to Z-57 Heat Room West (Left)
   > Tiny Alcove
       All of the following:
-          Morph Ball and After Cataris - breakablemag014
+          Morph Ball and After Cataris - Z-57 Second Tunnel Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
 
 > Tiny Alcove; Heals? False
   * Layers: default
-  > Event - Second Tunnel Blob (breakablemag014)
-      Shoot Beam
+  > Event - Second Tunnel Blob
+      Lay Bomb or Shoot Beam
   > Tunnel to Z-57 Heat Room West (Right)
       All of the following:
-          Morph Ball and After Cataris - breakablemag014
+          Morph Ball and After Cataris - Z-57 Second Tunnel Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
   > Right Platform
       All of the following:
-          After Cataris - breakablemag004 and Can Slide
+          After Cataris - Z-57 First Tunnel Blob and Can Slide
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
 
-> Event - Door Blob (db_hdoor_mg_002); Heals? False
+> Event - Green EMMI Access Blob; Heals? False
   * Layers: default
   * Event Cataris - Green EMMI Access Blob
   > Top Ledge
@@ -1525,25 +1525,26 @@ Extra - asset_id: collision_camera_019
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Event - Door Blob (db_hdoor_mg_002)
-      Shoot Beam
+  > Event - Green EMMI Access Blob
+      Lay Bomb or Shoot Beam
 
 > Right Platform; Heals? False
   * Layers: default
-  > Event - First Tunnel Blob (breakablemag004)
-      Any of the following:
-          Shoot Diffusion or Wave
-          All of the following:
-              Lay Bomb
+  > Event - First Tunnel Blob, in tunnel
+      All of the following:
+          Lay Bomb
+          Any of the following:
               Simple IBJ or Use Spin Boost
-              Any of the following:
-                  Varia Suit
-                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Event - Open Passage Blob (breakablemag013)
+              Slide and Slide Jump (Intermediate)
+              Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Event - Open Passage Blob
       Shoot Beam
   > Dock to Z-57 Heat Room West (Right)
       All of the following:
-          After Cataris - breakablemag013
+          After Cataris - Z-57 Open Passage Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
@@ -1551,6 +1552,14 @@ Extra - asset_id: collision_camera_019
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+  > Event - First Tunnel Blob, below
+      Shoot Diffusion or Wave
+
+> Event - First Tunnel Blob, below; Heals? False
+  * Layers: default
+  * Event Cataris - Z-57 First Tunnel Blob
+  > Right Platform
+      Trivial
 
 ----------------
 Green EMMI Introduction
@@ -1562,20 +1571,20 @@ Extra - asset_id: collision_camera_020
   * EMMI Door to Green EMMI Introduction Access/Dock to Green EMMI Introduction
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to EMMI Zone East Tower Access (doorchargecharge_005)
+  > Door to EMMI Zone East Tower Access (Lower)
       Trivial
-  > Event - Lower-left Blob (breakablemag005)
+  > Event - Green EMMI Blob
       Wave Beam
   > Tunnel to EMMI Zone East Tower Access (Bottom)
       Trivial
   > Center Alcove
       Any of the following:
-          After Cataris - breakablemag005
+          After Cataris - Green EMMI Blob
           Morph Ball and After Cataris - Central Unit
 
-> Door to EMMI Zone East Tower Access (doorchargecharge_005); Heals? False
+> Door to EMMI Zone East Tower Access (Lower); Heals? False
   * Layers: default
-  * Charge Beam Door to EMMI Zone East Tower Access/Door to Green EMMI Introduction (doorchargecharge_005)
+  * Charge Beam Door to EMMI Zone East Tower Access/Door to Green EMMI Introduction (Lower)
   * Extra - actor_name: doorchargecharge_005
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1599,15 +1608,17 @@ Extra - asset_id: collision_camera_020
   > Tunnel to EMMI Zone Item Tunnel
       All of the following:
           After Cataris - Central Unit
-          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+              Grapple Beam and Grapple Movement (Beginner)
   > Tunnel to EMMI Zone East Tower Access (Upper)
       Trivial
   > Center Alcove
       Can Slide
 
-> Door to EMMI Zone East Tower Access (doorshutter_001); Heals? False
+> Door to EMMI Zone East Tower Access (Upper); Heals? False
   * Layers: default
-  * Phase Shift Door to EMMI Zone East Tower Access/Door to Green EMMI Introduction (doorshutter_001)
+  * Phase Shift Door to EMMI Zone East Tower Access/Door to Green EMMI Introduction (Upper)
   * Extra - actor_name: doorshutter_001
   * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1617,9 +1628,9 @@ Extra - asset_id: collision_camera_020
   > Tile Group (POWERBEAM) 3
       Trivial
 
-> Event - Lower-left Blob (breakablemag005); Heals? False
+> Event - Green EMMI Blob; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag005
+  * Event Cataris - Green EMMI Blob
   * Extra - actor_name: breakablemag005
   * Extra - actor_def: actordef:actors/props/breakablemag005/charclasses/breakablemag005.bmsad
   > Center Alcove
@@ -1645,9 +1656,9 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (POWERBEAM) 1
-      Trivial
+      Can Slide
   > Tile Group (POWERBEAM) 3
-      Trivial
+      Can Slide
 
 > Tile Group (POWERBEAM) 3; Heals? False
   * Layers: default
@@ -1656,7 +1667,7 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Door to EMMI Zone East Tower Access (doorshutter_001)
+  > Door to EMMI Zone East Tower Access (Upper)
       Trivial
   > Tile Group (POWERBEAM) 2
       Trivial
@@ -1683,7 +1694,7 @@ Extra - asset_id: collision_camera_020
   * Layers: default
   > Dock to Green EMMI Introduction Access
       Any of the following:
-          After Cataris - breakablemag005
+          After Cataris - Green EMMI Blob
           Morph Ball and After Cataris - Central Unit
   > Door to EMMI Zone West Exit Path
       All of the following:
@@ -1691,8 +1702,8 @@ Extra - asset_id: collision_camera_020
           Any of the following:
               Flash Shift or Spider Magnet or Lay Cross Comb or Use Spin Boost
               Infinite Bomb Jump (Intermediate) and Lay Bomb
-  > Event - Lower-left Blob (breakablemag005)
-      Shoot Beam
+  > Event - Green EMMI Blob
+      Lay Bomb or Shoot Beam
 
 ----------------
 Z-57 Heat Room West (Right)
@@ -1710,12 +1721,12 @@ Extra - asset_id: collision_camera_021
   * Extra - right_shield_def: None
   > Dock to Z-57 Heat Room West (Left)
       All of the following:
-          After Cataris - breakablemag013
+          After Cataris - Z-57 Open Passage Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Event - Open Passage Blob (breakablemag013)
-      Shoot Beam
+  > Event - Open Passage Blob
+      Lay Bomb or Shoot Beam
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -1730,14 +1741,14 @@ Extra - asset_id: collision_camera_021
   * Open Passage to Z-57 Heat Room West (Left)/Dock to Z-57 Heat Room West (Right)
   > Door to Above Z-57 Fight
       All of the following:
-          After Cataris - breakablemag013
+          After Cataris - Z-57 Open Passage Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Event - Open Passage Blob (breakablemag013); Heals? False
+> Event - Open Passage Blob; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag013
+  * Event Cataris - Z-57 Open Passage Blob
   > Door to Above Z-57 Fight
       Trivial
 
@@ -1773,7 +1784,7 @@ Extra - asset_id: collision_camera_022
       Trivial
   > Tunnel to EMMI Zone Tower West
       Any of the following:
-          Space Jump or Simple IBJ
+          Space Jump or Speed Booster or Simple IBJ
           Flash Shift and Walljump (Intermediate) and Use Spin Boost
 
 > Tunnel to EMMI Zone Tower West; Heals? False
@@ -1789,7 +1800,7 @@ Extra - polygon: [[-10400.0, 3100.0], [-12500.0, 3100.0], [-12500.0, 1100.0], [-
 Extra - asset_id: collision_camera_023
 > Dock to EMMI Zone Exits West (Upper); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exits West/Dock to Long Mouth Statue Room (dooremmy_008)
+  * EMMI Door to EMMI Zone Exits West/Dock to Long Mouth Statue Room (Upper)
   * Extra - actor_name: dooremmy_008
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to EMMI Zone Exits West (Lower)
@@ -1797,7 +1808,7 @@ Extra - asset_id: collision_camera_023
 
 > Dock to EMMI Zone Exits West (Lower); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exits West/Dock to Long Mouth Statue Room (dooremmy_009)
+  * EMMI Door to EMMI Zone Exits West/Dock to Long Mouth Statue Room (Lower)
   * Extra - actor_name: dooremmy_009
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Path to Kraid Entryway
@@ -2437,10 +2448,8 @@ Extra - asset_id: collision_camera_028
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Ghavoran Teleport Access
-      All of the following:
-          Can Slide
-          Speed Booster or Simple IBJ or Use Spin Boost
-  > Dock to Long Mouth Statue Room (dooremmy_008)
+      Can Slide
+  > Dock to Long Mouth Statue Room (Upper)
       Morph Ball
   > Tunnel to Central Unit Access
       Trivial
@@ -2453,7 +2462,7 @@ Extra - asset_id: collision_camera_028
   > Door to EMMI Zone Item Tunnel
       Can Slide
 
-> Dock to Long Mouth Statue Room (dooremmy_008); Heals? False
+> Dock to Long Mouth Statue Room (Upper); Heals? False
   * Layers: default
   * EMMI Door to Long Mouth Statue Room/Dock to EMMI Zone Exits West (Upper)
   * Extra - actor_name: dooremmy_008
@@ -2463,7 +2472,7 @@ Extra - asset_id: collision_camera_028
   > Pickup (Missile Tank)
       Trivial
 
-> Dock to Long Mouth Statue Room (dooremmy_009); Heals? False
+> Dock to Long Mouth Statue Room (Lower); Heals? False
   * Layers: default
   * EMMI Door to Long Mouth Statue Room/Dock to EMMI Zone Exits West (Lower)
   * Extra - actor_name: dooremmy_009
@@ -2488,7 +2497,7 @@ Extra - asset_id: collision_camera_028
   * Pickup 40; Major Location? False
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Dock to Long Mouth Statue Room (dooremmy_008)
+  > Dock to Long Mouth Statue Room (Upper)
       Trivial
 
 > Tunnel to EMMI Zone West Exit Path; Heals? False
@@ -2511,7 +2520,7 @@ Extra - asset_id: collision_camera_028
 
 > Upper Ledge; Heals? False
   * Layers: default
-  > Dock to Long Mouth Statue Room (dooremmy_009)
+  > Dock to Long Mouth Statue Room (Lower)
       Trivial
   > Door to EMMI Zone West Exit Path
       Trivial
@@ -2557,7 +2566,7 @@ Extra - asset_id: collision_camera_029
   > Door to EMMI Zone Exits West
       Can Slide
   > Center of Tunnel
-      Morph Ball and After Cataris - Central Unit
+      After Cataris - Central Unit and Can Slide
 
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
@@ -2566,25 +2575,6 @@ Extra - asset_id: collision_camera_029
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBOMB)
-      Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_076
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Pickup (Power Bomb Tank)
-      Ballspark
   > Center of Tunnel
       Morph Ball
 
@@ -2602,10 +2592,10 @@ Extra - asset_id: collision_camera_029
 
 > Center of Tunnel; Heals? False
   * Layers: default
+  > Pickup (Power Bomb Tank)
+      Speed Booster and After Cataris - Central Unit and Disabled Door Lock Randomizer and Lay Power Bomb
   > Door to EMMI Zone Exit to Map Station
       Morph Ball and After Cataris - Central Unit
-  > Tile Group (POWERBOMB)
-      Morph Ball
   > Tunnel to Green EMMI Introduction
       Morph Ball
   > Tunnel to EMMI Zone Exits West
@@ -2663,12 +2653,13 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Tower East
       Any of the following:
-          Grapple Beam or Space Jump or Speed Booster or Simple IBJ
+          Space Jump or Speed Booster or Simple IBJ
+          All of the following:
+              Grapple Beam
+              Spider Magnet or Grapple Movement (Beginner)
           Spider Magnet and After Cataris - Lower Lava Button
   > Dock to EMMI Zone Tower West
-      Any of the following:
-          Flash Shift or Grapple Beam or Spider Magnet or Use Spin Boost
-          Speed Booster and Knowledge (Beginner)
+      Flash Shift or Grapple Beam or Spider Magnet or Speed Booster or Use Spin Boost
 
 > Dock to EMMI Zone Tower East; Heals? False
   * Layers: default
@@ -2677,9 +2668,12 @@ Extra - asset_id: collision_camera_031
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Map Station
       Any of the following:
-          Grapple Beam or Space Jump or Simple IBJ
-          Spider Magnet and After Cataris - Lower Lava Button
+          Space Jump or Simple IBJ
+          All of the following:
+              Grapple Beam
+              Spider Magnet or Grapple Movement (Beginner)
           Speed Booster and Disabled Door Lock Randomizer
+          Spider Magnet and After Cataris - Lower Lava Button
 
 > Dock to EMMI Zone Tower West; Heals? False
   * Layers: default
@@ -2694,7 +2688,7 @@ EMMI Zone Tower East
 Extra - total_boundings: {'x1': 2400.0, 'x2': 4500.0, 'y1': -1300.0, 'y2': 4150.0}
 Extra - polygon: [[4500.0, 4150.0], [2400.0, 4150.0], [2400.0, -1300.0], [4500.0, -1300.0]]
 Extra - asset_id: collision_camera_032
-> Door to EMMI Zone East Tower Access (doorpowerpower_015); Heals? False
+> Door to EMMI Zone East Tower Access (Middle); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Middle)
   * Extra - actor_name: doorpowerpower_015
@@ -2708,19 +2702,21 @@ Extra - asset_id: collision_camera_032
 
 > Door to EMMI Zone Exit East (Power); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Exit East/Door to EMMI Zone Tower East (doorpowerpower_016)
+  * Power Beam Door to EMMI Zone Exit East/Door to EMMI Zone Tower East (Power)
   * Extra - actor_name: doorpowerpower_016
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone East Tower Access (doorclosedcharge)
+  > Door to EMMI Zone East Tower Access (Bottom)
       Trivial
   > Tunnel to EMMI Zone Exit East
       All of the following:
           Morph Ball
-          Simple IBJ or Use Spin Boost
+          Any of the following:
+              Simple IBJ or Use Spin Boost
+              Speed Booster and Disabled Door Lock Randomizer
 
 > Dock to Moving Magnet Walls (Small); Heals? False
   * Layers: default
@@ -2739,7 +2735,7 @@ Extra - asset_id: collision_camera_032
                       Any of the following:
                           Space Jump
                           Speed Booster and Disabled Door Lock Randomizer
-  > Door to EMMI Zone East Tower Access (doorpowerpower_000)
+  > Door to EMMI Zone East Tower Access (Top)
       Trivial
 
 > Dock to Hall Thermal Device Room; Heals? False
@@ -2754,7 +2750,7 @@ Extra - asset_id: collision_camera_032
   > Tunnel to EMMI Zone Hidden Missile Room
       Trivial
 
-> Door to EMMI Zone East Tower Access (doorpowerpower_000); Heals? False
+> Door to EMMI Zone East Tower Access (Top); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Top)
   * Extra - actor_name: doorpowerpower_000
@@ -2766,7 +2762,7 @@ Extra - asset_id: collision_camera_032
   > Dock to Moving Magnet Walls (Small)
       Trivial
 
-> Door to EMMI Zone East Tower Access (doorclosedcharge); Heals? False
+> Door to EMMI Zone East Tower Access (Bottom); Heals? False
   * Layers: default
   * Charge Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Bottom)
   * Extra - actor_name: doorclosedcharge
@@ -2780,7 +2776,7 @@ Extra - asset_id: collision_camera_032
 
 > Door to EMMI Zone Exit East (Charge); Heals? False
   * Layers: default
-  * Access Locked to EMMI Zone Exit East/Door to EMMI Zone Tower East (doorclosedcharge_001)
+  * Access Locked to EMMI Zone Exit East/Door to EMMI Zone Tower East (Charge)
   * Extra - actor_name: doorclosedcharge_001
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2789,7 +2785,7 @@ Extra - asset_id: collision_camera_032
   * Extra - right_shield_def: None
   > Tunnel to EMMI Zone Hidden Missile Room
       Trivial
-  > Tunnel to EMMI Zone East Tower Access (2)
+  > Tunnel to EMMI Zone East Tower Access (Upper)
       Trivial
 
 > Tunnel to EMMI Zone Hidden Missile Room; Heals? False
@@ -2803,22 +2799,22 @@ Extra - asset_id: collision_camera_032
 > Tunnel to EMMI Zone Exit East; Heals? False
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to EMMI Zone Tower East
-  > Door to EMMI Zone East Tower Access (doorpowerpower_015)
+  > Door to EMMI Zone East Tower Access (Middle)
       Trivial
   > Door to EMMI Zone Exit East (Power)
       Can Slide
-  > Tunnel to EMMI Zone East Tower Access (1)
+  > Tunnel to EMMI Zone East Tower Access (Lower)
       Trivial
 
-> Tunnel to EMMI Zone East Tower Access (1); Heals? False
+> Tunnel to EMMI Zone East Tower Access (Lower); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to EMMI Zone East Tower Access/Tunnel to EMMI Zone Tower East (1)
+  * Morph Ball Tunnel to EMMI Zone East Tower Access/Tunnel to EMMI Zone Tower East (Lower)
   > Tunnel to EMMI Zone Exit East
       Trivial
 
-> Tunnel to EMMI Zone East Tower Access (2); Heals? False
+> Tunnel to EMMI Zone East Tower Access (Upper); Heals? False
   * Layers: default
-  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Tunnel to EMMI Zone Tower East (2)
+  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Tunnel to EMMI Zone Tower East (Upper)
   > Door to EMMI Zone Exit East (Charge)
       Trivial
 
@@ -2964,20 +2960,22 @@ Extra - asset_id: collision_camera_036
       Trivial
   > Upper-right Corner
       Trivial
-  > Event - Central Unit Blob through wall
-      Diffusion Beam or Wave Beam
+  > Door to Central Unit
+      After Cataris - Central Unit Bottom Blob and Can Slide
+  > Event - Central Unit Bottom Blob through Wall
+      Shoot Diffusion or Wave
 
-> Event - Top Blob (breakablemag007); Heals? False
+> Event - Central Unit Top Blob; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag007
+  * Event Cataris - Central Unit Top Blob
   * Extra - actor_name: breakablemag007
   * Extra - actor_def: actordef:actors/props/breakablemag007/charclasses/breakablemag007.bmsad
   > Upper-right Corner
       Trivial
 
-> Event - Central Unit Blob (breakablemag008); Heals? False
+> Event - Central Unit Bottom Blob, adjacent; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag008
+  * Event Cataris - Central Unit Bottom Blob
   * Extra - actor_name: breakablemag008
   * Extra - actor_def: actordef:actors/props/breakablemag008/charclasses/breakablemag008.bmsad
   > Door to Central Unit
@@ -3000,10 +2998,10 @@ Extra - asset_id: collision_camera_036
   * Layers: default
   > Door from EMMI Zone Tower West
       Trivial
-  > Event - Top Blob (breakablemag007)
-      Shoot Beam
+  > Event - Central Unit Top Blob
+      Lay Bomb or Shoot Beam
   > Door to Central Unit
-      Morph Ball or After Cataris - breakablemag007
+      Morph Ball or After Cataris - Central Unit Top Blob
 
 > Door to Central Unit; Heals? False
   * Layers: default
@@ -3011,19 +3009,19 @@ Extra - asset_id: collision_camera_036
   > Door from EMMI Zone Tower West
       Any of the following:
           Morph Ball
-          After Cataris - breakablemag008 and Can Slide
-  > Event - Top Blob (breakablemag007)
-      Diffusion Beam or Wave Beam
-  > Event - Central Unit Blob (breakablemag008)
-      Shoot Beam
+          After Cataris - Central Unit Bottom Blob and Can Slide
+  > Event - Central Unit Top Blob
+      Shoot Diffusion or Wave
+  > Event - Central Unit Bottom Blob, adjacent
+      Lay Bomb or Shoot Beam
   > Upper-right Corner
-      Morph Ball or After Cataris - breakablemag007
+      Morph Ball or After Cataris - Central Unit Top Blob
   > Pickup (Morph Ball)
       After Cataris - Central Unit
 
-> Event - Central Unit Blob through wall; Heals? False
+> Event - Central Unit Bottom Blob through Wall; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag008
+  * Event Cataris - Central Unit Bottom Blob
   > Door from EMMI Zone Tower West
       Trivial
 
@@ -3785,29 +3783,29 @@ Extra - polygon: [[2500.0, 2000.0], [-700.0, 2000.0], [-700.0, -1300.0], [2500.0
 Extra - asset_id: collision_camera_046
 > Door to EMMI Zone Tower East (Middle); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (doorpowerpower_015)
+  * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (Middle)
   * Extra - actor_name: doorpowerpower_015
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Green EMMI Introduction (doorchargecharge_005)
+  > Door to Green EMMI Introduction (Lower)
       Trivial
   > Door to EMMI Zone Tower East (Bottom)
       Trivial
-  > Tunnel to EMMI Zone Tower East (1)
+  > Tunnel to EMMI Zone Tower East (Lower)
       Trivial
   > Tunnel to Green EMMI Introduction (Bottom)
       Trivial
-  > Tunnel to EMMI Zone Tower East (2)
+  > Tunnel to EMMI Zone Tower East (Upper)
       All of the following:
           Morph Ball and After Cataris - Central Unit
           Speed Booster or Simple IBJ or Use Spin Boost
 
-> Door to Green EMMI Introduction (doorchargecharge_005); Heals? False
+> Door to Green EMMI Introduction (Lower); Heals? False
   * Layers: default
-  * Charge Beam Door to Green EMMI Introduction/Door to EMMI Zone East Tower Access (doorchargecharge_005)
+  * Charge Beam Door to Green EMMI Introduction/Door to EMMI Zone East Tower Access (Lower)
   * Extra - actor_name: doorchargecharge_005
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3819,19 +3817,19 @@ Extra - asset_id: collision_camera_046
 
 > Door to EMMI Zone Tower East (Top); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (doorpowerpower_000)
+  * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (Top)
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Green EMMI Introduction (doorshutter_001)
+  > Door to Green EMMI Introduction (Upper)
       Can Slide
 
 > Door to EMMI Zone Tower East (Bottom); Heals? False
   * Layers: default
-  * Access Locked to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (doorclosedcharge)
+  * Access Locked to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (Bottom)
   * Extra - actor_name: doorclosedcharge
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3841,9 +3839,9 @@ Extra - asset_id: collision_camera_046
   > Door to EMMI Zone Tower East (Middle)
       Trivial
 
-> Door to Green EMMI Introduction (doorshutter_001); Heals? False
+> Door to Green EMMI Introduction (Upper); Heals? False
   * Layers: default
-  * Phase Shift Door to Green EMMI Introduction/Door to EMMI Zone East Tower Access (doorshutter_001)
+  * Phase Shift Door to Green EMMI Introduction/Door to EMMI Zone East Tower Access (Upper)
   * Extra - actor_name: doorshutter_001
   * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3854,12 +3852,12 @@ Extra - asset_id: collision_camera_046
       Can Slide
   > Tunnel to Green EMMI Introduction (Upper)
       Trivial
-  > Tunnel to EMMI Zone Tower East (2)
+  > Tunnel to EMMI Zone Tower East (Upper)
       Morph Ball and After Cataris - Central Unit
 
-> Tunnel to EMMI Zone Tower East (1); Heals? False
+> Tunnel to EMMI Zone Tower East (Lower); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (1)
+  * Morph Ball Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (Lower)
   > Door to EMMI Zone Tower East (Middle)
       Trivial
 
@@ -3872,15 +3870,15 @@ Extra - asset_id: collision_camera_046
 > Tunnel to Green EMMI Introduction (Upper); Heals? False
   * Layers: default
   * Cataris EMMI Tunnel to Green EMMI Introduction/Tunnel to EMMI Zone East Tower Access (Upper)
-  > Door to Green EMMI Introduction (doorshutter_001)
+  > Door to Green EMMI Introduction (Upper)
       Trivial
 
-> Tunnel to EMMI Zone Tower East (2); Heals? False
+> Tunnel to EMMI Zone Tower East (Upper); Heals? False
   * Layers: default
-  * Cataris EMMI Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (2)
+  * Cataris EMMI Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (Upper)
   > Door to EMMI Zone Tower East (Middle)
       Morph Ball and After Cataris - Central Unit
-  > Door to Green EMMI Introduction (doorshutter_001)
+  > Door to Green EMMI Introduction (Upper)
       Morph Ball and After Cataris - Central Unit
 
 ----------------
@@ -4102,7 +4100,7 @@ Extra - asset_id: collision_camera_049
   > Pickup (Missile Tank)
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 200
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -4110,16 +4108,9 @@ Extra - asset_id: collision_camera_049
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Above Z-57 Fight
-      All of the following:
-          Any of the following:
-              # Get through the room
-              Varia Suit
-              Heat/Cold Runs (Beginner) and Heat Damage ≥ 200
-          Any of the following:
-              # Reach the door
-              Flash Shift or Gravity Suit or Simple IBJ or Use Spin Boost
-              Slide and Slide Jump (Intermediate)
-              Heat/Cold Runs (Beginner) and Lava Damage ≥ 200
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 200
 
 ----------------
 Teleport to Dairon
@@ -4463,9 +4454,9 @@ Extra - asset_id: collision_camera_053
   > Dock to Underlava Puzzle Room 1
       Morph Ball
 
-> Event - Lava Grapple Block (grapplepulloff1x2_000); Heals? False
+> Event - Lava Grapple Block; Heals? False
   * Layers: default
-  * Event Cataris - grapplepulloff1x2_000
+  * Event Cataris - Lava Grapple Block
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Below Lava
@@ -4528,7 +4519,7 @@ Extra - asset_id: collision_camera_053
 
 > Below Lava; Heals? False
   * Layers: default
-  > Event - Lava Grapple Block (grapplepulloff1x2_000)
+  > Event - Lava Grapple Block
       All of the following:
           Grapple Beam
           Any of the following:
@@ -4538,6 +4529,8 @@ Extra - asset_id: collision_camera_053
       Any of the following:
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Lava Damage ≥ 500
+  > Dock to Underlava Puzzle Room 1
+      Gravity Suit and Morph Ball and After Cataris - Underlava Puzzle Speed Blocks Destroyed
 
 > Tunnel to Dropdown Pit; Heals? False
   * Layers: default
@@ -4560,8 +4553,18 @@ Extra - asset_id: collision_camera_053
   * Open Passage to Underlava Puzzle Room 1/Dock to Underlava Puzzle Room 2
   > Pickup (Energy Part)
       All of the following:
-          Gravity Suit and After Cataris - grapplepulloff1x2_000 and Ballspark
+          Gravity Suit and After Cataris - Underlava Puzzle Speed Blocks Destroyed and Ballspark
           Flash Shift or Speedbooster Conservation (Beginner) or Simple IBJ or Use Spin Boost
+  > Below Lava
+      Gravity Suit and Morph Ball and After Cataris - Underlava Puzzle Speed Blocks Destroyed
+  > Event - Underlava Puzzle Speed Blocks Destroyed
+      Gravity Suit and Speed Booster and After Cataris - Lava Grapple Block
+
+> Event - Underlava Puzzle Speed Blocks Destroyed; Heals? False
+  * Layers: default
+  * Event Cataris - Underlava Puzzle Speed Blocks Destroyed
+  > Dock to Underlava Puzzle Room 1
+      Trivial
 
 ----------------
 Underlava Puzzle Room 1
@@ -4590,18 +4593,9 @@ Extra - asset_id: collision_camera_055
   * Pickup 47; Major Location? False
   * Extra - actor_name: item_missiletank_011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (WEIGHT)
-      Morph Ball
   > Tile Group (MISSILE)
       Morph Ball
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_013
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tunnel to EMMI Zone Tower East
+  > Main Room
       Morph Ball
 
 > Tile Group (MISSILE); Heals? False
@@ -4620,7 +4614,7 @@ Extra - asset_id: collision_camera_055
   * Layers: default
   > Tile Group (MISSILE)
       Any of the following:
-          Spider Magnet or Speed Booster or Use Spin Boost
+          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
   > Tunnel to EMMI Zone Tower East
       Morph Ball
@@ -4692,7 +4686,7 @@ Extra - asset_id: collision_camera_059
 
 > Door to EMMI Zone Exits West; Heals? False
   * Layers: default
-  * Phase Shift Door to EMMI Zone Exits West/Door to EMMI Zone West Exit Path
+  * Access Open to EMMI Zone Exits West/Door to EMMI Zone West Exit Path
   * Extra - actor_name: doorshutter_002
   * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
   * Extra - left_shield_entity: {EMPTY}
