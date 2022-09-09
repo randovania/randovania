@@ -4232,7 +4232,7 @@ Extra - asset_id: collision_camera_066
   > Door to Save Station East
       Trivial
   > Door to Thermal Device (Upper)
-      After Artaria - Open Thermal Device Item Door
+      Trivial
 
 > Door to Save Station East; Heals? False
   * Layers: default
@@ -4304,8 +4304,8 @@ Extra - asset_id: collision_camera_067
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
       Trivial
-  > Tile Group (MISSILE)
-      Can Slide
+  > Start Point
+      Can Slide and Shoot Missile
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -4333,31 +4333,15 @@ Extra - asset_id: collision_camera_067
       Trivial
   > Door to Thermal Door Tutorial
       Trivial
-  > Event - Thermal Device
-      Trivial
-  > Tile Group (MISSILE)
-      Morph Ball
-  > Event - Open Item Door
+  > Door to Path to Thermal Device (Upper)
       All of the following:
           Shoot Missile
-          Missiles ≥ 2 or Shoot Beam
-
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_049
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Door to Path to Thermal Device (Upper)
-      Morph Ball
-  > Start Point
-      Can Slide
-
-> Event - Open Item Door; Heals? False
-  * Layers: default
-  * Event Artaria - Open Thermal Device Item Door
-  > Start Point
+          Any of the following:
+              Morph Ball
+              All of the following:
+                  Disabled Door Lock Randomizer
+                  Missiles ≥ 2 or Shoot Beam
+  > Event - Thermal Device
       Trivial
 
 ----------------
