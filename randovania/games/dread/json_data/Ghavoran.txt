@@ -619,8 +619,8 @@ Extra - asset_id: collision_camera_008
   > Door to Transport to Dairon
       Trivial
   > Pickup (Missile Tank)
-      Morph Ball and After Ghavoran - grapplepulloff1x2_002
-  > Event - Breakable (grapplepulloff1x2_002)
+      Morph Ball and After Ghavoran - Dairon Transport Grapple Block
+  > Event - Grapple Block
       Grapple Beam
   > Tunnel to Super Missile Room Access
       Any of the following:
@@ -633,11 +633,11 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Super Missile Room Access
-      Morph Ball and After Ghavoran - grapplepulloff1x2_002
+      Morph Ball and After Ghavoran - Dairon Transport Grapple Block
 
-> Event - Breakable (grapplepulloff1x2_002); Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Ghavoran - grapplepulloff1x2_002
+  * Event Ghavoran - Dairon Transport Grapple Block
   * Extra - actor_name: grapplepulloff1x2_002
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Super Missile Room Access
@@ -848,7 +848,7 @@ Extra - asset_id: collision_camera_011
       Trivial
   > Dock to Map Station Access (Upper)
       Any of the following:
-          Grapple Beam or Space Jump or Lay Cross Comb
+          Grapple Beam or Space Jump or Lay Cross Bomb
           Slide and Slide Jump (Beginner) and Use Spin Boost
           Flash Shift and Walljump (Beginner)
           Gravity Suit and Simple IBJ
@@ -1405,7 +1405,7 @@ Extra - asset_id: collision_camera_020
 
 > Dock to Spin Boost Tower (Lower); Heals? False
   * Layers: default
-  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (dooremmy)
+  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (Lower)
   * Extra - actor_name: dooremmy
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Middle Path
@@ -1413,7 +1413,7 @@ Extra - asset_id: collision_camera_020
 
 > Dock to Spin Boost Tower (Upper); Heals? False
   * Layers: default
-  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (Upper)
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Central Unit Access (Lower)
@@ -1480,7 +1480,7 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Event - Breakable (grapplepulloff1x2_000)
+  > Event - Grapple Block
       Any of the following:
           All of the following:
               # With these methods it is impossible to get on the platfrom directly
@@ -1504,7 +1504,7 @@ Extra - asset_id: collision_camera_021
                   Spider Magnet and Slide and Slide Jump (Beginner) and Walljump (Beginner)
   > Tile Group (MISSILE)
       All of the following:
-          After Ghavoran - grapplepulloff1x2_000 and Shoot Missile
+          After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
           Any of the following:
               Flash Shift or Spider Magnet or Simple IBJ or Use Spin Boost
               All of the following:
@@ -1531,7 +1531,7 @@ Extra - asset_id: collision_camera_021
   > Ledge Below PB Tank
       Trivial
 
-> Dock to EMMI Zone Exit Northeast (dooremmy); Heals? False
+> Dock to EMMI Zone Exit Northeast (Lower); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (Lower)
   * Extra - actor_name: dooremmy
@@ -1539,7 +1539,7 @@ Extra - asset_id: collision_camera_021
   > Upper Center Platform
       Flash Shift or Movement (Beginner) or Simple IBJ or Use Spin Boost
 
-> Dock to EMMI Zone Exit Northeast (dooremmy_007); Heals? False
+> Dock to EMMI Zone Exit Northeast (Upper); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (Upper)
   * Extra - actor_name: dooremmy_007
@@ -1571,9 +1571,9 @@ Extra - asset_id: collision_camera_021
   > E-Tank Alcove
       Trivial
 
-> Event - Breakable (grapplepulloff1x2_000); Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Ghavoran - grapplepulloff1x2_000
+  * Event Ghavoran - Spin Boost Tower Grapple Block
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Save Station Center
@@ -1585,7 +1585,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: ammorecharge_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
-  > Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  > Dock to EMMI Zone Exit Northeast (Upper)
       Trivial
 
 > Tile Group (MISSILE); Heals? False
@@ -1596,7 +1596,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
   > Door to Save Station Center
-      After Ghavoran - grapplepulloff1x2_000
+      After Ghavoran - Spin Boost Tower Grapple Block
   > Pickup (Energy Part)
       Morph Ball
 
@@ -1612,24 +1612,24 @@ Extra - asset_id: collision_camera_021
   * Layers: default
   > Door to Save Station Center
       Trivial
-  > Dock to EMMI Zone Exit Northeast (dooremmy)
+  > Dock to EMMI Zone Exit Northeast (Lower)
       Any of the following:
           Flash Shift or Simple IBJ or Use Spin Boost
           Slide and Slide Jump (Intermediate)
-  > Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  > Dock to EMMI Zone Exit Northeast (Upper)
       After Ghavoran - Ammo Recharge Enky Below
-  > Event - Breakable (grapplepulloff1x2_000)
+  > Event - Grapple Block
       All of the following:
           Grapple Beam
           Movement (Intermediate) or Shoot Ice Missile
   > Tile Group (MISSILE)
-      After Ghavoran - grapplepulloff1x2_000 and Shoot Missile
+      After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
   > Event - Ammo Recharge Enky (Below)
       Destroy Enky
 
 > E-Tank Alcove; Heals? False
   * Layers: default
-  > Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  > Dock to EMMI Zone Exit Northeast (Upper)
       After Ghavoran - Ammo Recharge Enky Above
   > Pickup (Energy Tank)
       Trivial
@@ -1726,7 +1726,9 @@ Extra - asset_id: collision_camera_023
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Total Recharge Station North
-      Trivial
+      After Ghavoran - Chozo-X or Before Ghavoran - Chozo-X Trigger
+  > Event - Chozo-X
+      After Ghavoran - Chozo-X Trigger and Fight Chozo-X
 
 > Door to Total Recharge Station North; Heals? False
   * Layers: default
@@ -1738,7 +1740,9 @@ Extra - asset_id: collision_camera_023
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Save Station Center
-      Trivial
+      After Ghavoran - Chozo-X or Before Ghavoran - Chozo-X Trigger
+  > Event - Chozo-X
+      After Ghavoran - Chozo-X Trigger and Fight Chozo-X
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -1747,19 +1751,18 @@ Extra - asset_id: collision_camera_023
   > Door to Save Station Center
       Trivial
 
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_024
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Save Station Center
-      Trivial
-
 > Dock to Teleport to Burenia; Heals? False
   * Layers: default
   * Open Passage to Teleport to Burenia/Dock to Chozo Warrior Arena
-  > Tile Group (WEIGHT)
+  > Door to Save Station Center
+      After Ghavoran - Chozo-X or Before Ghavoran - Chozo-X Trigger
+  > Event - Chozo-X
+      After Ghavoran - Chozo-X Trigger and Fight Chozo-X
+
+> Event - Chozo-X; Heals? False
+  * Layers: default
+  * Event Ghavoran - Chozo-X
+  > Door to Save Station Center
       Trivial
 
 ----------------
@@ -1862,7 +1865,7 @@ Extra - asset_id: collision_camera_024
   > Door to Save Station East
       Any of the following:
           After Ghavoran - Pulse Radar Enky and Movement (Beginner) and Ballspark
-          Bomb and Movement (Expert) and Lay Cross Comb
+          Bomb and Movement (Expert) and Lay Cross Bomb
   > Tile Group (WEIGHT) 3
       Morph Ball
 
@@ -1875,7 +1878,7 @@ Extra - asset_id: collision_camera_024
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Movement (Beginner)
               Any of the following:
@@ -1969,6 +1972,16 @@ Extra - asset_id: collision_camera_024
 > Tunnel to Above Pulse Radar; Heals? False
   * Layers: default
   * Slide Tunnel to Above Pulse Radar/Tunnel to Golzuna Tower
+  > Door to Above Golzuna
+      All of the following:
+          Morph Ball and Disabled Door Lock Randomizer
+          Any of the following:
+              Knowledge (Beginner) and Lay Power Bomb
+              All of the following:
+                  Shoot Charge Beam
+                  Any of the following:
+                      # The pseudo for this is a melee pseudo next to the tunnel
+                      Wave Beam or Pseudo-Wave Beam (Beginner)
   > Tile Group (POWERBEAM) 1
       Can Slide
 
@@ -2088,7 +2101,7 @@ Extra - asset_id: collision_camera_024
       Morph Ball
   > Pickup (Missile Tank)
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Intermediate)
               Flash Shift or Use Spin Boost
@@ -2108,7 +2121,7 @@ Extra - asset_id: collision_camera_024
       Morph Ball
   > Dock to Energy Recharge Station
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Intermediate)
               Flash Shift or Use Spin Boost
@@ -2450,7 +2463,7 @@ Extra - asset_id: collision_camera_028
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Gravity Suit and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -2569,8 +2582,14 @@ Extra - asset_id: collision_camera_030
 > Tunnel to Teleport to Burenia; Heals? False
   * Layers: default
   * Morph Ball Launcher to Teleport to Burenia/Tunnel to Spin Boost Room
-  > Start Point
+  > Event - Chozo-X Trigger
       Morph Ball
+
+> Event - Chozo-X Trigger; Heals? False
+  * Layers: default
+  * Event Ghavoran - Chozo-X Trigger
+  > Start Point
+      Trivial
 
 ----------------
 Energy Recharge Station
@@ -2925,7 +2944,7 @@ Extra - asset_id: collision_camera_033
       Can Slide
   > Alcove 2
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -2974,7 +2993,7 @@ Extra - asset_id: collision_camera_033
       Morph Ball
   > Alcove 2
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -2983,7 +3002,7 @@ Extra - asset_id: collision_camera_033
   * Layers: default
   > Tile Group (BOMB) 2
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -2993,7 +3012,7 @@ Extra - asset_id: collision_camera_033
       Morph Ball
   > Alcove 1
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -3217,12 +3236,16 @@ Extra - asset_id: collision_camera_039
   * Pickup 106; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Door to Golzuna Tower
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # Movement is for shooting the block while on the ledge, pseudo is performed in the little alcove under the block with a melee pseudo
+              Wave Beam or Movement (Beginner) or Pseudo-Wave Beam (Beginner) or Lay Bomb or Lay Power Bomb
   > Tile Group (WEIGHT)
       Morph Ball
-  > Tile Group (POWERBEAM) 1
-      Can Slide
-  > Tile Group (POWERBEAM) 2
-      Lay Bomb or Lay Power Bomb
+  > Tunnel to Golzuna Tower
+      Morph Ball
 
 > Door to Golzuna Tower; Heals? False
   * Layers: default
@@ -3233,8 +3256,8 @@ Extra - asset_id: collision_camera_039
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 2
-      Can Slide
+  > Pickup (Missile Tank)
+      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -3254,48 +3277,6 @@ Extra - asset_id: collision_camera_039
   > Start Point
       Trivial
 
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tile Group (POWERBEAM) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              # Movement option is for shooting the block while hanging on the ledge. Pseudo-wave is performed in the tunnel section to the right of the block
-              Wave Beam or Movement (Beginner) or Pseudo-Wave Beam (Beginner)
-  > Tile Group (POWERBEAM) 3
-      Can Slide
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_046
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Pickup (Missile Tank)
-      Can Slide
-  > Door to Golzuna Tower
-      Morph Ball
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_029
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Tunnel to Golzuna Tower
-      Can Slide
-
 > Dock to Pulse Radar Room; Heals? False
   * Layers: default
   * Open Passage to Pulse Radar Room/Dock to Above Pulse Radar
@@ -3303,8 +3284,8 @@ Extra - asset_id: collision_camera_039
 > Tunnel to Golzuna Tower; Heals? False
   * Layers: default
   * Slide Tunnel to Golzuna Tower/Tunnel to Above Pulse Radar
-  > Tile Group (POWERBEAM) 3
-      Can Slide
+  > Pickup (Missile Tank)
+      Morph Ball
 
 ----------------
 Save Station East

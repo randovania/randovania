@@ -4,6 +4,8 @@
 
 Welcome to Randovania, a randomizer platform for a multitude of games.
 
+New here or looking to install? Check [our website](https://randovania.github.io/).
+
 <!-- Begin SUPPORTED -->
 
 ### Supported Games
@@ -99,6 +101,8 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 
 [BashPrime](https://www.twitch.tv/bashprime), [Pwootage](https://github.com/Pwootage), and [April Wade](https://github.com/aprilwade) made <https://randomizer.metroidprime.run/>, from which the GUI was based.
 
+Website created by [Hugoshido](https://twitch.tv/hugoshido).
+
 Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/), which has graciously provided us with an open source license.
 
 ## Games
@@ -106,12 +110,14 @@ Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/)
 ### Metroid Prime 1
 * Game patching via [randomprime](https://github.com/aprilwade/randomprime) from April Wade, with contributions from [UltiNaruto](https://github.com/UltiNaruto), BashPrime and toasterparty.
 * Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [SolventMercury](https://github.com/SolventMercury).
+* Converting Metroid Prime 2 models by [Migs](https://www.twitch.tv/migslive).
 
 ### Metroid Prime 2: Echoes
 * Game patching written by [Claris](https://www.twitch.tv/claris).
 * Room data initially collected by Claris, revamped by [Dyceron](https://www.twitch.tv/dyceron).
 * [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z) created by Claris. For more information, see the
 [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
+* Converting Metroid Prime models by [Migs](https://www.twitch.tv/migslive).
 
 ### Metroid Prime 3: Corruption
 * Game patching written by [gollop](https://github.com/gollop).
@@ -129,9 +135,23 @@ Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/)
 * Features contributions from [many others](https://github.com/cave-story-randomizer/cave-story-randomizer/graphs/contributors).
 
 ### Metroid Dread
-* Game Patching by [Henrique Gemignani](https://github.com/henriquegemignani/) and [duncathan_salt](https://twitter.com/duncathan_salt).
-* Room data initially collected by [KirbymastaH](https://www.twitch.tv/kirbymastah) (connections), [Dyceron](https://www.twitch.tv/dyceron) (area names) and Henrique Gemignani (initial structure).
-* Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ). Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ. 
+* Game Patching by:
+  * [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/)
+  * [duncathan_salt](https://twitter.com/duncathan_salt)
+  * [ScorelessPine](https://github.com/ScorelessPine)
+  * [Arcanox](https://twitter.com/ArcanoxDragon)
+  * [Migs](https://www.twitch.tv/migslive)
+
+* Logic Database by:
+  * [KirbymastaH](https://www.twitch.tv/kirbymastah)
+  * [Dyceron](https://www.twitch.tv/dyceron)
+  * [XenoWars](https://www.twitch.tv/xenowars1)
+  * [Izzychu](https://github.com/Isachu)
+  * [Hugoshido](https://twitch.tv/hugoshido)
+
+* Assets by:
+  * Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ).
+  * Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ. 
 
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).

@@ -1482,7 +1482,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Pull Grapple Block": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1529,13 +1529,13 @@
                                 "negate": false
                             }
                         },
-                        "Event - Pull Grapple Block": {
+                        "Event - Grapple Block": {
                             "type": "template",
                             "data": "Break/Move Grapple Block from Behind"
                         }
                     }
                 },
-                "Event - Pull Grapple Block": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1693,7 +1693,7 @@
                                                                         },
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Lay Cross Comb"
+                                                                            "data": "Lay Cross Bomb"
                                                                         }
                                                                     ]
                                                                 }
@@ -1707,7 +1707,7 @@
                                 ]
                             }
                         },
-                        "Event - Blob (db_reg_b1_005)": {
+                        "Event - Blob": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1795,7 +1795,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Blob (db_reg_b1_005)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         }
@@ -1875,7 +1875,7 @@
                         }
                     }
                 },
-                "Event - Blob (db_reg_b1_005)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1902,7 +1902,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2_007)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2077,7 +2077,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Pull Grapple Block (grapplepulloff1x2_007)": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3001,7 +3001,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Blob through wall (db_dif_b1_001)": {
+                        "Event - Blob, through wall": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3108,7 +3108,7 @@
                         }
                     }
                 },
-                "Event - Blob from shaft (db_dif_b1_001)": {
+                "Event - Blob, from teleporter": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3162,7 +3162,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Event - Blob from shaft (db_dif_b1_001)": {
+                        "Event - Blob, from teleporter": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
@@ -3329,7 +3329,7 @@
                                 ]
                             }
                         },
-                        "Event - Blob from shaft (db_dif_b1_001)": {
+                        "Event - Blob, from teleporter": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
@@ -3441,7 +3441,7 @@
                         }
                     }
                 },
-                "Event - Blob through wall (db_dif_b1_001)": {
+                "Event - Blob, through wall": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -5023,15 +5023,6 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Grapple",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
                                                                                         "type": "template",
                                                                                         "data": "Simple IBJ"
                                                                                     },
@@ -5065,6 +5056,32 @@
                                                                                 "type": "tricks",
                                                                                 "name": "Movement",
                                                                                 "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Grapple",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "GrappleMovement",
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -5125,7 +5142,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2_006)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -5143,11 +5160,47 @@
                     },
                     "event_name": "s030_baselab:default:grapplepulloff1x2_006",
                     "connections": {
-                        "Full samus control": {
-                            "type": "and",
+                        "Elevator to Artaria - Transport to Dairon": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Cold",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5179,41 +5232,58 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Full samus control": {
-                            "type": "or",
+                        "Event - Grapple Block": {
+                            "type": "and",
                             "data": {
-                                "comment": "Loading time in Heat Room; can still expect you to get back onto elevator with 0 tanks",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Varia",
+                                            "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
+                                                        "type": "items",
+                                                        "name": "Varia",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 300,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Heat",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5221,31 +5291,8 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13100.0,
-                        "y": -1500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_053",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Early Grapple Room": {
+                        },
+                        "Tile Group (POWERBEAM)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5288,7 +5335,90 @@
                                 ]
                             }
                         },
-                        "Full samus control": {
+                        "Tunnel to Hub Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:grapplepulloff1x2_006",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Heat",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tile Group (POWERBEAM)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13100.0,
+                        "y": -1500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "breakabletilegroup_053",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
+                    },
+                    "connections": {
+                        "Door to Early Grapple Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5616,229 +5746,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Full samus control": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:grapplepulloff1x2_006",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 50,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Full samus control": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13517.697594501718,
-                        "y": -1371.4380121596614,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Event - Pull Grapple Block (grapplepulloff1x2_006)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Elevator to Artaria - Transport to Dairon": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 100,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 50,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5884,7 +5792,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "Heat",
+                                                                    "name": "Cold",
                                                                     "amount": 50,
                                                                     "negate": false
                                                                 }
@@ -8915,7 +8823,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "template",
@@ -9635,7 +9543,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Lay Cross Bomb"
                                                 },
                                                 {
                                                     "type": "and",
@@ -9677,7 +9585,7 @@
                                 ]
                             }
                         },
-                        "Event - Cross Bomb Puzzle Grapple Block": {
+                        "Event -  Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9716,7 +9624,7 @@
                         }
                     }
                 },
-                "Event - Cross Bomb Puzzle Grapple Block": {
+                "Event -  Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12571,7 +12479,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "misc",
-                                            "name": "DisabledFreezer",
+                                            "name": "HighDanger",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -12928,7 +12836,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "misc",
-                                            "name": "DisabledFreezer",
+                                            "name": "HighDanger",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -16222,7 +16130,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Lay Cross Bomb"
                                                 },
                                                 {
                                                     "type": "template",

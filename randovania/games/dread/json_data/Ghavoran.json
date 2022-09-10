@@ -3184,7 +3184,7 @@
                                 ]
                             }
                         },
-                        "Event - Breakable (grapplepulloff1x2_002)": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3284,7 +3284,7 @@
                         }
                     }
                 },
-                "Event - Breakable (grapplepulloff1x2_002)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4382,7 +4382,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -7398,7 +7398,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "Spin Boost Tower",
-                        "node_name": "Dock to EMMI Zone Exit Northeast (dooremmy)"
+                        "node_name": "Dock to EMMI Zone Exit Northeast (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -7433,7 +7433,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "Spin Boost Tower",
-                        "node_name": "Dock to EMMI Zone Exit Northeast (dooremmy_007)"
+                        "node_name": "Dock to EMMI Zone Exit Northeast (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -7700,7 +7700,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Breakable (grapplepulloff1x2_000)": {
+                        "Event - Grapple Block": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8152,7 +8152,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit Northeast (dooremmy)": {
+                "Dock to EMMI Zone Exit Northeast (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8214,7 +8214,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
+                "Dock to EMMI Zone Exit Northeast (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8333,7 +8333,7 @@
                         }
                     }
                 },
-                "Event - Breakable (grapplepulloff1x2_000)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -8379,7 +8379,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
+                        "Dock to EMMI Zone Exit Northeast (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8535,7 +8535,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to EMMI Zone Exit Northeast (dooremmy)": {
+                        "Dock to EMMI Zone Exit Northeast (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8586,7 +8586,7 @@
                                 ]
                             }
                         },
-                        "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
+                        "Dock to EMMI Zone Exit Northeast (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -8595,7 +8595,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Breakable (grapplepulloff1x2_000)": {
+                        "Event - Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8674,7 +8674,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
+                        "Dock to EMMI Zone Exit Northeast (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -9214,10 +9214,50 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Total Recharge Station North": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoX",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo-X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fight Chozo-X"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9253,10 +9293,50 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station Center": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoX",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo-X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fight Chozo-X"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9276,36 +9356,6 @@
                     "extra": {
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Save Station Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5800.0,
-                        "y": 800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
                     },
                     "connections": {
                         "Door to Save Station Center": {
@@ -9340,7 +9390,71 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (WEIGHT)": {
+                        "Door to Save Station Center": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoX",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo-X": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fight Chozo-X"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Chozo-X": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5550.0,
+                        "y": -200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "GhavoranChozoX",
+                    "connections": {
+                        "Door to Save Station Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9862,7 +9976,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Lay Cross Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -9957,7 +10071,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -10285,6 +10399,99 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Above Golzuna": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Charge Beam"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "The pseudo for this is a melee pseudo next to the tunnel",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Wave",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Pseudo",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Tile Group (POWERBEAM) 1": {
                             "type": "template",
                             "data": "Can Slide"
@@ -10784,7 +10991,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -10907,7 +11114,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -12731,7 +12938,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -13367,13 +13574,37 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Event - Chozo-X Trigger": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Chozo-X Trigger": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3555.02,
+                        "y": 1464.8,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "GhavoranChozoXTrigger",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -15031,7 +15262,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -15257,7 +15488,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -15332,7 +15563,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -15404,7 +15635,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -16492,6 +16723,66 @@
                     "pickup_index": 106,
                     "major_location": false,
                     "connections": {
+                        "Door to Golzuna Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Movement is for shooting the block while on the ledge, pseudo is performed in the little alcove under the block with a melee pseudo",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Tile Group (WEIGHT)": {
                             "type": "resource",
                             "data": {
@@ -16501,24 +16792,13 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (POWERBEAM) 1": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        },
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "or",
+                        "Tunnel to Golzuna Tower": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -16553,9 +16833,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "template",
-                            "data": "Can Slide"
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -16619,166 +16904,6 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3600.0,
-                        "y": 6400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_017",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Movement option is for shooting the block while hanging on the ledge. Pseudo-wave is performed in the tunnel section to the right of the block",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Pseudo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 3": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3900.0,
-                        "y": 7000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_046",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        },
-                        "Door to Golzuna Tower": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4000.0,
-                        "y": 6200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_029",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (POWERBEAM) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to Golzuna Tower": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        }
-                    }
-                },
                 "Dock to Pulse Radar Room": {
                     "node_type": "dock",
                     "heal": false,
@@ -16826,9 +16951,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM) 3": {
-                            "type": "template",
-                            "data": "Can Slide"
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 }

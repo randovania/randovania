@@ -147,7 +147,7 @@
                                 ]
                             }
                         },
-                        "Event - Missile Tank Blob through wall (breakablemag002)": {
+                        "Event - Blob through Wall": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
@@ -188,7 +188,7 @@
                         }
                     }
                 },
-                "Event - Missile Tank Blob (breakablemag002)": {
+                "Event - Blob, adjacent": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -388,13 +388,13 @@
                                 "items": []
                             }
                         },
-                        "Event - Missile Tank Blob (breakablemag002)": {
+                        "Event - Blob, adjacent": {
                             "type": "template",
                             "data": "Shoot Beam"
                         }
                     }
                 },
-                "Event - Missile Tank Blob through wall (breakablemag002)": {
+                "Event - Blob through Wall": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1415,14 +1415,9 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Breakable (breakablemag001)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
+                        "Event - Blob": {
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
                         },
                         "Tunnel to Transport to Artaria": {
                             "type": "resource",
@@ -1435,7 +1430,7 @@
                         }
                     }
                 },
-                "Event - Breakable (breakablemag001)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1553,7 +1548,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Breakable (breakablemag001)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -1757,7 +1752,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Blob (breakablemag003)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -1812,7 +1807,7 @@
                         }
                     }
                 },
-                "Event - Blob (breakablemag003)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2034,10 +2029,12 @@
                             }
                         },
                         "Between Thermal Gates": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "s020_magma:default:deviceheat",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2382,10 +2379,12 @@
                             }
                         },
                         "Center Hall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "s020_magma:default:deviceheat",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Z-57 Room": {
@@ -2461,7 +2460,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Door to EMMI Zone Tower East (doorpowerpower_016)": {
+                "Door to EMMI Zone Tower East (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2491,7 +2490,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Tower East (doorclosedcharge_001)": {
+                        "Door to EMMI Zone Tower East (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2517,13 +2516,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -2556,7 +2550,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Tower East (doorclosedcharge_001)": {
+                        "Door to EMMI Zone Tower East (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2567,7 +2561,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Tower East (doorclosedcharge_001)": {
+                "Door to EMMI Zone Tower East (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2597,7 +2591,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Tower East (doorpowerpower_016)": {
+                        "Door to EMMI Zone Tower East (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2661,7 +2655,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Tower East (doorpowerpower_016)": {
+                        "Door to EMMI Zone Tower East (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2787,7 +2781,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East Access (doorchargecharge_002)": {
+                "Door to Lava Button East Access (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2811,7 +2805,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East Access",
-                        "node_name": "Door to Lava Button East (doorchargecharge_002)"
+                        "node_name": "Door to Lava Button East (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -2972,7 +2966,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East Access (doorframepresence_001)": {
+                "Door to Lava Button East Access (Cloak)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2996,7 +2990,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East Access",
-                        "node_name": "Door to Lava Button East (doorframepresence_001)"
+                        "node_name": "Door to Lava Button East (Cloak)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -3059,7 +3053,7 @@
                     "extra": {},
                     "event_name": "CatarisMoveMagnetWallsButton",
                     "connections": {
-                        "Door to Lava Button East Access (doorframepresence_001)": {
+                        "Door to Lava Button East Access (Cloak)": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -3225,7 +3219,7 @@
                                 ]
                             }
                         },
-                        "Door to Lava Button East Access (doorchargecharge_002)": {
+                        "Door to Lava Button East Access (Charge)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3590,7 +3584,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                        "Door to Energy Recharge Station (Charge)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3735,7 +3729,7 @@
                         }
                     }
                 },
-                "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                "Door to Energy Recharge Station (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3772,7 +3766,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Energy Recharge Station (doorpresenceframe_000)": {
+                        "Door to Energy Recharge Station (Cloak)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3836,7 +3830,7 @@
                         }
                     }
                 },
-                "Door to Energy Recharge Station (doorpresenceframe_000)": {
+                "Door to Energy Recharge Station (Cloak)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3866,7 +3860,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                        "Door to Energy Recharge Station (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3942,7 +3936,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                        "Door to Energy Recharge Station (Charge)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4439,7 +4433,7 @@
                         }
                     }
                 },
-                "Event - Blue Teleport Blob (breakablemag012)": {
+                "Event - East Blob, below": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4466,7 +4460,7 @@
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                "Event - West Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4520,7 +4514,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Event - Blue Teleport Blob (breakablemag012)": {
+                        "Event - East Blob, below": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -5407,7 +5401,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Blue Teleport Blob from other side (breakablemag012)": {
+                        "Event - East Blob, above": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6529,7 +6523,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                        "Event - West Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -6866,7 +6860,7 @@
                         }
                     }
                 },
-                "Event - Blue Teleport Blob from other side (breakablemag012)": {
+                "Event - East Blob, above": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -6962,15 +6956,6 @@
                                 "negate": false
                             }
                         },
-                        "Event - Breakable (db_hdoor_mg_001)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Total Recharge": {
                             "type": "and",
                             "data": {
@@ -7017,33 +7002,6 @@
                                 "name": "s020_magma:default:db_hdoor_mg_001",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Breakable (db_hdoor_mg_001)": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 10400.0,
-                        "y": 7200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "db_hdoor_mg_001",
-                        "actor_def": "actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad"
-                    },
-                    "event_name": "s020_magma:default:db_hdoor_mg_001",
-                    "connections": {
-                        "Door to Thermal Device Room North": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -7218,7 +7176,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Moving Magnet Walls (Tall)",
-                        "node_name": "Door to Energy Recharge Station (doorclosedcharge_002)"
+                        "node_name": "Door to Energy Recharge Station (Charge)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
@@ -7317,7 +7275,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Moving Magnet Walls (Tall)",
-                        "node_name": "Door to Energy Recharge Station (doorpresenceframe_000)"
+                        "node_name": "Door to Energy Recharge Station (Cloak)"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "override_default_open_requirement": null,
@@ -7503,7 +7461,7 @@
                         }
                     }
                 },
-                "Event - First Tunnel Blob (breakablemag004)": {
+                "Event - First Tunnel Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -7530,7 +7488,7 @@
                         }
                     }
                 },
-                "Event - Second Tunnel Blob (breakablemag014)": {
+                "Event - Second Tunnel Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -7557,7 +7515,7 @@
                         }
                     }
                 },
-                "Event - Open Passage Blob (breakablemag013)": {
+                "Event - Open Passage Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -7753,82 +7711,40 @@
                             }
                         },
                         "Top Ledge": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 50,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 50,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -7990,7 +7906,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - Second Tunnel Blob (breakablemag014)": {
+                        "Event - Second Tunnel Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -8129,7 +8045,7 @@
                         }
                     }
                 },
-                "Event - Door Blob (db_hdoor_mg_002)": {
+                "Event - Green EMMI Access Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -8219,7 +8135,7 @@
                                 ]
                             }
                         },
-                        "Event - Door Blob (db_hdoor_mg_002)": {
+                        "Event - Green EMMI Access Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         }
@@ -8239,7 +8155,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - First Tunnel Blob (breakablemag004)": {
+                        "Event - First Tunnel Blob": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8322,7 +8238,7 @@
                                 ]
                             }
                         },
-                        "Event - Open Passage Blob (breakablemag013)": {
+                        "Event - Open Passage Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -8490,14 +8406,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone East Tower Access (doorchargecharge_005)": {
+                        "Door to EMMI Zone East Tower Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Lower-left Blob (breakablemag005)": {
+                        "Event - Blob": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8558,7 +8474,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone East Tower Access (doorchargecharge_005)": {
+                "Door to EMMI Zone East Tower Access (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8582,7 +8498,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone East Tower Access",
-                        "node_name": "Door to Green EMMI Introduction (doorchargecharge_005)"
+                        "node_name": "Door to Green EMMI Introduction (Lower)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -8635,52 +8551,35 @@
                             }
                         },
                         "Tunnel to EMMI Zone Item Tunnel": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
+                                            "type": "items",
+                                            "name": "Magnet",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -8698,7 +8597,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone East Tower Access (doorshutter_001)": {
+                "Door to EMMI Zone East Tower Access (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8722,7 +8621,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone East Tower Access",
-                        "node_name": "Door to Green EMMI Introduction (doorshutter_001)"
+                        "node_name": "Door to Green EMMI Introduction (Upper)"
                     },
                     "default_dock_weakness": "Phase Shift Door",
                     "override_default_open_requirement": null,
@@ -8737,7 +8636,7 @@
                         }
                     }
                 },
-                "Event - Lower-left Blob (breakablemag005)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -8859,7 +8758,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to EMMI Zone East Tower Access (doorshutter_001)": {
+                        "Door to EMMI Zone East Tower Access (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9097,7 +8996,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Lay Cross Bomb"
                                                 }
                                             ]
                                         }
@@ -9105,7 +9004,7 @@
                                 ]
                             }
                         },
-                        "Event - Lower-left Blob (breakablemag005)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         }
@@ -9234,7 +9133,7 @@
                                 ]
                             }
                         },
-                        "Event - Open Passage Blob (breakablemag013)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         }
@@ -9355,7 +9254,7 @@
                         }
                     }
                 },
-                "Event - Open Passage Blob (breakablemag013)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9644,7 +9543,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Dock to EMMI Zone Exits West (dooremmy_008)": {
+                "Dock to EMMI Zone Exits West (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9664,13 +9563,13 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Exits West",
-                        "node_name": "Dock to Long Mouth Statue Room (dooremmy_008)"
+                        "node_name": "Dock to Long Mouth Statue Room (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (WEIGHT) 1": {
+                        "Dock to EMMI Zone Exits West (Lower)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9681,7 +9580,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exits West (dooremmy_009)": {
+                "Dock to EMMI Zone Exits West (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9701,7 +9600,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Exits West",
-                        "node_name": "Dock to Long Mouth Statue Room (dooremmy_009)"
+                        "node_name": "Dock to Long Mouth Statue Room (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -9755,7 +9654,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to EMMI Zone Exits West (dooremmy_009)": {
+                        "Dock to EMMI Zone Exits West (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9790,6 +9689,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -9797,7 +9705,7 @@
                                 ]
                             }
                         },
-                        "Event - Ledge Blob (db_reg_mg_017)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -9854,7 +9762,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to EMMI Zone Exits West (dooremmy_009)": {
+                        "Dock to EMMI Zone Exits West (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9863,7 +9771,7 @@
                         }
                     }
                 },
-                "Event - Ledge Blob (db_reg_mg_017)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9918,38 +9826,6 @@
                         }
                     }
                 },
-                "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11400.0,
-                        "y": 2400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_015",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (WEIGHT) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Tile Group (POWERBEAM) 1": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -9971,7 +9847,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exits West (dooremmy_009)": {
+                        "Dock to EMMI Zone Exits West (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10052,70 +9928,6 @@
                         }
                     }
                 },
-                "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11800.0,
-                        "y": 2200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_031",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (WEIGHT) 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 3": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11900.0,
-                        "y": 1600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_032",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Dock to EMMI Zone Exits West (dooremmy_009)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Tunnel to Path to Kraid Entryway": {
                     "node_type": "dock",
                     "heal": false,
@@ -10135,7 +9947,7 @@
                         "area_name": "Path to Kraid Entryway",
                         "node_name": "Tunnel to Long Mouth Statue Room"
                     },
-                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "default_dock_weakness": "Slide Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10228,9 +10040,21 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Blob above Kraid, from below": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Blob above Kraid, below": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Dock to Kraid Arena": {
                             "type": "and",
@@ -10394,12 +10218,12 @@
                         }
                     }
                 },
-                "Event - Blob above Kraid, from below": {
+                "Event - Blob above Kraid, below": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15434.62590912364,
-                        "y": -3771.3365689218112,
+                        "x": -15434.63,
+                        "y": -3771.34,
                         "z": 0.0
                     },
                     "description": "",
@@ -11344,13 +11168,13 @@
                                 ]
                             }
                         },
-                        "Event - Blob above Kraid, from left": {
+                        "Event - Blob above Kraid, left": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         }
                     }
                 },
-                "Event - Blob above Kraid, from left": {
+                "Event - Blob above Kraid, left": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -11549,21 +11373,41 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spin",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spin Boost"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -11629,6 +11473,15 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11636,9 +11489,21 @@
                                 ]
                             }
                         },
-                        "Event - Morph Tunnel Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Tile Group (BOMB)": {
                             "type": "and",
@@ -11766,7 +11631,7 @@
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -11820,21 +11685,16 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Tile Group (BOMB)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (WEIGHT) 2": {
+                        "Door to Save Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tile Group (BOMB)": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -11875,69 +11735,13 @@
                                 "items": []
                             }
                         },
+                        "Pickup (Missile+ Tank)": {
+                            "type": "template",
+                            "data": "Can Slide"
+                        },
                         "Teleporter to Artaria - Teleport to Cataris": {
                             "type": "template",
                             "data": "Can Slide"
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -18300.0,
-                        "y": -300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_021",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Save Station West": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -18300.0,
-                        "y": 200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_022",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (WEIGHT) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -12121,7 +11925,7 @@
                         }
                     }
                 },
-                "Event - Lower-left Tunnel Blob": {
+                "Event - Lower Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12148,7 +11952,7 @@
                         }
                     }
                 },
-                "Event - Upper-right Tunnel Blob (db_dside_mg_002)": {
+                "Event - Upper Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12175,7 +11979,7 @@
                         }
                     }
                 },
-                "Event - Green Teleport Grapple Block": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12229,7 +12033,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Event - Green Teleport Grapple Block": {
+                        "Event - Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12295,13 +12099,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Slide"
                                     },
                                     {
                                         "type": "or",
@@ -12441,6 +12240,66 @@
                         ]
                     },
                     "connections": {
+                        "Pickup (Missile Tank - Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Heat",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Top room": {
                             "type": "and",
                             "data": {
@@ -12484,10 +12343,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
                                     },
                                     {
                                         "type": "resource",
@@ -12614,9 +12469,21 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - Lower-left Tunnel Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Lower Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Tile Group (POWERBEAM) 2": {
                             "type": "resource",
@@ -12638,12 +12505,46 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Magnet",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "GrappleMovement",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -12651,10 +12552,74 @@
                                                     "data": "Use Spin Boost"
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Speedbooster",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "misc",
+                                                                                            "name": "DoorLocks",
+                                                                                            "amount": 1,
+                                                                                            "negate": true
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
+                                                        "type": "items",
+                                                        "name": "Flash",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -12860,9 +12825,21 @@
                                 ]
                             }
                         },
-                        "Event - Upper-right Tunnel Blob (db_dside_mg_002)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Upper Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Teleporter to Ghavoran - Teleport to Cataris": {
                             "type": "and",
@@ -13237,9 +13214,21 @@
                                 "items": []
                             }
                         },
-                        "Event - Morph Tunnel Blob (db_dside_mg_002)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Tunnel to Teleport to Ghavoran": {
                             "type": "resource",
@@ -13287,7 +13276,7 @@
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob (db_dside_mg_002)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -13412,43 +13401,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Ghavoran Teleport Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         },
-                        "Dock to Long Mouth Statue Room (dooremmy_008)": {
+                        "Dock to Long Mouth Statue Room (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -13498,7 +13454,7 @@
                         }
                     }
                 },
-                "Dock to Long Mouth Statue Room (dooremmy_008)": {
+                "Dock to Long Mouth Statue Room (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13518,7 +13474,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Long Mouth Statue Room",
-                        "node_name": "Dock to EMMI Zone Exits West (dooremmy_008)"
+                        "node_name": "Dock to EMMI Zone Exits West (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -13537,7 +13493,7 @@
                         }
                     }
                 },
-                "Dock to Long Mouth Statue Room (dooremmy_009)": {
+                "Dock to Long Mouth Statue Room (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13557,7 +13513,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Long Mouth Statue Room",
-                        "node_name": "Dock to EMMI Zone Exits West (dooremmy_009)"
+                        "node_name": "Dock to EMMI Zone Exits West (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -13630,7 +13586,7 @@
                     "pickup_index": 40,
                     "major_location": false,
                     "connections": {
-                        "Dock to Long Mouth Statue Room (dooremmy_008)": {
+                        "Dock to Long Mouth Statue Room (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13763,7 +13719,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Dock to Long Mouth Statue Room (dooremmy_009)": {
+                        "Dock to Long Mouth Statue Room (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14401,7 +14357,7 @@
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -14415,7 +14371,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -14431,8 +14387,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "events",
-                                                                    "name": "CatarisThermalLowerLava",
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -14450,6 +14406,32 @@
                                             "name": "Speed",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "CatarisThermalLowerLava",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -14483,29 +14465,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -14567,12 +14532,21 @@
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -14588,22 +14562,13 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "events",
-                                                                    "name": "CatarisThermalLowerLava",
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -14630,6 +14595,32 @@
                                                         "name": "DoorLocks",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "CatarisThermalLowerLava",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -14708,7 +14699,7 @@
                 "asset_id": "collision_camera_032"
             },
             "nodes": {
-                "Door to EMMI Zone East Tower Access (doorpowerpower_015)": {
+                "Door to EMMI Zone East Tower Access (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14771,13 +14762,13 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Exit East",
-                        "node_name": "Door to EMMI Zone Tower East (doorpowerpower_016)"
+                        "node_name": "Door to EMMI Zone Tower East (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone East Tower Access (doorclosedcharge)": {
+                        "Door to EMMI Zone East Tower Access (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14960,7 +14951,7 @@
                                 ]
                             }
                         },
-                        "Door to EMMI Zone East Tower Access (doorpowerpower_000)": {
+                        "Door to EMMI Zone East Tower Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15047,7 +15038,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone East Tower Access (doorpowerpower_000)": {
+                "Door to EMMI Zone East Tower Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15086,7 +15077,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone East Tower Access (doorclosedcharge)": {
+                "Door to EMMI Zone East Tower Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15149,7 +15140,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Exit East",
-                        "node_name": "Door to EMMI Zone Tower East (doorclosedcharge_001)"
+                        "node_name": "Door to EMMI Zone Tower East (Upper)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
@@ -15162,7 +15153,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to EMMI Zone East Tower Access (2)": {
+                        "Tunnel to EMMI Zone East Tower Access (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15233,7 +15224,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone East Tower Access (doorpowerpower_015)": {
+                        "Door to EMMI Zone East Tower Access (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15244,7 +15235,7 @@
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Tunnel to EMMI Zone East Tower Access (1)": {
+                        "Tunnel to EMMI Zone East Tower Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15253,7 +15244,7 @@
                         }
                     }
                 },
-                "Tunnel to EMMI Zone East Tower Access (1)": {
+                "Tunnel to EMMI Zone East Tower Access (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15270,7 +15261,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone East Tower Access",
-                        "node_name": "Tunnel to EMMI Zone Tower East (1)"
+                        "node_name": "Tunnel to EMMI Zone Tower East (Lower)"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "override_default_open_requirement": null,
@@ -15285,7 +15276,7 @@
                         }
                     }
                 },
-                "Tunnel to EMMI Zone East Tower Access (2)": {
+                "Tunnel to EMMI Zone East Tower Access (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15302,7 +15293,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone East Tower Access",
-                        "node_name": "Tunnel to EMMI Zone Tower East (2)"
+                        "node_name": "Tunnel to EMMI Zone Tower East (Upper)"
                     },
                     "default_dock_weakness": "Cataris EMMI Tunnel",
                     "override_default_open_requirement": null,
@@ -15871,35 +15862,13 @@
                                 "items": []
                             }
                         },
-                        "Event - Central Unit Blob through wall": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Diffusion",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                        "Event - Bottom Blob through wall": {
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
                         }
                     }
                 },
-                "Event - Top Blob (breakablemag007)": {
+                "Event - Top Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -15926,7 +15895,7 @@
                         }
                     }
                 },
-                "Event - Central Unit Blob (breakablemag008)": {
+                "Event - Bottom Blob, adjacent": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -16032,7 +16001,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Top Blob (breakablemag007)": {
+                        "Event - Top Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -16125,33 +16094,11 @@
                                 ]
                             }
                         },
-                        "Event - Top Blob (breakablemag007)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Diffusion",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                        "Event - Top Blob": {
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
                         },
-                        "Event - Central Unit Blob (breakablemag008)": {
+                        "Event - Bottom Blob, adjacent": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -16192,7 +16139,7 @@
                         }
                     }
                 },
-                "Event - Central Unit Blob through wall": {
+                "Event - Bottom Blob through wall": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -17183,7 +17130,7 @@
             }
         },
         "Thermal Device Room North": {
-            "default_node": "Event - Thermal Device 1",
+            "default_node": "Event - Thermal Device 2",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -17396,7 +17343,7 @@
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Event - Thermal Device 1": {
+                        "Event - Thermal Device 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17461,7 +17408,7 @@
                         }
                     }
                 },
-                "Event - Thermal Device 1": {
+                "Event - Thermal Device 2": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -17490,7 +17437,7 @@
                         }
                     }
                 },
-                "Event - Thermal Device 2": {
+                "Event - Thermal Device 1": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -17722,7 +17669,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Thermal Device 2": {
+                        "Event - Thermal Device 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -18011,13 +17958,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Tile Group (POWERBEAM) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -18109,7 +18051,7 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -18123,29 +18065,56 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Lava",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -18178,13 +18147,8 @@
                     },
                     "connections": {
                         "Door to Teleport to Artaria (Red)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         },
                         "Tunnel to Long Mouth Statue Room": {
                             "type": "and",
@@ -18356,29 +18320,56 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Lava",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -18451,7 +18442,7 @@
                         "area_name": "Long Mouth Statue Room",
                         "node_name": "Tunnel to Path to Kraid Entryway"
                     },
-                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "default_dock_weakness": "Slide Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -18570,7 +18561,7 @@
                                 ]
                             }
                         },
-                        "Event - Diffusion Tutorial Blob (db_dif_mg_002)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
@@ -18757,7 +18748,7 @@
                         }
                     }
                 },
-                "Event - Diffusion Tutorial Blob (db_dif_mg_002)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -18784,7 +18775,7 @@
                         }
                     }
                 },
-                "Event - PB Tank Grapple Block (grapplepulloff1x2)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -19225,7 +19216,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Diffusion Tutorial Blob (db_dif_mg_002)": {
+                        "Event - Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19527,7 +19518,7 @@
                                 ]
                             }
                         },
-                        "Event - PB Tank Grapple Block (grapplepulloff1x2)": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -19615,7 +19606,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Button East (doorframepresence_001)": {
+                        "Door to Lava Button East (Cloak)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19624,7 +19615,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East (doorchargecharge_002)": {
+                "Door to Lava Button East (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -19648,7 +19639,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East",
-                        "node_name": "Door to Lava Button East Access (doorchargecharge_002)"
+                        "node_name": "Door to Lava Button East Access (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -19672,7 +19663,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East (doorframepresence_001)": {
+                "Door to Lava Button East (Cloak)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -19696,7 +19687,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East",
-                        "node_name": "Door to Lava Button East Access (doorframepresence_001)"
+                        "node_name": "Door to Lava Button East Access (Cloak)"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "override_default_open_requirement": null,
@@ -19709,7 +19700,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                        "Event - Blob, adjacent": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -19743,7 +19734,7 @@
                     "pickup_index": 46,
                     "major_location": false,
                     "connections": {
-                        "Door to Lava Button East (doorchargecharge_002)": {
+                        "Door to Lava Button East (Charge)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
@@ -19756,7 +19747,7 @@
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                "Event - Blob, adjacent": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -19774,7 +19765,7 @@
                     },
                     "event_name": "s020_magma:default:db_dside_mg_004",
                     "connections": {
-                        "Door to Lava Button East (doorframepresence_001)": {
+                        "Door to Lava Button East (Cloak)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19804,7 +19795,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Lava Button East (doorchargecharge_002)": {
+                        "Door to Lava Button East (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19843,7 +19834,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Button East (doorframepresence_001)": {
+                        "Door to Lava Button East (Cloak)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -19882,13 +19873,13 @@
                                 "items": []
                             }
                         },
-                        "Event - Morph Tunnel Blob through wall (db_dside_mg_004)": {
+                        "Event - Blob through wall": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob through wall (db_dside_mg_004)": {
+                "Event - Blob through wall": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -19969,13 +19960,13 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Tower East",
-                        "node_name": "Door to EMMI Zone East Tower Access (doorpowerpower_015)"
+                        "node_name": "Door to EMMI Zone East Tower Access (Middle)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Green EMMI Introduction (doorchargecharge_005)": {
+                        "Door to Green EMMI Introduction (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19989,7 +19980,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to EMMI Zone Tower East (1)": {
+                        "Tunnel to EMMI Zone Tower East (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20003,7 +19994,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to EMMI Zone Tower East (2)": {
+                        "Tunnel to EMMI Zone Tower East (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20056,7 +20047,7 @@
                         }
                     }
                 },
-                "Door to Green EMMI Introduction (doorchargecharge_005)": {
+                "Door to Green EMMI Introduction (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20080,7 +20071,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Green EMMI Introduction",
-                        "node_name": "Door to EMMI Zone East Tower Access (doorchargecharge_005)"
+                        "node_name": "Door to EMMI Zone East Tower Access (Lower)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -20119,13 +20110,13 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Tower East",
-                        "node_name": "Door to EMMI Zone East Tower Access (doorpowerpower_000)"
+                        "node_name": "Door to EMMI Zone East Tower Access (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Green EMMI Introduction (doorshutter_001)": {
+                        "Door to Green EMMI Introduction (Upper)": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -20155,7 +20146,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Tower East",
-                        "node_name": "Door to EMMI Zone East Tower Access (doorclosedcharge)"
+                        "node_name": "Door to EMMI Zone East Tower Access (Bottom)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
@@ -20170,7 +20161,7 @@
                         }
                     }
                 },
-                "Door to Green EMMI Introduction (doorshutter_001)": {
+                "Door to Green EMMI Introduction (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20194,9 +20185,9 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Green EMMI Introduction",
-                        "node_name": "Door to EMMI Zone East Tower Access (doorshutter_001)"
+                        "node_name": "Door to EMMI Zone East Tower Access (Upper)"
                     },
-                    "default_dock_weakness": "Phase Shift Door",
+                    "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -20211,7 +20202,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to EMMI Zone Tower East (2)": {
+                        "Tunnel to EMMI Zone Tower East (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20239,7 +20230,7 @@
                         }
                     }
                 },
-                "Tunnel to EMMI Zone Tower East (1)": {
+                "Tunnel to EMMI Zone Tower East (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20256,7 +20247,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Tower East",
-                        "node_name": "Tunnel to EMMI Zone East Tower Access (1)"
+                        "node_name": "Tunnel to EMMI Zone East Tower Access (Lower)"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "override_default_open_requirement": null,
@@ -20326,7 +20317,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Green EMMI Introduction (doorshutter_001)": {
+                        "Door to Green EMMI Introduction (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20335,7 +20326,7 @@
                         }
                     }
                 },
-                "Tunnel to EMMI Zone Tower East (2)": {
+                "Tunnel to EMMI Zone Tower East (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20352,7 +20343,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "EMMI Zone Tower East",
-                        "node_name": "Tunnel to EMMI Zone East Tower Access (2)"
+                        "node_name": "Tunnel to EMMI Zone East Tower Access (Upper)"
                     },
                     "default_dock_weakness": "Cataris EMMI Tunnel",
                     "override_default_open_requirement": null,
@@ -20384,7 +20375,7 @@
                                 ]
                             }
                         },
-                        "Door to Green EMMI Introduction (doorshutter_001)": {
+                        "Door to Green EMMI Introduction (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -21699,13 +21690,13 @@
                             "type": "template",
                             "data": "Push Wide Beam Block"
                         },
-                        "Event - Door Blob (db_hdoor_mg_001)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         }
                     }
                 },
-                "Event - Door Blob (db_hdoor_mg_001)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -21816,7 +21807,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Suitless",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -21857,134 +21848,40 @@
                     "major_location": false,
                     "connections": {
                         "Door to Above Z-57 Fight": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Get through the room",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 200,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "Reach the door",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 200,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Slide",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Slide",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Lava",
-                                                                    "amount": 200,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]
@@ -22122,7 +22019,7 @@
                     "pickup_index": 39,
                     "major_location": false,
                     "connections": {
-                        "Event - Missile Tank Blob (breakablemag009)": {
+                        "Event - Lava Blob": {
                             "type": "template",
                             "data": "Lay Bomb"
                         },
@@ -22383,7 +22280,7 @@
                         }
                     }
                 },
-                "Event - Missile Tank Blob (breakablemag009)": {
+                "Event - Lava Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -22446,7 +22343,7 @@
                         }
                     }
                 },
-                "Event - Diffusion Tutorial Blob from below (db_dif_mg_001)": {
+                "Event - Diffusion Blob, below": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -22983,7 +22880,7 @@
                                 ]
                             }
                         },
-                        "Event - Diffusion Tutorial Blob from below (db_dif_mg_001)": {
+                        "Event - Diffusion Blob, below": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
@@ -23256,7 +23153,7 @@
                         }
                     }
                 },
-                "Event - Wave Beam Blob (db_reg_mg_021)": {
+                "Event - Kraid Eyedoor Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -23280,7 +23177,7 @@
                         }
                     }
                 },
-                "Event - Diffusion Tutorial Blob from above (db_dif_mg_001)": {
+                "Event - Diffusion Blob, above": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -23412,7 +23309,7 @@
                                 ]
                             }
                         },
-                        "Event - Missile Tank Blob (breakablemag009)": {
+                        "Event - Lava Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -23578,19 +23475,14 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s020_magma:default:db_reg_mg_021",
+                                            "name": "s020_magma:default:db_dif_mg_001",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Slide"
                                     },
                                     {
                                         "type": "or",
@@ -23670,7 +23562,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Morph",
+                                                        "name": "Varia",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -23707,7 +23599,7 @@
                                 ]
                             }
                         },
-                        "Event - Wave Beam Blob (db_reg_mg_021)": {
+                        "Event - Kraid Eyedoor Blob": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -23716,7 +23608,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Diffusion Tutorial Blob from above (db_dif_mg_001)": {
+                        "Event - Diffusion Blob, above": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -23851,9 +23743,21 @@
                                 "items": []
                             }
                         },
-                        "Event - Breakable (db_hdoor_mg_002)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                        "Event - Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -23949,7 +23853,7 @@
                         }
                     }
                 },
-                "Event - Breakable (db_hdoor_mg_002)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -24172,7 +24076,7 @@
                         }
                     }
                 },
-                "Event - Lava Grapple Block (grapplepulloff1x2_000)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -24532,7 +24436,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - Lava Grapple Block (grapplepulloff1x2_000)": {
+                        "Event - Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -24972,15 +24876,6 @@
                     "pickup_index": 47,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (WEIGHT)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Tile Group (MISSILE)": {
                             "type": "resource",
                             "data": {
@@ -24989,31 +24884,8 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4600.0,
-                        "y": 2200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_013",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tunnel to EMMI Zone Tower East": {
+                        },
+                        "Main Room": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -25425,7 +25297,7 @@
                         "area_name": "EMMI Zone Exits West",
                         "node_name": "Door to EMMI Zone West Exit Path"
                     },
-                    "default_dock_weakness": "Phase Shift Door",
+                    "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -25822,6 +25694,19 @@
                                                         "amount": 10,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Bomb"
                                                 }
                                             ]
                                         }
@@ -25874,7 +25759,7 @@
                         }
                     }
                 },
-                "Event - Blob to Teleport to Dairon (db_reg_mg_021)": {
+                "Event - Wall Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -25901,7 +25786,7 @@
                         }
                     }
                 },
-                "Event - Top Blob (db_reg_mg_020)": {
+                "Event - Ceiling Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -26177,6 +26062,19 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Bomb"
                                                 }
                                             ]
                                         }
@@ -26227,7 +26125,7 @@
                                 ]
                             }
                         },
-                        "Event - Blob to Teleport to Dairon (db_reg_mg_021)": {
+                        "Event - Wall Blob": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
@@ -26432,13 +26330,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
                                                 }
                                             ]
                                         }
@@ -26547,7 +26440,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - Top Blob (db_reg_mg_020)": {
+                        "Event - Ceiling Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },

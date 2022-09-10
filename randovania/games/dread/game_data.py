@@ -52,7 +52,7 @@ def _generator() -> game.GameGenerator:
 game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
-    development_state=game.DevelopmentState.DEVELOPMENT,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -62,7 +62,7 @@ game_data: game.GameData = game.GameData(
 
     faq=[
         (
-            "Why does this missile door doesn't open after I shoot a missile at it?",
+            "Why does this missile door not open after I shoot a missile at it?",
             "Shoot another missile at the door. In the process of making certain missile doors possible to open from "
             "both sides, this issue shows up."
         ),
@@ -74,6 +74,20 @@ game_data: game.GameData = game.GameData(
             "Why is this pickup not animating, or displaying visual effects?",
             "While progressive pickups update to have the correct model, "
             "due to limitations these models are not animated or have any additional effects.",
+        ),
+        (
+            "Can I play on Yuzu?",
+            "Yuzu is not officially supported so you're on your own.\nIt has been reported to work fine, but there are "
+            "planned features that are known to be incompatible."
+        ),
+        (
+            "Can I use other mods?",
+            "Depending on which files the other mods change, it can go from simple to impossible.\n\n"
+            "* If a Lua file is modified, very likely it's not compatible.\n"
+            "* If a PKG file is modified, it'll have to be combined with the one from Randovania.\n"
+            "* Other mods likely work fine.\n\n"
+            "When reporting issues, your first step is always to reproduce the issue without mods, "
+            "**no matter how simple** the mod is."
         ),
     ],
 
