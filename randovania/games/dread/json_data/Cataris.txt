@@ -2979,12 +2979,8 @@ EMMI Zone Exits West
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
-  > Tunnel to EMMI Zone Exits West
+  > Room Center
       Trivial
-  > Upper-right Corner
-      Trivial
-  > Event - Bottom Blob through wall
-      Shoot Diffusion or Wave
 
 > Event - Top Blob; Heals? False
   * Layers: default
@@ -3012,27 +3008,21 @@ EMMI Zone Exits West
 > Tunnel to EMMI Zone Exits West; Heals? False
   * Layers: default
   * Cataris EMMI Tunnel to EMMI Zone Exits West/Tunnel to Central Unit Access
-  > Door to EMMI Zone Tower West
-      Before Cataris - Central Unit or After Cataris - Post-EMMI Door Trigger
+  > Room Center
+      Trivial
 
 > Upper-right Corner; Heals? False
   * Layers: default
-  > Door to EMMI Zone Tower West
-      Before Cataris - Central Unit or After Cataris - Post-EMMI Door Trigger
   > Event - Top Blob
       Lay Bomb or Shoot Beam
   > Door to Central Unit
       Morph Ball or After Cataris - Central Unit Top Blob
+  > Room Center
+      Trivial
 
 > Door to Central Unit; Heals? False
   * Layers: default
   * Access Open to Central Unit/Door to Central Unit Access
-  > Door to EMMI Zone Tower West
-      All of the following:
-          Before Cataris - Central Unit or After Cataris - Post-EMMI Door Trigger
-          Any of the following:
-              Morph Ball
-              After Cataris - Central Unit Bottom Blob and Can Slide
   > Event - Top Blob
       Shoot Diffusion or Wave
   > Event - Bottom Blob, adjacent
@@ -3041,12 +3031,14 @@ EMMI Zone Exits West
       Morph Ball or After Cataris - Central Unit Top Blob
   > Pickup (Morph Ball)
       After Cataris - Central Unit
+  > Room Center
+      After Cataris - Central Unit Bottom Blob and Can Slide
 
 > Event - Bottom Blob through wall; Heals? False
   * Layers: default
   * Event Cataris - Central Unit Bottom Blob
-  > Door to EMMI Zone Tower West
-      Before Cataris - Central Unit or After Cataris - Post-EMMI Door Trigger
+  > Room Center
+      Trivial
 
 > Pickup (Morph Ball); Heals? False
   * Layers: default
@@ -3058,6 +3050,19 @@ EMMI Zone Exits West
   * Extra - boss_hint_name: E.M.M.I.-03MB
   > Door to Central Unit
       Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to EMMI Zone Tower West
+      Before Cataris - Central Unit or After Cataris - Post-EMMI Door Trigger
+  > Tunnel to EMMI Zone Exits West
+      Trivial
+  > Upper-right Corner
+      Trivial
+  > Door to Central Unit
+      After Cataris - Central Unit Bottom Blob and Can Slide
+  > Event - Bottom Blob through wall
+      Shoot Diffusion or Wave
 
 ----------------
 Central Unit
