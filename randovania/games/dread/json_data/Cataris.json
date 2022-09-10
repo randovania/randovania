@@ -2781,7 +2781,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East Access (doorchargecharge_002)": {
+                "Door to Lava Button East Access (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2805,7 +2805,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East Access",
-                        "node_name": "Door to Lava Button East (doorchargecharge_002)"
+                        "node_name": "Door to Lava Button East (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -2966,7 +2966,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East Access (doorframepresence_001)": {
+                "Door to Lava Button East Access (Cloak)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2990,7 +2990,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East Access",
-                        "node_name": "Door to Lava Button East (doorframepresence_001)"
+                        "node_name": "Door to Lava Button East (Cloak)"
                     },
                     "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
@@ -3053,7 +3053,7 @@
                     "extra": {},
                     "event_name": "CatarisMoveMagnetWallsButton",
                     "connections": {
-                        "Door to Lava Button East Access (doorframepresence_001)": {
+                        "Door to Lava Button East Access (Cloak)": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -3219,7 +3219,7 @@
                                 ]
                             }
                         },
-                        "Door to Lava Button East Access (doorchargecharge_002)": {
+                        "Door to Lava Button East Access (Charge)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3584,7 +3584,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                        "Door to Energy Recharge Station (Charge)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3729,7 +3729,7 @@
                         }
                     }
                 },
-                "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                "Door to Energy Recharge Station (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3766,7 +3766,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Energy Recharge Station (doorpresenceframe_000)": {
+                        "Door to Energy Recharge Station (Cloak)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3830,7 +3830,7 @@
                         }
                     }
                 },
-                "Door to Energy Recharge Station (doorpresenceframe_000)": {
+                "Door to Energy Recharge Station (Cloak)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3860,7 +3860,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                        "Door to Energy Recharge Station (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3936,7 +3936,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Energy Recharge Station (doorclosedcharge_002)": {
+                        "Door to Energy Recharge Station (Charge)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4433,7 +4433,7 @@
                         }
                     }
                 },
-                "Event - Blue Teleport Blob (breakablemag012)": {
+                "Event - East Blob, below": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4460,7 +4460,7 @@
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                "Event - West Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4514,7 +4514,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Event - Blue Teleport Blob (breakablemag012)": {
+                        "Event - East Blob, below": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -5401,7 +5401,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Blue Teleport Blob from other side (breakablemag012)": {
+                        "Event - East Blob, above": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6523,7 +6523,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                        "Event - West Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -6860,7 +6860,7 @@
                         }
                     }
                 },
-                "Event - Blue Teleport Blob from other side (breakablemag012)": {
+                "Event - East Blob, above": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -6956,15 +6956,6 @@
                                 "negate": false
                             }
                         },
-                        "Event - Breakable (db_hdoor_mg_001)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Total Recharge": {
                             "type": "and",
                             "data": {
@@ -7011,33 +7002,6 @@
                                 "name": "s020_magma:default:db_hdoor_mg_001",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Breakable (db_hdoor_mg_001)": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 10400.0,
-                        "y": 7200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "db_hdoor_mg_001",
-                        "actor_def": "actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad"
-                    },
-                    "event_name": "s020_magma:default:db_hdoor_mg_001",
-                    "connections": {
-                        "Door to Thermal Device Room North": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -7212,7 +7176,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Moving Magnet Walls (Tall)",
-                        "node_name": "Door to Energy Recharge Station (doorclosedcharge_002)"
+                        "node_name": "Door to Energy Recharge Station (Charge)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
@@ -7311,7 +7275,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Moving Magnet Walls (Tall)",
-                        "node_name": "Door to Energy Recharge Station (doorpresenceframe_000)"
+                        "node_name": "Door to Energy Recharge Station (Cloak)"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "override_default_open_requirement": null,
@@ -17166,7 +17130,7 @@
             }
         },
         "Thermal Device Room North": {
-            "default_node": "Event - Thermal Device 1",
+            "default_node": "Event - Thermal Device 2",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -17379,7 +17343,7 @@
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Event - Thermal Device 1": {
+                        "Event - Thermal Device 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17444,7 +17408,7 @@
                         }
                     }
                 },
-                "Event - Thermal Device 1": {
+                "Event - Thermal Device 2": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -17473,7 +17437,7 @@
                         }
                     }
                 },
-                "Event - Thermal Device 2": {
+                "Event - Thermal Device 1": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -17705,7 +17669,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Thermal Device 2": {
+                        "Event - Thermal Device 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19642,7 +19606,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Button East (doorframepresence_001)": {
+                        "Door to Lava Button East (Cloak)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19651,7 +19615,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East (doorchargecharge_002)": {
+                "Door to Lava Button East (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -19675,7 +19639,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East",
-                        "node_name": "Door to Lava Button East Access (doorchargecharge_002)"
+                        "node_name": "Door to Lava Button East Access (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -19699,7 +19663,7 @@
                         }
                     }
                 },
-                "Door to Lava Button East (doorframepresence_001)": {
+                "Door to Lava Button East (Cloak)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -19723,7 +19687,7 @@
                     "default_connection": {
                         "world_name": "Cataris",
                         "area_name": "Lava Button East",
-                        "node_name": "Door to Lava Button East Access (doorframepresence_001)"
+                        "node_name": "Door to Lava Button East Access (Cloak)"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "override_default_open_requirement": null,
@@ -19736,7 +19700,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                        "Event - Blob, adjacent": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -19770,7 +19734,7 @@
                     "pickup_index": 46,
                     "major_location": false,
                     "connections": {
-                        "Door to Lava Button East (doorchargecharge_002)": {
+                        "Door to Lava Button East (Charge)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
@@ -19783,7 +19747,7 @@
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob (db_dside_mg_004)": {
+                "Event - Blob, adjacent": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -19801,7 +19765,7 @@
                     },
                     "event_name": "s020_magma:default:db_dside_mg_004",
                     "connections": {
-                        "Door to Lava Button East (doorframepresence_001)": {
+                        "Door to Lava Button East (Cloak)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19831,7 +19795,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Lava Button East (doorchargecharge_002)": {
+                        "Door to Lava Button East (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19870,7 +19834,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Button East (doorframepresence_001)": {
+                        "Door to Lava Button East (Cloak)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -19909,13 +19873,13 @@
                                 "items": []
                             }
                         },
-                        "Event - Morph Tunnel Blob through wall (db_dside_mg_004)": {
+                        "Event - Blob through wall": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob through wall (db_dside_mg_004)": {
+                "Event - Blob through wall": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -21726,13 +21690,13 @@
                             "type": "template",
                             "data": "Push Wide Beam Block"
                         },
-                        "Event - Door Blob (db_hdoor_mg_001)": {
+                        "Event - Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         }
                     }
                 },
-                "Event - Door Blob (db_hdoor_mg_001)": {
+                "Event - Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {

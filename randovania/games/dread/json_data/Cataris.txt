@@ -622,9 +622,9 @@ Extra - asset_id: collision_camera_012
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Door to Lava Button East Access (doorchargecharge_002); Heals? False
+> Door to Lava Button East Access (Charge); Heals? False
   * Layers: default
-  * Charge Beam Door to Lava Button East Access/Door to Lava Button East (doorchargecharge_002)
+  * Charge Beam Door to Lava Button East Access/Door to Lava Button East (Charge)
   * Extra - actor_name: doorchargecharge_002
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -652,9 +652,9 @@ Extra - asset_id: collision_camera_012
               Varia Suit or After Cataris - Move Magnet Walls Button
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Door to Lava Button East Access (doorframepresence_001); Heals? False
+> Door to Lava Button East Access (Cloak); Heals? False
   * Layers: default
-  * Access Open to Lava Button East Access/Door to Lava Button East (doorframepresence_001)
+  * Access Open to Lava Button East Access/Door to Lava Button East (Cloak)
   * Extra - actor_name: doorframepresence_001
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -677,7 +677,7 @@ Extra - asset_id: collision_camera_012
 > Event - Activate Magnet Walls Button; Heals? False
   * Layers: default
   * Event Cataris - Move Magnet Walls Button
-  > Door to Lava Button East Access (doorframepresence_001)
+  > Door to Lava Button East Access (Cloak)
       Can Slide
 
 > Below Thermal Door; Heals? False
@@ -697,7 +697,7 @@ Extra - asset_id: collision_camera_012
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Door to Lava Button East Access (doorchargecharge_002)
+  > Door to Lava Button East Access (Charge)
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
@@ -771,7 +771,7 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Door to Lava Button East Access
       Trivial
-  > Door to Energy Recharge Station (doorclosedcharge_002)
+  > Door to Energy Recharge Station (Charge)
       Any of the following:
           Space Jump or Speed Booster
           All of the following:
@@ -792,7 +792,7 @@ Extra - asset_id: collision_camera_014
   > Door to Tall Magnet Walls Access
       Trivial
 
-> Door to Energy Recharge Station (doorclosedcharge_002); Heals? False
+> Door to Energy Recharge Station (Charge); Heals? False
   * Layers: default
   * Charge Beam Door to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Charge)
   * Extra - actor_name: doorclosedcharge_002
@@ -803,7 +803,7 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Door to Tall Magnet Walls Access
       Trivial
-  > Door to Energy Recharge Station (doorpresenceframe_000)
+  > Door to Energy Recharge Station (Cloak)
       Trivial
   > Tile Group (POWERBEAM)
       Any of the following:
@@ -812,7 +812,7 @@ Extra - asset_id: collision_camera_014
               Spider Magnet
               Grapple Beam or Use Spin Boost
 
-> Door to Energy Recharge Station (doorpresenceframe_000); Heals? False
+> Door to Energy Recharge Station (Cloak); Heals? False
   * Layers: default
   * Access Open to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Cloak)
   * Extra - actor_name: doorpresenceframe_000
@@ -821,7 +821,7 @@ Extra - asset_id: collision_camera_014
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Energy Recharge Station (doorclosedcharge_002)
+  > Door to Energy Recharge Station (Charge)
       Trivial
 
 > Door to Teleport to Artaria (Blue); Heals? False
@@ -845,7 +845,7 @@ Extra - asset_id: collision_camera_014
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Tall Magnet Walls Access
       Trivial
-  > Door to Energy Recharge Station (doorclosedcharge_002)
+  > Door to Energy Recharge Station (Charge)
       Spider Magnet or Space Jump
   > Door to Teleport to Artaria (Blue)
       Trivial
@@ -920,17 +920,17 @@ Extra - asset_id: collision_camera_015
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
           Grapple Beam or Simple IBJ or Use Spin Boost
 
-> Event - Blue Teleport Blob (breakablemag012); Heals? False
+> Event - East Blob, below; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag012
+  * Event Cataris - Blue Teleport Blob
   * Extra - actor_name: breakablemag012
   * Extra - actor_def: actordef:actors/props/breakablemag012/charclasses/breakablemag012.bmsad
   > Teleporter to Artaria - Screw Attack Room
       Trivial
 
-> Event - Morph Tunnel Blob (db_dside_mg_004); Heals? False
+> Event - West Blob; Heals? False
   * Layers: default
-  * Event Cataris - db_dside_mg_004
+  * Event Cataris - Lava Button East Blob
   * Extra - actor_name: db_dside_mg_004
   * Extra - actor_def: actordef:actors/props/db_dside_mg_003/charclasses/db_dside_mg_003.bmsad
   > Center Room
@@ -945,11 +945,11 @@ Extra - asset_id: collision_camera_015
   * Extra - target_spawn_point: teleporter_magma_000_platform
   * Extra - start_point_actor_name: teleporter_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Event - Blue Teleport Blob (breakablemag012)
+  > Event - East Blob, below
       Shoot Beam
   > Tile Group (POWERBOMB)
       All of the following:
-          After Cataris - breakablemag012
+          After Cataris - Blue Teleport Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
@@ -1078,13 +1078,13 @@ Extra - asset_id: collision_camera_015
   * Extra - tile_types: ('POWERBOMB',)
   > Teleporter to Artaria - Screw Attack Room
       All of the following:
-          After Cataris - breakablemag012
+          After Cataris - Blue Teleport Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
   > Right Room
       Trivial
-  > Event - Blue Teleport Blob from other side (breakablemag012)
+  > Event - East Blob, above
       Wave Beam
 
 > Tile Group (POWERBEAM) 2; Heals? False
@@ -1179,7 +1179,7 @@ Extra - asset_id: collision_camera_015
   * Slide Tunnel to Lava Button East Access/Tunnel to Teleport to Artaria (Blue)
   > Center Room
       All of the following:
-          After Cataris - db_dside_mg_004
+          After Cataris - Lava Button East Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
@@ -1233,7 +1233,7 @@ Extra - asset_id: collision_camera_015
 
 > Center Room; Heals? False
   * Layers: default
-  > Event - Morph Tunnel Blob (db_dside_mg_004)
+  > Event - West Blob
       Shoot Beam
   > Tile Group (POWERBEAM) 1
       Any of the following:
@@ -1261,7 +1261,7 @@ Extra - asset_id: collision_camera_015
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
   > Tunnel to Lava Button East Access
       All of the following:
-          After Cataris - db_dside_mg_004
+          After Cataris - Lava Button East Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
@@ -1272,9 +1272,9 @@ Extra - asset_id: collision_camera_015
   > Door to Moving Magnet Walls (Tall)
       Trivial
 
-> Event - Blue Teleport Blob from other side (breakablemag012); Heals? False
+> Event - East Blob, above; Heals? False
   * Layers: default
-  * Event Cataris - breakablemag012
+  * Event Cataris - Blue Teleport Blob
   > Tile Group (POWERBOMB)
       Trivial
 
@@ -1293,9 +1293,7 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Double Obsydomithon Room
-      After Cataris - db_hdoor_mg_001
-  > Event - Breakable (db_hdoor_mg_001)
-      Wave Beam
+      After Cataris - Obsydomithon Blob
   > Total Recharge
       Trivial
 
@@ -1309,15 +1307,7 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Thermal Device Room North
-      After Cataris - db_hdoor_mg_001
-
-> Event - Breakable (db_hdoor_mg_001); Heals? False
-  * Layers: default
-  * Event Cataris - db_hdoor_mg_001
-  * Extra - actor_name: db_hdoor_mg_001
-  * Extra - actor_def: actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad
-  > Door to Thermal Device Room North
-      Trivial
+      After Cataris - Obsydomithon Blob
 
 > Total Recharge; Heals? True; Spawn Point
   * Layers: default
@@ -1361,7 +1351,7 @@ Extra - asset_id: collision_camera_018
 
 > Door to Moving Magnet Walls (Tall) (Charge); Heals? False
   * Layers: default
-  * Access Locked to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (doorclosedcharge_002)
+  * Access Locked to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (Charge)
   * Extra - actor_name: doorclosedcharge_002
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1377,7 +1367,7 @@ Extra - asset_id: collision_camera_018
 
 > Door to Moving Magnet Walls (Tall) (Cloak); Heals? False
   * Layers: default
-  * Sensor Lock Door to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (doorpresenceframe_000)
+  * Sensor Lock Door to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (Cloak)
   * Extra - actor_name: doorpresenceframe_000
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2727,7 +2717,7 @@ Extra - asset_id: collision_camera_032
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Hall Thermal Device Room
       Any of the following:
-          After Cataris - deviceheat_camerafar_000
+          After Cataris - Magnet Wall Thermal Device
           All of the following:
               After Cataris - Central Unit
               Any of the following:
@@ -2747,7 +2737,7 @@ Extra - asset_id: collision_camera_032
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Moving Magnet Walls (Small)
       Any of the following:
-          After Cataris - deviceheat_camerafar_000
+          After Cataris - Magnet Wall Thermal Device
           Morph Ball and After Cataris - Central Unit
   > Tunnel to EMMI Zone Hidden Missile Room
       Trivial
@@ -3240,7 +3230,7 @@ Extra - asset_id: collision_camera_042
   > Door to Dairon Transport Access
       Can Slide
   > Past Magnet Floor
-      Before Cataris - deviceheat_002
+      Before Cataris - Final Thermal Device
 
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
@@ -3269,7 +3259,7 @@ Extra - asset_id: collision_camera_042
   * Extra - right_shield_def: None
   > Door to Total Recharge Station North
       Can Slide
-  > Event - Thermal Device 1
+  > Event - Thermal Device 2
       Trivial
 
 > Pickup (Energy Part); Heals? False
@@ -3288,9 +3278,9 @@ Extra - asset_id: collision_camera_042
   > Past Magnet Floor
       Trivial
 
-> Event - Thermal Device 1; Heals? False; Spawn Point
+> Event - Thermal Device 2; Heals? False; Spawn Point
   * Layers: default
-  * Event Cataris - deviceheat_002
+  * Event Cataris - Final Thermal Device
   * Extra - actor_name: deviceheat_002
   * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_003
@@ -3298,9 +3288,9 @@ Extra - asset_id: collision_camera_042
   > Door to Dairon Transport Access
       Trivial
 
-> Event - Thermal Device 2; Heals? False
+> Event - Thermal Device 1; Heals? False
   * Layers: default
-  * Event Cataris - deviceheat_camerafar_000
+  * Event Cataris - Magnet Wall Thermal Device
   * Extra - actor_name: deviceheat_camerafar_000
   * Extra - actor_def: actordef:actors/props/deviceheat_camerafar/charclasses/deviceheat_camerafar.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_006
@@ -3341,7 +3331,7 @@ Extra - asset_id: collision_camera_042
 > Dock to Energy Recharge Station; Heals? False
   * Layers: default
   * Open Passage to Energy Recharge Station/Dock to Thermal Device Room North
-  > Event - Thermal Device 2
+  > Event - Thermal Device 1
       Trivial
   > Past Magnet Floor
       After Cataris - Thermal Magnet Platform Lowered
@@ -3349,7 +3339,7 @@ Extra - asset_id: collision_camera_042
 > Past Magnet Floor; Heals? False
   * Layers: default
   > Door to Total Recharge Station North
-      Before Cataris - deviceheat_002
+      Before Cataris - Final Thermal Device
   > Pickup (Energy Tank)
       Trivial
   > Dock to Energy Recharge Station
@@ -3692,12 +3682,12 @@ Extra - asset_id: collision_camera_045
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Lava Button East (doorframepresence_001)
+  > Door to Lava Button East (Cloak)
       Trivial
 
-> Door to Lava Button East (doorchargecharge_002); Heals? False
+> Door to Lava Button East (Charge); Heals? False
   * Layers: default
-  * Charge Beam Door to Lava Button East/Door to Lava Button East Access (doorchargecharge_002)
+  * Charge Beam Door to Lava Button East/Door to Lava Button East Access (Charge)
   * Extra - actor_name: doorchargecharge_002
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3709,9 +3699,9 @@ Extra - asset_id: collision_camera_045
   > Tile Group (POWERBEAM)
       Trivial
 
-> Door to Lava Button East (doorframepresence_001); Heals? False
+> Door to Lava Button East (Cloak); Heals? False
   * Layers: default
-  * Sensor Lock Door to Lava Button East/Door to Lava Button East Access (doorframepresence_001)
+  * Sensor Lock Door to Lava Button East/Door to Lava Button East Access (Cloak)
   * Extra - actor_name: doorframepresence_001
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3720,27 +3710,27 @@ Extra - asset_id: collision_camera_045
   * Extra - right_shield_def: None
   > Door to Moving Magnet Walls (Tall)
       Trivial
-  > Event - Morph Tunnel Blob (db_dside_mg_004)
+  > Event - Blob, adjacent
       Shoot Beam
   > Tunnel to Teleport to Artaria (Blue)
-      After Cataris - db_dside_mg_004
+      After Cataris - Lava Button East Blob
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 46; Major Location? False
   * Extra - actor_name: item_missiletank_010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Lava Button East (doorchargecharge_002)
+  > Door to Lava Button East (Charge)
       Can Slide
   > Pickup Corner
       Trivial
 
-> Event - Morph Tunnel Blob (db_dside_mg_004); Heals? False
+> Event - Blob, adjacent; Heals? False
   * Layers: default
-  * Event Cataris - db_dside_mg_004
+  * Event Cataris - Lava Button East Blob
   * Extra - actor_name: db_dside_mg_003b_000
   * Extra - actor_def: actordef:actors/props/db_dside_mg_003b/charclasses/db_dside_mg_003b.bmsad
-  > Door to Lava Button East (doorframepresence_001)
+  > Door to Lava Button East (Cloak)
       Trivial
 
 > Tile Group (POWERBEAM); Heals? False
@@ -3750,7 +3740,7 @@ Extra - asset_id: collision_camera_045
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Door to Lava Button East (doorchargecharge_002)
+  > Door to Lava Button East (Charge)
       Trivial
   > Pickup Corner
       Trivial
@@ -3758,8 +3748,8 @@ Extra - asset_id: collision_camera_045
 > Tunnel to Teleport to Artaria (Blue); Heals? False
   * Layers: default
   * Slide Tunnel to Teleport to Artaria (Blue)/Tunnel to Lava Button East Access
-  > Door to Lava Button East (doorframepresence_001)
-      After Cataris - db_dside_mg_004
+  > Door to Lava Button East (Cloak)
+      After Cataris - Lava Button East Blob
 
 > Pickup Corner; Heals? False
   * Layers: default
@@ -3767,12 +3757,12 @@ Extra - asset_id: collision_camera_045
       Trivial
   > Tile Group (POWERBEAM)
       Trivial
-  > Event - Morph Tunnel Blob through wall (db_dside_mg_004)
+  > Event - Blob through wall
       Shoot Diffusion or Wave
 
-> Event - Morph Tunnel Blob through wall (db_dside_mg_004); Heals? False
+> Event - Blob through wall; Heals? False
   * Layers: default
-  * Event Cataris - db_dside_mg_004
+  * Event Cataris - Lava Button East Blob
   > Pickup Corner
       Trivial
 
@@ -3896,7 +3886,7 @@ Extra - asset_id: collision_camera_048
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Left Floor
-      After Cataris - db_hdoor_mg_001
+      After Cataris - Obsydomithon Blob
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -4059,7 +4049,7 @@ Extra - asset_id: collision_camera_048
 > Left Floor; Heals? False
   * Layers: default
   > Door to Total Recharge Station North
-      After Cataris - db_hdoor_mg_001
+      After Cataris - Obsydomithon Blob
   > Tile Group (BOMB) 1
       All of the following:
           After Cataris - Heated Wide Beam Block
@@ -4074,12 +4064,12 @@ Extra - asset_id: collision_camera_048
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Event - Wide Beam Block
       Push Wide Beam Block
-  > Event - Door Blob (db_hdoor_mg_001)
+  > Event - Blob
       Shoot Beam
 
-> Event - Door Blob (db_hdoor_mg_001); Heals? False
+> Event - Blob; Heals? False
   * Layers: default
-  * Event Cataris - db_hdoor_mg_001
+  * Event Cataris - Obsydomithon Blob
   > Left Floor
       Trivial
 
