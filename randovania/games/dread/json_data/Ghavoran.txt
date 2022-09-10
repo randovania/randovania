@@ -848,7 +848,7 @@ Extra - asset_id: collision_camera_011
       Trivial
   > Dock to Map Station Access (Upper)
       Any of the following:
-          Grapple Beam or Space Jump or Lay Cross Comb
+          Grapple Beam or Space Jump or Lay Cross Bomb
           Slide and Slide Jump (Beginner) and Use Spin Boost
           Flash Shift and Walljump (Beginner)
           Gravity Suit and Simple IBJ
@@ -1726,7 +1726,9 @@ Extra - asset_id: collision_camera_023
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Total Recharge Station North
-      Trivial
+      After Ghavoran - Chozo-X or Before Ghavoran - Chozo-X Trigger
+  > Event - Chozo-X
+      After Ghavoran - Chozo-X Trigger and Fight Chozo-X
 
 > Door to Total Recharge Station North; Heals? False
   * Layers: default
@@ -1738,7 +1740,9 @@ Extra - asset_id: collision_camera_023
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Save Station Center
-      Trivial
+      After Ghavoran - Chozo-X or Before Ghavoran - Chozo-X Trigger
+  > Event - Chozo-X
+      After Ghavoran - Chozo-X Trigger and Fight Chozo-X
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -1747,19 +1751,18 @@ Extra - asset_id: collision_camera_023
   > Door to Save Station Center
       Trivial
 
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_024
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Save Station Center
-      Trivial
-
 > Dock to Teleport to Burenia; Heals? False
   * Layers: default
   * Open Passage to Teleport to Burenia/Dock to Chozo Warrior Arena
-  > Tile Group (WEIGHT)
+  > Door to Save Station Center
+      After Ghavoran - Chozo-X or Before Ghavoran - Chozo-X Trigger
+  > Event - Chozo-X
+      After Ghavoran - Chozo-X Trigger and Fight Chozo-X
+
+> Event - Chozo-X; Heals? False
+  * Layers: default
+  * Event Ghavoran - Chozo-X
+  > Door to Save Station Center
       Trivial
 
 ----------------
@@ -1862,7 +1865,7 @@ Extra - asset_id: collision_camera_024
   > Door to Save Station East
       Any of the following:
           After Ghavoran - Pulse Radar Enky and Movement (Beginner) and Ballspark
-          Bomb and Movement (Expert) and Lay Cross Comb
+          Bomb and Movement (Expert) and Lay Cross Bomb
   > Tile Group (WEIGHT) 3
       Morph Ball
 
@@ -1875,7 +1878,7 @@ Extra - asset_id: collision_camera_024
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Movement (Beginner)
               Any of the following:
@@ -2098,7 +2101,7 @@ Extra - asset_id: collision_camera_024
       Morph Ball
   > Pickup (Missile Tank)
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Intermediate)
               Flash Shift or Use Spin Boost
@@ -2118,7 +2121,7 @@ Extra - asset_id: collision_camera_024
       Morph Ball
   > Dock to Energy Recharge Station
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Intermediate)
               Flash Shift or Use Spin Boost
@@ -2460,7 +2463,7 @@ Extra - asset_id: collision_camera_028
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Gravity Suit and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -2579,8 +2582,14 @@ Extra - asset_id: collision_camera_030
 > Tunnel to Teleport to Burenia; Heals? False
   * Layers: default
   * Morph Ball Launcher to Teleport to Burenia/Tunnel to Spin Boost Room
-  > Start Point
+  > Event - Chozo-X Trigger
       Morph Ball
+
+> Event - Chozo-X Trigger; Heals? False
+  * Layers: default
+  * Event Ghavoran - Chozo-X Trigger
+  > Start Point
+      Trivial
 
 ----------------
 Energy Recharge Station
@@ -2935,7 +2944,7 @@ Extra - asset_id: collision_camera_033
       Can Slide
   > Alcove 2
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -2984,7 +2993,7 @@ Extra - asset_id: collision_camera_033
       Morph Ball
   > Alcove 2
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -2993,7 +3002,7 @@ Extra - asset_id: collision_camera_033
   * Layers: default
   > Tile Group (BOMB) 2
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
@@ -3003,7 +3012,7 @@ Extra - asset_id: collision_camera_033
       Morph Ball
   > Alcove 1
       Any of the following:
-          Lay Cross Comb
+          Lay Cross Bomb
           All of the following:
               Morph Ball and Movement (Expert)
               Flash Shift or Use Spin Boost
