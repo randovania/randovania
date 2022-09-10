@@ -619,8 +619,8 @@ Extra - asset_id: collision_camera_008
   > Door to Transport to Dairon
       Trivial
   > Pickup (Missile Tank)
-      Morph Ball and After Ghavoran - grapplepulloff1x2_002
-  > Event - Breakable (grapplepulloff1x2_002)
+      Morph Ball and After Ghavoran - Dairon Transport Grapple Block
+  > Event - Grapple Block
       Grapple Beam
   > Tunnel to Super Missile Room Access
       Any of the following:
@@ -633,11 +633,11 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Super Missile Room Access
-      Morph Ball and After Ghavoran - grapplepulloff1x2_002
+      Morph Ball and After Ghavoran - Dairon Transport Grapple Block
 
-> Event - Breakable (grapplepulloff1x2_002); Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Ghavoran - grapplepulloff1x2_002
+  * Event Ghavoran - Dairon Transport Grapple Block
   * Extra - actor_name: grapplepulloff1x2_002
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Super Missile Room Access
@@ -1405,7 +1405,7 @@ Extra - asset_id: collision_camera_020
 
 > Dock to Spin Boost Tower (Lower); Heals? False
   * Layers: default
-  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (dooremmy)
+  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (Lower)
   * Extra - actor_name: dooremmy
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Middle Path
@@ -1413,7 +1413,7 @@ Extra - asset_id: collision_camera_020
 
 > Dock to Spin Boost Tower (Upper); Heals? False
   * Layers: default
-  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  * EMMI Door to Spin Boost Tower/Dock to EMMI Zone Exit Northeast (Upper)
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Central Unit Access (Lower)
@@ -1480,7 +1480,7 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Event - Breakable (grapplepulloff1x2_000)
+  > Event - Grapple Block
       Any of the following:
           All of the following:
               # With these methods it is impossible to get on the platfrom directly
@@ -1504,7 +1504,7 @@ Extra - asset_id: collision_camera_021
                   Spider Magnet and Slide and Slide Jump (Beginner) and Walljump (Beginner)
   > Tile Group (MISSILE)
       All of the following:
-          After Ghavoran - grapplepulloff1x2_000 and Shoot Missile
+          After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
           Any of the following:
               Flash Shift or Spider Magnet or Simple IBJ or Use Spin Boost
               All of the following:
@@ -1531,7 +1531,7 @@ Extra - asset_id: collision_camera_021
   > Ledge Below PB Tank
       Trivial
 
-> Dock to EMMI Zone Exit Northeast (dooremmy); Heals? False
+> Dock to EMMI Zone Exit Northeast (Lower); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (Lower)
   * Extra - actor_name: dooremmy
@@ -1539,7 +1539,7 @@ Extra - asset_id: collision_camera_021
   > Upper Center Platform
       Flash Shift or Movement (Beginner) or Simple IBJ or Use Spin Boost
 
-> Dock to EMMI Zone Exit Northeast (dooremmy_007); Heals? False
+> Dock to EMMI Zone Exit Northeast (Upper); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit Northeast/Dock to Spin Boost Tower (Upper)
   * Extra - actor_name: dooremmy_007
@@ -1571,9 +1571,9 @@ Extra - asset_id: collision_camera_021
   > E-Tank Alcove
       Trivial
 
-> Event - Breakable (grapplepulloff1x2_000); Heals? False
+> Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Ghavoran - grapplepulloff1x2_000
+  * Event Ghavoran - Spin Boost Tower Grapple Block
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Save Station Center
@@ -1585,7 +1585,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: ammorecharge_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
-  > Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  > Dock to EMMI Zone Exit Northeast (Upper)
       Trivial
 
 > Tile Group (MISSILE); Heals? False
@@ -1596,7 +1596,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
   > Door to Save Station Center
-      After Ghavoran - grapplepulloff1x2_000
+      After Ghavoran - Spin Boost Tower Grapple Block
   > Pickup (Energy Part)
       Morph Ball
 
@@ -1612,24 +1612,24 @@ Extra - asset_id: collision_camera_021
   * Layers: default
   > Door to Save Station Center
       Trivial
-  > Dock to EMMI Zone Exit Northeast (dooremmy)
+  > Dock to EMMI Zone Exit Northeast (Lower)
       Any of the following:
           Flash Shift or Simple IBJ or Use Spin Boost
           Slide and Slide Jump (Intermediate)
-  > Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  > Dock to EMMI Zone Exit Northeast (Upper)
       After Ghavoran - Ammo Recharge Enky Below
-  > Event - Breakable (grapplepulloff1x2_000)
+  > Event - Grapple Block
       All of the following:
           Grapple Beam
           Movement (Intermediate) or Shoot Ice Missile
   > Tile Group (MISSILE)
-      After Ghavoran - grapplepulloff1x2_000 and Shoot Missile
+      After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
   > Event - Ammo Recharge Enky (Below)
       Destroy Enky
 
 > E-Tank Alcove; Heals? False
   * Layers: default
-  > Dock to EMMI Zone Exit Northeast (dooremmy_007)
+  > Dock to EMMI Zone Exit Northeast (Upper)
       After Ghavoran - Ammo Recharge Enky Above
   > Pickup (Energy Tank)
       Trivial
