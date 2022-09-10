@@ -52,7 +52,7 @@ def _generator() -> game.GameGenerator:
 game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
-    development_state=game.DevelopmentState.DEVELOPMENT,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
