@@ -4382,7 +4382,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -9214,10 +9214,50 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Total Recharge Station North": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoX",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo-X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fight Chozo-X"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9253,10 +9293,50 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station Center": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoX",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo-X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fight Chozo-X"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9276,36 +9356,6 @@
                     "extra": {
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Save Station Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5800.0,
-                        "y": 800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
                     },
                     "connections": {
                         "Door to Save Station Center": {
@@ -9340,7 +9390,71 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (WEIGHT)": {
+                        "Door to Save Station Center": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoX",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo-X": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranChozoXTrigger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fight Chozo-X"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Chozo-X": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5550.0,
+                        "y": -200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "GhavoranChozoX",
+                    "connections": {
+                        "Door to Save Station Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9862,7 +9976,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Lay Cross Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -9957,7 +10071,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -10877,7 +10991,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -11000,7 +11114,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -12824,7 +12938,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -13460,13 +13574,37 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Event - Chozo-X Trigger": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Chozo-X Trigger": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3555.02,
+                        "y": 1464.8,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "GhavoranChozoXTrigger",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -15124,7 +15262,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -15350,7 +15488,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -15425,7 +15563,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -15497,7 +15635,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
+                                        "data": "Lay Cross Bomb"
                                     },
                                     {
                                         "type": "and",
