@@ -151,7 +151,8 @@ Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/)
 
 * Assets by:
   * Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ).
-  * Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ. 
+  * Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ.
+  * New map icons by [SkyTheLucario](https://github.com/TheSkyknight100).
 
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).

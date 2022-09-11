@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: The differences tab no longer mentions Kraid and Corpius checkpoints being removed, as that's not a thing.
+- Fixed: Missing credits in Randovania itself for SkyTheLucario's new map icons.
 
 ## [5.0.0] - 2022-09-10
 
