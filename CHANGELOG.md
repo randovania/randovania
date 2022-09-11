@@ -5,7 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.6.0] - 2022-09-01
+## [5.1.0] - 2022-10-01
+
+- Nothing yet.
+
+### Cave Story
+
+- Nothing.
+
+### Metroid Dread
+
+- Nothing.
+
+### Metroid Prime
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+- Nothing.
+
+## [5.0.1] - 2022-09-??
+
+- Fixed: The README and front page now lists Metroid Dread as a supported game.
+
+### Metroid Dread
+
+- Fixed: The differences tab no longer mentions Kraid and Corpius checkpoints being removed, as that's not a thing.
+- Fixed: Missing credits in Randovania itself for SkyTheLucario's new map icons.
+
+## [5.0.0] - 2022-09-10
 
 - **Major** - Added: Metroid Dread has been added with full single-player support.
 - **Major** - Added: An installer is now provided for Windows. With it rdvgame files are associated to open with Randovania, for ease of use. A shortcut for opening just the auto tracker is also provided.
