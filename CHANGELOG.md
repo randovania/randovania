@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.0.1] - 2022-09-??
 
-- Nothing yet.
+- Fixed: The README and front page now lists Metroid Dread as a supported game.
 
 ### Metroid Dread
 

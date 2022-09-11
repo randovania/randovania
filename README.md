@@ -9,9 +9,10 @@ New here or looking to install? Check [our website](https://randovania.github.io
 <!-- Begin SUPPORTED -->
 
 ### Supported Games
+ - Cave Story
+ - Metroid Dread
  - Metroid Prime
  - Metroid Prime 2: Echoes
- - Cave Story
 
 <!-- End SUPPORTED -->
 
@@ -19,7 +20,6 @@ New here or looking to install? Check [our website](https://randovania.github.io
 
 ### Experimental Games
  - Metroid Prime 3: Corruption
- - Metroid Dread
  - Super Metroid
 
 <!-- End EXPERIMENTAL -->
