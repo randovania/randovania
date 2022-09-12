@@ -249,17 +249,6 @@ jobs:
           path: |
             dist/Randovania*Installer.exe
 
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@2.3.0
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/Randovania*Installer.exe
-          file_glob: true
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "Release installer"
-
   lint:
     runs-on: 'windows-latest'
 
