@@ -89,6 +89,12 @@ game_data: game.GameData = game.GameData(
             "When reporting issues, your first step is always to reproduce the issue without mods, "
             "**no matter how simple** the mod is."
         ),
+        ( 	
+            "I picked up the Speed Booster / Phantom Cloak / Storm Missile but can't use them!",
+            "Press ZL + ZR + D-Pad Up to fix the issue." 
+            " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab for important rules of when to use this button combination.\n\n"
+            "You can also save and reload your game."
+        ),
     ],
 
     layout=game.GameLayout(
