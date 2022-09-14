@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.1.0] - 2022-10-01
 
-- Nothing yet.
+- Changed: Discord slash command for FAQ has better usability on mobile.
 
 ### Cave Story
 
@@ -15,7 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Nothing.
+- Added FAQ entry about Speed Booster/Phantom Cloak/Storm Missile not working.
+ 
+#### Logic Database
+
+- Nothing yet.
 
 ### Metroid Prime
 
