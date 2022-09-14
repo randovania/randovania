@@ -5192,7 +5192,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "Cold",
+                                                        "name": "Heat",
                                                         "amount": 50,
                                                         "negate": false
                                                     }
@@ -5419,6 +5419,49 @@
                     },
                     "connections": {
                         "Door to Early Grapple Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Elevator to Artaria - Transport to Dairon": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5792,7 +5835,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "Cold",
+                                                                    "name": "Heat",
                                                                     "amount": 50,
                                                                     "negate": false
                                                                 }
@@ -9585,7 +9628,7 @@
                                 ]
                             }
                         },
-                        "Event -  Grapple Block": {
+                        "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9624,7 +9667,7 @@
                         }
                     }
                 },
-                "Event -  Grapple Block": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
