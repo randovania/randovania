@@ -52,7 +52,7 @@ def _generator() -> game.GameGenerator:
 game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
-    development_state=game.DevelopmentState.DEVELOPMENT,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -88,6 +88,17 @@ game_data: game.GameData = game.GameData(
             "* Other mods likely work fine.\n\n"
             "When reporting issues, your first step is always to reproduce the issue without mods, "
             "**no matter how simple** the mod is."
+        ),
+        ( 	
+            "I picked up the Speed Booster / Phantom Cloak / Storm Missile but can't use them!",
+            "Press ZL + ZR + D-Pad Up to fix the issue." 
+            " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab for important rules of when to use this button combination.\n\n"
+            "You can also save and reload your game."
+        ),
+        ( 	
+            "I entered the arena for Golzuna/Experiment Z-57 but it isn't there!",
+            "Golzuna and Experiment Z-57 will not appear unless the X have been released from Elun." 
+            "To activate the fight against Experiment Z-57, you must use the Morph Ball Launcher to enter the arena."
         ),
     ],
 
