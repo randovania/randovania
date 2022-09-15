@@ -9,9 +9,10 @@ New here or looking to install? Check [our website](https://randovania.github.io
 <!-- Begin SUPPORTED -->
 
 ### Supported Games
+ - Cave Story
+ - Metroid Dread
  - Metroid Prime
  - Metroid Prime 2: Echoes
- - Cave Story
 
 <!-- End SUPPORTED -->
 
@@ -19,7 +20,6 @@ New here or looking to install? Check [our website](https://randovania.github.io
 
 ### Experimental Games
  - Metroid Prime 3: Corruption
- - Metroid Dread
  - Super Metroid
 
 <!-- End EXPERIMENTAL -->
@@ -151,7 +151,8 @@ Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/)
 
 * Assets by:
   * Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ).
-  * Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ. 
+  * Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ.
+  * New map icons by [SkyTheLucario](https://github.com/TheSkyknight100).
 
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
