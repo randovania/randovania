@@ -95,6 +95,11 @@ game_data: game.GameData = game.GameData(
             " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab for important rules of when to use this button combination.\n\n"
             "You can also save and reload your game."
         ),
+        ( 	
+            "I entered the arena for Golzuna/Experiment Z-57 but it isn't there!",
+            "Golzuna and Experiment Z-57 will not appear unless the X have been released from Elun." 
+            "To activate the fight against Experiment Z-57, you must use the Morph Ball Launcher to enter the arena."
+        ),
     ],
 
     layout=game.GameLayout(
