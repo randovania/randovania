@@ -37,6 +37,9 @@ class PermalinkDialog(QDialog, Ui_PermalinkDialog):
             new_permalink = self.get_permalink_from_field()
             if new_permalink.as_base64_str != self.permalink_edit.text():
                 raise ValueError("Imported permalink is different from text field.")
+
+            if new_permalink.parameters.development:
+                self.import_error_label.setText("WARNING! Permalink is intended for development purposes.")
             self.accept_button.setEnabled(True)
 
         except (ValueError, UnsupportedPermalink) as e:

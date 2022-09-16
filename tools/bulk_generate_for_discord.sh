@@ -16,7 +16,7 @@ GENERATION_LOG_PATH=${GENERATION_LOG_PATH:-${OUTPUT_PATH}/generation.log}
 : "${TARGET_CHANNEL:?Variable not set or empty}"
 
 # Get permalink
-permalink=$(python -m randovania layout permalink --game "${TARGET_GAME}" --preset-name "${TARGET_PRESET}" --seed-number 1000)
+permalink=$(python -m randovania layout permalink --game "${TARGET_GAME}" --preset-name "${TARGET_PRESET}" --seed-number 1000 --development)
 
 # Delete old path
 rm -rf "$OUTPUT_PATH"

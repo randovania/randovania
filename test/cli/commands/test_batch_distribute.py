@@ -24,6 +24,7 @@ def test_batch_distribute_helper(mocker):
         seed_number=seed_number,
         spoiler=True,
         presets=base_permalink.presets,
+        development=base_permalink.development,
     )
 
     mock_perf_counter.side_effect = [1000, 5000]

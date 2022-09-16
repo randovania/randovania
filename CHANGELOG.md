@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.1.0] - 2022-10-01
 
+- Added: A development mode for permalinks, to help investigate issues.
 - Changed: Discord slash command for FAQ has better usability on mobile.
 
 ### Cave Story
