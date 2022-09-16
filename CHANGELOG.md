@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Some Movement tricks to Climb Sloped Tunnels
 - Changed: Some Movement tricks to Skip Cross Bomb
 - Changed: Allow pickup in Ghavoran Elun Transport Access by charging speed via navigation room
+- Changed: Help solver by adding Morph Ball requirment on connections to event to flip the spinner in Ghavoran Flipper Room
 - Fixed: Accounted for whether the player could have Varia or not when trudging through lava
 - Fixed: Accounted for the upper parts of Thermal Device Room North being heated without pressing the lava button
 - Fixed: Ghavoran Orange backdoor properly connects to Above Pulse Radar
