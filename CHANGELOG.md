@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Exporting Metroid Dread games on the Linux builds no longer causes an error.
 - Added: FAQ entry about Speed Booster/Phantom Cloak/Storm Missile not working.
 - Added: FAQ entry about Golzuna and Experiment Z-57 spawn conditions.
+- Added: FAQ entry about the Wide Beam door in Dairon - Teleport to Cataris.
 
 ## [5.0.1] - 2022-09-12
 
