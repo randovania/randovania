@@ -214,7 +214,7 @@ async def _create_description(generator_params: GeneratorParameters,
     :param status_update:
     :return:
     """
-    rng = Random(generator_params.as_bytes)
+    rng = generator_params.create_rng()
 
     presets = [
         generator_params.get_preset(i)

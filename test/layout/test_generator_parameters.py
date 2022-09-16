@@ -12,6 +12,25 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
 
 
+def test_invalid_seed_range(default_blank_preset):
+    with pytest.raises(ValueError, match="Invalid seed number: -1"):
+        GeneratorParameters(
+            seed_number=-1,
+            spoiler=False,
+            presets=[default_blank_preset],
+        )
+
+
+def test_no_race_and_develop(default_blank_preset):
+    with pytest.raises(ValueError, match="Race permalinks can't have development enabled"):
+        GeneratorParameters(
+            seed_number=1000,
+            spoiler=False,
+            development=True,
+            presets=[default_blank_preset],
+        )
+
+
 @pytest.mark.parametrize("spoiler", [False, True])
 @pytest.mark.parametrize("layout", [
     {},
@@ -53,8 +72,9 @@ def test_round_trip(spoiler: bool,
     assert params == after
 
 
+@pytest.mark.parametrize("development", [False, True])
 @pytest.mark.parametrize("extra_data", [False, True])
-def test_decode(default_echoes_preset, mocker, extra_data):
+def test_decode(default_echoes_preset, mocker, development, extra_data):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
     mocker.patch("randovania.layout.generator_parameters.game_db_hash", autospec=True,
                  return_value=120)
@@ -64,7 +84,10 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = b'$\x00\x00\x1fD\x00\x000\xff\xbc\x00'
+    if development:
+        encoded = b'$\x00\x00\x1fF\x00\x00\x18\x7f\xc0'
+    else:
+        encoded = b'$\x00\x00\x1fD\x00\x00\x18\x7f\xde\x00'
     if extra_data:
         encoded += b"="
 
@@ -78,6 +101,7 @@ def test_decode(default_echoes_preset, mocker, extra_data):
             uuid=random_uuid,
             base_preset_uuid=default_echoes_preset.uuid,
         )],
+        development=development,
     )
 
     # Uncomment this line to quickly get the new encoded permalink
@@ -99,9 +123,9 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
-    (b'$\x00\x00\x1fD\x00W\x80', 1),
-    (b'D\x80\x00\x03\xe8\x80\n\x00+\xc0', 2),
-    (b'\x8cI$\x92H\x00\x00>\x88\x00\xa0\x02\x80\n\x00(\x00\xa0\x02\x80\n\x00(\x00\xa0\x02\xbc\x00', 10),
+    (b'$\x00\x00\x1fD\x00+\xc0', 1),
+    (b'D\x80\x00\x03\xe8\x80\x05\x00\x15\xe0', 2),
+    (b'\x8cI$\x92H\x00\x00>\x88\x00P\x01@\x05\x00\x14\x00P\x01@\x05\x00\x14\x00P\x01^\x00', 10),
 ])
 def test_decode_mock_other(encoded, num_players, mocker):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
@@ -126,8 +150,8 @@ def test_decode_mock_other(encoded, num_players, mocker):
     preset.bit_pack_encode.return_value = [(0, 100), (5, 100)]
 
     # Uncomment this line to quickly get the new encoded permalink
-    # assert expected.as_bytes == b""
     # print(expected.as_bytes)
+    # assert expected.as_bytes == b""
 
     # Run
     round_trip = expected.as_bytes
@@ -164,3 +188,18 @@ def test_as_bytes_caches(mock_bit_pack_encode: MagicMock,
     assert str1 == str2
     assert object.__getattribute__(params, "__cached_as_bytes") is not None
     mock_bit_pack_encode.assert_called_once_with(params, {})
+
+
+def test_development_rng(default_blank_preset):
+    params = GeneratorParameters(
+        seed_number=1000,
+        spoiler=True,
+        development=True,
+        presets=[default_blank_preset],
+    )
+
+    # Run
+    rng = params.create_rng()
+
+    # Assert
+    assert rng.randint(100, 900) == 896

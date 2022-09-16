@@ -24,6 +24,7 @@ def get_generator_params(base_params: GeneratorParameters, seed_number: int) -> 
     return GeneratorParameters(
         seed_number=seed_number,
         spoiler=True,
+        development=base_params.development,
         presets=base_params.presets,
     )
 

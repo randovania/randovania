@@ -31,6 +31,7 @@ def create_permalink(args):
         GeneratorParameters(
             seed,
             spoiler=not args.race,
+            development=args.development,
             presets=presets,
         ),
     )
@@ -52,7 +53,10 @@ def add_permalink_arguments(parser: ArgumentParser):
                         required=True, help="The name of the game of the preset to use.")
     parser.add_argument("--seed-number", type=int, help="The seed number. Defaults to 0.")
     parser.add_argument("--preset-name", required=True, type=str, help="The name of the presets to use", nargs='+')
-    parser.add_argument("--race", default=False, action="store_true", help="Make a race permalink (without spoiler).")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--race", default=False, action="store_true", help="Make a race permalink (without spoiler).")
+    group.add_argument("--development", default=False, action="store_true",
+                       help="Disables features that maximize randomness in order to make easier to investigate bugs.")
 
 
 def add_permalink_command(sub_parsers):
