@@ -100,6 +100,11 @@ game_data: game.GameData = game.GameData(
             "Golzuna and Experiment Z-57 will not appear unless the X have been released from Elun." 
             "To activate the fight against Experiment Z-57, you must use the Morph Ball Launcher to enter the arena."
         ),
+        ( 	
+            "I opened the Wide Beam door in Dairon's Teleport to Cataris, but it won't let me through!",
+            "Unlocking this door before turning on the power will render it unopenable." 
+            "To fix this, simply save and reload the game."
+        ),
     ],
 
     layout=game.GameLayout(
