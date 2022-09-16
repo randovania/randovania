@@ -1,7 +1,7 @@
 import copy
 import io
 import json
-import uuid
+from uuid import UUID
 from pathlib import Path
 
 import aiofiles
@@ -18,6 +18,7 @@ class InvalidPreset(Exception):
 
 
 class VersionedPreset:
+    is_included_preset: bool = False
     data: dict
     exception: InvalidPreset | None = None
     _preset: Preset | None = None
@@ -41,13 +42,6 @@ class VersionedPreset:
             return self.data["name"]
 
     @property
-    def base_preset_uuid(self) -> uuid.UUID | None:
-        if self._preset is not None:
-            return self._preset.base_preset_uuid
-        elif self.data["base_preset_uuid"] is not None:
-            return uuid.UUID(self.data["base_preset_uuid"])
-
-    @property
     def game(self) -> RandovaniaGame:
         if self._preset is not None:
             return self._preset.configuration.game
@@ -58,11 +52,11 @@ class VersionedPreset:
         return RandovaniaGame(self.data["game"])
 
     @property
-    def uuid(self) -> uuid.UUID:
+    def uuid(self) -> UUID:
         if self._preset is not None:
             return self._preset.uuid
         else:
-            return uuid.UUID(self.data["uuid"])
+            return UUID(self.data["uuid"])
 
     def __eq__(self, other):
         if isinstance(other, VersionedPreset):
@@ -134,3 +128,10 @@ class VersionedPreset:
         else:
             assert self.data is not None
             return self.data
+
+    def recover_old_base_uuid(self) -> UUID:
+        """Returns the base preset uuid that existed in old versions.
+        Should be used only for migrating that field to Options, before the preset itself is migrated."""
+        base_uuid = self.data.get("base_preset_uuid")
+        if base_uuid is not None:
+            return UUID(base_uuid)

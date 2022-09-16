@@ -54,7 +54,6 @@ def test_round_trip(spoiler: bool,
         name=f"{default_echoes_preset.game.long_name} Custom",
         description="A customized preset.",
         uuid=random_uuid,
-        base_preset_uuid=default_echoes_preset.uuid,
         game=default_echoes_preset.game,
         configuration=dataclasses.replace(default_echoes_preset.configuration, **layout),
     )
@@ -99,7 +98,6 @@ def test_decode(default_echoes_preset, mocker, development, extra_data):
             name=f"{default_echoes_preset.game.long_name} Custom",
             description="A customized preset.",
             uuid=random_uuid,
-            base_preset_uuid=default_echoes_preset.uuid,
         )],
         development=development,
     )

@@ -13,9 +13,7 @@ def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_man
     # Setup
     game = echoes_game_description.game
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base,
-                                 uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
-                                 base_preset_uuid=base.uuid)
+    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
 
     editor = PresetEditor(preset)
     window = PresetItemPool(editor, echoes_game_description, MagicMock())

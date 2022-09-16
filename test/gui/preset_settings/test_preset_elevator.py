@@ -16,9 +16,7 @@ from randovania.layout.lib.teleporters import TeleporterTargetList
 def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base,
-                                 uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
-                                 base_preset_uuid=base.uuid)
+    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
     editor = PresetEditor(preset)
     window = PresetElevators(editor, default_database.game_description_for(preset.game), MagicMock())
 

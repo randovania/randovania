@@ -1,5 +1,6 @@
 import itertools
 import json
+import uuid
 from pathlib import Path
 from unittest.mock import patch, MagicMock, call
 
@@ -379,3 +380,13 @@ def test_mark_alert_as_displayed(tmp_path):
     new_opt = Options(tmp_path)
     new_opt.load_from_disk()
     assert new_opt.displayed_alerts == set(all_alerts)
+
+
+def test_set_parent_for_preset(tmp_path):
+    opt = Options(tmp_path)
+    u1 = uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6')
+    u2 = uuid.UUID('b51fdeaa-1fff-4b79-8cd6-3e5a78077fa6')
+
+    assert opt.get_parent_for_preset(u1) is None
+    opt.set_parent_for_preset(u1, u2)
+    assert opt.get_parent_for_preset(u1) == u2
