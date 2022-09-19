@@ -1,7 +1,9 @@
+import asyncio
 import base64
 import io
 import json
 import logging
+import random
 import re
 import subprocess
 
@@ -9,7 +11,9 @@ import discord
 from discord.ui import Button
 
 import randovania
+from randovania.generator import generator
 from randovania.layout import preset_describer, layout_description
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
@@ -18,6 +22,7 @@ from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog
 
 possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')
+_MAXIMUM_PRESETS_FOR_GENERATION = 4
 
 
 def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
@@ -215,6 +220,22 @@ class RequestPresetsView(discord.ui.View):
         )
 
 
+async def _get_presets_from_message(message: discord.Message):
+    for attachment in message.attachments:
+        filename: str = attachment.filename
+        if filename.endswith(VersionedPreset.file_extension()):
+            data = await attachment.read()
+            yield VersionedPreset(json.loads(data.decode("utf-8")))
+
+
+async def _get_layouts_from_message(message: discord.Message):
+    for attachment in message.attachments:
+        filename: str = attachment.filename
+        if filename.endswith(LayoutDescription.file_extension()):
+            data = await attachment.read()
+            yield LayoutDescription.from_json_dict(json.loads(data.decode("utf-8")))
+
+
 class PermalinkLookupCog(RandovaniaCog):
     def __init__(self, configuration: dict, bot: RandovaniaBot):
         self.configuration = configuration
@@ -223,22 +244,68 @@ class PermalinkLookupCog(RandovaniaCog):
     async def add_commands(self):
         self.bot.add_view(RequestPresetsView())
 
+    @discord.commands.message_command(
+        name="Generate new game",
+        default_member_permissions=discord.Permissions(
+            administrator=True,
+        ),
+    )
+    async def generate_game(self, context: discord.ApplicationContext, message: discord.Message):
+        """Generates a game with all presets in the given message."""
+        presets = [preset.get_preset() async for preset in _get_presets_from_message(message)]
+        if not presets:
+            return await context.respond(content="No presets found in message.", ephemeral=True)
+
+        if len(presets) > _MAXIMUM_PRESETS_FOR_GENERATION:
+            return await context.respond(
+                content=f"Found {len(presets)}, can only generate up to {_MAXIMUM_PRESETS_FOR_GENERATION}.",
+                ephemeral=True)
+
+        response: discord.Interaction = await context.respond(
+            content=f"Generating game with {len(presets)} players...",
+            ephemeral=True
+        )
+        try:
+            layout: LayoutDescription = await asyncio.wait_for(
+                generator.generate_and_validate_description(
+                    generator_params=GeneratorParameters(
+                        seed_number=random.randint(0, 2 ** 31),
+                        spoiler=True,
+                        presets=presets,
+                    ),
+                    status_update=None,
+                    validate_after_generation=False,
+                    timeout=60
+                ),
+                timeout=60,
+            )
+        except asyncio.TimeoutError:
+            return await response.edit_original_message(
+                content="Timeout when generating",
+            )
+
+        await message.reply(
+            content=f"Generated: {layout.shareable_word_hash}",
+            files=[
+                discord.File(
+                    io.BytesIO(json.dumps(layout.as_json(), indent=4, separators=(',', ': ')).encode("utf-8")),
+                    filename=f"{layout.shareable_word_hash}.{LayoutDescription.file_extension()}"
+                )
+            ],
+            mention_author=False,
+        )
+        await response.delete_original_message()
+
     @discord.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.author == self.bot.user:
             return
 
-        for attachment in message.attachments:
-            filename: str = attachment.filename
-            if filename.endswith(VersionedPreset.file_extension()):
-                data = await attachment.read()
-                versioned_preset = VersionedPreset(json.loads(data.decode("utf-8")))
-                await reply_for_preset(message, versioned_preset)
+        async for preset in _get_presets_from_message(message):
+            await reply_for_preset(message, preset)
 
-            elif filename.endswith(LayoutDescription.file_extension()):
-                data = await attachment.read()
-                description = LayoutDescription.from_json_dict(json.loads(data.decode("utf-8")))
-                await reply_for_layout_description(message, description)
+        async for description in _get_layouts_from_message(message):
+            await reply_for_layout_description(message, description)
 
         await look_for_permalinks(message)
 
