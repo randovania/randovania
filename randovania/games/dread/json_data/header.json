@@ -1140,6 +1140,11 @@
                 "long_name": "Climb Sloped Tunnels",
                 "description": "There are various tunnels that contain slopes in the game, many of which can also be ascended with bombs or good movement.",
                 "extra": {}
+            },
+            "ShortBoost": {
+                "long_name": "Short Boost",
+                "description": "Flash Shift can be manipulated to allow you to charge Speed Booster in a smaller area than intended.",
+                "extra": {}
             }
         },
         "damage": {
@@ -4530,6 +4535,32 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Can Short Boost": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Flash",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     ]
