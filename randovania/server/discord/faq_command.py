@@ -24,7 +24,7 @@ class GameFaqMessage:
         result = discord.SlashCommand(
             game_faq_entry,
             name=self.game.value,
-            description=f"Prints the answer to a FAQ for {self.game.long_name}.",
+            description=f"{self.game.long_name} frequently asked questions.",
             parent=parent,
             options=[discord.Option(
                 input_type=str,

@@ -20,17 +20,12 @@ class PresetEditor:
 
     _name: str
     _uuid: uuid.UUID
-    _base_preset_uuid: uuid.UUID
     _game: RandovaniaGame
     _configuration: BaseConfiguration
 
     def __init__(self, initial_preset: Preset):
-        if initial_preset.base_preset_uuid is None:
-            raise ValueError("Unable to edit an included preset!")
-
         self._name = initial_preset.name
         self._uuid = initial_preset.uuid
-        self._base_preset_uuid = initial_preset.base_preset_uuid
         self._game = initial_preset.game
         self._configuration = initial_preset.configuration
 
@@ -62,7 +57,6 @@ class PresetEditor:
             name=self.name,
             description="A preset that was customized.",
             uuid=self._uuid,
-            base_preset_uuid=self._base_preset_uuid,
             game=self._game,
             configuration=self.configuration,
         )

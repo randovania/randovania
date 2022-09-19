@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import asyncio
 import locale
 import logging.handlers
 import os
 import sys
-import traceback
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
@@ -12,6 +13,10 @@ from PySide6 import QtCore, QtWidgets
 
 import randovania
 from randovania.games.game import RandovaniaGame
+
+if typing.TYPE_CHECKING:
+    from randovania.interface_common.preset_manager import PresetManager
+    from randovania.interface_common.options import Options
 
 logger = logging.getLogger(__name__)
 
@@ -39,14 +44,19 @@ def catch_exceptions_async(loop, context):
         logger.critical(str(context))
 
 
-async def show_main_window(app: QtWidgets.QApplication, options, is_preview: bool):
+def _migrate_old_base_preset_uuid(preset_manager: PresetManager, options: Options):
+    for uuid, preset in preset_manager.custom_presets.items():
+        if options.get_parent_for_preset(uuid) is None and (parent_uuid := preset.recover_old_base_uuid()) is not None:
+            options.set_parent_for_preset(uuid, parent_uuid)
+
+
+async def show_main_window(app: QtWidgets.QApplication, options: Options, is_preview: bool):
     from randovania.interface_common.preset_manager import PresetManager
-    from randovania.interface_common.options import Options
-    options = typing.cast(Options, options)
     preset_manager = PresetManager(options.presets_path)
 
     logger.info("Loading user presets...")
     await preset_manager.load_user_presets()
+    _migrate_old_base_preset_uuid(preset_manager, options)
     logger.info("Finished loading presets!")
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -157,7 +167,7 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
     app.game_session_window.show()
 
 
-async def display_window_for(app, options, command: str, args):
+async def display_window_for(app, options: Options, command: str, args):
     if command == "tracker":
         await show_tracker(app)
     elif command == "main":
@@ -206,7 +216,7 @@ def create_memory_executor(debug_game_backend: bool, options):
     return backend
 
 
-async def _load_options():
+async def _load_options() -> Options | None:
     logger.info("Loading up user preferences code...")
     from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
@@ -220,11 +230,11 @@ async def _load_options():
     import dulwich.repo
     import dulwich.errors
     try:
-        dulwich.repo.Repo(options.user_dir)
+        dulwich.repo.Repo(os.fspath(options.user_dir))
 
     except (dulwich.errors.NotGitRepository, ValueError):
         options.user_dir.mkdir(parents=True, exist_ok=True)
-        dulwich.repo.Repo.init(options.user_dir)
+        dulwich.repo.Repo.init(os.fspath(options.user_dir))
 
     theme.set_dark_theme(options.dark_mode)
 

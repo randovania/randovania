@@ -28,17 +28,11 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         if source is None or target is None:
             return event.setDropAction(Qt.IgnoreAction)
 
-        if source.game != target.game or source.base_preset_uuid is None:
+        if source.game != target.game or source.is_included_preset:
             return event.setDropAction(Qt.IgnoreAction)
 
-        try:
-            source_preset = source.get_preset()
-        except InvalidPreset:
-            return event.setDropAction(Qt.IgnoreAction)
-
-        self.window_manager.preset_manager.add_new_preset(VersionedPreset.with_preset(
-            dataclasses.replace(source_preset, base_preset_uuid=target.uuid)
-        ))
+        with self.options as options:
+            options.set_parent_for_preset(source.uuid, target.uuid)
 
         return super().dropEvent(event)
 
@@ -91,9 +85,10 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         # Set parents after, so don't have issues with order
         for preset in sorted(self.window_manager.preset_manager.custom_presets.values(), key=lambda it: it.name):
-            if preset.base_preset_uuid in self.preset_to_item:
+            preset_parent = self.options.get_parent_for_preset(preset.uuid)
+            if preset_parent in self.preset_to_item:
                 self_item = self.preset_to_item[preset.uuid]
-                target_parent = parent_item = self.preset_to_item[preset.base_preset_uuid]
+                target_parent = parent_item = self.preset_to_item[preset_parent]
 
                 while parent_item not in root_parents:
                     if parent_item == self_item:

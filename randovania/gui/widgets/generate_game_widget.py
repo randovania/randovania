@@ -93,7 +93,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.preset = preset
 
         for p in [self.action_delete, self.action_history, self.action_export]:
-            p.setEnabled(preset is not None and preset.base_preset_uuid is not None)
+            p.setEnabled(preset is not None and not preset.is_included_preset)
 
         for p in [self.action_customize, self.action_duplicate, self.action_map_tracker, self.action_required_tricks]:
             p.setEnabled(preset is not None)
@@ -179,7 +179,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             return
 
         old_preset = self._current_preset_data.get_preset()
-        if old_preset.base_preset_uuid is None:
+        if self._current_preset_data.is_included_preset:
             old_preset = old_preset.fork()
 
         editor = PresetEditor(old_preset)

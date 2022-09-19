@@ -79,7 +79,6 @@ def customized_preset(default_preset) -> Preset:
         name=f"{default_preset.name} Custom",
         description="A customized preset.",
         uuid=uuid.uuid4(),
-        base_preset_uuid=default_preset.uuid,
         game=default_preset.game,
         configuration=default_preset.configuration
     )

@@ -12,9 +12,7 @@ from randovania.resolver.exceptions import InvalidConfiguration
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
 @patch("randovania.generator.generator.create_player_pool", autospec=True)
 @patch("randovania.generator.generator._distribute_remaining_items", autospec=True)
-@patch("randovania.generator.generator.Random", autospec=False)
-async def test_create_patches(mock_random: MagicMock,
-                              mock_distribute_remaining_items: MagicMock,
+async def test_create_patches(mock_distribute_remaining_items: MagicMock,
                               mock_create_player_pool: MagicMock,
                               mock_validate_item_pool_size: MagicMock,
                               mocker,
@@ -28,22 +26,22 @@ async def test_create_patches(mock_random: MagicMock,
         new_callable=AsyncMock, return_value=filler_result)
     mock_distribute_remaining_items.return_value = filler_result
 
+    generator_parameters = MagicMock()
+    generator_parameters.get_preset.side_effect = lambda i: presets[i]
+
     num_players = 1
-    rng = mock_random.return_value
+    rng = generator_parameters.create_rng.return_value
     status_update: MagicMock | Callable[[str], None] = MagicMock()
     player_pools = [MagicMock() for _ in range(num_players)]
     presets = [MagicMock() for _ in range(num_players)]
 
     mock_create_player_pool.side_effect = player_pools
 
-    generator_parameters = MagicMock()
-    generator_parameters.get_preset.side_effect = lambda i: presets[i]
-
     # Run
     result = await generator._create_description(generator_parameters, status_update, 0)
 
     # Assert
-    mock_random.assert_called_once_with(generator_parameters.as_bytes)
+    generator_parameters.create_rng.assert_called_once_with()
     mock_create_player_pool.assert_has_calls([
         call(rng, presets[i].configuration, i, num_players)
         for i in range(num_players)

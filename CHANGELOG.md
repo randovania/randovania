@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.1.0] - 2022-10-01
 
-- Nothing yet.
+- Added: A development mode for permalinks, to help investigate issues.
+- Changed: Discord slash command for FAQ has better usability on mobile.
+- Changed: The parent for a preset is now stored in your preferences, instead of in the preset itself.
 
 ### Cave Story
 
@@ -15,7 +17,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Nothing.
+- Added: FAQ entry about Speed Booster/Phantom Cloak/Storm Missile not working.
+- Added: FAQ entry about Golzuna and Experiment Z-57 spawn conditions.
+- Added: FAQ entry about the Wide Beam door in Dairon - Teleport to Cataris.
+ 
+#### Logic Database
+
+- Added: Event in Underlava Puzzle Room 2 for breaking the speed blocks so that going between the two parts can be accounted for
+- Added: Event for the trigger that reopens the door to Central Unit Access, allowing it logical to go back through
+- Added: Other various methods of going through rooms
+- Changed: Separated the First Tunnel Blob event into two to account for Diffusion/Wave not needing to be in the tunnel
+- Changed: Deleted some unnecessary tile nodes
+- Changed: Various instances of Walljump (Beginner) to trivial
+- Changed: Some Grapple options to include Grapple Movement
+- Changed: Some Movement tricks to Climb Sloped Tunnels
+- Changed: Some Movement tricks to Skip Cross Bomb
+- Fixed: Accounted for whether the player could have Varia or not when trudging through lava
+- Fixed: Accounted for the upper parts of Thermal Device Room North being heated without pressing the lava button
+- Fixed: Ghavoran Orange backdoor properly connects to Above Pulse Radar
 
 ### Metroid Prime
 

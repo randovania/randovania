@@ -33,6 +33,7 @@ def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mo
         args.preset_name = [preset_name]
         args.seed_number = 0
         args.race = False
+        args.development = False
 
     extra_args = {}
     if no_retry:
@@ -57,15 +58,17 @@ def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mo
     else:
         mock_from_str.assert_not_called()
 
-    mock_generate.assert_has_awaits([
-                                        call(
-                                            generator_params=generator_params,
-                                            status_update=ANY,
-                                            validate_after_generation=args.validate,
-                                            timeout=None,
-                                            **extra_args,
-                                        )
-                                    ] * repeat)
+    mock_generate.assert_has_awaits(
+        [
+            call(
+                generator_params=generator_params,
+                status_update=ANY,
+                validate_after_generation=args.validate,
+                timeout=None,
+                **extra_args,
+            )
+        ] * repeat
+    )
 
     save_file_mock: MagicMock = mock_generate.return_value.save_to_file
     save_file_mock.assert_called_once_with(args.output_file)

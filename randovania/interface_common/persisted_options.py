@@ -95,6 +95,12 @@ def _convert_v17(options: dict) -> dict:
     return options
 
 
+def _convert_v18(options: dict) -> dict:
+    # added parent_for_presets, but we don't have to change anything.
+    # we added a new version to split the file
+    return options
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -113,6 +119,7 @@ _CONVERTER_FOR_VERSION = [
     _convert_v15,
     _convert_v16,
     _convert_v17,
+    _convert_v18,
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

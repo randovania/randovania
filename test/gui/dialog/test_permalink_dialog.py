@@ -36,3 +36,20 @@ def test_on_permalink_changed_permalink_different_str(skip_qtbot, mocker):
     # Assert
     assert not dialog.accept_button.isEnabled()
     assert dialog.import_error_label.text() == "Invalid permalink: Imported permalink is different from text field."
+
+
+def test_on_permalink_changed_permalink_development(skip_qtbot, mocker):
+    mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str")
+    mock_from_str.return_value.as_base64_str = "<text>"
+    mock_from_str.return_value.parameters.development = True
+
+    dialog = PermalinkDialog()
+    dialog.permalink_edit.setText("<text>")
+    skip_qtbot.addWidget(dialog)
+
+    # Run
+    dialog._on_permalink_changed("")
+
+    # Assert
+    assert dialog.accept_button.isEnabled()
+    assert dialog.import_error_label.text() == "WARNING! Permalink is intended for development purposes."

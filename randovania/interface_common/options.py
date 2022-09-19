@@ -47,15 +47,33 @@ def decode_alerts(data: list[str]):
     return result
 
 
-def serialize_uuids(elements: set[uuid.UUID]) -> list[str]:
+def serialize_uuid_set(elements: set[uuid.UUID]) -> list[str]:
     return sorted(str(a) for a in elements)
 
 
-def decode_uuids(data: list[str]):
+def decode_uuid_set(data: list[str]):
     result = set()
     for item in data:
         try:
             result.add(uuid.UUID(item))
+        except ValueError:
+            continue
+
+    return result
+
+
+def serialize_uuid_dict(elements: dict[uuid.UUID, uuid.UUID]) -> dict[str, str]:
+    return {
+        str(key): str(value)
+        for key, value in elements.items()
+    }
+
+
+def decode_uuid_dict(data: dict[str, str]) -> dict[uuid.UUID, uuid.UUID]:
+    result = {}
+    for key, value in data.items():
+        try:
+            result[uuid.UUID(key)] = uuid.UUID(value)
         except ValueError:
             continue
 
@@ -96,10 +114,11 @@ _SERIALIZER_FOR_FIELD = {
     "dark_mode": Serializer(identity, bool),
     "experimental_games": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
-    "hidden_preset_uuids": Serializer(serialize_uuids, decode_uuids),
+    "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
     "game_backend": Serializer(lambda it: it.value, MemoryExecutorChoice),
     "nintendont_ip": Serializer(identity, str),
     "selected_tracker": Serializer(identity, str),
+    "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
 }
 
 
@@ -151,6 +170,7 @@ class Options:
     _experimental_games: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
     _hidden_preset_uuids: set[uuid.UUID] | None = None
+    _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
     _game_backend: MemoryExecutorChoice | None = None
     _nintendont_ip: str | None = None
     _selected_tracker: str | None = None
@@ -436,7 +456,6 @@ class Options:
     @hidden_preset_uuids.setter
     def hidden_preset_uuids(self, value):
         self._edit_field("hidden_preset_uuids", value)
-        pass
 
     def is_preset_uuid_hidden(self, the_uuid: uuid.UUID) -> bool:
         return the_uuid in self.hidden_preset_uuids
@@ -453,6 +472,27 @@ class Options:
                 uuids.remove(the_uuid)
             with self:
                 self.hidden_preset_uuids = uuids
+
+    @property
+    def parent_for_presets(self) -> dict[uuid.UUID, uuid.UUID]:
+        return _return_with_default(self._parent_for_presets, dict)
+
+    @parent_for_presets.setter
+    def parent_for_presets(self, value: dict[uuid.UUID, uuid.UUID]):
+        self._edit_field("parent_for_presets", value)
+
+    def get_parent_for_preset(self, preset: uuid.UUID) -> uuid.UUID | None:
+        return self.parent_for_presets.get(preset)
+
+    def set_parent_for_preset(self, preset: uuid.UUID, parent: uuid.UUID):
+        current_dict = self.parent_for_presets
+
+        if current_dict.get(preset) != parent:
+            # Create a copy, so we don't modify the existing field
+            new_dict = dict(current_dict)
+            new_dict[preset] = parent
+            with self:
+                self.parent_for_presets = new_dict
 
     # Advanced
 
