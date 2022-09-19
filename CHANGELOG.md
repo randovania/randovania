@@ -25,7 +25,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
-## [5.0.1] - 2022-09-??
+
+## [5.0.2] - 2022-09-19
+
+- Fixed: Exporting Metroid Dread games on the Linux builds no longer causes an error.
+
+## [5.0.1] - 2022-09-12
 
 - Fixed: The README and front page now lists Metroid Dread as a supported game.
 
