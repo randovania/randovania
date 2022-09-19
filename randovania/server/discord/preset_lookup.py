@@ -3,9 +3,11 @@ import base64
 import io
 import json
 import logging
+import math
 import random
 import re
 import subprocess
+import time
 
 import discord
 from discord.ui import Button
@@ -18,6 +20,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.resolver.exceptions import GenerationFailure
 from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog
 
@@ -265,6 +268,12 @@ class PermalinkLookupCog(RandovaniaCog):
             content=f"Generating game with {len(presets)} players...",
             ephemeral=True
         )
+
+        content = ""
+        files = []
+        embeds = []
+        start_time = time.time()
+
         try:
             layout: LayoutDescription = await asyncio.wait_for(
                 generator.generate_and_validate_description(
@@ -279,22 +288,38 @@ class PermalinkLookupCog(RandovaniaCog):
                 ),
                 timeout=60,
             )
-        except asyncio.TimeoutError:
-            return await response.edit_original_message(
-                content="Timeout when generating",
-            )
-
-        await message.reply(
-            content=f"Generated: {layout.shareable_word_hash}",
-            files=[
+            content = f"Hash: {layout.shareable_word_hash}. Generated in "
+            files = [
                 discord.File(
                     io.BytesIO(json.dumps(layout.as_json(), indent=4, separators=(',', ': ')).encode("utf-8")),
                     filename=f"{layout.shareable_word_hash}.{LayoutDescription.file_extension()}"
                 )
-            ],
-            mention_author=False,
-        )
-        await response.delete_original_message()
+            ]
+        except GenerationFailure as e:
+            embeds = [discord.Embed(
+                title="Unable to generate a game",
+                description=str(e.source),
+            )]
+        except asyncio.TimeoutError:
+            content = "Timeout after "
+        except Exception as e:
+            return await response.edit_original_message(
+                content=f"Unexpected error when generating: {e} ({type(e)})",
+            )
+
+        delta = time.time() - start_time
+        delta_str = f"{math.floor(delta)} seconds."
+        if content:
+            content += delta_str
+        else:
+            content += f"Took {delta_str}"
+
+        try:
+            await message.reply(
+                content=f"{content}\nRequested by {context.user.display_name}.",
+                files=files, embeds=embeds, mention_author=False)
+        except discord.errors.Forbidden:
+            return await response.edit_original_message(content=content, files=files, embeds=embeds)
 
     @discord.Cog.listener()
     async def on_message(self, message: discord.Message):
