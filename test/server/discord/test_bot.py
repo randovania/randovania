@@ -12,6 +12,7 @@ async def test_on_ready():
 
     b.sync_commands.assert_awaited_once_with()
     assert [c.name for c in b.pending_application_commands] == [
+        "Generate new game",
         "prefix-database-inspect",
         "prefix-randovania-faq",
     ]

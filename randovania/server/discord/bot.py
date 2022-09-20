@@ -36,6 +36,8 @@ class RandovaniaBot(discord.Bot):
 
         for command in self.pending_application_commands:
             assert isinstance(command, discord.ApplicationCommand)
+            if not isinstance(command, discord.SlashCommand):
+                continue
             if command_prefix := self.configuration.get("command_prefix", ""):
                 if not command.name.startswith(command_prefix):
                     command.name = command_prefix + command.name
