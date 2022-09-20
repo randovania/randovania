@@ -3891,7 +3891,7 @@
                                 ]
                             }
                         },
-                        "Event - Activate Magnet Walls with Wave": {
+                        "Event - Activate Magnet Walls": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3899,28 +3899,48 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisMoveMagnetWallsButton",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
                                             "amount": 3,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Diffusion Beam"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DiffusionAbuse",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4201,7 +4221,7 @@
                         }
                     }
                 },
-                "Event - Activate Magnet Walls with Wave": {
+                "Event - Activate Magnet Walls": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4209,7 +4229,7 @@
                         "y": 2126.03,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Activating the switch from this room will darken the room and require the\nplayer to reload the room to see.\n\n",
                     "layers": [
                         "default"
                     ],
