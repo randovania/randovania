@@ -1145,6 +1145,11 @@
                 "long_name": "Short Boost",
                 "description": "Flash Shift can be manipulated to allow you to charge Speed Booster in a smaller area than intended.",
                 "extra": {}
+            },
+            "DiffusionAbuse": {
+                "long_name": "Diffusion Abuse",
+                "description": "Using Diffusion Beam in certain situations can bypass the usual requirements for some objects",
+                "extra": {}
             }
         },
         "damage": {
@@ -1406,17 +1411,46 @@
                 }
             },
             "Push Wide Beam Block": {
-                "type": "and",
+                "type": "or",
                 "data": {
                     "comment": null,
                     "items": [
                         {
-                            "type": "template",
-                            "data": "Shoot Charge Beam"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Charge Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Wide Beam"
+                                    }
+                                ]
+                            }
                         },
                         {
-                            "type": "template",
-                            "data": "Shoot Wide Beam"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DiffusionAbuse",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }

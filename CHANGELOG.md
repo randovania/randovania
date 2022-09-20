@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Event in Underlava Puzzle Room 2 for breaking the speed blocks so that going between the two parts can be accounted for
 - Added: Event for the trigger that reopens the door to Central Unit Access, allowing it logical to go back through
 - Added: Other various methods of going through rooms
+- Added: New Diffusion Abuse trick for pushing Wide Beam blocks and activating the lava buttons in Cataris.
 - Changed: Separated the First Tunnel Blob event into two to account for Diffusion/Wave not needing to be in the tunnel
 - Changed: Deleted some unnecessary tile nodes
 - Changed: Various instances of Walljump (Beginner) to trivial

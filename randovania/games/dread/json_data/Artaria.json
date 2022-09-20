@@ -21597,8 +21597,49 @@
                             }
                         },
                         "Event - EMMI Wide Beam Block": {
-                            "type": "template",
-                            "data": "Push Wide Beam Block"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Charge Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Wide Beam"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Diffusion Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DiffusionAbuse",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Tunnel to EMMI Zone Hub": {
                             "type": "and",
@@ -21664,7 +21705,11 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Push Wide Beam Block"
+                                        "data": "Shoot Charge Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Wide Beam"
                                     },
                                     {
                                         "type": "resource",
