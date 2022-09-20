@@ -76,6 +76,7 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
             self.version_widget.addItem(item)
 
         self.accept_button.clicked.connect(self.accept)
+        self.export_button.clicked.connect(self._export_selected_preset)
         self.cancel_button.clicked.connect(self.reject)
         self.version_widget.itemSelectionChanged.connect(self._on_selection_changed)
         self._on_selection_changed()
@@ -87,15 +88,27 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
         else:
             return None
 
+    def _export_selected_preset(self):
+        preset = self.selected_preset()
+        assert preset is not None
+
+        preset = VersionedPreset.with_preset(preset)
+        default_name = f"{preset.slug_name}.rdvpreset"
+        path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True, name=default_name)
+        if path is not None:
+            preset.save_to_file(path)
+
     def _on_selection_changed(self):
         items = self.version_widget.selectedItems()
         self.accept_button.setEnabled(False)
+        self.export_button.setEnabled(False)
         if not items:
             self.label.setText("Select a version on the left")
             return
 
         old_preset, old_description = items[0].data(QtCore.Qt.UserRole)
         self.accept_button.setEnabled(old_preset is not None)
+        self.export_button.setEnabled(self.accept_button.isEnabled())
 
         if old_preset is not None and self._original_lines:
             k = list(difflib.unified_diff(
