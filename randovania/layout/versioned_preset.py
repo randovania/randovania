@@ -122,6 +122,9 @@ class VersionedPreset:
         if self._preset is not None:
             preset_json = {
                 "schema_version": preset_migration.CURRENT_VERSION,
+
+                # It's important to keep this field in order to keep old Randovania versions working
+                "base_preset_uuid": None,
             }
             preset_json.update(self._preset.as_json)
             return preset_json
@@ -129,9 +132,11 @@ class VersionedPreset:
             assert self.data is not None
             return self.data
 
-    def recover_old_base_uuid(self) -> UUID:
+    def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.
         Should be used only for migrating that field to Options, before the preset itself is migrated."""
         base_uuid = self.data.get("base_preset_uuid")
         if base_uuid is not None:
             return UUID(base_uuid)
+        else:
+            return None
