@@ -12,7 +12,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 @dataclasses.dataclass(frozen=True)
 class Preset(BitPackValue):
     name: str
-    uuid: UUID
+    uuid: uuid_module.UUID
     description: str
     game: RandovaniaGame
     configuration: BaseConfiguration
