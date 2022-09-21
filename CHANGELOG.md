@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Accounted for whether the player could have Varia or not when trudging through lava
 - Fixed: Accounted for the upper parts of Thermal Device Room North being heated without pressing the lava button
 - Fixed: Ghavoran Orange backdoor properly connects to Above Pulse Radar
+- Fixed: Purple EMMI Arena properly accounting for Gravity Suit to climb the tower.
 
 ### Metroid Prime
 
