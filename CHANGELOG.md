@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
-- Fixed: Problem with DNA goal slider which wouldn't save the right value when customized
+- Fixed: The target DNA count is no longer limited to 6 when modifying an existing preset, or changing tabs.
 
 #### Logic Database
 
