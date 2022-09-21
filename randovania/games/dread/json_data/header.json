@@ -1411,46 +1411,17 @@
                 }
             },
             "Push Wide Beam Block": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
                     "items": [
                         {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Charge Beam"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Wide Beam"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Shoot Charge Beam"
                         },
                         {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Diffusion Beam"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "DiffusionAbuse",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Shoot Wide Beam"
                         }
                     ]
                 }
