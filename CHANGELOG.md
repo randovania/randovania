@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
+- Fixed: The target DNA count is no longer limited to 6 when modifying an existing preset, or changing tabs.
+
 #### Logic Database
 
 - Added: Event in Underlava Puzzle Room 2 for breaking the speed blocks so that going between the two parts can be accounted for
