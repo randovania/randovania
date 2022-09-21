@@ -17,6 +17,7 @@ from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -44,6 +45,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     _last_percentage: float = 0
     _can_stop_background_process: bool = True
     _game_details_tabs: list[GameDetailsTab]
+    validator_widget: GameValidatorWidget | None = None
 
     def __init__(self, window_manager: WindowManager | None, options: Options):
         super().__init__()
@@ -92,6 +94,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         # Cosmetic
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
+
+    def closeEvent(self, event: QtGui.QCloseEvent):
+        if self.validator_widget is not None:
+            self.validator_widget.stop_validator()
+
+        return super().closeEvent(event)
 
     @property
     def current_player_index(self) -> int:
@@ -268,6 +276,13 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.player_index_combo.setVisible(description.player_count > 1)
 
         if description.has_spoiler:
+            if description.player_count == 1:
+                if self.validator_widget is not None:
+                    self.validator_widget.stop_validator()
+
+                self.validator_widget = GameValidatorWidget(self.layout_description)
+                self.layout_info_tab.addTab(self.validator_widget, f"Spoiler: Playthrough")
+
             action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
             for item_order in description.item_order:
                 action_list_widget.addItem(item_order)
