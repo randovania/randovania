@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
+- Fixed: Problem with DNA goal slider which wouldn't save the right value when customized
+
 #### Logic Database
 
 - Added: Event in Underlava Puzzle Room 2 for breaking the speed blocks so that going between the two parts can be accounted for

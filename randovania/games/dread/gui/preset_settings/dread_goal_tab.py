@@ -81,6 +81,6 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
     def on_preset_changed(self, preset: Preset):
         assert isinstance(preset.configuration, DreadConfiguration)
         artifacts = preset.configuration.artifacts
-        self.dna_slider.setValue(artifacts.required_artifacts)
         self.prefer_emmi_check.setChecked(artifacts.prefer_emmi)
         self.prefer_major_bosses_check.setChecked(artifacts.prefer_major_bosses)
+        self.dna_slider.setValue(artifacts.required_artifacts)
