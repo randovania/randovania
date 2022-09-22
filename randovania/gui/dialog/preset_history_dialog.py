@@ -1,10 +1,13 @@
+import datetime
 import difflib
 import json
+from typing import Iterator
 
 from PySide6 import QtWidgets, QtCore
+from qasync import asyncSlot
 
 from randovania.gui.generated.preset_history_dialog_ui import Ui_PresetHistoryDialog
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, file_prompts
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.preset import Preset
@@ -41,6 +44,24 @@ def _describe_preset(preset: Preset) -> list[str]:
     return lines
 
 
+def _calculate_previous_versions(preset_manager: PresetManager, preset: VersionedPreset,
+                                 original_lines: tuple[str, ...],
+                                 ) -> Iterator[tuple[datetime.datetime, Preset, tuple[str, ...]]]:
+    previous_description = None
+
+    for date, commit in preset_manager.get_previous_versions(preset):
+        old_preset = _get_old_preset(preset_manager.get_previous_version(preset, commit))
+        if not isinstance(old_preset, Preset):
+            continue
+
+        old_description = tuple(_describe_preset(old_preset))
+        if old_description in (original_lines, previous_description):
+            continue
+
+        previous_description = old_description
+        yield date, old_preset, old_description
+
+
 class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
     def __init__(self, preset_manager: PresetManager, preset: VersionedPreset):
         super().__init__()
@@ -59,18 +80,8 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
         item.setData(QtCore.Qt.UserRole, (None, self._original_lines))
         self.version_widget.addItem(item)
 
-        previous_description = None
-
-        for date, commit in preset_manager.get_previous_versions(preset):
-            old_preset = _get_old_preset(self.preset_manager.get_previous_version(self.preset, commit))
-            if not isinstance(old_preset, Preset):
-                continue
-
-            old_description = tuple(_describe_preset(old_preset))
-            if old_description in (self._original_lines, previous_description):
-                continue
-
-            previous_description = old_description
+        for date, old_preset, old_description in _calculate_previous_versions(self.preset_manager, self.preset,
+                                                                              self._original_lines):
             item = QtWidgets.QListWidgetItem(date.astimezone().strftime("%c"))
             item.setData(QtCore.Qt.UserRole, (old_preset, old_description))
             self.version_widget.addItem(item)
@@ -88,13 +99,14 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
         else:
             return None
 
-    def _export_selected_preset(self):
+    @asyncSlot()
+    async def _export_selected_preset(self):
         preset = self.selected_preset()
         assert preset is not None
 
         preset = VersionedPreset.with_preset(preset)
         default_name = f"{preset.slug_name}.rdvpreset"
-        path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True, name=default_name)
+        path = await file_prompts.prompt_preset(self, new_file=True, name=default_name)
         if path is not None:
             preset.save_to_file(path)
 
