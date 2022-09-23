@@ -1,0 +1,141 @@
+{
+    "schema_version": 13,
+    "info": {
+        "randovania_version": "5.1.0.dev64",
+        "randovania_version_git": "3aa24df9",
+        "permalink": "DfP7crebjjqiTfkIrBdIUKOyKXgAAEyJ",
+        "has_spoiler": true,
+        "seed": 641593484,
+        "hash": "7NZLPG4O",
+        "word_hash": "Thardus Combat Kakeru",
+        "presets": [
+            {
+                "schema_version": 39,
+                "base_preset_uuid": null,
+                "name": "Starter Preset",
+                "uuid": "98fd4d7d-7d17-4a81-bb17-0838311c7be1",
+                "description": "Basic preset.",
+                "game": "blank",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": false,
+                        "specific_levels": {}
+                    },
+                    "starting_location": [
+                        {
+                            "world_name": "Intro",
+                            "area_name": "Starting Area"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": []
+                    },
+                    "major_items_configuration": {
+                        "items_state": {
+                            "Weapon": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    5
+                                ]
+                            },
+                            "Explosive": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Blue Key": {
+                                "num_shuffled_pickups": 1
+                            }
+                        },
+                        "default_items": {},
+                        "minimum_random_starting_items": 0,
+                        "maximum_random_starting_items": 0
+                    },
+                    "ammo_configuration": {
+                        "items_state": {
+                            "Missile Expansion": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 1,
+                                "requires_major_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "minimum_available_locations_for_hint_placement": 0,
+                    "minimum_location_weight_for_hint_placement": 0.0,
+                    "dock_rando": {
+                        "mode": "vanilla",
+                        "types_state": {
+                            "door": {
+                                "can_change_from": [
+                                    "Back-Only Door",
+                                    "Blue Key Door",
+                                    "Explosive Door",
+                                    "Locked Door",
+                                    "Normal Door"
+                                ],
+                                "can_change_to": [
+                                    "Back-Only Door",
+                                    "Blue Key Door",
+                                    "Explosive Door",
+                                    "Locked Door",
+                                    "Normal Door"
+                                ]
+                            },
+                            "other": {
+                                "can_change_from": [],
+                                "can_change_to": []
+                            }
+                        }
+                    },
+                    "include_extra_pickups": false
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "blank",
+            "starting_location": "Intro/Starting Area",
+            "starting_items": {},
+            "teleporters": {},
+            "dock_weakness": {},
+            "configurable_nodes": {},
+            "locations": {
+                "Intro": {
+                    "Back-Only Lock Room/Pickup (Extra Key)": "Victory Key",
+                    "Blue Key Room/Pickup (Blue Key)": "Weapon",
+                    "Explosive Depot/Pickup (Explosive)": "Blue Key",
+                    "Starting Area/Pickup (Missile Expansion)": "Explosive",
+                    "Starting Area/Pickup (Weapon)": "Missile Expansion"
+                }
+            },
+            "hints": {
+                "Intro/Hint Room/Hint with Translator": {
+                    "hint_type": "joke",
+                    "precision": null,
+                    "target": null,
+                    "dark_temple": null
+                },
+                "Intro/Hint Room/Hint no Translator": {
+                    "hint_type": "joke",
+                    "precision": null,
+                    "target": null,
+                    "dark_temple": null
+                }
+            }
+        }
+    ],
+    "item_order": [
+        "Blue Key at Intro/Explosive Depot/Pickup (Explosive)",
+        "Explosive at Intro/Starting Area/Pickup (Missile Expansion)",
+        "Missile Expansion at Intro/Back-Only Lock Room/Pickup (Extra Key)",
+        "Weapon at Intro/Starting Area/Pickup (Weapon)",
+        "Victory Key at Intro/Blue Key Room/Pickup (Blue Key)"
+    ]
+}

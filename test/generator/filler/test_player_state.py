@@ -45,8 +45,8 @@ def _state_for_blank(default_filler_config, blank_game_description, default_blan
 def test_current_state_report(state_for_blank):
     result = state_for_blank.current_state_report()
     assert result == (
-        "At Intro/Back-Only Lock Room/Event - Key Switch 1 after 0 actions and 0 pickups, "
-        "with 3 collected locations, 17 safe nodes.\n\n"
+        "At Intro/Hint Room/Hint no Translator after 0 actions and 0 pickups, "
+        "with 3 collected locations, 16 safe nodes.\n\n"
         "Pickups still available: \n\n"
         "Resources to progress: Blue Key, Missile, Weapon\n\n"
         "Paths to be opened:\n"
