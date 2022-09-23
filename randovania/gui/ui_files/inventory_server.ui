@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InventoryServerWindow</class>
+ <widget class="QMainWindow" name="InventoryServerWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>340</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Inventory Server</string>
+  </property>
+  <widget class="QWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QGridLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Run a websocket server on this machine that will respond to any message with the player's current inventory in JSON format.&lt;p&gt;This will allow you to share your inventory with other local and remote applications, letting you build custom OBS overlays and even allow tournament organizers to automatically retrieve your inventory status from you.&lt;p&gt;If you're allowing other computers (like a tournament organizer) to connect to your inventory server, be sure to know your public IP address and enable port forwarding on your router!&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="inventory_server_start_button">
+      <property name="text">
+       <string>Start server</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="inventory_server_stop_button">
+      <property name="text">
+       <string>Stop server</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="inventory_server_autostart">
+      <property name="text">
+       <string>Automatically start server when Randovania starts</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QSpinBox" name="inventory_server_port">
+      <property name="minimum">
+       <number>0</number>
+      </property>
+      <property name="maximum">
+       <number>65535</number>
+      </property>
+      <property name="prefix">
+       <string>Port number:   </string>
+      </property>
+      <property name="value">
+       <number>8765</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+</ui>

@@ -119,6 +119,8 @@ _SERIALIZER_FOR_FIELD = {
     "nintendont_ip": Serializer(identity, str),
     "selected_tracker": Serializer(identity, str),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
+    "inventory_server_autostart": Serializer(identity, bool),
+    "inventory_server_port": Serializer(identity, int),
 }
 
 
@@ -174,6 +176,8 @@ class Options:
     _game_backend: MemoryExecutorChoice | None = None
     _nintendont_ip: str | None = None
     _selected_tracker: str | None = None
+    _inventory_server_autostart: bool | None = None
+    _inventory_server_port: int | None = None
 
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
@@ -374,6 +378,22 @@ class Options:
     @dark_mode.setter
     def dark_mode(self, value: bool):
         self._edit_field("dark_mode", value)
+
+    @property
+    def inventory_server_autostart(self) -> bool:
+        return _return_with_default(self._inventory_server_autostart, lambda: False)
+
+    @inventory_server_autostart.setter
+    def inventory_server_autostart(self, value: bool):
+        self._edit_field("inventory_server_autostart", value)
+
+    @property
+    def inventory_server_port(self) -> bool:
+        return _return_with_default(self._inventory_server_port, lambda: 8765)
+
+    @inventory_server_port.setter
+    def inventory_server_port(self, value: bool):
+        self._edit_field("inventory_server_port", value)
 
     @property
     def experimental_games(self) -> bool:

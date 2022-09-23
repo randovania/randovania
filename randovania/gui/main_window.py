@@ -196,6 +196,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_experimental_games.triggered.connect(self._on_menu_action_experimental_games)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
+        self.menu_action_open_inventory_server.triggered.connect(self._open_inventory_server)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
         self.menu_action_layout_editor.triggered.connect(self._on_menu_action_layout_editor)
@@ -593,6 +594,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
         self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
         self.auto_tracker_window.show()
+
+    def _open_inventory_server(self):
+        from randovania.gui.inventory_server_window import InventoryServerWindow
+        self.inventory_server_window = InventoryServerWindow(common_qt_lib.get_game_connection(), self._options)
+        self.inventory_server_window.show()
 
     def _on_menu_action_previously_generated_games(self):
         path = self._options.game_history_path

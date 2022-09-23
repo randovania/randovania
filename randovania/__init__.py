@@ -116,6 +116,9 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
             'randovania.game_connection.connection_backend': {
                 'level': 'DEBUG',
             },
+            'randovania.inventory_server.inventory_server': {
+                'level': 'INFO',
+            },
             'randovania.gui.multiworld_client': {
                 'level': 'DEBUG',
             },
@@ -138,6 +141,9 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
                 'level': 'INFO',
             },
             'qasync': {
+                'level': 'INFO',
+            },
+            'websockets.server': {
                 'level': 'INFO',
             },
             # 'socketio.client': {

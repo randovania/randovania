@@ -290,6 +290,10 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
     from randovania.game_connection.game_connection import GameConnection
     app.game_connection = GameConnection(executor)
 
+    logging.info("Setting up inventory websocket server...")
+    from randovania.inventory_server.inventory_server import InventoryServer
+    app.inventory_server = InventoryServer(app.game_connection, options)
+
     logging.info("Configuring qasync...")
     import qasync
 
