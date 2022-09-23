@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A development mode for permalinks, to help investigate issues.
 - Changed: Discord slash command for FAQ has better usability on mobile.
 - Changed: The parent for a preset is now stored in your preferences, instead of in the preset itself.
+- Fixed: The solver can no longer consider collecting a location a requirement to collecting itself. This is a regression from 4.3.0.
 
 ### Cave Story
 

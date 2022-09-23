@@ -6,6 +6,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.event_pickup import EventPickupNode
 from randovania.game_description.world.node import Node
@@ -28,6 +29,11 @@ def _simplify_requirement_list(self: RequirementList, state: State,
             return None
 
         if item.satisfied(state.resources, state.energy, state.resource_database):
+            continue
+
+        # We don't want to mark collecting a pickup/event node as a requirement to collecting that node.
+        # This could be interesting for DockLock, as indicating it needs to be unlocked from the other side.
+        if item.resource.resource_type == ResourceType.NODE_IDENTIFIER:
             continue
 
         if item.resource not in dangerous_resources:
