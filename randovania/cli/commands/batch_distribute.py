@@ -11,7 +11,7 @@ from pathlib import Path
 
 from randovania.cli import cli_lib
 from randovania.interface_common import sleep_inhibitor
-from randovania.resolver.exceptions import GenerationFailure
+from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if typing.TYPE_CHECKING:
     from randovania.layout.generator_parameters import GeneratorParameters
@@ -82,7 +82,10 @@ def batch_distribute_command_logic(args):
         try:
             report_update(seed, f"Finished seed in {r.result()} seconds.")
         except GenerationFailure as e:
-            report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
+            if isinstance(e.source, (asyncio.TimeoutError, ImpossibleForSolver)):
+                report_update(seed, f"Failed to generate seed: {e}")
+            else:
+                report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
         except CancelledError:
             nonlocal finished_count
             finished_count += 1
