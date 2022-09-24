@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>340</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -37,17 +37,13 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="inventory_server_start_button">
+    <item row="1" column="0" colspan="2">
+     <widget class="QPushButton" name="inventory_server_button">
       <property name="text">
-       <string>Start server</string>
+       <string>...</string>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="inventory_server_stop_button">
-      <property name="text">
-       <string>Stop server</string>
+      <property name="enabled">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -77,7 +73,18 @@
       </property>
      </widget>
     </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QLabel" name="inventory_server_status">
+      <property name="text">
+       <string>Status: </string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
 </ui>
+
