@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Event for the trigger that reopens the door to Central Unit Access, allowing it logical to go back through
 - Added: Other various methods of going through rooms
 - Added: New Diffusion Abuse trick for pushing Wide Beam blocks and activating the lava buttons in Cataris.
-- Added: Cross Bomb Skip (Advaned) for Dairon's Cross Bomb Puzzle Room item
+- Added: Cross Bomb Skip (Advanced) for Dairon's Cross Bomb Puzzle Room item
 - Added: Power Bombs method for the Speedbooster Conservation for Dairon's Cross Bomb Puzzle Room item
 - Changed: Separated the First Tunnel Blob event into two to account for Diffusion/Wave not needing to be in the tunnel
 - Changed: Deleted some unnecessary tile nodes
