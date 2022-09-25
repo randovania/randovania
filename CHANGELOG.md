@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Some Grapple options to include Grapple Movement
 - Changed: Some Movement tricks to Climb Sloped Tunnels
 - Changed: Some Movement tricks to Skip Cross Bomb
+- Changed: Rotating the spinner in Ghavoran - Flipper Room now requires either pulling the grapple block in Right Entrance, or activating the Freezer in Dairon.
 - Changed: Allow pickup in Ghavoran Elun Transport Access by charging speed via navigation room
 - Changed: Help solver by adding Morph Ball requirment on connections to event to flip the spinner in Ghavoran Flipper Room
 - Changed: Shooting occluded objects requires at least Intermediate Knowledge
