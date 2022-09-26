@@ -118,7 +118,9 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes)
 
     # Assert
-    mock_req_lists.assert_called_once_with(reach.state, [possible_set], {resource})
+    mock_req_lists.assert_called_once_with(
+        reach.state, [possible_set, reach.game.victory_condition.as_set.return_value], {resource}
+    )
     assert result == tuple()
 
 

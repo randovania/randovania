@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A development mode for permalinks, to help investigate issues.
 - Changed: Discord slash command for FAQ has better usability on mobile.
 - Changed: The parent for a preset is now stored in your preferences, instead of in the preset itself.
+- Fixed: The solver can no longer consider collecting a location a requirement to collecting itself. This is a regression from 4.3.0.
 
 ### Cave Story
 
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Some Grapple options to include Grapple Movement
 - Changed: Some Movement tricks to Climb Sloped Tunnels
 - Changed: Some Movement tricks to Skip Cross Bomb
+- Changed: Rotating the spinner in Ghavoran - Flipper Room now requires either pulling the grapple block in Right Entrance, or activating the Freezer in Dairon.
 - Changed: Allow pickup in Ghavoran Elun Transport Access by charging speed via navigation room
 - Changed: Help solver by adding Morph Ball requirment on connections to event to flip the spinner in Ghavoran Flipper Room
 - Changed: Shooting occluded objects requires at least Intermediate Knowledge
