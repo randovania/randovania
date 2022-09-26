@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [5.1.0] - 2022-10-01
 
 - Added: You can now view past versions of the presets and revert your preset to it.
+- Added: A Playthrough tab where you can run the validator has been added to the Game Details window.
+- Added: Deleting a preset now has a confirmation dialog.
 - Added: A development mode for permalinks, to help investigate issues.
-- Added: A Playthrough tab where you can run the validator has been added to the Game Details window. 
 - Changed: Discord slash command for FAQ has better usability on mobile.
 - Changed: The parent for a preset is now stored in your preferences, instead of in the preset itself.
 - Fixed: The solver can no longer consider collecting a location a requirement to collecting itself. This is a regression from 4.3.0.
