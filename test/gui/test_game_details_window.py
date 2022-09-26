@@ -1,7 +1,8 @@
 import dataclasses
 from unittest.mock import MagicMock, AsyncMock, call, ANY
 
-from PySide6 import QtWidgets, QtCore
+import pytest
+from PySide6 import QtWidgets, QtCore, QtGui
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
@@ -101,13 +102,16 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
         """)
 
 
-def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
+@pytest.mark.parametrize("twice", [False, True])
+def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir, twice: bool):
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
 
     # Run
     window = GameDetailsWindow(None, MagicMock())
     skip_qtbot.addWidget(window)
     window.update_layout_description(description)
+    if twice:
+        window.update_layout_description(description)
 
     # Assert
     pickup_details_tab = window._game_details_tabs[0]
@@ -144,3 +148,20 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
     # Assert
     mock_execute_dialog.assert_awaited_once()
     mock_clipboard.assert_called_once()
+
+
+@pytest.mark.parametrize("has_validator", [False, True])
+def test_close_event(skip_qtbot, has_validator):
+    window = GameDetailsWindow(None, MagicMock())
+    skip_qtbot.addWidget(window)
+
+    validator = MagicMock()
+    if has_validator:
+        window.validator_widget = validator
+
+    # Run
+    window.closeEvent(QtGui.QCloseEvent())
+
+    # Assert
+    if has_validator:
+        validator.stop_validator.assert_called_once_with()
