@@ -7,6 +7,7 @@ from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 @pytest.fixture(name="tab")
@@ -117,3 +118,24 @@ async def test_generate_new_seed(tab, mocker):
         retries=retries,
     )
     mock_randint.assert_called_once_with(0, 2 ** 31)
+
+
+async def test_on_view_preset_history(tab, mocker):
+    default_preset = tab._window_manager.preset_manager.default_preset
+    tab.create_preset_tree = MagicMock()
+    tab.create_preset_tree.current_preset_data = default_preset
+
+    new_preset = VersionedPreset.with_preset(default_preset.get_preset().fork())
+
+    mock_dialog = mocker.patch("randovania.gui.widgets.generate_game_widget.PresetHistoryDialog")
+    mock_dialog.return_value.selected_preset.return_value = new_preset
+
+    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    mock_execute_dialog.return_value = QtWidgets.QDialog.Accepted
+
+    # Run
+    await tab._on_view_preset_history()
+
+    # Assert
+    mock_execute_dialog.assert_awaited_once_with(mock_dialog.return_value)
+    assert new_preset.uuid in tab._window_manager.preset_manager.custom_presets

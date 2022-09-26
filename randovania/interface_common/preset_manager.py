@@ -1,6 +1,8 @@
 import asyncio
+import datetime
 import logging
 import os
+import time
 import typing
 import uuid
 from pathlib import Path
@@ -8,10 +10,11 @@ from typing import Iterator
 
 import dulwich.porcelain
 import dulwich.repo
+from dulwich.objects import Blob
 
 import randovania
 from randovania.games.game import RandovaniaGame
-from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
 
 
@@ -27,6 +30,7 @@ def read_preset_list() -> list[Path]:
 def _commit(message: str, file_path: Path, repository: Path, remove: bool):
     with dulwich.porcelain.open_repo_closing(repository) as r:
         r = typing.cast(dulwich.repo.Repo, r)
+
         # Detect invalid index
         try:
             r.open_index()
@@ -42,6 +46,33 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
 
     dulwich.porcelain.commit(repository, message=f"{message} using Randovania v{randovania.VERSION}",
                              author=author, committer=author)
+
+
+def _get_preset_at_version(repository: Path, commit_sha: bytes, file_path: Path) -> str:
+    blob = dulwich.porcelain.get_object_by_path(
+        repository,
+        dulwich.porcelain.path_to_tree_path(repository, file_path),
+        commit_sha,
+    )
+    assert isinstance(blob, Blob)
+    return blob.as_raw_string().decode()
+
+
+def _history_for_file(repository: Path, file_path: Path) -> Iterator[tuple[datetime.datetime, bytes]]:
+    from dulwich.walk import WalkEntry
+    from dulwich.objects import Commit
+
+    with dulwich.porcelain.open_repo_closing(repository) as r:
+        r = typing.cast(dulwich.repo.Repo, r)
+
+        paths = [
+            dulwich.porcelain.path_to_tree_path(repository, file_path)
+        ]
+        walker = r.get_walker(paths=paths)
+        for entry in walker:
+            assert isinstance(entry, WalkEntry)
+            assert isinstance(entry.commit, Commit)
+            yield datetime.datetime(*time.gmtime(entry.commit.commit_time)[:6]), entry.commit.id
 
 
 class PresetManager:
@@ -94,8 +125,11 @@ class PresetManager:
         yield from self.included_presets.values()
         yield from self.custom_presets.values()
 
+    def _get_repository_root(self):
+        return self._data_dir.parent
+
     def _commit(self, message: str, file_path: Path, remove: bool):
-        repo_root = self._data_dir.parent
+        repo_root = self._get_repository_root()
         try:
             self.logger.info("Will perform git operation: %s for path %s", message, str(file_path))
             _commit(message, file_path, repo_root, remove)
@@ -147,3 +181,16 @@ class PresetManager:
 
     def is_included_preset_uuid(self, the_uid: uuid.UUID) -> bool:
         return the_uid in self.included_presets
+
+    def get_previous_versions(self, preset: VersionedPreset) -> Iterator[tuple[datetime.datetime, bytes]]:
+        yield from _history_for_file(
+            self._get_repository_root(),
+            self._file_name_for_preset(preset),
+        )
+
+    def get_previous_version(self, preset: VersionedPreset, version: bytes) -> str:
+        return _get_preset_at_version(
+            self._get_repository_root(),
+            version,
+            self._file_name_for_preset(preset),
+        )

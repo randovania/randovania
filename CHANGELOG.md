@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.1.0] - 2022-10-01
 
+- Added: You can now view past versions of the presets and revert your preset to it.
 - Added: A development mode for permalinks, to help investigate issues.
 - Added: A Playthrough tab where you can run the validator has been added to the Game Details window. 
 - Changed: Discord slash command for FAQ has better usability on mobile.
@@ -52,7 +53,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Nothing.
-
 
 ## [5.0.2] - 2022-09-19
 
