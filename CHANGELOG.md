@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.1.0] - 2022-10-01
 
+- Added: You can now view past versions of the presets and revert your preset to it.
+- Added: A Playthrough tab where you can run the validator has been added to the Game Details window.
+- Added: Deleting a preset now has a confirmation dialog.
 - Added: A development mode for permalinks, to help investigate issues.
 - Changed: Discord slash command for FAQ has better usability on mobile.
 - Changed: The parent for a preset is now stored in your preferences, instead of in the preset itself.
@@ -26,12 +29,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Event for the trigger that reopens the door to Central Unit Access, allowing it logical to go back through
 - Added: Other various methods of going through rooms
 - Added: New Diffusion Abuse trick for pushing Wide Beam blocks and activating the lava buttons in Cataris.
+- Added: Cross Bomb Skip (Advanced) for Dairon's Cross Bomb Puzzle Room item
+- Added: Power Bombs method for the Speedbooster Conservation for Dairon's Cross Bomb Puzzle Room item
 - Changed: Separated the First Tunnel Blob event into two to account for Diffusion/Wave not needing to be in the tunnel
 - Changed: Deleted some unnecessary tile nodes
 - Changed: Various instances of Walljump (Beginner) to trivial
 - Changed: Some Grapple options to include Grapple Movement
 - Changed: Some Movement tricks to Climb Sloped Tunnels
 - Changed: Some Movement tricks to Skip Cross Bomb
+- Changed: Rotating the spinner in Ghavoran - Flipper Room now requires either pulling the grapple block in Right Entrance, or activating the Freezer in Dairon.
 - Changed: Allow pickup in Ghavoran Elun Transport Access by charging speed via navigation room
 - Changed: Help solver by adding Morph Ball requirment on connections to event to flip the spinner in Ghavoran Flipper Room
 - Changed: Shooting occluded objects requires at least Intermediate Knowledge
@@ -48,7 +54,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Nothing.
-
 
 ## [5.0.2] - 2022-09-19
 

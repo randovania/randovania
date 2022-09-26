@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import copy
 import io
 import json
@@ -92,12 +94,16 @@ class VersionedPreset:
             return self._preset
 
     @classmethod
-    async def from_file(cls, path: Path) -> "VersionedPreset":
-        async with aiofiles.open(path) as f:
-            return VersionedPreset(json.loads(await f.read()))
+    def from_str(cls, contents: str) -> VersionedPreset:
+        return cls(json.loads(contents))
 
     @classmethod
-    def from_file_sync(cls, path: Path) -> "VersionedPreset":
+    async def from_file(cls, path: Path) -> VersionedPreset:
+        async with aiofiles.open(path) as f:
+            return cls.from_str(await f.read())
+
+    @classmethod
+    def from_file_sync(cls, path: Path) -> VersionedPreset:
         with path.open() as f:
             return VersionedPreset(json.load(f))
 
