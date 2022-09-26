@@ -166,8 +166,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self.create_generate_button.setEnabled(value)
         self.create_generate_race_button.setEnabled(value)
 
-    def _add_new_preset(self, preset: VersionedPreset):
+    def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None = None):
         with self._options as options:
+            options.set_parent_for_preset(preset.uuid, parent)
             options.set_selected_preset_uuid_for(self.game, preset.uuid)
 
         self._window_manager.preset_manager.add_new_preset(preset)
@@ -195,10 +196,18 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         if result == QtWidgets.QDialog.Accepted:
             self._add_new_preset(VersionedPreset.with_preset(editor.create_custom_preset_with()))
 
-    def _on_delete_preset(self):
-        self._window_manager.preset_manager.delete_preset(self._current_preset_data)
-        self._update_preset_tree_items()
-        self._on_select_preset()
+    @asyncSlot()
+    async def _on_delete_preset(self):
+        result = await async_dialog.warning(
+            self, "Delete preset?",
+            f"Are you sure you want to delete preset {self._current_preset_data.name}?",
+            buttons=QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            default_button=QtWidgets.QMessageBox.No,
+        )
+        if result == QtWidgets.QMessageBox.Yes:
+            self._window_manager.preset_manager.delete_preset(self._current_preset_data)
+            self._update_preset_tree_items()
+            self._on_select_preset()
 
     @asyncSlot()
     async def _on_view_preset_history(self):
@@ -229,7 +238,8 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     def _on_duplicate_preset(self):
         old_preset = self._current_preset_data
-        self._add_new_preset(VersionedPreset.with_preset(old_preset.get_preset().fork()))
+        new_preset = VersionedPreset.with_preset(old_preset.get_preset().fork())
+        self._add_new_preset(new_preset, parent=old_preset.uuid)
 
     @asyncSlot()
     async def _on_open_map_tracker_for_preset(self):
