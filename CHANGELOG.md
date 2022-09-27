@@ -50,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Fixed: Shuffle Item Position is now properly randomized, along with other things shuffled patcher-side.
 
 ### Metroid Prime 2: Echoes
 

@@ -167,7 +167,7 @@ class PrimeGameExporter(GameExporter):
         new_config["preferences"]["cacheDir"] = cache_dir
 
         random_enemy_attributes = new_config.pop("randEnemyAttributes")
-        random_enemy_attributes_seed = new_config.pop("seed")
+        random_enemy_attributes_seed = new_config["seed"]
 
         split_updater = DynamicSplitProgressUpdate(progress_update)
         asset_updater = None
