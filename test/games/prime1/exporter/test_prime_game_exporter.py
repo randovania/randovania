@@ -7,6 +7,7 @@ import pytest
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams, adjust_model_names
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
+
 @pytest.mark.parametrize('use_echoes_models', [True, False])
 @pytest.mark.parametrize('use_enemy_attribute_randomizer', [False, True])
 def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_randomizer):
@@ -64,6 +65,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         "preferences": {
             "cacheDir": os.fspath(tmp_path.joinpath("cache_path")),
         },
+        "seed": 103817502,
         "inputIso": os.fspath(tmp_path.joinpath("input.iso")),
         "outputIso": os.fspath(tmp_path.joinpath("output.iso")),
     }
