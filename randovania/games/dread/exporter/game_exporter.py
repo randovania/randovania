@@ -42,8 +42,15 @@ class DreadGameExporter(GameExporter):
         """
         return True
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
-                    progress_update: status_update_lib.ProgressUpdateCallable):
+    def _before_export(self):
+        assert not self._busy
+        self._busy = True
+
+    def _after_export(self):
+        self._busy = False
+
+    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
+                        progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, DreadGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 

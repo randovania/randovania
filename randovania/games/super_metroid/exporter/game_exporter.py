@@ -15,14 +15,12 @@ class SuperMetroidGameExportParams(GameExportParams):
 
 
 class SuperMetroidGameExporter(GameExporter):
-    _busy: bool = False
-
     @property
     def is_busy(self) -> bool:
         """
         Checks if the exporter is busy right now
         """
-        return self._busy
+        return False
 
     @property
     def export_can_be_aborted(self) -> bool:
@@ -31,8 +29,8 @@ class SuperMetroidGameExporter(GameExporter):
         """
         return False
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
-                    progress_update: status_update_lib.ProgressUpdateCallable):
+    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
+                        progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, SuperMetroidGameExportParams)
 
         vanilla_bytes = export_params.input_path.read_bytes()
