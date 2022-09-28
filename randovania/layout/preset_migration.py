@@ -688,6 +688,11 @@ def _migrate_v38(preset: dict) -> dict:
     # But leave it there to migrate easily to options
     return preset
 
+def _migrate_v39(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["blue_save_doors"] = False
+    return preset
+
 
 def _migrate_v39(preset: dict) -> dict:
     if preset["game"] == "dread":

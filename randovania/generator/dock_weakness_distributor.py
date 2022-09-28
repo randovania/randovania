@@ -37,11 +37,13 @@ def distribute_pre_fill_weaknesses(patches: GamePatches):
         (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
         for node in game.world_list.all_nodes
         if (
-                isinstance(node, DockNode) and dock_rando.types_state[node.dock_type].can_shuffle
+                patches.has_default_weakness(node) # don't randomize anything that was already modified
+                and isinstance(node, DockNode) and dock_rando.types_state[node.dock_type].can_shuffle
                 and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
         )
     ]
 
+    patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
     return patches.assign_dock_weakness(docks_to_unlock)
 
 
@@ -79,7 +81,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
         player_docks: list[tuple[int, DockNode]] = []
 
         if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
-            player_docks.extend((player, node) for node, _ in patches.all_dock_weaknesses())
+            player_docks.extend((player, node) for node in patches.all_weaknesses_to_shuffle())
 
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
             game = results.game
@@ -90,7 +92,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
                 game.world_list
             )
 
-            for dock, _ in patches.all_dock_weaknesses():
+            for dock in patches.all_weaknesses_to_shuffle():
                 if (player, dock.get_target_identifier(ctx)) not in player_docks:
                     player_docks.append((player, dock))
 
