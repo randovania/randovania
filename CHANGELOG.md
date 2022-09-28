@@ -47,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ghavoran Orange backdoor properly connects to Above Pulse Radar
 - Fixed: Purple EMMI Arena properly accounting for Gravity Suit to climb the tower.
 - Fixed: Ferenia - Space Jump Room Access properly requires a way of destroying the blocks to get to the lower door.
+- Changed: Collecting the item in Burenia - Underneath Drogyga before flooding the room by defeating Drogyga now requires Highly Dangerous Logic to be enabled.
 
 ### Metroid Prime
 
