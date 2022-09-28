@@ -305,6 +305,10 @@ def _akul_testament_string_patch(namer: HintNamer):
     # update after each tournament! ordered from newest to oldest
     champs = [
         {
+            "title": "CGC 2022 Champions",
+            "name": "Cosmonawt and Cestrion"
+        },
+        {
             "title": "2021 Champion",
             "name": "Dyceron"
         },
