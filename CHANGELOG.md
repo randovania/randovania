@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: Exporting multiple games at once is not properly prevented with an error message. It was never possible and fail in unclear ways.
+- Added: The winners of the Cross-Game Cup have been added to A-Kul's scan.
 
 ## [5.0.2] - 2022-09-19
 
