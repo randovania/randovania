@@ -1,10 +1,14 @@
 import dataclasses
 from typing import Iterable
 
+from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import *
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
+from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup, ResourceDetailsPopup
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.window_manager import WindowManager
@@ -39,6 +43,16 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.on_combo(self.dangerous_combo, self._on_dangerous_changed)
 
         signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
+        signal_handling.on_checked(self.highdanger_logic_check, self._on_highdanger_logic_check)
+        self.highdanger_logic_label.linkActivated.connect(self._on_click_link_highdanger_logic_details)
+        
+        self.highdanger_logic_label.setText(self.highdanger_logic_label.text().replace("color:#0000ff;", ""))
+
+        if self.game_enum != RandovaniaGame.METROID_DREAD:
+            for w in [self.highdanger_logic_check, self.highdanger_logic_label, self.highdanger_logic_line]:
+                w.setVisible(False)
+
+        #Minimal Logic
         for w in [
             self.trick_level_minimal_logic_check,
             self.trick_level_minimal_logic_label,
@@ -69,6 +83,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         common_qt_lib.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
 
         common_qt_lib.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
+
+        if self.game_enum == RandovaniaGame.METROID_DREAD:
+            self.highdanger_logic_check.setChecked(preset.configuration.allow_highly_dangerous_logic)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -106,6 +123,35 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
                 dataclasses.replace(options.configuration.trick_level,
                                     minimal_logic=state)
             )
+
+    def _on_highdanger_logic_check(self, state: bool):
+        with self._editor as options:
+            options.set_configuration_field(
+                "allow_highly_dangerous_logic",
+                state,
+            )
+
+    def _on_click_link_highdanger_logic_details(self, link: str):
+        self._exec_trick_details(ResourceDetailsPopup(
+            self,
+            self._window_manager,
+            self.game_description,
+            self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "HighDanger"),
+        ))
+
+    def _exec_trick_details(self, popup: TrickDetailsPopup):
+        self._trick_details_popup = popup
+        self._trick_details_popup.setWindowModality(QtCore.Qt.WindowModal)
+        self._trick_details_popup.open()
+
+    def _open_trick_details_popup(self, trick: TrickResourceInfo):
+        self._exec_trick_details(TrickDetailsPopup(
+            self,
+            self._window_manager,
+            self.game_description,
+            trick,
+            self._editor.configuration.trick_level.level_for_trick(trick),
+        ))
 
     def _on_update_damage_strictness(self, new_index: int):
         with self._editor as editor:
