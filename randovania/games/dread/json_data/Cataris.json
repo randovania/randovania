@@ -18162,30 +18162,13 @@
                                 ]
                             }
                         },
-                        "Dock to Energy Recharge Station": {
-                            "type": "and",
+                        "Pickup (Energy Tank)": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisThermalMagnetPlatformLowered",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s020_magma:default:deviceheat_002",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "s020_magma:default:deviceheat_002",
+                                "amount": 1,
+                                "negate": true
                             }
                         }
                     }
@@ -18890,29 +18873,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Energy Tank)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisThermalMagnetPlatformLowered",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s020_magma:default:deviceheat_camerafar_000",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "CatarisThermalMagnetPlatformLowered",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Event - Thermal Device 1": {
@@ -19015,6 +18981,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:deviceheat_camerafar_000",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
