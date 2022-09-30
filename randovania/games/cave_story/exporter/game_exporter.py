@@ -30,12 +30,17 @@ class CSGameExporter(GameExporter):
         """
         return False
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
-                    progress_update: status_update_lib.ProgressUpdateCallable):
-        assert isinstance(export_params, CSGameExportParams)
+    def _before_export(self):
+        assert not self._busy
         self._busy = True
+
+    def _after_export(self):
+        self._busy = False
+
+    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
+                        progress_update: status_update_lib.ProgressUpdateCallable):
+        assert isinstance(export_params, CSGameExportParams)
         try:
             caver_patcher.patch_files(patch_data, export_params.output_path, progress_update)
         finally:
             json.dump(patch_data, export_params.output_path.joinpath("data", "patcher_data.json").open("w"))
-            self._busy = False

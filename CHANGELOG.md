@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
  
 - Fixed: The target DNA count is no longer limited to 6 when modifying an existing preset, or changing tabs.
+- Fixed: Exporting multiple games at once is not properly prevented with an error message. It was never possible and fail in unclear ways.
 
 #### Logic Database
 
@@ -46,14 +47,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ghavoran Orange backdoor properly connects to Above Pulse Radar
 - Fixed: Purple EMMI Arena properly accounting for Gravity Suit to climb the tower.
 - Fixed: Ferenia - Space Jump Room Access properly requires a way of destroying the blocks to get to the lower door.
+- Changed: Collecting the item in Burenia - Underneath Drogyga before flooding the room by defeating Drogyga now requires Highly Dangerous Logic to be enabled.
 
 ### Metroid Prime
 
-- Nothing.
+- Fixed: Shuffle Item Position is now properly randomized, along with other things shuffled patcher-side.
 
 ### Metroid Prime 2: Echoes
 
-- Nothing.
+- Fixed: Exporting multiple games at once is not properly prevented with an error message. It was never possible and fail in unclear ways.
+- Added: The winners of the Cross-Game Cup have been added to A-Kul's scan.
 
 ## [5.0.2] - 2022-09-19
 

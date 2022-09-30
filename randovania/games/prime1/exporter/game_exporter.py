@@ -51,14 +51,12 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
 
 
 class PrimeGameExporter(GameExporter):
-    _busy: bool = False
-
     @property
     def is_busy(self) -> bool:
         """
         Checks if the patcher is busy right now
         """
-        return self._busy
+        return False
 
     @property
     def export_can_be_aborted(self) -> bool:
@@ -143,8 +141,8 @@ class PrimeGameExporter(GameExporter):
             filepath = directory.with_name(f"{base_filename} {world_name}.png")
             make_one_map(filepath, level_data, world_name)
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
-                    progress_update: status_update_lib.ProgressUpdateCallable) -> None:
+    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
+                        progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         assert isinstance(export_params, PrimeGameExportParams)
 
         input_file = export_params.input_path
@@ -169,7 +167,7 @@ class PrimeGameExporter(GameExporter):
         new_config["preferences"]["cacheDir"] = cache_dir
 
         random_enemy_attributes = new_config.pop("randEnemyAttributes")
-        random_enemy_attributes_seed = new_config.pop("seed")
+        random_enemy_attributes_seed = new_config["seed"]
 
         split_updater = DynamicSplitProgressUpdate(progress_update)
         asset_updater = None
