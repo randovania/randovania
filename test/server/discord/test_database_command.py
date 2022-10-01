@@ -20,7 +20,7 @@ async def test_add_commands():
     # Assert
     command = cog.get_commands()[0]
     assert isinstance(command, discord.SlashCommand)
-    assert command.name == "database_inspect"
+    assert command.name == "database"
     assert command.description == "Consult the Randovania's logic database for one specific room."
 
 

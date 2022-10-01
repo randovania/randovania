@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The parent for a preset is now stored in your preferences, instead of in the preset itself.
 - Fixed: The solver can no longer consider collecting a location a requirement to collecting itself. This is a regression from 4.3.0.
 
+### Discord Bot
+
+- Added: `/website` command that gives instructions to where Randovania's website is.
+- Changed: `/randovania-faq` is now just `/faq`.
+- Changed: `/database-inspect` is now just `/database`.
+
 ### Cave Story
 
 - Nothing.
