@@ -424,7 +424,7 @@ class DatabaseCommandCog(RandovaniaCog):
         self._select_split_world_view = {}
         self._on_database_component_listener = {}
 
-    @discord.commands.slash_command()
+    @discord.commands.slash_command(name="database")
     async def database_inspect(self, context: discord.ApplicationContext, game: _GameChoices):
         """Consult the Randovania's logic database for one specific room."""
         assert isinstance(game, RandovaniaGame)
