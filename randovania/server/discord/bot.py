@@ -18,15 +18,9 @@ class RandovaniaBot(discord.Bot):
                          intents=intents)
 
         self.configuration = configuration
-        self.load_cog("randovania.server.discord.preset_lookup")
-        self.load_cog("randovania.server.discord.database_command")
-        self.load_cog("randovania.server.discord.faq_command")
-
-    def load_cog(self, name: str):
-        result = self.load_extension(name)
-        for it in result.values():
-            if isinstance(it, Exception):
-                raise it
+        self.load_extension("randovania.server.discord.preset_lookup")
+        self.load_extension("randovania.server.discord.database_command")
+        self.load_extension("randovania.server.discord.faq_command")
 
     async def on_ready(self):
 
