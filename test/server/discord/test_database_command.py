@@ -27,11 +27,12 @@ async def test_add_commands():
 async def test_database_command():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
+    cog.database_inspect.cog = cog
     cog._select_split_world_view[RandovaniaGame.METROID_PRIME_CORRUPTION] = view = MagicMock()
     ctx = AsyncMock()
 
     # Run
-    await cog.database_inspect(cog, ctx, game=RandovaniaGame.METROID_PRIME_CORRUPTION)
+    await cog.database_inspect(ctx, game=RandovaniaGame.METROID_PRIME_CORRUPTION)
 
     # Assert
     ctx.respond.assert_awaited_once_with(
