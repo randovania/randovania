@@ -401,6 +401,7 @@ _MIGRATIONS = [
     _migrate_v28,  # rename HintNodeKind
     _migrate_v29,  # add custom_index_group
     _migrate_v30,  # split Echoes light/dark
+    lambda it: it,  # RemoteActivationNode added
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -259,6 +259,10 @@ ConstructNode = NodeAdapter(
                     network=String,
                     requirement_to_activate=ConstructRequirement,
                 ),
+                "remote_activation": Struct(
+                    **NodeBaseFields,
+                    remote_identifier=ConstructNodeIdentifier,
+                ),
             },
         ),
     )
