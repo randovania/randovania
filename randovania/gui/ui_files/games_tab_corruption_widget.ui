@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>469</width>
-    <height>361</height>
+    <width>635</width>
+    <height>494</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="currentIndex">
    <number>0</number>
@@ -30,7 +36,7 @@
       <item>
        <widget class="QLabel" name="intro_label">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;TODO: Introduce the game&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Navigate the planets in the Federation Solar System in search of items and Energy Cells in order to retrieve the Pirate Code from the G.F. S. Valhalla. Once the code is in your possession, infiltrate the Pirate Homeworld and take control of the Leviathan. Now, it's time to fly to Phaaze to defeat Dark Samus and Aurora Unit 313, once and for all!&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The game starts in the post-Norion Invasion state, so no need to fight those pesky pirates. All planets excluding Phaaze are accessible from the start as well.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Scanning two specific Fuse Hint Scanbots in the G.F.S Valhalla reveals the planet that the Hyper Missile and Hyper Grapple reside.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -66,6 +72,57 @@
     <string>Play</string>
    </attribute>
   </widget>
+  <widget class="QWidget" name="faq_tab">
+   <attribute name="title">
+    <string>FAQ</string>
+   </attribute>
+   <layout class="QGridLayout" name="faq_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QScrollArea" name="faq_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="faq_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>629</width>
+         <height>465</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_8">
+        <item row="0" column="0">
+         <widget class="QLabel" name="faq_label">
+          <property name="text">
+           <string># updated from code</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QWidget" name="hints_tab">
    <attribute name="title">
     <string>Hints</string>
@@ -96,8 +153,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>463</width>
-         <height>335</height>
+         <width>629</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -159,8 +216,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>463</width>
-         <height>335</height>
+         <width>629</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
