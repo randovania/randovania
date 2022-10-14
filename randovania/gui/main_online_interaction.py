@@ -100,7 +100,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         if not result:
             return
 
-        if await async_dialog.execute_dialog(browser) == browser.Accepted:
+        if await async_dialog.execute_dialog(browser) == QtWidgets.QDialog.DialogCode.Accepted:
             self.game_session_window = await GameSessionWindow.create_and_update(
                 network_client, common_qt_lib.get_game_connection(),
                 self.preset_manager, self.window_manager, self.options,
@@ -133,7 +133,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         dialog.setModal(True)
         dialog.setWindowTitle("Enter session name")
         dialog.setLabelText("Select a name for the session:")
-        if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
+        if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
         await self.network_client.create_new_session(dialog.textValue())

@@ -33,7 +33,7 @@ async def test_browse_for_game_session(skip_qtbot, default_online_interactions, 
 
     mock_execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog",
                                                   new_callable=AsyncMock)
-    mock_execute_dialog.return_value = mock_game_session_browser.return_value.Accepted
+    mock_execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
     mock_game_session_browser.return_value.refresh = AsyncMock(return_value=refresh_success)
 
     # Run
