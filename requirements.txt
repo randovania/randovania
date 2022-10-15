@@ -129,8 +129,10 @@ markupsafe==2.1.1
     # via
     #   jinja2
     #   werkzeug
-matplotlib==3.6.1
-    # via randovania (setup.py)
+matplotlib @ git+https://github.com/matplotlib/matplotlib@2c43a0d87d2d97b1dcd3b0c4f01b7343452cd975
+    # via
+    #   -r tools/requirements/requirements.in
+    #   randovania (setup.py)
 mercury-engine-data-structures==0.17.0
     # via open-dread-rando
 mock==4.0.3
@@ -163,6 +165,7 @@ packaging==21.3
     # via
     #   matplotlib
     #   pytest
+    #   setuptools-scm
 peewee==3.15.3
     # via randovania (setup.py)
 pefile==2022.5.30
@@ -264,6 +267,8 @@ retro-data-structures==0.11.0
     # via
     #   open-prime-rando
     #   randovania (setup.py)
+setuptools-scm==7.0.5
+    # via matplotlib
 shiboken6==6.4.0.1
     # via pyside6-essentials
 six==1.16.0
@@ -280,10 +285,13 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
+    #   setuptools-scm
 tsc-utils==0.2.3
     # via randovania (setup.py)
 typing-extensions==4.4.0
-    # via tsc-utils
+    # via
+    #   setuptools-scm
+    #   tsc-utils
 urllib3==1.26.12
     # via
     #   dulwich
@@ -295,4 +303,6 @@ yarl==1.8.1
 
 # The following packages are considered to be unsafe in a requirements file:
 setuptools==65.5.0
-    # via pyinstaller
+    # via
+    #   pyinstaller
+    #   setuptools-scm
