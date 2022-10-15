@@ -99,7 +99,7 @@ class GameConnectionSetup:
         if self.options.nintendont_ip is not None:
             dialog.setTextValue(self.options.nintendont_ip)
 
-        if await async_dialog.execute_dialog(dialog) == dialog.Accepted:
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
             new_ip = dialog.textValue()
             if new_ip != "":
                 if not self.options.is_alert_displayed(InfoAlert.NINTENDONT_UNSTABLE):
@@ -122,9 +122,9 @@ class GameConnectionSetup:
                                               "Unable to find a Nintendont executable.")
 
         text = f"Uploading Nintendont to the Wii at {self.options.nintendont_ip}..."
-        box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, "Uploading to Homebrew Channel",
-                                    text, QtWidgets.QMessageBox.Ok, self.parent)
-        box.button(QtWidgets.QMessageBox.Ok).setEnabled(False)
+        box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.NoIcon, "Uploading to Homebrew Channel",
+                                    text, QtWidgets.QMessageBox.StandardButton.Ok, self.parent)
+        box.button(QtWidgets.QMessageBox.StandardButton.Ok).setEnabled(False)
         box.show()
 
         try:
@@ -133,7 +133,7 @@ class GameConnectionSetup:
         except Exception as e:
             box.setText(f"Error uploading to Wii: {e}")
         finally:
-            box.button(QtWidgets.QMessageBox.Ok).setEnabled(True)
+            box.button(QtWidgets.QMessageBox.StandardButton.Ok).setEnabled(True)
 
     def on_connect_to_game(self):
         connect_to_game = self.connect_to_game.isChecked()

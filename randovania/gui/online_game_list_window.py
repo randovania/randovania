@@ -91,7 +91,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             dialog.setWindowModality(Qt.WindowModal)
             dialog.setTextEchoMode(QLineEdit.Password)
 
-            if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
+            if await async_dialog.execute_dialog(dialog) != QDialog.DialogCode.Accepted:
                 return
 
             password = dialog.textValue()
