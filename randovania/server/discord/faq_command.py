@@ -37,6 +37,7 @@ class GameFaqMessage:
                 ]
             )],
         )
+        result.cog = None
         result.callback = self.callback
         return result
 
