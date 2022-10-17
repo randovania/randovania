@@ -31,7 +31,9 @@ class PresetDreadGeneration(PresetGeneration):
         self.highdanger_logic_check = QCheckBox(
             "Allow Highly Dangerous Logic")
         self.highdanger_logic_label = QLabel(
-            "<html><head/><body><p>Highly Dangerous Logic is a setting which enables dangerous actions that are not as obvious.</p><p>Using these dangerous actions could render a seed unbeatable if the player were to save afterwards.</p><p><a href=\"resource-details://misc/highdanger\"><span style=\" text-decoration: underline; color:#0000ff;\">Click here</span></a> to see which rooms are affected.</p></body></html>")
+            """<html><head/><body><p>Highly Dangerous Logic is a setting which enables dangerous actions that are not as obvious.</p><p>Using these dangerous actions could render
+            a seed unbeatable if the player were to save afterwards.</p><p><a href=\"resource-details://misc/highdanger\"><span style=\" text-decoration: underline;
+            color:#0000ff;\">Click here</span></a> to see which rooms are affected.</p></body></html>""")
 
     @property
     def game_specific_widgets(self) -> Iterable[QWidget] | None:
@@ -62,11 +64,3 @@ class PresetDreadGeneration(PresetGeneration):
         self._trick_details_popup.setWindowModality(QtCore.Qt.WindowModal)
         self._trick_details_popup.open()
 
-    def _open_trick_details_popup(self, trick: TrickResourceInfo):
-        self._exec_trick_details(TrickDetailsPopup(
-            self,
-            self._window_manager,
-            self.game_description,
-            trick,
-            self._editor.configuration.trick_level.level_for_trick(trick),
-        ))

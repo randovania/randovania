@@ -8,6 +8,7 @@ from PySide6.QtWidgets import *
 
 from randovania.game_description import default_database
 from randovania.games.cave_story.gui.preset_settings.cs_generation_tab import PresetCSGeneration
+from randovania.games.dread.gui.preset_settings.dread_generation_tab import PresetDreadGeneration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
@@ -15,13 +16,14 @@ from randovania.interface_common.preset_editor import PresetEditor
 
 
 @pytest.mark.parametrize("game_data", [
+    (RandovaniaGame.METROID_DREAD, True, True, PresetDreadGeneration),
     (RandovaniaGame.METROID_PRIME, True, True, PresetPrimeGeneration),
     (RandovaniaGame.METROID_PRIME_ECHOES, False, True, PresetGeneration),
     (RandovaniaGame.CAVE_STORY, True, False, PresetCSGeneration)
 ])
 def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
     # Setup
-    game, has_specific_settings, has_min_logic, tab = game_data
+    game, has_specific_settings, has_min_logic, has_highdanger_logic, tab = game_data
 
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
@@ -35,6 +37,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
 
     # Assert
     assert window.trick_level_minimal_logic_check.isVisibleTo(parent) == has_min_logic
+    assert window.highdanger_logic_check.isVisibleTo(parent) == has_highdanger_logic
     assert window.game_specific_group.isVisibleTo(parent) == has_specific_settings
 
 
