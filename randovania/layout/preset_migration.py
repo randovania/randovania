@@ -689,6 +689,13 @@ def _migrate_v38(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v39(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["allow_highly_dangerous_logic"] = False
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -728,6 +735,7 @@ _MIGRATIONS = [
     _migrate_v36,
     _migrate_v37,
     _migrate_v38,
+    _migrate_v39,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

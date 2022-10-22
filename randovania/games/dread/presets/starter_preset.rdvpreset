@@ -1,9 +1,9 @@
 {
-    "schema_version": 36,
+    "schema_version": 40,
+    "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "407e97ed-decb-4889-8ab7-943f86ae48a4",
     "description": "Basic preset.",
-    "base_preset_uuid": null,
     "game": "dread",
     "configuration": {
         "trick_level": {
@@ -167,12 +167,14 @@
         "hanubia_shortcut_no_grapple": true,
         "hanubia_easier_path_to_itorash": true,
         "x_starts_released": false,
+        "allow_highly_dangerous_logic": false,
         "artifacts": {
             "prefer_emmi": true,
             "prefer_major_bosses": true,
             "required_artifacts": 3
         },
-        "linear_damage_runs": true,
-        "linear_dps": 20
+        "constant_heat_damage": 20,
+        "constant_cold_damage": 20,
+        "constant_lava_damage": 20
     }
 }
