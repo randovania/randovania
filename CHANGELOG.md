@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  
 - Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
 
+#### Logic Database
+
+- Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
+
 ### Metroid Prime
 
 - Nothing.
