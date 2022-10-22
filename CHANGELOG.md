@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  
 - Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
 
+#### Logic Database
+
+- Added: Cross Bomb alternative for crossing Flash Gates
+
 ### Metroid Prime
 
 - Nothing.
