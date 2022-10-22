@@ -12,7 +12,7 @@ async def test_add_commands():
     await cog.add_commands()
 
     # Assert
-    cog.bot.create_group.assert_called_once_with("randovania-faq")
+    cog.bot.create_group.assert_called_once_with("faq")
     cog.bot.create_group.return_value.subcommands.append.assert_called()
 
 

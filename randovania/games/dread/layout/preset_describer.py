@@ -53,6 +53,12 @@ class DreadPresetDescriber(GamePresetDescriber):
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
+            "Logic Settings": [
+                {
+                    "Highly Dangerous Logic":
+                        configuration.allow_highly_dangerous_logic,
+                }
+            ],
             "Difficulty": [
                 {
                     "Immediate Energy Part": configuration.immediate_energy_parts,

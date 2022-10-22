@@ -6,6 +6,19 @@ from randovania.resolver.bootstrap import MetroidBootstrap
 
 
 class DreadBootstrap(MetroidBootstrap):
+    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
+                                    resource_database: ResourceDatabase) -> set[str]:
+        enabled_resources = set()
+
+        logical_patches = {
+            "allow_highly_dangerous_logic": "HighDanger",
+        }
+        for name, index in logical_patches.items():
+            if getattr(configuration, name):
+                enabled_resources.add(index)
+
+        return enabled_resources
+
     def event_resources_for_configuration(self, configuration: BaseConfiguration,
                                           resource_database: ResourceDatabase,
                                           ) -> ResourceGain:

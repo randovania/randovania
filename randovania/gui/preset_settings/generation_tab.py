@@ -39,6 +39,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.on_combo(self.dangerous_combo, self._on_dangerous_changed)
 
         signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
+
+        #Minimal Logic
         for w in [
             self.trick_level_minimal_logic_check,
             self.trick_level_minimal_logic_label,

@@ -37,6 +37,7 @@ class GameFaqMessage:
                 ]
             )],
         )
+        result.cog = None
         result.callback = self.callback
         return result
 
@@ -60,8 +61,19 @@ class FaqCommandCog(RandovaniaCog):
         self.configuration = configuration
         self.bot = bot
 
+    @discord.commands.slash_command()
+    async def website(self, context: discord.ApplicationContext):
+        """Posts information about Randovania's website."""
+        embed = discord.Embed(
+            title="https://randovania.github.io/",
+            description=(
+                "In the website, you'll find download links to Randovania and instructions on how to get started!"
+            )
+        )
+        await context.respond(embed=embed)
+
     async def add_commands(self):
-        base_command = self.configuration.get("command_prefix", "") + "randovania-faq"
+        base_command = self.configuration.get("command_prefix", "") + "faq"
 
         group = self.bot.create_group(
             base_command
