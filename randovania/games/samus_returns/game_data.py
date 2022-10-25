@@ -1,6 +1,6 @@
 from randovania.games import game
-from randovania.games.samus_returns.layout.samus_returns_configuration import SamusReturnsConfiguration
-from randovania.games.samus_returns.layout.samus_returns_cosmetic_patches import SamusReturnsCosmeticPatches
+from randovania.games.samus_returns.layout.samus_returns_configuration import SRConfiguration
+from randovania.games.samus_returns.layout.samus_returns_cosmetic_patches import SRCosmeticPatches
 from randovania.layout.preset_describer import GamePresetDescriber
 
 
@@ -13,10 +13,10 @@ def _gui() -> game.GameGui:
     from randovania.games.samus_returns import gui
 
     return game.GameGui(
-        game_tab=gui.SamusReturnsGameTabWidget,
+        game_tab=gui.SRGameTabWidget,
         tab_provider=gui.preset_tabs,
-        cosmetic_dialog=gui.SamusReturnsCosmeticPatchesDialog,
-        export_dialog=gui.SamusReturnsGameExportDialog,
+        cosmetic_dialog=gui.SRCosmeticPatchesDialog,
+        export_dialog=gui.SRGameExportDialog,
         progressive_item_gui_tuples=tuple(),
         spoiler_visualizer=tuple(),
     )
@@ -28,23 +28,23 @@ def _generator() -> game.GameGenerator:
 
     return game.GameGenerator(
         item_pool_creator=generator.pool_creator,
-        bootstrap=generator.SamusReturnsBootstrap(),
-        base_patches_factory=generator.SamusReturnsBasePatchesFactory(),
+        bootstrap=generator.SRBootstrap(),
+        base_patches_factory=generator.SRBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
     )
 
 
 def _patch_data_factory():
-    from randovania.games.samus_returns.exporter.patch_data_factory import SamusReturnsPatchDataFactory
-    return SamusReturnsPatchDataFactory
+    from randovania.games.samus_returns.exporter.patch_data_factory import SRPatchDataFactory
+    return SRPatchDataFactory
 
 
 def _exporter():
-    from randovania.games.samus_returns.exporter.game_exporter import SamusReturnsGameExporter
-    return SamusReturnsGameExporter()
+    from randovania.games.samus_returns.exporter.game_exporter import SRGameExporter
+    return SRGameExporter()
 
 game_data: game.GameData = game.GameData(
-    short_name="SamusReturns",
+    short_name="SR",
     long_name="Metroid: Samus Returns",
     development_state=game.DevelopmentState.EXPERIMENTAL,
 
@@ -57,8 +57,8 @@ game_data: game.GameData = game.GameData(
     faq=[],
 
     layout=game.GameLayout(
-        configuration=SamusReturnsConfiguration,
-        cosmetic_patches=SamusReturnsCosmeticPatches,
+        configuration=SRConfiguration,
+        cosmetic_patches=SRCosmeticPatches,
         preset_describer=GamePresetDescriber()
     ),
 
