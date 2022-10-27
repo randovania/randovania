@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Fixed: The infinite scanning bug has been fixed.
 
 ### Metroid Prime 2: Echoes
 
