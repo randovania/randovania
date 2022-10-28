@@ -73,7 +73,7 @@ def test_round_trip(spoiler: bool,
 
 @pytest.mark.parametrize("development", [False, True])
 @pytest.mark.parametrize("extra_data", [False, True])
-def test_decode(default_echoes_preset, mocker, development, extra_data):
+def test_decode(default_blank_preset, mocker, development, extra_data):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
     mocker.patch("randovania.layout.generator_parameters.game_db_hash", autospec=True,
                  return_value=120)
@@ -84,9 +84,9 @@ def test_decode(default_echoes_preset, mocker, development, extra_data):
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
     if development:
-        encoded = b'$\x00\x00\x1fF\x00\x00\x18\x7f\xc0'
+        encoded = b'8\x00\x00\x1fF\x00\x00'
     else:
-        encoded = b'$\x00\x00\x1fD\x00\x00\x18\x7f\xde\x00'
+        encoded = b'8\x00\x00\x1fD\x00\x03\xc0'
     if extra_data:
         encoded += b"="
 
@@ -94,8 +94,8 @@ def test_decode(default_echoes_preset, mocker, development, extra_data):
         seed_number=1000,
         spoiler=True,
         presets=[dataclasses.replace(
-            default_echoes_preset,
-            name=f"{default_echoes_preset.game.long_name} Custom",
+            default_blank_preset,
+            name=f"{default_blank_preset.game.long_name} Custom",
             description="A customized preset.",
             uuid=random_uuid,
         )],

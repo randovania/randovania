@@ -565,7 +565,21 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         _apply_translator_gate_patches(result["specific_patches"], self.configuration.elevators.mode)
 
+        if self.configuration.use_new_patcher:
+            result["new_patcher"] = self.new_patcher_configuration()
+
         return result
+
+    def new_patcher_configuration(self):
+        return {
+            "small_randomizations": {
+                "seed": self.description.get_seed_for_player(self.players_config.player_index),
+                "echo_locks": True,
+                "minigyro_chamber": True,
+                "rubiks": True,
+            },
+            "inverted": self.configuration.inverted_mode,
+        }
 
     def create_logbook_patches(self):
         return [
