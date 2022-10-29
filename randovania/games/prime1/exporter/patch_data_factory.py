@@ -325,17 +325,20 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     dock_index = node.extra["dock_index"]
                     dock_data = {
                         "shieldType": weakness.extra["shieldType"],
-                        "blastShieldType": weakness.extra.get("blastShieldType", None)
+                        "blastShieldType": weakness.extra.get("blastShieldType",
+                            # remove vanilla blast shields
+                            "Empty" if node.default_dock_weakness.lock is not None else None
+                        )
                     }
 
                     world_data[world.name]["rooms"][area.name]["doors"][dock_index] = dock_data
 
-                regular_door = self.game.dock_weakness_database.find_type("door")
-                missile_shield = self.game.dock_weakness_database.get_by_weakness("door", "Missile Blast Shield")
-                remove_blast_shields = (
-                        self.configuration.dock_rando.mode != DockRandoMode.VANILLA and
-                        missile_shield in self.configuration.dock_rando.types_state[regular_door].can_change_from
-                )
+                # regular_door = self.game.dock_weakness_database.find_type("door")
+                # missile_shield = self.game.dock_weakness_database.get_by_weakness("door", "Missile Blast Shield")
+                # remove_blast_shields = (
+                #         self.configuration.dock_rando.mode != DockRandoMode.VANILLA and
+                #         missile_shield in self.configuration.dock_rando.types_state[regular_door].can_change_from
+                # )
 
                 if self.configuration.superheated_probability != 0:
                     world_data[world.name]["rooms"][area.name][
