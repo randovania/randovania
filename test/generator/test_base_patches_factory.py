@@ -3,6 +3,7 @@ from random import Random
 from unittest.mock import MagicMock
 
 import pytest
+from randovania.game_description.game_description import GameDescription
 
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -213,6 +214,26 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
     # Assert
     associated_requirements = [req for _, req in results]
     assert associated_requirements == requirements[:len(translator_configuration.translator_requirement)]
+
+
+def test_blue_save_doors(prime_game_description: GameDescription, default_prime_configuration):
+    # Setup
+    patches_factory = prime_game_description.game.generator.base_patches_factory
+    power_weak = prime_game_description.dock_weakness_database.get_by_weakness("door", "Normal Door")
+
+    configuration = dataclasses.replace(
+        default_prime_configuration,
+        blue_save_doors=True,
+        main_plaza_door=False,
+    )
+
+    # Run
+    results = patches_factory.create_base_patches(configuration, None, prime_game_description, False, 0)
+
+    # Assert
+    weaknesses = list(results.all_dock_weaknesses())
+    assert len(weaknesses) == 26
+    assert all(weakness == power_weak for _, weakness in weaknesses)
 
 
 def test_create_base_patches(mocker):
