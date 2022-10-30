@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>515</width>
-         <height>1590</height>
+         <height>2521</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -121,7 +121,7 @@
              </property>
             </widget>
            </item>
-            <item>
+           <item>
             <widget class="QCheckBox" name="qol_game_breaking_check">
              <property name="enabled">
               <bool>true</bool>
@@ -176,6 +176,20 @@
                <widget class="QLabel" name="main_plaza_door_label">
                 <property name="text">
                  <string>Allow access to Vault from Main Plaza</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="blue_save_doors_check">
+                <property name="text">
+                 <string>Unlock Save Station Doors</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="blue_save_doors_label">
+                <property name="text">
+                 <string>Ensure all Save Station doors are blue doors, even with door lock rando enabled</string>
                 </property>
                </widget>
               </item>
@@ -455,7 +469,7 @@
            <string>Chaos Options</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
+           <item>
             <widget class="QLabel" name="chaos_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Chaos options are patcher-side only, and thus are not accounted for by the seed generator logic (many seeds will be incompletable). PROCEDE WITH CAUTION.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -465,7 +479,7 @@
              </property>
             </widget>
            </item>
-            <item>
+           <item>
             <widget class="QCheckBox" name="small_samus_check">
              <property name="text">
               <string>Enable Small Samus</string>
@@ -482,7 +496,7 @@
              </property>
             </widget>
            </item>
-            <item>
+           <item>
             <widget class="QCheckBox" name="large_samus_check">
              <property name="text">
               <string>Enable Large Samus</string>
@@ -543,14 +557,14 @@
            <item>
             <widget class="QLabel" name="random_boss_sizes_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes each of the bosses (and mini-bosses) a random size ranging from "tiny bug" to "barely fits in the room".&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes each of the bosses (and mini-bosses) a random size ranging from &quot;tiny bug&quot; to &quot;barely fits in the room&quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-            <item>
+           <item>
             <widget class="QCheckBox" name="no_doors_check">
              <property name="text">
               <string>Remove Doors</string>
@@ -560,155 +574,155 @@
            <item>
             <widget class="QLabel" name="no_doors_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Completely removes the need to shoot doors to procede through the game. This also means that there is nothing stopping you from entering a room before it has loaded. As such, it is reccomended to play with Dolphin's "Speed up Disc Transfer Rate" option in the right-click properties menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Completely removes the need to shoot doors to procede through the game. This also means that there is nothing stopping you from entering a room before it has loaded. As such, it is reccomended to play with Dolphin's &quot;Speed up Disc Transfer Rate&quot; option in the right-click properties menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-            <item>
-            <widget class="QLabel">
-            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;Superheated Probability: Probability that any room is superheated. If non-zero, rooms which are normally superheated will have their superheated state re-rolled. Completely ignores heat-run logic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="wordWrap">
-            <bool>true</bool>
-            </property>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;Superheated Probability: Probability that any room is superheated. If non-zero, rooms which are normally superheated will have their superheated state re-rolled. Completely ignores heat-run logic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
             </widget>
-            </item>
-            <item>
+           </item>
+           <item>
             <layout class="QHBoxLayout" name="superheated_slider_layout">
-            <item>
-            <widget class="QSlider" name="superheated_slider">
-            <property name="maximum">
-            <number>1000</number>
-            </property>
-            <property name="pageStep">
-            <number>2</number>
-            </property>
-            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-            <enum>QSlider::TicksBelow</enum>
-            </property>
-            </widget>
-            </item>
-            <item>
-            <widget class="QLabel" name="superheated_slider_label">
-            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-            </sizepolicy>
-            </property>
-            <property name="minimumSize">
-            <size>
-            <width>20</width>
-            <height>0</height>
-            </size>
-            </property>
-            <property name="text">
-            <string>0</string>
-            </property>
-            <property name="alignment">
-            <set>Qt::AlignCenter</set>
-            </property>
-            </widget>
-            </item>
+             <item>
+              <widget class="QSlider" name="superheated_slider">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="pageStep">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="superheated_slider_label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
             </layout>
-            </item>
-            <item>
-                <widget class="QLabel">
-                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;Submerged Probability: Probability that any room is fully submerged in water. Completely ignores underwater movement logic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="wordWrap">
-                <bool>true</bool>
-                </property>
-                </widget>
-            </item>
-            <item>
-                <layout class="QHBoxLayout" name="submerged_slider_layout">
-                <item>
-                    <widget class="QSlider" name="submerged_slider">
-                    <property name="maximum">
-                    <number>1000</number>
-                    </property>
-                    <property name="pageStep">
-                    <number>2</number>
-                    </property>
-                    <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="tickPosition">
-                    <enum>QSlider::TicksBelow</enum>
-                    </property>
-                    </widget>
-                </item>
-                <item>
-                    <widget class="QLabel" name="submerged_slider_label">
-                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                    </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                    <size>
-                    <width>20</width>
-                    <height>0</height>
-                    </size>
-                    </property>
-                    <property name="text">
-                    <string>0</string>
-                    </property>
-                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                    </property>
-                    </widget>
-                </item>
-              </layout>
-            </item>
-            <item>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;Submerged Probability: Probability that any room is fully submerged in water. Completely ignores underwater movement logic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="submerged_slider_layout">
+             <item>
+              <widget class="QSlider" name="submerged_slider">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="pageStep">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="submerged_slider_label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <widget class="QGroupBox" name="room_rando_group">
-            <property name="title">
-            <string>Room Rando</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-            <item>
-                <widget class="QComboBox" name="room_rando_combo">
+             <property name="title">
+              <string>Room Rando</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QComboBox" name="room_rando_combo">
                 <item>
-                <property name="text">
-                <string>None</string>
-                </property>
+                 <property name="text">
+                  <string>None</string>
+                 </property>
                 </item>
                 <item>
-                <property name="text">
-                <string>One-way</string>
-                </property>
+                 <property name="text">
+                  <string>One-way</string>
+                 </property>
                 </item>
                 <item>
-                <property name="text">
-                <string>Two-way</string>
-                </property>
+                 <property name="text">
+                  <string>Two-way</string>
+                 </property>
                 </item>
-                </widget>
-            </item>
-            <item>
-                <widget class="QLabel" name="room_rando_label">
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="room_rando_label">
                 <property name="text">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;These options shuffle how rooms within an area are connected completely smashing randovania's delicately balanced logic.&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: No changes are made.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way&lt;/span&gt;: Doors are patched to lead to another random door in the same world. That door most likely does not lead back to the previous room. Scan doors to see where they lead.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way&lt;/span&gt;: Like One-way, but doors will always lead back to the previous room.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;These options shuffle how rooms within an area are connected completely smashing randovania's delicately balanced logic.&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: No changes are made.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way&lt;/span&gt;: Doors are patched to lead to another random door in the same world. That door most likely does not lead back to the previous room. Scan doors to see where they lead.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way&lt;/span&gt;: Like One-way, but doors will always lead back to the previous room.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="wordWrap">
-                <bool>true</bool>
+                 <bool>true</bool>
                 </property>
-                </widget>
-            </item>
-            </layout>
+               </widget>
+              </item>
+             </layout>
             </widget>
-            </item>
+           </item>
           </layout>
          </widget>
         </item>

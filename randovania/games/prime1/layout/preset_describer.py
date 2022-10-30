@@ -110,6 +110,7 @@ class PrimePresetDescriber(GamePresetDescriber):
                     "Warp to start": configuration.warp_to_start,
                     "Final bosses removed": configuration.elevators.skip_final_bosses,
                     "Unlocked Vault door": configuration.main_plaza_door,
+                    "Unlocked Save Station doors": configuration.blue_save_doors,
                     "Phazon Elite without Dynamo": configuration.phazon_elite_without_dynamo,
                 },
                 {

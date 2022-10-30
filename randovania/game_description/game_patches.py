@@ -42,6 +42,7 @@ class GamePatches:
     elevator_connection: ElevatorConnection
     dock_connection: list[int | None]
     dock_weakness: list[DockWeakness | None]
+    weaknesses_to_shuffle: list[bool]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
     starting_location: AreaIdentifier
@@ -66,6 +67,7 @@ class GamePatches:
             elevator_connection=game.get_default_elevator_connection(),
             dock_connection=[None] * len(game.world_list.all_nodes),
             dock_weakness=[None] * len(game.world_list.all_nodes),
+            weaknesses_to_shuffle=[False] * len(game.world_list.all_nodes),
             configurable_nodes={},
             starting_items=ResourceCollection.with_database(game.resource_database),
             starting_location=game.starting_location,
@@ -155,10 +157,24 @@ class GamePatches:
             new_weakness[node.node_index] = weakness
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
+    
+    def assign_weaknesses_to_shuffle(self, weaknesses: Iterator[tuple[DockNode, bool]]) -> GamePatches:
+        new_to_shuffle = list(self.weaknesses_to_shuffle)
+
+        for node, shuffle in weaknesses:
+            new_to_shuffle[node.node_index] = shuffle
+        
+        return dataclasses.replace(self, weaknesses_to_shuffle=new_to_shuffle)
 
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
         return self.dock_weakness[node.node_index] or node.default_dock_weakness
 
+    def has_default_weakness(self, node: DockNode) -> bool:
+        return self.dock_weakness[node.node_index] is None
+    
+    def should_shuffle_weakness(self, node: DockNode) -> bool:
+        return self.weaknesses_to_shuffle[node.node_index]
+    
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
         nodes = self.game.world_list.all_nodes
         for index, weakness in enumerate(self.dock_weakness):
@@ -166,3 +182,11 @@ class GamePatches:
                 node = nodes[index]
                 assert node is not None
                 yield node, weakness
+    
+    def all_weaknesses_to_shuffle(self) -> Iterator[DockNode]:
+        nodes = self.game.world_list.all_nodes
+        for index, shuffle in enumerate(self.weaknesses_to_shuffle):
+            if shuffle:
+                node = nodes[index]
+                assert node is not None
+                yield node
