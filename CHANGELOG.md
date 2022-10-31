@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Cross Bomb alternative for crossing Flash Gates
 - Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
+- Fixed: Going to the red teleporter in Cataris no longer forces needing to use bombs.
 
 ### Metroid Prime
 
