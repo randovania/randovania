@@ -688,11 +688,15 @@ def _migrate_v38(preset: dict) -> dict:
     # But leave it there to migrate easily to options
     return preset
 
-
 def _migrate_v39(preset: dict) -> dict:
     if preset["game"] == "dread":
         preset["configuration"]["allow_highly_dangerous_logic"] = False
 
+    return preset
+
+def _migrate_v40(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["blue_save_doors"] = False
     return preset
 
 
@@ -736,6 +740,7 @@ _MIGRATIONS = [
     _migrate_v37,
     _migrate_v38,
     _migrate_v39,
+    _migrate_v40,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

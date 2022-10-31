@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Fixed: The infinite scanning bug has been fixed.
 
 ### Metroid Prime 2: Echoes
 
@@ -83,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Shuffle Item Position is now properly randomized, along with other things shuffled patcher-side.
+- Added: You may now force all Save Station doors to be blue, improving QOL for both random start and door lock rando.
 
 ### Metroid Prime 2: Echoes
 

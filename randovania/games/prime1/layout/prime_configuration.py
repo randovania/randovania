@@ -65,6 +65,7 @@ class PrimeConfiguration(BaseConfiguration):
     deterministic_maze: bool
 
     main_plaza_door: bool
+    blue_save_doors: bool
     backwards_frigate: bool
     backwards_labs: bool
     backwards_upper_mines: bool
