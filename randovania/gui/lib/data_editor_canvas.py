@@ -68,7 +68,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     image_bounds: BoundsInt
     edit_mode: bool = True
 
-    scale: float
+    scale: float = 0.5
     border_x: float = 75
     border_y: float = 75
     canvas_size: QSizeF
@@ -231,10 +231,6 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.border_y = self.rect().height() * 0.05
         canvas_width = max(self.rect().width() - self.border_x * 2, 1)
         canvas_height = max(self.rect().height() - self.border_y * 2, 1)
-
-        self.scale = min(canvas_width / self.area_size.width(),
-                         canvas_height / self.area_size.height())
-
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
     def _nodes_at_position(self, qt_local_position: QPointF):
@@ -500,3 +496,19 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 painter.drawEllipse(p, 7, 7)
             painter.drawEllipse(p, 5, 5)
             centered_text(painter, p + QPointF(0, 15), node.name)
+
+    def wheelEvent(self, event):
+        zoom_in = False
+        if event.angleDelta().y() > 0:
+            zoom_in = True
+        
+        if self.scale <= 0.1 and not zoom_in:
+            self.scale -= 0.005
+        elif zoom_in:
+            self.scale += 0.01
+        else:
+            self.scale -= 0.01
+
+        if self.scale <= 0.0:
+            self.scale = 0.005
+        self.repaint()
