@@ -109,6 +109,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
         self.area_view_canvas.SelectConnectionsRequest.connect(self.focus_on_connection)
         self.area_view_canvas.ReplaceConnectionsRequest.connect(self.replace_connection_with)
+        self.area_view_canvas.UpdateSlider.connect(self.update_slider)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -119,6 +120,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.rename_area_button.clicked.connect(self._rename_area)
         self.new_node_button.clicked.connect(self._create_new_node_no_location)
         self.delete_node_button.clicked.connect(self._remove_node)
+        self.zoom_slider.valueChanged.connect(self._on_slider_changed)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.nodes_scroll_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
@@ -144,6 +146,20 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self.game_description.game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES,
                                           RandovaniaGame.METROID_PRIME_CORRUPTION}:
             self.area_view_dock.hide()
+
+        # values for dread and super metroid
+        min_zoom = 7
+        max_zoom = 370
+        start_zoom = 370
+        if self.game_description.game in {RandovaniaGame.CAVE_STORY}:
+            min_zoom = 100
+            max_zoom = 4000
+            start_zoom = 1000
+        self.area_view_canvas.set_zoom_values(min_zoom, max_zoom, start_zoom)
+        self.zoom_slider.setMinimum(min_zoom)
+        self.zoom_slider.setMaximum(max_zoom)
+        self.zoom_slider.setValue(start_zoom)
+        
 
         self.update_edit_mode()
         self._on_filters_changed()
@@ -753,6 +769,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 self._collection_for_filtering = None
 
         self.update_game(game)
+
+    def _on_slider_changed(self):
+        self.area_view_canvas.change_zoom(self.zoom_slider.value())
+
+    def update_slider(self, new_slider_value):
+        self.zoom_slider.setValue(new_slider_value)
 
     def update_edit_mode(self):
         self.rename_area_button.setVisible(self.edit_mode)
