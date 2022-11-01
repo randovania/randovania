@@ -5,13 +5,15 @@ import json
 import shutil
 from pathlib import Path
 
-from mp2hudcolor import mp2hudcolor_c
+import mp2hudcolor
+from retro_data_structures.asset_manager import PathFileProvider
+
 
 from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
 from randovania.games.prime2.patcher import claris_randomizer
-from randovania.lib import status_update_lib
+from randovania.lib import status_update_lib, json_lib
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
 
@@ -84,6 +86,12 @@ class EchoesGameExporter(GameExporter):
                     "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
                     "a clean game ISO.")
 
+        # Save patcher data
+        json_lib.write_path(
+            contents_files_path.joinpath("files", "patcher_data.json"),
+            patch_data,
+        )
+
         # Apply patcher
         banner_patcher.patch_game_name_and_id(
             contents_files_path,
@@ -100,12 +108,25 @@ class EchoesGameExporter(GameExporter):
                 patch_data, randomizer_data, updaters[1],
             )
 
+        new_patcher = patch_data.pop("new_patcher", None)
+
+        # Claris Rando
         adjust_model_name(patch_data, randomizer_data)
+
         claris_randomizer.apply_patcher_file(
             contents_files_path,
             patch_data,
             randomizer_data,
             updaters[2])
+
+        # New Patcher
+        if new_patcher is not None:
+            import open_prime_rando.echoes_patcher
+            open_prime_rando.echoes_patcher.patch_paks(
+                PathFileProvider(contents_files_path),
+                contents_files_path,
+                new_patcher,
+            )
 
         # Change the color of the hud
         hud_color = patch_data["specific_patches"]["hud_color"]
@@ -116,7 +137,7 @@ class EchoesGameExporter(GameExporter):
                 hud_color[2] / 255,
             ]
             ntwk_file = str(contents_files_path.joinpath("files", "Standard.ntwk"))
-            mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2])  # RGB 0.0-1.0
+            mp2hudcolor.mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2])  # RGB 0.0-1.0
 
         # Pack ISO
         iso_packager.pack_iso(
@@ -124,35 +145,6 @@ class EchoesGameExporter(GameExporter):
             game_files_path=contents_files_path,
             progress_update=updaters[3],
         )
-
-
-def extract_and_backup_iso(input_path: Path, contents_files_path: Path, backup_files_path: Path,
-                           progress_update: status_update_lib.ProgressUpdateCallable):
-    if input_path is not None:
-        unpack_updaters = status_update_lib.split_progress_update(progress_update, 2)
-        shutil.rmtree(contents_files_path, ignore_errors=True)
-        shutil.rmtree(backup_files_path, ignore_errors=True)
-        iso_packager.unpack_iso(
-            iso=input_path,
-            game_files_path=contents_files_path,
-            progress_update=unpack_updaters[0],
-        )
-        claris_randomizer.create_pak_backups(
-            contents_files_path,
-            backup_files_path,
-            unpack_updaters[1]
-        )
-    else:
-        try:
-            claris_randomizer.restore_pak_backups(
-                contents_files_path,
-                backup_files_path,
-                progress_update
-            )
-        except FileNotFoundError:
-            raise RuntimeError(
-                "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
-                "a clean game ISO.")
 
 
 @functools.lru_cache
