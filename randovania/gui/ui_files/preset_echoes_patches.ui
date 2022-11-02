@@ -22,16 +22,16 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>4</number>
     </property>
     <item>
      <widget class="QCheckBox" name="include_menu_mod_check">
@@ -109,6 +109,73 @@
        <bool>true</bool>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="new_patcher_check">
+      <property name="text">
+       <string>[Experimental] Use new patcher</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="new_patcher_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates the use of the new patcher in addition to the existing one.&lt;/p&gt;&lt;p&gt;With this enabled, certain in-game puzzles will have their solution randomized, but are also modified to have better accessibility.&lt;br/&gt;It's also required for certain new features, such as Inverted Aether.&lt;/p&gt;&lt;p&gt;This setting causes additional stuttering during gameplay, especially on Dolphin. It's recommended to unlock disc read speeds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="inverted_check">
+      <property name="text">
+       <string>[Experimental] Inverted Aether</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="inverted_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this mode, it's the Light Aether atmosphere that is dangerous!&lt;br/&gt;All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous.&lt;/p&gt;&lt;p&gt;This mode has &lt;span style=&quot; font-weight:700;&quot;&gt;no logic&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>
