@@ -147,19 +147,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                                           RandovaniaGame.METROID_PRIME_CORRUPTION}:
             self.area_view_dock.hide()
 
-        # values for dread and super metroid
-        min_zoom = 7
-        max_zoom = 370
-        start_zoom = 370
-        if self.game_description.game in {RandovaniaGame.CAVE_STORY}:
-            min_zoom = 100
-            max_zoom = 4000
-            start_zoom = 1000
-        self.area_view_canvas.set_zoom_values(min_zoom, max_zoom, start_zoom)
-        self.zoom_slider.setMinimum(min_zoom)
-        self.zoom_slider.setMaximum(max_zoom)
-        self.zoom_slider.setValue(start_zoom)
-        
+        self.zoom_slider.setTickInterval(1)
 
         self.update_edit_mode()
         self._on_filters_changed()
@@ -771,10 +759,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.update_game(game)
 
     def _on_slider_changed(self):
-        self.area_view_canvas.change_zoom(self.zoom_slider.value())
+        self.area_view_canvas.set_zoom_value(self.zoom_slider.value())
 
-    def update_slider(self, new_slider_value):
-        self.zoom_slider.setValue(new_slider_value)
+    def update_slider(self, zoom_in):
+        # update slider on wheel event
+        current_val = self.zoom_slider.value()
+        if zoom_in:     
+            self.zoom_slider.setValue(current_val + self.zoom_slider.tickInterval())
+        else:
+            self.zoom_slider.setValue(current_val - self.zoom_slider.tickInterval())
+        # set zoom valuein canvas to the slider value
+        self.area_view_canvas.set_zoom_value(self.zoom_slider.value())
 
     def update_edit_mode(self):
         self.rename_area_button.setVisible(self.edit_mode)

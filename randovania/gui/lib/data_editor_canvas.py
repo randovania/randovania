@@ -68,7 +68,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
     image_bounds: BoundsInt
     edit_mode: bool = True
 
-    scale: float = 0.4
+    scale: float
+    additional_zoom: float = 1.0
     border_x: float = 75
     border_y: float = 75
     canvas_size: QSizeF
@@ -82,7 +83,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     ReplaceConnectionsRequest = Signal(Node, Requirement)
     CreateDockRequest = Signal(NodeLocation, Area)
     MoveNodeToAreaRequest = Signal(Node, Area)
-    UpdateSlider = Signal(float)
+    UpdateSlider = Signal(bool)
 
     state: State | None = None
     visible_nodes: set[Node] | None = None
@@ -232,6 +233,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.border_y = self.rect().height() * 0.05
         canvas_width = max(self.rect().width() - self.border_x * 2, 1)
         canvas_height = max(self.rect().height() - self.border_y * 2, 1)
+
+        self.scale = min(canvas_width / self.area_size.width(),
+            canvas_height / self.area_size.height()) * self.additional_zoom
+
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
     def _nodes_at_position(self, qt_local_position: QPointF):
@@ -498,33 +503,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
             painter.drawEllipse(p, 5, 5)
             centered_text(painter, p + QPointF(0, 15), node.name)
 
-    def set_zoom_values(self, min_zoom, max_zoom, start_scale):
-        self._min_zoom = min_zoom / 1000
-        self._max_zoom = max_zoom / 1000
-        self.scale = start_scale / 1000
-
-    def change_zoom(self, new_scale):
-        self.scale = new_scale / 1000
+    def set_zoom_value(self, new_zoom):
+        self.additional_zoom = new_zoom / 20
         self.repaint()
 
     def wheelEvent(self, event):
-        zoom_in = False
-        if event.angleDelta().y() > 0:
-            zoom_in = True
-        
-        # zoom out slower if we are already have a low scale
-        if self.scale <= 0.1 and not zoom_in:
-            self.scale -= 0.005
-        elif zoom_in:
-            self.scale += 0.01
-        else:
-            self.scale -= 0.01
-
-        # minimun and maximum value of slider
-        if self.scale <= self._min_zoom:
-            self.scale = self._min_zoom
-        elif self.scale >= self._max_zoom:
-            self.scale = self._max_zoom
-        
-        self.UpdateSlider.emit(self.scale * 1000)
-        self.repaint()
+        self.UpdateSlider.emit(event.angleDelta().y() > 0)
