@@ -235,7 +235,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         canvas_height = max(self.rect().height() - self.border_y * 2, 1)
 
         self.scale = min(canvas_width / self.area_size.width(),
-            canvas_height / self.area_size.height()) * self.additional_zoom
+                         canvas_height / self.area_size.height()) * self.additional_zoom
 
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
