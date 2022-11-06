@@ -1,0 +1,114 @@
+====================
+Templates
+
+====================
+Dock Weaknesses
+
+> Door
+  * Access Open
+      Extra - type: frame
+      Open:
+          Trivial
+      No lock
+
+
+  * Access Closed
+      Open:
+          Impossible
+      No lock
+
+
+  * Access Locked
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Impossible
+
+
+  * Power Beam Door
+      Extra - type: power_beam
+      Open:
+          Shoot Beam
+      No lock
+
+
+  * Charge Beam Door
+      Extra - type: charge_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Any of the following:
+              Shoot Charge Beam
+              Knowledge (Beginner) and Lay Power Bomb
+
+
+  * Wave Beam Door
+      Extra - type: wave_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Wave Beam
+
+
+  * Spazer Beam Door
+      Extra - type: spazer_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Spazer Beam
+
+
+  * Plasma Beam Door
+      Extra - type: plasma_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Plasma Beam
+
+
+  * Missile Door
+      Extra - type: missile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Missiles
+
+
+  * Super Missile Door
+      Extra - type: super_missile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Super Missile
+
+
+  * Power Bomb Door
+      Extra - type: power_bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Power Bomb
+
+  > Dock Rando: Disabled
+
+
+> Dock
+  * Open Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Not Determined
+      Open:
+          Impossible
+      No lock
+
+
+  * Blocked Passage
+      Open:
+          Impossible
+      No lock
+
+  > Dock Rando: Disabled
+
