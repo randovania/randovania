@@ -452,7 +452,7 @@ def write_as_split_files(data: dict, base_path: Path):
     data["worlds"] = []
 
     for world in worlds:
-        name = re.sub(r'[^a-zA-Z\- ]', r'', world["name"])
+        name = re.sub(r'[^a-zA-Z0-9\- ]', r'', world["name"])
         data["worlds"].append(f"{name}.json")
         with base_path.joinpath(f"{name}.json").open("w", encoding="utf-8") as world_file:
             json.dump(world, world_file, indent=4)
