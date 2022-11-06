@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: Cross Bomb alternative for crossing Flash Gates
+- Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
+- Fixed: Going to the red teleporter in Cataris no longer forces needing to use bombs.
 
 ### Metroid Prime
 
@@ -27,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Nothing.
+- Added: A new experimental option, Inverted Aether. In this mode, it's the Light Aether atmosphere that is dangerous! All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous. This mode has no logic.
 
 ## [5.1.0] - 2022-10-01
 

@@ -2093,7 +2093,7 @@ Extra - asset_id: collision_camera_025
       Trivial
   > Pickup (Missile+ Tank)
       Morph Ball
-  > Tile Group (BOMB)
+  > Teleporter to Artaria - Teleport to Cataris
       Morph Ball
 
 > Door to West Teleport Access; Heals? False
@@ -2173,8 +2173,10 @@ Extra - asset_id: collision_camera_025
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Door to Save Station West
       Trivial
-  > Tile Group (BOMB)
+  > Pickup (Missile+ Tank)
       Can Slide
+  > Tile Group (BOMB)
+      Morph Ball
 
 > Tile Group (BOMB); Heals? False
   * Layers: default
@@ -2184,7 +2186,7 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Door to Path to Kraid Entryway
-      Morph Ball
+      Can Slide
   > Door to West Teleport Access
       Trivial
   > Pickup (Missile+ Tank)
@@ -3284,7 +3286,8 @@ Extra - asset_id: collision_camera_042
           Any of the following:
               Varia Suit or After Cataris - Lower Lava Button
               Heat/Cold Runs (Beginner) and Heat Damage ≥ 200
-  > Past Magnet Floor
+          After Cataris - Final Thermal Device or Enabled Highly Dangerous Logic
+  > Pickup (Energy Tank)
       Before Cataris - Final Thermal Device
 
 > Door to Energy Recharge Station; Heals? False
@@ -3395,26 +3398,30 @@ Extra - asset_id: collision_camera_042
 
 > Event - Lower Spider Magnet Floor; Heals? False
   * Layers: default
-  * Event Cataris - Thermal Magnet Platform Lowered
+  * Event Cataris - Magnet Wall Lowered
   > Below Spider Magnet Wall
       Trivial
 
 > Dock to Energy Recharge Station; Heals? False
   * Layers: default
   * Open Passage to Energy Recharge Station/Dock to Thermal Device Room North
+  > Pickup (Energy Tank)
+      After Cataris - Magnet Wall Lowered
   > Event - Thermal Device 1
       Trivial
-  > Past Magnet Floor
-      After Cataris - Thermal Magnet Platform Lowered
 
 > Past Magnet Floor; Heals? False
   * Layers: default
   > Door to Total Recharge Station North
       Before Cataris - Final Thermal Device
-  > Pickup (Energy Tank)
-      Trivial
+  > Door to Dairon Transport Access
+      All of the following:
+          Before Cataris - Final Thermal Device and After Cataris - Magnet Wall Thermal Device and Can Slide
+          Any of the following:
+              Varia Suit or After Cataris - Lower Lava Button
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 200
   > Dock to Energy Recharge Station
-      After Cataris - Thermal Magnet Platform Lowered
+      After Cataris - Magnet Wall Lowered
 
 > Below Spider Magnet Wall; Heals? False
   * Layers: default
