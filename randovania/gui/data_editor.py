@@ -237,6 +237,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _on_image_spin_update(self):
         w = self.current_world
+        if type(w.extra) != dict:
+            object.__setattr__(w, "extra", dict(w.extra))
         w.extra["map_min_x"] = self.spin_min_x.value()
         w.extra["map_min_y"] = self.spin_min_y.value()
         w.extra["map_max_x"] = self.spin_max_x.value()
