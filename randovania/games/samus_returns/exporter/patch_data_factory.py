@@ -2,7 +2,7 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.games.game import RandovaniaGame
 
 
-class SRPatchDataFactory(BasePatchDataFactory):
+class SamusReturnsPatchDataFactory(BasePatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
 

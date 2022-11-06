@@ -1,5 +1,5 @@
 from randovania.game_description.item.major_item import MajorItem
-from randovania.games.samus_returns.layout.samus_returns_configuration import SRConfiguration
+from randovania.games.samus_returns.layout.samus_returns_configuration import SamusReturnsConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -7,9 +7,9 @@ from randovania.layout.preset_describer import (
 )
 
 
-class SRPresetDescriber(GamePresetDescriber):
+class SamusReturnsPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
-        assert isinstance(configuration, SRConfiguration)
+        assert isinstance(configuration, SamusReturnsConfiguration)
 
         major_items = configuration.major_items_configuration
         template_strings = super().format_params(configuration)

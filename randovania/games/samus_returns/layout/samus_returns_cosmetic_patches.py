@@ -5,7 +5,7 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 @dataclasses.dataclass(frozen=True)
-class SRCosmeticPatches(BaseCosmeticPatches):
+class SamusReturnsCosmeticPatches(BaseCosmeticPatches):
     @classmethod
     def game(cls):
         return RandovaniaGame.METROID_SAMUS_RETURNS
