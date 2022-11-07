@@ -2458,9 +2458,7 @@ Extra - asset_id: collision_camera_028
   > Dock to Long Mouth Statue Room (Upper)
       Morph Ball
   > Tunnel to Central Unit Access
-      After Cataris - Post-EMMI Door Trigger
-  > Event - Door Trigger
-      Morph Ball and After Cataris - Central Unit
+      Morph Ball
 
 > Dock to Ghavoran Teleport Access; Heals? False
   * Layers: default
@@ -2524,9 +2522,7 @@ Extra - asset_id: collision_camera_028
   * Layers: default
   * Cataris EMMI Tunnel to Central Unit Access/Tunnel to EMMI Zone Exits West
   > Door to EMMI Zone Item Tunnel
-      After Cataris - Post-EMMI Door Trigger
-  > Event - Door Trigger
-      Morph Ball and After Cataris - Central Unit
+      Morph Ball
 
 > Upper Ledge; Heals? False
   * Layers: default
@@ -2537,12 +2533,6 @@ Extra - asset_id: collision_camera_028
   > Tunnel to EMMI Zone West Exit Path
       Trivial
   > Tunnel to EMMI Zone Item Tunnel
-      Trivial
-
-> Event - Door Trigger; Heals? False
-  * Layers: default
-  * Event Cataris - Post-EMMI Door Trigger
-  > Tunnel to Central Unit Access
       Trivial
 
 ----------------
@@ -2984,10 +2974,6 @@ Extra - asset_id: collision_camera_036
 > Door to EMMI Zone Tower West; Heals? False
   * Layers: default
   * Wide Beam Door to EMMI Zone Tower West/Door to Central Unit Access
-  * Door opens up after Green EMMI is defeated and rolling through a trigger in
-EMMI Zone Exits West
-
-
   * Extra - actor_name: doorpowerpower_030
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3069,7 +3055,7 @@ EMMI Zone Exits West
 > Room Center; Heals? False
   * Layers: default
   > Door to EMMI Zone Tower West
-      Before Cataris - Central Unit or After Cataris - Post-EMMI Door Trigger
+      Trivial
   > Tunnel to EMMI Zone Exits West
       Trivial
   > Upper-right Corner
@@ -3077,7 +3063,9 @@ EMMI Zone Exits West
   > Door to Central Unit
       After Cataris - Central Unit Bottom Blob and Can Slide
   > Event - Bottom Blob through wall
-      Shoot Diffusion or Wave
+      Any of the following:
+          Shoot Diffusion or Wave
+          Slide and Pseudo-Wave Beam (Beginner)
 
 ----------------
 Central Unit
