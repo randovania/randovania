@@ -31,6 +31,8 @@ from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.lib import frozen_lib
 
+WORLD_NAME_TO_FILE_NAME_RE = re.compile(r'[^a-zA-Z0-9\- ]')
+
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
     return {
@@ -452,7 +454,7 @@ def write_as_split_files(data: dict, base_path: Path):
     data["worlds"] = []
 
     for world in worlds:
-        name = re.sub(r'[^a-zA-Z0-9\- ]', r'', world["name"])
+        name = WORLD_NAME_TO_FILE_NAME_RE.sub(r'', world["name"])
         data["worlds"].append(f"{name}.json")
         with base_path.joinpath(f"{name}.json").open("w", encoding="utf-8") as world_file:
             json.dump(world, world_file, indent=4)
