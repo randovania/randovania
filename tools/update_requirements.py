@@ -16,6 +16,7 @@ custom_env = {
 }
 
 is_quiet = "--quiet" in sys.argv
+has_upgrade = "--upgrade" in sys.argv
 stdout = subprocess.PIPE if is_quiet else None
 
 subprocess.run(
@@ -30,6 +31,7 @@ subprocess.run(
         "--strip-extras",
         "--output-file",
         "requirements.txt",
+        "--upgrade" if has_upgrade else "",
         "tools/requirements/requirements.in",
         "setup.py",
     ],
@@ -50,6 +52,7 @@ subprocess.run(
         "--resolver", "backtracking",
         "--output-file",
         "requirements-lint.txt",
+        "--upgrade" if has_upgrade else "",
         "tools/requirements/requirements-lint.in",
     ],
     env=custom_env,
