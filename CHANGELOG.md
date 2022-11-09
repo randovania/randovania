@@ -15,10 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
-- Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
+- Fixed: You now retain Kraid's item if you reload checkpoint after defeating him. This eliminates a way of rendering a seed impossible to complete.
+- Added: Entering Golzuna's arena without releasing the X displays a message explaining why the boss won't spawn.
+- Added: All doors locked while fighting an EMMI now unlock immediately upon defeating it.
 
 #### Logic Database
 
+- Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
 - Added: Cross Bomb alternative for crossing Flash Gates
 - Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
 - Changed: Removed the Cataris EMMI Zone Door Trigger event now that the door remains unsealed.
