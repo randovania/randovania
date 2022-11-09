@@ -1,4 +1,5 @@
 # -*- mode: python -*-
+from PyInstaller.utils.hooks import copy_metadata
 
 import randovania
 from randovania.games.game import RandovaniaGame
@@ -10,24 +11,27 @@ item_databases = [(f'randovania/games/{game.value}/item_database', f'games/{game
 presets = [(f'randovania/games/{game.value}/presets', f'games/{game.value}/presets') for game in RandovaniaGame]
 game_assets = [(f'randovania/games/{game.value}/assets', f'games/{game.value}/assets') for game in RandovaniaGame if game.data_path.joinpath("assets").exists()]
 
+datas=[
+    ("randovania/data/configuration.json", "data/"),
+    ("randovania/data/migration_data.json", "data/"),
+    ("randovania/data/binary_data", "data/binary_data"),
+    ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
+    ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
+    ("randovania/data/gui_assets", "data/gui_assets"),
+    ("randovania/data/hash_words", "data/hash_words"),
+    ("randovania/data/icons", "data/icons"),
+    ("randovania/data/nintendont", "data/nintendont"),
+    *item_databases,
+    *presets,
+    *game_assets,
+    ("README.md", "data/")
+]
+datas += copy_metadata('randovania', recursive=True)
+
 a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              pathex=[],
              binaries=[],
-             datas=[
-                 ("randovania/data/configuration.json", "data/"),
-                 ("randovania/data/migration_data.json", "data/"),
-                 ("randovania/data/binary_data", "data/binary_data"),
-                 ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
-                 ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
-                 ("randovania/data/gui_assets", "data/gui_assets"),
-                 ("randovania/data/hash_words", "data/hash_words"),
-                 ("randovania/data/icons", "data/icons"),
-                 ("randovania/data/nintendont", "data/nintendont"),
-                 *item_databases,
-                 *presets,
-                 *game_assets,
-                 ("README.md", "data/")
-             ],
+             datas=datas,
              hiddenimports=[
                 "mock",
                 "unittest.mock",
