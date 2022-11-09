@@ -43,9 +43,9 @@ jobs:
           elif [ "${{ github.event_name }}" = "push" ]; then
             TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
           fi
-          echo ::set-output name=version::${VERSION}
-          echo ::set-output name=tags::${TAGS}
-          echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+          echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
       -
         name: Set up QEMU
@@ -116,7 +116,7 @@ jobs:
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             ENV=production
           fi
-          echo ::set-output name=env::${ENV}
+          echo "env=${ENV}" >> $GITHUB_OUTPUT
 
       - name: start deployment
         uses: bobheadxi/deployments@v1.3.0
