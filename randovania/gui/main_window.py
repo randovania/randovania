@@ -60,6 +60,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _preset_manager: PresetManager
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     about_window: QtWidgets.QMainWindow | None = None
+    dependencies_window: QtWidgets.QMainWindow | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
@@ -203,6 +204,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_changelog.triggered.connect(self._on_menu_action_changelog)
         self.menu_action_changelog.setVisible(False)
         self.menu_action_about.triggered.connect(self._on_menu_action_about)
+        self.menu_action_dependencies.triggered.connect(self._on_menu_action_dependencies)
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -661,7 +663,15 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.about_window is None:
             self.about_window = self._create_generic_window(AboutWidget(), "About Randovania")
         self.about_window.show()
-    
+
+    def _on_menu_action_dependencies(self):
+        from randovania.gui.widgets.dependencies_widget import DependenciesWidget
+
+        if self.dependencies_window is None:
+            self.dependencies_window = self._create_generic_window(DependenciesWidget(), "Dependencies")
+        self.dependencies_window.show()
+
+
     def _on_click_help_link(self, link: str):
         tab_name = re.match(r"^help://(.+)$", link).group(1)
         if tab_name is None:
