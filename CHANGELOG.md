@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: More options to reach the item in Communication Area.
+- Added: More options to reach the pickup in Communication Area.
 
 ## [5.1.0] - 2022-10-01
 
