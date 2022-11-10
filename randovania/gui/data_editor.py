@@ -602,11 +602,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if not did_confirm or new_name == "" or new_name == self.current_area.name:
             return
 
-        node_index = self.current_area.nodes.index(self.current_node)
+        if self.current_node is not None:
+            node_index = self.current_area.nodes.index(self.current_node)
+        else:
+            node_index = None
         self.editor.rename_area(self.current_area, new_name)
         self.on_select_world()
         self.focus_on_area_by_name(new_name)
-        self.focus_on_node(self.current_area.nodes[node_index])
+        if node_index is not None:
+            self.focus_on_node(self.current_area.nodes[node_index])
+        else:
+            self.update_selected_node()
 
     def _move_node(self, node: Node, location: NodeLocation):
         area = self.current_area
