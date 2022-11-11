@@ -37,7 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: Movement(Beginner) trick for crossing HoCM from the Portal Side, after the tunnel is destroyed, with NSJ Screw Attack. 
+- Added: Movement(Beginner) trick for crossing HoCM from the Portal Side, after the tunnel is destroyed, with NSJ Screw Attack.
+- Fixed up miscellaneous cases where Screw Attack could be logically used without Morph Ball.
 
 ## [5.1.0] - 2022-10-01
 
