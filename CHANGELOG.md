@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [5.2.0] - 2022-11-01
 
 - Added: Help -> Dependencies window, to see all dependencies included in Randovania, including their versions and licenses.
@@ -33,6 +34,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: A new experimental option, Inverted Aether. In this mode, it's the Light Aether atmosphere that is dangerous! All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous. This mode has no logic.
+
+#### Logic Database
+
+- Added: Movement(Beginner) trick for crossing HoCM from the Portal Side, after the tunnel is destroyed, with NSJ Screw Attack. 
 
 ## [5.1.0] - 2022-10-01
 
