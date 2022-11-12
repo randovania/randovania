@@ -74,6 +74,13 @@ class GamePresetDescriber:
 
         template_strings = collections.defaultdict(list)
 
+        unsupported = configuration.unsupported_features()
+        if unsupported:
+            template_strings["WARNING!"] = [
+                "This preset uses the following unsupported features:",
+                ", ".join(unsupported)
+            ]
+
         # Item Placement
         randomization_mode = configuration.available_locations.randomization_mode
 
