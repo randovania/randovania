@@ -16,9 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
-- Fixed: You now retain Kraid's item if you reload checkpoint after defeating him. This eliminates a way of rendering a seed impossible to complete.
 - Added: Entering Golzuna's arena without releasing the X displays a message explaining why the boss won't spawn.
 - Added: All doors locked while fighting an EMMI now unlock immediately upon defeating it.
+- Changed: Exporting for Ryujinx now also utilizes the Dread Depackager, for a smaller mod size. This requires an up to date Ryujinx.
+- Fixed: You now retain Kraid's item if you reload checkpoint after defeating him. This eliminates a way of rendering a seed impossible to complete.
 
 #### Logic Database
 
