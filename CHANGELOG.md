@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [5.2.0] - 2022-11-01
 
 - Added: Help -> Dependencies window, to see all dependencies included in Randovania, including their versions and licenses.
+- Added: A warning is now displayed when using presets with unsupported features enabled. These features are not present in the UI.
 
 ### Cave Story
 
