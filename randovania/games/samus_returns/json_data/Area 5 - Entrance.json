@@ -1,10 +1,15 @@
 {
     "name": "Area 5 - Entrance",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s060_area6/s060_area6.bmsld"
+        "asset_id": "maps/levels/c10_samus/s060_area6/s060_area6.bmsld",
+        "map_min_x": 0,
+        "map_max_x": 0,
+        "map_min_y": 0,
+        "map_max_y": 29,
+        "scenario_id": "s060_area6"
     },
     "areas": {
-        "collision_camera_001 (area6)": {
+        "Phase Drift Tutorial": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -47,11 +52,11 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Usable (LE_Platform_SaveStation_001)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -6967.7001953125,
+                        "x": -6967.7,
                         "y": -5500.0,
                         "z": 0.0
                     },
@@ -63,9 +68,82 @@
                         "actor_name": "LE_Platform_SaveStation_001",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Area 5 Interior (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Pool East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Connecting Tunnel": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        },
+                        "Dock to Phase Drift Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door016)": {
+                "Door to Transport to Area 5 Interior (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -84,15 +162,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_002 (area6)",
-                        "node_name": "Door (Door016)"
+                        "area_name": "Transport to Area 5 Interior (East)",
+                        "node_name": "Door to Phase Drift Tutorial"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door019)": {
+                "Door to Pool East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -111,18 +197,153 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_015 (area6)",
-                        "node_name": "Door (Door019)"
+                        "area_name": "Pool East",
+                        "node_name": "Door to Phase Drift Tutorial"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Phase Drift Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Connecting Tunnel": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7379.18,
+                        "y": -5107.81,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Connecting Tunnel",
+                        "node_name": "Tunnel to Phase Drift Tutorial"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to Phase Drift Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5629.54,
+                        "y": -6368.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Phase Drift Room",
+                        "node_name": "Dock to Phase Drift Tutorial"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4705.86,
+                        "y": -5888.08,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_002 (area6)": {
-            "default_node": null,
+        "Transport to Area 5 Interior (East)": {
+            "default_node": "Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -152,8 +373,8 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Usable (LE_Platform_Elevator_FromArea06C_01)": {
-                    "node_type": "generic",
+                "Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": -3000.0,
@@ -168,9 +389,70 @@
                         "actor_name": "LE_Platform_Elevator_FromArea06C_01",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Transport to Area 5 Entrance (East)"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Pool West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Burst",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Phase Drift Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door015)": {
+                "Door to Pool West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -189,15 +471,92 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_006 (area6)",
-                        "node_name": "Door (Door015)"
+                        "area_name": "Pool West",
+                        "node_name": "Door to Transport to Area 5 Interior (East)"
                     },
-                    "default_dock_weakness": "Access Closed",
+                    "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Burst",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spider",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Phase Drift Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door016)": {
+                "Door to Phase Drift Tutorial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -216,18 +575,95 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_001 (area6)",
-                        "node_name": "Door (Door016)"
+                        "area_name": "Phase Drift Tutorial",
+                        "node_name": "Door to Transport to Area 5 Interior (East)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Pool West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_004 (area6)": {
-            "default_node": null,
+        "Transport Hub": {
+            "default_node": "Elevator to Area 4 West - Transport to Area 5 Entrance",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -301,7 +737,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Pickup (LE_Item_002)": {
+                "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -317,11 +753,25 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_supermissiletank"
                     },
-                    "pickup_index": 0,
+                    "pickup_index": 102,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Above Center Tunnel": {
+                            "type": "template",
+                            "data": "Can Spiderspark"
+                        }
+                    }
                 },
-                "Usable (LE_Platform_AmmoRecharge_001)": {
+                "Ammo Recharge Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -337,9 +787,101 @@
                         "actor_name": "LE_Platform_AmmoRecharge_001",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Below Chozo Seal": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        },
+                        "Below Center Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Transport Hub Grapple Block Middle",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_ChozoUnlockAreaDNA)": {
+                "Chozo Seal": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -355,10 +897,116 @@
                         "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 4 West - Transport to Area 5 Entrance": {
+                            "type": "template",
+                            "data": "Climb Rooms (High Jump)"
+                        },
+                        "Save Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DNA5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (High Jump)"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo Seal Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 18",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 11",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 14",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 13",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Zeta 3",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 12",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Zeta 2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Below Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "DNA5",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_Elevator_FromArea04)": {
-                    "node_type": "generic",
+                "Elevator to Area 4 West - Transport to Area 5 Entrance": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": 20500.0,
@@ -373,13 +1021,27 @@
                         "actor_name": "LE_Platform_Elevator_FromArea04",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 4 - West",
+                        "area_name": "Transport to Area 5 Entrance"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_Elevator_FromArea07)": {
-                    "node_type": "generic",
+                "Elevator to Area 6 - Transport to Area 5 Entrance": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 14144.7001953125,
+                        "x": 14144.7,
                         "y": -14100.0,
                         "z": 0.0
                     },
@@ -391,9 +1053,51 @@
                         "actor_name": "LE_Platform_Elevator_FromArea07",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 6",
+                        "area_name": "Transport to Area 5 Entrance"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Below Center Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DNA5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Transport Hub Grapple Block Bottom",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_SaveStation_002)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -409,9 +1113,31 @@
                         "actor_name": "LE_Platform_SaveStation_002",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DNA5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Pickup (HiddenPowerup002)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -427,13 +1153,527 @@
                         "actor_name": "HiddenPowerup002",
                         "actor_type": "item_powerbombtank"
                     },
-                    "pickup_index": 7,
+                    "pickup_index": 109,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Below Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Baby",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Bottom of Right Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 5 (Entrance) - Transport Hub Grapple Block Top",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to Transport Hub Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11330.02,
+                        "y": -7624.75,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Transport Hub Access",
+                        "node_name": "Dock to Transport Hub"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport Hub Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11343.21,
+                        "y": -9181.64,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Transport Hub Access",
+                        "node_name": "Tunnel to Transport Hub"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Below Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Chozo Seal Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16145.07,
+                        "y": -8484.64,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "DNA5",
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Below Chozo Seal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14695.761657470519,
+                        "y": -9891.328572974142,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Transport Hub Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Above Center Tunnel": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Armor",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Above Center Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15558.96,
+                        "y": -10903.72,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "template",
+                            "data": "Can Spiderspark"
+                        },
+                        "Below Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Armor",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Grapple Block Top": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Below Center Tunnel": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block Middle": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14781.02,
+                        "y": -12118.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Entrance) - Transport Hub Grapple Block Middle",
+                    "connections": {
+                        "Below Center Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block Top": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17200.09,
+                        "y": -10647.96,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Entrance) - Transport Hub Grapple Block Top",
+                    "connections": {
+                        "Bottom of Right Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block Bottom": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16240.99,
+                        "y": -12949.81,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Entrance) - Transport Hub Grapple Block Bottom",
+                    "connections": {
+                        "Elevator to Area 6 - Transport to Area 5 Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Below Center Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15447.055950451013,
+                        "y": -11966.520139668288,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Transport Hub Grapple Block Middle",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Elevator to Area 6 - Transport to Area 5 Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Transport Hub Grapple Block Bottom",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Center Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Grapple Block Middle": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Grapple Block Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Bottom of Right Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17058.123194116102,
+                        "y": -11288.232203835041,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Transport Hub Grapple Block Top",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    }
+                                ]
+                            }
+                        },
+                        "Below Center Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_006 (area6)": {
+        "Pool West": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -508,7 +1748,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Pickup (LE_Item_006)": {
+                "Pickup (Aeion Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -524,11 +1764,19 @@
                         "actor_name": "LE_Item_006",
                         "actor_type": "item_senergytank"
                     },
-                    "pickup_index": 3,
+                    "pickup_index": 105,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Next to Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (LE_Item_007)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -544,12 +1792,27 @@
                         "actor_name": "LE_Item_007",
                         "actor_type": "item_powerbombtank"
                     },
-                    "pickup_index": 4,
+                    "pickup_index": 106,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Area 5 Interior (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_Teleporter_06A_002)": {
-                    "node_type": "generic",
+                "Teleporter": {
+                    "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
                         "x": -12100.0,
@@ -564,9 +1827,26 @@
                         "actor_name": "LE_Platform_Teleporter_06A_002",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Area 5 Entrance Teleporter West",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door015)": {
+                "Door to Transport to Area 5 Interior (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -585,15 +1865,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_002 (area6)",
-                        "node_name": "Door (Door015)"
+                        "area_name": "Transport to Area 5 Interior (East)",
+                        "node_name": "Door to Pool West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door017)": {
+                "Door to Transport to Area 5 Interior (West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -612,15 +1900,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_010 (area6)",
-                        "node_name": "Door (Door017)"
+                        "area_name": "Transport to Area 5 Interior (West)",
+                        "node_name": "Door to Pool West"
                     },
-                    "default_dock_weakness": "Access Closed",
+                    "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door018)": {
+                "Door to Gamma+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -639,17 +1935,444 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_013 (area6)",
-                        "node_name": "Door (Door018)"
+                        "area_name": "Gamma+ Arena Access",
+                        "node_name": "Door to Pool West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Next to Left Pool": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Connecting Tunnel (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8561.86,
+                        "y": -5097.2,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Connecting Tunnel",
+                        "node_name": "Tunnel to Pool West (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Next to Left Pool": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Connecting Tunnel (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8536.78881388621,
+                        "y": -6100.09643201543,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Connecting Tunnel",
+                        "node_name": "Tunnel to Pool West (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Next to Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Next to Grapple Block": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9176.133076181293,
+                        "y": -6087.560270009643,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Aeion Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Connecting Tunnel (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Pool Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Next to Left Pool": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spider",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8850.19,
+                        "y": -5962.2,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Entrance) - Pool Grapple Block",
+                    "connections": {
+                        "Next to Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10693.00867888139,
+                        "y": -3041.2729026036645,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Baby",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 5 Entrance Teleporter West",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Transport to Area 5 Interior (West)": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Next to Left Pool": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11507.86,
+                        "y": -2991.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 Entrance Teleporter West",
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Left Pool": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10542.574734811958,
+                        "y": -5034.522661523626,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Gamma+ Arena Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Connecting Tunnel (Top)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        },
+                        "Next to Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Next to Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_007 (area6)": {
+        "Connecting Tunnel": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -679,10 +2402,170 @@
                 ],
                 "asset_id": "collision_camera_007"
             },
-            "nodes": {}
+            "nodes": {
+                "Tunnel to Phase Drift Tutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7306.12,
+                        "y": -5105.71,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Phase Drift Tutorial",
+                        "node_name": "Tunnel to Connecting Tunnel"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Pool West (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spider",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Pool West (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Pool Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Pool West (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8595.53,
+                        "y": -5107.37,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Pool West",
+                        "node_name": "Tunnel to Connecting Tunnel (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Phase Drift Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spider",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Pool West (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8593.877671507853,
+                        "y": -6104.179950407368,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Pool West",
+                        "node_name": "Tunnel to Connecting Tunnel (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Phase Drift Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (No High Jump)"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
         },
-        "collision_camera_010 (area6)": {
-            "default_node": null,
+        "Transport to Area 5 Interior (West)": {
+            "default_node": "Door to Pool West",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -712,8 +2595,8 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Usable (LE_Platform_Elevator_FromArea06C_02)": {
-                    "node_type": "generic",
+                "Elevator to Area 5 Interior - Transport to Area 5 Entrance (West)": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": -12135.0,
@@ -728,9 +2611,23 @@
                         "actor_name": "LE_Platform_Elevator_FromArea06C_02",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Transport to Area 5 Entrance (West)"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Pool West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door017)": {
+                "Door to Pool West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -749,17 +2646,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_006 (area6)",
-                        "node_name": "Door (Door017)"
+                        "area_name": "Pool West",
+                        "node_name": "Door to Transport to Area 5 Interior (West)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 5 Interior - Transport to Area 5 Entrance (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_011 (area6)": {
+        "Alpha+ Arena Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -806,7 +2711,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Pickup (LE_Item_003)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -822,12 +2727,20 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 1,
+                    "pickup_index": 103,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Next to Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_Teleporter_06A_001)": {
-                    "node_type": "generic",
+                "Teleporter": {
+                    "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
                         "x": 6069.0,
@@ -842,9 +2755,26 @@
                         "actor_name": "LE_Platform_Teleporter_06A_001",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Area 5 Entrance Teleporter East",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door001)": {
+                "Door to Transport Hub Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -863,15 +2793,59 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_017 (area6)",
-                        "node_name": "Door (Door001)"
+                        "area_name": "Transport Hub Access",
+                        "node_name": "Door to Alpha+ Arena Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door021)": {
+                "Door to Alpha+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -890,17 +2864,295 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_012 (area6)",
-                        "node_name": "Door (Door021)"
+                        "area_name": "Alpha+ Arena",
+                        "node_name": "Door to Alpha+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport Hub Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8765.8,
+                        "y": -8501.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Transport Hub Access",
+                        "node_name": "Tunnel to Alpha+ Arena Access"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Next to Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8590.453418349274,
+                        "y": -8493.482111229188,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block",
+                    "connections": {
+                        "Next to Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Activated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6798.034006376196,
+                        "y": -7511.547998583068,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 Entrance Teleporter East",
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7039.620970598654,
+                        "y": -7799.893730074389,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 5 Entrance Teleporter East",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Transport Hub Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Alpha+ Arena": {
+                            "type": "template",
+                            "data": "Climb Rooms (High Jump)"
+                        },
+                        "Event - Teleporter Activated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Next to Pickup": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8590.88636989806,
+                        "y": -8687.011453536426,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Transport Hub Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_012 (area6)": {
+        "Alpha+ Arena": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -931,7 +3183,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door (Door020)": {
+                "Door to Pool East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -950,15 +3202,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_015 (area6)",
-                        "node_name": "Door (Door020)"
+                        "area_name": "Pool East",
+                        "node_name": "Door to Alpha+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door021)": {
+                "Door to Alpha+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -977,17 +3237,87 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_011 (area6)",
-                        "node_name": "Door (Door021)"
+                        "area_name": "Alpha+ Arena Access",
+                        "node_name": "Door to Alpha+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Alpha Metroid+": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4629.53,
+                        "y": -5938.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Alpha 18",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4626.388888888889,
+                        "y": -6084.375,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Pool East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 18",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Alpha+ Arena Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 18",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid+"
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_013 (area6)": {
+        "Gamma+ Arena Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1018,7 +3348,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door (Door018)": {
+                "Door to Pool West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1037,17 +3367,56 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_006 (area6)",
-                        "node_name": "Door (Door018)"
+                        "area_name": "Pool West",
+                        "node_name": "Door to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Gamma+ Arena": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Tunnel to Gamma+ Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20722.91,
+                        "y": -3504.53,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Gamma+ Arena",
+                        "node_name": "Tunnel to Gamma+ Arena Access"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Pool West": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_014 (area6)": {
+        "Phase Drift Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1086,11 +3455,11 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Pickup (LE_SpecialAbility_PhaseDisplacement)": {
+                "Pickup (Phase Drift)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4052.39990234375,
+                        "x": -4052.4,
                         "y": -6900.0,
                         "z": 0.0
                     },
@@ -1102,11 +3471,19 @@
                         "actor_name": "LE_SpecialAbility_PhaseDisplacement",
                         "actor_type": "powerup_phasedisplacement"
                     },
-                    "pickup_index": 5,
+                    "pickup_index": 107,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Left of Crumble Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (HiddenPowerup001)": {
+                "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1122,13 +3499,167 @@
                         "actor_name": "HiddenPowerup001",
                         "actor_type": "item_supermissiletank"
                     },
-                    "pickup_index": 6,
+                    "pickup_index": 108,
                     "major_location": false,
+                    "connections": {
+                        "Left of Crumble Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Phase Drift Tutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5629.54,
+                        "y": -6368.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Phase Drift Tutorial",
+                        "node_name": "Dock to Phase Drift Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Phase Drift)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Pool East (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1830.38,
+                        "y": -6613.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Pool East",
+                        "node_name": "Tunnel to Phase Drift Room (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Left of Crumble Blocks": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Pool East (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1836.14,
+                        "y": -7759.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Pool East",
+                        "node_name": "Tunnel to Phase Drift Room (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Left of Crumble Blocks": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2815.7891954752085,
+                        "y": -7020.446135955175,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Phase Drift)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Pool East (Top)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        },
+                        "Tunnel to Pool East (Bottom)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_015 (area6)": {
+        "Pool East": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1167,7 +3698,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Pickup (LE_Item_004)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1183,11 +3714,19 @@
                         "actor_name": "LE_Item_004",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 2,
+                    "pickup_index": 104,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door019)": {
+                "Door to Phase Drift Tutorial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1206,15 +3745,27 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_001 (area6)",
-                        "node_name": "Door (Door019)"
+                        "area_name": "Phase Drift Tutorial",
+                        "node_name": "Door to Pool East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Phase Drift Room (Top)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door020)": {
+                "Door to Alpha+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1233,17 +3784,203 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_012 (area6)",
-                        "node_name": "Door (Door020)"
+                        "area_name": "Alpha+ Arena",
+                        "node_name": "Door to Pool East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Phase Drift Room (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1830.38,
+                        "y": -6613.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Phase Drift Room",
+                        "node_name": "Tunnel to Pool East (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Phase Drift Tutorial": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Tunnel to Phase Drift Room (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1836.14,
+                        "y": -7759.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Phase Drift Room",
+                        "node_name": "Tunnel to Pool East (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Room Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -652.6978800468733,
+                        "y": -8215.356343879834,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Phase Drift Tutorial": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_016 (area6)": {
+        "Gamma+ Arena": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1273,9 +4010,77 @@
                 ],
                 "asset_id": "collision_camera_016"
             },
-            "nodes": {}
+            "nodes": {
+                "Tunnel to Gamma+ Arena Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20722.91,
+                        "y": -3504.53,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Gamma+ Arena Access",
+                        "node_name": "Tunnel to Gamma+ Arena"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Gamma Metroid+": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid+"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Gamma Metroid+": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22363.81,
+                        "y": -3119.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Gamma 11",
+                    "connections": {
+                        "Tunnel to Gamma+ Arena Access": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                }
+            }
         },
-        "collision_camera_017 (area6)": {
+        "Transport Hub Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1306,7 +4111,7 @@
                 "asset_id": "collision_camera_017"
             },
             "nodes": {
-                "Door (Door001)": {
+                "Door to Alpha+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1325,13 +4130,200 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "collision_camera_011 (area6)",
-                        "node_name": "Door (Door001)"
+                        "area_name": "Alpha+ Arena Access",
+                        "node_name": "Door to Transport Hub Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "template",
+                            "data": "Climb Rooms (High Jump)"
+                        }
+                    }
+                },
+                "Tunnel to Alpha+ Arena Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8765.8,
+                        "y": -8501.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Alpha+ Arena Access",
+                        "node_name": "Tunnel to Transport Hub Access"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to Transport Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11330.02,
+                        "y": -7624.75,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Transport Hub",
+                        "node_name": "Dock to Transport Hub Access"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11343.21,
+                        "y": -9181.64,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Transport Hub",
+                        "node_name": "Tunnel to Transport Hub Access"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10164.732160428228,
+                        "y": -8338.270948951076,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Alpha+ Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Alpha+ Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Transport Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Transport Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DNA5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -56,7 +56,7 @@
                 "extra": {}
             },
             "Supers": {
-                "long_name": "Super Missile",
+                "long_name": "Super Missile Launcher",
                 "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_WEAPON_SUPER_MISSILE"
@@ -173,11 +173,19 @@
                 }
             },
             "MissileAmmo": {
-                "long_name": "Missiles",
+                "long_name": "Missile",
                 "max_capacity": 999,
                 "extra": {
                     "item_id": "ITEM_WEAPON_MISSILE_CURRENT",
                     "item_capacity_id": "ITEM_WEAPON_MISSILE_MAX"
+                }
+            },
+            "SMAmmo": {
+                "long_name": "Super Missile",
+                "max_capacity": 99,
+                "extra": {
+                    "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+                    "item_capacity_id": "ITEM_WEAPON_SUPER_MISSILE_MAX"
                 }
             },
             "ATank": {
@@ -188,17 +196,546 @@
                 }
             },
             "PBAmmo": {
-                "long_name": "Power Bombs",
+                "long_name": "Power Bomb",
                 "max_capacity": 99,
                 "extra": {
                     "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
                     "item_capacity_id": "ITEM_WEAPON_POWER_BOMB_MAX"
                 }
+            },
+            "Baby": {
+                "long_name": "Baby Metroid",
+                "max_capacity": 1,
+                "extra": {}
             }
         },
         "events": {
+            "Alpha 1": {
+                "long_name": "Surface (East) - Alpha Metroid",
+                "extra": {}
+            },
+            "Alpha 2": {
+                "long_name": "Area 1 - Alpha Metroid North",
+                "extra": {}
+            },
+            "Alpha 3": {
+                "long_name": "Area 1 - Alpha Metroid East",
+                "extra": {}
+            },
+            "Alpha 4": {
+                "long_name": "Area 1 - Alpha Metroid Southeast",
+                "extra": {}
+            },
+            "Alpha 5": {
+                "long_name": "Area 1 - Alpha Metroid West",
+                "extra": {}
+            },
+            "Alpha 6": {
+                "long_name": "Area 2 (Entrance) - Alpha Metroid",
+                "extra": {}
+            },
+            "Alpha 7": {
+                "long_name": "Area 2 (Exterior) - Alpha Metroid North",
+                "extra": {}
+            },
+            "Alpha 8": {
+                "long_name": "Area 2 (Exterior) - Alpha Metroid+ North",
+                "extra": {}
+            },
+            "Alpha 9": {
+                "long_name": "Area 2 (Exterior) - Alpha Metroid South",
+                "extra": {}
+            },
+            "Alpha 10": {
+                "long_name": "Area 2 (Exterior) - Alpha Metroid West",
+                "extra": {}
+            },
+            "Alpha 11": {
+                "long_name": "Area 2 (Exterior) - Alpha Metroid Heat",
+                "extra": {}
+            },
+            "Alpha 12": {
+                "long_name": "Area 2 (Exterior) - Alpha Metroid+ Heat",
+                "extra": {}
+            },
+            "Gamma 1": {
+                "long_name": "Area 2 (Interior) - Gamma Metroid",
+                "extra": {}
+            },
+            "Gamma 2": {
+                "long_name": "Area 3 (Exterior) - Gamma Metroid",
+                "extra": {}
+            },
+            "Gamma 3": {
+                "long_name": "Area 3 (Interior East) - Gamma Metroid Upper",
+                "extra": {}
+            },
+            "Gamma 4": {
+                "long_name": "Area 3 (Interior East) - Gamma Metroid Lower",
+                "extra": {}
+            },
+            "Alpha 13": {
+                "long_name": "Area 3 (Interior East) - Alpha Metroid",
+                "extra": {}
+            },
+            "Alpha 15": {
+                "long_name": "Area 3 (Interior West) - Alpha Metroid+ West",
+                "extra": {}
+            },
+            "Alpha 16": {
+                "long_name": "Area 3 (Interior West) - Alpha Metroid+ East",
+                "extra": {}
+            },
+            "Gamma 5": {
+                "long_name": "Area 3 (Interior West) - Gamma Metroid Upper",
+                "extra": {}
+            },
+            "Gamma 6": {
+                "long_name": "Area 3 (Interior West) - Gamma Metroid Lower",
+                "extra": {}
+            },
+            "Gamma 7": {
+                "long_name": "Area 3 (Interior West) - Gamma Metroid+ Heat",
+                "extra": {}
+            },
+            "Gamma 8": {
+                "long_name": "Area 3 (Interior West) - Gamma Metroid+ Lower",
+                "extra": {}
+            },
+            "Gamma 9": {
+                "long_name": "Area 4 (West) - Gamma Metroid",
+                "extra": {}
+            },
+            "Alpha 17": {
+                "long_name": "Area 4 (West) - Alpha Metroid+",
+                "extra": {}
+            },
+            "Gamma 10": {
+                "long_name": "Area 4 (East) - Gamma Metroid",
+                "extra": {}
+            },
+            "Zeta 1": {
+                "long_name": "Area 4 (East) - Zeta Metroid",
+                "extra": {}
+            },
+            "Alpha 18": {
+                "long_name": "Area 5 (Entrance) - Alpha Metroid+",
+                "extra": {}
+            },
+            "Gamma 11": {
+                "long_name": "Area 5 (Entrance) - Gamma Metroid+",
+                "extra": {}
+            },
+            "Gamma 12": {
+                "long_name": "Area 5 (Interior) - Gamma Metroid+",
+                "extra": {}
+            },
+            "Zeta 2": {
+                "long_name": "Area 5 (Interior) - Zeta Metroid+",
+                "extra": {}
+            },
+            "Gamma 13": {
+                "long_name": "Area 5 (Exterior) - Gamma Metroid+",
+                "extra": {}
+            },
+            "Zeta 3": {
+                "long_name": "Area 5 (Exterior) - Zeta Metroid",
+                "extra": {}
+            },
+            "Gamma 14": {
+                "long_name": "Area 5 (Exterior) - Gamma Metroid",
+                "extra": {}
+            },
+            "Zeta 4": {
+                "long_name": "Area 6 - Zeta Metroid",
+                "extra": {}
+            },
+            "Omega 1": {
+                "long_name": "Area 6 - Omega Metroid",
+                "extra": {}
+            },
+            "Omega 2": {
+                "long_name": "Area 7 - Omega Metroid North",
+                "extra": {}
+            },
+            "Omega 3": {
+                "long_name": "Area 7 - Omega Metroid South",
+                "extra": {}
+            },
+            "Omega 4": {
+                "long_name": "Area 7 - Omega Metroid+",
+                "extra": {}
+            },
+            "Larva 1": {
+                "long_name": "Area 8 - Larva Metroid 1",
+                "extra": {}
+            },
+            "Larva 2": {
+                "long_name": "Area 8 - Larva Metroid 2",
+                "extra": {}
+            },
+            "Larva 3": {
+                "long_name": "Area 8 - Larva Metroid 3",
+                "extra": {}
+            },
+            "Larva 4": {
+                "long_name": "Area 8 - Larva Metroid 4",
+                "extra": {}
+            },
+            "Larva 5": {
+                "long_name": "Area 8 - Larva Metroid 5",
+                "extra": {}
+            },
+            "Larva 6": {
+                "long_name": "Area 8 - Larva Metroid 6",
+                "extra": {}
+            },
+            "Larva 7": {
+                "long_name": "Area 8 - Larva Metroid 7",
+                "extra": {}
+            },
+            "Larva 8": {
+                "long_name": "Area 8 - Larva Metroid 8",
+                "extra": {}
+            },
+            "Larva 9": {
+                "long_name": "Area 8 - Larva Metroid 9",
+                "extra": {}
+            },
+            "Larva 10": {
+                "long_name": "Area 8 - Larva Metroid 10",
+                "extra": {}
+            },
+            "Queen Metroid": {
+                "long_name": "Area 8 - Queen Metroid",
+                "extra": {}
+            },
             "Proteus Ridley": {
-                "long_name": "Proteus Ridley",
+                "long_name": "Surface (West) - Proteus Ridley",
+                "extra": {}
+            },
+            "Surface East Teleporter": {
+                "long_name": "Surface (East) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Surface West Teleporter": {
+                "long_name": "Surface (West) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 1 Teleporter": {
+                "long_name": "Area 1 - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 2 Entrance Teleporter": {
+                "long_name": "Area 2 (Entrance) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 2 Exterior Teleporter Upper": {
+                "long_name": "Area 2 (Exterior) - Teleporter Unlocked (Upper)",
+                "extra": {}
+            },
+            "Area 2 Exterior Teleporter Heat": {
+                "long_name": "Area 2 (Exterior) - Teleporter Unlocked (Heat)",
+                "extra": {}
+            },
+            "Area 2 Interior Teleporter": {
+                "long_name": "Area 2 (Interior) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 3 Exterior Teleporter East": {
+                "long_name": "Area 3 (Exterior) - Teleporter Unlocked (East)",
+                "extra": {}
+            },
+            "Area 3 Exterior Teleporter West": {
+                "long_name": "Area 3 (Exterior) - Teleporter Unlocked (West)",
+                "extra": {}
+            },
+            "Area 3 Interior East Teleporter": {
+                "long_name": "Area 3 (Interior East) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 3 Interior West Teleporter Upper": {
+                "long_name": "Area 3 (Interior West) - Teleporter Unlocked (Upper)",
+                "extra": {}
+            },
+            "Area 3 Interior East Teleporter Lower": {
+                "long_name": "Area 3 (Interior West) - Teleporter Unlocked (Lower)",
+                "extra": {}
+            },
+            "Area 4 West Teleporter": {
+                "long_name": "Area 4 (West) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 4 East Teleporter": {
+                "long_name": "Area 4 (East) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 5 Entrance Teleporter East": {
+                "long_name": "Area 5 (Entrance) - Teleporter Unlocked (East)",
+                "extra": {}
+            },
+            "Area 5 Entrance Teleporter West": {
+                "long_name": "Area 5 (Entrance) - Teleporter Unlocked (West)",
+                "extra": {}
+            },
+            "Area 5 Interior Teleporter": {
+                "long_name": "Area 5 (Interior) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 5 Exterior Teleporter": {
+                "long_name": "Area 5 (Exterior) - Teleporter Unlocked",
+                "extra": {}
+            },
+            "Area 6 Teleporter Upper": {
+                "long_name": "Area 6 - Teleporter Unlocked (Upper)",
+                "extra": {}
+            },
+            "Area 6 Teleporter Lower": {
+                "long_name": "Area 6 - Teleporter Unlocked (Lower)",
+                "extra": {}
+            },
+            "Area 7 Teleporter West": {
+                "long_name": "Area 7 - Teleporter Unlocked (West)",
+                "extra": {}
+            },
+            "Area 7 Teleporter East": {
+                "long_name": "Area 7 - Teleporter Unlocked (East)",
+                "extra": {}
+            },
+            "Area 8 Teleporter Upper": {
+                "long_name": "Area 8 - Teleporter Unlocked (Upper)",
+                "extra": {}
+            },
+            "Area 8 Teleporter Lower": {
+                "long_name": "Area 8 - Teleporter Unlocked (Lower)",
+                "extra": {}
+            },
+            "DNA1": {
+                "long_name": "Area 1 - Chozo Seal Unlocked",
+                "extra": {}
+            },
+            "DNA2": {
+                "long_name": "Area 2 (Entrance) - Chozo Seal Unlocked",
+                "extra": {}
+            },
+            "DNA3": {
+                "long_name": "Area 3 (Exterior) - Chozo Seal Unlocked",
+                "extra": {}
+            },
+            "DNA4L": {
+                "long_name": "Area 4 (West) - Chozo Seal Unlocked (Left)",
+                "extra": {}
+            },
+            "DNA4R": {
+                "long_name": "Area 4 (West) - Chozo Seal Unlocked (Right)",
+                "extra": {}
+            },
+            "DNA5": {
+                "long_name": "Area 5 (Entrance) - Chozo Seal Unlocked",
+                "extra": {}
+            },
+            "DNA6W": {
+                "long_name": "Area 6 - Chozo Seal West Unlocked",
+                "extra": {}
+            },
+            "DNA6E": {
+                "long_name": "Area 6 - Chozo Seal East Unlocked",
+                "extra": {}
+            },
+            "DNA7": {
+                "long_name": "Area 7 - Chozo Seal Unlocked",
+                "extra": {}
+            },
+            "Area 1 - One-Way Puzzle Grapple Block": {
+                "long_name": "Area 1 - One-Way Puzzle Grapple Block",
+                "extra": {}
+            },
+            "Area 5 (Interior) - Gravity Suit Room Pickup": {
+                "long_name": "Area 5 (Interior) - Gravity Suit Room Pickup",
+                "extra": {}
+            },
+            "Area 3 (Exterior) - Inner Hub Access Grapple Block Left": {
+                "long_name": "Area 3 (Exterior) - Outer Hub Access Grapple Block Left",
+                "extra": {}
+            },
+            "Area 3 (Exterior) - Inner Hub Access Grapple Block Right": {
+                "long_name": "Area 3 (Exterior) - Outer Hub Access Grapple Block Right",
+                "extra": {}
+            },
+            "Area 3 (Exterior) - Gamma Shaft Grapple Block": {
+                "long_name": "Area 3 (Exterior) - Gamma Shaft Grapple Block",
+                "extra": {}
+            },
+            "Area 3 (Exterior) - Transport to Area 4 West Grapple Block": {
+                "long_name": "Area 3 (Exterior) - Transport to Area 4 West Grapple Block",
+                "extra": {}
+            },
+            "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block": {
+                "long_name": "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block",
+                "extra": {}
+            },
+            "Area 3 (Interior East) - Gamma Metroid Awakened": {
+                "long_name": "Area 3 (Interior East) - Gamma Metroid Upper Awakened",
+                "extra": {}
+            },
+            "Area 3 (Interior East) - Double Back Grapple Block Left": {
+                "long_name": "Area 3 (Interior East) - Double Back Grapple Block Left",
+                "extra": {}
+            },
+            "Area 3 (Interior East) - Double Back Grapple Block Right": {
+                "long_name": "Area 3 (Interior East) - Double Back Grapple Block Right",
+                "extra": {}
+            },
+            "Area 3 (Interior West) - Upper Shaft Access Grapple Block": {
+                "long_name": "Area 3 (Interior West) - Upper Shaft Access Grapple Block",
+                "extra": {}
+            },
+            "Area 3 (Interior West) - Diggernaut Awakened": {
+                "long_name": "Area 3 (Interior West) - Diggernaut Awakened",
+                "extra": {}
+            },
+            "Area 3 (Interior West) - Transport to Area 3 Interior West Grapple Block": {
+                "long_name": "Area 3 (Interior West) - Transport to Area 3 Interior West Grapple Block",
+                "extra": {}
+            },
+            "Area 3 (Interior West) - Grappling Steps Grapple Block": {
+                "long_name": "Area 3 (Interior West) - Grappling Steps Grapple Block",
+                "extra": {}
+            },
+            "Area 4 (East) - Diggernaut Chase Arena Grapple Block": {
+                "long_name": "Area 4 (East) - Diggernaut Chase Arena Grapple Block",
+                "extra": {}
+            },
+            "Area 4 (East) - Teleporter Room Grapple Block": {
+                "long_name": "Area 4 (East) - Teleporter Room Grapple Block",
+                "extra": {}
+            },
+            "Area 4 (West) - Gamma Access Path Lower Grapple Block": {
+                "long_name": "Area 4 (West) - Gamma Access Path Lower Grapple Block",
+                "extra": {}
+            },
+            "Area 4 (West) - Roundabout Grapple Block": {
+                "long_name": "Area 4 (West) - Roundabout Grapple Block",
+                "extra": {}
+            },
+            "Area 4 (West) - Transport Area Grapple Block Left": {
+                "long_name": "Area 4 (West) - Transport Hub Grapple Block Left",
+                "extra": {}
+            },
+            "Area 4 (West) - Transport Area Grapple Block Right": {
+                "long_name": "Area 4 (West) - Transport Hub Grapple Block Right",
+                "extra": {}
+            },
+            "Area 4 (West) - Transport Area Grapple Block Pull Left": {
+                "long_name": "Area 4 (West) - Transport Hub Grapple Block Pull Left",
+                "extra": {}
+            },
+            "Area 4 (West) - Transport Area Grapple Block Pull Right": {
+                "long_name": "Area 4 (West) - Transport Hub Grapple Block Pull Right",
+                "extra": {}
+            },
+            "Area 4 (West) -Transport to Area 5 Entrance Grapple Block": {
+                "long_name": "Area 4 (West) -Transport to Area 5 Entrance Grapple Block",
+                "extra": {}
+            },
+            "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block": {
+                "long_name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                "extra": {}
+            },
+            "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block": {
+                "long_name": "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block",
+                "extra": {}
+            },
+            "Area 5 (Entrance) - Pool Grapple Block": {
+                "long_name": "Area 5 (Entrance) - Pool West Grapple Block",
+                "extra": {}
+            },
+            "Area 5 (Entrance) - Transport Hub Grapple Block Top": {
+                "long_name": "Area 5 (Entrance) - Transport Hub Grapple Block Top",
+                "extra": {}
+            },
+            "Area 5 (Entrance) - Transport Hub Grapple Block Middle": {
+                "long_name": "Area 5 (Entrance) - Transport Hub Grapple Block Middle",
+                "extra": {}
+            },
+            "Area 5 (Entrance) - Transport Hub Grapple Block Bottom": {
+                "long_name": "Area 5 (Entrance) - Transport Hub Grapple Block Bottom",
+                "extra": {}
+            },
+            "Area 5 (Interior) - Grapple Shuffler Grapple Block": {
+                "long_name": "Area 5 (Interior) - Grapple Shuffler Grapple Block",
+                "extra": {}
+            },
+            "Area 5 (Interior) - Transport Connector Grapple Block": {
+                "long_name": "Area 5 (Interior) - Transport Connector Grapple Block",
+                "extra": {}
+            },
+            "Area 6 - Chozo Seal East Grapple Block": {
+                "long_name": "Area 6 - Chozo Seal East Grapple Block",
+                "extra": {}
+            },
+            "Area 6 - Transport to Area 5 Entrance Grapple Block": {
+                "long_name": "Area 6 - Transport to Area 5 Entrance Grapple Block",
+                "extra": {}
+            },
+            "Diggernaut": {
+                "long_name": "Area 6 - Diggernaut",
+                "extra": {}
+            },
+            "Area 6 - Red Plant Tunnel Grapple Block": {
+                "long_name": "Area 6 - Red Plant Tunnel Grapple Block",
+                "extra": {}
+            },
+            "Area 6 - Stolen Power Bomb Room Grapple Block": {
+                "long_name": "Area 6 - Stolen Power Bomb Room Grapple Block",
+                "extra": {}
+            },
+            "Area 6 - Transport to Area 7 Grapple Block": {
+                "long_name": "Area 6 - Transport to Area 7 Grapple Blocks Top",
+                "extra": {}
+            },
+            "Area 6 - Transport to Area 7 Grapple Block Bottom": {
+                "long_name": "Area 6 - Transport to Area 7 Grapple Blocks Bottom",
+                "extra": {}
+            },
+            "Area 7 - Exit Puzzle Room 1 Grapple Block Left": {
+                "long_name": "Area 7 - Exit Puzzle Room 1 Grapple Block Left",
+                "extra": {}
+            },
+            "Area 7 - Exit Puzzle Room 1 Grapple Block Right": {
+                "long_name": "Area 7 - Exit Puzzle Room 1 Grapple Block Right",
+                "extra": {}
+            },
+            "Area 7 - Exit Puzzle Room 1 Grapple Block Middle": {
+                "long_name": "Area 7 - Exit Puzzle Room 1 Grapple Block Middle",
+                "extra": {}
+            },
+            "Area 7 - Launch Tunnel South Grapple Block": {
+                "long_name": "Area 7 - Launch Tunnel South Grapple Block Bottom",
+                "extra": {}
+            },
+            "Area 7 - Launch Tunnel South Grapple Block Top": {
+                "long_name": "Area 7 - Launch Tunnel South Grapple Block Top",
+                "extra": {}
+            },
+            "Area 7 - Transport to Area 8": {
+                "long_name": "Area 7 - Transport to Area 8 Grapple Block",
+                "extra": {}
+            },
+            "Area 8 - Central Chamber Access Grapple Block": {
+                "long_name": "Area 8 - Central Chamber Access Grapple Block",
+                "extra": {}
+            },
+            "Area 8 - Central Chamber Grapple Block Top": {
+                "long_name": "Area 8 - Central Chamber Grapple Block Top",
+                "extra": {}
+            },
+            "Area 8 - Central Chamber Grapple Block Bottom": {
+                "long_name": "Area 8 - Central Chamber Grapple Block Bottom",
+                "extra": {}
+            },
+            "Arachnus": {
+                "long_name": "Area 2 (Exterior) - Arachnus",
                 "extra": {}
             }
         },
@@ -280,8 +817,454 @@
                 "extra": {}
             }
         },
-        "misc": {},
-        "requirement_template": {},
+        "misc": {
+            "SeparateBeams": {
+                "long_name": "Separate Beam Behaviors",
+                "extra": {}
+            }
+        },
+        "requirement_template": {
+            "Climb Rooms (No High Jump)": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spider",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Climb Rooms (High Jump)": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Boots",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spider",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Lay Bomb": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Bomb",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Lay Power Bomb": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "PBAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MainPB",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Beam": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Shoot Wave Beam": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SeparateBeams",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Spazer Beam": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wide",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SeparateBeams",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Missiles": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileLauncher",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Destroy Bomb Blocks": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Lay Bomb"
+                        },
+                        {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        }
+                    ]
+                }
+            },
+            "Can Spiderspark": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Spider",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Use Spider Ball": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Spider",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat Alpha Metroid": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Defeat Alpha Metroid+": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Defeat Gamma Metroid": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Defeat Gamma Metroid+": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Defeat Zeta Metroid": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Defeat Omega Metroid": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Defeat Larva Metroid": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
         "damage_reductions": [
             {
                 "name": "Damage",
@@ -480,13 +1463,8 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Wave",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Shoot Wave Beam"
                             }
                         }
                     },
@@ -523,8 +1501,13 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "template",
-                                "data": "Shoot Plasma Beam"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Plasma",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         }
                     },
@@ -566,8 +1549,13 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "template",
-                                "data": "Shoot Super Missile"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SMAmmo",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         }
                     },
@@ -589,6 +1577,39 @@
                                 "data": "Lay Power Bomb"
                             }
                         }
+                    }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
+                }
+            },
+            "tunnel": {
+                "name": "Tunnel",
+                "extra": {},
+                "items": {
+                    "Tunnel": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Tunnel with Bomb Block": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        },
+                        "lock": null
                     }
                 },
                 "dock_rando": {
@@ -656,8 +1677,8 @@
         "Area 2 - Interior.json",
         "Area 2 - Entrance.json",
         "Area 3 - Exterior.json",
-        "Area 3 - Interior Lower.json",
-        "Area 3 - Interior Upper.json",
+        "Area 3 - Interior West.json",
+        "Area 3 - Interior East.json",
         "Area 4 - West.json",
         "Area 4 - East.json",
         "Area 5 - Entrance.json",

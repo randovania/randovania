@@ -1,11 +1,16 @@
 {
     "name": "Area 5 - Interior",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s067_area6c/s067_area6c.bmsld"
+        "asset_id": "maps/levels/c10_samus/s067_area6c/s067_area6c.bmsld",
+        "map_min_x": 54,
+        "map_max_x": 65,
+        "map_min_y": 19,
+        "map_max_y": 20,
+        "scenario_id": "s067_area6c"
     },
     "areas": {
-        "collision_camera_002 (area6c)": {
-            "default_node": null,
+        "Transport to Area 5 Entrance (East)": {
+            "default_node": "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -55,8 +60,8 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Usable (LE_Platform_Elevator_FromArea06A_01)": {
-                    "node_type": "generic",
+                "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": -2650.0,
@@ -71,9 +76,32 @@
                         "actor_name": "LE_Platform_Elevator_FromArea06A_01",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Transport to Area 5 Interior (East)"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Transport to Area 5 Exterior (East)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Transport Connector": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door002)": {
+                "Door to Transport to Area 5 Exterior (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -92,15 +120,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_005 (area6c)",
-                        "node_name": "Door (Door002)"
+                        "area_name": "Transport to Area 5 Exterior (East)",
+                        "node_name": "Door to Transport to Area 5 Entrance (East)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door013)": {
+                "Door to Transport Connector": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -119,17 +157,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_003 (area6c)",
-                        "node_name": "Door (Door013)"
+                        "area_name": "Transport Connector",
+                        "node_name": "Door to Transport to Area 5 Entrance (East)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_003 (area6c)": {
+        "Transport Connector": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -172,7 +218,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Pickup (LE_Item_004)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -188,42 +234,20 @@
                         "actor_name": "LE_Item_004",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 3,
+                    "pickup_index": 122,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Underwater": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
                 },
-                "Door (LE_PlasmaShield_Door016)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11550.0,
-                        "y": 300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door016",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_015 (area6c)",
-                        "node_name": "Door (LE_PlasmaShield_Door016)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_SaveStation001)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -10530.7998046875,
+                        "x": -10530.8,
                         "y": 900.0,
                         "z": 0.0
                     },
@@ -235,9 +259,23 @@
                         "actor_name": "LE_Platform_SaveStation001",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Area 5 Entrance (West)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Above Save Station": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        }
+                    }
                 },
-                "Door (Door013)": {
+                "Door to Transport to Area 5 Entrance (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -256,15 +294,37 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_002 (area6c)",
-                        "node_name": "Door (Door013)"
+                        "area_name": "Transport to Area 5 Entrance (East)",
+                        "node_name": "Door to Transport Connector"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Above Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (No High Jump)"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door016)": {
+                "Door to Transport to Area 5 Entrance (West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -283,18 +343,353 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_015 (area6c)",
-                        "node_name": "Door (Door016)"
+                        "area_name": "Transport to Area 5 Entrance (West)",
+                        "node_name": "Door to Transport Connector"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Gamma Arena Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18317.96,
+                        "y": 4710.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Gamma Arena Access",
+                        "node_name": "Tunnel to Transport Connector"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Underwater": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13027.02,
+                        "y": 4503.38,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Interior) - Transport Connector Grapple Block",
+                    "connections": {
+                        "Next to Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10091.012514220705,
+                        "y": 2043.4869169510807,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Next to Grapple Block": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Interior) - Transport Connector Grapple Block",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Next to Grapple Block": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13882.25,
+                        "y": 4609.19,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Above Save Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Interior) - Transport Connector Grapple Block",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Next to Grapple Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Grapple Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17170.932878270763,
+                        "y": 4741.439135381115,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Tunnel to Gamma Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Next to Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Underwater": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Underwater": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17594.141069397043,
+                        "y": 4177.161547212741,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        },
+                        "Next to Grapple Point": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_005 (area6c)": {
-            "default_node": null,
+        "Transport to Area 5 Exterior (East)": {
+            "default_node": "Transport to Area 5 Exterior - Outer Hub",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -332,8 +727,8 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Usable (LE_Platform_Elevator_FromArea06B_01)": {
-                    "node_type": "generic",
+                "Transport to Area 5 Exterior - Outer Hub": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": -1700.0,
@@ -348,9 +743,37 @@
                         "actor_name": "LE_Platform_Elevator_FromArea06B_01",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 5 - Exterior",
+                        "area_name": "Outer Hub"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Transport to Area 5 Entrance (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Grapple Shuffler": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Water Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door002)": {
+                "Door to Transport to Area 5 Entrance (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -369,15 +792,20 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_002 (area6c)",
-                        "node_name": "Door (Door002)"
+                        "area_name": "Transport to Area 5 Entrance (East)",
+                        "node_name": "Door to Transport to Area 5 Exterior (East)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Transport to Area 5 Exterior - Outer Hub": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        }
+                    }
                 },
-                "Door (Door003)": {
+                "Door to Grapple Shuffler": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -396,15 +824,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_007 (area6c)",
-                        "node_name": "Door (Door003)"
+                        "area_name": "Grapple Shuffler",
+                        "node_name": "Door to Transport to Area 5 Exterior (East)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Transport to Area 5 Exterior - Outer Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door015)": {
+                "Door to Water Drop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -423,17 +859,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_016 (area6c)",
-                        "node_name": "Door (Door015)"
+                        "area_name": "Water Drop",
+                        "node_name": "Door to Transport to Area 5 Exterior (East)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Transport to Area 5 Exterior - Outer Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_006 (area6c)": {
+        "Plasma Beam Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -464,66 +908,12 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door006)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5050.0,
-                        "y": 1900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door006",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_007 (area6c)",
-                        "node_name": "Door (LE_MissileShield_Door006)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (LE_PlasmaShield_Door005)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -7500.0,
-                        "y": 1800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door005",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_008 (area6c)",
-                        "node_name": "Door (LE_PlasmaShield_Door005)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (LE_PowerUp_PlasmaBeam)": {
+                "Pickup (Plasma Beam)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": -7090.5,
-                        "y": 2519.699951171875,
+                        "y": 2519.7,
                         "z": 0.0
                     },
                     "description": "",
@@ -534,11 +924,19 @@
                         "actor_name": "LE_PowerUp_PlasmaBeam",
                         "actor_type": "itemsphere_plasmabeam"
                     },
-                    "pickup_index": 6,
+                    "pickup_index": 125,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door from Grapple Shuffler": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door005)": {
+                "Door to Autrack Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -557,15 +955,15 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_008 (area6c)",
-                        "node_name": "Door (Door005)"
+                        "area_name": "Autrack Tower",
+                        "node_name": "Door from Plasma Beam Room"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door (Door006)": {
+                "Door from Grapple Shuffler": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -584,17 +982,32 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_007 (area6c)",
-                        "node_name": "Door (Door006)"
+                        "area_name": "Grapple Shuffler",
+                        "node_name": "Door to Plasma Beam Room"
                     },
                     "default_dock_weakness": "Access Closed",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Plasma Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Autrack Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_007 (area6c)": {
+        "Grapple Shuffler": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -625,34 +1038,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door006)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5050.0,
-                        "y": 1900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door006",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_006 (area6c)",
-                        "node_name": "Door (LE_MissileShield_Door006)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door003)": {
+                "Door to Transport to Area 5 Exterior (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -671,15 +1057,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_005 (area6c)",
-                        "node_name": "Door (Door003)"
+                        "area_name": "Transport to Area 5 Exterior (East)",
+                        "node_name": "Door to Grapple Shuffler"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Teleporter Room (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door006)": {
+                "Door to Plasma Beam Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -698,15 +1092,37 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_006 (area6c)",
-                        "node_name": "Door (Door006)"
+                        "area_name": "Plasma Beam Room",
+                        "node_name": "Door from Grapple Shuffler"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Teleporter Room (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (No High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Interior) - Grapple Shuffler Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door020)": {
+                "Door to Teleporter Room (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -725,15 +1141,77 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_023 (area6c)",
-                        "node_name": "Door (Door020)"
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Grapple Shuffler (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Plasma Beam Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Interior) - Grapple Shuffler Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door021)": {
+                "Door to Teleporter Room (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -752,15 +1230,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_023 (area6c)",
-                        "node_name": "Door (Door021)"
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Grapple Shuffler (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Area 5 Exterior (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (HiddenPowerup002)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -776,13 +1262,177 @@
                         "actor_name": "HiddenPowerup002",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 8,
+                    "pickup_index": 127,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Plasma Beam Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Interior) - Grapple Shuffler Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4284.01,
+                        "y": 2725.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Interior) - Grapple Shuffler Grapple Block",
+                    "connections": {
+                        "Above Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3520.752154917936,
+                        "y": 2683.9768567717556,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_008 (area6c)": {
+        "Autrack Tower": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -813,36 +1463,9 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door (LE_PlasmaShield_Door005)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -7500.0,
-                        "y": 1800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door005",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_006 (area6c)",
-                        "node_name": "Door (LE_PlasmaShield_Door005)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_EnergyRecharge_001)": {
+                "Energy Recharge Station": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": -8800.0,
                         "y": 4300.0,
@@ -856,9 +1479,14 @@
                         "actor_name": "LE_Platform_EnergyRecharge_001",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Above Crumble Blocks": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        }
+                    }
                 },
-                "Door (Door004)": {
+                "Door to Teleporter Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -877,15 +1505,63 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_023 (area6c)",
-                        "node_name": "Door (Door004)"
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Autrack Tower"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Above Crumble Blocks": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door005)": {
+                "Door from Plasma Beam Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -904,17 +1580,91 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_006 (area6c)",
-                        "node_name": "Door (Door005)"
+                        "area_name": "Plasma Beam Room",
+                        "node_name": "Door to Autrack Tower"
                     },
                     "default_dock_weakness": "Access Closed",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Teleporter Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport to Area 5 Exterior (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7484.51,
+                        "y": 8578.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Transport to Area 5 Exterior (West)",
+                        "node_name": "Tunnel to Autrack Tower"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Above Crumble Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Crumble Blocks": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7600.345377258235,
+                        "y": 5831.349628055261,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Energy Recharge Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Teleporter Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_009 (area6c)": {
+        "Gravity Suit Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -945,39 +1695,12 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door009)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5050.0,
-                        "y": 7400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door009",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_020 (area6c)",
-                        "node_name": "Door (LE_MissileShield_Door009)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (LE_PowerUp_GravitySuite)": {
+                "Pickup (Gravity Suit)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -7179.89990234375,
-                        "y": 7424.7001953125,
+                        "x": -7179.9,
+                        "y": 7424.7,
                         "z": 0.0
                     },
                     "description": "",
@@ -988,11 +1711,19 @@
                         "actor_name": "LE_PowerUp_GravitySuite",
                         "actor_type": "itemsphere_gravitysuit"
                     },
-                    "pickup_index": 5,
+                    "pickup_index": 124,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door from Underwater Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door007)": {
+                "Door to Underwater Path (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1011,15 +1742,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_020 (area6c)",
-                        "node_name": "Door (Door007)"
+                        "area_name": "Underwater Path",
+                        "node_name": "Door to Gravity Suit Room (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Underwater Path (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door008)": {
+                "Door to Underwater Path (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1038,15 +1777,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_020 (area6c)",
-                        "node_name": "Door (Door008)"
+                        "area_name": "Underwater Path",
+                        "node_name": "Door to Gravity Suit Room (Middle)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Underwater Path (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door009)": {
+                "Door from Underwater Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1065,17 +1812,58 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_020 (area6c)",
-                        "node_name": "Door (Door009)"
+                        "area_name": "Underwater Path",
+                        "node_name": "Door to Gravity Suit Room (Top)"
                     },
                     "default_dock_weakness": "Access Closed",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Underwater Path (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Gravity Suit Room Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gravity Suit Room Pickup": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6120.238827674926,
+                        "y": 7289.7946691027955,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 (Interior) - Gravity Suit Room Pickup",
+                    "connections": {
+                        "Pickup (Gravity Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_010 (area6c)": {
+        "Upper Path Storage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1106,7 +1894,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Pickup (LE_Item_001)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1122,38 +1910,19 @@
                         "actor_name": "LE_Item_001",
                         "actor_type": "item_powerbombtank"
                     },
-                    "pickup_index": 0,
+                    "pickup_index": 119,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Upper Path Left": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_PowerBombShield_Door012)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": 11700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PowerBombShield_Door012",
-                        "actor_type": "doorshieldpowerbomb"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_011 (area6c)",
-                        "node_name": "Door (LE_PowerBombShield_Door012)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door012)": {
+                "Door to Upper Path Left": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1172,17 +1941,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_011 (area6c)",
-                        "node_name": "Door (Door012)"
+                        "area_name": "Upper Path Left",
+                        "node_name": "Door to Upper Path Storage"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Power Bomb Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_011 (area6c)": {
+        "Upper Path Left": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1213,7 +1990,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Pickup (LE_Item_002)": {
+                "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1229,65 +2006,19 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_supermissiletank"
                     },
-                    "pickup_index": 1,
+                    "pickup_index": 120,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Upper Path Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_PowerBombShield_Door012)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": 11700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PowerBombShield_Door012",
-                        "actor_type": "doorshieldpowerbomb"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_010 (area6c)",
-                        "node_name": "Door (LE_PowerBombShield_Door012)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (LE_SuperMissileShield_Door011)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6650.0,
-                        "y": 11700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_SuperMissileShield_Door011",
-                        "actor_type": "doorshieldsupermissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_012 (area6c)",
-                        "node_name": "Door (LE_SuperMissileShield_Door011)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door011)": {
+                "Door to Upper Path Right": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1306,15 +2037,44 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_012 (area6c)",
-                        "node_name": "Door (Door011)"
+                        "area_name": "Upper Path Right",
+                        "node_name": "Door to Upper Path Left"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Super Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Upper Path Storage": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
+                            }
+                        },
+                        "Below Crumble Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door012)": {
+                "Door to Upper Path Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1333,15 +2093,51 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_010 (area6c)",
-                        "node_name": "Door (Door012)"
+                        "area_name": "Upper Path Storage",
+                        "node_name": "Door to Upper Path Left"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Power Bomb Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Upper Path Right": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
+                            }
+                        },
+                        "Below Crumble Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (HiddenPowerup003)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1357,13 +2153,82 @@
                         "actor_name": "HiddenPowerup003",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 9,
+                    "pickup_index": 128,
                     "major_location": false,
+                    "connections": {
+                        "Dock to Transport to Area 5 Exterior (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Transport to Area 5 Exterior (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6960.6,
+                        "y": 9631.7,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Transport to Area 5 Exterior (West)",
+                        "node_name": "Dock to Upper Path Left"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Below Crumble Blocks": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7396.929979926792,
+                        "y": 11285.287519187625,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spider",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_012 (area6c)": {
+        "Upper Path Right": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1394,34 +2259,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door (LE_SuperMissileShield_Door011)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6650.0,
-                        "y": 11700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_SuperMissileShield_Door011",
-                        "actor_type": "doorshieldsupermissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_011 (area6c)",
-                        "node_name": "Door (LE_SuperMissileShield_Door011)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door010)": {
+                "Door to Side Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1440,15 +2278,44 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_021 (area6c)",
-                        "node_name": "Door (Door010)"
+                        "area_name": "Side Path",
+                        "node_name": "Door to Upper Path Right"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Upper Path Left": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Transport to Area 5 Exterior (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door011)": {
+                "Door to Upper Path Left": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1467,18 +2334,71 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_011 (area6c)",
-                        "node_name": "Door (Door011)"
+                        "area_name": "Upper Path Left",
+                        "node_name": "Door to Upper Path Right"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Super Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Side Path": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Transport to Area 5 Exterior (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Transport to Area 5 Exterior (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5472.0,
+                        "y": 9616.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Transport to Area 5 Exterior (West)",
+                        "node_name": "Dock to Upper Path Right"
+                    },
+                    "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
         },
-        "collision_camera_015 (area6c)": {
-            "default_node": null,
+        "Transport to Area 5 Entrance (West)": {
+            "default_node": "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1508,38 +2428,11 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Door (LE_PlasmaShield_Door016)": {
-                    "node_type": "dock",
+                "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -11550.0,
-                        "y": 300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door016",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_003 (area6c)",
-                        "node_name": "Door (LE_PlasmaShield_Door016)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_Elevator_FromArea06A_02)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12176.2001953125,
+                        "x": -12176.2,
                         "y": 300.0,
                         "z": 0.0
                     },
@@ -1551,9 +2444,23 @@
                         "actor_name": "LE_Platform_Elevator_FromArea06A_02",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 5 - Entrance",
+                        "area_name": "Transport to Area 5 Interior (West)"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Transport Connector": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door016)": {
+                "Door to Transport Connector": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1572,17 +2479,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_003 (area6c)",
-                        "node_name": "Door (Door016)"
+                        "area_name": "Transport Connector",
+                        "node_name": "Door to Transport to Area 5 Entrance (West)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_016 (area6c)": {
+        "Water Drop": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1613,39 +2528,12 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Door (LE_PlasmaShield_Door014)": {
+                "Door to Zeta+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3250.0,
-                        "y": 2600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door014",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_017 (area6c)",
-                        "node_name": "Door (LE_PlasmaShield_Door014)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door014)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3250.0,
-                        "y": 2600.10009765625,
+                        "y": 2600.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -1659,15 +2547,20 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_017 (area6c)",
-                        "node_name": "Door (Door014)"
+                        "area_name": "Zeta+ Arena Access",
+                        "node_name": "Door to Water Drop"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Area 5 Exterior (East)": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        }
+                    }
                 },
-                "Door (Door015)": {
+                "Door to Transport to Area 5 Exterior (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1686,17 +2579,56 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_005 (area6c)",
-                        "node_name": "Door (Door015)"
+                        "area_name": "Transport to Area 5 Exterior (East)",
+                        "node_name": "Door to Water Drop"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Zeta+ Arena Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (No High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_017 (area6c)": {
+        "Zeta+ Arena Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1727,7 +2659,7 @@
                 "asset_id": "collision_camera_017"
             },
             "nodes": {
-                "Pickup (LE_Item_005)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1743,43 +2675,55 @@
                         "actor_name": "LE_Item_005",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 4,
+                    "pickup_index": 123,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Above Center Platform": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (LE_PlasmaShield_Door014)": {
+                "Door to Water Drop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3250.0,
-                        "y": 2600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door014",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_016 (area6c)",
-                        "node_name": "Door (LE_PlasmaShield_Door014)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door014)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3250.0,
-                        "y": 2600.10009765625,
+                        "y": 2600.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -1793,15 +2737,54 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_016 (area6c)",
-                        "node_name": "Door (Door014)"
+                        "area_name": "Water Drop",
+                        "node_name": "Door to Zeta+ Arena Access"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Left Platform": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door022)": {
+                "Door to Zeta+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1820,18 +2803,419 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_025 (area6c)",
-                        "node_name": "Door (Door022)"
+                        "area_name": "Zeta+ Arena",
+                        "node_name": "Door to Zeta+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Center Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Center Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Center Platform": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9832.432432432433,
+                        "y": 2805.4054054054054,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Zeta+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Left Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Center Platform": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Left Platform": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6372.972972972973,
+                        "y": 2794.5945945945946,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Water Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Center Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Armor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Center Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Above Center Platform": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9291.891891891892,
+                        "y": 3583.7837837837837,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Bomb Blocks"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms (No High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Zeta+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
+                            }
+                        },
+                        "Center Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Left Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_018 (area6c)": {
-            "default_node": null,
+        "Transport to Area 5 Exterior (West)": {
+            "default_node": "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1869,35 +3253,8 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Door (LE_SpazerShield_Door018)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5050.0,
-                        "y": 8500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_SpazerShield_Door018",
-                        "actor_type": "doorspazerbeam"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_020 (area6c)",
-                        "node_name": "Door (LE_SpazerShield_Door018)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_Elevator_FromArea06B_02)": {
-                    "node_type": "generic",
+                "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": -8400.0,
@@ -1912,9 +3269,23 @@
                         "actor_name": "LE_Platform_Elevator_FromArea06B_02",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 5 - Exterior",
+                        "area_name": "Transport to Area 5 Interior"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Underwater Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door018)": {
+                "Door to Underwater Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1933,17 +3304,160 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_020 (area6c)",
-                        "node_name": "Door (Door018)"
+                        "area_name": "Underwater Path",
+                        "node_name": "Door to Transport to Area 5 Exterior (West)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Autrack Tower": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        },
+                        "Tunnel to Side Path": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        }
+                    }
+                },
+                "Tunnel to Autrack Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7484.51,
+                        "y": 8578.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Autrack Tower",
+                        "node_name": "Tunnel to Transport to Area 5 Exterior (West)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Underwater Path": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Tunnel to Side Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5088.51,
+                        "y": 9558.12,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Side Path",
+                        "node_name": "Tunnel to Transport to Area 5 Exterior (West)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Underwater Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to Upper Path Left": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6960.6,
+                        "y": 9631.7,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Upper Path Left",
+                        "node_name": "Dock to Transport to Area 5 Exterior (West)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Underwater Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Upper Path Right": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5472.0,
+                        "y": 9616.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Upper Path Right",
+                        "node_name": "Dock to Transport to Area 5 Exterior (West)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Underwater Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_020 (area6c)": {
+        "Underwater Path": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1974,61 +3488,7 @@
                 "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door009)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5050.0,
-                        "y": 7400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door009",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_009 (area6c)",
-                        "node_name": "Door (LE_MissileShield_Door009)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (LE_SpazerShield_Door018)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5050.0,
-                        "y": 8500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_SpazerShield_Door018",
-                        "actor_type": "doorspazerbeam"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_018 (area6c)",
-                        "node_name": "Door (LE_SpazerShield_Door018)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door007)": {
+                "Door to Gravity Suit Room (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2047,15 +3507,139 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_009 (area6c)",
-                        "node_name": "Door (Door007)"
+                        "area_name": "Gravity Suit Room",
+                        "node_name": "Door to Underwater Path (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Area 5 Exterior (West)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Destroy Bomb Blocks"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Phase",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spider",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door008)": {
+                "Door to Gravity Suit Room (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2074,15 +3658,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_009 (area6c)",
-                        "node_name": "Door (Door008)"
+                        "area_name": "Gravity Suit Room",
+                        "node_name": "Door to Underwater Path (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Gravity Suit Room (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door009)": {
+                "Door to Gravity Suit Room (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2101,15 +3693,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_009 (area6c)",
-                        "node_name": "Door (Door009)"
+                        "area_name": "Gravity Suit Room",
+                        "node_name": "Door from Underwater Path"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Gravity Suit Room (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door018)": {
+                "Door to Transport to Area 5 Exterior (West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2128,15 +3728,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_018 (area6c)",
-                        "node_name": "Door (Door018)"
+                        "area_name": "Transport to Area 5 Exterior (West)",
+                        "node_name": "Door to Underwater Path"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Gravity Suit Room (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (HP_ChozoHologram_001)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2152,13 +3760,18 @@
                         "actor_name": "HP_ChozoHologram_001",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 7,
+                    "pickup_index": 126,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Gravity Suit Room (Bottom)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_021 (area6c)": {
+        "Side Path": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2189,7 +3802,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Door (Door010)": {
+                "Door to Upper Path Right": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2208,17 +3821,56 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_012 (area6c)",
-                        "node_name": "Door (Door010)"
+                        "area_name": "Upper Path Right",
+                        "node_name": "Door to Side Path"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Transport to Area 5 Exterior (West)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport to Area 5 Exterior (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5088.51,
+                        "y": 9558.12,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Transport to Area 5 Exterior (West)",
+                        "node_name": "Tunnel to Side Path"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Upper Path Right": {
+                            "type": "template",
+                            "data": "Climb Rooms (No High Jump)"
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_022 (area6c)": {
+        "Gamma Arena": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2249,7 +3901,7 @@
                 "asset_id": "collision_camera_022"
             },
             "nodes": {
-                "Door (Door019)": {
+                "Door to Gamma Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2268,17 +3920,94 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_026 (area6c)",
-                        "node_name": "Door (Door019)"
+                        "area_name": "Gamma Arena Access",
+                        "node_name": "Door to Gamma Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Gamma Metroid+": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Gamma Metroid+": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -25486.78,
+                        "y": 4742.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Gamma 12",
+                    "connections": {
+                        "Door to Gamma Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_023 (area6c)": {
+        "Teleporter Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2309,7 +4038,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Pickup (LE_Item_003)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2325,12 +4054,20 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
-                    "pickup_index": 2,
+                    "pickup_index": 121,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Grapple Shuffler (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_Teleporter_06C_001)": {
-                    "node_type": "generic",
+                "Teleporter": {
+                    "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
                         "x": -7000.0,
@@ -2345,9 +4082,26 @@
                         "actor_name": "LE_Platform_Teleporter_06C_001",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Area 5 Interior Teleporter",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door004)": {
+                "Door to Autrack Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2366,15 +4120,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_008 (area6c)",
-                        "node_name": "Door (Door004)"
+                        "area_name": "Autrack Tower",
+                        "node_name": "Door to Teleporter Room"
                     },
-                    "default_dock_weakness": "Access Closed",
+                    "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Grapple Shuffler (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door020)": {
+                "Door to Grapple Shuffler (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2393,15 +4155,53 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_007 (area6c)",
-                        "node_name": "Door (Door020)"
+                        "area_name": "Grapple Shuffler",
+                        "node_name": "Door to Teleporter Room (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Autrack Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Next to Teleporter": {
+                            "type": "template",
+                            "data": "Climb Rooms (High Jump)"
+                        }
+                    }
                 },
-                "Door (Door021)": {
+                "Door to Grapple Shuffler (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2420,17 +4220,95 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_007 (area6c)",
-                        "node_name": "Door (Door021)"
+                        "area_name": "Grapple Shuffler",
+                        "node_name": "Door to Teleporter Room (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6756.710458526532,
+                        "y": 4499.2400824317365,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 5 Interior Teleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Grapple Shuffler (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Grapple Shuffler (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6754.52,
+                        "y": 4742.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 5 Interior Teleporter",
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_025 (area6c)": {
+        "Zeta+ Arena": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2461,7 +4339,7 @@
                 "asset_id": "collision_camera_025"
             },
             "nodes": {
-                "Door (Door022)": {
+                "Door to Zeta+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2480,17 +4358,69 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_017 (area6c)",
-                        "node_name": "Door (Door022)"
+                        "area_name": "Zeta+ Arena Access",
+                        "node_name": "Door to Zeta+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Zeta Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Zeta Metroid"
+                        }
+                    }
+                },
+                "Event - Zeta Metroid+": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15301.53,
+                        "y": 1666.04,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Zeta 2",
+                    "connections": {
+                        "Door to Zeta+ Arena Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_026 (area6c)": {
+        "Gamma Arena Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2521,7 +4451,7 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Door (Door019)": {
+                "Door to Gamma Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2540,13 +4470,99 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "collision_camera_022 (area6c)",
-                        "node_name": "Door (Door019)"
+                        "area_name": "Gamma Arena",
+                        "node_name": "Door to Gamma Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Transport Connector": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport Connector": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18317.96,
+                        "y": 4710.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 5 - Interior",
+                        "area_name": "Transport Connector",
+                        "node_name": "Tunnel to Gamma Arena Access"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -1,11 +1,16 @@
 {
     "name": "Surface - East",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s000_surface/s000_surface.bmsld"
+        "asset_id": "maps/levels/c10_samus/s000_surface/s000_surface.bmsld",
+        "map_min_x": 39,
+        "map_max_x": 5,
+        "map_min_y": 67,
+        "map_max_y": 99,
+        "scenario_id": "s000_surface"
     },
     "areas": {
-        "collision_camera_000 (surface)": {
-            "default_node": null,
+        "Landing Site": {
+            "default_node": "Ship",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -59,34 +64,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door (LE_SpazerShield_Door_012)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -18950.0,
-                        "y": 5400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_SpazerShield_Door_012",
-                        "actor_type": "doorspazerbeam"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_018 (surface)",
-                        "node_name": "Door (LE_SpazerShield_Door_012)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_SaveStation_004)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -102,9 +80,21 @@
                         "actor_name": "LE_Platform_SaveStation_004",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Landing Site Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Top of Mountain": {
+                            "type": "template",
+                            "data": "Climb Rooms"
+                        }
+                    }
                 },
-                "Door (Door012)": {
+                "Door to Landing Site Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -123,17 +113,187 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_018 (surface)",
-                        "node_name": "Door (Door012)"
+                        "area_name": "Landing Site Storage",
+                        "node_name": "Door to Landing Site"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Entrance Pathway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3360.43,
+                        "y": 2134.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Entrance Pathway",
+                        "node_name": "Dock to Landing Site"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Ship": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -9196.96,
+                        "y": 2294.44,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Dock to Entrance Pathway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Top of Mountain": {
+                            "type": "template",
+                            "data": "Climb Rooms"
+                        }
+                    }
+                },
+                "Top of Mountain": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16450.591016548464,
+                        "y": 9939.046493301812,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Crumble Drop Shaft (Upper)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to Crumble Drop Shaft (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23021.51,
+                        "y": 10220.71,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Crumble Drop Shaft",
+                        "node_name": "Dock to Landing Site (Upper)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Top of Mountain": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Crumble Drop Shaft (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23076.43,
+                        "y": 7218.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Crumble Drop Shaft",
+                        "node_name": "Dock to Landing Site (Lower)"
+                    },
+                    "default_dock_weakness": "Not Determined",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_002 (surface)": {
+        "Melee Tutorial Pathway": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -196,7 +356,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Pickup (LE_Item_006)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -214,36 +374,17 @@
                     },
                     "pickup_index": 5,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Morph Ball Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_MissileShield_Door_002)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9350.0,
-                        "y": -4100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door_002",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_003 (surface)",
-                        "node_name": "Door (LE_MissileShield_Door_002)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_AmmoRecharge_002)": {
+                "Ammo Recharge Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -259,9 +400,26 @@
                         "actor_name": "LE_Platform_AmmoRecharge_002",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Entrance Pathway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Boots",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Morph Ball Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door001)": {
+                "Door to Entrance Pathway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -280,15 +438,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_016 (surface)",
-                        "node_name": "Door (Door001)"
+                        "area_name": "Entrance Pathway",
+                        "node_name": "Door to Melee Tutorial Pathway"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door002)": {
+                "Door to Morph Ball Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -307,17 +473,34 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_003 (surface)",
-                        "node_name": "Door (Door002)"
+                        "area_name": "Morph Ball Room",
+                        "node_name": "Door to Melee Tutorial Pathway"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_003 (surface)": {
+        "Morph Ball Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -364,39 +547,12 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door_002)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9350.0,
-                        "y": -4100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door_002",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_002 (surface)",
-                        "node_name": "Door (LE_MissileShield_Door_002)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (LE_PowerUP_Morphball)": {
+                "Pickup (Morph Ball)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 10883.2001953125,
-                        "y": -3577.699951171875,
+                        "x": 10883.2,
+                        "y": -3577.7,
                         "z": 0.0
                     },
                     "description": "",
@@ -409,9 +565,17 @@
                     },
                     "pickup_index": 12,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Melee Tutorial Pathway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_SaveStation_001)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -427,9 +591,26 @@
                         "actor_name": "LE_Platform_SaveStation_001",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Melee Tutorial Pathway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door002)": {
+                "Door to Melee Tutorial Pathway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -448,15 +629,30 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_002 (surface)",
-                        "node_name": "Door (Door002)"
+                        "area_name": "Melee Tutorial Pathway",
+                        "node_name": "Door to Morph Ball Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Morph Ball)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door003)": {
+                "Door to Chozo Seal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -475,17 +671,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_004 (surface)",
-                        "node_name": "Door (Door003)"
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Morph Ball Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_004 (surface)": {
+        "Chozo Seal": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -532,7 +736,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Pickup (LE_Item_005)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -550,9 +754,14 @@
                     },
                     "pickup_index": 4,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Transport to Area 1": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
                 },
-                "Usable (LE_Platform_ChozoUnlockAreaDNA)": {
+                "Chozo Seal": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -568,9 +777,33 @@
                         "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Morph Ball Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Scan Pulse Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Transport to Area 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door003)": {
+                "Door to Morph Ball Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -589,15 +822,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_003 (surface)",
-                        "node_name": "Door (Door003)"
+                        "area_name": "Morph Ball Room",
+                        "node_name": "Door to Chozo Seal"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door004)": {
+                "Door to Scan Pulse Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -616,15 +857,30 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_011 (surface)",
-                        "node_name": "Door (Door004)"
+                        "area_name": "Scan Pulse Room",
+                        "node_name": "Door to Chozo Seal"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Scan Pulse Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door011)": {
+                "Door to Transport to Area 1": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -643,18 +899,96 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_006 (surface)",
-                        "node_name": "Door (Door011)"
+                        "area_name": "Transport to Area 1",
+                        "node_name": "Door to Chozo Seal"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Scan Pulse Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4566.11,
+                        "y": -4304.37,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Scan Pulse Room",
+                        "node_name": "Tunnel to Chozo Seal"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Scan Pulse Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport to Area 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6453.12,
+                        "y": -7907.14,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Transport to Area 1",
+                        "node_name": "Tunnel to Chozo Seal"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_006 (surface)": {
-            "default_node": null,
+        "Transport to Area 1": {
+            "default_node": "Teleporter",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -684,7 +1018,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Pickup (LE_Item_004)": {
+                "Pickup (Missile Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -702,10 +1036,18 @@
                     },
                     "pickup_index": 3,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_Elevator_FromArea01)": {
-                    "node_type": "generic",
+                "Elevator to Area 1 - Transport Area": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": 7400.0,
@@ -720,10 +1062,24 @@
                         "actor_name": "LE_Platform_Elevator_FromArea01",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 1",
+                        "area_name": "Transport Area"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_Teleporter_00_01)": {
-                    "node_type": "generic",
+                "Teleporter": {
+                    "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
                         "x": 8000.0,
@@ -738,9 +1094,26 @@
                         "actor_name": "LE_Platform_Teleporter_00_01",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Surface East Teleporter",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door011)": {
+                "Door to Chozo Seal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -759,17 +1132,240 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_004 (surface)",
-                        "node_name": "Door (Door011)"
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Transport to Area 1"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Chozo Seal": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6454.71,
+                        "y": -8162.86,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Chozo Seal",
+                        "node_name": "Tunnel to Transport to Area 1"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Dock to Transport Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6454.711300035423,
+                        "y": -8872.033297910024,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Transport Storage",
+                        "node_name": "Dock to Transport to Area 1"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8003.275710885632,
+                        "y": -8451.052236001504,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Surface East Teleporter",
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7685.475385193537,
+                        "y": -8074.001002129526,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (High Jump)"
+                                    }
+                                ]
+                            }
+                        },
+                        "Elevator to Area 1 - Transport Area": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Surface East Teleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Transport Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Baby",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_007 (surface)": {
+        "Charge Beam Storage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -800,7 +1396,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Pickup (LE_Item_007)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -818,11 +1414,55 @@
                     },
                     "pickup_index": 6,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Charge Beam Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Charge Beam Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1410.39,
+                        "y": -8502.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Charge Beam Shaft",
+                        "node_name": "Tunnel to Charge Beam Storage"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_008 (surface)": {
+        "Charge Beam Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -853,38 +1493,11 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door_006)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1450.0,
-                        "y": -9500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door_006",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_015 (surface)",
-                        "node_name": "Door (LE_MissileShield_Door_006)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (LE_PowerUP_ChargeBeam)": {
+                "Pickup (Charge Beam)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 2690.300048828125,
+                        "x": 2690.3,
                         "y": -9985.0,
                         "z": 0.0
                     },
@@ -898,9 +1511,34 @@
                     },
                     "pickup_index": 11,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Charge Beam Shaft (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Charge Beam Shaft (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door006)": {
+                "Door to Charge Beam Shaft (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -919,15 +1557,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_015 (surface)",
-                        "node_name": "Door (Door006)"
+                        "area_name": "Charge Beam Shaft",
+                        "node_name": "Door to Charge Beam Room (Upper)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Charge Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door007)": {
+                "Door to Charge Beam Shaft (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -946,17 +1592,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_015 (surface)",
-                        "node_name": "Door (Door007)"
+                        "area_name": "Charge Beam Shaft",
+                        "node_name": "Door to Charge Beam Room (Lower)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Charge Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_010 (surface)": {
+        "Alpha Arena": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1007,7 +1661,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Pickup (LE_Item_001)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1025,36 +1679,19 @@
                     },
                     "pickup_index": 0,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Side Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (LE_PlasmaShield_Door_008)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": -6500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door_008",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_012 (surface)",
-                        "node_name": "Door (LE_PlasmaShield_Door_008)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_SaveStation_002)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1070,9 +1707,104 @@
                         "actor_name": "LE_Platform_SaveStation_002",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Alpha Storage": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Side Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Alpha Arena Access ": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door008)": {
+                "Door to Alpha Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1091,15 +1823,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_012 (surface)",
-                        "node_name": "Door (Door008)"
+                        "area_name": "Alpha Storage",
+                        "node_name": "Door to Alpha Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door013)": {
+                "Door to Ammo Recharge Station South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1118,17 +1858,211 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_024 (surface)",
-                        "node_name": "Door (Door013)"
+                        "area_name": "Ammo Recharge Station South",
+                        "node_name": "Door to Alpha Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Side Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5880.924548352816,
+                        "y": -8960.308182784273,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Side Path",
+                        "node_name": "Dock to Alpha Arena"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Side Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5886.238044633368,
+                        "y": -9826.408076514346,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Side Path",
+                        "node_name": "Tunnel to Alpha Arena"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Alpha Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2861.59,
+                        "y": -9821.48,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Alpha 1",
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2383.095803642122,
+                        "y": -10054.26233834785,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Ammo Recharge Station South": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
+                        }
+                    }
+                },
+                "Tunnel to Alpha Arena Access ": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1029.7024442082893,
+                        "y": -8312.061636556855,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Alpha Arena Access ",
+                        "node_name": "Tunnel to Alpha Arena"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_011 (surface)": {
+        "Scan Pulse Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1179,11 +2113,11 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Pickup (LE_SpecialAbility_ScanningPulse)": {
+                "Pickup (Scan Pulse)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 241.10000610351562,
+                        "x": 241.1,
                         "y": -5000.0,
                         "z": 0.0
                     },
@@ -1197,9 +2131,28 @@
                     },
                     "pickup_index": 13,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to One-Way Drop": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door004)": {
+                "Door to Chozo Seal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1218,15 +2171,34 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_004 (surface)",
-                        "node_name": "Door (Door004)"
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Scan Pulse Room"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Scan Pulse)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Charge Beam Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door005)": {
+                "Door to Charge Beam Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1245,17 +2217,95 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_015 (surface)",
-                        "node_name": "Door (Door005)"
+                        "area_name": "Charge Beam Shaft",
+                        "node_name": "Door to Scan Pulse Room"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to One-Way Drop": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1665.37,
+                        "y": -4747.92,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "One-Way Drop",
+                        "node_name": "Dock to Scan Pulse Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Scan Pulse)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Chozo Seal": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4566.11,
+                        "y": -4304.37,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Chozo Seal",
+                        "node_name": "Tunnel to Scan Pulse Room"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_012 (surface)": {
+        "Alpha Storage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1286,7 +2336,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Pickup (LE_Item_008)": {
+                "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1304,36 +2354,17 @@
                     },
                     "pickup_index": 7,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_PlasmaShield_Door_008)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": -6500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door_008",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_010 (surface)",
-                        "node_name": "Door (LE_PlasmaShield_Door_008)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door008)": {
+                "Door to Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1352,17 +2383,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_010 (surface)",
-                        "node_name": "Door (Door008)"
+                        "area_name": "Alpha Arena",
+                        "node_name": "Door to Alpha Storage"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_013 (surface)": {
+        "Side Path": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1392,9 +2431,78 @@
                 ],
                 "asset_id": "collision_camera_013"
             },
-            "nodes": {}
+            "nodes": {
+                "Dock to Alpha Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5812.203329791002,
+                        "y": -9022.051009564293,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Alpha Arena",
+                        "node_name": "Dock to Side Path"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Alpha Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Alpha Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5809.133309717794,
+                        "y": -9835.606328964459,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Alpha Arena",
+                        "node_name": "Tunnel to Side Path"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Alpha Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
         },
-        "collision_camera_014 (surface)": {
+        "One-Way Drop": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1433,7 +2541,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door (Door009)": {
+                "Door to Alpha Arena Access ": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1452,17 +2560,136 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_023 (surface)",
-                        "node_name": "Door (Door009)"
+                        "area_name": "Alpha Arena Access ",
+                        "node_name": "Door to One-Way Drop"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Upper Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Scan Pulse Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1642.73,
+                        "y": -4783.11,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Scan Pulse Room",
+                        "node_name": "Dock to One-Way Drop"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Alpha Arena Access ": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Upper Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2316.8378793245956,
+                        "y": -4460.998937300744,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Upper Storage",
+                        "node_name": "Tunnel to One-Way Drop"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Alpha Arena Access ": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_015 (surface)": {
+        "Charge Beam Shaft": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1493,7 +2720,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Pickup (LE_Item_010)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1510,37 +2737,18 @@
                         "actor_type": "item_energytank"
                     },
                     "pickup_index": 8,
-                    "major_location": false,
-                    "connections": {}
+                    "major_location": true,
+                    "connections": {
+                        "Door to Charge Beam Room (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_MissileShield_Door_006)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1450.0,
-                        "y": -9500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door_006",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_008 (surface)",
-                        "node_name": "Door (LE_MissileShield_Door_006)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door005)": {
+                "Door to Scan Pulse Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1559,15 +2767,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_011 (surface)",
-                        "node_name": "Door (Door005)"
+                        "area_name": "Scan Pulse Room",
+                        "node_name": "Door to Charge Beam Shaft"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ammo Recharge Station South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door006)": {
+                "Door to Charge Beam Room (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1586,15 +2802,32 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_008 (surface)",
-                        "node_name": "Door (Door006)"
+                        "area_name": "Charge Beam Room",
+                        "node_name": "Door to Charge Beam Shaft (Upper)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ammo Recharge Station South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Charge Beam Storage": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door007)": {
+                "Door to Charge Beam Room (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1613,15 +2846,32 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_008 (surface)",
-                        "node_name": "Door (Door007)"
+                        "area_name": "Charge Beam Room",
+                        "node_name": "Door to Charge Beam Shaft (Lower)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Ammo Recharge Station South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door010)": {
+                "Door to Ammo Recharge Station South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1640,17 +2890,82 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_024 (surface)",
-                        "node_name": "Door (Door010)"
+                        "area_name": "Ammo Recharge Station South",
+                        "node_name": "Door to Charge Beam Shaft"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Scan Pulse Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Charge Beam Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Charge Beam Room (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Charge Beam Storage": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Charge Beam Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1451.98,
+                        "y": -8577.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Charge Beam Storage",
+                        "node_name": "Tunnel to Charge Beam Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Ammo Recharge Station South": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_016 (surface)": {
+        "Entrance Pathway": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1701,7 +3016,7 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Door (Door001)": {
+                "Door to Melee Tutorial Pathway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1720,57 +3035,59 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_002 (surface)",
-                        "node_name": "Door (Door001)"
+                        "area_name": "Melee Tutorial Pathway",
+                        "node_name": "Door to Entrance Pathway"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Access Open",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Landing Site": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3360.43,
+                        "y": 2134.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Landing Site",
+                        "node_name": "Dock to Entrance Pathway"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Melee Tutorial Pathway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 3,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_017 (surface)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -41200.0,
-                    "x2": -22900.0,
-                    "y1": 0.0,
-                    "y2": 4900.0
-                },
-                "polygon": [
-                    [
-                        -41200.0,
-                        3600.0
-                    ],
-                    [
-                        -41200.0,
-                        0.0
-                    ],
-                    [
-                        -22900.0,
-                        0.0
-                    ],
-                    [
-                        -22900.0,
-                        4900.0
-                    ],
-                    [
-                        -25400.0,
-                        4900.0
-                    ],
-                    [
-                        -25400.0,
-                        3600.0
-                    ]
-                ],
-                "asset_id": "collision_camera_017"
-            },
-            "nodes": {}
-        },
-        "collision_camera_018 (surface)": {
+        "Landing Site Storage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1801,7 +3118,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Pickup (LE_Item_002)": {
+                "Pickup (Aeion Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1819,36 +3136,17 @@
                     },
                     "pickup_index": 1,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_SpazerShield_Door_012)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -18950.0,
-                        "y": 5400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_SpazerShield_Door_012",
-                        "actor_type": "doorspazerbeam"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "collision_camera_000 (surface)",
-                        "node_name": "Door (LE_SpazerShield_Door_012)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door012)": {
+                "Door to Landing Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1867,17 +3165,62 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_000 (surface)",
-                        "node_name": "Door (Door012)"
+                        "area_name": "Landing Site",
+                        "node_name": "Door to Landing Site Storage"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Aeion Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_019 (surface)": {
+        "Crumble Drop Shaft": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1908,7 +3251,7 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
-                "Pickup (LE_Item_003)": {
+                "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1926,11 +3269,75 @@
                     },
                     "pickup_index": 2,
                     "major_location": false,
+                    "connections": {
+                        "Dock to Landing Site (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Landing Site (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23021.51,
+                        "y": 10220.71,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Landing Site",
+                        "node_name": "Dock to Crumble Drop Shaft (Upper)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Landing Site (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23076.43,
+                        "y": 7218.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Landing Site",
+                        "node_name": "Dock to Crumble Drop Shaft (Lower)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
         },
-        "collision_camera_020 (surface)": {
+        "Transport Storage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1961,7 +3368,7 @@
                 "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Pickup (LE_Item_012)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1979,11 +3386,65 @@
                     },
                     "pickup_index": 10,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Transport to Area 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Transport to Area 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6417.87,
+                        "y": -8872.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Transport to Area 1",
+                        "node_name": "Dock to Transport Storage"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_021 (surface)": {
+        "Upper Storage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2014,7 +3475,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Pickup (LE_Item_011)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2032,11 +3493,55 @@
                     },
                     "pickup_index": 9,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to One-Way Drop": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to One-Way Drop": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2391.4768806073153,
+                        "y": -4299.076782816274,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "One-Way Drop",
+                        "node_name": "Tunnel to Upper Storage"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_023 (surface)": {
+        "Alpha Arena Access ": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2067,9 +3572,9 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Usable (LE_Platform_EnergyRecharge)": {
+                "Energy Recharge Station": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": -700.0,
                         "y": -8200.0,
@@ -2083,9 +3588,71 @@
                         "actor_name": "LE_Platform_EnergyRecharge",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Alpha Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door009)": {
+                "Door to One-Way Drop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2104,15 +3671,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_014 (surface)",
-                        "node_name": "Door (Door009)"
+                        "area_name": "One-Way Drop",
+                        "node_name": "Door to Alpha Arena Access "
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Pickup (HiddenPowerup001)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2130,11 +3707,60 @@
                     },
                     "pickup_index": 14,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to One-Way Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Alpha Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1681.4972251741647,
+                        "y": -8297.691581060339,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Alpha Arena",
+                        "node_name": "Tunnel to Alpha Arena Access "
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Energy Recharge Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_024 (surface)": {
+        "Ammo Recharge Station South": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2165,7 +3791,7 @@
                 "asset_id": "collision_camera_024"
             },
             "nodes": {
-                "Usable (LE_Platform_AmmoRecharge)": {
+                "Ammo Recharge Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2181,9 +3807,24 @@
                         "actor_name": "LE_Platform_AmmoRecharge",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Charge Beam Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door010)": {
+                "Door to Charge Beam Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2202,15 +3843,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_015 (surface)",
-                        "node_name": "Door (Door010)"
+                        "area_name": "Charge Beam Shaft",
+                        "node_name": "Door to Ammo Recharge Station South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door013)": {
+                "Door to Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2229,13 +3878,21 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Surface - East",
-                        "area_name": "collision_camera_010 (surface)",
-                        "node_name": "Door (Door013)"
+                        "area_name": "Alpha Arena",
+                        "node_name": "Door to Ammo Recharge Station South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }

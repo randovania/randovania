@@ -1,11 +1,16 @@
 {
     "name": "Area 2 - Interior",
     "extra": {
-        "asset_id": "maps/levels/c10_samus/s025_area2b/s025_area2b.bmsld"
+        "asset_id": "maps/levels/c10_samus/s025_area2b/s025_area2b.bmsld",
+        "map_min_x": 0,
+        "map_max_x": 13,
+        "map_min_y": 9,
+        "map_max_y": 6,
+        "scenario_id": "s025_area2b"
     },
     "areas": {
-        "collision_camera009 (area2b)": {
-            "default_node": null,
+        "Main Hub": {
+            "default_node": "Elevator to Area 2 Exterior - Outer Hub",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -63,39 +68,12 @@
                 "asset_id": "collision_camera009"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door009)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": 900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door009",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (LE_MissileShield_Door009)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (LE_PowerUp_WaveBeam)": {
+                "Pickup (Wave Beam)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": -5579.5,
-                        "y": 1128.800048828125,
+                        "y": 1128.8,
                         "z": 0.0
                     },
                     "description": "",
@@ -106,66 +84,20 @@
                         "actor_name": "LE_PowerUp_WaveBeam",
                         "actor_type": "itemsphere_wavebeam"
                     },
-                    "pickup_index": 6,
+                    "pickup_index": 46,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Varia Suit Room (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_WaveShield_Door008)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": 400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_WaveShield_Door008",
-                        "actor_type": "doorwave"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (LE_WaveShield_Door008)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (LE_WaveShield_Door019)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": 1900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_WaveShield_Door019",
-                        "actor_type": "doorwave"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (LE_WaveShield_Door019)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_Elevator_FromArea02A)": {
-                    "node_type": "generic",
+                "Elevator to Area 2 Exterior - Outer Hub": {
+                    "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": -10200.0,
@@ -180,9 +112,23 @@
                         "actor_name": "LE_Platform_Elevator_FromArea02A",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Area 2 - Exterior",
+                        "area_name": "Outer Hub"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Usable (LE_Platform_SaveStation)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -198,9 +144,92 @@
                         "actor_name": "LE_Platform_SaveStation",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Area 2 Exterior - Outer Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fiery Balcony": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Varia Suit Room (Bottom)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Varia Suit Room (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door002)": {
+                "Door to Fiery Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -219,15 +248,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera012 (area2b)",
-                        "node_name": "Door (Door002)"
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Main Hub"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door003)": {
+                "Door to Fiery Balcony": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -246,15 +283,32 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera041 (area2b)",
-                        "node_name": "Door (Door003)"
+                        "area_name": "Fiery Balcony",
+                        "node_name": "Door to Main Hub"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Wallfire Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door005)": {
+                "Door to Wallfire Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -273,15 +327,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera035 (area2b)",
-                        "node_name": "Door (Door005)"
+                        "area_name": "Wallfire Path",
+                        "node_name": "Door to Main Hub"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Fiery Balcony": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door008)": {
+                "Door to Varia Suit Room (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -300,15 +364,25 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (Door008)"
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Main Hub (Bottom)"
                     },
-                    "default_dock_weakness": "Access Closed",
+                    "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door009)": {
+                "Door to Varia Suit Room (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -327,15 +401,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (Door009)"
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Main Hub (Middle)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Wave Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door019)": {
+                "Door to Varia Suit Room (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -354,1489 +436,27 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (Door019)"
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Main Hub (Top)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Wave Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera012 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -13000.0,
-                    "x2": -5700.0,
-                    "y1": -4600.0,
-                    "y2": -200.0
-                },
-                "polygon": [
-                    [
-                        -5700.0,
-                        -1500.0
-                    ],
-                    [
-                        -7100.0,
-                        -1500.0
-                    ],
-                    [
-                        -8700.0,
-                        -1000.0
-                    ],
-                    [
-                        -9700.0,
-                        -1000.0
-                    ],
-                    [
-                        -10600.0,
-                        -900.0
-                    ],
-                    [
-                        -10600.0,
-                        -200.0
-                    ],
-                    [
-                        -13000.0,
-                        -200.0
-                    ],
-                    [
-                        -13000.0,
-                        -3300.0
-                    ],
-                    [
-                        -10100.0,
-                        -3300.0
-                    ],
-                    [
-                        -8500.0,
-                        -4600.0
-                    ],
-                    [
-                        -5750.0,
-                        -4600.0
-                    ],
-                    [
-                        -5750.0,
-                        -3400.0
-                    ],
-                    [
-                        -5700.0,
-                        -3200.0
-                    ]
-                ],
-                "asset_id": "collision_camera012"
-            },
-            "nodes": {
-                "Door (LE_PowerBombShield_Door015)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5800.0,
-                        "y": -3900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PowerBombShield_Door015",
-                        "actor_type": "doorshieldpowerbomb"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera013 (area2b)",
-                        "node_name": "Door (LE_PowerBombShield_Door015)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door002)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10650.0,
-                        "y": -900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door002",
-                        "actor_type": "doorchargecharge"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (Door002)"
-                    },
-                    "default_dock_weakness": "Charge Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door010)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5800.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door010",
-                        "actor_type": "doorchargecharge"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera037 (area2b)",
-                        "node_name": "Door (Door010)"
-                    },
-                    "default_dock_weakness": "Charge Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door015)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5800.0,
-                        "y": -3900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door015",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera013 (area2b)",
-                        "node_name": "Door (Door015)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door020)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5750.0,
-                        "y": -2600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door020",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera041 (area2b)",
-                        "node_name": "Door (Door020)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (HP_Item_001)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10350.0,
-                        "y": -1900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "HP_Item_001",
-                        "actor_type": "item_missiletank"
-                    },
-                    "pickup_index": 7,
-                    "major_location": false,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera013 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -5850.0,
-                    "x2": -2700.0,
-                    "y1": -4002.070068359375,
-                    "y2": -2800.0
-                },
-                "polygon": [
-                    [
-                        -5850.0,
-                        -2800.0
-                    ],
-                    [
-                        -5850.0,
-                        -4002.070068359375
-                    ],
-                    [
-                        -2700.0,
-                        -4002.070068359375
-                    ],
-                    [
-                        -2700.0,
-                        -2800.0
-                    ]
-                ],
-                "asset_id": "collision_camera013"
-            },
-            "nodes": {
-                "Pickup (LE_Item_006)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3550.0,
-                        "y": -3000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_Item_006",
-                        "actor_type": "item_powerbombtank"
-                    },
-                    "pickup_index": 3,
-                    "major_location": false,
-                    "connections": {}
-                },
-                "Door (LE_PowerBombShield_Door015)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5800.0,
-                        "y": -3900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PowerBombShield_Door015",
-                        "actor_type": "doorshieldpowerbomb"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera012 (area2b)",
-                        "node_name": "Door (LE_PowerBombShield_Door015)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door015)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5800.0,
-                        "y": -3900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door015",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera012 (area2b)",
-                        "node_name": "Door (Door015)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera015 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -1700.0,
-                    "x2": 3100.0,
-                    "y1": -3100.0,
-                    "y2": -1700.0
-                },
-                "polygon": [
-                    [
-                        -300.0,
-                        -1700.0
-                    ],
-                    [
-                        -300.0,
-                        -2339.639892578125
-                    ],
-                    [
-                        -1700.0,
-                        -2339.639892578125
-                    ],
-                    [
-                        -1700.0,
-                        -3100.0
-                    ],
-                    [
-                        3100.0,
-                        -3100.0
-                    ],
-                    [
-                        3100.0,
-                        -1700.0
-                    ]
-                ],
-                "asset_id": "collision_camera015"
-            },
-            "nodes": {
-                "Door (Door012)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -250.0,
-                        "y": -2100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door012",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (Door012)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera016 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": 2200.0,
-                    "x2": 4700.0,
-                    "y1": -6800.0,
-                    "y2": -1600.0
-                },
-                "polygon": [
-                    [
-                        3000.0,
-                        -1600.0
-                    ],
-                    [
-                        3000.0,
-                        -5200.0
-                    ],
-                    [
-                        2200.0,
-                        -5200.0
-                    ],
-                    [
-                        2200.0,
-                        -6800.0
-                    ],
-                    [
-                        4700.0,
-                        -6800.0
-                    ],
-                    [
-                        4700.0,
-                        -1600.0
-                    ]
-                ],
-                "asset_id": "collision_camera016"
-            },
-            "nodes": {
-                "Door (LE_PlasmaShield_Door017)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door017",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera036 (area2b)",
-                        "node_name": "Door (LE_PlasmaShield_Door017)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (LE_WaveShield_Door016)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_WaveShield_Door016",
-                        "actor_type": "doorwave"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera017 (area2b)",
-                        "node_name": "Door (LE_WaveShield_Door016)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_Teleporter_02_04)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3350.0,
-                        "y": -3400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_Platform_Teleporter_02_04",
-                        "actor_type": "weightactivatedplatform"
-                    },
-                    "connections": {}
-                },
-                "Door (Door016)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door016",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera017 (area2b)",
-                        "node_name": "Door (Door016)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door017)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door017",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera036 (area2b)",
-                        "node_name": "Door (Door017)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera017 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -4000.0,
-                    "x2": 2300.0,
-                    "y1": -8100.0,
-                    "y2": -5400.0
-                },
-                "polygon": [
-                    [
-                        -4000.0,
-                        -5400.0
-                    ],
-                    [
-                        -4000.0,
-                        -8100.0
-                    ],
-                    [
-                        -1700.0,
-                        -8100.0
-                    ],
-                    [
-                        -1700.0,
-                        -7100.0
-                    ],
-                    [
-                        -400.0,
-                        -6200.0
-                    ],
-                    [
-                        2300.0,
-                        -6200.0
-                    ],
-                    [
-                        2300.0,
-                        -5400.0
-                    ]
-                ],
-                "asset_id": "collision_camera017"
-            },
-            "nodes": {
-                "Door (LE_WaveShield_Door016)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_WaveShield_Door016",
-                        "actor_type": "doorwave"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera016 (area2b)",
-                        "node_name": "Door (LE_WaveShield_Door016)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door014)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -1750.0,
-                        "y": -8000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door014",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera018 (area2b)",
-                        "node_name": "Door (Door014)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door016)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door016",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera016 (area2b)",
-                        "node_name": "Door (Door016)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera018 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -1800.0,
-                    "x2": 300.0,
-                    "y1": -8100.0,
-                    "y2": -7100.0
-                },
-                "polygon": [
-                    [
-                        -1800.0,
-                        -7100.0
-                    ],
-                    [
-                        -1800.0,
-                        -8100.0
-                    ],
-                    [
-                        300.0,
-                        -8100.0
-                    ],
-                    [
-                        300.0,
-                        -7100.0
-                    ]
-                ],
-                "asset_id": "collision_camera018"
-            },
-            "nodes": {
-                "Pickup (LE_Item_001)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 0.0,
-                        "y": -8000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_Item_001",
-                        "actor_type": "item_energytank"
-                    },
-                    "pickup_index": 0,
-                    "major_location": false,
-                    "connections": {}
-                },
-                "Pickup (LE_Item_002)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -1300.0,
-                        "y": -7600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_Item_002",
-                        "actor_type": "item_missiletank"
-                    },
-                    "pickup_index": 1,
-                    "major_location": false,
-                    "connections": {}
-                },
-                "Door (Door014)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -1750.0,
-                        "y": -8000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door014",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera017 (area2b)",
-                        "node_name": "Door (Door014)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera019 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": 200.0,
-                    "x2": 2300.0,
-                    "y1": -8400.0,
-                    "y2": -7100.0
-                },
-                "polygon": [
-                    [
-                        200.0,
-                        -7100.0
-                    ],
-                    [
-                        200.0,
-                        -8400.0
-                    ],
-                    [
-                        2300.0,
-                        -8400.0
-                    ],
-                    [
-                        2300.0,
-                        -7100.0
-                    ]
-                ],
-                "asset_id": "collision_camera019"
-            },
-            "nodes": {}
-        },
-        "collision_camera020 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": 2200.0,
-                    "x2": 4700.0,
-                    "y1": -8959.73046875,
-                    "y2": -8200.0
-                },
-                "polygon": [
-                    [
-                        2200.0,
-                        -8200.0
-                    ],
-                    [
-                        2200.0,
-                        -8959.73046875
-                    ],
-                    [
-                        4700.0,
-                        -8959.73046875
-                    ],
-                    [
-                        4700.0,
-                        -8200.0
-                    ]
-                ],
-                "asset_id": "collision_camera020"
-            },
-            "nodes": {}
-        },
-        "collision_camera021 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": 2400.0,
-                    "x2": 4700.0,
-                    "y1": -8300.0,
-                    "y2": -7100.0
-                },
-                "polygon": [
-                    [
-                        2400.0,
-                        -7100.0
-                    ],
-                    [
-                        2400.0,
-                        -8300.0
-                    ],
-                    [
-                        4700.0,
-                        -8300.0
-                    ],
-                    [
-                        4700.0,
-                        -7100.0
-                    ]
-                ],
-                "asset_id": "collision_camera021"
-            },
-            "nodes": {
-                "Door (LE_MissileShield_Door013)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4650.0,
-                        "y": -8100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door013",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera022 (area2b)",
-                        "node_name": "Door (LE_MissileShield_Door013)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (LE_PowerUp_HighJumpBoots)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2741.0,
-                        "y": -7873.89990234375,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PowerUp_HighJumpBoots",
-                        "actor_type": "itemsphere_highjumpboots"
-                    },
-                    "pickup_index": 4,
-                    "major_location": true,
-                    "connections": {}
-                },
-                "Door (Door013)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4650.0,
-                        "y": -8100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door013",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera022 (area2b)",
-                        "node_name": "Door (Door013)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera022 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": 4600.0,
-                    "x2": 6100.0,
-                    "y1": -8200.0,
-                    "y2": -3900.0
-                },
-                "polygon": [
-                    [
-                        4600.0,
-                        -3900.0
-                    ],
-                    [
-                        4600.0,
-                        -8200.0
-                    ],
-                    [
-                        6100.0,
-                        -8200.0
-                    ],
-                    [
-                        6100.0,
-                        -3900.0
-                    ]
-                ],
-                "asset_id": "collision_camera022"
-            },
-            "nodes": {
-                "Door (LE_MissileShield_Door013)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4650.0,
-                        "y": -8100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door013",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera021 (area2b)",
-                        "node_name": "Door (LE_MissileShield_Door013)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door013)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4650.0,
-                        "y": -8100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door013",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera021 (area2b)",
-                        "node_name": "Door (Door013)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera035 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -5800.0,
-                    "x2": -4100.0,
-                    "y1": -800.0,
-                    "y2": -41.720699310302734
-                },
-                "polygon": [
-                    [
-                        -5800.0,
-                        -41.720699310302734
-                    ],
-                    [
-                        -5800.0,
-                        -800.0
-                    ],
-                    [
-                        -4100.0,
-                        -800.0
-                    ],
-                    [
-                        -4100.0,
-                        -41.720699310302734
-                    ]
-                ],
-                "asset_id": "collision_camera035"
-            },
-            "nodes": {
-                "Door (LE_MissileShield_Door006)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4150.0,
-                        "y": -600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door006",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (LE_MissileShield_Door006)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door005)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5750.0,
-                        "y": -600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door005",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (Door005)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door006)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4150.0,
-                        "y": -600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door006",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (Door006)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera036 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -100.0,
-                    "x2": 2300.0,
-                    "y1": -7000.0,
-                    "y2": -6200.0
-                },
-                "polygon": [
-                    [
-                        -100.0,
-                        -6200.0
-                    ],
-                    [
-                        -100.0,
-                        -7000.0
-                    ],
-                    [
-                        2300.0,
-                        -7000.0
-                    ],
-                    [
-                        2300.0,
-                        -6200.0
-                    ]
-                ],
-                "asset_id": "collision_camera036"
-            },
-            "nodes": {
-                "Pickup (LE_Item_005)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 200.0,
-                        "y": -6900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_Item_005",
-                        "actor_type": "item_senergytank"
-                    },
-                    "pickup_index": 2,
-                    "major_location": false,
-                    "connections": {}
-                },
-                "Door (LE_PlasmaShield_Door017)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PlasmaShield_Door017",
-                        "actor_type": "doorcreature"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera016 (area2b)",
-                        "node_name": "Door (LE_PlasmaShield_Door017)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door017)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2250.0,
-                        "y": -6700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door017",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera016 (area2b)",
-                        "node_name": "Door (Door017)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera037 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -5850.0,
-                    "x2": -1750.0,
-                    "y1": -5100.0,
-                    "y2": -3900.0
-                },
-                "polygon": [
-                    [
-                        -1750.0,
-                        -3900.0
-                    ],
-                    [
-                        -5850.0,
-                        -3900.0
-                    ],
-                    [
-                        -5850.0,
-                        -5100.0
-                    ],
-                    [
-                        -1750.0,
-                        -5100.0
-                    ]
-                ],
-                "asset_id": "collision_camera037"
-            },
-            "nodes": {
-                "Door (Door010)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5800.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door010",
-                        "actor_type": "doorchargecharge"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera012 (area2b)",
-                        "node_name": "Door (Door010)"
-                    },
-                    "default_dock_weakness": "Charge Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door018)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -1800.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door018",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (Door018)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera041 (area2b)": {
-            "default_node": null,
-            "valid_starting_location": false,
-            "extra": {
-                "total_boundings": {
-                    "x1": -5800.0,
-                    "x2": -4100.0,
-                    "y1": -2800.0,
-                    "y2": -800.0
-                },
-                "polygon": [
-                    [
-                        -5800.0,
-                        -800.0
-                    ],
-                    [
-                        -5800.0,
-                        -2800.0
-                    ],
-                    [
-                        -4100.0,
-                        -2800.0
-                    ],
-                    [
-                        -4100.0,
-                        -800.0
-                    ]
-                ],
-                "asset_id": "collision_camera041"
-            },
-            "nodes": {
-                "Door (Door003)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5750.0,
-                        "y": -1400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door003",
-                        "actor_type": "doorchargecharge"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (Door003)"
-                    },
-                    "default_dock_weakness": "Charge Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door004)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4150.0,
-                        "y": -1300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door004",
-                        "actor_type": "doorchargecharge"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera011 (area2b)",
-                        "node_name": "Door (Door004)"
-                    },
-                    "default_dock_weakness": "Charge Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (Door020)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5750.0,
-                        "y": -2600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door020",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera012 (area2b)",
-                        "node_name": "Door (Door020)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "collision_camera011 (area2b)": {
+        "Varia Suit Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1907,66 +527,12 @@
                 "asset_id": "collision_camera011"
             },
             "nodes": {
-                "Door (LE_MissileShield_Door006)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4150.0,
-                        "y": -600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door006",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera035 (area2b)",
-                        "node_name": "Door (LE_MissileShield_Door006)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (LE_MissileShield_Door009)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": 900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_MissileShield_Door009",
-                        "actor_type": "doorshieldmissile"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (LE_MissileShield_Door009)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Pickup (LE_PowerUp_VariaSuite)": {
+                "Pickup (Varia Suit)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -2023.0999755859375,
-                        "y": -679.7999877929688,
+                        "x": -2023.1,
+                        "y": -679.8,
                         "z": 0.0
                     },
                     "description": "",
@@ -1977,65 +543,19 @@
                         "actor_name": "LE_PowerUp_VariaSuite",
                         "actor_type": "itemsphere_variasuit"
                     },
-                    "pickup_index": 5,
+                    "pickup_index": 45,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Wallfire Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (LE_WaveShield_Door008)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": 400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_WaveShield_Door008",
-                        "actor_type": "doorwave"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (LE_WaveShield_Door008)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door (LE_WaveShield_Door019)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3350.0,
-                        "y": 1900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_WaveShield_Door019",
-                        "actor_type": "doorwave"
-                    },
-                    "dock_type": "other",
-                    "default_connection": {
-                        "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (LE_WaveShield_Door019)"
-                    },
-                    "default_dock_weakness": "Not Determined",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Usable (LE_Platform_AmmoCharge)": {
+                "Ammo Recharge Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2051,9 +571,62 @@
                         "actor_name": "LE_Platform_AmmoCharge",
                         "actor_type": "weightactivatedplatform"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Main Hub (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Main Hub (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Top of Morph Ball Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door004)": {
+                "Door to Fiery Balcony": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2072,15 +645,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera041 (area2b)",
-                        "node_name": "Door (Door004)"
+                        "area_name": "Fiery Balcony",
+                        "node_name": "Door to Varia Suit Room"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Wallfire Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door006)": {
+                "Door to Wallfire Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2099,15 +680,39 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera035 (area2b)",
-                        "node_name": "Door (Door006)"
+                        "area_name": "Wallfire Path",
+                        "node_name": "Door to Varia Suit Room"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Varia Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fiery Balcony": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Shortcut": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Door (Door008)": {
+                "Door to Main Hub (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2126,15 +731,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (Door008)"
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Varia Suit Room (Bottom)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Wave Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door009)": {
+                "Door to Main Hub (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2153,20 +766,28 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (Door009)"
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Varia Suit Room (Middle)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door012)": {
+                "Door to Teleporter Shaft Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -250.0,
-                        "y": -2100.0,
+                        "x": -263.75,
+                        "y": -2022.97,
                         "z": 0.0
                     },
                     "description": "",
@@ -2180,15 +801,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera015 (area2b)",
-                        "node_name": "Door (Door012)"
+                        "area_name": "Teleporter Shaft Access",
+                        "node_name": "Door to Varia Suit Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Main Hub (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door (Door018)": {
+                "Door to Gamma Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2207,15 +836,41 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera037 (area2b)",
-                        "node_name": "Door (Door018)"
+                        "area_name": "Gamma Arena",
+                        "node_name": "Door to Varia Suit Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Bottom of Morph Ball Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Missiles"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spider",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door (Door019)": {
+                "Door to Main Hub (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2234,15 +889,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Interior",
-                        "area_name": "collision_camera009 (area2b)",
-                        "node_name": "Door (Door019)"
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Varia Suit Room (Top)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Wave Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Teleporter Shaft Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (HP_Item_002)": {
+                "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2258,9 +921,2492 @@
                         "actor_name": "HP_Item_002",
                         "actor_type": "item_supermissiletank"
                     },
-                    "pickup_index": 8,
+                    "pickup_index": 48,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Inside Shortcut": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Shortcut": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2355.6972487897037,
+                        "y": -1253.501003660409,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Wallfire Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Teleporter Shaft Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Super Missile Tank)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        },
+                        "Bottom of Morph Ball Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Bottom of Morph Ball Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1537.03,
+                        "y": -3386.77,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        },
+                        "Top of Morph Ball Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Top of Morph Ball Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1159.1766048726731,
+                        "y": 131.94395245404758,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Inside Shortcut": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Bottom of Morph Ball Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Path": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -13000.0,
+                    "x2": -5700.0,
+                    "y1": -4600.0,
+                    "y2": -200.0
+                },
+                "polygon": [
+                    [
+                        -5700.0,
+                        -1500.0
+                    ],
+                    [
+                        -7100.0,
+                        -1500.0
+                    ],
+                    [
+                        -8700.0,
+                        -1000.0
+                    ],
+                    [
+                        -9700.0,
+                        -1000.0
+                    ],
+                    [
+                        -10600.0,
+                        -900.0
+                    ],
+                    [
+                        -10600.0,
+                        -200.0
+                    ],
+                    [
+                        -13000.0,
+                        -200.0
+                    ],
+                    [
+                        -13000.0,
+                        -3300.0
+                    ],
+                    [
+                        -10100.0,
+                        -3300.0
+                    ],
+                    [
+                        -8500.0,
+                        -4600.0
+                    ],
+                    [
+                        -5750.0,
+                        -4600.0
+                    ],
+                    [
+                        -5750.0,
+                        -3400.0
+                    ],
+                    [
+                        -5700.0,
+                        -3200.0
+                    ]
+                ],
+                "asset_id": "collision_camera012"
+            },
+            "nodes": {
+                "Door to Main Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10650.0,
+                        "y": -900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door002",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5800.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door010",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Gamma Arena",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5800.0,
+                        "y": -3900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door015",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Storage",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Balcony": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5750.0,
+                        "y": -2600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door020",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Balcony",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10350.0,
+                        "y": -1900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "HP_Item_001",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 47,
+                    "major_location": false,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Under Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9982.34,
+                        "y": -2542.36,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Gamma Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Fiery Storage": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Fiery Balcony": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Storage": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5850.0,
+                    "x2": -2700.0,
+                    "y1": -4002.070068359375,
+                    "y2": -2800.0
+                },
+                "polygon": [
+                    [
+                        -5850.0,
+                        -2800.0
+                    ],
+                    [
+                        -5850.0,
+                        -4002.070068359375
+                    ],
+                    [
+                        -2700.0,
+                        -4002.070068359375
+                    ],
+                    [
+                        -2700.0,
+                        -2800.0
+                    ]
+                ],
+                "asset_id": "collision_camera013"
+            },
+            "nodes": {
+                "Pickup (Power Bomb Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3550.0,
+                        "y": -3000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_006",
+                        "actor_type": "item_powerbombtank"
+                    },
+                    "pickup_index": 43,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5800.0,
+                        "y": -3900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door015",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Fiery Storage"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Teleporter Shaft Access": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -1700.0,
+                    "x2": 3100.0,
+                    "y1": -3100.0,
+                    "y2": -1700.0
+                },
+                "polygon": [
+                    [
+                        -300.0,
+                        -1700.0
+                    ],
+                    [
+                        -300.0,
+                        -2339.639892578125
+                    ],
+                    [
+                        -1700.0,
+                        -2339.639892578125
+                    ],
+                    [
+                        -1700.0,
+                        -3100.0
+                    ],
+                    [
+                        3100.0,
+                        -3100.0
+                    ],
+                    [
+                        3100.0,
+                        -1700.0
+                    ]
+                ],
+                "asset_id": "collision_camera015"
+            },
+            "nodes": {
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -250.0,
+                        "y": -2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door012",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Teleporter Shaft Access"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Teleporter Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Energy Recharge Station": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Tunnel to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3023.27,
+                        "y": -2072.48,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Tunnel to Teleporter Shaft Access"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Energy Recharge Station": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -1099.46,
+                        "y": -3028.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_EnergyCharge",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                }
+            }
+        },
+        "Teleporter Shaft": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 2200.0,
+                    "x2": 4700.0,
+                    "y1": -6800.0,
+                    "y2": -1600.0
+                },
+                "polygon": [
+                    [
+                        3000.0,
+                        -1600.0
+                    ],
+                    [
+                        3000.0,
+                        -5200.0
+                    ],
+                    [
+                        2200.0,
+                        -5200.0
+                    ],
+                    [
+                        2200.0,
+                        -6800.0
+                    ],
+                    [
+                        4700.0,
+                        -6800.0
+                    ],
+                    [
+                        4700.0,
+                        -1600.0
+                    ]
+                ],
+                "asset_id": "collision_camera016"
+            },
+            "nodes": {
+                "Teleporter": {
+                    "node_type": "player_ship",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3350.0,
+                        "y": -3400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Teleporter_02_04",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Area 2 Interior Teleporter",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Horseshoe Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2250.0,
+                        "y": -6100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door016",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Horseshoe Path",
+                        "node_name": "Door to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Fan Tunnel": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2250.0,
+                        "y": -6700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door017",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fan Tunnel",
+                        "node_name": "Door to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Plasma Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to High Jump Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4621.4,
+                        "y": -4112.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Shaft",
+                        "node_name": "Tunnel to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Teleporter Shaft Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3023.27,
+                        "y": -2072.48,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft Access",
+                        "node_name": "Tunnel to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Under Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3692.677777215503,
+                        "y": -3729.263588774747,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 2 Interior Teleporter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Horseshoe Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fan Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to High Jump Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Teleporter Shaft Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3473.39,
+                        "y": -3179.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 2 Interior Teleporter",
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Horseshoe Path": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -4000.0,
+                    "x2": 2300.0,
+                    "y1": -8100.0,
+                    "y2": -5400.0
+                },
+                "polygon": [
+                    [
+                        -4000.0,
+                        -5400.0
+                    ],
+                    [
+                        -4000.0,
+                        -8100.0
+                    ],
+                    [
+                        -1700.0,
+                        -8100.0
+                    ],
+                    [
+                        -1700.0,
+                        -7100.0
+                    ],
+                    [
+                        -400.0,
+                        -6200.0
+                    ],
+                    [
+                        2300.0,
+                        -6200.0
+                    ],
+                    [
+                        2300.0,
+                        -5400.0
+                    ]
+                ],
+                "asset_id": "collision_camera017"
+            },
+            "nodes": {
+                "Door to High Jump Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1750.0,
+                        "y": -8000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door014",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Storage",
+                        "node_name": "Door to Horseshoe Path"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Teleporter Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (No High Jump)"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2250.0,
+                        "y": -6100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door016",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Door to Horseshoe Path"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to High Jump Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Storage": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -1800.0,
+                    "x2": 300.0,
+                    "y1": -8100.0,
+                    "y2": -7100.0
+                },
+                "polygon": [
+                    [
+                        -1800.0,
+                        -7100.0
+                    ],
+                    [
+                        -1800.0,
+                        -8100.0
+                    ],
+                    [
+                        300.0,
+                        -8100.0
+                    ],
+                    [
+                        300.0,
+                        -7100.0
+                    ]
+                ],
+                "asset_id": "collision_camera018"
+            },
+            "nodes": {
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -8000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_001",
+                        "actor_type": "item_energytank"
+                    },
+                    "pickup_index": 40,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Horseshoe Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1300.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_002",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 41,
+                    "major_location": false,
+                    "connections": {
+                        "Tunnel to High Jump Secret": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Horseshoe Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1750.0,
+                        "y": -8000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door014",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Horseshoe Path",
+                        "node_name": "Door to High Jump Storage"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to High Jump Secret": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 283.13,
+                        "y": -7540.26,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Secret",
+                        "node_name": "Tunnel to High Jump Storage"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Secret": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 200.0,
+                    "x2": 2300.0,
+                    "y1": -8400.0,
+                    "y2": -7100.0
+                },
+                "polygon": [
+                    [
+                        200.0,
+                        -7100.0
+                    ],
+                    [
+                        200.0,
+                        -8400.0
+                    ],
+                    [
+                        2300.0,
+                        -8400.0
+                    ],
+                    [
+                        2300.0,
+                        -7100.0
+                    ]
+                ],
+                "asset_id": "collision_camera019"
+            },
+            "nodes": {
+                "Tunnel to High Jump Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 283.13,
+                        "y": -7540.26,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Storage",
+                        "node_name": "Tunnel to High Jump Secret"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to High Jump Room": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Tunnel to High Jump Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2217.29,
+                        "y": -8248.93,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Room",
+                        "node_name": "Tunnel to High Jump Secret"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to High Jump Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms (High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 2200.0,
+                    "x2": 4700.0,
+                    "y1": -8960.0,
+                    "y2": -7100.0
+                },
+                "polygon": [
+                    [
+                        2200.0,
+                        -7100.0
+                    ],
+                    [
+                        2200.0,
+                        -8960.0
+                    ],
+                    [
+                        4700.0,
+                        -8960.0
+                    ],
+                    [
+                        4700.0,
+                        -7100.0
+                    ]
+                ],
+                "asset_id": "collision_camera021"
+            },
+            "nodes": {
+                "Pickup (High Jump Boots)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2741.0,
+                        "y": -7873.9,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_PowerUp_HighJumpBoots",
+                        "actor_type": "itemsphere_highjumpboots"
+                    },
+                    "pickup_index": 44,
+                    "major_location": true,
+                    "connections": {
+                        "Door to High Jump Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to High Jump Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4650.0,
+                        "y": -8100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door013",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Shaft",
+                        "node_name": "Door to High Jump Room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (High Jump Boots)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to High Jump Secret": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Tunnel to High Jump Secret": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2217.29,
+                        "y": -8248.93,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Secret",
+                        "node_name": "Tunnel to High Jump Room"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to High Jump Shaft": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Shaft": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 4600.0,
+                    "x2": 6100.0,
+                    "y1": -8200.0,
+                    "y2": -3900.0
+                },
+                "polygon": [
+                    [
+                        4600.0,
+                        -3900.0
+                    ],
+                    [
+                        4600.0,
+                        -8200.0
+                    ],
+                    [
+                        6100.0,
+                        -8200.0
+                    ],
+                    [
+                        6100.0,
+                        -3900.0
+                    ]
+                ],
+                "asset_id": "collision_camera022"
+            },
+            "nodes": {
+                "Door to High Jump Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4650.0,
+                        "y": -8100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door013",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Room",
+                        "node_name": "Door to High Jump Shaft"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Teleporter Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4621.4,
+                        "y": -4112.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Tunnel to High Jump Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to High Jump Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Wallfire Path": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5800.0,
+                    "x2": -4100.0,
+                    "y1": -800.0,
+                    "y2": -41.720699310302734
+                },
+                "polygon": [
+                    [
+                        -5800.0,
+                        -41.720699310302734
+                    ],
+                    [
+                        -5800.0,
+                        -800.0
+                    ],
+                    [
+                        -4100.0,
+                        -800.0
+                    ],
+                    [
+                        -4100.0,
+                        -41.720699310302734
+                    ]
+                ],
+                "asset_id": "collision_camera035"
+            },
+            "nodes": {
+                "Door to Main Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5750.0,
+                        "y": -600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door005",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Wallfire Path"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4150.0,
+                        "y": -600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Wallfire Path"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fan Tunnel": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -100.0,
+                    "x2": 2300.0,
+                    "y1": -7000.0,
+                    "y2": -6200.0
+                },
+                "polygon": [
+                    [
+                        -100.0,
+                        -6200.0
+                    ],
+                    [
+                        -100.0,
+                        -7000.0
+                    ],
+                    [
+                        2300.0,
+                        -7000.0
+                    ],
+                    [
+                        2300.0,
+                        -6200.0
+                    ]
+                ],
+                "asset_id": "collision_camera036"
+            },
+            "nodes": {
+                "Pickup (Aeion Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200.0,
+                        "y": -6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_005",
+                        "actor_type": "item_senergytank"
+                    },
+                    "pickup_index": 42,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Teleporter Shaft": {
+                            "type": "template",
+                            "data": "Destroy Bomb Blocks"
+                        }
+                    }
+                },
+                "Door to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2250.0,
+                        "y": -6700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door017",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Door to Fan Tunnel"
+                    },
+                    "default_dock_weakness": "Plasma Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Aeion Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gamma Arena": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5850.0,
+                    "x2": -1750.0,
+                    "y1": -5100.0,
+                    "y2": -3900.0
+                },
+                "polygon": [
+                    [
+                        -1750.0,
+                        -3900.0
+                    ],
+                    [
+                        -5850.0,
+                        -3900.0
+                    ],
+                    [
+                        -5850.0,
+                        -5100.0
+                    ],
+                    [
+                        -1750.0,
+                        -5100.0
+                    ]
+                ],
+                "asset_id": "collision_camera037"
+            },
+            "nodes": {
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5800.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door010",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Gamma Arena"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1800.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door018",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Gamma Arena"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gamma Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3779.55,
+                        "y": -4483.27,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Gamma 1",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3762.037037037037,
+                        "y": -4720.659722222223,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Fiery Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gamma 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Varia Suit Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gamma 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Balcony": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5800.0,
+                    "x2": -4100.0,
+                    "y1": -2800.0,
+                    "y2": -800.0
+                },
+                "polygon": [
+                    [
+                        -5800.0,
+                        -800.0
+                    ],
+                    [
+                        -5800.0,
+                        -2800.0
+                    ],
+                    [
+                        -4100.0,
+                        -2800.0
+                    ],
+                    [
+                        -4100.0,
+                        -800.0
+                    ]
+                ],
+                "asset_id": "collision_camera041"
+            },
+            "nodes": {
+                "Door to Main Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5750.0,
+                        "y": -1400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Fiery Balcony"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4150.0,
+                        "y": -1300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door004",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Fiery Balcony"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5750.0,
+                        "y": -2600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door020",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Fiery Balcony"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }
