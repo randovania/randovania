@@ -60,11 +60,9 @@ async def test_on_customize_button(tab, mocker, has_existing_window):
         tab._add_new_preset.assert_called_once()
 
 
-@pytest.mark.parametrize("allow_experimental", [False, True])
-def test_on_options_changed_select_preset(tab, is_dev_version, allow_experimental):
+def test_on_options_changed_select_preset(tab, is_dev_version):
     preset = tab._window_manager.preset_manager.default_preset_for_game(tab.game)
 
-    tab._options.experimental_games = allow_experimental
     tab._options.selected_preset_uuid = preset.uuid
 
     # Run
