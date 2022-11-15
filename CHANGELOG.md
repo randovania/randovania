@@ -5,9 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [5.2.0] - 2022-11-01
 
-- Nothing.
+- Added: Help -> Dependencies window, to see all dependencies included in Randovania, including their versions and licenses.
+- Added: A warning is now displayed when using presets with unsupported features enabled. These features are not present in the UI.
+- Changed: Experimental games are no longer available on stable versions.
 
 ### Cave Story
 
@@ -15,11 +18,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
-- Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
+- Added: Entering Golzuna's arena without releasing the X displays a message explaining why the boss won't spawn.
+- Added: All doors locked while fighting an EMMI now unlock immediately upon defeating it.
+- Changed: Exporting for Ryujinx now also utilizes the Dread Depackager, for a smaller mod size. This requires an up to date Ryujinx.
+- Fixed: You now retain Kraid's item if you reload checkpoint after defeating him. This eliminates a way of rendering a seed impossible to complete.
 
 #### Logic Database
 
+- Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
 - Added: Cross Bomb alternative for crossing Flash Gates
+- Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
+- Fixed: Going to the red teleporter in Cataris no longer forces needing to use bombs.
 
 ### Metroid Prime
 
@@ -27,7 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Nothing.
+- Added: A new experimental option, Inverted Aether. In this mode, it's the Light Aether atmosphere that is dangerous! All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous. This mode has no logic.
+
+#### Logic Database
+
+- Added: Movement(Beginner) trick for crossing HoCM from the Portal Side, after the tunnel is destroyed, with NSJ Screw Attack. 
 
 ## [5.1.0] - 2022-10-01
 

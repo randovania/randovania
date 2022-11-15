@@ -50,7 +50,6 @@ def _t(key: str, disambiguation: str | None = None):
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
-    _experimental_games_visible: bool = False
 
     menu_new_version: QtGui.QAction | None = None
     _current_version_url: str | None = None
@@ -60,6 +59,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _preset_manager: PresetManager
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     about_window: QtWidgets.QMainWindow | None = None
+    dependencies_window: QtWidgets.QMainWindow | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
@@ -148,7 +148,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.setToolTip(game.long_name)
             logo.setAccessibleName(game.long_name)
             logo.clicked.connect(partial(self._select_game, game))
-            logo.setVisible(game.data.development_state.can_view(False))
+            logo.setVisible(game.data.development_state.can_view())
 
             def highlight_logo(l: ClickableLabel, active: bool):
                 if active:
@@ -168,7 +168,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             game_menu.setTitle(_t(game.long_name))
             game_menu.game = game
 
-            if game.data.development_state.can_view(False):
+            if game.data.development_state.can_view():
                 self.menu_open.addAction(game_menu.menuAction())
             self.game_menus.append(game_menu)
 
@@ -194,7 +194,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
-        self.menu_action_experimental_games.triggered.connect(self._on_menu_action_experimental_games)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
@@ -203,11 +202,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_changelog.triggered.connect(self._on_menu_action_changelog)
         self.menu_action_changelog.setVisible(False)
         self.menu_action_about.triggered.connect(self._on_menu_action_about)
+        self.menu_action_dependencies.triggered.connect(self._on_menu_action_dependencies)
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
         self._options = options
         self.tab_game_details.set_main_window(self)
+        self.refresh_game_list()
 
         self.main_tab_widget.setCurrentIndex(0)
 
@@ -252,21 +253,15 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     # Per-Game elements
     def refresh_game_list(self):
-        self.tab_game_details.set_experimental_visible(self.menu_action_experimental_games.isChecked())
-
-        if self._experimental_games_visible == self.menu_action_experimental_games.isChecked():
-            return
-        self._experimental_games_visible = self.menu_action_experimental_games.isChecked()
-
         for game, logo in self._play_game_logos.items():
-            logo.setVisible(game.data.development_state.can_view(self._experimental_games_visible))
+            logo.setVisible(game.data.development_state.can_view())
 
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
 
         for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits):
             game: RandovaniaGame = game_menu.game
-            if game.data.development_state.can_view(self._experimental_games_visible):
+            if game.data.development_state.can_view():
                 self.menu_open.addAction(game_menu.menuAction())
 
     def _on_main_tab_changed(self):
@@ -440,9 +435,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self._options.advanced_timeout_during_generation)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
 
-        self.menu_action_experimental_games.setChecked(self._options.experimental_games)
-        self.refresh_game_list()
-
         self.tab_game_details.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
 
@@ -585,10 +577,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         with self._options as options:
             options.dark_mode = self.menu_action_dark_mode.isChecked()
 
-    def _on_menu_action_experimental_games(self):
-        with self._options as options:
-            options.experimental_games = self.menu_action_experimental_games.isChecked()
-
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
         self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
@@ -631,7 +619,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         experimental = get_readme_section("EXPERIMENTAL")
 
         self.games_supported_label.setText(supported)
-        self.games_experimental_label.setText(experimental)
+        self.games_experimental_label.setText(experimental if randovania.is_dev_version() else "")
         self.intro_welcome_label.setText(welcome)
 
     def _create_generic_window(self, widget: QtWidgets.QWidget, title: str) -> QtWidgets.QMainWindow:
@@ -661,7 +649,15 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.about_window is None:
             self.about_window = self._create_generic_window(AboutWidget(), "About Randovania")
         self.about_window.show()
-    
+
+    def _on_menu_action_dependencies(self):
+        from randovania.gui.widgets.dependencies_widget import DependenciesWidget
+
+        if self.dependencies_window is None:
+            self.dependencies_window = self._create_generic_window(DependenciesWidget(), "Dependencies")
+        self.dependencies_window.show()
+
+
     def _on_click_help_link(self, link: str):
         tab_name = re.match(r"^help://(.+)$", link).group(1)
         if tab_name is None:

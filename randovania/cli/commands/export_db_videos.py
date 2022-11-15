@@ -195,6 +195,13 @@ def generate_world_html(name, areas):
     return header + toc + body + HTML_FOOTER
 
 
+def filename_friendly_game_name(game: RandovaniaGame):
+    return "".join(
+        x for x in game.long_name
+        if x.isalnum() or x in [" "]
+    )
+
+
 def export_videos(game: RandovaniaGame, out_dir):
     worlds = collect_game_info(game)
     if len(worlds) == 0:
@@ -203,7 +210,7 @@ def export_videos(game: RandovaniaGame, out_dir):
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
 
-    out_dir_game = os.path.join(out_dir, game.long_name)
+    out_dir_game = os.path.join(out_dir, filename_friendly_game_name(game))
     if not os.path.exists(out_dir_game):
         os.makedirs(out_dir_game)
 

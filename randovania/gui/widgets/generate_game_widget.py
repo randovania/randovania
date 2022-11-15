@@ -332,6 +332,21 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         preset = self.preset
         num_players = self.num_players_spin_box.value()
 
+        unsupported_features = preset.get_preset().configuration.unsupported_features()
+        if unsupported_features:
+            result = await async_dialog.warning(
+                self, "Unsupported Features",
+                "Preset '{}' uses the unsupported features:\n{}\n\n"
+                "Are you sure you want to continue?".format(
+                    preset.name,
+                    ", ".join(unsupported_features)
+                ),
+                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+                default_button=async_dialog.StandardButton.No,
+            )
+            if result != async_dialog.StandardButton.Yes:
+                return
+
         return await self.generate_layout_from_permalink(
             permalink=Permalink.from_parameters(GeneratorParameters(
                 seed_number=random.randint(0, 2 ** 31),

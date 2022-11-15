@@ -69,6 +69,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     edit_mode: bool = True
 
     scale: float
+    additional_zoom: float = 1.0
     border_x: float = 75
     border_y: float = 75
     canvas_size: QSizeF
@@ -82,6 +83,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     ReplaceConnectionsRequest = Signal(Node, Requirement)
     CreateDockRequest = Signal(NodeLocation, Area)
     MoveNodeToAreaRequest = Signal(Node, Area)
+    UpdateSlider = Signal(bool)
 
     state: State | None = None
     visible_nodes: set[Node] | None = None
@@ -233,7 +235,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         canvas_height = max(self.rect().height() - self.border_y * 2, 1)
 
         self.scale = min(canvas_width / self.area_size.width(),
-                         canvas_height / self.area_size.height())
+                         canvas_height / self.area_size.height()) * self.additional_zoom
 
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
@@ -500,3 +502,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 painter.drawEllipse(p, 7, 7)
             painter.drawEllipse(p, 5, 5)
             centered_text(painter, p + QPointF(0, 15), node.name)
+
+    def set_zoom_value(self, new_zoom):
+        self.additional_zoom = new_zoom / 20
+        self.repaint()
+
+    def wheelEvent(self, event):
+        self.UpdateSlider.emit(event.angleDelta().y() > 0)

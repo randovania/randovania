@@ -2,6 +2,7 @@ import re
 from pathlib import Path
 from typing import Iterator, TextIO
 
+from randovania.game_description.data_writer import WORLD_NAME_TO_FILE_NAME_RE
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -227,7 +228,7 @@ def write_human_readable_game(game: GameDescription, base_path: Path):
         write_human_readable_meta(game, meta)
 
     for world in game.world_list.worlds:
-        name = re.sub(r'[^a-zA-Z\- ]', r'', world.name)
+        name = WORLD_NAME_TO_FILE_NAME_RE.sub(r'', world.name)
         with base_path.joinpath(f"{name}.txt").open("w", encoding="utf-8") as world_file:
             def print_to_file(*args):
                 world_file.write("\t".join(str(arg) for arg in args) + "\n")

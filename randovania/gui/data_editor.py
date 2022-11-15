@@ -109,6 +109,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
         self.area_view_canvas.SelectConnectionsRequest.connect(self.focus_on_connection)
         self.area_view_canvas.ReplaceConnectionsRequest.connect(self.replace_connection_with)
+        self.area_view_canvas.UpdateSlider.connect(self.update_slider)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -119,6 +120,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.rename_area_button.clicked.connect(self._rename_area)
         self.new_node_button.clicked.connect(self._create_new_node_no_location)
         self.delete_node_button.clicked.connect(self._remove_node)
+        self.zoom_slider.valueChanged.connect(self._on_slider_changed)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.nodes_scroll_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
@@ -144,6 +146,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self.game_description.game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES,
                                           RandovaniaGame.METROID_PRIME_CORRUPTION}:
             self.area_view_dock.hide()
+
+        self.zoom_slider.setTickInterval(1)
 
         self.update_edit_mode()
         self._on_filters_changed()
@@ -233,6 +237,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _on_image_spin_update(self):
         w = self.current_world
+        if type(w.extra) != dict:
+            object.__setattr__(w, "extra", dict(w.extra))
         w.extra["map_min_x"] = self.spin_min_x.value()
         w.extra["map_min_y"] = self.spin_min_y.value()
         w.extra["map_max_x"] = self.spin_max_x.value()
@@ -596,11 +602,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if not did_confirm or new_name == "" or new_name == self.current_area.name:
             return
 
-        node_index = self.current_area.nodes.index(self.current_node)
+        if self.current_node is not None:
+            node_index = self.current_area.nodes.index(self.current_node)
+        else:
+            node_index = None
         self.editor.rename_area(self.current_area, new_name)
         self.on_select_world()
         self.focus_on_area_by_name(new_name)
-        self.focus_on_node(self.current_area.nodes[node_index])
+        if node_index is not None:
+            self.focus_on_node(self.current_area.nodes[node_index])
+        else:
+            self.update_selected_node()
 
     def _move_node(self, node: Node, location: NodeLocation):
         area = self.current_area
@@ -753,6 +765,19 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 self._collection_for_filtering = None
 
         self.update_game(game)
+
+    def _on_slider_changed(self):
+        self.area_view_canvas.set_zoom_value(self.zoom_slider.value())
+
+    def update_slider(self, zoom_in):
+        # update slider on wheel event
+        current_val = self.zoom_slider.value()
+        if zoom_in:     
+            self.zoom_slider.setValue(current_val + self.zoom_slider.tickInterval())
+        else:
+            self.zoom_slider.setValue(current_val - self.zoom_slider.tickInterval())
+        # set zoom valuein canvas to the slider value
+        self.area_view_canvas.set_zoom_value(self.zoom_slider.value())
 
     def update_edit_mode(self):
         self.rename_area_button.setVisible(self.edit_mode)

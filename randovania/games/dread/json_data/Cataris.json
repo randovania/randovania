@@ -11868,7 +11868,7 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (BOMB)": {
+                        "Teleporter to Artaria - Teleport to Cataris": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12271,9 +12271,18 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (BOMB)": {
+                        "Pickup (Missile+ Tank)": {
                             "type": "template",
                             "data": "Can Slide"
+                        },
+                        "Tile Group (BOMB)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -12299,13 +12308,8 @@
                     },
                     "connections": {
                         "Door to Path to Kraid Entryway": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         },
                         "Door to West Teleport Access": {
                             "type": "and",
@@ -18132,11 +18136,37 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s020_magma:default:deviceheat_002",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         },
-                        "Past Magnet Floor": {
+                        "Pickup (Energy Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -18846,20 +18876,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Thermal Device 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Past Magnet Floor": {
+                        "Pickup (Energy Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "CatarisThermalMagnetPlatformLowered",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Event - Thermal Device 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -18887,11 +18917,86 @@
                                 "negate": true
                             }
                         },
-                        "Pickup (Energy Tank)": {
+                        "Door to Dairon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:deviceheat_002",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "CatarisThermalLowerLava",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Heat",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:deviceheat_camerafar_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Dock to Energy Recharge Station": {
