@@ -1329,12 +1329,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "BoostBall",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "You can use Spring Ball to rotate instead of Boost",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "BoostBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -5284,7 +5301,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Event6",
+                                            "name": "Event94",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6824,6 +6841,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "BoostBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event7",
                                             "amount": 1,
                                             "negate": false
                                         }
