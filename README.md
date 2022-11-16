@@ -20,6 +20,7 @@ New here or looking to install? Check [our website](https://randovania.github.io
 
 ### Experimental Games
  - Metroid Prime 3: Corruption
+ - Metroid: Samus Returns
  - Super Metroid
 
 <!-- End EXPERIMENTAL -->

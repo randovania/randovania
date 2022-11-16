@@ -37,7 +37,7 @@
                 "Grapple Beam": {
                     "num_shuffled_pickups": 1
                 },
-                "Missiles": {
+                "Missile": {
                     "num_included_in_starting_items": 1,
                     "included_ammo": [
                         24
@@ -50,16 +50,28 @@
                     ]
                 },
                 "Scan Pulse": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_items": 1,
+                    "included_ammo": [
+                        1000
+                    ]
                 },
                 "Lightning Armor": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        150
+                    ]
                 },
                 "Beam Burst": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        150
+                    ]
                 },
                 "Phase Drift": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        150
+                    ]
                 },
                 "Varia Suit": {},
                 "Gravity Suit": {},
@@ -82,13 +94,13 @@
                     ]
                 },
                 "Spring Ball": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
                 "High Jump Boots": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
                 "Space Jump": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
                 "Screw Attack": {
                     "num_shuffled_pickups": 1
@@ -125,7 +137,11 @@
                     "requires_major_item": true
                 },
                 "Aeion Tank": {
-                    "pickup_count": 15
+                    "ammo_count": [
+                        50
+                    ],
+                    "pickup_count": 15,
+                    "requires_major_item": true
                 }
             }
         },
@@ -140,6 +156,10 @@
             "mode": "vanilla",
             "types_state": {
                 "door": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "tunnel": {
                     "can_change_from": [],
                     "can_change_to": []
                 },

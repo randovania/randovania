@@ -2,7 +2,7 @@ from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import status_update_lib
 
 
-class SamusReturnsGameExporter(GameExporter):
+class MSRGameExporter(GameExporter):
     _busy: bool = False
 
     @property

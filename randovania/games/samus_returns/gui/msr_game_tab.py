@@ -3,7 +3,7 @@ from randovania.gui.generated.games_tab_samusreturns_widget_ui import Ui_SamusRe
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 
 
-class SamusReturnsGameTabWidget(BaseGameTabWidget, Ui_SamusReturnsGameTabWidget):
+class MSRGameTabWidget(BaseGameTabWidget, Ui_SamusReturnsGameTabWidget):
     def setup_ui(self):
         self.setupUi(self)
 

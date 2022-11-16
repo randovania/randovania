@@ -1,5 +1,5 @@
 from randovania.game_description.item.major_item import MajorItem
-from randovania.games.samus_returns.layout.samus_returns_configuration import SamusReturnsConfiguration
+from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -7,9 +7,9 @@ from randovania.layout.preset_describer import (
 )
 
 
-class SamusReturnsPresetDescriber(GamePresetDescriber):
+class MSRPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
-        assert isinstance(configuration, SamusReturnsConfiguration)
+        assert isinstance(configuration, MSRConfiguration)
 
         major_items = configuration.major_items_configuration
         template_strings = super().format_params(configuration)
@@ -39,6 +39,7 @@ class SamusReturnsPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_configuration,
                     {
+                        "Super Missile needs Launcher": "Super Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
                     }
                 ),

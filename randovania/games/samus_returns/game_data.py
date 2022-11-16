@@ -1,6 +1,5 @@
 from randovania.games import game
-from randovania.games.samus_returns.layout.samus_returns_configuration import SamusReturnsConfiguration
-from randovania.games.samus_returns.layout.samus_returns_cosmetic_patches import SamusReturnsCosmeticPatches
+from randovania.games.samus_returns import layout
 from randovania.layout.preset_describer import GamePresetDescriber
 
 
@@ -13,10 +12,10 @@ def _gui() -> game.GameGui:
     from randovania.games.samus_returns import gui
 
     return game.GameGui(
-        game_tab=gui.SamusReturnsGameTabWidget,
+        game_tab=gui.MSRGameTabWidget,
         tab_provider=gui.preset_tabs,
-        cosmetic_dialog=gui.SamusReturnsCosmeticPatchesDialog,
-        export_dialog=gui.SamusReturnsGameExportDialog,
+        cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
+        export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=tuple(),
         spoiler_visualizer=tuple(),
     )
@@ -28,38 +27,39 @@ def _generator() -> game.GameGenerator:
 
     return game.GameGenerator(
         item_pool_creator=generator.pool_creator,
-        bootstrap=generator.SamusReturnsBootstrap(),
-        base_patches_factory=generator.SamusReturnsBasePatchesFactory(),
+        bootstrap=generator.MSRBootstrap(),
+        base_patches_factory=generator.MSRBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
     )
 
 
 def _patch_data_factory():
-    from randovania.games.samus_returns.exporter.patch_data_factory import SamusReturnsPatchDataFactory
-    return SamusReturnsPatchDataFactory
+    from randovania.games.samus_returns.exporter.patch_data_factory import MSRPatchDataFactory
+    return MSRPatchDataFactory
 
 
 def _exporter():
-    from randovania.games.samus_returns.exporter.game_exporter import SamusReturnsGameExporter
-    return SamusReturnsGameExporter()
+    from randovania.games.samus_returns.exporter.game_exporter import MSRGameExporter
+    return MSRGameExporter()
+
 
 game_data: game.GameData = game.GameData(
-    short_name="SamusReturns",
+    short_name="MSR",
     long_name="Metroid: Samus Returns",
-    development_state=game.DevelopmentState.EXPERIMENTAL,
+    development_state=game.DevelopmentState.DEVELOPMENT,
 
     presets=[
         {
             "path": "starter_preset.rdvpreset"
-        }
+        },
     ],
 
     faq=[],
 
     layout=game.GameLayout(
-        configuration=SamusReturnsConfiguration,
-        cosmetic_patches=SamusReturnsCosmeticPatches,
-        preset_describer=GamePresetDescriber()
+        configuration=layout.MSRConfiguration,
+        cosmetic_patches=layout.MSRCosmeticPatches,
+        preset_describer=GamePresetDescriber(),
     ),
 
     options=_options,

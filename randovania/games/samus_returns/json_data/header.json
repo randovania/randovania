@@ -22,7 +22,7 @@
                     "item_id": "ITEM_WEAPON_WAVE_BEAM"
                 }
             },
-            "Wide": {
+            "Spazer": {
                 "long_name": "Spazer Beam",
                 "max_capacity": 1,
                 "extra": {
@@ -188,7 +188,7 @@
                     "item_capacity_id": "ITEM_WEAPON_SUPER_MISSILE_MAX"
                 }
             },
-            "ATank": {
+            "Aeion": {
                 "long_name": "Aeion Tank",
                 "max_capacity": 2000,
                 "extra": {
@@ -824,7 +824,7 @@
             }
         },
         "requirement_template": {
-            "Climb Rooms (No High Jump)": {
+            "Climb/Traverse Rooms (No High Jump)": {
                 "type": "or",
                 "data": {
                     "comment": null,
@@ -867,7 +867,7 @@
                     ]
                 }
             },
-            "Climb Rooms (High Jump)": {
+            "Climb/Traverse Rooms (High Jump)": {
                 "type": "or",
                 "data": {
                     "comment": null,
@@ -980,13 +980,6 @@
                     ]
                 }
             },
-            "Shoot Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": []
-                }
-            },
             "Shoot Wave Beam": {
                 "type": "or",
                 "data": {
@@ -1024,7 +1017,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Wide",
+                                                        "name": "Spazer",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -1056,7 +1049,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "Wide",
+                                "name": "Spazer",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1116,7 +1109,7 @@
                     ]
                 }
             },
-            "Destroy Bomb Blocks": {
+            "Destroy Bomb Block": {
                 "type": "or",
                 "data": {
                     "comment": null,
@@ -1396,8 +1389,11 @@
                             "type": "power_beam"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "lock": null
                     },
@@ -1420,8 +1416,13 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Charge Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "and",

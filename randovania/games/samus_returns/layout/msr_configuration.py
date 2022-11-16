@@ -8,7 +8,7 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
-class SamusReturnsConfiguration(BaseConfiguration):
+class MSRConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     allow_highly_dangerous_logic: bool
