@@ -89,20 +89,16 @@ class GameGenerator:
 class DevelopmentState(Enum):
     STABLE = "stable"
     EXPERIMENTAL = "experimental"
-    DEVELOPMENT = "development"
 
     @property
     def is_stable(self):
         return self == DevelopmentState.STABLE
 
-    def can_view(self, allow_experimental: bool) -> bool:
+    def can_view(self) -> bool:
         if self.is_stable:
             return True
 
-        if not allow_experimental:
-            return False
-
-        return self == DevelopmentState.EXPERIMENTAL or randovania.is_dev_version()
+        return randovania.is_dev_version()
 
 
 @dataclass(frozen=True)

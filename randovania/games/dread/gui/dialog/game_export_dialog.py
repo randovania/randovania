@@ -109,6 +109,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.atmosphere_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_radio.toggled.connect(self._on_update_target_platform)
+        self.ryujinx_legacy_radio.toggled.connect(self._on_update_target_platform)
         self._on_update_target_platform()
 
         # Output to SD
@@ -412,7 +413,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             input_path=self.input_file,
             output_path=output_path,
             target_platform=self.target_platform,
-            use_exlaunch=self.target_platform == DreadModPlatform.ATMOSPHERE,
+            use_exlaunch=not self.ryujinx_legacy_radio.isChecked(),
             clean_output_path=clean_output_path,
             post_export=post_export,
         )

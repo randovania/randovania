@@ -5,4 +5,4 @@ cd ..
 
 call venv\scripts\activate
 python setup.py build_ui
-python -m randovania gui --preview main
+python -m randovania gui main

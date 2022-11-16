@@ -228,7 +228,7 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker):
         input_path=tmp_path.joinpath("input"),
         output_path=ryujinx_path,
         target_platform=DreadModPlatform.RYUJINX,
-        use_exlaunch=False,
+        use_exlaunch=True,
         clean_output_path=False,
         post_export=None,
     )
@@ -305,7 +305,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
         input_path=tmp_path.joinpath("input"),
         output_path=tmp_path.joinpath("output"),
         target_platform=DreadModPlatform.RYUJINX,
-        use_exlaunch=False,
+        use_exlaunch=True,
         clean_output_path=False,
         post_export=None,
     )
