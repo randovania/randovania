@@ -4460,7 +4460,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Event97",
+                                            "name": "ShipGrappleAcquired",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5358,7 +5358,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Ship Grapple)": {
+                        "Event - Ship Grapple Acquired": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5379,6 +5379,26 @@
                     "event_name": "Event97",
                     "connections": {
                         "Door to Landing Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Ship Grapple Acquired": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "ShipGrappleAcquired",
+                    "connections": {
+                        "Pickup (Ship Grapple)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
