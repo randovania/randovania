@@ -240,6 +240,8 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
         "dock_rando": {
             "enable_one_way": database.dock_rando_config.enable_one_way,
             "force_change_two_way": database.dock_rando_config.force_change_two_way,
+            "resolver_attempts": database.dock_rando_config.resolver_attempts,
+            "to_shuffle_proportion": database.dock_rando_config.to_shuffle_proportion,
         },
     }
 

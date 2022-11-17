@@ -81,6 +81,8 @@ def _migrate_v11(data: dict) -> dict:
     data["dock_weakness_database"]["dock_rando"] = {
         "enable_one_way": False,
         "force_change_two_way": False,
+        "resolver_attempts": 125,
+        "to_shuffle_proportion": 1.0
     }
     return data
 

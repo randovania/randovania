@@ -82,9 +82,6 @@ class DockRandoLogic(Logic):
         return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, context))
 
 
-TO_SHUFFLE_PROPORTION = 0.6
-
-
 def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tuple[int, DockNode]]:
     """
     Collects all docks to be assigned from each player, returning them in a random order
@@ -112,18 +109,17 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
                 if (player, dock.get_target_identifier(ctx)) not in player_docks:
                     player_docks.append((player, dock))
 
-        if TO_SHUFFLE_PROPORTION < 1.0:
+        to_shuffle_proportion = game.dock_weakness_database.dock_rando_config.to_shuffle_proportion
+
+        if to_shuffle_proportion < 1.0:
             rng.shuffle(player_docks)
-            limit = int(len(player_docks) * TO_SHUFFLE_PROPORTION)
+            limit = int(len(player_docks) * to_shuffle_proportion)
             player_docks = player_docks[:limit]
 
         unassigned_docks.extend(player_docks)
 
     rng.shuffle(unassigned_docks)
     return unassigned_docks
-
-
-RESOLVER_ATTEMPTS = 125
 
 
 async def _run_resolver(state: State, logic: Logic, max_attempts: int):
@@ -152,7 +148,7 @@ async def _run_dock_resolver(dock: DockNode,
 
     debug.debug_print(f"{dock.identifier}")
     try:
-        new_state = await _run_resolver(state, logic, RESOLVER_ATTEMPTS)
+        new_state = await _run_resolver(state, logic, state.patches.game.dock_weakness_database.dock_rando_config.resolver_attempts)
     except resolver.ResolverTimeout:
         new_state = None
         result = f"Timeout ({resolver.get_attempts()} attempts)"

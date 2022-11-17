@@ -102,6 +102,8 @@ class DockType:
 class DockRandoConfig:
     enable_one_way: bool
     force_change_two_way: bool # whether a two-way door should change both sides, even if one side has an excluded weakness
+    resolver_attempts: int
+    to_shuffle_proportion: float
 
 
 @dataclass(frozen=True, slots=True)
