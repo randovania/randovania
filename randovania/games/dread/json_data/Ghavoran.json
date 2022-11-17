@@ -11111,12 +11111,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranFereniaTransportEnkyLeft",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -11160,6 +11177,27 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Ferenia Transport Enky Left": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranFereniaTransportGrappleBox",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Enky"
                                     }
                                 ]
                             }
@@ -11211,8 +11249,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Slide"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranFereniaTransportEnkyLeft",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Slide"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
