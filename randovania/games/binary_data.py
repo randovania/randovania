@@ -11,7 +11,7 @@ from randovania.game_description.world.logbook_node import LoreType
 from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
 
-current_format_version = 11
+current_format_version = 12
 
 _EXPECTED_FIELDS = [
     "schema_version",
