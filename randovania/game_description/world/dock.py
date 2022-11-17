@@ -98,6 +98,11 @@ class DockType:
     long_name: str
     extra: frozendict
 
+@dataclass(frozen=True, slots=True)
+class DockRandoConfig:
+    enable_one_way: bool
+    force_change_two_way: bool # whether a two-way door should change both sides, even if one side has an excluded weakness
+
 
 @dataclass(frozen=True, slots=True)
 class DockWeaknessDatabase:
@@ -105,6 +110,7 @@ class DockWeaknessDatabase:
     weaknesses: dict[DockType, dict[str, DockWeakness]]
     dock_rando_params: dict[DockType, DockRandoParams]
     default_weakness: tuple[DockType, DockWeakness]
+    dock_rando_config: DockRandoConfig
 
     def find_type(self, dock_type_name: str) -> DockType:
         for dock_type in self.dock_types:

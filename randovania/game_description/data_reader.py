@@ -27,7 +27,7 @@ from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock import (
-    DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
+    DockRandoConfig, DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
 )
 from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.dock_node import DockNode
@@ -251,11 +251,17 @@ def read_dock_weakness_database(data: dict,
                          if dock_type.short_name == data["default_weakness"]["type"]][0]
     default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
+    dock_rando_config = DockRandoConfig(
+        enable_one_way=data["dock_rando"]["enable_one_way"],
+        force_change_two_way=data["dock_rando"]["force_change_two_way"],
+    )
+
     return DockWeaknessDatabase(
         dock_types=dock_types,
         weaknesses=weaknesses,
         dock_rando_params=dock_rando,
         default_weakness=(default_dock_type, default_dock_weakness),
+        dock_rando_config=dock_rando_config
     )
 
 

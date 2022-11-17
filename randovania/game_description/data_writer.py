@@ -236,7 +236,11 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
         "default_weakness": {
             "type": database.default_weakness[0].short_name,
             "name": database.default_weakness[1].name,
-        }
+        },
+        "dock_rando": {
+            "enable_one_way": database.dock_rando_config.enable_one_way,
+            "force_change_two_way": database.dock_rando_config.force_change_two_way,
+        },
     }
 
 

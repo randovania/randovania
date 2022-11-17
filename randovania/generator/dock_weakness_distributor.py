@@ -33,6 +33,9 @@ def distribute_pre_fill_weaknesses(patches: GamePatches):
     game = default_database.game_description_for(patches.configuration.game)
     weakness_database = game.dock_weakness_database
 
+    if dock_rando.mode == DockRandoMode.ONE_WAY and not weakness_database.dock_rando_config.enable_one_way:
+        raise ValueError(f"{game.game.long_name} does not support one-way door lock rando!")
+
     docks_to_unlock = [
         (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
         for node in game.world_list.all_nodes
@@ -42,6 +45,18 @@ def distribute_pre_fill_weaknesses(patches: GamePatches):
                 and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
         )
     ]
+
+    if weakness_database.dock_rando_config.force_change_two_way:
+        unlocked = [node for node, _ in docks_to_unlock]
+        docks_to_unlock.extend([
+            (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
+            for node in game.world_list.all_nodes
+            if (
+                isinstance(node, DockNode)
+                and node not in unlocked
+                and game.world_list.node_by_identifier(node.default_connection) in unlocked
+            )
+        ])
 
     patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
     return patches.assign_dock_weakness(docks_to_unlock)
@@ -261,7 +276,13 @@ async def distribute_post_fill_weaknesses(rng: Random,
         new_assignment = [
             (dock, weakness),
         ]
-        if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY and target.default_dock_weakness in dock_type_state.can_change_from:
+        if (
+            patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY 
+            and (
+                target.default_dock_weakness in dock_type_state.can_change_from
+                or game.dock_weakness_database.dock_rando_config.force_change_two_way
+            )
+        ):
             new_assignment.append((target, weakness))
 
         docks_placed += 1

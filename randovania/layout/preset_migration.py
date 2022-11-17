@@ -626,7 +626,7 @@ def _migrate_v31(preset: dict) -> dict:
     return preset
 
 
-def _migrate_v32(preset: dict) -> dict:
+def _update_default_dock_rando(preset: dict) -> dict:
     game = RandovaniaGame(preset["game"])
     weakness_database = default_database.game_description_for(game).dock_weakness_database
 
@@ -638,6 +638,9 @@ def _migrate_v32(preset: dict) -> dict:
         }
     }
     return preset
+
+def _migrate_v32(preset: dict) -> dict:
+    return _update_default_dock_rando(preset)
 
 
 def _migrate_v33(preset: dict) -> dict:
@@ -710,6 +713,12 @@ def _migrate_v41(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v42(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset = _update_default_dock_rando(preset)
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -752,6 +761,7 @@ _MIGRATIONS = [
     _migrate_v39,
     _migrate_v40,
     _migrate_v41,
+    _migrate_v42,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
