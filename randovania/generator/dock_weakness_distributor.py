@@ -231,7 +231,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
         state, logic = resolver.setup_resolver(patches.configuration, patches)
 
         try:
-            new_state = await _run_resolver(state, logic, RESOLVER_ATTEMPTS * 2)
+            new_state = await _run_resolver(state, logic, patches.game.dock_weakness_database.dock_rando_config.resolver_attempts * 2)
         except resolver.ResolverTimeout:
             new_state = None
 
