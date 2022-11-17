@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
-- Added: Cross Bomb alternative for crossing Flash Gates
+- Added: Cross Bomb alternative for crossing Flash Gates.
 - Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
 - Fixed: Going to the red teleporter in Cataris no longer forces needing to use bombs.
 
@@ -41,7 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: Movement(Beginner) trick for crossing HoCM from the Portal Side, after the tunnel is destroyed, with NSJ Screw Attack. 
+- Added: Intermediate Slope Jump and Intermediate Wall Boost to get next to the pickup in Communication Area.
+- Added: Beginner Movement for crossing Hall of Combat Mastery from the Portal Side with NSJ Screw Attack after the tunnel is destroyed. 
 
 ## [5.1.0] - 2022-10-01
 
