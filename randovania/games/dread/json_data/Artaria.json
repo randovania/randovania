@@ -3441,12 +3441,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3691,7 +3708,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Grapple Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -11674,7 +11694,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Invisible Corpius Room": {
+                        "Dock to Invisible Corpius Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -11727,7 +11747,7 @@
                         }
                     }
                 },
-                "Door to Invisible Corpius Room": {
+                "Dock to Invisible Corpius Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11747,13 +11767,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Invisible Corpius Room",
                         "node_name": "Door to Thermal Door Tutorial"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -11829,7 +11849,7 @@
                     },
                     "event_name": "s010_cave:default:db_reg_cv_021",
                     "connections": {
-                        "Door to Invisible Corpius Room": {
+                        "Dock to Invisible Corpius Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12662,7 +12682,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Lower Path to Cataris",
-                        "node_name": "Door to Hot Room Hub"
+                        "node_name": "Dock to Hot Room Hub"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "override_default_open_requirement": null,
@@ -12943,7 +12963,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -13711,7 +13732,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -16735,7 +16757,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Thermal Door Tutorial",
-                        "node_name": "Door to Invisible Corpius Room"
+                        "node_name": "Dock to Invisible Corpius Room"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "override_default_open_requirement": null,
@@ -17313,7 +17335,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Grapple Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -18277,7 +18302,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Grapple Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -19379,7 +19407,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Grapple Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -22825,7 +22856,7 @@
                 "asset_id": "collision_camera_072"
             },
             "nodes": {
-                "Door to Phantom Cloak Tutorial": {
+                "Dock to Phantom Cloak Tutorial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -22845,13 +22876,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Phantom Cloak Tutorial",
                         "node_name": "Door to Path to Corpius"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -22922,7 +22953,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Phantom Cloak Tutorial": {
+                        "Dock to Phantom Cloak Tutorial": {
                             "type": "template",
                             "data": "Can Slide"
                         },
@@ -23031,7 +23062,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Path to Corpius",
-                        "node_name": "Door to Phantom Cloak Tutorial"
+                        "node_name": "Dock to Phantom Cloak Tutorial"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "override_default_open_requirement": null,
@@ -24403,7 +24434,7 @@
                 "asset_id": "collision_camera_079"
             },
             "nodes": {
-                "Door to Hot Room Hub": {
+                "Dock to Hot Room Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -24423,13 +24454,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Hot Room Hub",
                         "node_name": "Door to Lower Path to Cataris"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -24649,7 +24680,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hot Room Hub": {
+                        "Dock to Hot Room Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
