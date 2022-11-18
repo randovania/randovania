@@ -5,19 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [5.2.0] - 2022-11-01
 
-- Nothing.
+- Added: Help -> Dependencies window, to see all dependencies included in Randovania, including their versions and licenses.
+- Added: A warning is now displayed when using presets with unsupported features enabled. These features are not present in the UI.
+- Changed: Experimental games are no longer available on stable versions.
 
-### Cave Story
+### Cave Stor
 
 - Nothing.
 
 ### Metroid Dread
  
-- Fixed: You now retain Kraid's item if you reload checkpoint after defeating him. This eliminates a way of rendering a seed impossible to complete.
 - Added: Entering Golzuna's arena without releasing the X displays a message explaining why the boss won't spawn.
 - Added: All doors locked while fighting an EMMI now unlock immediately upon defeating it.
+- Changed: Exporting for Ryujinx now also utilizes the Dread Depackager, for a smaller mod size. This requires an up to date Ryujinx.
+- Fixed: You now retain Kraid's item if you reload checkpoint after defeating him. This eliminates a way of rendering a seed impossible to complete.
 
 #### Logic Database
 
@@ -35,6 +39,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: A new experimental option, Inverted Aether. In this mode, it's the Light Aether atmosphere that is dangerous! All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous. This mode has no logic.
+
+#### Logic Database
+
+- Added: Intermediate Slope Jump and Intermediate Wall Boost to get next to the pickup in Communication Area.
+- Added: Beginner Movement for crossing Hall of Combat Mastery from the Portal Side with NSJ Screw Attack after the tunnel is destroyed. 
 
 ## [5.1.0] - 2022-10-01
 

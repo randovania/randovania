@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, AsyncMock
 import pytest
 from PySide6 import QtWidgets
 
+from randovania.gui.lib import async_dialog
 from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -59,11 +60,9 @@ async def test_on_customize_button(tab, mocker, has_existing_window):
         tab._add_new_preset.assert_called_once()
 
 
-@pytest.mark.parametrize("allow_experimental", [False, True])
-def test_on_options_changed_select_preset(tab, is_dev_version, allow_experimental):
+def test_on_options_changed_select_preset(tab, is_dev_version):
     preset = tab._window_manager.preset_manager.default_preset_for_game(tab.game)
 
-    tab._options.experimental_games = allow_experimental
     tab._options.selected_preset_uuid = preset.uuid
 
     # Run
@@ -92,12 +91,25 @@ def test_click_on_preset_tree(tab, skip_qtbot, tmp_path):
     assert tab._current_preset_data.get_preset() == preset.get_preset()
 
 
-async def test_generate_new_seed(tab, mocker):
+@pytest.mark.parametrize(["has_unsupported", "abort_generate"], [
+    (False, False),
+    (True, False),
+    (True, True),
+])
+async def test_generate_new_layout(tab, mocker, has_unsupported, abort_generate):
     # Setup
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=12341234)
+    mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning")
+
+    versioned_preset = MagicMock()
+    versioned_preset.name = "PresetName"
+    preset = versioned_preset.get_preset.return_value
+    preset.configuration.unsupported_features.return_value = ["Unsup1", "Unsup2"] if has_unsupported else []
+
+    mock_warning.return_value = async_dialog.StandardButton.No if abort_generate else async_dialog.StandardButton.Yes
 
     tab.create_preset_tree = MagicMock()
-    tab.create_preset_tree.current_preset_data = tab._window_manager.preset_manager.default_preset
+    tab.create_preset_tree.current_preset_data = versioned_preset
     tab.generate_layout_from_permalink = AsyncMock()
 
     spoiler = MagicMock(spec=bool)
@@ -107,17 +119,32 @@ async def test_generate_new_seed(tab, mocker):
     await tab.generate_new_layout(spoiler, retries)
 
     # Assert
-    tab.generate_layout_from_permalink.assert_awaited_once_with(
-        permalink=Permalink.from_parameters(
-            GeneratorParameters(
-                seed_number=12341234,
-                spoiler=spoiler,
-                presets=[tab._window_manager.preset_manager.default_preset.get_preset()],
-            )
-        ),
-        retries=retries,
-    )
-    mock_randint.assert_called_once_with(0, 2 ** 31)
+    if has_unsupported:
+        mock_warning.assert_awaited_once_with(
+            tab, "Unsupported Features",
+            "Preset 'PresetName' uses the unsupported features:\nUnsup1, Unsup2\n\n"
+            "Are you sure you want to continue?",
+            buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+            default_button=async_dialog.StandardButton.No,
+        )
+    else:
+        mock_warning.assert_not_awaited()
+
+    if abort_generate:
+        tab.generate_layout_from_permalink.assert_not_awaited()
+        mock_randint.assert_not_called()
+    else:
+        tab.generate_layout_from_permalink.assert_awaited_once_with(
+            permalink=Permalink.from_parameters(
+                GeneratorParameters(
+                    seed_number=12341234,
+                    spoiler=spoiler,
+                    presets=[preset],
+                )
+            ),
+            retries=retries,
+        )
+        mock_randint.assert_called_once_with(0, 2 ** 31)
 
 
 async def test_on_view_preset_history(tab, mocker):
