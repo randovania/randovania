@@ -13999,15 +13999,6 @@
                             }
                         },
                         "Tunnel to Central Unit Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "CatarisPostEmmiTrigger",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Door Trigger": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14310,15 +14301,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to EMMI Zone Item Tunnel": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "CatarisPostEmmiTrigger",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Door Trigger": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14382,30 +14364,6 @@
                             }
                         },
                         "Tunnel to EMMI Zone Item Tunnel": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Door Trigger": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8900.0,
-                        "y": 3020.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "CatarisPostEmmiTrigger",
-                    "connections": {
-                        "Tunnel to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16534,7 +16492,7 @@
                         "y": 3600.0,
                         "z": 0.0
                     },
-                    "description": "Door opens up after Green EMMI is defeated and rolling through a trigger in\nEMMI Zone Exits West\n\n",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
@@ -16913,29 +16871,10 @@
                     "extra": {},
                     "connections": {
                         "Door to EMMI Zone Tower West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisPostEmmiTrigger",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Tunnel to EMMI Zone Exits West": {
@@ -16974,8 +16913,42 @@
                             }
                         },
                         "Event - Bottom Blob through wall": {
-                            "type": "template",
-                            "data": "Shoot Diffusion or Wave"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
