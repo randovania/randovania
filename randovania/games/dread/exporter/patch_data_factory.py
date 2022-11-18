@@ -292,6 +292,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 raise ValueError(
                     f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness")
 
+            if "actor_name" not in node.extra:
+                print(f"Invalid door (no actor): {node}")
+                continue
+            
             result.append({
                 "actor": (actor := self._teleporter_ref_for(node)),
                 "door_type": (door_type := weakness.extra["type"]),
@@ -331,6 +335,15 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "required_artifacts": self.configuration.artifacts.required_artifacts,
             "hints": hint_text,
         }
+
+    def _tilegroup_patches(self):
+        return [
+            # beam blocks -> speedboost blocks in Artaria EMMI zone speedbooster puzzle to prevent softlock
+            dict(
+                actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
+                tiletype="SPEEDBOOST"
+            )
+        ]
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
@@ -388,6 +401,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "default_x_released": self.configuration.x_starts_released,
             },
             "door_patches": self._door_patches(),
+            "tile_group_patches": self._tilegroup_patches(),
             "objective": self._objective_patches(),
         }
 

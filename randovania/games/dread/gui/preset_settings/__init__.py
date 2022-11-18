@@ -13,6 +13,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.games.dread.gui.preset_settings.dread_item_pool_tab import DreadPresetItemPool
     from randovania.games.dread.gui.preset_settings.dread_energy_tab import PresetDreadEnergy
     from randovania.games.dread.gui.preset_settings.dread_goal_tab import PresetDreadGoal
+    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
 
     return [
         PresetTrickLevel,
@@ -25,4 +26,5 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         DreadPresetItemPool,
         PresetDreadEnergy,
         PresetDreadPatches,
+        PresetDockRando,
     ]

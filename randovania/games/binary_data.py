@@ -270,7 +270,13 @@ ConstructDockWeaknessDatabase = Struct(
     default_weakness=Struct(
         type=String,
         name=String,
-    )
+    ),
+    dock_rando=Struct(
+        enable_one_way=Flag,
+        force_change_two_way=Flag,
+        resolver_attempts=VarInt,
+        to_shuffle_proportion=Float64b,
+    ),
 )
 
 ConstructGame = Struct(

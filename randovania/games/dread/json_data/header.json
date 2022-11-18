@@ -1,5 +1,5 @@
 {
-    "schema_version": 11,
+    "schema_version": 12,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -1036,10 +1036,6 @@
             },
             "CatarisUnderlavaSpeedBlocks": {
                 "long_name": "Cataris - Underlava Speed Blocks Destroyed",
-                "extra": {}
-            },
-            "CatarisPostEmmiTrigger": {
-                "long_name": "Cataris - Post-EMMI Door Trigger",
                 "extra": {}
             }
         },
@@ -4703,6 +4699,26 @@
                             }
                         }
                     },
+                    "Access Permanently Closed": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-impossible",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": []
+                                }
+                            }
+                        }
+                    },
                     "Power Beam Door": {
                         "extra": {
                             "type": "power_beam"
@@ -4968,10 +4984,30 @@
                     }
                 },
                 "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
+                    "unlocked": "Power Beam Door",
+                    "locked": "Access Permanently Closed",
+                    "change_from": [
+                        "Access Open",
+                        "Charge Beam Door",
+                        "Grapple Beam Door",
+                        "Missile Door",
+                        "Plasma Beam Door",
+                        "Power Beam Door",
+                        "Sensor Lock Door",
+                        "Super Missile Door",
+                        "Wave Beam Door",
+                        "Wide Beam Door"
+                    ],
+                    "change_to": [
+                        "Charge Beam Door",
+                        "Grapple Beam Door",
+                        "Missile Door",
+                        "Plasma Beam Door",
+                        "Power Beam Door",
+                        "Super Missile Door",
+                        "Wave Beam Door",
+                        "Wide Beam Door"
+                    ]
                 }
             },
             "tunnel": {
@@ -5195,6 +5231,12 @@
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
+        },
+        "dock_rando": {
+            "enable_one_way": false,
+            "force_change_two_way": true,
+            "resolver_attempts": 250,
+            "to_shuffle_proportion": 0.6
         }
     },
     "worlds": [

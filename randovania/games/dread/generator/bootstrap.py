@@ -2,6 +2,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 
@@ -16,6 +17,9 @@ class DreadBootstrap(MetroidBootstrap):
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
+
+        if configuration.dock_rando.mode != DockRandoMode.VANILLA:
+            enabled_resources.add("DoorLocks")
 
         return enabled_resources
 
