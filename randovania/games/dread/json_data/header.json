@@ -4681,16 +4681,7 @@
                                 "items": []
                             }
                         },
-                        "lock": {
-                            "lock_type": "front-blast-back-impossible",
-                            "requirement": {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
-                            }
-                        }
+                        "lock": null
                     },
                     "Access Locked": {
                         "extra": {},
@@ -4705,6 +4696,26 @@
                             "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
                                 "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": []
+                                }
+                            }
+                        }
+                    },
+                    "Access Permanently Closed": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-impossible",
+                            "requirement": {
+                                "type": "and",
                                 "data": {
                                     "comment": null,
                                     "items": []
@@ -4978,7 +4989,7 @@
                 },
                 "dock_rando": {
                     "unlocked": "Power Beam Door",
-                    "locked": "Access Closed",
+                    "locked": "Access Permanently Closed",
                     "change_from": [
                         "Access Open",
                         "Charge Beam Door",
