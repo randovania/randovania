@@ -336,6 +336,15 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "hints": hint_text,
         }
 
+    def _tilegroup_patches(self):
+        return [
+            # beam blocks -> speedboost blocks in Artaria EMMI zone speedbooster puzzle to prevent softlock
+            dict(
+                actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
+                tiletype="SPEEDBOOST"
+            )
+        ]
+
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_items)
@@ -392,6 +401,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "default_x_released": self.configuration.x_starts_released,
             },
             "door_patches": self._door_patches(),
+            "tile_group_patches": self._tilegroup_patches(),
             "objective": self._objective_patches(),
         }
 
