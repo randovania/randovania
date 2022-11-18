@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Intermediate Slope Jump and Intermediate Wall Boost to get next to the pickup in Communication Area.
 - Added: Beginner Movement for crossing Hall of Combat Mastery from the Portal Side with NSJ Screw Attack after the tunnel is destroyed. 
+- Changed: Standable Terrain to reach the upper Command Center Access door in Central Mining Station with Space Jump and Screw Attack has had its difficulty decreased from Intermediate to Beginner.
 
 ## [5.1.0] - 2022-10-01
 
