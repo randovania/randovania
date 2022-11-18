@@ -90,6 +90,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
     unassigned_docks: list[tuple[int, DockNode]] = []
 
     for player, results in filler_results.player_results.items():
+        game = results.game
         patches = results.patches
         player_docks: list[tuple[int, DockNode]] = []
 
@@ -97,7 +98,6 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
             player_docks.extend((player, node) for node in patches.all_weaknesses_to_shuffle())
 
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
-            game = results.game
             ctx = NodeContext(
                 patches,
                 patches.starting_items,

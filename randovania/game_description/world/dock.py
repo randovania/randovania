@@ -98,10 +98,12 @@ class DockType:
     long_name: str
     extra: frozendict
 
+
 @dataclass(frozen=True, slots=True)
 class DockRandoConfig:
     enable_one_way: bool
-    force_change_two_way: bool # whether a two-way door should change both sides, even if one side has an excluded weakness
+    # whether a two-way door should change both sides, even if one side has an excluded weakness
+    force_change_two_way: bool
     resolver_attempts: int
     to_shuffle_proportion: float
 

@@ -77,6 +77,7 @@ def _migrate_v10(data: dict) -> dict:
 
     return data
 
+
 def _migrate_v11(data: dict) -> dict:
     data["dock_weakness_database"]["dock_rando"] = {
         "enable_one_way": False,
