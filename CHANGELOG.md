@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
+- **Major** - Added: Door locks can now be randomized.
 - Added: The power beam breakable tiles in the Artaria AMMI zone speed boost puzzle have been changed to speed boost breakable tiles to prevent softlocks.
 - Added: Entering Golzuna's arena without releasing the X displays a message explaining why the boss won't spawn.
 - Added: All doors locked while fighting an EMMI now unlock immediately upon defeating it.
@@ -27,8 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
-- Added: Cross Bomb alternative for crossing Flash Gates
+- Added: Cross Bomb alternative for crossing Flash Gates.
+- Added: Pseudo-wave beam trick for destroying the bottom blob in Cataris' Central Unit Access.
 - Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
+- Changed: Removed the Cataris EMMI Zone Door Trigger event now that the door remains unsealed.
 - Fixed: Going to the red teleporter in Cataris no longer forces needing to use bombs.
 
 ### Metroid Prime
@@ -41,7 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: Movement(Beginner) trick for crossing HoCM from the Portal Side, after the tunnel is destroyed, with NSJ Screw Attack. 
+- Added: Intermediate Slope Jump and Intermediate Wall Boost to get next to the pickup in Communication Area.
+- Added: Beginner Movement for crossing Hall of Combat Mastery from the Portal Side with NSJ Screw Attack after the tunnel is destroyed. 
 
 ## [5.1.0] - 2022-10-01
 

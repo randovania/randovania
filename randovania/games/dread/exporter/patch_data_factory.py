@@ -292,6 +292,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 raise ValueError(
                     f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness")
 
+            if "actor_name" not in node.extra:
+                print(f"Invalid door (no actor): {node}")
+                continue
+            
             result.append({
                 "actor": (actor := self._teleporter_ref_for(node)),
                 "door_type": (door_type := weakness.extra["type"]),
