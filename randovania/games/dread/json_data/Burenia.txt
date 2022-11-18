@@ -1168,6 +1168,7 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Teleport to Ghavoran (Charge)
       After Burenia - Hub Magnet Wall and Horizontal Water Movement
   > Missile Tank Plus Platform
@@ -1653,6 +1654,7 @@ Extra - asset_id: collision_camera_013
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Main Hub Tower Bottom
       Trivial
   > Life Recharge
@@ -1788,9 +1790,7 @@ Extra - asset_id: collision_camera_015
   > Event - Destroy all Enkys
       Destroy Enky
   > Event - Ghavoran Teleport Speed Blocks Destroyed
-      All of the following:
-          # Proceeding down from here will be logically impossible with door rando enabled
-          Speed Booster and Disabled Door Lock Randomizer
+      Speed Booster and After Burenia - Early Gravity Pickup 1
 
 > Door to Early Gravity Speedboost Room 1 (Lower); Heals? False
   * Layers: default
@@ -1801,6 +1801,7 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Early Gravity Speedboost Room 1 (Upper)
       After Burenia - Ghavoran Teleoport Speed Blocks Destroyed
 
@@ -2058,6 +2059,8 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_def: None
   > Pickup (Energy Part)
       Trivial
+  > Event - Early Gravity Pickup 1
+      Trivial
 
 > Door to Teleport to Ghavoran (Lower); Heals? False
   * Layers: default
@@ -2068,6 +2071,7 @@ Extra - asset_id: collision_camera_018
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Tile Group (POWERBEAM) 2
       Can Slide
 
@@ -2148,6 +2152,15 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBEAM) 1
       Morph Ball
 
+> Event - Early Gravity Pickup 1; Heals? False
+  * Layers: default
+  * Event Burenia - Early Gravity Pickup 1
+  * Event readded so that the door does not need excluded for door rando
+
+
+  > Door to Teleport to Ghavoran (Upper)
+      Trivial
+
 ----------------
 Early Gravity Speedboost Room 2
 Extra - total_boundings: {'x1': -700.0, 'x2': 2100.0, 'y1': -8300.0, 'y2': -6000.0}
@@ -2217,7 +2230,7 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Door to Ammo Recharge South (Lower)
+  > Dock to Ammo Recharge South (Lower)
       All of the following:
           After Burenia - Destroy Gravity Suit Floor
           Any of the following:
@@ -2257,9 +2270,9 @@ Extra - asset_id: collision_camera_021
   > Breakable Floor
       After Burenia - Destroy Gravity Suit Floor
 
-> Door to Ammo Recharge South (Lower); Heals? False
+> Dock to Ammo Recharge South (Lower); Heals? False
   * Layers: default
-  * Access Open to Ammo Recharge South/Door to Gravity Suit Tower (Lower)
+  * Open Passage to Ammo Recharge South/Door to Gravity Suit Tower (Lower)
   * Extra - actor_name: doorframepresence
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2268,7 +2281,7 @@ Extra - asset_id: collision_camera_021
   * Extra - right_shield_def: None
   > Door to Gravity Suit Room (Lower)
       Before Burenia - Destroy Gravity Suit Floor
-  > Dock to Ammo Recharge South
+  > Dock to Ammo Recharge South (Middle)
       After Burenia - Destroy Gravity Suit Floor
 
 > Pickup (Missile+ Tank); Heals? False
@@ -2296,7 +2309,7 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Ammo Recharge South (Lower)
+  > Dock to Ammo Recharge South (Lower)
       All of the following:
           Before Burenia - Destroy Gravity Suit Floor
           Any of the following:
@@ -2321,9 +2334,9 @@ Extra - asset_id: collision_camera_021
   > Tile Group (MISSILE)
       Trivial
 
-> Door to Ammo Recharge South (Upper); Heals? False
+> Dock to Ammo Recharge South (Upper); Heals? False
   * Layers: default
-  * Access Open to Ammo Recharge South/Door to Gravity Suit Tower (Upper)
+  * Open Passage to Ammo Recharge South/Door to Gravity Suit Tower (Upper)
   * Extra - actor_name: doorframepresence_000
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2375,7 +2388,7 @@ Extra - asset_id: collision_camera_021
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Demolition
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Ammo Recharge South (Upper)
+  > Dock to Ammo Recharge South (Upper)
       Trivial
 
 > Start Point 2; Heals? False
@@ -2514,7 +2527,7 @@ Extra - asset_id: collision_camera_021
           Any of the following:
               Space Jump or Simple IBJ
               Speed Booster and Disabled Door Lock Randomizer
-  > Dock to Ammo Recharge South
+  > Dock to Ammo Recharge South (Middle)
       Any of the following:
           Space Jump or Before Burenia - Destroy Gravity Suit Floor
           All of the following:
@@ -2530,15 +2543,15 @@ Extra - asset_id: collision_camera_021
 > Tunnel to Ammo Recharge South; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Ammo Recharge South/Tunnel to Gravity Suit Tower
-  > Door to Ammo Recharge South (Upper)
+  > Dock to Ammo Recharge South (Upper)
       Morph Ball
 
-> Dock to Ammo Recharge South; Heals? False
+> Dock to Ammo Recharge South (Middle); Heals? False
   * Layers: default
   * Open Passage to Ammo Recharge South/Dock to Gravity Suit Tower
   > Door to Gravity Suit Room (Upper)
       After Burenia - Destroy Gravity Suit Floor
-  > Door to Ammo Recharge South (Lower)
+  > Dock to Ammo Recharge South (Lower)
       After Burenia - Destroy Gravity Suit Floor
   > Breakable Floor
       Before Burenia - Destroy Gravity Suit Floor or Horizontal Water Movement
@@ -2604,7 +2617,7 @@ Extra - polygon: [[11100.0, -8800.0], [9000.0, -8800.0], [9000.0, -10900.0], [11
 Extra - asset_id: collision_camera_022
 > Door to Gravity Suit Tower (Lower); Heals? False
   * Layers: default
-  * Sensor Lock Door to Gravity Suit Tower/Door to Ammo Recharge South (Lower)
+  * Sensor Lock Door to Gravity Suit Tower/Dock to Ammo Recharge South (Lower)
   * Extra - actor_name: doorframepresence
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2618,7 +2631,7 @@ Extra - asset_id: collision_camera_022
 
 > Door to Gravity Suit Tower (Upper); Heals? False
   * Layers: default
-  * Sensor Lock Door to Gravity Suit Tower/Door to Ammo Recharge South (Upper)
+  * Sensor Lock Door to Gravity Suit Tower/Dock to Ammo Recharge South (Upper)
   * Extra - actor_name: doorframepresence_000
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2645,7 +2658,7 @@ Extra - asset_id: collision_camera_022
 
 > Dock to Gravity Suit Tower; Heals? False
   * Layers: default
-  * Open Passage to Gravity Suit Tower/Dock to Ammo Recharge South
+  * Open Passage to Gravity Suit Tower/Dock to Ammo Recharge South (Middle)
   > Tunnel to Gravity Suit Tower
       Morph Ball
 

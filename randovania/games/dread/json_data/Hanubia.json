@@ -2341,7 +2341,7 @@
                         "Door to Navigation Station (Top)": {
                             "type": "and",
                             "data": {
-                                "comment": "Temporary. Will likely need removed with door rando",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2350,6 +2350,15 @@
                                             "name": "Wave",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -2753,37 +2762,11 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Door rando does not matter here until Random Start support. If you can get in here, you can get the item.",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Ballspark"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Temporary until door rando. Wave likely removed at that point",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "HanubiaTankSpeed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -3002,13 +2985,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Prepare Speedboost": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -3076,30 +3052,6 @@
                             }
                         },
                         "Tile Group (BOMB)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Prepare Speedboost": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4800.0,
-                        "y": -100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "HanubiaTankSpeed",
-                    "connections": {
-                        "Door to Speedboost Puzzle Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,

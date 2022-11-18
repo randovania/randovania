@@ -573,9 +573,7 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Navigation Station (Top)
-      All of the following:
-          # Temporary. Will likely need removed with door rando
-          Wave Beam
+      Wave Beam and Disabled Door Lock Randomizer
   > Tile Group (BOMB) 1
       Trivial
 
@@ -680,10 +678,8 @@ Extra - asset_id: collision_camera_009
   * Extra - tile_types: ('BOMB',)
   > Pickup (Power Bomb Tank)
       All of the following:
+          # Door rando does not matter here until Random Start support. If you can get in here, you can get the item.
           Ballspark
-          Any of the following:
-              # Temporary until door rando. Wave likely removed at that point
-              Wave Beam or After Hanubia - Prepare Speedboost in Tank Room
   > Door from Tank Room
       Trivial
 
@@ -735,8 +731,6 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Exit West (Top)
       Trivial
-  > Event - Prepare Speedboost
-      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Layers: default
@@ -758,12 +752,6 @@ Extra - asset_id: collision_camera_010
   > Dock to EMMI Zone Exit West (Top)
       Trivial
   > Tile Group (BOMB)
-      Trivial
-
-> Event - Prepare Speedboost; Heals? False
-  * Layers: default
-  * Event Hanubia - Prepare Speedboost in Tank Room
-  > Door to Speedboost Puzzle Room
       Trivial
 
 ----------------

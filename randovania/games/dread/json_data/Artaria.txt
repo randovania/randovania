@@ -699,7 +699,8 @@ Extra - asset_id: collision_camera_006
   > Door to Teleport to Dairon (Thermal)
       Any of the following:
           # Spider ceiling wall here. Probably don't need an event for it.
-          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          Spider Magnet or Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
   > Door to EMMI Zone Ballspark Hallway
       Any of the following:
           Flash Shift or Simple IBJ or Use Spin Boost
@@ -736,6 +737,7 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Teleport to Dairon (Lower)
       Trivial
 
@@ -2335,16 +2337,16 @@ Extra - asset_id: collision_camera_022
   * Extra - right_shield_def: None
   > Door to David Jaffe Room
       After Artaria - Thermal Device East Blob
-  > Door to Invisible Corpius Room
+  > Dock to Invisible Corpius Room
       After Artaria - Thermal Device West Blob
   > Event - Thermal Device East Blob
       Lay Bomb or Shoot Beam
   > Event - Thermal Device West Blob
       Wave Beam or Pseudo-Wave Beam (Intermediate)
 
-> Door to Invisible Corpius Room; Heals? False
+> Dock to Invisible Corpius Room; Heals? False
   * Layers: default
-  * Access Open to Invisible Corpius Room/Door to Thermal Door Tutorial
+  * Open Passage to Invisible Corpius Room/Door to Thermal Door Tutorial
   * Extra - actor_name: doorpresenceframe_000
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2369,7 +2371,7 @@ Extra - asset_id: collision_camera_022
   * Event Artaria - Thermal Device West Blob
   * Extra - actor_name: db_reg_cv_021
   * Extra - actor_def: actordef:actors/props/db_reg_cv_020/charclasses/db_reg_cv_020.bmsad
-  > Door to Invisible Corpius Room
+  > Dock to Invisible Corpius Room
       Trivial
 
 > Door to Magma Flow Vista; Heals? False
@@ -2522,7 +2524,7 @@ Extra - asset_id: collision_camera_024
 
 > Door to Lower Path to Cataris; Heals? False
   * Layers: default
-  * Sensor Lock Door to Lower Path to Cataris/Door to Hot Room Hub
+  * Sensor Lock Door to Lower Path to Cataris/Dock to Hot Room Hub
   * Extra - actor_name: doorpresenceframe_001
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2606,6 +2608,7 @@ Extra - asset_id: collision_camera_026
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Start Point
       All of the following:
           # TODO: Find heat values after constand damage numbers are decided on
@@ -2737,6 +2740,7 @@ Extra - asset_id: collision_camera_029
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Ledge above lava
       Any of the following:
           Varia Suit
@@ -3340,7 +3344,7 @@ Extra - asset_id: collision_camera_050
 
 > Door to Thermal Door Tutorial; Heals? False
   * Layers: default
-  * Sensor Lock Door to Thermal Door Tutorial/Door to Invisible Corpius Room
+  * Sensor Lock Door to Thermal Door Tutorial/Dock to Invisible Corpius Room
   * Extra - actor_name: doorpresenceframe_000
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3459,6 +3463,7 @@ Extra - asset_id: collision_camera_053
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to EMMI Zone Hub
       Trivial
 
@@ -3669,6 +3674,7 @@ Extra - asset_id: collision_camera_056
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Pickup (Missile Tank)
       Trivial
   > Tower Middle
@@ -3878,6 +3884,7 @@ Extra - asset_id: collision_camera_059
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Water Reservoir
       Trivial
 
@@ -4640,9 +4647,9 @@ Path to Corpius
 Extra - total_boundings: {'x1': 10800.0, 'x2': 15900.0, 'y1': -900.0, 'y2': 200.0}
 Extra - polygon: [[15900.0, 200.0], [10800.0, 200.0], [10800.0, -900.0], [15900.0, -900.0]]
 Extra - asset_id: collision_camera_072
-> Door to Phantom Cloak Tutorial; Heals? False
+> Dock to Phantom Cloak Tutorial; Heals? False
   * Layers: default
-  * Access Open to Phantom Cloak Tutorial/Door to Path to Corpius
+  * Open Passage to Phantom Cloak Tutorial/Door to Path to Corpius
   * Extra - actor_name: Door052
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4668,7 +4675,7 @@ Extra - asset_id: collision_camera_072
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Scorpius
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Phantom Cloak Tutorial
+  > Dock to Phantom Cloak Tutorial
       Can Slide
   > Door to Early Cloak Room
       Trivial
@@ -4692,7 +4699,7 @@ Extra - asset_id: collision_camera_073
 
 > Door to Path to Corpius; Heals? False
   * Layers: default
-  * Sensor Lock Door to Path to Corpius/Door to Phantom Cloak Tutorial
+  * Sensor Lock Door to Path to Corpius/Dock to Phantom Cloak Tutorial
   * Extra - actor_name: Door052
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4960,9 +4967,9 @@ Lower Path to Cataris
 Extra - total_boundings: {'x1': 26800.0, 'x2': 31800.0, 'y1': 1400.0, 'y2': 3000.0}
 Extra - polygon: [[31800.0, 3000.0], [26800.0, 3000.0], [26800.0, 1400.0], [31800.0, 1400.0]]
 Extra - asset_id: collision_camera_079
-> Door to Hot Room Hub; Heals? False
+> Dock to Hot Room Hub; Heals? False
   * Layers: default
-  * Access Open to Hot Room Hub/Door to Lower Path to Cataris
+  * Open Passage to Hot Room Hub/Door to Lower Path to Cataris
   * Extra - actor_name: doorpresenceframe_001
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4994,7 +5001,7 @@ Extra - asset_id: collision_camera_079
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Hot Room Hub
+  > Dock to Hot Room Hub
       Any of the following:
           Flash Shift or Speed Booster or Can Slide or Use Spin Boost
           Stand on Frozen Enemy (Beginner) and Shoot Ice Missile

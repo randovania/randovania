@@ -460,6 +460,7 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Dock to Blue EMMI Introduction
       Trivial
 
@@ -491,6 +492,7 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Flipper Room
       Trivial
   > Navigation Room
@@ -2306,6 +2308,7 @@ Extra - asset_id: collision_camera_026
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Before Golzuna
       After Elun - Release X Parasites
   > Start Point
@@ -2553,12 +2556,8 @@ blast shields
       Trivial
   > Pickup (Missile Tank)
       All of the following:
-          # Item logically unattainable if Door Lock Rando is enabled.
-          Speed Booster and Disabled Door Lock Randomizer
-          Any of the following:
-              # Speed can be charged either to the right, requiring grapple beam, or to the left, after flipping the spinner.
-              Grapple Beam
-              After Ghavoran - Super Missile Rotatable and Shoot Super Missile
+          # Currently, this item does not care which direction you come from. if you can enter here, you can get the item. Will need looked at once Random Start/Transports is supported.
+          Speed Booster
 
 ----------------
 Spin Boost Room
@@ -2884,6 +2883,7 @@ Extra - asset_id: collision_camera_033
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Tile Group (BOMB) 1
       Morph Ball
 
