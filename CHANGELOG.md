@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New Highly Dangerous Logic setting for enabling situations that may be unrecoverable upon saving.
 - Added: Cross Bomb alternative for crossing Flash Gates.
 - Added: Pseudo-wave beam trick for destroying the bottom blob in Cataris' Central Unit Access.
+- Added: Traversal through Ghavoran Total Recharge Station North without Morph Ball, before pulling the grapple block, by destroying the left Enky.
 - Changed: Cataris' Thermal Device Room North now forces picking the Energy Tank pickup and the Magnet Wall Thermal Device event before going to the Final Thermal Device, or uses Highly Dangerous Logic.
 - Changed: Removed the Cataris EMMI Zone Door Trigger event now that the door remains unsealed.
 - Fixed: Going to the red teleporter in Cataris no longer forces needing to use bombs.
