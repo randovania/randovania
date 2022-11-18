@@ -194,7 +194,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                  )
         ], {})
     ])
-    game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], {}, {}, (None, None)),
+    game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], {}, {}, (None, None), None),
                            echoes_resource_database, ("default",), Requirement.impossible(),
                            None, {}, None, world_list)
 

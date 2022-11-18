@@ -26,7 +26,11 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         # Mode
         self.mode_combo.setItemData(0, DockRandoMode.VANILLA)
         self.mode_combo.setItemData(1, DockRandoMode.TWO_WAY)
-        self.mode_combo.setItemData(2, DockRandoMode.ONE_WAY)
+        if game_description.dock_weakness_database.dock_rando_config.enable_one_way:
+            self.mode_combo.setItemData(2, DockRandoMode.ONE_WAY)
+        else:
+            self.mode_combo.setMaxCount(2)
+
         signal_handling.on_combo(self.mode_combo, self._on_mode_changed)
 
         # Types
