@@ -41,10 +41,10 @@ async def _process_command_async(args: list[str], input_data: str, read_callback
                                                    stdout=asyncio.subprocess.PIPE,
                                                    stderr=asyncio.subprocess.STDOUT)
 
-    await asyncio.wait([
+    await asyncio.gather(
         _write_data(process.stdin, input_data),
         _read_data(process.stdout, read_callback),
-    ])
+    )
     await process.wait()
 
 

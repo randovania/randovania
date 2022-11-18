@@ -123,6 +123,7 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
     description = MagicMock(spec=LayoutDescription)
     description.all_patches = {0: MagicMock()}
     description.get_preset.return_value = preset
+    description.get_seed_for_player.return_value = 1000
 
     # Setup
     pickup = pickup_creator.create_major_item(
