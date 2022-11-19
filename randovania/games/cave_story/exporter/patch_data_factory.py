@@ -11,7 +11,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
@@ -78,7 +78,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
         hints = {}
         for logbook_node in game_description.world_list.iterate_nodes():
-            if not isinstance(logbook_node, LogbookNode):
+            if not isinstance(logbook_node, HintNode):
                 continue
 
             mapname = logbook_node.extra.get("event_map",

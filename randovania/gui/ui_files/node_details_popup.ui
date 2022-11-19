@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>556</width>
-    <height>691</height>
+    <height>698</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -268,17 +268,17 @@
      </item>
      <item>
       <property name="text">
-       <string>Translator Gate</string>
+       <string>Configurable</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Logbook</string>
+       <string>Hint</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Player Ship</string>
+       <string>Teleporter Network</string>
       </property>
      </item>
     </widget>
@@ -596,9 +596,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_translator_gate">
+     <widget class="QWidget" name="tab_configurable">
       <attribute name="title">
-       <string>Translator Gate</string>
+       <string>Configurable</string>
       </attribute>
       <layout class="QGridLayout" name="translator_gate_layout">
        <property name="leftMargin">
@@ -628,119 +628,24 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_logbook">
+     <widget class="QWidget" name="tab_hint">
       <attribute name="title">
-       <string>Logbook</string>
+       <string>Hint</string>
       </attribute>
-      <layout class="QGridLayout" name="logbook_layout">
-       <property name="leftMargin">
-        <number>2</number>
-       </property>
-       <property name="topMargin">
-        <number>2</number>
-       </property>
-       <property name="rightMargin">
-        <number>2</number>
-       </property>
-       <property name="bottomMargin">
-        <number>2</number>
-       </property>
-       <item row="2" column="0">
-        <widget class="QLabel" name="logbook_extra_label">
+      <layout class="QGridLayout" name="hint_layout">
+       <item row="1" column="0" colspan="2">
+        <widget class="QPushButton" name="hint_requirement_to_collect_button">
          <property name="text">
-          <string>Extra:</string>
+          <string>Edit requirement to collect</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="lore_type_combo">
-         <item>
-          <property name="text">
-           <string>Requires Item</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Specific Pickup</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Generic</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Sky Temple Key Hint</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="logbook_extra_combo"/>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="logbook_string_asset_id_edit"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="logbook_string_asset_id_label">
-         <property name="text">
-          <string>String asset id</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="lore_type_label">
-         <property name="text">
-          <string>Lore type:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <spacer name="verticalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_player_ship">
-      <attribute name="title">
-       <string>Player Ship</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="player_ship_layout">
-       <property name="leftMargin">
-        <number>2</number>
-       </property>
-       <property name="topMargin">
-        <number>2</number>
-       </property>
-       <property name="rightMargin">
-        <number>2</number>
-       </property>
-       <property name="bottomMargin">
-        <number>2</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="player_ship_unlocked_button">
-         <property name="text">
-          <string>Edit unlocked by</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="player_ship_unlocked_group">
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="hint_requirement_to_collect_group">
          <property name="title">
           <string/>
          </property>
-         <layout class="QGridLayout" name="player_ship_unlocked_layout">
+         <layout class="QGridLayout" name="hint_requirement_to_collect_layout">
           <property name="leftMargin">
            <number>2</number>
           </property>
@@ -757,6 +662,107 @@
            <number>2</number>
           </property>
          </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="hint_kind_label">
+         <property name="text">
+          <string>Kind</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="hint_kind_combo"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_teleporter_network">
+      <attribute name="title">
+       <string>Teleporter Network</string>
+      </attribute>
+      <layout class="QGridLayout" name="teleporter_network_layout">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item row="3" column="0" colspan="2">
+        <widget class="QPushButton" name="teleporter_network_unlocked_button">
+         <property name="text">
+          <string>Edit unlocked by</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="teleporter_network_edit"/>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QGroupBox" name="teleporter_network_unlocked_group">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="teleporter_network_unlocked_layout">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="teleporter_network_label">
+         <property name="text">
+          <string>Network name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QGroupBox" name="teleporter_network_activate_group">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="teleporter_network_activate_layout">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QPushButton" name="teleporter_network_activate_button">
+         <property name="text">
+          <string>Edit requirement to activate</string>
+         </property>
         </widget>
        </item>
       </layout>

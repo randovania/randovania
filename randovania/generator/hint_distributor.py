@@ -14,7 +14,7 @@ from randovania.game_description.hint import (
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.hint_node import HintNodeKind, HintNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
@@ -52,7 +52,7 @@ class HintDistributor(ABC):
         return [
             prefill.game.world_list.identifier_for_node(node)
             for node in prefill.game.world_list.iterate_nodes()
-            if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
+            if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
         ]
 
     async def get_specific_pickup_precision_pair_overrides(self, patches: GamePatches, prefill: PreFillParams
@@ -68,13 +68,13 @@ class HintDistributor(ABC):
 
         wl = prefill.game.world_list
         for node in wl.iterate_nodes():
-            if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
+            if isinstance(node, HintNode) and node.kind == HintNodeKind.SPECIFIC_PICKUP:
                 identifier = wl.identifier_for_node(node)
                 patches = patches.assign_hint(
                     identifier,
                     Hint(HintType.LOCATION,
                          specific_location_precisions.get(identifier, default_precision),
-                         PickupIndex(node.hint_index))
+                         PickupIndex(node.extra["hint_index"]))
                 )
 
         return patches
@@ -84,7 +84,7 @@ class HintDistributor(ABC):
 
     async def assign_guaranteed_indices_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                               prefill: PreFillParams) -> GamePatches:
-        # Specific Pickup/any LogbookNode Hints
+        # Specific Pickup/any HintNode
         indices_with_hint = await self.get_guranteed_hints(patches, prefill)
         prefill.rng.shuffle(indices_with_hint)
 
@@ -172,7 +172,7 @@ class HintDistributor(ABC):
         potential_hint_locations: set[NodeIdentifier] = {
             world_list.identifier_for_node(node)
             for node in world_list.iterate_nodes()
-            if isinstance(node, LogbookNode)
+            if isinstance(node, HintNode)
         }
         for logbook in potential_hint_locations:
             if logbook not in hint_initial_pickups:

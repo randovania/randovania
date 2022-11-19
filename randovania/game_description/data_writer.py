@@ -22,10 +22,10 @@ from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock import DockRandoParams, DockWeaknessDatabase, DockWeakness, DockLock
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.hint_node import HintNodeKind, HintNode
 from randovania.game_description.world.node import Node, GenericNode
 from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -299,22 +299,18 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "configurable_node"
         data.update(common_fields)
 
-    elif isinstance(node, LogbookNode):
-        data["node_type"] = "logbook"
+    elif isinstance(node, HintNode):
+        data["node_type"] = "hint"
         data.update(common_fields)
-        data["string_asset_id"] = node.string_asset_id
-        data["lore_type"] = node.lore_type.value
+        data["kind"] = node.kind.value
+        data["requirement_to_collect"] = write_requirement(node.requirement_to_collect)
 
-        if node.lore_type == LoreType.REQUIRES_ITEM:
-            data["extra"]["translator"] = node.required_translator.short_name
-
-        elif node.lore_type in {LoreType.SPECIFIC_PICKUP, LoreType.SKY_TEMPLE_KEY_HINT}:
-            data["extra"]["hint_index"] = node.hint_index
-
-    elif isinstance(node, PlayerShipNode):
-        data["node_type"] = "player_ship"
+    elif isinstance(node, TeleporterNetworkNode):
+        data["node_type"] = "teleporter_network"
         data.update(common_fields)
         data["is_unlocked"] = write_requirement(node.is_unlocked)
+        data["network"] = node.network
+        data["requirement_to_activate"] = write_requirement(node.requirement_to_activate)
 
     else:
         raise ValueError(f"Unknown node class: {node}")

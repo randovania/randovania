@@ -10,10 +10,11 @@ from randovania.game_description.hint import (
     Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair,
     RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple,
 )
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world import World
@@ -35,8 +36,9 @@ def _players_configuration() -> PlayersConfiguration:
 def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     nc = NodeIdentifier.create
 
-    logbook_node = LogbookNode(nc("World", "Area", "Logbook A"),
-                               0, True, None, "", ("default",), {}, asset_id, None, None, None, None)
+    logbook_node = HintNode(nc("World", "Area", "Logbook A"),
+                            0, True, None, "", ("default",), {"string_asset_id": asset_id}, None,
+                            Requirement.trivial())
     pickup_node = PickupNode(nc("World", "Area", "Pickup Node"),
                              1, True, None, "", ("default",), {}, pickup_index, True)
 
@@ -68,13 +70,13 @@ def test_create_hints_nothing(echoes_game_patches, players_config, monkeypatch, 
     asset_id = 1000
     pickup_index = PickupIndex(0)
 
-    logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
+    hint_node, _, world_list = _create_world_list(asset_id, pickup_index)
     monkeypatch.setattr(echoes_game_description, "world_list", world_list)
 
     patches = dataclasses.replace(
         echoes_game_patches,
         hints={
-            world_list.identifier_for_node(logbook_node): Hint(
+            world_list.identifier_for_node(hint_node): Hint(
                 HintType.LOCATION,
                 PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED,
                               include_owner=False),

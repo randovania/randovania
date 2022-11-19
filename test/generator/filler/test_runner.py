@@ -10,7 +10,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
@@ -28,7 +28,7 @@ async def test_run_filler(echoes_game_description,
     status_update = MagicMock()
 
     hint_identifiers = [echoes_game_description.world_list.identifier_for_node(node)
-                        for node in echoes_game_description.world_list.iterate_nodes() if isinstance(node, LogbookNode)]
+                        for node in echoes_game_description.world_list.iterate_nodes() if isinstance(node, HintNode)]
 
     player_pools = [
         await create_player_pool(rng, default_echoes_configuration, 0, 1),
@@ -68,7 +68,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_
     # Setup
     rng = Random(5000)
     expected_logbooks = sum(1 for node in echoes_game_description.world_list.iterate_nodes()
-                            if isinstance(node, LogbookNode))
+                            if isinstance(node, HintNode))
     hint_distributor = echoes_game_description.game.generator.hint_distributor
 
     # Run

@@ -14,12 +14,12 @@ from randovania.game_description.world.area import Area
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.hint_node import HintNodeKind, HintNode
 from randovania.game_description.world.node import (
     Node
 )
 from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -109,19 +109,16 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
     elif isinstance(node, ConfigurableNode):
         return f"Configurable Node"
 
-    elif isinstance(node, LogbookNode):
-        message = ""
-        if node.lore_type == LoreType.REQUIRES_ITEM:
-            message = f" ({node.required_translator.long_name})"
-        return f"Logbook {node.lore_type.long_name}{message} for {node.string_asset_id:x}"
+    elif isinstance(node, HintNode):
+        return f"Hint"
 
-    elif isinstance(node, PlayerShipNode):
+    elif isinstance(node, TeleporterNetworkNode):
         unlocked_pretty = list(pretty_print_requirement(node.is_unlocked))
         if len(unlocked_pretty) > 1:
             unlocked_by = "Complex requirement"
         else:
             unlocked_by = unlocked_pretty[0][1]
-        return f"Player Ship (Unlocked by {unlocked_by})"
+        return f"Teleporter Network (Unlocked by {unlocked_by})"
 
     return ""
 
