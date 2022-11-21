@@ -200,7 +200,7 @@ class RequestPresetsView(discord.ui.View):
     )
     async def button_callback(self, button: Button, interaction: discord.Interaction):
         try:
-            title = (await interaction.original_message()).embeds[0].title
+            title = (await interaction.original_response()).embeds[0].title
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 

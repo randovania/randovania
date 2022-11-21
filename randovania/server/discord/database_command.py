@@ -216,7 +216,7 @@ class SelectNodesItem(discord.ui.Select):
         await r.defer()
 
         db = default_database.game_description_for(self.game)
-        original_message = await interaction.original_message()
+        original_response = await interaction.original_response()
 
         def snipped_message(n: str) -> str:
             return f"\n{n}: *Skipped*\n"
@@ -267,7 +267,7 @@ class SelectNodesItem(discord.ui.Select):
             body_by_node[name] = body
 
         snipped = "*(message too long, skipped)*"
-        space_left = 6000 - len(original_message.content)
+        space_left = 6000 - len(original_response.content)
         for name, body in body_by_node.items():
             space_left -= len(name) + len(snipped)
 
@@ -285,7 +285,7 @@ class SelectNodesItem(discord.ui.Select):
             ))
 
         logging.info("Updating visible nodes of %s: %s", self.area.area.name, str(self.values))
-        await original_message.edit(
+        await original_response.edit(
             embeds=embeds,
         )
 
