@@ -92,6 +92,9 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
 
         def draw_connections_from(source_node: Node):
             for target_node, requirement in area.connections[source_node].items():
+                if target_node.is_derived_node:
+                    continue
+
                 source = location_to_pos(source_node.location)
                 target = location_to_pos(target_node.location)
 
@@ -209,14 +212,8 @@ class SelectNodesItem(discord.ui.Select):
         return [node for node in sorted(self.area.area.nodes, key=lambda it: it.name)
                 if not node.is_derived_node]
 
-    async def callback(self, interaction: discord.Interaction):
-        r = interaction.response
-        assert isinstance(r, discord.InteractionResponse)
-
-        await r.defer()
-
+    def _describe_selected_connections(self, original_content: str):
         db = default_database.game_description_for(self.game)
-        original_response = await interaction.original_response()
 
         def snipped_message(n: str) -> str:
             return f"\n{n}: *Skipped*\n"
@@ -239,6 +236,9 @@ class SelectNodesItem(discord.ui.Select):
             node_bodies = []
 
             for target_node, requirement in db.world_list.area_connections_from(node):
+                if target_node.is_derived_node:
+                    continue
+
                 extra_lines = []
                 for level, text in pretty_print.pretty_print_requirement(requirement.simplify()):
                     extra_lines.append("{}{}".format("  " * level, text))
@@ -267,7 +267,7 @@ class SelectNodesItem(discord.ui.Select):
             body_by_node[name] = body
 
         snipped = "*(message too long, skipped)*"
-        space_left = 6000 - len(original_response.content)
+        space_left = 6000 - len(original_content)
         for name, body in body_by_node.items():
             space_left -= len(name) + len(snipped)
 
@@ -283,6 +283,24 @@ class SelectNodesItem(discord.ui.Select):
                 title=name,
                 description=body,
             ))
+
+        return embeds
+
+    async def callback(self, interaction: discord.Interaction):
+        r = interaction.response
+        assert isinstance(r, discord.InteractionResponse)
+
+        await r.defer()
+        original_response = await interaction.original_response()
+
+        try:
+            embeds = self._describe_selected_connections(original_response.content)
+        except Exception as e:
+            logging.exception("Error updating visible nodes of %s: %s", self.area.area.name, str(self.values))
+            embeds = [discord.Embed(
+                title="Error describing area",
+                description=str(e),
+            )]
 
         logging.info("Updating visible nodes of %s: %s", self.area.area.name, str(self.values))
         await original_response.edit(
