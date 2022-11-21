@@ -69,7 +69,7 @@ async def test_on_database_world_selected():
     await item.callback(ctx)
 
     # Assert
-    ctx.edit_original_message.assert_awaited_once_with(
+    ctx.edit_original_response.assert_awaited_once_with(
         embed=ANY,
         view=view,
     )

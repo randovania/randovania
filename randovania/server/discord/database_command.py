@@ -319,7 +319,7 @@ class SelectAreaItem(discord.ui.Select):
         ]
         if not valid_items:
             await r.defer()
-            return await interaction.edit_original_message(
+            return await interaction.edit_original_response(
                 view=None, embeds=[],
                 content=f"Invalid selected option, unable to find given world subset '{option_selected}'."
             )
@@ -377,7 +377,7 @@ class SelectSplitWorldItem(discord.ui.Select):
             if it.command_id == option_selected
         ]
         if not valid_items:
-            return await interaction.edit_original_message(
+            return await interaction.edit_original_response(
                 view=None, embeds=[],
                 content=f"Invalid selected option, unable to find given world subset '{option_selected}'."
             )
@@ -388,7 +388,7 @@ class SelectSplitWorldItem(discord.ui.Select):
 
         logging.info("Responding to area selection for section %s with %d options.",
                      split_world.name, len(split_world.areas))
-        return await interaction.edit_original_message(
+        return await interaction.edit_original_response(
             embed=embed,
             view=split_world.view,
         )
@@ -407,7 +407,7 @@ class BackToGameButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         # defer is needed to be able to edit the original message.
         await interaction.response.defer()
-        return await interaction.edit_original_message(
+        return await interaction.edit_original_response(
             embed=Embed(title=f"{self.game.long_name} Database", description="Choose the world subset to visualize."),
             view=self.response_view,
         )
