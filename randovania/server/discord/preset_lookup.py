@@ -217,7 +217,7 @@ class RequestPresetsView(discord.ui.View):
                     discord.File(data, filename=f"Player {player + 1}'s Preset.{VersionedPreset.file_extension()}")
                 )
 
-        await interaction.edit_original_message(
+        await interaction.edit_original_response(
             view=None,
             files=files,
         )
@@ -303,7 +303,7 @@ class PermalinkLookupCog(RandovaniaCog):
         except asyncio.TimeoutError:
             content = "Timeout after "
         except Exception as e:
-            return await response.edit_original_message(
+            return await response.edit_original_response(
                 content=f"Unexpected error when generating: {e} ({type(e)})",
             )
 
@@ -319,7 +319,7 @@ class PermalinkLookupCog(RandovaniaCog):
                 content=f"{content}\nRequested by {context.user.display_name}.",
                 files=files, embeds=embeds, mention_author=False)
         except discord.errors.Forbidden:
-            return await response.edit_original_message(content=content, files=files, embeds=embeds)
+            return await response.edit_original_response(content=content, files=files, embeds=embeds)
 
     @discord.Cog.listener()
     async def on_message(self, message: discord.Message):
