@@ -6,7 +6,7 @@ from randovania.game_description.resources.resource_info import ResourceCollecti
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_sky_temple_key
-from randovania.resolver.exceptions import InvalidConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 
 
 def add_sky_temple_key_distribution_logic(game: GameDescription,

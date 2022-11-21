@@ -7,7 +7,7 @@ from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_major_item
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.resolver.exceptions import InvalidConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 
 
 def _find_ammo_for(ammo_index: tuple[str, ...],
