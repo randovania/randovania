@@ -8,6 +8,8 @@ import random
 import re
 import subprocess
 import time
+import typing
+from typing import Callable
 
 import discord
 from discord.ui import Button
@@ -223,20 +225,41 @@ class RequestPresetsView(discord.ui.View):
         )
 
 
+T = typing.TypeVar("T")
+
+
+async def _try_get(message: discord.Message, attachment: discord.Attachment, decoder: Callable[[dict], T]) -> T | None:
+    try:
+        data = await attachment.read()
+        return decoder(json.loads(data.decode("utf-8")))
+    except Exception as e:
+        logging.exception(f"Unable to process {attachment.filename} from {message}")
+        await message.reply(
+            embed=discord.Embed(
+                title=f"Unable to process {attachment.filename}",
+                description=str(e),
+            ),
+            mention_author=False
+        )
+        return None
+
+
 async def _get_presets_from_message(message: discord.Message):
     for attachment in message.attachments:
         filename: str = attachment.filename
         if filename.endswith(VersionedPreset.file_extension()):
-            data = await attachment.read()
-            yield VersionedPreset(json.loads(data.decode("utf-8")))
+            result = await _try_get(message, attachment, VersionedPreset)
+            if result is not None:
+                yield result
 
 
 async def _get_layouts_from_message(message: discord.Message):
     for attachment in message.attachments:
         filename: str = attachment.filename
         if filename.endswith(LayoutDescription.file_extension()):
-            data = await attachment.read()
-            yield LayoutDescription.from_json_dict(json.loads(data.decode("utf-8")))
+            result = await _try_get(message, attachment, LayoutDescription.from_json_dict)
+            if result is not None:
+                yield result
 
 
 class PermalinkLookupCog(RandovaniaCog):
