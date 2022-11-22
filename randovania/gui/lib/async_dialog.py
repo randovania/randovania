@@ -1,4 +1,5 @@
 import asyncio
+import typing
 
 from PySide6 import QtWidgets
 
@@ -35,7 +36,7 @@ async def message_box(parent: QtWidgets.QWidget | None,
     box = QtWidgets.QMessageBox(icon, title, text, buttons, parent)
     box.setDefaultButton(default_button)
     common_qt_lib.set_default_window_icon(box)
-    return await execute_dialog(box)
+    return typing.cast(StandardButton, await execute_dialog(box))
 
 
 async def warning(parent: QtWidgets.QWidget | None,

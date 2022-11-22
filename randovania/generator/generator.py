@@ -25,8 +25,8 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
 from randovania.resolver.exceptions import (GenerationFailure,
-                                            ImpossibleForSolver,
-                                            InvalidConfiguration)
+                                            ImpossibleForSolver)
+from randovania.layout.exceptions import InvalidConfiguration
 
 
 def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
@@ -279,11 +279,11 @@ async def generate_and_validate_description(generator_params: GeneratorParameter
         try:
             final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)
         except asyncio.TimeoutError as e:
-            raise GenerationFailure("Timeout reached when validating possibility",
-                                    generator_params=generator_params, source=e) from e
+            raise ImpossibleForSolver("Timeout reached when validating possibility",
+                                      generator_params=generator_params, layout=result) from e
 
         if final_state_by_resolve is None:
-            raise GenerationFailure("Generated game was considered impossible by the solver",
-                                    generator_params=generator_params, source=ImpossibleForSolver())
+            raise ImpossibleForSolver("Generated game was considered impossible by the solver",
+                                      generator_params=generator_params, layout=result)
 
     return result
