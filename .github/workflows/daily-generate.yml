@@ -1,0 +1,23 @@
+name: Daily Test Generate
+
+on:
+  schedule:
+    - cron: '0 23 * * *'
+
+jobs:
+  report:
+    runs-on: self-hosted
+    container:
+      image: randovania/server:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Bulk Generate
+        run:
+          ./tools/bulk_generate_for_discord.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
