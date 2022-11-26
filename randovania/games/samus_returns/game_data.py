@@ -46,7 +46,7 @@ def _exporter():
 game_data: game.GameData = game.GameData(
     short_name="MSR",
     long_name="Metroid: Samus Returns",
-    development_state=game.DevelopmentState.DEVELOPMENT,
+    development_state=game.DevelopmentState.EXPERIMENTAL,
 
     presets=[
         {
