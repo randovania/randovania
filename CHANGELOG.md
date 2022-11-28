@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A warning is now displayed when using presets with unsupported features enabled. These features are not present in the UI.
 - Added: When the generated game fails due to the solver, you're now offered to retry, cancel or keep the generated game.
 - Changed: Experimental games are no longer available on stable versions.
+- Fixed: Solver debug now contains previously missing rollback instances.
 
 ### Cave Story
 
