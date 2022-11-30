@@ -1,5 +1,5 @@
 {
-    "schema_version": 11,
+    "schema_version": 12,
     "game": "samus_returns",
     "resource_database": {
         "items": {
@@ -66,28 +66,28 @@
                 "long_name": "Scan Pulse",
                 "max_capacity": 1,
                 "extra": {
-                    "item_id": "ITEM_SCANNINGPULSE"
+                    "item_id": "ITEM_SPECIAL_ENERGY_SCANNING_PULSE"
                 }
             },
             "Armor": {
                 "long_name": "Lighting Armor",
                 "max_capacity": 1,
                 "extra": {
-                    "item_id": "ITEM_ENERGYSHIELD"
+                    "item_id": "ITEM_SPECIAL_ENERGY_ENERGY_SHIELD"
                 }
             },
             "Burst": {
                 "long_name": "Beam Burst",
                 "max_capacity": 1,
                 "extra": {
-                    "item_id": "ITEM_ENERGYWAVE"
+                    "item_id": "ITEM_SPECIAL_ENERGY_ENERGY_WAVE"
                 }
             },
             "Phase": {
                 "long_name": "Phase Drift",
                 "max_capacity": 1,
                 "extra": {
-                    "item_id": "ITEM_PHASEDISPLACEMENT"
+                    "item_id": "ITEM_SPECIAL_ENERGY_PHASE_DISPLACEMENT"
                 }
             },
             "PowerSuit": {
@@ -165,6 +165,13 @@
                     "item_id": "ITEM_SCREW_ATTACK"
                 }
             },
+            "Baby": {
+                "long_name": "Baby Metroid",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": "ITEM_BABY_HATCHLING"
+                }
+            },
             "ETank": {
                 "long_name": "Energy Tank",
                 "max_capacity": 10,
@@ -188,13 +195,6 @@
                     "item_capacity_id": "ITEM_WEAPON_SUPER_MISSILE_MAX"
                 }
             },
-            "Aeion": {
-                "long_name": "Aeion Tank",
-                "max_capacity": 2000,
-                "extra": {
-                    "item_id": "ITEM_SENERGY_TANKS"
-                }
-            },
             "PBAmmo": {
                 "long_name": "Power Bomb",
                 "max_capacity": 99,
@@ -203,8 +203,16 @@
                     "item_capacity_id": "ITEM_WEAPON_POWER_BOMB_MAX"
                 }
             },
-            "Baby": {
-                "long_name": "Baby Metroid",
+            "Aeion": {
+                "long_name": "Aeion",
+                "max_capacity": 2000,
+                "extra": {
+                    "item_id": "ITEM_CURRENT_SPECIAL_ENERGY",
+                    "item_capacity_id": "ITEM_MAX_SPECIAL_ENERGY"
+                }
+            },
+            "Command Visor": {
+                "long_name": "Command Visor",
                 "max_capacity": 1,
                 "extra": {}
             }
@@ -587,7 +595,7 @@
                 "extra": {}
             },
             "Area 3 (Interior West) - Upper Shaft Access Grapple Block": {
-                "long_name": "Area 3 (Interior West) - Upper Shaft Access Grapple Block",
+                "long_name": "Area 3 (Interior West) - Teleporter Access Grapple Block",
                 "extra": {}
             },
             "Area 3 (Interior West) - Diggernaut Awakened": {
@@ -599,7 +607,7 @@
                 "extra": {}
             },
             "Area 3 (Interior West) - Grappling Steps Grapple Block": {
-                "long_name": "Area 3 (Interior West) - Grappling Steps Grapple Block",
+                "long_name": "Area 3 (Interior West) - Mid-Shaft Shortcut Grapple Block",
                 "extra": {}
             },
             "Area 4 (East) - Diggernaut Chase Arena Grapple Block": {
@@ -619,19 +627,19 @@
                 "extra": {}
             },
             "Area 4 (West) - Transport Area Grapple Block Left": {
-                "long_name": "Area 4 (West) - Transport Hub Grapple Block Left",
+                "long_name": "Area 4 (West) - Chozo Seals Grapple Block Left",
                 "extra": {}
             },
             "Area 4 (West) - Transport Area Grapple Block Right": {
-                "long_name": "Area 4 (West) - Transport Hub Grapple Block Right",
+                "long_name": "Area 4 (West) - Chozo Seals Grapple Block Right",
                 "extra": {}
             },
             "Area 4 (West) - Transport Area Grapple Block Pull Left": {
-                "long_name": "Area 4 (West) - Transport Hub Grapple Block Pull Left",
+                "long_name": "Area 4 (West) - Chozo Seals Grapple Block Pull Left",
                 "extra": {}
             },
             "Area 4 (West) - Transport Area Grapple Block Pull Right": {
-                "long_name": "Area 4 (West) - Transport Hub Grapple Block Pull Right",
+                "long_name": "Area 4 (West) - Chozo Seals Grapple Block Pull Right",
                 "extra": {}
             },
             "Area 4 (West) -Transport to Area 5 Entrance Grapple Block": {
@@ -736,6 +744,10 @@
             },
             "Arachnus": {
                 "long_name": "Area 2 (Exterior) - Arachnus",
+                "extra": {}
+            },
+            "DNASE": {
+                "long_name": "Surface (East) - Chozo Seal Unlocked",
                 "extra": {}
             }
         },
@@ -1669,6 +1681,12 @@
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
+        },
+        "dock_rando": {
+            "enable_one_way": false,
+            "force_change_two_way": false,
+            "resolver_attempts": 125,
+            "to_shuffle_proportion": 1.0
         }
     },
     "worlds": [
