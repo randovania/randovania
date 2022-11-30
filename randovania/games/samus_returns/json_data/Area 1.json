@@ -239,30 +239,47 @@
                     "editable": true,
                     "connections": {
                         "Door to Chozo Seal Storage": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "DNA1",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "After Crumble Bridge": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "DNA1",
+                                            "type": "items",
+                                            "name": "Screw",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "After Crumble Bridge": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -270,13 +287,13 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Screw",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -284,44 +301,27 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Morph",
+                                                                    "name": "MissileAmmo",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bomb",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "MissileAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -546,8 +546,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -12852.6537961979,
-                        "y": 1544.8459086078637,
+                        "x": -12852.65,
+                        "y": 1544.85,
                         "z": 0.0
                     },
                     "description": "",
@@ -1897,8 +1897,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Energy Tank)": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -2681,7 +2686,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Door to Alpha Arena Southeast": {
+                "Door to Alpha Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2700,7 +2705,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
-                        "area_name": "Alpha Arena Southeast",
+                        "area_name": "Alpha Arena South",
                         "node_name": "Door to Alpha Shaft Left"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2826,7 +2831,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena Southeast": {
+                        "Door to Alpha Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2990,7 +2995,7 @@
                 }
             }
         },
-        "Alpha Arena Southeast": {
+        "Alpha Arena South": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -3041,24 +3046,24 @@
                     "default_connection": {
                         "world_name": "Area 1",
                         "area_name": "Alpha Shaft Left",
-                        "node_name": "Door to Alpha Arena Southeast"
+                        "node_name": "Door to Alpha Arena South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Southeast": {
+                        "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
                         }
                     }
                 },
-                "Event - Alpha Southeast": {
+                "Event - Alpha Metroid": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 2457.5485262401153,
-                        "y": -150.50323508267434,
+                        "x": 2457.55,
+                        "y": -150.5,
                         "z": 0.0
                     },
                     "description": "",
@@ -3146,8 +3151,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 8828.48624890947,
-                        "y": 1561.0744984030525,
+                        "x": 8828.49,
+                        "y": 1561.07,
                         "z": 0.0
                     },
                     "description": "",
@@ -3155,7 +3160,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "event_name": "Alpha 4",
+                    "event_name": "Alpha 3",
                     "connections": {
                         "Door to Alpha Arena East Access": {
                             "type": "and",
@@ -5761,8 +5766,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5937.076396268744,
-                        "y": 6012.350926909907,
+                        "x": 5945.893719806763,
+                        "y": 6012.520128824477,
                         "z": 0.0
                     },
                     "description": "",
