@@ -138,6 +138,17 @@ def _get_preset(preset_json: dict) -> VersionedPreset:
         raise InvalidAction(f"invalid preset: {e}")
 
 
+def _emit_inventory_update(membership: GameSessionMembership):
+    session_id = membership.session.id
+    flask_socketio.emit("game_session_binary_inventory", (session_id, membership.row, membership.inventory),
+                        room=f"game-session-{session_id}-binary-inventory",
+                        namespace="/")
+    flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
+                                                        BinaryInventory.parse(membership.inventory)),
+                        room=f"game-session-{session_id}-json-inventory",
+                        namespace="/")
+
+
 def _emit_session_meta_update(session: GameSession):
     logger().debug("game_session_meta_update for session %d (%s)", session.id, session.name)
     flask_socketio.emit("game_session_meta_update", session.create_session_entry(), room=f"game-session-{session.id}",
@@ -717,8 +728,26 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes, 
     membership.connection_state = f"Online, {game_connection_state}"
     membership.inventory = inventory
     membership.save()
+    _emit_inventory_update(membership)
     if old_state != membership.connection_state:
         _emit_session_meta_update(membership.session)
+
+
+def game_session_watch_row_inventory(sio: ServerApp, session_id: int, row: int, watch: bool, binary: bool):
+    current_user = sio.get_current_user()
+    session = GameSession.get_by_id(session_id)
+    GameSessionMembership.get_by_ids(current_user.id, session_id)
+
+    if not (0 <= row < session.num_rows):
+        raise InvalidAction(f"Invalid row {row}")
+
+    data_format = "binary" if binary else "json"
+    room = f"game-session-{session_id}-{data_format}-inventory"
+    if watch:
+        flask_socketio.join_room(room)
+        _emit_inventory_update(GameSessionMembership.get_by_session_position(session, row))
+    else:
+        flask_socketio.leave_room(room)
 
 
 def report_user_disconnected(sio: ServerApp, user_id: int, log):
@@ -748,6 +777,7 @@ def setup_app(sio: ServerApp):
     sio.on("game_session_admin_player", game_session_admin_player)
     sio.on("game_session_collect_locations", game_session_collect_locations)
     sio.on("game_session_self_update", game_session_self_update)
+    sio.on("game_session_watch_row_inventory", game_session_watch_row_inventory)
 
     @sio.admin_route("/sessions")
     def admin_sessions(user):
