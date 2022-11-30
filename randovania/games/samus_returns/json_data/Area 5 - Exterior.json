@@ -2,14 +2,14 @@
     "name": "Area 5 - Exterior",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s065_area6b/s065_area6b.bmsld",
-        "map_min_x": 167,
-        "map_max_x": 30,
-        "map_min_y": 73,
-        "map_max_y": 53,
+        "map_min_x": 3,
+        "map_max_x": 28,
+        "map_min_y": 13,
+        "map_max_y": 4,
         "scenario_id": "s065_area6b"
     },
     "areas": {
-        "Outer Hub": {
+        "Tower": {
             "default_node": "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)",
             "valid_starting_location": false,
             "extra": {
@@ -152,8 +152,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -150.0,
-                        "y": 9000.0,
+                        "x": -54.71411140911732,
+                        "y": 8991.794443601033,
                         "z": 0.0
                     },
                     "description": "",
@@ -182,8 +182,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -7300.0,
-                        "y": -6100.0,
+                        "x": -7068.135609421476,
+                        "y": -5326.869141800065,
                         "z": 0.0
                     },
                     "description": "",
@@ -212,8 +212,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -6309.4,
-                        "y": -151.92,
+                        "x": -6192.673841292332,
+                        "y": -268.64559260946044,
                         "z": 0.0
                     },
                     "description": "",
@@ -242,8 +242,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 2200.0,
-                        "y": -2900.0,
+                        "x": 2464.670310206973,
+                        "y": -2583.755601662084,
                         "z": 0.0
                     },
                     "description": "",
@@ -264,15 +264,15 @@
                         },
                         "Door to Zeta Arena Access": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Door to Dangerous Hallway": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Door to Poison Plants Hallway": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -280,8 +280,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 3300.0,
-                        "y": -7600.0,
+                        "x": 3456.860314086669,
+                        "y": -7311.249149559455,
                         "z": 0.0
                     },
                     "description": "",
@@ -301,7 +301,7 @@
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Save Station Right": {
                             "type": "and",
@@ -323,8 +323,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -7350.0,
-                        "y": -3500.0,
+                        "x": -7097.317668359114,
+                        "y": -2836.666779121613,
                         "z": 0.0
                     },
                     "description": "",
@@ -371,7 +371,7 @@
                         },
                         "Next to Teleporter": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -379,8 +379,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 4100.0,
-                        "y": -7700.0,
+                        "x": 4196.139140506833,
+                        "y": -7330.703855517881,
                         "z": 0.0
                     },
                     "description": "",
@@ -405,8 +405,8 @@
                     "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
-                        "x": -7300.0,
-                        "y": 2300.0,
+                        "x": -6920.279844137442,
+                        "y": 2616.973668673988,
                         "z": 0.0
                     },
                     "description": "",
@@ -440,8 +440,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1597.99,
-                        "y": -296.31,
+                        "x": 1861.5744254957845,
+                        "y": -132.4626509004829,
                         "z": 0.0
                     },
                     "description": "",
@@ -456,7 +456,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Zeta Arena Access",
-                        "node_name": "Door to Outer Hub"
+                        "node_name": "Door to Tower"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
@@ -475,8 +475,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1350.0,
-                        "y": 4700.0,
+                        "x": -1348.4520576444065,
+                        "y": 4867.396780414846,
                         "z": 0.0
                     },
                     "description": "",
@@ -491,7 +491,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Dangerous Hallway",
-                        "node_name": "Door to Outer Hub"
+                        "node_name": "Door to Tower"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "override_default_open_requirement": null,
@@ -515,12 +515,19 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Wide",
+                                            "name": "Spazer",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Poison Plants Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Missile Tank Hidden)": {
@@ -548,7 +555,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -629,8 +636,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5250.0,
-                        "y": -100.0,
+                        "x": 5246.693262261806,
+                        "y": 62.08440868377147,
                         "z": 0.0
                     },
                     "description": "",
@@ -645,7 +652,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Poison Plants Hallway",
-                        "node_name": "Door to Outer Hub"
+                        "node_name": "Door to Tower"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "override_default_open_requirement": null,
@@ -664,8 +671,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4650.0,
-                        "y": -2800.0,
+                        "x": -4655.752070576726,
+                        "y": -2467.02736591153,
                         "z": 0.0
                     },
                     "description": "",
@@ -680,7 +687,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Transport to Area 5 Interior",
-                        "node_name": "Door to Outer Hub"
+                        "node_name": "Door to Tower"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -715,7 +722,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Gamma+ Arena Access",
-                        "node_name": "Door to Outer Hub"
+                        "node_name": "Door to Tower"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -786,8 +793,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4450.0,
-                        "y": -7100.0,
+                        "x": 4449.050317966365,
+                        "y": -6805.426794640396,
                         "z": 0.0
                     },
                     "description": "",
@@ -802,7 +809,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Gamma Arena",
-                        "node_name": "Door to Outer Hub"
+                        "node_name": "Door to Tower"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -821,8 +828,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -6270.49,
-                        "y": 7201.96,
+                        "x": -6105.127664479418,
+                        "y": 7260.325613301171,
                         "z": 0.0
                     },
                     "description": "",
@@ -849,8 +856,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4874.56,
-                        "y": 2963.83,
+                        "x": -4665.479423555938,
+                        "y": 3272.1108918239634,
                         "z": 0.0
                     },
                     "description": "",
@@ -862,7 +869,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Dangerous Hallway",
-                        "node_name": "Tunnel to Outer Hub"
+                        "node_name": "Tunnel to Tower"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
@@ -883,8 +890,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 3564.3731628042824,
-                        "y": 7247.014498698038,
+                        "x": 3759.749960301464,
+                        "y": 6943.012650599958,
                         "z": 0.0
                     },
                     "description": "",
@@ -965,8 +972,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -6164.464517652615,
-                        "y": -5982.979100247963,
+                        "x": -5998.126781708079,
+                        "y": -5891.055614594403,
                         "z": 0.0
                     },
                     "description": "",
@@ -1157,7 +1164,7 @@
                         },
                         "Door to Transport to Area 5 Interior": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -1165,8 +1172,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -6716.005431573975,
-                        "y": 2310.562049828788,
+                        "x": -6062.327311370882,
+                        "y": 2351.416932341481,
                         "z": 0.0
                     },
                     "description": "",
@@ -1186,7 +1193,7 @@
                         },
                         "Door to Dangerous Hallway": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Door to Transport to Area 5 Interior": {
                             "type": "and",
@@ -1208,8 +1215,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -7308.401228008029,
-                        "y": 1759.0211359074274,
+                        "x": -6409.593812728775,
+                        "y": 2841.6755224938015,
                         "z": 0.0
                     },
                     "description": "",
@@ -1273,8 +1280,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -1281.77,
-                        "y": 3139.65,
+                        "x": -1088.9607710022228,
+                        "y": 3239.8825925482215,
                         "z": 0.0
                     },
                     "description": "",
@@ -1288,7 +1295,7 @@
                     "pickup_index": 110,
                     "major_location": false,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1315,8 +1322,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4377.94,
-                        "y": 3148.07,
+                        "x": -4215.832701036966,
+                        "y": 3239.8825925482215,
                         "z": 0.0
                     },
                     "description": "",
@@ -1330,7 +1337,7 @@
                     "pickup_index": 116,
                     "major_location": false,
                     "connections": {
-                        "Tunnel to Outer Hub": {
+                        "Tunnel to Tower": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1341,12 +1348,12 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1350.0,
-                        "y": 4700.0,
+                        "x": -1374.6256139930515,
+                        "y": 4853.502921874792,
                         "z": 0.0
                     },
                     "description": "",
@@ -1360,7 +1367,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Outer Hub",
+                        "area_name": "Tower",
                         "node_name": "Door to Dangerous Hallway"
                     },
                     "default_dock_weakness": "Super Missile Door",
@@ -1380,12 +1387,12 @@
                         }
                     }
                 },
-                "Tunnel to Outer Hub": {
+                "Tunnel to Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4874.56,
-                        "y": 2963.83,
+                        "x": -4679.072986968039,
+                        "y": 3054.586478175792,
                         "z": 0.0
                     },
                     "description": "",
@@ -1396,7 +1403,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Outer Hub",
+                        "area_name": "Tower",
                         "node_name": "Tunnel to Dangerous Hallway"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -1408,8 +1415,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -2711.17,
-                        "y": 3282.48,
+                        "x": -2640.815728871318,
+                        "y": 3394.296021191912,
                         "z": 0.0
                     },
                     "description": "",
@@ -1487,8 +1494,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 2284.3,
-                        "y": 2113.9,
+                        "x": 2250.5757268275465,
+                        "y": 2151.173512154233,
                         "z": 0.0
                     },
                     "description": "",
@@ -1502,7 +1509,7 @@
                     "pickup_index": 117,
                     "major_location": true,
                     "connections": {
-                        "Dock to Underwater Horseshoe": {
+                        "Dock to Water Path": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1513,12 +1520,12 @@
                         }
                     }
                 },
-                "Door from Underwater Horseshoe": {
+                "Door from Water Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 222.48,
-                        "y": 2206.5,
+                        "x": 234.13479213540975,
+                        "y": 2292.3479066484315,
                         "z": 0.0
                     },
                     "description": "",
@@ -1532,7 +1539,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Underwater Horseshoe",
+                        "area_name": "Water Path",
                         "node_name": "Door to Screw Attack Room"
                     },
                     "default_dock_weakness": "Access Closed",
@@ -1548,12 +1555,12 @@
                         }
                     }
                 },
-                "Dock to Underwater Horseshoe": {
+                "Dock to Water Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 215.32,
-                        "y": 1454.89,
+                        "x": 241.19351186011968,
+                        "y": 1640.5927854002148,
                         "z": 0.0
                     },
                     "description": "",
@@ -1564,7 +1571,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Underwater Horseshoe",
+                        "area_name": "Water Path",
                         "node_name": "Dock to Screw Attack Room"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -1621,12 +1628,12 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door to Outer Hub": {
+                "Door to Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1887.793924714906,
-                        "y": -280.3360581289737,
+                        "x": 1782.0314683918377,
+                        "y": -114.524845919359,
                         "z": 0.0
                     },
                     "description": "",
@@ -1640,7 +1647,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Outer Hub",
+                        "area_name": "Tower",
                         "node_name": "Door to Zeta Arena Access"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
@@ -1656,18 +1663,18 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Horseshoe Room": {
+                        "Tunnel to Inner Connector": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -1678,8 +1685,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2138.142093046725,
-                        "y": -346.5385003532142,
+                        "x": -2083.980957904403,
+                        "y": -191.612295200812,
                         "z": 0.0
                     },
                     "description": "",
@@ -1700,7 +1707,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1711,12 +1718,12 @@
                         }
                     }
                 },
-                "Tunnel to Horseshoe Room": {
+                "Tunnel to Inner Connector": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2187.79,
-                        "y": 489.27,
+                        "x": -2125.6931964910877,
+                        "y": 638.6399637927133,
                         "z": 0.0
                     },
                     "description": "",
@@ -1727,14 +1734,14 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Horseshoe Room",
+                        "area_name": "Inner Connector",
                         "node_name": "Tunnel to Zeta Arena Access"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1782,8 +1789,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 10900.0,
-                        "y": -100.0,
+                        "x": 10652.44399185336,
+                        "y": -10.794297352342369,
                         "z": 0.0
                     },
                     "description": "",
@@ -1797,14 +1804,14 @@
                     "pickup_index": 112,
                     "major_location": false,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "and",
@@ -1854,12 +1861,12 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5250.0,
-                        "y": -100.0,
+                        "x": 5270.5702647657845,
+                        "y": 74.74541751527477,
                         "z": 0.0
                     },
                     "description": "",
@@ -1873,7 +1880,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Outer Hub",
+                        "area_name": "Tower",
                         "node_name": "Door to Poison Plants Hallway"
                     },
                     "default_dock_weakness": "Power Bomb Door",
@@ -1927,7 +1934,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Blocks"
+                                                    "data": "Destroy Bomb Block"
                                                 }
                                             ]
                                         }
@@ -1974,8 +1981,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -4050.0,
-                        "y": -2800.0,
+                        "x": -3909.897018321159,
+                        "y": -2614.319908703813,
                         "z": 0.0
                     },
                     "description": "",
@@ -1993,7 +2000,7 @@
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2002,12 +2009,12 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4650.0,
-                        "y": -2800.0,
+                        "x": -4580.027548209367,
+                        "y": -2483.0526874076345,
                         "z": 0.0
                     },
                     "description": "",
@@ -2021,7 +2028,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Outer Hub",
+                        "area_name": "Tower",
                         "node_name": "Door to Transport to Area 5 Interior"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2074,8 +2081,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2253.42,
-                        "y": -402.73,
+                        "x": -2101.5551162759734,
+                        "y": -201.9221809565645,
                         "z": 0.0
                     },
                     "description": "",
@@ -2106,8 +2113,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -3467.26,
-                        "y": -675.17,
+                        "x": -3297.393940604076,
+                        "y": -529.9841593120615,
                         "z": 0.0
                     },
                     "description": "",
@@ -2151,7 +2158,7 @@
                 }
             }
         },
-        "Horseshoe Room": {
+        "Inner Connector": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2182,12 +2189,12 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to Underwater Horseshoe": {
+                "Door to Water Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2116.42,
-                        "y": 1884.79,
+                        "x": -2131.0308182784274,
+                        "y": 1999.033627284648,
                         "z": 0.0
                     },
                     "description": "",
@@ -2201,8 +2208,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Underwater Horseshoe",
-                        "node_name": "Door to Horseshoe Room"
+                        "area_name": "Water Path",
+                        "node_name": "Door to Inner Connector"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -2210,7 +2217,7 @@
                     "connections": {
                         "Tunnel to Zeta Arena Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -2218,8 +2225,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2116.42,
-                        "y": 488.52,
+                        "x": -2117.358664106245,
+                        "y": 620.8804867286885,
                         "z": 0.0
                     },
                     "description": "",
@@ -2231,13 +2238,13 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Zeta Arena Access",
-                        "node_name": "Tunnel to Horseshoe Room"
+                        "node_name": "Tunnel to Inner Connector"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Horseshoe": {
+                        "Door to Water Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2253,7 +2260,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -2305,8 +2312,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 9600.0,
-                        "y": -8100.0,
+                        "x": 9514.591277531203,
+                        "y": -7773.087662270009,
                         "z": 0.0
                     },
                     "description": "",
@@ -2333,8 +2340,8 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 5600.0,
-                        "y": -6000.0,
+                        "x": 5610.942676751891,
+                        "y": -5841.0587401804505,
                         "z": 0.0
                     },
                     "description": "",
@@ -2346,18 +2353,18 @@
                         "actor_type": "weightactivatedplatform"
                     },
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4450.0,
-                        "y": -7100.0,
+                        "x": 4518.237794586485,
+                        "y": -6799.15504990519,
                         "z": 0.0
                     },
                     "description": "",
@@ -2371,7 +2378,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Outer Hub",
+                        "area_name": "Tower",
                         "node_name": "Door to Gamma Arena"
                     },
                     "default_dock_weakness": "Charge Beam Door",
@@ -2380,11 +2387,11 @@
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Bottom of Shaft": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -2392,8 +2399,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 6102.46,
-                        "y": -3714.05,
+                        "x": 6497.775624596278,
+                        "y": -3988.211331291284,
                         "z": 0.0
                     },
                     "description": "",
@@ -2405,7 +2412,7 @@
                     "connections": {
                         "Bottom of Shaft": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -2413,8 +2420,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 8336.964222458377,
-                        "y": -6190.843074743181,
+                        "x": 8398.13194140568,
+                        "y": -6514.10160238378,
                         "z": 0.0
                     },
                     "description": "",
@@ -2444,9 +2451,9 @@
                                 ]
                             }
                         },
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Event - Gamma Metroid": {
                             "type": "and",
@@ -2455,11 +2462,11 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     },
                                     {
                                         "type": "template",
@@ -2472,7 +2479,7 @@
                 }
             }
         },
-        "Underwater Horseshoe": {
+        "Water Path": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2507,8 +2514,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 250.0,
-                        "y": 2200.0,
+                        "x": 247.2863144169446,
+                        "y": 2288.471002877409,
                         "z": 0.0
                     },
                     "description": "",
@@ -2523,13 +2530,13 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Screw Attack Room",
-                        "node_name": "Door from Underwater Horseshoe"
+                        "node_name": "Door from Water Path"
                     },
                     "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Horseshoe Room": {
+                        "Door to Inner Connector": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2547,12 +2554,12 @@
                         }
                     }
                 },
-                "Door to Horseshoe Room": {
+                "Door to Inner Connector": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2150.0,
-                        "y": 1900.0,
+                        "x": -2116.2075298438936,
+                        "y": 2023.048668503214,
                         "z": 0.0
                     },
                     "description": "",
@@ -2566,8 +2573,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Horseshoe Room",
-                        "node_name": "Door to Underwater Horseshoe"
+                        "area_name": "Inner Connector",
+                        "node_name": "Door to Water Path"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -2617,8 +2624,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 215.32,
-                        "y": 1454.89,
+                        "x": 250.6427915518825,
+                        "y": 1609.8255280073463,
                         "z": 0.0
                     },
                     "description": "",
@@ -2630,7 +2637,7 @@
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Screw Attack Room",
-                        "node_name": "Dock to Underwater Horseshoe"
+                        "node_name": "Dock to Water Path"
                     },
                     "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
@@ -2652,7 +2659,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -2692,12 +2699,12 @@
                 "asset_id": "collision_camera_017"
             },
             "nodes": {
-                "Door to Outer Hub": {
+                "Door to Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7650.0,
-                        "y": 6900.0,
+                        "x": 7643.535315360712,
+                        "y": 6921.819098009574,
                         "z": 0.0
                     },
                     "description": "",
@@ -2711,7 +2718,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Exterior",
-                        "area_name": "Outer Hub",
+                        "area_name": "Tower",
                         "node_name": "Door to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2771,8 +2778,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10300.0,
-                        "y": 6600.0,
+                        "x": 10297.22642143277,
+                        "y": 6646.980767615689,
                         "z": 0.0
                     },
                     "description": "",
@@ -2793,7 +2800,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2962,8 +2969,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 12026.56,
-                        "y": 7225.7,
+                        "x": 12237.782551008851,
+                        "y": 6915.51057392036,
                         "z": 0.0
                     },
                     "description": "",

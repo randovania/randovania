@@ -30,6 +30,8 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Door to Zeta Shaft
       Trivial
+  > Door to Teleporter Room
+      Trivial
   > Tunnel to Main Shaft Secret
       Lay Power Bomb
   > Next to Grapple Block
@@ -41,7 +43,7 @@ Extra - asset_id: collision_camera_001
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerclosed
   > Pickup (Super Missile Tank Bottom)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Door to Zeta Shaft; Heals? False
   * Layers: default
@@ -92,6 +94,8 @@ Extra - asset_id: collision_camera_001
   * Power Beam Door to Teleporter Room/Door to Main Shaft
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
+  > Next to Grapple Block
+      Trivial
 
 > Door to Main Shaft Access; Heals? False
   * Layers: default
@@ -148,12 +152,12 @@ Extra - asset_id: collision_camera_001
   > Door to Super Missile Room
       Trivial
   > Dock to Gamma Arena Access
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
 
 > Next to Grapple Block; Heals? False
   * Layers: default
   > Save Station
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
   > Door to Space Jump Room (Top)
       Trivial
   > Door to Main Shaft Access
@@ -172,7 +176,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: LE_PoweUp_SuperMissile
   * Extra - actor_type: itemsphere_supermissile
   > Door to Main Shaft (Top)
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Main Shaft (Bottom); Heals? False
   * Layers: default
@@ -180,7 +184,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Door to Main Shaft (Top)
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Main Shaft (Top); Heals? False
   * Layers: default
@@ -243,9 +247,9 @@ Transport to Area 4 West
 Extra - total_boundings: {'x1': -7800.0, 'x2': -4700.0, 'y1': -5200.0, 'y2': -3100.0}
 Extra - polygon: [[-7800.0, -3100.0], [-7800.0, -5200.0], [-4700.0, -5200.0], [-4700.0, -4200.0], [-5400.0, -4000.0], [-5400.0, -3100.0]]
 Extra - asset_id: collision_camera_005
-> Elevator to Area 4 West - Transport Hub; Heals? False; Spawn Point
+> Elevator to Area 4 West - Chozo Seals; Heals? False; Spawn Point
   * Layers: default
-  * Teleporter to Area 4 - West - Transport Hub
+  * Teleporter to Area 4 - West - Chozo Seals
   * Extra - actor_name: LE_Platform_Elevator_FromArea04
   * Extra - actor_type: weightactivatedplatform
   > Door to Diggernaut Chase Access
@@ -256,7 +260,7 @@ Extra - asset_id: collision_camera_005
   * Charge Beam Door to Diggernaut Chase Access/Door to Transport to Area 4 West
   * Extra - actor_name: Door006
   * Extra - actor_type: doorchargecharge
-  > Elevator to Area 4 West - Transport Hub
+  > Elevator to Area 4 West - Chozo Seals
       Trivial
 
 ----------------
@@ -347,8 +351,8 @@ Extra - asset_id: collision_camera_008
 
 ----------------
 Gamma Arena
-Extra - total_boundings: {'x1': 5500.0, 'x2': 18000.0, 'y1': 5900.0, 'y2': 13000.0}
-Extra - polygon: [[7500.0, 13000.0], [7500.0, 8600.0], [5500.0, 8600.0], [5500.0, 5900.0], [18000.0, 5900.0], [18000.0, 13000.0]]
+Extra - total_boundings: {'x1': 5500.0, 'x2': 18000.0, 'y1': 5900.0, 'y2': 11000.0}
+Extra - polygon: [[7500.0, 11000.0], [7500.0, 8600.0], [5500.0, 8600.0], [5500.0, 5900.0], [18000.0, 5900.0], [18000.0, 11000.0]]
 Extra - asset_id: collision_camera_009
 > Door to Gamma Arena Access; Heals? False
   * Layers: default
@@ -356,7 +360,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Below Pickup
-      Varia Suit and Climb Rooms (No High Jump) and Defeat Gamma Metroid and Destroy Bomb Blocks
+      Varia Suit and Climb/Traverse Rooms (No High Jump) and Defeat Gamma Metroid and Destroy Bomb Block
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -379,7 +383,9 @@ Extra - asset_id: collision_camera_009
   > Pickup (Super Missile Tank)
       Morph Ball and Super Missile and Varia Suit
   > Event - Gamma Metroid
-      Varia Suit and Climb Rooms (No High Jump) and Defeat Gamma Metroid and Destroy Bomb Blocks
+      All of the following:
+          Varia Suit and Defeat Gamma Metroid and Destroy Bomb Block
+          Space Jump or Can Spiderspark
 
 ----------------
 Diggernaut Chase Access
@@ -410,7 +416,7 @@ Extra - asset_id: collision_camera_010
   > Door to Transport to Area 4 West
       Trivial
   > Door to Main Shaft Access
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 ----------------
 Main Shaft Access
@@ -527,7 +533,7 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Pickup (Energy Tank)
-      Screw Attack and Space Jump and Destroy Bomb Blocks
+      Screw Attack and Space Jump and Destroy Bomb Block
   > Dock to Zeta Arena Access
       Space Jump or Can Spiderspark
 
@@ -547,8 +553,8 @@ Extra - asset_id: collision_camera_014
 
 ----------------
 Space Jump Room
-Extra - total_boundings: {'x1': 5000.0, 'x2': 14400.0, 'y1': -8700.0, 'y2': -700.0}
-Extra - polygon: [[5000.0, -700.0], [5000.0, -2700.0], [7500.0, -2700.0], [7500.0, -5500.0], [10200.0, -5500.0], [10200.0, -7200.0], [9800.0, -7300.0], [9800.0, -8700.0], [11000.0, -8700.0], [14400.0, -8700.0], [14400.0, -7760.0], [14075.0, -7445.0], [14400.0, -7130.0], [14400.0, -700.0]]
+Extra - total_boundings: {'x1': 5000.0, 'x2': 15000.0, 'y1': -8700.0, 'y2': -700.0}
+Extra - polygon: [[5000.0, -700.0], [5000.0, -2700.0], [8100.0, -2700.0], [8100.0, -5500.0], [10800.0, -5500.0], [10800.0, -7200.0], [10300.0, -7300.0], [10300.0, -8700.0], [11000.0, -8700.0], [15000.0, -8700.0], [15000.0, -700.0]]
 Extra - asset_id: collision_camera_AfterChase
 > Pickup (Space Jump); Heals? False; Spawn Point
   * Layers: default
@@ -586,7 +592,7 @@ Extra - asset_id: collision_camera_AfterChase
   * Layers: default
   * Tunnel to Diggernaut Chase Room/Tunnel to Space Jump Room (Bottom)
   > Pickup (Space Jump)
-      Morph Ball and Climb Rooms (High Jump)
+      Morph Ball and Climb/Traverse Rooms (High Jump)
 
 > Tunnel to Diggernaut Chase Room (Top); Heals? False
   * Layers: default
@@ -620,8 +626,8 @@ Extra - asset_id: collision_camera_AfterChase
 
 ----------------
 Diggernaut Chase Room
-Extra - total_boundings: {'x1': -3900.0, 'x2': 10500.0, 'y1': -9200.0, 'y2': -6100.0}
-Extra - polygon: [[5000.0, -2700.0], [-3100.0, -2700.0], [-3100.0, -4000.0], [-4200.0, -4000.0], [-4200.0, -9200.0], [10000.0, -9200.0], [10000.0, -7600.0], [10500.0, -7600.0], [10500.0, -6100.0], [7400.0, -6100.0], [7400.0, -2700.0]]
+Extra - total_boundings: {'x1': -4000.0, 'x2': 10900.0, 'y1': -9200.0, 'y2': -2700.0}
+Extra - polygon: [[5000.0, -2700.0], [-3100.0, -2700.0], [-3100.0, -4000.0], [-4000.0, -4000.0], [-4000.0, -9200.0], [10400.0, -9200.0], [10400.0, -7600.0], [10900.0, -7600.0], [10900.0, -6000.0], [8200.0, -6000.0], [8200.0, -2700.0]]
 Extra - asset_id: collision_camera_AfterChase_001
 > Pickup (Missile Tank Top); Heals? False
   * Layers: default
@@ -631,7 +637,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   > Top Level
       Baby Metroid
   > Middle Level
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Pickup (Aeion Tank); Heals? False
   * Layers: default
@@ -662,7 +668,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Extra - actor_name: LE_Platform_AmmoCharge_001
   * Extra - actor_type: weightactivatedplatform
   > Bottom Level
-      Missile ≥ 2 and Morph Ball and Destroy Bomb Blocks
+      Missile ≥ 2 and Morph Ball and Destroy Bomb Block
 
 > Save Station; Heals? False
   * Layers: default
@@ -691,7 +697,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Layers: default
   * Tunnel to Space Jump Room/Tunnel to Diggernaut Chase Room (Bottom)
   > Bottom Level
-      Spider Ball and Destroy Bomb Blocks
+      Spider Ball and Destroy Bomb Block
 
 > Tunnel to Space Jump Room (Top); Heals? False
   * Layers: default
@@ -706,7 +712,7 @@ Extra - asset_id: collision_camera_AfterChase_001
           Morph Ball
           Any of the following:
               Baby Metroid or Can Spiderspark
-              Phase Drift and Destroy Bomb Blocks
+              Phase Drift and Destroy Bomb Block
   > Save Station
       Any of the following:
           Can Spiderspark
@@ -719,7 +725,7 @@ Extra - asset_id: collision_camera_AfterChase_001
 > Middle Level; Heals? False
   * Layers: default
   > Pickup (Aeion Tank)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Pickup (Missile Tank Middle)
       Lay Power Bomb
   > Ammo Recharge Station
@@ -727,7 +733,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   > Tunnel to Space Jump Room (Middle)
       Morph Ball and After Area 4 (East) - Diggernaut Chase Arena Grapple Block
   > Top Level
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
   > Event - Grapple Block
       Grapple Beam
   > Bottom Level
@@ -744,7 +750,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   > Pickup (Missile Tank Bottom)
       Trivial
   > Tunnel to Space Jump Room (Bottom)
-      Super Missile and Destroy Bomb Blocks
+      Super Missile and Destroy Bomb Block
   > Middle Level
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
 

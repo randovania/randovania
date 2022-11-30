@@ -2,10 +2,10 @@
     "name": "Area 6",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s070_area7/s070_area7.bmsld",
-        "map_min_x": 11,
-        "map_max_x": 13,
-        "map_min_y": 33,
-        "map_max_y": 23,
+        "map_min_x": 13,
+        "map_max_x": 66,
+        "map_min_y": 37,
+        "map_max_y": 15,
         "scenario_id": "s070_area7"
     },
     "areas": {
@@ -34,10 +34,6 @@
                     ],
                     [
                         -17950.0,
-                        -7800.0
-                    ],
-                    [
-                        -14600.0,
                         -7800.0
                     ],
                     [
@@ -84,8 +80,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -13750.0,
-                        "y": -10500.0,
+                        "x": -13732.917109458023,
+                        "y": -10328.686976030229,
                         "z": 0.0
                     },
                     "description": "",
@@ -112,8 +108,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -13153.2,
-                        "y": -4500.0,
+                        "x": -13102.677411736922,
+                        "y": -4460.225528397686,
                         "z": 0.0
                     },
                     "description": "",
@@ -153,15 +149,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6E",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -172,8 +159,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -9500.0,
-                        "y": -6900.0,
+                        "x": -9403.893611996693,
+                        "y": -6784.8801511394495,
                         "z": 0.0
                     },
                     "description": "",
@@ -207,8 +194,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -8450.0,
-                        "y": -6900.0,
+                        "x": -8453.368166253395,
+                        "y": -6733.2211595229655,
                         "z": 0.0
                     },
                     "description": "",
@@ -242,8 +229,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16350.0,
-                        "y": -4800.0,
+                        "x": -16346.862085252096,
+                        "y": -4666.8614948636205,
                         "z": 0.0
                     },
                     "description": "",
@@ -280,7 +267,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -317,8 +304,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -17900.0,
-                        "y": -7700.0,
+                        "x": -17906.963632069903,
+                        "y": -7497.774235446924,
                         "z": 0.0
                     },
                     "description": "",
@@ -341,7 +328,7 @@
                     "connections": {
                         "Before Diggernaut Area": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -349,8 +336,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15507.94,
-                        "y": -5637.21,
+                        "x": -15861.267564057149,
+                        "y": -5183.451411028456,
                         "z": 0.0
                     },
                     "description": "",
@@ -362,7 +349,7 @@
                     "connections": {
                         "Door to Diggernaut Hallway": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -370,8 +357,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -13165.59,
-                        "y": -8083.03,
+                        "x": -12400.115125752745,
+                        "y": -8128.013933168024,
                         "z": 0.0
                     },
                     "description": "",
@@ -415,9 +402,30 @@
                                 "negate": false
                             }
                         },
+                        "Door to Diggernaut Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 6 - Transport to Area 7 Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Diggernaut Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Above Pickup": {
                             "type": "and",
@@ -502,8 +510,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -14031.038219070135,
-                        "y": -9672.818163908589,
+                        "x": -13877.562285984177,
+                        "y": -9409.156925256819,
                         "z": 0.0
                     },
                     "description": "",
@@ -519,7 +527,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "resource",
@@ -635,7 +643,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (High Jump)"
+                                        "data": "Climb/Traverse Rooms (High Jump)"
                                     },
                                     {
                                         "type": "or",
@@ -715,8 +723,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -14733.72,
-                        "y": -10242.03,
+                        "x": -14135.857244066596,
+                        "y": -9729.442673279016,
                         "z": 0.0
                     },
                     "description": "",
@@ -851,8 +859,8 @@
                     "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
-                        "x": -5300.0,
-                        "y": -8300.0,
+                        "x": -5326.509572901326,
+                        "y": -8205.580197898129,
                         "z": 0.0
                     },
                     "description": "",
@@ -873,7 +881,7 @@
                         }
                     },
                     "connections": {
-                        "Next to Teleporter": {
+                        "Door to Crumble Steps": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -886,8 +894,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3550.0,
-                        "y": -8100.0,
+                        "x": -3555.522827687776,
+                        "y": -7891.801765562996,
                         "z": 0.0
                     },
                     "description": "",
@@ -908,7 +916,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Next to Teleporter": {
+                        "Door to Crumble Steps": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -921,8 +929,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -6050.0,
-                        "y": -8300.0,
+                        "x": -6071.068564882998,
+                        "y": -8077.941513558414,
                         "z": 0.0
                     },
                     "description": "",
@@ -942,21 +950,6 @@
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Next to Teleporter": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4970.083967975005,
-                        "y": -8298.743071669503,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
                     "connections": {
                         "Teleporter": {
                             "type": "resource",
@@ -967,7 +960,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Crumble Steps": {
+                        "Door from Chozo Seal West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -987,8 +980,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -5170.63,
-                        "y": -8131.2,
+                        "x": -5020.708558337425,
+                        "y": -8067.304956530104,
                         "z": 0.0
                     },
                     "description": "",
@@ -998,7 +991,7 @@
                     "extra": {},
                     "event_name": "Area 6 Teleporter Lower",
                     "connections": {
-                        "Next to Teleporter": {
+                        "Door to Crumble Steps": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1016,7 +1009,7 @@
                 "total_boundings": {
                     "x1": -2050.0,
                     "x2": 2050.0,
-                    "y1": 7400.0,
+                    "y1": 7100.0,
                     "y2": 8700.0
                 },
                 "polygon": [
@@ -1026,11 +1019,11 @@
                     ],
                     [
                         -2050.0,
-                        7400.0
+                        7100.0
                     ],
                     [
                         2050.0,
-                        7400.0
+                        7100.0
                     ],
                     [
                         2050.0,
@@ -1044,8 +1037,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2000.0,
-                        "y": 7500.0,
+                        "x": 1981.1742360761968,
+                        "y": 7494.584101446847,
                         "z": 0.0
                     },
                     "description": "",
@@ -1114,8 +1107,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1641.78,
-                        "y": 8616.35,
+                        "x": -1481.109062808409,
+                        "y": 8605.415898553154,
                         "z": 0.0
                     },
                     "description": "",
@@ -1146,8 +1139,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 18.96,
-                        "y": 7976.25,
+                        "x": 13.141025641025408,
+                        "y": 7915.331196581196,
                         "z": 0.0
                     },
                     "description": "",
@@ -1170,8 +1163,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 10.54,
-                        "y": 7626.47,
+                        "x": 30.662393162393073,
+                        "y": 7451.014957264957,
                         "z": 0.0
                     },
                     "description": "",
@@ -1181,19 +1174,10 @@
                     "extra": {},
                     "connections": {
                         "Door to Zeta Arena Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6W",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -1207,19 +1191,10 @@
                             }
                         },
                         "Door to Red Plant Tunnel": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6W",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -1238,15 +1213,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega 1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
                                         "data": "Defeat Omega Metroid"
                                     }
@@ -1264,7 +1230,7 @@
                 "total_boundings": {
                     "x1": -11800.0,
                     "x2": -1900.0,
-                    "y1": 6600.0,
+                    "y1": 6500.0,
                     "y2": 11400.0
                 },
                 "polygon": [
@@ -1282,11 +1248,11 @@
                     ],
                     [
                         -8000.0,
-                        6600.0
+                        6500.0
                     ],
                     [
                         -5300.0,
-                        6600.0
+                        6500.0
                     ],
                     [
                         -5300.0,
@@ -1316,8 +1282,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -5250.0,
-                        "y": 9200.0,
+                        "x": -5263.461538461538,
+                        "y": 9098.510558069382,
                         "z": 0.0
                     },
                     "description": "",
@@ -1331,9 +1297,19 @@
                     "pickup_index": 133,
                     "major_location": false,
                     "connections": {
+                        "Grapple Cubby": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Middle Level": {
-                            "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1341,8 +1317,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -8900.0,
-                        "y": 8600.0,
+                        "x": -9017.232277526395,
+                        "y": 8507.447209653092,
                         "z": 0.0
                     },
                     "description": "",
@@ -1371,8 +1347,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1950.0,
-                        "y": 10000.0,
+                        "x": -1965.9502262443439,
+                        "y": 9928.073152337858,
                         "z": 0.0
                     },
                     "description": "",
@@ -1393,32 +1369,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Power Bomb Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Area 6 - Stolen Power Bomb Room Grapple Block",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Grapple Cubby": {
                             "type": "and",
                             "data": {
@@ -1440,7 +1390,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Blocks"
+                                                    "data": "Destroy Bomb Block"
                                                 },
                                                 {
                                                     "type": "and",
@@ -1480,8 +1430,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1950.0,
-                        "y": 10700.0,
+                        "x": -1965.9502262443439,
+                        "y": 10622.831825037707,
                         "z": 0.0
                     },
                     "description": "",
@@ -1541,7 +1491,7 @@
                     "connections": {
                         "Middle Level": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -1549,8 +1499,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -4056.502636203867,
-                        "y": 9594.463971880492,
+                        "x": -4050.2262443438913,
+                        "y": 9274.792609351432,
                         "z": 0.0
                     },
                     "description": "",
@@ -1573,8 +1523,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -4820.1230228471,
-                        "y": 9565.465729349737,
+                        "x": -4475.377073906486,
+                        "y": 9254.05354449472,
                         "z": 0.0
                     },
                     "description": "",
@@ -1583,6 +1533,32 @@
                     ],
                     "extra": {},
                     "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 6 - Stolen Power Bomb Room Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Omega Arena Access (Bottom)": {
                             "type": "and",
                             "data": {
@@ -1604,7 +1580,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Blocks"
+                                                    "data": "Destroy Bomb Block"
                                                 },
                                                 {
                                                     "type": "and",
@@ -1653,8 +1629,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -7758.611599297013,
-                        "y": 8627.855887521968,
+                        "x": -7150.716440422323,
+                        "y": 8331.16515837104,
                         "z": 0.0
                     },
                     "description": "",
@@ -1729,25 +1705,25 @@
                 "total_boundings": {
                     "x1": -6000.0,
                     "x2": -4400.0,
-                    "y1": 5100.0,
-                    "y2": 8000.0
+                    "y1": 4800.0,
+                    "y2": 7700.0
                 },
                 "polygon": [
                     [
                         -6000.0,
-                        8000.0
+                        7700.0
                     ],
                     [
                         -6000.0,
-                        5100.0
+                        4800.0
                     ],
                     [
                         -4400.0,
-                        5100.0
+                        4800.0
                     ],
                     [
                         -4400.0,
-                        8000.0
+                        7700.0
                     ]
                 ],
                 "asset_id": "collision_camera_039"
@@ -1792,8 +1768,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5950.0,
-                        "y": 5200.0,
+                        "x": -5970.456960680127,
+                        "y": 5242.363325067895,
                         "z": 0.0
                     },
                     "description": "",
@@ -1816,7 +1792,7 @@
                     "connections": {
                         "Door to Red Plant Tunnel": {
                             "type": "template",
-                            "data": "Climb Rooms (High Jump)"
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         },
                         "Tunnel to Red Plant Tunnel": {
                             "type": "and",
@@ -1834,7 +1810,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (High Jump)"
+                                        "data": "Climb/Traverse Rooms (High Jump)"
                                     },
                                     {
                                         "type": "resource",
@@ -1854,8 +1830,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4474.04,
-                        "y": 6110.91,
+                        "x": -4476.626520250325,
+                        "y": 5922.933640335341,
                         "z": 0.0
                     },
                     "description": "",
@@ -1893,7 +1869,7 @@
                 "total_boundings": {
                     "x1": 6550.0,
                     "x2": 9900.0,
-                    "y1": 5000.0,
+                    "y1": 4900.0,
                     "y2": 8000.0
                 },
                 "polygon": [
@@ -1903,11 +1879,11 @@
                     ],
                     [
                         6550.0,
-                        5000.0
+                        4900.0
                     ],
                     [
                         9900.0,
-                        5000.0
+                        4900.0
                     ],
                     [
                         9900.0,
@@ -1921,8 +1897,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 7600.0,
-                        "y": 6200.0,
+                        "x": 7532.277521942772,
+                        "y": 6124.119337190538,
                         "z": 0.0
                     },
                     "description": "",
@@ -1938,11 +1914,11 @@
                     "connections": {
                         "Under Bridge": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Left of Bridge": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -1950,8 +1926,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9850.0,
-                        "y": 6400.0,
+                        "x": 9858.408115873579,
+                        "y": 6427.185421340575,
                         "z": 0.0
                     },
                     "description": "",
@@ -2025,8 +2001,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 6600.0,
-                        "y": 7500.0,
+                        "x": 6579.784114614083,
+                        "y": 7485.948754280316,
                         "z": 0.0
                     },
                     "description": "",
@@ -2060,8 +2036,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 7850.0,
-                        "y": 5400.0,
+                        "x": 7776.304758531113,
+                        "y": 5348.7424725469355,
                         "z": 0.0
                     },
                     "description": "",
@@ -2088,8 +2064,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 8272.82,
-                        "y": 5389.48,
+                        "x": 8177.768921950644,
+                        "y": 5049.612311567678,
                         "z": 0.0
                     },
                     "description": "",
@@ -2180,8 +2156,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 7146.360255047822,
-                        "y": 6264.434998228835,
+                        "x": 6898.593891447239,
+                        "y": 6135.927106702877,
                         "z": 0.0
                     },
                     "description": "",
@@ -2257,7 +2233,7 @@
                 "total_boundings": {
                     "x1": -11600.0,
                     "x2": -7900.0,
-                    "y1": 5100.0,
+                    "y1": 4900.0,
                     "y2": 7400.0
                 },
                 "polygon": [
@@ -2267,11 +2243,11 @@
                     ],
                     [
                         -11600.0,
-                        5100.0
+                        4900.0
                     ],
                     [
                         -9100.0,
-                        5100.0
+                        4900.0
                     ],
                     [
                         -9100.0,
@@ -2297,8 +2273,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9150.0,
-                        "y": 5200.0,
+                        "x": -9157.051282051281,
+                        "y": 5232.686023127199,
                         "z": 0.0
                     },
                     "description": "",
@@ -2378,7 +2354,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Blocks"
+                                                    "data": "Destroy Bomb Block"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2439,7 +2415,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -2483,8 +2459,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -6050.0,
-                        "y": -8300.0,
+                        "x": -6070.4038257173215,
+                        "y": -8078.335694887236,
                         "z": 0.0
                     },
                     "description": "",
@@ -2562,7 +2538,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "resource",
@@ -2582,8 +2558,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -6050.0,
-                        "y": -9600.0,
+                        "x": -6070.4038257173215,
+                        "y": -9372.614830558508,
                         "z": 0.0
                     },
                     "description": "",
@@ -2609,8 +2585,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -8450.0,
-                        "y": -6900.0,
+                        "x": -8462.362734679418,
+                        "y": -6707.601251623568,
                         "z": 0.0
                     },
                     "description": "",
@@ -2644,8 +2620,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -7650.0,
-                        "y": -8300.0,
+                        "x": -7670.504191758177,
+                        "y": -8182.096469476915,
                         "z": 0.0
                     },
                     "description": "",
@@ -2707,8 +2683,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -19454.0,
-                        "y": -7692.0,
+                        "x": -19945.508100147275,
+                        "y": -7597.821551300933,
                         "z": 0.0
                     },
                     "description": "",
@@ -2722,7 +2698,7 @@
                     "pickup_index": 139,
                     "major_location": true,
                     "connections": {
-                        "Room Center": {
+                        "Door from Transport to Area 7": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2735,8 +2711,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -21100.0,
-                        "y": -7700.0,
+                        "x": -21103.15414825724,
+                        "y": -7506.694894452627,
                         "z": 0.0
                     },
                     "description": "",
@@ -2762,8 +2738,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -17856.834143706106,
-                        "y": -7686.844948676391,
+                        "x": -17903.595974472264,
+                        "y": -7503.319833087874,
                         "z": 0.0
                     },
                     "description": "",
@@ -2784,6 +2760,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Diggernaut Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Diggernaut",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Event - Diggernaut": {
                             "type": "and",
                             "data": {
@@ -2833,24 +2830,6 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 30,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 10,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Bomb",
                                             "amount": 1,
                                             "negate": false
@@ -2867,15 +2846,6 @@
                                     }
                                 ]
                             }
-                        },
-                        "Room Center": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Diggernaut",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
@@ -2883,8 +2853,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -19477.95,
-                        "y": -7200.06,
+                        "x": -19418.99852724595,
+                        "y": -7486.444526264114,
                         "z": 0.0
                     },
                     "description": "",
@@ -2900,26 +2870,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
-                    }
-                },
-                "Room Center": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -19464.343598055104,
-                        "y": -7761.129119394922,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Door to Diggernaut Shaft": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
                         }
                     }
                 }
@@ -2960,8 +2910,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16350.0,
-                        "y": -4800.0,
+                        "x": -16349.007936507936,
+                        "y": -4671.130952380952,
                         "z": 0.0
                     },
                     "description": "",
@@ -3035,8 +2985,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -21102.1,
-                        "y": -4800.0,
+                        "x": -21100.992063492064,
+                        "y": -4676.09126984127,
                         "z": 0.0
                     },
                     "description": "",
@@ -3143,8 +3093,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -21700.0,
-                        "y": -3800.0,
+                        "x": -21609.08017475499,
+                        "y": -3797.8391781792425,
                         "z": 0.0
                     },
                     "description": "",
@@ -3171,8 +3121,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -21650.0,
-                        "y": -7700.0,
+                        "x": -21648.04581414571,
+                        "y": -7571.011925847207,
                         "z": 0.0
                     },
                     "description": "",
@@ -3195,9 +3145,9 @@
                                 "items": []
                             }
                         },
-                        "Upper Platform": {
+                        "Top Platform": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -3205,8 +3155,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -21102.1,
-                        "y": -4800.0,
+                        "x": -21096.032589443854,
+                        "y": -4668.071791238635,
                         "z": 0.0
                     },
                     "description": "",
@@ -3227,7 +3177,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Upper Platform": {
+                        "Top Platform": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3240,8 +3190,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -21100.0,
-                        "y": -7700.0,
+                        "x": -21115.515409139214,
+                        "y": -7493.080647065769,
                         "z": 0.0
                     },
                     "description": "",
@@ -3271,12 +3221,12 @@
                         }
                     }
                 },
-                "Upper Platform": {
+                "Top Platform": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -22175.380800566774,
-                        "y": -4828.480340063762,
+                        "x": -21706.494273231787,
+                        "y": -4934.336993741883,
                         "z": 0.0
                     },
                     "description": "",
@@ -3310,25 +3260,25 @@
                 "total_boundings": {
                     "x1": -4500.0,
                     "x2": -1950.0,
-                    "y1": 5800.0,
-                    "y2": 8300.0
+                    "y1": 5600.0,
+                    "y2": 8000.0
                 },
                 "polygon": [
                     [
                         -4500.0,
-                        8300.0
+                        8000.0
                     ],
                     [
                         -4500.0,
-                        5800.0
+                        5600.0
                     ],
                     [
                         -1950.0,
-                        5800.0
+                        5600.0
                     ],
                     [
                         -1950.0,
-                        8300.0
+                        8000.0
                     ]
                 ],
                 "asset_id": "collision_camera_046"
@@ -3338,8 +3288,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -3200.0,
-                        "y": 5900.0,
+                        "x": -3202.040448170452,
+                        "y": 5824.943913094816,
                         "z": 0.0
                     },
                     "description": "",
@@ -3401,8 +3351,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2000.0,
-                        "y": 7500.0,
+                        "x": -2001.5838810826408,
+                        "y": 7478.031644822293,
                         "z": 0.0
                     },
                     "description": "",
@@ -3437,7 +3387,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "or",
@@ -3474,8 +3424,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4474.04,
-                        "y": 6110.91,
+                        "x": -4454.975990868658,
+                        "y": 5929.901864315609,
                         "z": 0.0
                     },
                     "description": "",
@@ -3508,8 +3458,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -3983.65,
-                        "y": 6118.66,
+                        "x": -4340.178231720917,
+                        "y": 5926.621928339959,
                         "z": 0.0
                     },
                     "description": "",
@@ -3638,7 +3588,7 @@
                 "total_boundings": {
                     "x1": 1950.0,
                     "x2": 4050.0,
-                    "y1": 7400.0,
+                    "y1": 7100.0,
                     "y2": 8600.0
                 },
                 "polygon": [
@@ -3648,11 +3598,11 @@
                     ],
                     [
                         1950.0,
-                        7400.0
+                        7100.0
                     ],
                     [
                         4050.0,
-                        7400.0
+                        7100.0
                     ],
                     [
                         4050.0,
@@ -3666,8 +3616,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2000.0,
-                        "y": 7500.0,
+                        "x": 1988.1410256410256,
+                        "y": 7487.660256410257,
                         "z": 0.0
                     },
                     "description": "",
@@ -3690,7 +3640,7 @@
                     "connections": {
                         "Door to Zeta Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -3698,8 +3648,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4000.0,
-                        "y": 7500.0,
+                        "x": 3966.9871794871797,
+                        "y": 7494.391025641025,
                         "z": 0.0
                     },
                     "description": "",
@@ -3722,7 +3672,7 @@
                     "connections": {
                         "Door to Omega Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -3730,8 +3680,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4031.13,
-                        "y": 8525.87,
+                        "x": 3993.2406010837385,
+                        "y": 8335.316462767443,
                         "z": 0.0
                     },
                     "description": "",
@@ -3767,27 +3717,27 @@
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
-                    "x1": 4000.0,
+                    "x1": 3900.0,
                     "x2": 6650.0,
-                    "y1": 7400.0,
-                    "y2": 8800.0
+                    "y1": 7100.0,
+                    "y2": 8500.0
                 },
                 "polygon": [
                     [
-                        3950.0,
-                        8800.0
+                        3900.0,
+                        8500.0
                     ],
                     [
-                        3950.0,
-                        7400.0
-                    ],
-                    [
-                        6650.0,
-                        7400.0
+                        3900.0,
+                        7100.0
                     ],
                     [
                         6650.0,
-                        8800.0
+                        7100.0
+                    ],
+                    [
+                        6650.0,
+                        8500.0
                     ]
                 ],
                 "asset_id": "collision_camera_048"
@@ -3797,8 +3747,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4000.0,
-                        "y": 7500.0,
+                        "x": 3961.698717948718,
+                        "y": 7487.099358974359,
                         "z": 0.0
                     },
                     "description": "",
@@ -3832,8 +3782,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 6600.0,
-                        "y": 7500.0,
+                        "x": 6579.48717948718,
+                        "y": 7487.099358974359,
                         "z": 0.0
                     },
                     "description": "",
@@ -3867,8 +3817,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4031.13,
-                        "y": 8525.87,
+                        "x": 4000.074018211273,
+                        "y": 8333.157365510307,
                         "z": 0.0
                     },
                     "description": "",
@@ -3899,8 +3849,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 5309.48,
-                        "y": 8103.88,
+                        "x": 5272.061965811966,
+                        "y": 7845.53952991453,
                         "z": 0.0
                     },
                     "description": "",
@@ -3923,8 +3873,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5312.06,
-                        "y": 7485.5,
+                        "x": 5289.690170940171,
+                        "y": 7404.834401709402,
                         "z": 0.0
                     },
                     "description": "",
@@ -3976,7 +3926,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -3990,13 +3940,13 @@
             }
         },
         "Transport to Area 5 Entrance": {
-            "default_node": "Elevator to Area 5 Entrance - Transport Hub",
+            "default_node": "Elevator to Area 5 Entrance - Chozo Seal",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -1200.0,
                     "x2": 19450.0,
-                    "y1": -4100.0,
+                    "y1": -4400.0,
                     "y2": 900.0
                 },
                 "polygon": [
@@ -4006,31 +3956,27 @@
                     ],
                     [
                         -1200.0,
-                        -1700.0
+                        -1900.0
                     ],
                     [
                         2700.0,
-                        -1700.0
+                        -1900.0
                     ],
                     [
                         3900.0,
-                        -2000.0
-                    ],
-                    [
-                        3900.0,
-                        -2700.0
+                        -2900.0
                     ],
                     [
                         8900.0,
-                        -2700.0
+                        -2900.0
                     ],
                     [
                         11100.0,
-                        -2100.0
+                        -2300.0
                     ],
                     [
                         13800.0,
-                        -2100.0
+                        -2300.0
                     ],
                     [
                         14700.0,
@@ -4038,22 +3984,22 @@
                     ],
                     [
                         14700.0,
-                        -4100.0
+                        -4400.0
                     ],
                     [
                         19450.0,
-                        -4100.0
+                        -4400.0
                     ],
                     [
                         19450.0,
-                        -2799.989990234375
-                    ],
-                    [
-                        17300.0,
                         -2800.0
                     ],
                     [
-                        17300.0,
+                        17600.0,
+                        -2800.0
+                    ],
+                    [
+                        17600.0,
                         -200.0
                     ],
                     [
@@ -4084,12 +4030,12 @@
                 "asset_id": "collision_camera_051"
             },
             "nodes": {
-                "Elevator to Area 5 Entrance - Transport Hub": {
+                "Elevator to Area 5 Entrance - Chozo Seal": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 18800.0,
-                        "y": -4000.0,
+                        "x": 18857.440774107443,
+                        "y": -4084.063229896564,
                         "z": 0.0
                     },
                     "description": "",
@@ -4102,35 +4048,16 @@
                     },
                     "destination": {
                         "world_name": "Area 5 - Entrance",
-                        "area_name": "Transport Hub"
+                        "area_name": "Chozo Seal"
                     },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
                         "Save Station": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6W",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6E",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4139,8 +4066,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 7250.0,
-                        "y": -2000.0,
+                        "x": 7546.055387967153,
+                        "y": -2000.1434975699685,
                         "z": 0.0
                     },
                     "description": "",
@@ -4152,7 +4079,7 @@
                         "actor_type": "weightactivatedplatform"
                     },
                     "connections": {
-                        "Elevator to Area 5 Entrance - Transport Hub": {
+                        "Elevator to Area 5 Entrance - Chozo Seal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4296,8 +4223,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 227.59,
-                        "y": -350.74,
+                        "x": -175.63264622088013,
+                        "y": -421.19888553712144,
                         "z": 0.0
                     },
                     "description": "",
@@ -4325,7 +4252,7 @@
                 "total_boundings": {
                     "x1": 1900.0,
                     "x2": 13200.0,
-                    "y1": -700.0,
+                    "y1": -800.0,
                     "y2": 6900.0
                 },
                 "polygon": [
@@ -4335,23 +4262,19 @@
                     ],
                     [
                         1900.0,
-                        -700.0
+                        -800.0
                     ],
                     [
-                        7000.0,
-                        -700.0
+                        7200.0,
+                        -800.0
                     ],
                     [
-                        7000.0,
-                        1200.0
-                    ],
-                    [
-                        9600.0,
-                        1700.0
+                        7200.0,
+                        1500.0
                     ],
                     [
                         13200.0,
-                        1700.0
+                        1500.0
                     ],
                     [
                         13200.0,
@@ -4381,8 +4304,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 10750.0,
-                        "y": 3200.0,
+                        "x": 10769.37321937322,
+                        "y": 3073.697931214271,
                         "z": 0.0
                     },
                     "description": "",
@@ -4412,7 +4335,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -4423,8 +4346,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9850.0,
-                        "y": 6400.0,
+                        "x": 9843.540398115561,
+                        "y": 6398.279425730406,
                         "z": 0.0
                     },
                     "description": "",
@@ -4446,12 +4369,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Next to Pickup Puzzle": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DNA6W",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4460,8 +4381,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 4070.75,
-                        "y": -477.58,
+                        "x": 5798.282218870454,
+                        "y": -563.220630132395,
                         "z": 0.0
                     },
                     "description": "",
@@ -4489,7 +4410,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -4578,8 +4499,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1931.51,
-                        "y": 71.96,
+                        "x": 1927.9327970504448,
+                        "y": -326.5020110608348,
                         "z": 0.0
                     },
                     "description": "",
@@ -4640,7 +4561,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -4651,8 +4572,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 5118.07,
-                        "y": -446.1,
+                        "x": 5798.282218870454,
+                        "y": -42.43966817496221,
                         "z": 0.0
                     },
                     "description": "",
@@ -4675,8 +4596,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 3296.95,
-                        "y": 1363.71,
+                        "x": 3703.3224400871463,
+                        "y": 525.685017596782,
                         "z": 0.0
                     },
                     "description": "",
@@ -4699,8 +4620,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 10426.504987960096,
-                        "y": 2492.629858961128,
+                        "x": 10821.688034188035,
+                        "y": 1957.4252136752139,
                         "z": 0.0
                     },
                     "description": "",
@@ -4798,7 +4719,7 @@
                         },
                         "Door to Crumble Bridge": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Chozo Seal": {
                             "type": "and",
@@ -4863,25 +4784,25 @@
                 "total_boundings": {
                     "x1": -2000.0,
                     "x2": 900.0,
-                    "y1": 8600.0,
-                    "y2": 11200.0
+                    "y1": 8500.0,
+                    "y2": 11000.0
                 },
                 "polygon": [
                     [
                         -2000.0,
-                        11200.0
+                        11000.0
                     ],
                     [
                         -2000.0,
-                        8600.0
+                        8500.0
                     ],
                     [
                         900.0,
-                        8600.0
+                        8500.0
                     ],
                     [
                         900.0,
-                        11200.0
+                        11000.0
                     ]
                 ],
                 "asset_id": "collision_camera_061"
@@ -4891,8 +4812,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1950.0,
-                        "y": 10000.0,
+                        "x": -1958.3717085842486,
+                        "y": 9955.644113826898,
                         "z": 0.0
                     },
                     "description": "",
@@ -4915,7 +4836,7 @@
                     "connections": {
                         "Door to Stolen Power Bomb Room (Top)": {
                             "type": "template",
-                            "data": "Climb Rooms (High Jump)"
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         },
                         "Dock to Omega Arena": {
                             "type": "and",
@@ -4930,8 +4851,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1950.0,
-                        "y": 10700.0,
+                        "x": -1958.3717085842486,
+                        "y": 10642.561105207227,
                         "z": 0.0
                     },
                     "description": "",
@@ -4965,8 +4886,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1641.78,
-                        "y": 8616.35,
+                        "x": -1479.4871794871794,
+                        "y": 8589.690170940172,
                         "z": 0.0
                     },
                     "description": "",
@@ -5086,8 +5007,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -1550.0,
-                        "y": -7200.0,
+                        "x": -1591.0674223639153,
+                        "y": -7105.387294840004,
                         "z": 0.0
                     },
                     "description": "",
@@ -5103,7 +5024,7 @@
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -5111,8 +5032,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -7400.0,
-                        "y": -5100.0,
+                        "x": -7497.1661353170375,
+                        "y": -5032.680954067777,
                         "z": 0.0
                     },
                     "description": "",
@@ -5139,8 +5060,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -500.0,
-                        "y": -10000.0,
+                        "x": -543.570669500531,
+                        "y": -9802.134254339353,
                         "z": 0.0
                     },
                     "description": "",
@@ -5161,11 +5082,11 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "or",
@@ -5197,8 +5118,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -202.1,
-                        "y": 2000.0,
+                        "x": -231.55036013697008,
+                        "y": 1943.20167670327,
                         "z": 0.0
                     },
                     "description": "",
@@ -5218,29 +5139,10 @@
                             }
                         },
                         "Door to Transport to Area 5 Entrance (Top)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6W",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6E",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Tunnel to Chozo Seal East": {
@@ -5253,15 +5155,6 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6E",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5284,8 +5177,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -2350.0,
-                        "y": -9600.0,
+                        "x": -2460.2668555909786,
+                        "y": -9378.678120203092,
                         "z": 0.0
                     },
                     "description": "",
@@ -5318,7 +5211,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Blocks"
+                                                    "data": "Destroy Bomb Block"
                                                 }
                                             ]
                                         }
@@ -5453,11 +5346,11 @@
                         },
                         "Save Station": {
                             "type": "template",
-                            "data": "Climb Rooms (High Jump)"
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         },
                         "Door to Teleporter Room South": {
                             "type": "template",
-                            "data": "Climb Rooms (High Jump)"
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         }
                     }
                 },
@@ -5465,8 +5358,8 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": -3404.3,
-                        "y": -2000.0,
+                        "x": -3463.189278545282,
+                        "y": -1979.339355295785,
                         "z": 0.0
                     },
                     "description": "",
@@ -5479,12 +5372,10 @@
                     },
                     "connections": {
                         "Save Station": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DNA6E",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Transport to Area 5 Entrance (Top)": {
@@ -5543,8 +5434,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -5400.0,
-                        "y": -4900.0,
+                        "x": -5469.03412445389,
+                        "y": -4832.096469476915,
                         "z": 0.0
                     },
                     "description": "",
@@ -5563,7 +5454,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "or",
@@ -5614,8 +5505,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3550.0,
-                        "y": -8100.0,
+                        "x": -3552.337938363443,
+                        "y": -7863.150903294367,
                         "z": 0.0
                     },
                     "description": "",
@@ -5649,8 +5540,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -6050.0,
-                        "y": -9600.0,
+                        "x": -6070.787578226473,
+                        "y": -9378.678120203092,
                         "z": 0.0
                     },
                     "description": "",
@@ -5684,8 +5575,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1150.0,
-                        "y": 3500.0,
+                        "x": -1123.0369583185739,
+                        "y": 3481.016058566536,
                         "z": 0.0
                     },
                     "description": "",
@@ -5719,8 +5610,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1150.0,
-                        "y": 500.0,
+                        "x": -1167.6112882276539,
+                        "y": 494.5359546581644,
                         "z": 0.0
                     },
                     "description": "",
@@ -5741,6 +5632,10 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Chozo Seal": {
+                            "type": "template",
+                            "data": "Climb/Traverse Rooms (No High Jump)"
+                        },
                         "Energy Recharge Station": {
                             "type": "and",
                             "data": {
@@ -5790,8 +5685,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1150.0,
-                        "y": -1400.0,
+                        "x": -1145.3241232731134,
+                        "y": -1377.5859015232027,
                         "z": 0.0
                     },
                     "description": "",
@@ -5825,8 +5720,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1931.51,
-                        "y": 71.96,
+                        "x": 1908.0174754988784,
+                        "y": -285.5148187507384,
                         "z": 0.0
                     },
                     "description": "",
@@ -5859,8 +5754,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -610.43,
-                        "y": 1134.18,
+                        "x": -253.83752509151054,
+                        "y": 2522.667965521312,
                         "z": 0.0
                     },
                     "description": "",
@@ -5888,7 +5783,7 @@
                 "total_boundings": {
                     "x1": -9200.0,
                     "x2": -1100.0,
-                    "y1": 1900.0,
+                    "y1": 1800.0,
                     "y2": 6500.0
                 },
                 "polygon": [
@@ -5906,11 +5801,11 @@
                     ],
                     [
                         -8500.0,
-                        1900.0
+                        1800.0
                     ],
                     [
                         -2100.0,
-                        1900.0
+                        1800.0
                     ],
                     [
                         -2100.0,
@@ -5973,7 +5868,30 @@
                         "actor_type": "weightactivatedplatform"
                     },
                     "connections": {
-                        "Next to Teleporter": {
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 6 Teleporter Upper",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Stolen Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Chozo Seal West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5986,8 +5904,8 @@
                     "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
-                        "x": -6250.0,
-                        "y": 2100.0,
+                        "x": -6151.131221719457,
+                        "y": 2100.169683257918,
                         "z": 0.0
                     },
                     "description": "",
@@ -6008,7 +5926,7 @@
                         }
                     },
                     "connections": {
-                        "Next to Teleporter": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6021,8 +5939,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5950.0,
-                        "y": 5200.0,
+                        "x": -5979.5625942684765,
+                        "y": 5252.036199095022,
                         "z": 0.0
                     },
                     "description": "",
@@ -6056,8 +5974,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9150.0,
-                        "y": 5200.0,
+                        "x": -9154.524886877827,
+                        "y": 5236.953242835595,
                         "z": 0.0
                     },
                     "description": "",
@@ -6079,29 +5997,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6W",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6E",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Door to Connecting Shaft": {
@@ -6117,8 +6016,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1150.0,
-                        "y": 3500.0,
+                        "x": -1145.475113122172,
+                        "y": 3472.2473604826546,
                         "z": 0.0
                     },
                     "description": "",
@@ -6139,91 +6038,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Next to Teleporter": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6W",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6E",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Next to Teleporter": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5482.161687170474,
-                        "y": 2092.3550087873464,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
                         "Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Teleporter": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Area 6 Teleporter Upper",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Door to Chozo Seal West": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6W",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA6E",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Teleporter Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6236,8 +6051,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -5909.23,
-                        "y": 2440.33,
+                        "x": -5514.819004524887,
+                        "y": 2151.074660633484,
                         "z": 0.0
                     },
                     "description": "",
@@ -6247,7 +6062,7 @@
                     "extra": {},
                     "event_name": "Area 6 Teleporter Upper",
                     "connections": {
-                        "Next to Teleporter": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,

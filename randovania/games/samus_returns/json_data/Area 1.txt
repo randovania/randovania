@@ -1,5 +1,5 @@
 ----------------
-Transport Area
+Chozo Seal
 Extra - total_boundings: {'x1': -20550.0, 'x2': -10700.0, 'y1': -4600.0, 'y2': 6000.0}
 Extra - polygon: [[-15300.0, 700.0], [-14900.0, -500.0], [-14900.0, -4600.0], [-11200.0, -4600.0], [-11200.0, -3600.0], [-12000.0, -3500.0], [-12000.0, -2000.0], [-10700.0, -1800.0], [-10700.0, 2100.030029296875], [-17900.0, 2100.0], [-18200.0, 2400.0], [-18200.0, 6000.0], [-20550.0, 6000.0], [-20550.0, 700.0]]
 Extra - asset_id: collision_camera_000
@@ -12,7 +12,7 @@ Extra - asset_id: collision_camera_000
   > Door to Entrance Shaft
       Trivial
   > After Crumble Bridge
-      Morph Ball and Spider Ball and After Area 1 - Chozo Seal Unlocked
+      Morph Ball and Spider Ball
   > Event - Chozo Seal Unlocked
       After Area 1 - Alpha Metroid North and After Area 1 - Alpha Metroid East and After Area 1 - Alpha Metroid Southeast and After Area 1 - Alpha Metroid West
 
@@ -24,19 +24,21 @@ Extra - asset_id: collision_camera_000
   > Save Station
       Trivial
 
-> Elevator to Area 2 Entrance - Transport Area; Heals? False
+> Elevator to Area 2 Entrance - Chozo Seal; Heals? False
   * Layers: default
-  * Teleporter to Area 2 - Entrance - Transport Area
+  * Teleporter to Area 2 - Entrance - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea02
   * Extra - actor_type: weightactivatedplatform
-  > Door to DNA Storage
+  > Door to Chozo Seal Storage
       After Area 1 - Chozo Seal Unlocked
   > After Crumble Bridge
       All of the following:
           After Area 1 - Chozo Seal Unlocked
           Any of the following:
               Screw Attack
-              Missile and Morph Ball
+              All of the following:
+                  Morph Ball
+                  Bomb or Missile or Power Bomb
 
 > Save Station; Heals? False
   * Layers: default
@@ -49,25 +51,25 @@ Extra - asset_id: collision_camera_000
 
 > Door to Entrance Shaft; Heals? False
   * Layers: default
-  * Charge Beam Door to Entrance Shaft/Door to Transport Area
+  * Charge Beam Door to Entrance Shaft/Door to Chozo Seal
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
   > Chozo Seal
       Trivial
 
-> Door to DNA Storage; Heals? False
+> Door to Chozo Seal Storage; Heals? False
   * Layers: default
-  * Wave Beam Door to DNA Storage/Door to Transport Area
+  * Wave Beam Door to Chozo Seal Storage/Door to Chozo Seal
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 2 Entrance - Transport Area
+  > Elevator to Area 2 Entrance - Chozo Seal
       Morph Ball or Screw Attack
 
 > After Crumble Bridge; Heals? False
   * Layers: default
   > Chozo Seal
       Morph Ball
-  > Elevator to Area 2 Entrance - Transport Area
+  > Elevator to Area 2 Entrance - Chozo Seal
       Any of the following:
           Screw Attack
           All of the following:
@@ -85,9 +87,9 @@ Entrance Shaft
 Extra - total_boundings: {'x1': -10800.0, 'x2': -9500.0, 'y1': 1100.0, 'y2': 5100.0}
 Extra - polygon: [[-9500.0, 1100.0], [-9500.0, 5100.0], [-10800.0, 5100.0], [-10800.0, 1100.0]]
 Extra - asset_id: collision_camera_003
-> Door to Transport Area; Heals? False
+> Door to Chozo Seal; Heals? False
   * Layers: default
-  * Charge Beam Door to Transport Area/Door to Entrance Shaft
+  * Charge Beam Door to Chozo Seal/Door to Entrance Shaft
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
   > Door to Lava Shortcut
@@ -98,7 +100,7 @@ Extra - asset_id: collision_camera_003
   * Charge Beam Door to Lava Shortcut/Door to Entrance Shaft
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
-  > Door to Transport Area
+  > Door to Chozo Seal
       Trivial
   > Dock to Entrance Pathway
       Trivial
@@ -165,7 +167,7 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
   > Tunnel to Bomb Access
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Pickup (Bomb); Heals? False
   * Layers: default
@@ -183,15 +185,15 @@ Extra - asset_id: collision_camera_008
   > Pickup (Bomb)
       Trivial
   > Tunnel to Bomb Access
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Tunnel to Bomb Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Bomb Access/Tunnel to Bomb Room
   > Pickup (Missile Tank)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Door from Bomb Access
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Shaft East
@@ -214,7 +216,7 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerclosed
   > Door to Inner Room
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
   > Dock to Teleporter Room
       Trivial
 
@@ -232,7 +234,7 @@ Extra - asset_id: collision_camera_012
   > Door to Spider Ball Balcony
       Trivial
   > Door to Outer Hub
-      Ice Beam or Climb Rooms (High Jump)
+      Ice Beam or Climb/Traverse Rooms (High Jump)
 
 > Dock to Ice Beam Tutorial; Heals? False
   * Layers: default
@@ -284,7 +286,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_missiletank
   > Tunnel to Spider Ball Balcony
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Pickup (Spider Ball); Heals? False
   * Layers: default
@@ -325,7 +327,7 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_energytank
   > Door from Outer Hub
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Tunnel to Outer Hub
       Morph Ball
 
@@ -335,7 +337,7 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerclosed
   > Pickup (Energy Tank)
-      Climb Rooms (High Jump) and Destroy Bomb Blocks
+      Climb/Traverse Rooms (High Jump) and Destroy Bomb Block
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -343,7 +345,7 @@ Extra - asset_id: collision_camera_017
   * Layers: default
   * Tunnel to Outer Hub/Tunnel to Alpha Arena North
   > Pickup (Energy Tank)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
@@ -370,14 +372,14 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: LE_Item_017
   * Extra - actor_type: item_missiletank
   > Ammo Recharge Station
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_AmmoRecharge_Platform
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Missile Tank Puzzle)
-      Missile and Destroy Bomb Blocks
+      Missile and Destroy Bomb Block
   > Energy Recharge Station
       Trivial
 
@@ -401,7 +403,7 @@ Extra - asset_id: collision_camera_018
   > Door to Shaft East
       Trivial
   > Door to Alpha Arena North
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
   > Door to Spider Ball Room
       Trivial
   > Tunnel to Spider Ball Room
@@ -421,7 +423,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerclosed
   > Energy Recharge Station
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
   > Save Station
       Trivial
 
@@ -462,8 +464,6 @@ Extra - asset_id: collision_camera_018
 > Tunnel to Inner Shaft; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Inner Shaft/Tunnel to Outer Hub
-  > Dock to Save Station North
-      Morph Ball
   > 2nd Level
       Trivial
 
@@ -473,25 +473,27 @@ Extra - asset_id: collision_camera_018
   > Dock to Outer Hub Access
       Trivial
   > 2nd Level
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Above Wall; Heals? False
   * Layers: default
   > Energy Recharge Station
       Morph Ball and Space Jump
+  > Door to Shaft East
+      Trivial
   > Pickup (Missile Tank Hidden)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > 2nd Level
       Trivial
 
 > 2nd Level; Heals? False
   * Layers: default
   > Tunnel to Inner Shaft
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Dock to Save Station North
       Trivial
   > Above Wall
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 ----------------
 Alpha Shaft Left
@@ -503,8 +505,6 @@ Extra - asset_id: collision_camera_023
   * Power Beam Door to Alpha Arena Southeast/Door to Alpha Shaft Left
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Door to Alpha Shaft Right
-      Destroy Bomb Blocks
   > Dock to Alpha Arena West Access
       Trivial
 
@@ -512,7 +512,9 @@ Extra - asset_id: collision_camera_023
   * Layers: default
   * Access Open to Alpha Shaft Right/Dock to Alpha Shaft Left
   > Tunnel to Energy Recharge Room
-      Spider Ball and Destroy Bomb Blocks
+      Spider Ball and Destroy Bomb Block
+  > Dock to Alpha Arena West Access
+      Trivial
 
 > Tunnel to Energy Recharge Room; Heals? False
   * Layers: default
@@ -524,6 +526,8 @@ Extra - asset_id: collision_camera_023
   * Layers: default
   * Open Passage to Alpha Arena West Access/Dock to Alpha Shaft Left
   > Door to Alpha Arena Southeast
+      Trivial
+  > Door to Alpha Shaft Right
       Trivial
 
 ----------------
@@ -543,9 +547,9 @@ Extra - asset_id: collision_camera_024
 
 > Tunnel to Alpha Arena West (Lower); Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena West/Tunnel to Alpha Arena West Access (Lower)
+  * Tunnel with Bomb Block to Alpha Arena West/Tunnel to Alpha Arena West Access (Lower)
   > Dock to Alpha Shaft Left
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Alpha Arena Southeast
@@ -686,7 +690,7 @@ Extra - asset_id: collision_camera_031
   * Extra - actor_name: LE_EnergyCharge001_Platform
   * Extra - actor_type: weightactivatedplatform
   > Tunnel to Alpha Shaft Left
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Tunnel to Alpha Shaft Left; Heals? False
   * Layers: default
@@ -713,7 +717,7 @@ Extra - asset_id: collision_camera_033
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
   > Pickup (Missile Tank)
-      Varia Suit and Climb Rooms (No High Jump)
+      Varia Suit and Climb/Traverse Rooms (No High Jump)
   > Door to Shaft West
       Any of the following:
           Gravity Suit
@@ -730,7 +734,7 @@ Extra - asset_id: collision_camera_033
           Morph Ball and Spider Ball and Varia Suit
   > Pickup (Super Missile Tank)
       All of the following:
-          Gravity Suit and Morph Ball and Shoot Super Missiles
+          Gravity Suit and Morph Ball and Super Missile
           Any of the following:
               Space Jump
               Spider Ball and Spring Ball
@@ -756,7 +760,7 @@ Extra - asset_id: collision_camera_035
   > Dock to Bomb Access
       Trivial
   > Dock to Save Station North
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Tunnel to Alpha Shaft Right; Heals? False
   * Layers: default
@@ -791,7 +795,7 @@ Extra - asset_id: collision_camera_041
   * Extra - actor_name: LE_Item_006
   * Extra - actor_type: item_missiletank
   > Dock to Alpha Shaft Right
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Tunnel to Alpha Shaft Right
       Lay Power Bomb
 
@@ -805,6 +809,8 @@ Extra - asset_id: collision_camera_041
       All of the following:
           Morph Ball and After Area 1 - One-Way Puzzle Grapple Block
           Gravity Suit or Spider Ball
+  > Dock to Alpha Shaft Right
+      Trivial
 
 > Dock to One-Way Puzzle; Heals? False
   * Layers: default
@@ -815,6 +821,8 @@ Extra - asset_id: collision_camera_041
 > Tunnel to One-Way Puzzle; Heals? False
   * Layers: default
   * Tunnel to One-Way Puzzle/Tunnel to Save Station South
+  > Save Station
+      Morph Ball
 
 > Dock to Alpha Shaft Right; Heals? False
   * Layers: default
@@ -866,7 +874,7 @@ Extra - asset_id: collision_camera_043
   * Extra - actor_name: LE_Item_016
   * Extra - actor_type: item_missiletank
   > Door to Inner Room
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Inner Room; Heals? False
   * Layers: default
@@ -874,7 +882,7 @@ Extra - asset_id: collision_camera_043
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
   > Dock to Teleporter Access
       Trivial
 
@@ -892,7 +900,7 @@ Extra - asset_id: collision_camera_043
   * Layers: default
   * Tunnel to Inner Room/Tunnel to Inner Shaft
   > Tunnel to Outer Hub
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Alpha Shaft Right
@@ -903,7 +911,7 @@ Extra - asset_id: collision_camera_044
   * Layers: default
   * Open Passage to Save Station South/Dock to Alpha Shaft Right
   > Tunnel to Save Station South
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Tunnel to Central Shaft
       Morph Ball
   > Dock to Alpha Arena East Access
@@ -933,7 +941,7 @@ Extra - asset_id: collision_camera_044
   > Dock to Save Station South
       Trivial
   > Dock to Alpha Shaft Left
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Alpha Arena East Access
@@ -971,7 +979,7 @@ Extra - asset_id: collision_camera_046
   > Door to Bomb Room
       Trivial
   > Tunnel to Bomb Room
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Tunnel to Bomb Room; Heals? False
   * Layers: default
@@ -1044,36 +1052,29 @@ Extra - asset_id: collision_camera_049
   * Player Ship (Unlocked by Trivial)
   * Extra - actor_name: LE_Platform_Teleporter_01_01
   * Extra - actor_type: weightactivatedplatform
-  > Next to Teleporter
+  > Dock to Shaft East
       Trivial
 
 > Tunnel to Teleporter Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Teleporter Access/Tunnel to Teleporter Room
-  > Next to Teleporter
-      Morph Ball
+  > Dock to Shaft East
+      Destroy Bomb Block
 
 > Dock to Shaft East; Heals? False
   * Layers: default
   * Open Passage to Shaft East/Dock to Teleporter Room
-  > Next to Teleporter
+  > Teleporter
+      After Area 1 - Teleporter Unlocked
+  > Tunnel to Teleporter Access
+      Destroy Bomb Block
+  > Event - Teleporter Unlocked
       Trivial
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 1 - Teleporter Unlocked
-  > Next to Teleporter
-      Trivial
-
-> Next to Teleporter; Heals? False
-  * Layers: default
-  > Teleporter
-      After Area 1 - Teleporter Unlocked
-  > Tunnel to Teleporter Access
-      Destroy Bomb Blocks
   > Dock to Shaft East
-      Trivial
-  > Event - Teleporter Unlocked
       Trivial
 
 ----------------
@@ -1096,7 +1097,7 @@ Extra - asset_id: collision_camera_050
       Trivial
 
 ----------------
-DNA Storage
+Chozo Seal Storage
 Extra - total_boundings: {'x1': -12100.0, 'x2': -10800.0, 'y1': -2814.06005859375, 'y2': -2055.330078125}
 Extra - polygon: [[-10800.0, -2814.06005859375], [-10800.0, -2055.330078125], [-12100.0, -2055.330078125], [-12100.0, -2814.06005859375]]
 Extra - asset_id: collision_camera_051
@@ -1105,12 +1106,12 @@ Extra - asset_id: collision_camera_051
   * Pickup 16; Major Location? False
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_missiletank
-  > Door to Transport Area
+  > Door to Chozo Seal
       Morph Ball
 
-> Door to Transport Area; Heals? False
+> Door to Chozo Seal; Heals? False
   * Layers: default
-  * Wave Beam Door to Transport Area/Door to DNA Storage
+  * Wave Beam Door to Chozo Seal/Door to Chozo Seal Storage
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
@@ -1146,13 +1147,13 @@ Extra - asset_id: collision_camera_054
 
 > Tunnel to Alpha Arena West Access (Lower); Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena West Access/Tunnel to Alpha Arena West (Lower)
+  * Tunnel with Bomb Block to Alpha Arena West Access/Tunnel to Alpha Arena West (Lower)
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid West
   > Tunnel to Alpha Arena West Access (Lower)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Outer Hub Access

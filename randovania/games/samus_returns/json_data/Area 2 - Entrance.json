@@ -2,15 +2,15 @@
     "name": "Area 2 - Entrance",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s028_area2c/s028_area2c.bmsld",
-        "map_min_x": 10,
-        "map_max_x": 27,
+        "map_min_x": 16,
+        "map_max_x": 22,
         "map_min_y": 15,
         "map_max_y": 19,
         "scenario_id": "s028_area2c"
     },
     "areas": {
-        "Transport Area": {
-            "default_node": "Elevator To Area 1 - Transport Area",
+        "Chozo Seal": {
+            "default_node": "Elevator To Area 1 - Chozo Seal",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -64,8 +64,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 24500.0,
-                        "y": -7100.0,
+                        "x": 24429.507616011335,
+                        "y": -7022.051009564294,
                         "z": 0.0
                     },
                     "description": "",
@@ -88,12 +88,12 @@
                         }
                     }
                 },
-                "Elevator To Area 1 - Transport Area": {
+                "Elevator To Area 1 - Chozo Seal": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 21100.0,
-                        "y": -1500.0,
+                        "x": 21255.22493800921,
+                        "y": -1515.8519305703153,
                         "z": 0.0
                     },
                     "description": "",
@@ -106,7 +106,7 @@
                     },
                     "destination": {
                         "world_name": "Area 1",
-                        "area_name": "Transport Area"
+                        "area_name": "Chozo Seal"
                     },
                     "keep_name_when_vanilla": false,
                     "editable": true,
@@ -124,8 +124,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 22600.0,
-                        "y": -9500.0,
+                        "x": 22570.138150903294,
+                        "y": -9364.24017003188,
                         "z": 0.0
                     },
                     "description": "",
@@ -175,8 +175,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 20200.0,
-                        "y": -3200.0,
+                        "x": 20207.40347148424,
+                        "y": -3200.5844845908605,
                         "z": 0.0
                     },
                     "description": "",
@@ -188,7 +188,7 @@
                         "actor_type": "weightactivatedplatform"
                     },
                     "connections": {
-                        "Elevator To Area 1 - Transport Area": {
+                        "Elevator To Area 1 - Chozo Seal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -204,7 +204,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Alpha Arena Access (Top)": {
+                        "Door to Teleporter Room (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -217,8 +217,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 22500.0,
-                        "y": -4300.0,
+                        "x": 22436.592277718737,
+                        "y": -4258.678710591569,
                         "z": 0.0
                     },
                     "description": "",
@@ -239,7 +239,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Alpha Arena Access (Bottom)": {
+                        "Door to Teleporter Room (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -328,12 +328,12 @@
                         }
                     }
                 },
-                "Door to Alpha Arena Access (Top)": {
+                "Door to Teleporter Room (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 19050.0,
-                        "y": -3000.0,
+                        "x": 19051.718030464046,
+                        "y": -2902.6744597945444,
                         "z": 0.0
                     },
                     "description": "",
@@ -347,8 +347,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
-                        "area_name": "Alpha Arena Access",
-                        "node_name": "Door to Transport Area (Top)"
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Chozo Seal (Top)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
@@ -363,12 +363,12 @@
                         }
                     }
                 },
-                "Door to Alpha Arena Access (Bottom)": {
+                "Door to Teleporter Room (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 19050.0,
-                        "y": -4500.0,
+                        "x": 19051.718030464046,
+                        "y": -4412.770102727594,
                         "z": 0.0
                     },
                     "description": "",
@@ -382,8 +382,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
-                        "area_name": "Alpha Arena Access",
-                        "node_name": "Door to Transport Area (Bottom)"
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Chozo Seal (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -402,8 +402,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 20550.0,
-                        "y": -5900.0,
+                        "x": 20556.677293659228,
+                        "y": -5881.774707757704,
                         "z": 0.0
                     },
                     "description": "",
@@ -430,8 +430,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 23032.41,
-                        "y": -4340.86,
+                        "x": 22416.04675876727,
+                        "y": -3714.2224583776124,
                         "z": 0.0
                     },
                     "description": "",
@@ -454,8 +454,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 22431.45589798087,
-                        "y": -6528.958554729012,
+                        "x": 22477.683315621678,
+                        "y": -5029.135671271697,
                         "z": 0.0
                     },
                     "description": "",
@@ -480,7 +480,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -538,7 +538,7 @@
                 }
             }
         },
-        "Alpha Arena Access": {
+        "Teleporter Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -558,11 +558,19 @@
                         -1500.0
                     ],
                     [
-                        14300.0,
-                        -1500
+                        14050.0,
+                        -1500.0
                     ],
                     [
-                        14300.0,
+                        14050.0,
+                        -2650.0
+                    ],
+                    [
+                        14150.0,
+                        -2650.0
+                    ],
+                    [
+                        14150.0,
                         -5400.0
                     ],
                     [
@@ -581,8 +589,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 17700.0,
-                        "y": -2800.0,
+                        "x": 17587.218089502894,
+                        "y": -2827.6301806588735,
                         "z": 0.0
                     },
                     "description": "",
@@ -609,8 +617,8 @@
                     "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
-                        "x": 15550.0,
-                        "y": -2900.0,
+                        "x": 15524.164600307002,
+                        "y": -2907.450702562286,
                         "z": 0.0
                     },
                     "description": "",
@@ -640,12 +648,12 @@
                         }
                     }
                 },
-                "Door to Transport Area (Top)": {
+                "Door to Chozo Seal (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 19050.0,
-                        "y": -3000.0,
+                        "x": 19048.547644349983,
+                        "y": -2932.0108631479516,
                         "z": 0.0
                     },
                     "description": "",
@@ -659,14 +667,14 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
-                        "area_name": "Transport Area",
-                        "node_name": "Door to Alpha Arena Access (Top)"
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Teleporter Room (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport Area (Bottom)": {
+                        "Door to Chozo Seal (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -677,12 +685,12 @@
                         }
                     }
                 },
-                "Door to Transport Area (Bottom)": {
+                "Door to Chozo Seal (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 19050.0,
-                        "y": -4500.0,
+                        "x": 19060.827724642815,
+                        "y": -4387.200377848625,
                         "z": 0.0
                     },
                     "description": "",
@@ -696,14 +704,14 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
-                        "area_name": "Transport Area",
-                        "node_name": "Door to Alpha Arena Access (Bottom)"
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Teleporter Room (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport Area (Top)": {
+                        "Door to Chozo Seal (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -727,8 +735,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 13850.0,
-                        "y": -900.0,
+                        "x": 13847.93364033534,
+                        "y": -850.5372535128114,
                         "z": 0.0
                     },
                     "description": "",
@@ -743,7 +751,7 @@
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
                         "area_name": "Alpha Arena",
-                        "node_name": "Door to Alpha Arena Access"
+                        "node_name": "Door to Teleporter Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -762,8 +770,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 15984.67,
-                        "y": -2815.35,
+                        "x": 15996.947691581061,
+                        "y": -3005.6913449049475,
                         "z": 0.0
                     },
                     "description": "",
@@ -786,8 +794,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 15656.175463454954,
-                        "y": -3447.7742354469246,
+                        "x": 15591.705041917581,
+                        "y": -3466.1943558861735,
                         "z": 0.0
                     },
                     "description": "",
@@ -814,7 +822,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transport Area (Bottom)": {
+                        "Door to Chozo Seal (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -882,8 +890,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 6600.0,
-                        "y": 100.0,
+                        "x": 6555.59410445014,
+                        "y": 34.736026893931694,
                         "z": 0.0
                     },
                     "description": "",
@@ -910,8 +918,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 6446.2,
-                        "y": -2205.0,
+                        "x": 6447.657199613816,
+                        "y": -2267.9179429476358,
                         "z": 0.0
                     },
                     "description": "",
@@ -949,8 +957,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 7400.0,
-                        "y": 100.0,
+                        "x": 7288.023101553764,
+                        "y": 14.176616448917684,
                         "z": 0.0
                     },
                     "description": "",
@@ -981,8 +989,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8750.0,
-                        "y": -2900.0,
+                        "x": 8746.327783681663,
+                        "y": -2794.8813319164015,
                         "z": 0.0
                     },
                     "description": "",
@@ -1018,8 +1026,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8750.0,
-                        "y": -400.0,
+                        "x": 8750.696658401228,
+                        "y": -339.5737395206045,
                         "z": 0.0
                     },
                     "description": "",
@@ -1153,8 +1161,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8750.0,
-                        "y": -2900.0,
+                        "x": 8750.78521667257,
+                        "y": -2787.8793245955844,
                         "z": 0.0
                     },
                     "description": "",
@@ -1183,25 +1191,8 @@
                             }
                         },
                         "Dock to Water Storage": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Boots",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         }
                     }
                 },
@@ -1209,8 +1200,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8750.0,
-                        "y": -400.0,
+                        "x": 8748.955012398157,
+                        "y": -339.06600543157396,
                         "z": 0.0
                     },
                     "description": "",
@@ -1244,8 +1235,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10435.44,
-                        "y": -1296.36,
+                        "x": 10467.516826071555,
+                        "y": -1246.8473255402055,
                         "z": 0.0
                     },
                     "description": "",
@@ -1283,8 +1274,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10447.38,
-                        "y": -2070.44,
+                        "x": 10438.233557680955,
+                        "y": -2000.891486598182,
                         "z": 0.0
                     },
                     "description": "",
@@ -1348,8 +1339,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 14000.0,
-                        "y": -2900.0,
+                        "x": 14040.770252324037,
+                        "y": -2886.586985391766,
                         "z": 0.0
                     },
                     "description": "",
@@ -1376,8 +1367,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10447.38,
-                        "y": -2070.44,
+                        "x": 10429.72972972973,
+                        "y": -2021.6216216216217,
                         "z": 0.0
                     },
                     "description": "",
@@ -1473,12 +1464,12 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to Alpha Arena Access": {
+                "Door to Teleporter Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 13850.0,
-                        "y": -900.0,
+                        "x": 13854.424851008245,
+                        "y": -834.2844313821536,
                         "z": 0.0
                     },
                     "description": "",
@@ -1492,7 +1483,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
-                        "area_name": "Alpha Arena Access",
+                        "area_name": "Teleporter Room",
                         "node_name": "Door to Alpha Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1563,8 +1554,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 12315.28,
-                        "y": -978.01,
+                        "x": 12237.149971426239,
+                        "y": -1005.7269981222956,
                         "z": 0.0
                     },
                     "description": "",
@@ -1587,8 +1578,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 12166.25789669268,
-                        "y": -1170.2805648457822,
+                        "x": 12428.59417095273,
+                        "y": -1345.754755490244,
                         "z": 0.0
                     },
                     "description": "",
@@ -1597,7 +1588,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Door to Alpha Arena Access": {
+                        "Door to Teleporter Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",

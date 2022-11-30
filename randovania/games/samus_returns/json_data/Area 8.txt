@@ -1,7 +1,7 @@
 ----------------
 Larva Access
-Extra - total_boundings: {'x1': -2800.0, 'x2': -200.0, 'y1': 8900.0, 'y2': 11000.0}
-Extra - polygon: [[-2800.0, 8900.0], [-200.0, 8900.0], [-200.0, 11200.0], [-2800.0, 11200.0]]
+Extra - total_boundings: {'x1': -2800.0, 'x2': -270.0, 'y1': 8900.0, 'y2': 11000.0}
+Extra - polygon: [[-2800.0, 8900.0], [-270.0, 8900.0], [-270.0, 11200.0], [-2800.0, 11200.0]]
 Extra - asset_id: collision_camera_007
 > Door to Larva Hallway 1; Heals? False
   * Layers: default
@@ -24,9 +24,9 @@ Extra - asset_id: collision_camera_007
   * Tunnel to Larva Hallway 1/Tunnel to Larva Access
 
 ----------------
-Transport to Surface (West)
+Transport to Surface West
 Extra - total_boundings: {'x1': -12400.0, 'x2': 7150.0, 'y1': 11000.0, 'y2': 27400.0}
-Extra - polygon: [[-12400.0, 27400.0], [-12400.0, 11000.0], [-7100.0, 11000.0], [-7100.0, 19500.0], [-3100.0, 20900.0], [-1000.0, 20900.0], [100.0, 21600.0], [7150.0, 21600.0], [7150.0, 27400.0]]
+Extra - polygon: [[-12400.0, 27400.0], [-12400.0, 11000.0], [-6900.0, 11000.0], [-6900.0, 19500.0], [-3100.0, 20900.0], [-1000.0, 20900.0], [100.0, 21600.0], [7150.0, 21600.0], [7150.0, 27400.0]]
 Extra - asset_id: collision_camera_008_A
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -76,7 +76,7 @@ Extra - asset_id: collision_camera_008_A
 
 > Dock to Queen Arena; Heals? False
   * Layers: default
-  * Open Passage to Queen Arena/Dock to Transport to Surface (West)
+  * Open Passage to Queen Arena/Dock to Transport to Surface West
   > Save Station
       Trivial
 
@@ -91,8 +91,8 @@ Extra - asset_id: collision_camera_008_A
 
 ----------------
 Larva Hallway 1
-Extra - total_boundings: {'x1': -300.0, 'x2': 4250.0, 'y1': 8900.0, 'y2': 10500.0}
-Extra - polygon: [[-300.0, 8900.0], [4250.0, 8900.0], [4250.0, 10500.0], [-300.0, 10500.0]]
+Extra - total_boundings: {'x1': -370.0, 'x2': 4160.0, 'y1': 8900.0, 'y2': 10500.0}
+Extra - polygon: [[-370.0, 8900.0], [4160.0, 8900.0], [4160.0, 10500.0], [-370.0, 10500.0]]
 Extra - asset_id: collision_camera_008_B
 > Door to Larva Access; Heals? False
   * Layers: default
@@ -166,7 +166,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_powerbombtank
   > Save Station
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
@@ -187,13 +187,13 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Missile Tank Left)
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
   > Pickup (Power Bomb Tank)
-      Lighting Armor and Climb Rooms (No High Jump)
+      Lighting Armor and Climb/Traverse Rooms (No High Jump)
   > Door to Central Chamber Access
       Trivial
   > Lower Platforms
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Central Chamber Access; Heals? False
   * Layers: default
@@ -209,7 +209,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Above Top Pickup
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
 
 > Pickup (Missile Tank Hidden); Heals? False
   * Layers: default
@@ -241,10 +241,10 @@ Extra - asset_id: collision_camera_009
       Space Jump and Lay Power Bomb
   > Above Tunnels
       All of the following:
-          Destroy Bomb Blocks
+          Destroy Bomb Block
           Space Jump or Can Spiderspark
   > Next to Bottom Grapple Block
-      After Area 8 - Central Chamber Grapple Block Bottom and Climb Rooms (No High Jump)
+      After Area 8 - Central Chamber Grapple Block Bottom and Climb/Traverse Rooms (No High Jump)
 
 > Above Tunnels; Heals? False
   * Layers: default
@@ -264,7 +264,7 @@ Extra - asset_id: collision_camera_009
   > Next to Bottom Grapple Block
       Morph Ball
   > Above Top Pickup
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
 
 > Next to Bottom Grapple Block; Heals? False
   * Layers: default
@@ -280,7 +280,7 @@ Extra - asset_id: collision_camera_009
   > Pickup (Missile Tank Top)
       Morph Ball and After Area 8 - Central Chamber Grapple Block Top
   > Door to Teleporter Shaft North
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
   > Event - Grapple Block Top
       Grapple Beam
   > Above Tunnels
@@ -296,7 +296,7 @@ Extra - asset_id: collision_camera_010
   * Pickup 160; Major Location? False
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_missiletank
-  > Door to Central Chamber Shaft (Bottom)
+  > Door to Shaft East (Bottom)
       Trivial
   > Above Grapple Block
       Lighting Armor or Can Spiderspark
@@ -314,25 +314,25 @@ Extra - asset_id: collision_camera_010
   * Power Beam Door to Teleporter Shaft South/Door to Central Chamber Access
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Door to Central Chamber Shaft (Bottom)
+  > Door to Shaft East (Bottom)
       Trivial
 
-> Door to Central Chamber Shaft (Bottom); Heals? False
+> Door to Shaft East (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Shaft/Door to Central Chamber Access (Bottom)
+  * Power Beam Door to Shaft East/Door to Central Chamber Access (Bottom)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Door to Teleporter Shaft South
       Trivial
 
-> Door to Central Chamber Shaft (Top); Heals? False
+> Door to Shaft East (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Shaft/Door to Central Chamber Access (Top)
+  * Power Beam Door to Shaft East/Door to Central Chamber Access (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
-  > Door to Central Chamber Shaft (Bottom)
+  > Door to Shaft East (Bottom)
       Trivial
-  > Dock to Central Chamber Shaft
+  > Dock to Shaft East
       Screw Attack
   > Above Grapple Block
       Screw Attack
@@ -349,10 +349,10 @@ Extra - asset_id: collision_camera_010
   > Above Grapple Block
       Screw Attack
 
-> Dock to Central Chamber Shaft; Heals? False
+> Dock to Shaft East; Heals? False
   * Layers: default
-  * Open Passage to Central Chamber Shaft/Dock to Central Chamber Access
-  > Door to Central Chamber Shaft (Bottom)
+  * Open Passage to Shaft East/Dock to Central Chamber Access
+  > Door to Shaft East (Bottom)
       Trivial
 
 > Tunnel to Teleporter Shaft South; Heals? False
@@ -371,10 +371,10 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   > Pickup (Missile Tank Hallway)
       Lighting Armor or Can Spiderspark
-  > Door to Central Chamber Shaft (Top)
+  > Door to Shaft East (Top)
       Screw Attack
   > Door to Central Chamber
-      Screw Attack and Climb Rooms (No High Jump)
+      Screw Attack and Climb/Traverse Rooms (No High Jump)
   > Tunnel to Teleporter Shaft South
       Morph Ball and After Area 8 - Central Chamber Access Grapple Block
   > Event - Grapple Block
@@ -411,7 +411,7 @@ Extra - asset_id: collision_camera_011
   > Teleporter
       After Area 8 - Teleporter Unlocked (Lower)
   > Door to Central Chamber Access
-      Screw Attack and Climb Rooms (High Jump)
+      Screw Attack and Climb/Traverse Rooms (High Jump)
   > Event - Teleporter Unlocked
       Trivial
 
@@ -423,7 +423,7 @@ Extra - asset_id: collision_camera_011
   > Door to Entrance Hallway
       Screw Attack
   > Tunnel to Central Chamber Access
-      Morph Ball and After Area 8 - Central Chamber Access Grapple Block and Climb Rooms (High Jump)
+      Morph Ball and After Area 8 - Central Chamber Access Grapple Block and Climb/Traverse Rooms (High Jump)
 
 > Tunnel to Central Chamber Access; Heals? False
   * Layers: default
@@ -438,7 +438,7 @@ Extra - asset_id: collision_camera_011
       Trivial
 
 ----------------
-Central Chamber Shaft
+Shaft East
 Extra - total_boundings: {'x1': 1000.0, 'x2': 2900.0, 'y1': -7100.0, 'y2': -3600.0}
 Extra - polygon: [[1000.0, -3600.0], [1000.0, -7100.0], [2900.0, -7100.0], [2900.0, -3600.0]]
 Extra - asset_id: collision_camera_012
@@ -456,13 +456,13 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
   > Door to Central Chamber Access (Bottom)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Dock to Central Chamber Access
       Trivial
 
 > Door to Central Chamber Access (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Access/Door to Central Chamber Shaft (Bottom)
+  * Power Beam Door to Central Chamber Access/Door to Shaft East (Bottom)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Door to Central Chamber Access (Top)
@@ -470,7 +470,7 @@ Extra - asset_id: collision_camera_012
 
 > Door to Central Chamber Access (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Access/Door to Central Chamber Shaft (Top)
+  * Power Beam Door to Central Chamber Access/Door to Shaft East (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
   > Pickup (Super Missile Tank)
@@ -484,14 +484,14 @@ Extra - asset_id: collision_camera_012
 
 > Dock to Central Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to Central Chamber Access/Dock to Central Chamber Shaft
+  * Open Passage to Central Chamber Access/Dock to Shaft East
   > Pickup (Missile Tank)
       Trivial
 
 ----------------
 Larva Shaft 1
-Extra - total_boundings: {'x1': 4150.0, 'x2': 5950.0, 'y1': 9300.0, 'y2': 12000.0}
-Extra - polygon: [[4150.0, 12000.0], [4150.0, 9300.0], [5950.0, 9300.0], [5950.0, 12000.0]]
+Extra - total_boundings: {'x1': 4050.0, 'x2': 5950.0, 'y1': 9300.0, 'y2': 12000.0}
+Extra - polygon: [[4050.0, 12000.0], [4050.0, 9300.0], [5950.0, 9300.0], [5950.0, 12000.0]]
 Extra - asset_id: collision_camera_013
 > Door to Larva Hallway 1; Heals? False
   * Layers: default
@@ -545,23 +545,14 @@ Extra - asset_id: collision_camera_014
   > Room Top
       Trivial
 
-> Room Bottom; Heals? False
-  * Layers: default
-  > Door to Larva Shaft 1
-      After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
-  > Room Top
-      Morph Ball
-  > Event - Larva Metroid Bottom
-      Defeat Larva Metroid
-
 > Room Top; Heals? False
   * Layers: default
   > Door to Larva Hallway 2
       After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
-  > Room Bottom
-      Morph Ball
   > Event - Larva Metroid Top
       Defeat Larva Metroid
+  > Room Bottom
+      Morph Ball
 
 > Event - Larva Metroid Bottom; Heals? False
   * Layers: default
@@ -574,6 +565,15 @@ Extra - asset_id: collision_camera_014
   * Event Area 8 - Larva Metroid 4
   > Room Top
       Trivial
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Larva Shaft 1
+      After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
+  > Room Top
+      Morph Ball
+  > Event - Larva Metroid Bottom
+      Defeat Larva Metroid
 
 ----------------
 Larva Hallway 2
@@ -746,7 +746,7 @@ Extra - asset_id: collision_camera_018
   > Door to Larva Hallway 3
       After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
   > Event - Larva Metroid Top
-      Climb Rooms (No High Jump) and Defeat Larva Metroid
+      Climb/Traverse Rooms (No High Jump) and Defeat Larva Metroid
   > Event - Larva Metroid Middle
       Defeat Larva Metroid
   > Room Bottom
@@ -761,20 +761,20 @@ Extra - asset_id: collision_camera_018
   > Event - Larva Metroid Bottom
       Defeat Larva Metroid
   > Room Top
-      Morph Ball and Climb Rooms (High Jump)
+      Morph Ball and Climb/Traverse Rooms (High Jump)
 
 ----------------
 Queen Access Path
 Extra - total_boundings: {'x1': -5350.0, 'x2': 1200.0, 'y1': 12100.0, 'y2': 13600.0}
 Extra - polygon: [[-5350.0, 13600.0], [-5350.0, 12100.0], [1200.0, 12100.0], [1200.0, 13600.0]]
 Extra - asset_id: collision_camera_019
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
   > Door to Larva Shaft 3
-      Lighting Armor or Climb Rooms (High Jump)
-  > Dock to Queen Arena (Right)
+      Lighting Armor or Climb/Traverse Rooms (High Jump)
+  > Dock to Queen Arena
       Trivial
 
 > Door to Larva Shaft 3; Heals? False
@@ -783,17 +783,17 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Save Station
-      Lighting Armor or Climb Rooms (High Jump)
+      Lighting Armor or Climb/Traverse Rooms (High Jump)
 
-> Dock to Queen Arena (Right); Heals? False
+> Dock to Queen Arena; Heals? False
   * Layers: default
-  * Open Passage to Queen Arena/Dock to Queen Access Path (Right)
+  * Open Passage to Queen Arena/Dock to Queen Access Path
 
-> Dock to Queen Arena (Left); Heals? False
+> Tunnel to Queen Arena; Heals? False
   * Layers: default
-  * Open Passage to Queen Arena/Dock to Queen Access Path (Left)
+  * Tunnel to Queen Arena/Tunnel to Queen Access Path
   > Save Station
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Transport to Area 7
@@ -829,29 +829,30 @@ Extra - asset_id: collision_camera_021
 
 ----------------
 Queen Arena
-Extra - total_boundings: {'x1': -7000.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12400.0}
-Extra - polygon: [[-7200.0, 11100.0], [1600.0, 11100.0], [1600.0, 12400.0], [-7200.0, 12400.0]]
+Extra - total_boundings: {'x1': -7000.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12500.0}
+Extra - polygon: [[-7000.0, 11100.0], [1600.0, 11100.0], [1600.0, 12500.0], [-7000.0, 12500.0]]
 Extra - asset_id: collision_camera_022
-> Dock to Queen Access Path (Right); Heals? False
+> Dock to Queen Access Path; Heals? False
   * Layers: default
-  * Open Passage to Queen Access Path/Dock to Queen Arena (Right)
+  * Open Passage to Queen Access Path/Dock to Queen Arena
   > After Queen
       After Area 8 - Queen Metroid
   > Before Queen
       Before Area 8 - Queen Metroid
 
-> Dock to Queen Access Path (Left); Heals? False
+> Tunnel to Queen Access Path; Heals? False
   * Layers: default
-  * Open Passage to Queen Access Path/Dock to Queen Arena (Left)
+  * Tunnel with Bomb Block to Queen Access Path/Tunnel to Queen Arena
 
-> Dock to Transport to Surface (West); Heals? False
+> Dock to Transport to Surface West; Heals? False
   * Layers: default
-  * Open Passage to Transport to Surface (West)/Dock to Queen Arena
+  * Open Passage to Transport to Surface West/Dock to Queen Arena
   > After Queen
       After Area 8 - Queen Metroid
 
-> Pickup - Baby Metroid; Heals? False
+> Pickup (Baby Metroid); Heals? False
   * Layers: default
+  * Pickup 171; Major Location? True
   > After Queen
       Trivial
 
@@ -863,11 +864,11 @@ Extra - asset_id: collision_camera_022
 
 > After Queen; Heals? False
   * Layers: default
-  > Dock to Queen Access Path (Left)
+  > Tunnel to Queen Access Path
       Screw Attack and Space Jump
-  > Dock to Transport to Surface (West)
+  > Dock to Transport to Surface West
       Baby Metroid
-  > Pickup - Baby Metroid
+  > Pickup (Baby Metroid)
       Trivial
 
 > Before Queen; Heals? False
@@ -915,8 +916,8 @@ Extra - asset_id: collision_camera_023
 
 ----------------
 Teleporter Shaft North
-Extra - total_boundings: {'x1': -5400.0, 'x2': -2500.0, 'y1': 7500.0, 'y2': 12000.0}
-Extra - polygon: [[-5400.0, 12000.0], [-5400.0, 7500.0], [-3600.0, 7500.0], [-3600.0, 10200.0], [-3600.0, 10900.0], [-2500.0, 10900.0], [-2500.0, 12000.0]]
+Extra - total_boundings: {'x1': -5400.0, 'x2': -2500.0, 'y1': 7500.0, 'y2': 11200.0}
+Extra - polygon: [[-5400.0, 11200.0], [-5400.0, 7500.0], [-3600.0, 7500.0], [-3600.0, 10200.0], [-3600.0, 10900.0], [-2500.0, 10900.0], [-2500.0, 11200.0]]
 Extra - asset_id: collision_camera_024
 > Save Station; Heals? False
   * Layers: default

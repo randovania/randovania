@@ -1,5 +1,6 @@
 ----------------
 Landing Site
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
 Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
 Extra - asset_id: collision_camera_000
@@ -10,7 +11,7 @@ Extra - asset_id: collision_camera_000
   > Door to Landing Site Storage
       Trivial
   > Top of Mountain
-      Climb Rooms
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Landing Site Storage; Heals? False
   * Layers: default
@@ -31,7 +32,7 @@ Extra - asset_id: collision_camera_000
   > Dock to Entrance Pathway
       Trivial
   > Top of Mountain
-      Climb Rooms
+      Climb/Traverse Rooms (No High Jump)
 
 > Top of Mountain; Heals? False
   * Layers: default
@@ -39,18 +40,18 @@ Extra - asset_id: collision_camera_000
       Trivial
   > Ship
       Trivial
-  > Dock to Crumble Drop Shaft (Upper)
+  > Dock to Crumble Drop Shaft (Top)
       Space Jump
 
-> Dock to Crumble Drop Shaft (Upper); Heals? False
+> Dock to Crumble Drop Shaft (Top); Heals? False
   * Layers: default
-  * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Upper)
+  * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Top)
   > Top of Mountain
       Trivial
 
-> Dock to Crumble Drop Shaft (Lower); Heals? False
+> Dock to Crumble Drop Shaft (Bottom); Heals? False
   * Layers: default
-  * Not Determined to Crumble Drop Shaft/Dock to Landing Site (Lower)
+  * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Bottom)
   > Save Station
       Trivial
 
@@ -124,7 +125,7 @@ Extra - asset_id: collision_camera_003
   > Pickup (Morph Ball)
       Trivial
   > Save Station
-      Trivial
+      Morph Ball
 
 > Door to Chozo Seal; Heals? False
   * Layers: default
@@ -145,7 +146,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
   > Tunnel to Transport to Area 1
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Chozo Seal; Heals? False
   * Layers: default
@@ -156,6 +157,8 @@ Extra - asset_id: collision_camera_004
   > Door to Scan Pulse Room
       Trivial
   > Door to Transport to Area 1
+      Trivial
+  > Event - Chozo Seal Unlocked
       After Surface (East) - Alpha Metroid
 
 > Door to Morph Ball Room; Heals? False
@@ -182,7 +185,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: Door011
   * Extra - actor_type: doorchargecharge
   > Chozo Seal
-      After Surface (East) - Alpha Metroid
+      Trivial
 
 > Tunnel to Scan Pulse Room; Heals? False
   * Layers: default
@@ -192,9 +195,15 @@ Extra - asset_id: collision_camera_004
 
 > Tunnel to Transport to Area 1; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Transport to Area 1/Tunnel to Chozo Seal
+  * Tunnel to Transport to Area 1/Tunnel to Chozo Seal
   > Pickup (Missile Tank)
       Morph Ball
+
+> Event - Chozo Seal Unlocked; Heals? False
+  * Layers: default
+  * Event Surface (East) - Chozo Seal Unlocked
+  > Chozo Seal
+      Trivial
 
 ----------------
 Transport to Area 1
@@ -209,9 +218,9 @@ Extra - asset_id: collision_camera_006
   > Next to Teleporter
       Trivial
 
-> Elevator to Area 1 - Transport Area; Heals? False
+> Elevator to Area 1 - Chozo Seal; Heals? False
   * Layers: default
-  * Teleporter to Area 1 - Transport Area
+  * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
   > Next to Teleporter
@@ -235,9 +244,9 @@ Extra - asset_id: collision_camera_006
 
 > Tunnel to Chozo Seal; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Chozo Seal/Tunnel to Transport to Area 1
+  * Tunnel to Chozo Seal/Tunnel to Transport to Area 1
   > Next to Teleporter
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Dock to Transport Storage; Heals? False
   * Layers: default
@@ -254,15 +263,15 @@ Extra - asset_id: collision_camera_006
 > Next to Teleporter; Heals? False
   * Layers: default
   > Pickup (Missile Expansion)
-      Morph Ball and Climb Rooms (High Jump)
-  > Elevator to Area 1 - Transport Area
+      Morph Ball and Climb/Traverse Rooms (High Jump)
+  > Elevator to Area 1 - Chozo Seal
       After Surface (East) - Alpha Metroid
   > Teleporter
       After Surface (East) - Teleporter Unlocked
   > Door to Chozo Seal
       After Surface (East) - Alpha Metroid
   > Tunnel to Chozo Seal
-      After Surface (East) - Alpha Metroid and Destroy Bomb Blocks
+      After Surface (East) - Alpha Metroid and Destroy Bomb Block
   > Dock to Transport Storage
       All of the following:
           After Surface (East) - Alpha Metroid
@@ -300,7 +309,7 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: LE_PowerUP_ChargeBeam
   * Extra - actor_type: itemsphere_chargebeam
   > Door to Charge Beam Shaft (Upper)
-      High Jump Boots
+      Climb/Traverse Rooms (High Jump)
   > Door to Charge Beam Shaft (Lower)
       Trivial
 
@@ -345,7 +354,7 @@ Extra - asset_id: collision_camera_010
       Trivial
   > Inside Arena
       Missile and Morph Ball
-  > Tunnel to Alpha Arena Access 
+  > Tunnel to Alpha Arena Access
       Morph Ball
 
 > Door to Alpha Storage; Heals? False
@@ -356,9 +365,9 @@ Extra - asset_id: collision_camera_010
   > Save Station
       Trivial
 
-> Door to Ammo Recharge Station South; Heals? False
+> Door to Ammo Recharge Station; Heals? False
   * Layers: default
-  * Power Beam Door to Ammo Recharge Station South/Door to Alpha Arena
+  * Power Beam Door to Ammo Recharge Station/Door to Alpha Arena
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Inside Arena
@@ -386,14 +395,14 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   > Save Station
       Missile and Morph Ball and After Surface (East) - Alpha Metroid
-  > Door to Ammo Recharge Station South
+  > Door to Ammo Recharge Station
       After Surface (East) - Alpha Metroid
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
-> Tunnel to Alpha Arena Access ; Heals? False
+> Tunnel to Alpha Arena Access; Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena Access /Tunnel to Alpha Arena
+  * Tunnel to Alpha Arena Access/Tunnel to Alpha Arena
   > Save Station
       Trivial
 
@@ -485,9 +494,9 @@ One-Way Drop
 Extra - total_boundings: {'x1': -3800.0, 'x2': -1600.0, 'y1': -5900.0, 'y2': -3700.0}
 Extra - polygon: [[-3800.0, -3700.0], [-3800.0, -5900.0], [-1600.0, -5900.0], [-1600.0, -4500.0], [-2300.0, -4500.0], [-2300.0, -3700.0]]
 Extra - asset_id: collision_camera_014
-> Door to Alpha Arena Access ; Heals? False
+> Door to Alpha Arena Access; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena Access /Door to One-Way Drop
+  * Power Beam Door to Alpha Arena Access/Door to One-Way Drop
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Tunnel to Upper Storage
@@ -498,13 +507,13 @@ Extra - asset_id: collision_camera_014
 > Dock to Scan Pulse Room; Heals? False
   * Layers: default
   * Open Passage to Scan Pulse Room/Dock to One-Way Drop
-  > Door to Alpha Arena Access 
+  > Door to Alpha Arena Access
       Trivial
 
 > Tunnel to Upper Storage; Heals? False
   * Layers: default
   * Tunnel to Upper Storage/Tunnel to One-Way Drop
-  > Door to Alpha Arena Access 
+  > Door to Alpha Arena Access
       Morph Ball
 
 ----------------
@@ -525,7 +534,7 @@ Extra - asset_id: collision_camera_015
   * Charge Beam Door to Scan Pulse Room/Door to Charge Beam Shaft
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
-  > Door to Ammo Recharge Station South
+  > Door to Ammo Recharge Station
       Trivial
 
 > Door to Charge Beam Room (Upper); Heals? False
@@ -533,7 +542,7 @@ Extra - asset_id: collision_camera_015
   * Missile Door to Charge Beam Room/Door to Charge Beam Shaft (Upper)
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Door to Ammo Recharge Station South
+  > Door to Ammo Recharge Station
       Trivial
   > Tunnel to Charge Beam Storage
       Morph Ball
@@ -545,12 +554,12 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_type: doorchargecharge
   > Pickup (Energy Tank)
       Morph Ball
-  > Door to Ammo Recharge Station South
+  > Door to Ammo Recharge Station
       Trivial
 
-> Door to Ammo Recharge Station South; Heals? False
+> Door to Ammo Recharge Station; Heals? False
   * Layers: default
-  * Power Beam Door to Ammo Recharge Station South/Door to Charge Beam Shaft
+  * Power Beam Door to Ammo Recharge Station/Door to Charge Beam Shaft
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Door to Scan Pulse Room
@@ -565,7 +574,7 @@ Extra - asset_id: collision_camera_015
 > Tunnel to Charge Beam Storage; Heals? False
   * Layers: default
   * Tunnel to Charge Beam Storage/Tunnel to Charge Beam Shaft
-  > Door to Ammo Recharge Station South
+  > Door to Ammo Recharge Station
       Morph Ball
 
 ----------------
@@ -618,18 +627,18 @@ Extra - asset_id: collision_camera_019
   * Pickup 2; Major Location? False
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_supermissiletank
-  > Dock to Landing Site (Lower)
+  > Dock to Landing Site (Bottom)
       Trivial
 
-> Dock to Landing Site (Upper); Heals? False
+> Dock to Landing Site (Top); Heals? False
   * Layers: default
-  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Upper)
+  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Top)
   > Pickup (Super Missile Tank)
       Trivial
 
-> Dock to Landing Site (Lower); Heals? False
+> Dock to Landing Site (Bottom); Heals? False
   * Layers: default
-  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Lower)
+  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Bottom)
 
 ----------------
 Transport Storage
@@ -670,7 +679,7 @@ Extra - asset_id: collision_camera_021
       Morph Ball
 
 ----------------
-Alpha Arena Access 
+Alpha Arena Access
 Extra - total_boundings: {'x1': -1700.0, 'x2': -100.0, 'y1': -8400.0, 'y2': -5300.0}
 Extra - polygon: [[-1700.0, -5300.0], [-1700.0, -8400.0], [-100.0, -8400.0], [-100.0, -5300.0]]
 Extra - asset_id: collision_camera_023
@@ -679,15 +688,13 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_name: LE_Platform_EnergyRecharge
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Missile Tank)
-      All of the following:
-          Morph Ball
-          High Jump Boots or Space Jump or Spider Ball
+      Morph Ball and Climb/Traverse Rooms (High Jump)
   > Tunnel to Alpha Arena
       Morph Ball
 
 > Door to One-Way Drop; Heals? False
   * Layers: default
-  * Power Beam Door to One-Way Drop/Door to Alpha Arena Access 
+  * Power Beam Door to One-Way Drop/Door to Alpha Arena Access
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
@@ -705,12 +712,12 @@ Extra - asset_id: collision_camera_023
 
 > Tunnel to Alpha Arena; Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena/Tunnel to Alpha Arena Access 
+  * Tunnel to Alpha Arena/Tunnel to Alpha Arena Access
   > Energy Recharge Station
       Morph Ball
 
 ----------------
-Ammo Recharge Station South
+Ammo Recharge Station
 Extra - total_boundings: {'x1': -1400.0, 'x2': -100.0, 'y1': -10300.0, 'y2': -9300.0}
 Extra - polygon: [[-1400.0, -9300.0], [-1400.0, -10300.0], [-100.0, -10300.0], [-100.0, -9300.0]]
 Extra - asset_id: collision_camera_024
@@ -725,7 +732,7 @@ Extra - asset_id: collision_camera_024
 
 > Door to Charge Beam Shaft; Heals? False
   * Layers: default
-  * Power Beam Door to Charge Beam Shaft/Door to Ammo Recharge Station South
+  * Power Beam Door to Charge Beam Shaft/Door to Ammo Recharge Station
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
@@ -733,7 +740,7 @@ Extra - asset_id: collision_camera_024
 
 > Door to Alpha Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena/Door to Ammo Recharge Station South
+  * Power Beam Door to Alpha Arena/Door to Ammo Recharge Station
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station

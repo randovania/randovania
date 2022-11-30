@@ -2,14 +2,14 @@
     "name": "Area 1",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s010_area1/s010_area1.bmsld",
-        "map_min_x": 20,
-        "map_max_x": 61,
-        "map_min_y": 33,
-        "map_max_y": 14,
+        "map_min_x": 57,
+        "map_max_x": 24,
+        "map_min_y": 6,
+        "map_max_y": 35,
         "scenario_id": "s010_area1"
     },
     "areas": {
-        "Transport Area": {
+        "Chozo Seal": {
             "default_node": "Elevator to Surface East - Transport to Area 1",
             "valid_starting_location": false,
             "extra": {
@@ -84,8 +84,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -12850.0,
-                        "y": 995.4,
+                        "x": -12846.395678356359,
+                        "y": 1031.6802456016057,
                         "z": 0.0
                     },
                     "description": "",
@@ -130,15 +130,6 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Spider",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA1",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -196,8 +187,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -19900.0,
-                        "y": 5300.0,
+                        "x": -19805.422718148544,
+                        "y": 5374.814027630181,
                         "z": 0.0
                     },
                     "description": "",
@@ -224,12 +215,12 @@
                         }
                     }
                 },
-                "Elevator to Area 2 Entrance - Transport Area": {
+                "Elevator to Area 2 Entrance - Chozo Seal": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -12500.0,
-                        "y": -4500.0,
+                        "x": -12333.230015350102,
+                        "y": -4487.979690636441,
                         "z": 0.0
                     },
                     "description": "",
@@ -242,12 +233,12 @@
                     },
                     "destination": {
                         "world_name": "Area 2 - Entrance",
-                        "area_name": "Transport Area"
+                        "area_name": "Chozo Seal"
                     },
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
-                        "Door to DNA Storage": {
+                        "Door to Chozo Seal Storage": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -293,18 +284,44 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "MissileAmmo",
+                                                                    "name": "Morph",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bomb",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MissileAmmo",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PBAmmo",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -322,8 +339,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -19950.0,
-                        "y": 1300.0,
+                        "x": -20030.714960443973,
+                        "y": 1344.5861376785924,
                         "z": 0.0
                     },
                     "description": "",
@@ -355,8 +372,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -10750.0,
-                        "y": 1300.0,
+                        "x": -10774.958672806708,
+                        "y": 1432.1997874601484,
                         "z": 0.0
                     },
                     "description": "",
@@ -371,7 +388,7 @@
                     "default_connection": {
                         "world_name": "Area 1",
                         "area_name": "Entrance Shaft",
-                        "node_name": "Door to Transport Area"
+                        "node_name": "Door to Chozo Seal"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -386,12 +403,12 @@
                         }
                     }
                 },
-                "Door to DNA Storage": {
+                "Door to Chozo Seal Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -12050.0,
-                        "y": -2700.0,
+                        "x": -12057.872830322352,
+                        "y": -2610.544338174521,
                         "z": 0.0
                     },
                     "description": "",
@@ -405,14 +422,14 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
-                        "area_name": "DNA Storage",
-                        "node_name": "Door to Transport Area"
+                        "area_name": "Chozo Seal Storage",
+                        "node_name": "Door to Chozo Seal"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 Entrance - Transport Area": {
+                        "Elevator to Area 2 Entrance - Chozo Seal": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -444,8 +461,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -13397.11,
-                        "y": -895.82,
+                        "x": -13609.886055024206,
+                        "y": -1371.437005549653,
                         "z": 0.0
                     },
                     "description": "",
@@ -463,7 +480,7 @@
                                 "negate": false
                             }
                         },
-                        "Elevator to Area 2 Entrance - Transport Area": {
+                        "Elevator to Area 2 Entrance - Chozo Seal": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -529,8 +546,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -13659.95,
-                        "y": 718.77,
+                        "x": -12852.6537961979,
+                        "y": 1544.8459086078637,
                         "z": 0.0
                     },
                     "description": "",
@@ -582,12 +599,12 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door to Transport Area": {
+                "Door to Chozo Seal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -10750.0,
-                        "y": 1300.0,
+                        "x": -10766.365568544103,
+                        "y": 1420.935175345377,
                         "z": 0.0
                     },
                     "description": "",
@@ -601,7 +618,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
-                        "area_name": "Transport Area",
+                        "area_name": "Chozo Seal",
                         "node_name": "Door to Entrance Shaft"
                     },
                     "default_dock_weakness": "Charge Beam Door",
@@ -621,8 +638,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9550.0,
-                        "y": 2500.0,
+                        "x": -9557.249970480576,
+                        "y": 2630.050773408903,
                         "z": 0.0
                     },
                     "description": "",
@@ -643,7 +660,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport Area": {
+                        "Door to Chozo Seal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -663,8 +680,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9533.63,
-                        "y": 4684.6,
+                        "x": -9528.911323650962,
+                        "y": 4651.540913921361,
                         "z": 0.0
                     },
                     "description": "",
@@ -728,8 +745,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7150.0,
-                        "y": 2500.0,
+                        "x": -7168.369738825745,
+                        "y": 2678.315031290589,
                         "z": 0.0
                     },
                     "description": "",
@@ -784,8 +801,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5450.0,
-                        "y": 2500.0,
+                        "x": -5454.590071804845,
+                        "y": 2685.281615302869,
                         "z": 0.0
                     },
                     "description": "",
@@ -819,8 +836,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7129.17,
-                        "y": 4660.76,
+                        "x": -7150.953278795045,
+                        "y": 4656.824890778132,
                         "z": 0.0
                     },
                     "description": "",
@@ -851,8 +868,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5426.72,
-                        "y": 7561.89,
+                        "x": -5437.173611774145,
+                        "y": 7812.687448341008,
                         "z": 0.0
                     },
                     "description": "",
@@ -883,8 +900,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5426.72,
-                        "y": 3103.28,
+                        "x": -5454.590071804845,
+                        "y": 3061.4771519659935,
                         "z": 0.0
                     },
                     "description": "",
@@ -948,8 +965,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -2200.0,
-                        "y": 4200.0,
+                        "x": -2143.4256606176377,
+                        "y": 4276.1938872970395,
                         "z": 0.0
                     },
                     "description": "",
@@ -965,7 +982,7 @@
                     "connections": {
                         "Tunnel to Bomb Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -973,8 +990,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -2168.9,
-                        "y": 4818.2,
+                        "x": -2069.802610633556,
+                        "y": 4918.903215536453,
                         "z": 0.0
                     },
                     "description": "",
@@ -1001,8 +1018,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -50.0,
-                        "y": 4600.0,
+                        "x": -54.12289079910852,
+                        "y": 4809.463546641197,
                         "z": 0.0
                     },
                     "description": "",
@@ -1032,7 +1049,7 @@
                         },
                         "Tunnel to Bomb Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -1040,8 +1057,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -49.35,
-                        "y": 4281.34,
+                        "x": -56.11270296084058,
+                        "y": 4497.063037249283,
                         "z": 0.0
                     },
                     "description": "",
@@ -1061,11 +1078,11 @@
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Door from Bomb Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -1106,8 +1123,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9250.0,
-                        "y": 4600.0,
+                        "x": 9227.470775770456,
+                        "y": 4685.848388239461,
                         "z": 0.0
                     },
                     "description": "",
@@ -1148,8 +1165,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9250.0,
-                        "y": 7700.0,
+                        "x": 9245.182430038965,
+                        "y": 7829.667020899752,
                         "z": 0.0
                     },
                     "description": "",
@@ -1177,7 +1194,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (High Jump)"
+                                        "data": "Climb/Traverse Rooms (High Jump)"
                                     }
                                 ]
                             }
@@ -1195,8 +1212,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7850.0,
-                        "y": 9500.0,
+                        "x": 7845.96174282678,
+                        "y": 9680.534891958909,
                         "z": 0.0
                     },
                     "description": "",
@@ -1230,8 +1247,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7888.19,
-                        "y": 6276.12,
+                        "x": 7837.105915692526,
+                        "y": 6297.608926673751,
                         "z": 0.0
                     },
                     "description": "",
@@ -1263,7 +1280,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (High Jump)"
+                                        "data": "Climb/Traverse Rooms (High Jump)"
                                     },
                                     {
                                         "type": "resource",
@@ -1283,8 +1300,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7845.96,
-                        "y": 3428.32,
+                        "x": 7828.250088558271,
+                        "y": 3136.078639744951,
                         "z": 0.0
                     },
                     "description": "",
@@ -1376,8 +1393,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9250.0,
-                        "y": 4600.0,
+                        "x": 9242.143906020558,
+                        "y": 4698.523396989147,
                         "z": 0.0
                     },
                     "description": "",
@@ -1497,8 +1514,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 13359.06,
-                        "y": 4564.52,
+                        "x": 13353.74449339207,
+                        "y": 4402.488154698399,
                         "z": 0.0
                     },
                     "description": "",
@@ -1587,7 +1604,7 @@
                     "connections": {
                         "Tunnel to Spider Ball Balcony": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -1595,8 +1612,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 13651.6,
-                        "y": 4249.4,
+                        "x": 13647.759475735034,
+                        "y": 4214.03943795017,
                         "z": 0.0
                     },
                     "description": "",
@@ -1642,8 +1659,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11900.0,
-                        "y": 7900.0,
+                        "x": 11948.85759829968,
+                        "y": 8006.695005313496,
                         "z": 0.0
                     },
                     "description": "",
@@ -1679,8 +1696,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 13359.06,
-                        "y": 4564.52,
+                        "x": 13346.42519778014,
+                        "y": 4395.879088440193,
                         "z": 0.0
                     },
                     "description": "",
@@ -1713,8 +1730,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11886.51,
-                        "y": 8157.36,
+                        "x": 11951.455307592396,
+                        "y": 8349.592631951824,
                         "z": 0.0
                     },
                     "description": "",
@@ -1778,8 +1795,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 15000.0,
-                        "y": 10500.0,
+                        "x": 14963.559547571524,
+                        "y": 10561.913672654691,
                         "z": 0.0
                     },
                     "description": "",
@@ -1795,7 +1812,7 @@
                     "connections": {
                         "Door from Outer Hub": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Tunnel to Outer Hub": {
                             "type": "resource",
@@ -1812,8 +1829,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11900.0,
-                        "y": 9400.0,
+                        "x": 11937.528276779774,
+                        "y": 9548.989520958085,
                         "z": 0.0
                     },
                     "description": "",
@@ -1841,11 +1858,11 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (High Jump)"
+                                        "data": "Climb/Traverse Rooms (High Jump)"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -1860,8 +1877,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11906.961398017736,
-                        "y": 10496.824465310381,
+                        "x": 11940.71357285429,
+                        "y": 10568.284264803726,
                         "z": 0.0
                     },
                     "description": "",
@@ -1881,7 +1898,7 @@
                     "connections": {
                         "Pickup (Energy Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -1889,8 +1906,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 13491.39,
-                        "y": 9316.33,
+                        "x": 13800.92648037259,
+                        "y": 9431.133566200931,
                         "z": 0.0
                     },
                     "description": "",
@@ -1998,8 +2015,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 11650.0,
-                        "y": 9000.0,
+                        "x": 11753.967065868263,
+                        "y": 9075.63622754491,
                         "z": 0.0
                     },
                     "description": "",
@@ -2026,8 +2043,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 4050.0,
-                        "y": 13700.0,
+                        "x": 4094.161676646706,
+                        "y": 13686.040419161676,
                         "z": 0.0
                     },
                     "description": "",
@@ -2043,7 +2060,7 @@
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -2051,8 +2068,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5700.0,
-                        "y": 13100.0,
+                        "x": 5751.971057884231,
+                        "y": 13093.10129740519,
                         "z": 0.0
                     },
                     "description": "",
@@ -2071,7 +2088,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "resource",
@@ -2098,8 +2115,8 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 7000.0,
-                        "y": 13100.0,
+                        "x": 6949.950099800399,
+                        "y": 13105.202095808383,
                         "z": 0.0
                     },
                     "description": "",
@@ -2133,8 +2150,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 11500.0,
-                        "y": 8300.0,
+                        "x": 11596.656686626746,
+                        "y": 8361.689121756488,
                         "z": 0.0
                     },
                     "description": "",
@@ -2207,7 +2224,7 @@
                         },
                         "Door to Alpha Arena North": {
                             "type": "template",
-                            "data": "Climb Rooms (High Jump)"
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         },
                         "Door to Spider Ball Room": {
                             "type": "and",
@@ -2231,8 +2248,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9250.0,
-                        "y": 7700.0,
+                        "x": 9237.00099800399,
+                        "y": 7841.354790419162,
                         "z": 0.0
                     },
                     "description": "",
@@ -2266,8 +2283,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11900.0,
-                        "y": 9400.0,
+                        "x": 11923.378243512972,
+                        "y": 9571.768962075848,
                         "z": 0.0
                     },
                     "description": "",
@@ -2290,7 +2307,7 @@
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Save Station": {
                             "type": "and",
@@ -2305,8 +2322,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11900.0,
-                        "y": 7900.0,
+                        "x": 11923.378243512972,
+                        "y": 8034.96756487026,
                         "z": 0.0
                     },
                     "description": "",
@@ -2340,8 +2357,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 4950.0,
-                        "y": 10900.0,
+                        "x": 4929.116766467066,
+                        "y": 10975.461576846308,
                         "z": 0.0
                     },
                     "description": "",
@@ -2368,8 +2385,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2555.17,
-                        "y": 7606.55,
+                        "x": -2537.075848303393,
+                        "y": 7853.455588822356,
                         "z": 0.0
                     },
                     "description": "",
@@ -2400,8 +2417,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11886.51,
-                        "y": 8157.36,
+                        "x": 11923.378243512972,
+                        "y": 8349.588323353295,
                         "z": 0.0
                     },
                     "description": "",
@@ -2434,8 +2451,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11919.96,
-                        "y": 10164.23,
+                        "x": 11887.075848303391,
+                        "y": 10588.236027944113,
                         "z": 0.0
                     },
                     "description": "",
@@ -2468,8 +2485,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3354.56,
-                        "y": 9395.72,
+                        "x": 3331.811377245509,
+                        "y": 9462.861776447106,
                         "z": 0.0
                     },
                     "description": "",
@@ -2487,15 +2504,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Save Station North": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "2nd Level": {
                             "type": "and",
                             "data": {
@@ -2509,8 +2517,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1342.46,
-                        "y": 7718.97,
+                        "x": 1323.0788423153695,
+                        "y": 7841.354790419162,
                         "z": 0.0
                     },
                     "description": "",
@@ -2537,7 +2545,7 @@
                         },
                         "2nd Level": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -2545,8 +2553,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6630.22186147186,
-                        "y": 10872.172619047618,
+                        "x": 6465.9181636726535,
+                        "y": 11169.074351297406,
                         "z": 0.0
                     },
                     "description": "",
@@ -2581,9 +2589,16 @@
                                 ]
                             }
                         },
+                        "Door to Shaft East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Missile Tank Hidden)": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "2nd Level": {
                             "type": "and",
@@ -2598,8 +2613,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 2357.3210922787193,
-                        "y": 9355.732109227873,
+                        "x": 1395.6836327345309,
+                        "y": 9499.164171656688,
                         "z": 0.0
                     },
                     "description": "",
@@ -2610,7 +2625,7 @@
                     "connections": {
                         "Tunnel to Inner Shaft": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Dock to Save Station North": {
                             "type": "and",
@@ -2621,7 +2636,7 @@
                         },
                         "Above Wall": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 }
@@ -2670,8 +2685,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1150.0,
-                        "y": -400.0,
+                        "x": 1144.815382104005,
+                        "y": -258.2890541976626,
                         "z": 0.0
                     },
                     "description": "",
@@ -2692,10 +2707,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Shaft Right": {
-                            "type": "template",
-                            "data": "Destroy Bomb Blocks"
-                        },
                         "Dock to Alpha Arena West Access": {
                             "type": "and",
                             "data": {
@@ -2709,8 +2720,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1370.83,
-                        "y": 1348.07,
+                        "x": 1338.8170351917367,
+                        "y": 1462.1029637501476,
                         "z": 0.0
                     },
                     "description": "",
@@ -2744,9 +2755,16 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
+                            }
+                        },
+                        "Dock to Alpha Arena West Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2755,8 +2773,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -290.06,
-                        "y": 1615.84,
+                        "x": -260.78150064484373,
+                        "y": 1765.9168733026331,
                         "z": 0.0
                     },
                     "description": "",
@@ -2789,8 +2807,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -271.76,
-                        "y": -408.37,
+                        "x": -282.7439519377945,
+                        "y": -280.251505490613,
                         "z": 0.0
                     },
                     "description": "",
@@ -2809,6 +2827,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Alpha Arena Southeast": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alpha Shaft Right": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2854,8 +2879,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -271.76,
-                        "y": -408.37,
+                        "x": -225.64901349948104,
+                        "y": -281.8715552360412,
                         "z": 0.0
                     },
                     "description": "",
@@ -2914,8 +2939,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3981.21,
-                        "y": 62.01,
+                        "x": -3959.861312691501,
+                        "y": 137.5987743912272,
                         "z": 0.0
                     },
                     "description": "",
@@ -2938,8 +2963,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3970.26,
-                        "y": -759.08,
+                        "x": -3959.861312691501,
+                        "y": -876.5924850830511,
                         "z": 0.0
                     },
                     "description": "",
@@ -2953,13 +2978,13 @@
                         "area_name": "Alpha Arena West",
                         "node_name": "Tunnel to Alpha Arena West Access (Lower)"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Alpha Shaft Left": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -3000,8 +3025,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1150.0,
-                        "y": -400.0,
+                        "x": 1133.3213515456507,
+                        "y": -260.4960460100648,
                         "z": 0.0
                     },
                     "description": "",
@@ -3032,8 +3057,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 2462.09,
-                        "y": -304.07,
+                        "x": 2457.5485262401153,
+                        "y": -150.50323508267434,
                         "z": 0.0
                     },
                     "description": "",
@@ -3089,8 +3114,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7550.0,
-                        "y": 1300.0,
+                        "x": 7537.728187880984,
+                        "y": 1461.6191034159328,
                         "z": 0.0
                     },
                     "description": "",
@@ -3121,8 +3146,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 8715.47,
-                        "y": 1294.56,
+                        "x": 8828.48624890947,
+                        "y": 1561.0744984030525,
                         "z": 0.0
                     },
                     "description": "",
@@ -3178,8 +3203,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4500.0,
-                        "y": 2500.0,
+                        "x": -4564.349142368491,
+                        "y": 2537.1944739638684,
                         "z": 0.0
                     },
                     "description": "",
@@ -3206,8 +3231,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5450.0,
-                        "y": 2500.0,
+                        "x": -5463.392713037992,
+                        "y": 2677.470775770457,
                         "z": 0.0
                     },
                     "description": "",
@@ -3295,8 +3320,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5426.72,
-                        "y": 3103.28,
+                        "x": -5478.270502623539,
+                        "y": 3057.9171094580233,
                         "z": 0.0
                     },
                     "description": "",
@@ -3336,8 +3361,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4213.66,
-                        "y": 3064.29,
+                        "x": -4222.159981900903,
+                        "y": 3060.0425079702445,
                         "z": 0.0
                     },
                     "description": "",
@@ -3368,8 +3393,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4213.66,
-                        "y": 2728.48,
+                        "x": -4226.410778925345,
+                        "y": 2679.596174282678,
                         "z": 0.0
                     },
                     "description": "",
@@ -3402,8 +3427,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -4428.323637586344,
-                        "y": 2722.104144527099,
+                        "x": -4281.671140243092,
+                        "y": 2675.345377258236,
                         "z": 0.0
                     },
                     "description": "",
@@ -3426,8 +3451,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -4678.057962772316,
-                        "y": 2572.6177825008854,
+                        "x": -4674.869865003985,
+                        "y": 2564.824654622742,
                         "z": 0.0
                     },
                     "description": "",
@@ -3543,8 +3568,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 4129.4,
-                        "y": 3217.5,
+                        "x": 4145.129711209006,
+                        "y": 3184.312285854136,
                         "z": 0.0
                     },
                     "description": "",
@@ -3571,8 +3596,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5950.0,
-                        "y": 3000.0,
+                        "x": 5955.442407784567,
+                        "y": 3057.083050463906,
                         "z": 0.0
                     },
                     "description": "",
@@ -3641,8 +3666,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 3950.0,
-                        "y": 2600.0,
+                        "x": 3941.504309835872,
+                        "y": 2572.5292242295427,
                         "z": 0.0
                     },
                     "description": "",
@@ -3702,8 +3727,8 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": -600.0,
-                        "y": 1500.0,
+                        "x": -606.4901349948079,
+                        "y": 1525.6194334416375,
                         "z": 0.0
                     },
                     "description": "",
@@ -3717,7 +3742,7 @@
                     "connections": {
                         "Tunnel to Alpha Shaft Left": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -3725,8 +3750,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -290.06,
-                        "y": 1615.84,
+                        "x": -257.5804776739358,
+                        "y": 1758.2258716555523,
                         "z": 0.0
                     },
                     "description": "",
@@ -3792,8 +3817,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -8800.0,
-                        "y": 3300.0,
+                        "x": -8748.512221041445,
+                        "y": 3324.690046050301,
                         "z": 0.0
                     },
                     "description": "",
@@ -3820,8 +3845,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9550.0,
-                        "y": 2500.0,
+                        "x": -9545.536663124336,
+                        "y": 2644.5625221395676,
                         "z": 0.0
                     },
                     "description": "",
@@ -3858,7 +3883,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -3921,8 +3946,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7150.0,
-                        "y": 2500.0,
+                        "x": -7165.090329436769,
+                        "y": 2669.35883811548,
                         "z": 0.0
                     },
                     "description": "",
@@ -4019,8 +4044,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missiles"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -4074,8 +4104,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -8150.0,
-                        "y": 1900.0,
+                        "x": -8096.723343960326,
+                        "y": 1929.0116896918173,
                         "z": 0.0
                     },
                     "description": "",
@@ -4143,8 +4173,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3850.0,
-                        "y": 6100.0,
+                        "x": 3839.6918172157284,
+                        "y": 6231.278781438186,
                         "z": 0.0
                     },
                     "description": "",
@@ -4174,7 +4204,7 @@
                         },
                         "Dock to Save Station North": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -4182,8 +4212,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2575.22,
-                        "y": 3129.86,
+                        "x": 2444.7219270279843,
+                        "y": 3082.8551186680834,
                         "z": 0.0
                     },
                     "description": "",
@@ -4216,8 +4246,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2553.83,
-                        "y": 4625.89,
+                        "x": 2538.2394615657104,
+                        "y": 4797.343251859724,
                         "z": 0.0
                     },
                     "description": "",
@@ -4300,8 +4330,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2553.83,
-                        "y": 7782.11,
+                        "x": 2538.2394615657104,
+                        "y": 7961.3531703861145,
                         "z": 0.0
                     },
                     "description": "",
@@ -4365,8 +4395,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 600.0,
-                        "y": 2600.0,
+                        "x": 590.9509584266871,
+                        "y": 2672.628827483197,
                         "z": 0.0
                     },
                     "description": "",
@@ -4382,7 +4412,7 @@
                     "connections": {
                         "Dock to Alpha Shaft Right": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Tunnel to Alpha Shaft Right": {
                             "type": "template",
@@ -4394,8 +4424,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3600.0,
-                        "y": 2400.0,
+                        "x": -3647.037590241474,
+                        "y": 2459.783420463032,
                         "z": 0.0
                     },
                     "description": "",
@@ -4465,6 +4495,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Alpha Shaft Right": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4472,8 +4509,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4213.66,
-                        "y": 3064.29,
+                        "x": -4266.654219566841,
+                        "y": 3084.129947722181,
                         "z": 0.0
                     },
                     "description": "",
@@ -4504,8 +4541,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4213.66,
-                        "y": 2728.48,
+                        "x": -4257.194423699279,
+                        "y": 2672.628827483197,
                         "z": 0.0
                     },
                     "description": "",
@@ -4522,7 +4559,17 @@
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Dock to Alpha Shaft Right": {
                     "node_type": "dock",
@@ -4564,8 +4611,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1337.5586854460098,
-                        "y": 3012.6075899843504,
+                        "x": 1347.7346278317154,
+                        "y": 2975.342295245208,
                         "z": 0.0
                     },
                     "description": "",
@@ -4631,8 +4678,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3850.0,
-                        "y": 6100.0,
+                        "x": 3845.766030347528,
+                        "y": 6269.236417033774,
                         "z": 0.0
                     },
                     "description": "",
@@ -4675,8 +4722,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4924.3,
-                        "y": 6978.54,
+                        "x": 4590.944689182575,
+                        "y": 6962.7263827704355,
                         "z": 0.0
                     },
                     "description": "",
@@ -4707,8 +4754,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5989.12,
-                        "y": 6021.47,
+                        "x": 5941.311796377876,
+                        "y": 6038.790993636809,
                         "z": 0.0
                     },
                     "description": "",
@@ -4782,8 +4829,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 4300.0,
-                        "y": 8800.0,
+                        "x": 4296.705632306057,
+                        "y": 8827.819104971071,
                         "z": 0.0
                     },
                     "description": "",
@@ -4799,7 +4846,7 @@
                     "connections": {
                         "Door to Inner Room": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         }
                     }
                 },
@@ -4807,8 +4854,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5050.0,
-                        "y": 8800.0,
+                        "x": 5048.86055024206,
+                        "y": 8962.89998819223,
                         "z": 0.0
                     },
                     "description": "",
@@ -4831,7 +4878,7 @@
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Dock to Teleporter Access": {
                             "type": "and",
@@ -4846,8 +4893,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4924.3,
-                        "y": 6978.54,
+                        "x": 4597.567599480458,
+                        "y": 6936.686739874837,
                         "z": 0.0
                     },
                     "description": "",
@@ -4870,8 +4917,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3354.56,
-                        "y": 9395.72,
+                        "x": 3352.674459794545,
+                        "y": 9460.243240051954,
                         "z": 0.0
                     },
                     "description": "",
@@ -4904,8 +4951,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5039.41,
-                        "y": 9159.1,
+                        "x": 5061.140630534892,
+                        "y": 9457.173219978746,
                         "z": 0.0
                     },
                     "description": "",
@@ -4925,7 +4972,7 @@
                     "connections": {
                         "Tunnel to Outer Hub": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -4966,8 +5013,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1371.81,
-                        "y": 3405.6,
+                        "x": 1324.7786043216436,
+                        "y": 3360.1133545873186,
                         "z": 0.0
                     },
                     "description": "",
@@ -4987,7 +5034,7 @@
                     "connections": {
                         "Tunnel to Save Station South": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Tunnel to Central Shaft": {
                             "type": "resource",
@@ -5011,8 +5058,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1365.5154091392137,
-                        "y": 2999.238398866454,
+                        "x": 1346.032589443854,
+                        "y": 2977.541622387531,
                         "z": 0.0
                     },
                     "description": "",
@@ -5040,8 +5087,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2575.22,
-                        "y": 3129.86,
+                        "x": 2507.9171094580233,
+                        "y": 3083.811547998583,
                         "z": 0.0
                     },
                     "description": "",
@@ -5074,8 +5121,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1370.83,
-                        "y": 1348.07,
+                        "x": 1338.9479277364505,
+                        "y": 1457.881686149486,
                         "z": 0.0
                     },
                     "description": "",
@@ -5106,8 +5153,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2656.7,
-                        "y": 1351.61,
+                        "x": 2571.6790648246547,
+                        "y": 1447.254693588381,
                         "z": 0.0
                     },
                     "description": "",
@@ -5134,7 +5181,7 @@
                         },
                         "Dock to Alpha Shaft Left": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -5175,8 +5222,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7550.0,
-                        "y": 1300.0,
+                        "x": 7557.428708363288,
+                        "y": 1454.996405463695,
                         "z": 0.0
                     },
                     "description": "",
@@ -5210,8 +5257,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2656.7,
-                        "y": 1351.61,
+                        "x": 2514.0546369518333,
+                        "y": 1446.848789839444,
                         "z": 0.0
                     },
                     "description": "",
@@ -5275,8 +5322,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -50.0,
-                        "y": 4600.0,
+                        "x": -50.14326647564461,
+                        "y": 4792.478510028654,
                         "z": 0.0
                     },
                     "description": "",
@@ -5302,8 +5349,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2553.83,
-                        "y": 4625.89,
+                        "x": 2582.378223495702,
+                        "y": 4792.478510028654,
                         "z": 0.0
                     },
                     "description": "",
@@ -5330,7 +5377,7 @@
                         },
                         "Tunnel to Bomb Room": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -5338,8 +5385,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -49.35,
-                        "y": 4281.34,
+                        "x": -54.44126074498558,
+                        "y": 4493.767908309455,
                         "z": 0.0
                     },
                     "description": "",
@@ -5405,8 +5452,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 1950.0,
-                        "y": 7600.0,
+                        "x": 1995.4599126225057,
+                        "y": 7603.849332861022,
                         "z": 0.0
                     },
                     "description": "",
@@ -5438,8 +5485,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2553.83,
-                        "y": 7782.11,
+                        "x": 2584.0772228126107,
+                        "y": 7919.116778840477,
                         "z": 0.0
                     },
                     "description": "",
@@ -5470,8 +5517,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1342.46,
-                        "y": 7718.97,
+                        "x": 1311.1996693824537,
+                        "y": 7828.196953595466,
                         "z": 0.0
                     },
                     "description": "",
@@ -5535,8 +5582,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5050.0,
-                        "y": 8800.0,
+                        "x": 5037.616250611845,
+                        "y": 8950.02447381302,
                         "z": 0.0
                     },
                     "description": "",
@@ -5579,8 +5626,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7850.0,
-                        "y": 9500.0,
+                        "x": 7831.155163974547,
+                        "y": 9671.120900636319,
                         "z": 0.0
                     },
                     "description": "",
@@ -5614,8 +5661,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5039.41,
-                        "y": 9159.1,
+                        "x": 5040.455212922173,
+                        "y": 9463.876651982378,
                         "z": 0.0
                     },
                     "description": "",
@@ -5681,8 +5728,8 @@
                     "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
-                        "x": 6450.0,
-                        "y": 6000.0,
+                        "x": 6403.67107195301,
+                        "y": 6017.229564366128,
                         "z": 0.0
                     },
                     "description": "",
@@ -5701,7 +5748,7 @@
                         }
                     },
                     "connections": {
-                        "Next to Teleporter": {
+                        "Dock to Shaft East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5714,8 +5761,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5989.12,
-                        "y": 6021.47,
+                        "x": 5937.076396268744,
+                        "y": 6012.350926909907,
                         "z": 0.0
                     },
                     "description": "",
@@ -5733,14 +5780,9 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Next to Teleporter": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                        "Dock to Shaft East": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -5748,8 +5790,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7888.19,
-                        "y": 6276.12,
+                        "x": 7871.189042389893,
+                        "y": 6285.11040264494,
                         "z": 0.0
                     },
                     "description": "",
@@ -5767,7 +5809,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Next to Teleporter": {
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 1 Teleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Teleporter Access": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        },
+                        "Event - Teleporter Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5780,8 +5835,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 6473.35,
-                        "y": 5820.16,
+                        "x": 6403.67107195301,
+                        "y": 6189.52520802741,
                         "z": 0.0
                     },
                     "description": "",
@@ -5791,50 +5846,7 @@
                     "extra": {},
                     "event_name": "Area 1 Teleporter",
                     "connections": {
-                        "Next to Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Next to Teleporter": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6725.879994989353,
-                        "y": 6012.927470875611,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Teleporter": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Area 1 Teleporter",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to Teleporter Access": {
-                            "type": "template",
-                            "data": "Destroy Bomb Blocks"
-                        },
                         "Dock to Shaft East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Teleporter Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5880,8 +5892,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5950.0,
-                        "y": 3000.0,
+                        "x": 5949.660556687033,
+                        "y": 3055.940257976918,
                         "z": 0.0
                     },
                     "description": "",
@@ -5943,8 +5955,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7845.96,
-                        "y": 3428.32,
+                        "x": 7974.100475220638,
+                        "y": 3084.4534962661237,
                         "z": 0.0
                     },
                     "description": "",
@@ -5973,7 +5985,7 @@
                 }
             }
         },
-        "DNA Storage": {
+        "Chozo Seal Storage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -6008,8 +6020,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -11650.0,
-                        "y": -2300.0,
+                        "x": -11665.05247136105,
+                        "y": -2322.7428132924842,
                         "z": 0.0
                     },
                     "description": "",
@@ -6023,7 +6035,7 @@
                     "pickup_index": 16,
                     "major_location": false,
                     "connections": {
-                        "Door to Transport Area": {
+                        "Door to Chozo Seal": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6034,12 +6046,12 @@
                         }
                     }
                 },
-                "Door to Transport Area": {
+                "Door to Chozo Seal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -12050.0,
-                        "y": -2700.0,
+                        "x": -12051.4179283826,
+                        "y": -2632.043462174964,
                         "z": 0.0
                     },
                     "description": "",
@@ -6053,8 +6065,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
-                        "area_name": "Transport Area",
-                        "node_name": "Door to DNA Storage"
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Chozo Seal Storage"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "override_default_open_requirement": null,
@@ -6108,8 +6120,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9533.63,
-                        "y": 4684.6,
+                        "x": -9572.55489021956,
+                        "y": 4675.303066555691,
                         "z": 0.0
                     },
                     "description": "",
@@ -6205,8 +6217,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3981.21,
-                        "y": 62.01,
+                        "x": -3968.5959671396563,
+                        "y": 134.73985561364208,
                         "z": 0.0
                     },
                     "description": "",
@@ -6251,8 +6263,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3970.26,
-                        "y": -759.08,
+                        "x": -3960.3808812546677,
+                        "y": -862.0238984316654,
                         "z": 0.0
                     },
                     "description": "",
@@ -6266,7 +6278,7 @@
                         "area_name": "Alpha Arena West Access",
                         "node_name": "Tunnel to Alpha Arena West (Lower)"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -6275,8 +6287,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -5296.23,
-                        "y": -392.42,
+                        "x": -5518.508837440876,
+                        "y": -210.2937515558874,
                         "z": 0.0
                     },
                     "description": "",
@@ -6288,7 +6300,7 @@
                     "connections": {
                         "Tunnel to Alpha Arena West Access (Lower)": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -6329,8 +6341,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5426.72,
-                        "y": 7561.89,
+                        "x": -5482.035928143712,
+                        "y": 7826.297405189621,
                         "z": 0.0
                     },
                     "description": "",
@@ -6361,8 +6373,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2555.17,
-                        "y": 7606.55,
+                        "x": -2532.934131736527,
+                        "y": 7876.197604790419,
                         "z": 0.0
                     },
                     "description": "",

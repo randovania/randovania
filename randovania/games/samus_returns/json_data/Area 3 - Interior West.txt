@@ -3,9 +3,9 @@ Transport to Area 3 Exterior (Upper)
 Extra - total_boundings: {'x1': -14150.0, 'x2': -10800.0, 'y1': -7300.0, 'y2': 6900.0}
 Extra - polygon: [[-13200.0, 6900.0], [-13200.0, 5800.0], [-14150.0, 5600.0], [-14150.0, -600.0], [-13400.0, -700.0], [-13400.0, -7300.0], [-11600.0, -7300.0], [-11600.0, -2400.0], [-10800.0, -2000.0], [-10800.0, 6900.0]]
 Extra - asset_id: collision_camera_006
-> Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper); Heals? False; Spawn Point
+> Elevator to Area 3 Exterior - Transport to Area 3 Interior West (East); Heals? False; Spawn Point
   * Layers: default
-  * Teleporter to Area 3 - Exterior - Transport to Area 3 Interior West (Upper)
+  * Teleporter to Area 3 - Exterior - Transport to Area 3 Interior West (East)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03A_01
   * Extra - actor_type: weightactivatedplatform
   > Door to Alpha+ Arena West
@@ -15,31 +15,31 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
-  > Door to Gamma Arena Lower
+  > Door to Gamma Arena South
       Trivial
 
-> Door to Gamma Arena Upper; Heals? False
+> Door to Gamma Arena North; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena Upper/Door to Transport to Area 3 Exterior (Upper)
+  * Power Beam Door to Gamma Arena North/Door to Transport to Area 3 Exterior (Upper)
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
-  > Door to Gamma Arena Lower
+  > Door to Gamma Arena South
       Trivial
   > Door to Alpha+ Arena West
       Trivial
   > Pickup (Missile Tank)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
-> Door to Gamma Arena Lower; Heals? False
+> Door to Gamma Arena South; Heals? False
   * Layers: default
-  * Access Locked to Gamma Arena Lower/Door to Transport to Area 3 Exterior (Upper)
+  * Access Locked to Gamma Arena South/Door to Transport to Area 3 Exterior (Upper)
   * Extra - actor_name: Door003
   * Extra - actor_type: doorclosedpower
   > Save Station
       Trivial
-  > Door to Gamma Arena Upper
+  > Door to Gamma Arena North
       Trivial
-  > Tunnel to Gamma Arena Lower
+  > Tunnel to Gamma Arena South
       All of the following:
           Super Missile
           Any of the following:
@@ -53,9 +53,9 @@ Extra - asset_id: collision_camera_006
   * Power Beam Door to Alpha+ Arena West/Door to Transport to Area 3 Exterior (Upper)
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)
-      Climb Rooms (No High Jump)
-  > Door to Gamma Arena Upper
+  > Elevator to Area 3 Exterior - Transport to Area 3 Interior West (East)
+      Climb/Traverse Rooms (No High Jump)
+  > Door to Gamma Arena North
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -63,13 +63,13 @@ Extra - asset_id: collision_camera_006
   * Pickup 70; Major Location? False
   * Extra - actor_name: HiddenPowerup001
   * Extra - actor_type: item_missiletank
-  > Door to Gamma Arena Upper
+  > Door to Gamma Arena North
       Trivial
 
-> Tunnel to Gamma Arena Lower; Heals? False
+> Tunnel to Gamma Arena South; Heals? False
   * Layers: default
-  * Tunnel to Gamma Arena Lower/Tunnel to Transport to Area 3 Exterior (Upper)
-  > Door to Gamma Arena Lower
+  * Tunnel to Gamma Arena South/Tunnel to Transport to Area 3 Exterior (Upper)
+  > Door to Gamma Arena South
       All of the following:
           Morph Ball
           Any of the following:
@@ -115,21 +115,21 @@ Extra - asset_id: collision_camera_007
       Defeat Alpha Metroid+
 
 ----------------
-Gamma Arena Upper
-Extra - total_boundings: {'x1': -10900.0, 'x2': -7200.0, 'y1': -1900.0, 'y2': 300.0}
-Extra - polygon: [[-10900.0, 300.0], [-10900.0, -1900.0], [-7200.0, -1900.0], [-7200.0, 300.0]]
+Gamma Arena North
+Extra - total_boundings: {'x1': -10900.0, 'x2': -7200.0, 'y1': -1900.0, 'y2': 400.0}
+Extra - polygon: [[-10900.0, 400.0], [-10900.0, -1900.0], [-7200.0, -1900.0], [-7200.0, 400.0]]
 Extra - asset_id: collision_camera_008
 > Door to Transport to Area 3 Exterior (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 3 Exterior (Upper)/Door to Gamma Arena Upper
+  * Power Beam Door to Transport to Area 3 Exterior (Upper)/Door to Gamma Arena North
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Inside Arena
       Trivial
 
-> Door to Upper Shaft Access; Heals? False
+> Door to Teleporter Access; Heals? False
   * Layers: default
-  * Power Beam Door to Upper Shaft Access/Door to Gamma Arena Upper
+  * Power Beam Door to Teleporter Access/Door to Gamma Arena North
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Inside Arena
@@ -145,15 +145,15 @@ Extra - asset_id: collision_camera_008
   * Layers: default
   > Door to Transport to Area 3 Exterior (Upper)
       After Area 3 (Interior West) - Gamma Metroid Upper
-  > Door to Upper Shaft Access
+  > Door to Teleporter Access
       Beam Burst and Morph Ball and After Area 3 (Interior West) - Gamma Metroid Upper
   > Event - Gamma Metroid
       Defeat Gamma Metroid
 
 ----------------
-Gamma Arena Lower
-Extra - total_boundings: {'x1': -11700.0, 'x2': -3800.0, 'y1': -7800.0, 'y2': -4300.0}
-Extra - polygon: [[-11700.0, -4300.0], [-11700.0, -7800.0], [-3800.0, -7800.0], [-3800.0, -4300.0]]
+Gamma Arena South
+Extra - total_boundings: {'x1': -11700.0, 'x2': -3800.0, 'y1': -7800.0, 'y2': -4100.0}
+Extra - polygon: [[-11700.0, -4100.0], [-11700.0, -7800.0], [-3800.0, -7800.0], [-3800.0, -4100.0]]
 Extra - asset_id: collision_camera_009
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -173,7 +173,7 @@ Extra - asset_id: collision_camera_009
 
 > Door to Transport to Area 3 Exterior (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 3 Exterior (Upper)/Door to Gamma Arena Lower
+  * Power Beam Door to Transport to Area 3 Exterior (Upper)/Door to Gamma Arena South
   * Extra - actor_name: Door003
   * Extra - actor_type: doorclosedpower
   > Door to Shaft West
@@ -181,19 +181,19 @@ Extra - asset_id: collision_camera_009
 
 > Door to Shaft West; Heals? False
   * Layers: default
-  * Wave Beam Door to Shaft West/Door to Gamma Arena Lower
+  * Wave Beam Door to Shaft West/Door to Gamma Arena South
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 3 Exterior (Upper)
       Morph Ball
   > Event - Gamma Metroid
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Left of Fan
       Lay Power Bomb
 
 > Tunnel to Transport to Area 3 Exterior (Upper); Heals? False
   * Layers: default
-  * Tunnel to Transport to Area 3 Exterior (Upper)/Tunnel to Gamma Arena Lower
+  * Tunnel to Transport to Area 3 Exterior (Upper)/Tunnel to Gamma Arena South
   > Below Pickup
       Morph Ball
 
@@ -201,7 +201,7 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid Lower
   > Door to Shaft West
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Below Pickup; Heals? False
   * Layers: default
@@ -228,9 +228,9 @@ Extra - asset_id: collision_camera_009
   > Pickup (Super Missile Tank)
       Baby Metroid
   > Door to Shaft West
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Below Pickup
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Save Station Hallway
@@ -273,8 +273,8 @@ Extra - asset_id: collision_camera_010
 
 ----------------
 Upper Shaft
-Extra - total_boundings: {'x1': -6500.0, 'x2': -4450.0, 'y1': -4400.0, 'y2': 6500.0}
-Extra - polygon: [[-6500.0, 6500.0], [-6500.0, 1100.0], [-6100.0, 1000.0], [-6100.0, -4400.0], [-4450.0, -4400.0], [-4450.0, 3200.0], [-5050.0, 3400.0], [-5050.0, 6500.0]]
+Extra - total_boundings: {'x1': -6500.0, 'x2': -4450.0, 'y1': -4400.0, 'y2': 5900.0}
+Extra - polygon: [[-6500.0, 5900.0], [-6500.0, 1100.0], [-6100.0, 1000.0], [-6100.0, -4400.0], [-4450.0, -4400.0], [-4450.0, 3200.0], [-5050.0, 3400.0], [-5050.0, 5900.0]]
 Extra - asset_id: collision_camera_012
 > Door to Save Station Hallway; Heals? False
   * Layers: default
@@ -282,8 +282,8 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
   > Door to Alpha+ Arena East
-      Climb Rooms (No High Jump)
-  > Above Pickup
+      Climb/Traverse Rooms (No High Jump)
+  > Below Grapple Point
       Trivial
 
 > Door to Alpha+ Arena East; Heals? False
@@ -299,28 +299,28 @@ Extra - asset_id: collision_camera_012
   * Pickup 71; Major Location? False
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_missiletank
-  > Above Pickup
-      Climb Rooms (High Jump)
+  > Below Grapple Point
+      Climb/Traverse Rooms (High Jump)
 
-> Tunnel to Upper Shaft Access; Heals? False
+> Tunnel to Teleporter Access; Heals? False
   * Layers: default
-  * Tunnel to Upper Shaft Access/Tunnel to Upper Shaft
-  > Above Pickup
+  * Tunnel to Teleporter Access/Tunnel to Upper Shaft
+  > Below Grapple Point
       Morph Ball
 
-> Above Pickup; Heals? False
+> Below Grapple Point; Heals? False
   * Layers: default
   > Door to Save Station Hallway
       Grapple Beam or Space Jump or Can Spiderspark
   > Pickup (Missile Tank)
       Missile and Morph Ball
-  > Tunnel to Upper Shaft Access
-      Morph Ball and After Area 3 (Interior West) - Upper Shaft Access Grapple Block
+  > Tunnel to Teleporter Access
+      Morph Ball and After Area 3 (Interior West) - Teleporter Access Grapple Block
 
 ----------------
-Grappling Steps
-Extra - total_boundings: {'x1': -2100.0, 'x2': 1200.0, 'y1': -3300.0, 'y2': -1200.0}
-Extra - polygon: [[-2100.0, -1200.0], [-2100.0, -3300.0], [1200.0, -3300.0], [1200.0, -1200.0]]
+Mid-Shaft Shortcut
+Extra - total_boundings: {'x1': -2100.0, 'x2': 1200.0, 'y1': -3300.0, 'y2': -900.0}
+Extra - polygon: [[-2100.0, -900.0], [-2100.0, -3300.0], [1200.0, -3300.0], [1200.0, -900.0]]
 Extra - asset_id: collision_camera_024
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -328,15 +328,15 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_name: LE_Item_007
   * Extra - actor_type: item_missiletank
   > Tunnel to Shaft West
-      Destroy Bomb Blocks
-  > Above Pickup
+      Destroy Bomb Block
+  > Left of Grapple Block
       All of the following:
           Missile and Morph Ball
           Grapple Beam or Space Jump or Can Spiderspark
 
 > Tunnel to Shaft West; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Shaft West/Tunnel to Grappling Steps
+  * Tunnel with Bomb Block to Shaft West/Tunnel to Mid-Shaft Shortcut
   > Pickup (Missile Tank)
       All of the following:
           Missile and Morph Ball
@@ -344,29 +344,29 @@ Extra - asset_id: collision_camera_024
 
 > Tunnel to Shaft East; Heals? False
   * Layers: default
-  * Tunnel to Shaft East/Tunnel to Grappling Steps
-  > Above Pickup
+  * Tunnel to Shaft East/Tunnel to Mid-Shaft Shortcut
+  > Left of Grapple Block
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Area 3 (Interior West) - Grappling Steps Grapple Block
-  > Above Pickup
+  * Event Area 3 (Interior West) - Mid-Shaft Shortcut Grapple Block
+  > Left of Grapple Block
       Trivial
 
-> Above Pickup; Heals? False
+> Left of Grapple Block; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
   > Tunnel to Shaft East
-      Morph Ball and After Area 3 (Interior West) - Grappling Steps Grapple Block
+      Morph Ball and After Area 3 (Interior West) - Mid-Shaft Shortcut Grapple Block
   > Event - Grapple Block
       Grapple Beam
 
 ----------------
 Shaft West
-Extra - total_boundings: {'x1': -3900.0, 'x2': -1100.0, 'y1': -13100.0, 'y2': -2200.0}
-Extra - polygon: [[-3900.0, -2200.0], [-3900.0, -10900.0], [-3900.0, -11700.0], [-3900.0, -13100.0], [-1100.0, -13100.0], [-1100.0, -11500.0], [-2000.0, -11500.0], [-2000.0, -2200.0]]
+Extra - total_boundings: {'x1': -3900.0, 'x2': -1100.0, 'y1': -13100.0, 'y2': -2000.0}
+Extra - polygon: [[-3900.0, -2000.0], [-3900.0, -10900.0], [-3900.0, -11700.0], [-3900.0, -13100.0], [-1100.0, -13100.0], [-1100.0, -11500.0], [-2000.0, -11500.0], [-2000.0, -2000.0]]
 Extra - asset_id: collision_camera_025
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -375,21 +375,21 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_type: item_missiletank
   > Door to Central Shaft
       All of the following:
-          Destroy Bomb Blocks
+          Destroy Bomb Block
           Any of the following:
               Spider Ball
               Gravity Suit and Space Jump
 
-> Door to Gamma Arena Lower; Heals? False
+> Door to Gamma Arena South; Heals? False
   * Layers: default
-  * Wave Beam Door to Gamma Arena Lower/Door to Shaft West
+  * Wave Beam Door to Gamma Arena South/Door to Shaft West
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Door to Central Shaft
       Trivial
-  > Tunnel to Grappling Steps
+  > Tunnel to Mid-Shaft Shortcut
       All of the following:
-          Destroy Bomb Blocks
+          Destroy Bomb Block
           Grapple Beam or Space Jump or Can Spiderspark
 
 > Door to Central Shaft; Heals? False
@@ -409,19 +409,19 @@ Extra - asset_id: collision_camera_025
                       All of the following:
                           Spider Ball
                           Bomb or Spring Ball
-  > Door to Gamma Arena Lower
+  > Door to Gamma Arena South
       Trivial
 
-> Tunnel to Grappling Steps; Heals? False
+> Tunnel to Mid-Shaft Shortcut; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Grappling Steps/Tunnel to Shaft West
-  > Door to Gamma Arena Lower
+  * Tunnel with Bomb Block to Mid-Shaft Shortcut/Tunnel to Shaft West
+  > Door to Gamma Arena South
       Morph Ball
 
 ----------------
 Central Shaft
-Extra - total_boundings: {'x1': -2100.0, 'x2': 1200.0, 'y1': -15500.0, 'y2': -5200.0}
-Extra - polygon: [[-1600.0, -5200.0], [-1600.0, -7300.0], [-2100.0, -8100.0], [-2100.0, -9200.0], [-1600.0, -9300.0], [-1600.0, -9300.0], [-1600.0, -11300.0], [-1000.0, -11300.0], [-1000.0, -15500.0], [700.0, -15500.0], [700.0, -14600.0], [1200.0, -14300.0], [1200.0, -12400.0], [600.0, -11900.0], [600.0, -5200.0]]
+Extra - total_boundings: {'x1': -2100.0, 'x2': 1200.0, 'y1': -15500.0, 'y2': -5100.0}
+Extra - polygon: [[-1600.0, -5100.0], [-1600.0, -7300.0], [-2100.0, -8100.0], [-2100.0, -9200.0], [-1600.0, -9300.0], [-1600.0, -9300.0], [-1600.0, -11300.0], [-1100.0, -11300.0], [-1100.0, -15500.0], [700.0, -15500.0], [700.0, -14600.0], [1200.0, -14300.0], [1200.0, -12400.0], [800.0, -11900.0], [800.0, -5100.0]]
 Extra - asset_id: collision_camera_026
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -437,17 +437,17 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_type: weightactivatedplatform
   > Door to Shaft East
       Trivial
-  > Door to Gamma+ Arena Access
+  > Door to Gamma+ Arena South Access
       Trivial
-  > Next to Teleporter
-      Climb Rooms (High Jump)
+  > Above Teleporter
+      Climb/Traverse Rooms (High Jump)
 
 > Teleporter; Heals? False
   * Layers: default
   * Player Ship (Unlocked by After Area 3 (Interior West) - Teleporter Unlocked (Lower))
   * Extra - actor_name: LE_Platform_Teleporter_03B_002
   * Extra - actor_type: weightactivatedplatform
-  > Next to Teleporter
+  > Above Teleporter
       Trivial
 
 > Door to Shaft West; Heals? False
@@ -461,7 +461,7 @@ Extra - asset_id: collision_camera_026
           Any of the following:
               Space Jump or Can Spiderspark
               High Jump Boots and Grapple Beam
-  > Next to Teleporter
+  > Above Teleporter
       Trivial
 
 > Door to Shaft East; Heals? False
@@ -472,9 +472,9 @@ Extra - asset_id: collision_camera_026
   > Save Station
       Trivial
 
-> Door to Gamma+ Arena Access; Heals? False
+> Door to Gamma+ Arena South Access; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma+ Arena Access/Door to Central Shaft
+  * Power Beam Door to Gamma+ Arena South Access/Door to Central Shaft
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Save Station
@@ -483,31 +483,31 @@ Extra - asset_id: collision_camera_026
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Teleporter Unlocked (Lower)
-  > Next to Teleporter
+  > Above Teleporter
       Trivial
 
-> Next to Teleporter; Heals? False
+> Above Teleporter; Heals? False
   * Layers: default
   > Save Station
       Trivial
   > Teleporter
-      Trivial
+      After Area 3 (Interior West) - Teleporter Unlocked (Lower)
   > Door to Shaft West
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
   > Event - Teleporter Unlocked
       Trivial
 
 ----------------
 Shaft East
 Extra - total_boundings: {'x1': 1100.0, 'x2': 3900.0, 'y1': -14300.0, 'y2': 500.0}
-Extra - polygon: [[1100.0, 500.0], [1100.0, -14300.0], [3400.0, -14300.0], [3400.0, -7500.0], [3900.0, -7500.0], [3900.0, 500.0]]
+Extra - polygon: [[1100.0, 500.0], [1100.0, -14300.0], [3400.0, -14300.0], [3400.0, -7100.0], [3900.0, -7100.0], [3900.0, 500.0]]
 Extra - asset_id: collision_camera_027
 > Pickup (Aeion Tank); Heals? False
   * Layers: default
   * Pickup 68; Major Location? False
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_senergytank
-  > Door to Grappling Fans
+  > Door to Side Passage
       Trivial
 
 > Door to Central Shaft; Heals? False
@@ -517,12 +517,12 @@ Extra - asset_id: collision_camera_027
   * Extra - actor_type: doorchargecharge
   > Door to Transport to Area 3 Interior East
       Morph Ball
-  > Tunnel to Grappling Fans
-      Morph Ball and Climb Rooms (No High Jump)
+  > Tunnel to Side Passage
+      Morph Ball and Climb/Traverse Rooms (No High Jump)
 
-> Door to Grappling Fans; Heals? False
+> Door to Side Passage; Heals? False
   * Layers: default
-  * Spazer Beam Door to Grappling Fans/Door to Shaft East
+  * Spazer Beam Door to Side Passage/Door to Shaft East
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Pickup (Aeion Tank)
@@ -535,29 +535,29 @@ Extra - asset_id: collision_camera_027
   * Extra - actor_type: doorpowerpower
   > Door to Central Shaft
       Morph Ball
-  > Tunnel to Grappling Steps
-      Morph Ball and After Area 3 (Interior West) - Grappling Steps Grapple Block
+  > Tunnel to Mid-Shaft Shortcut
+      Morph Ball and After Area 3 (Interior West) - Mid-Shaft Shortcut Grapple Block
 
-> Tunnel to Grappling Steps; Heals? False
+> Tunnel to Mid-Shaft Shortcut; Heals? False
   * Layers: default
-  * Tunnel to Grappling Steps/Tunnel to Shaft East
+  * Tunnel to Mid-Shaft Shortcut/Tunnel to Shaft East
   > Door to Transport to Area 3 Interior East
-      Morph Ball and Climb Rooms (No High Jump)
+      Morph Ball and Climb/Traverse Rooms (No High Jump)
 
-> Tunnel to Grappling Fans; Heals? False
+> Tunnel to Side Passage; Heals? False
   * Layers: default
-  * Tunnel to Grappling Fans/Tunnel to Shaft East
+  * Tunnel to Side Passage/Tunnel to Shaft East
   > Door to Central Shaft
       Morph Ball
 
 ----------------
-Grappling Fans
-Extra - total_boundings: {'x1': 2900.0, 'x2': 4900.0, 'y1': -9100.0, 'y2': -7500.0}
-Extra - polygon: [[3300.0, -7500.0], [3300.0, -8300.0], [2900.0, -8300.0], [2900.0, -9100.0], [4900.0, -9100.0], [4900.0, -7500.0]]
+Side Passage
+Extra - total_boundings: {'x1': 2900.0, 'x2': 4900.0, 'y1': -8800.0, 'y2': -7200.0}
+Extra - polygon: [[3300.0, -7200.0], [3300.0, -8300.0], [2900.0, -8300.0], [2900.0, -8800.0], [4900.0, -8800.0], [4900.0, -7200.0]]
 Extra - asset_id: collision_camera_028
 > Door to Shaft East; Heals? False
   * Layers: default
-  * Spazer Beam Door to Shaft East/Door to Grappling Fans
+  * Spazer Beam Door to Shaft East/Door to Side Passage
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Tunnel to Shaft East
@@ -565,7 +565,7 @@ Extra - asset_id: collision_camera_028
 
 > Tunnel to Shaft East; Heals? False
   * Layers: default
-  * Tunnel to Shaft East/Tunnel to Grappling Fans
+  * Tunnel to Shaft East/Tunnel to Side Passage
   > Door to Shaft East
       All of the following:
           Morph Ball
@@ -650,40 +650,40 @@ Extra - asset_id: collision_camera_032
       Trivial
 
 ----------------
-Gamma+ Arena Lower
+Gamma+ Arena South
 Extra - total_boundings: {'x1': -5700.0, 'x2': 2500.0, 'y1': -18800.0, 'y2': -15500.0}
-Extra - polygon: [[-5700.0, -15500.0], [-5700.0, -18800.0], [2500.0, -18800.0], [2500.0, -17000.0], [700.0, -17000.0], [700.0, -15500.0]]
+Extra - polygon: [[-5700.0, -15000.0], [-5700.0, -18800.0], [2500.0, -18800.0], [2500.0, -16700.0], [700.0, -16700.0], [700.0, -15000.0]]
 Extra - asset_id: collision_camera_034
-> Door to Gamma+ Arena Access; Heals? False
+> Door to Gamma+ Arena South Access; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma+ Arena Access/Door to Gamma+ Arena Lower
+  * Power Beam Door to Gamma+ Arena South Access/Door to Gamma+ Arena South
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Event - Gamma Metoid+
-      Defeat Gamma Metroid+ and Destroy Bomb Blocks
+      Defeat Gamma Metroid+ and Destroy Bomb Block
 
 > Event - Gamma Metoid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid+ Lower
-  > Door to Gamma+ Arena Access
-      Climb Rooms (No High Jump) and Destroy Bomb Blocks
+  > Door to Gamma+ Arena South Access
+      Climb/Traverse Rooms (No High Jump) and Destroy Bomb Block
 
 ----------------
-Gamma+ Arena Access
-Extra - total_boundings: {'x1': 600.0, 'x2': 1900.0, 'y1': -16000.0, 'y2': -15000.0}
-Extra - polygon: [[600.0, -15000.0], [600.0, -16000.0], [1900.0, -16000.0], [1900.0, -15000.0]]
+Gamma+ Arena South Access
+Extra - total_boundings: {'x1': 600.0, 'x2': 1900.0, 'y1': -15800.0, 'y2': -14800.0}
+Extra - polygon: [[600.0, -14800.0], [600.0, -15800.0], [1900.0, -15800.0], [1900.0, -14800.0]]
 Extra - asset_id: collision_camera_035
 > Door to Central Shaft; Heals? False
   * Layers: default
-  * Power Beam Door to Central Shaft/Door to Gamma+ Arena Access
+  * Power Beam Door to Central Shaft/Door to Gamma+ Arena South Access
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Door to Gamma+ Arena Lower
+  > Door to Gamma+ Arena South
       Trivial
 
-> Door to Gamma+ Arena Lower; Heals? False
+> Door to Gamma+ Arena South; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma+ Arena Lower/Door to Gamma+ Arena Access
+  * Power Beam Door to Gamma+ Arena South/Door to Gamma+ Arena South Access
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Door to Central Shaft
@@ -696,7 +696,7 @@ Extra - polygon: [[-500.0, 6700.0], [-500.0, 3800.0], [3900.0, 3800.0], [3900.0,
 Extra - asset_id: collision_camera_036
 > Door to Alpha+ Arena East; Heals? False
   * Layers: default
-  * Access Open to Alpha+ Arena East/Door to Gamma+ Arena Heat
+  * Power Beam Door to Alpha+ Arena East/Door to Gamma+ Arena Heat
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Event - Gamma Metroid+
@@ -712,7 +712,7 @@ Extra - asset_id: collision_camera_036
   * Event Area 3 (Interior West) - Gamma Metroid+ Heat
   > Door to Alpha+ Arena East
       All of the following:
-          Destroy Bomb Blocks
+          Destroy Bomb Block
           Any of the following:
               Gravity Suit
               Spider Ball and Varia Suit
@@ -722,9 +722,9 @@ Transport to Area 3 Exterior (Lower)
 Extra - total_boundings: {'x1': -19050.0, 'x2': -17750.0, 'y1': 581.125, 'y2': 1339.0699462890625}
 Extra - polygon: [[-19050.0, 1339.0699462890625], [-19050.0, 581.125], [-17750.0, 581.125], [-17750.0, 1339.0699462890625]]
 Extra - asset_id: collision_camera_037
-> Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower); Heals? False; Spawn Point
+> Elevator to Area 3 Exterior - Transport to Area 3 Interior West (West); Heals? False; Spawn Point
   * Layers: default
-  * Teleporter to Area 3 - Exterior - Transport to Area 3 Interior West (Lower)
+  * Teleporter to Area 3 - Exterior - Transport to Area 3 Interior West (West)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03A_02
   * Extra - actor_type: weightactivatedplatform
   > Door to Alpha+ Arena West
@@ -735,7 +735,7 @@ Extra - asset_id: collision_camera_037
   * Power Beam Door to Alpha+ Arena West/Door to Transport to Area 3 Exterior (Lower)
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)
+  > Elevator to Area 3 Exterior - Transport to Area 3 Interior West (West)
       Trivial
 
 ----------------
@@ -749,7 +749,7 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Inside Arena
-      Climb Rooms (No High Jump) and Destroy Bomb Blocks
+      Climb/Traverse Rooms (No High Jump) and Destroy Bomb Block
 
 > Door to Upper Shaft; Heals? False
   * Layers: default
@@ -768,51 +768,51 @@ Extra - asset_id: collision_camera_038
 > Inside Arena; Heals? False
   * Layers: default
   > Door to Gamma+ Arena Heat
-      After Area 3 (Interior West) - Alpha Metroid+ East and Destroy Bomb Blocks
+      After Area 3 (Interior West) - Alpha Metroid+ East and Destroy Bomb Block
   > Door to Upper Shaft
       After Area 3 (Interior West) - Alpha Metroid+ East
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
 
 ----------------
-Upper Shaft Access
+Teleporter Access
 Extra - total_boundings: {'x1': -7300.0, 'x2': -6000.0, 'y1': -2300.0, 'y2': -1000.0}
 Extra - polygon: [[-7300.0, -1000.0], [-7300.0, -2300.0], [-6000.0, -2300.0], [-6000.0, -1000.0]]
 Extra - asset_id: collision_camera_039
-> Door to Gamma Arena Upper; Heals? False
+> Door to Gamma Arena North; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena Upper/Door to Upper Shaft Access
+  * Power Beam Door to Gamma Arena North/Door to Teleporter Access
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
-  > Door to Teleporter Upper
+  > Door to Teleporter Room
       Trivial
   > Tunnel to Upper Shaft
-      Morph Ball and After Area 3 (Interior West) - Upper Shaft Access Grapple Block
+      Morph Ball and After Area 3 (Interior West) - Teleporter Access Grapple Block
   > Event - Grapple Block
       Grapple Beam
 
-> Door to Teleporter Upper; Heals? False
+> Door to Teleporter Room; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Upper/Door to Upper Shaft Access
+  * Power Beam Door to Teleporter Room/Door to Teleporter Access
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
-  > Door to Gamma Arena Upper
+  > Door to Gamma Arena North
       Trivial
 
 > Tunnel to Upper Shaft; Heals? False
   * Layers: default
-  * Tunnel to Upper Shaft/Tunnel to Upper Shaft Access
-  > Door to Gamma Arena Upper
+  * Tunnel to Upper Shaft/Tunnel to Teleporter Access
+  > Door to Gamma Arena North
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Area 3 (Interior West) - Upper Shaft Access Grapple Block
-  > Door to Gamma Arena Upper
+  * Event Area 3 (Interior West) - Teleporter Access Grapple Block
+  > Door to Gamma Arena North
       Trivial
 
 ----------------
-Teleporter Upper
+Teleporter Room
 Extra - total_boundings: {'x1': -9700.0, 'x2': -7200.0, 'y1': -3300.0, 'y2': -1800.0}
 Extra - polygon: [[-9700.0, -1800.0], [-9700.0, -3300.0], [-7200.0, -3300.0], [-7200.0, -1800.0]]
 Extra - asset_id: collision_camera_040
@@ -821,12 +821,12 @@ Extra - asset_id: collision_camera_040
   * Player Ship (Unlocked by After Area 3 (Interior West) - Teleporter Unlocked (Upper))
   * Extra - actor_name: LE_Platform_Teleporter_03B_001
   * Extra - actor_type: weightactivatedplatform
-  > Door to Upper Shaft Access
+  > Door to Teleporter Access
       Morph Ball
 
-> Door to Upper Shaft Access; Heals? False
+> Door to Teleporter Access; Heals? False
   * Layers: default
-  * Power Beam Door to Upper Shaft Access/Door to Teleporter Upper
+  * Power Beam Door to Teleporter Access/Door to Teleporter Room
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
   > Teleporter
@@ -837,6 +837,6 @@ Extra - asset_id: collision_camera_040
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Teleporter Unlocked (Upper)
-  > Door to Upper Shaft Access
+  > Door to Teleporter Access
       Trivial
 

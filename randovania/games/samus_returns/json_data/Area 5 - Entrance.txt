@@ -14,7 +14,7 @@ Extra - asset_id: collision_camera_001
           Morph Ball
           Phase Drift or After Area 5 (Entrance) - Phase Drift Tutorial Grapple Block
   > Tunnel to Connecting Tunnel
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Dock to Phase Drift Room
       Morph Ball
   > Event - Grapple Block
@@ -42,7 +42,7 @@ Extra - asset_id: collision_camera_001
 
 > Tunnel to Connecting Tunnel; Heals? False
   * Layers: default
-  * Tunnel to Connecting Tunnel/Tunnel to Phase Drift Tutorial
+  * Tunnel with Bomb Block to Connecting Tunnel/Tunnel to Phase Drift Tutorial
   > Save Station
       Morph Ball
 
@@ -102,9 +102,9 @@ Extra - asset_id: collision_camera_002
           Phase Drift and Space Jump
 
 ----------------
-Transport Hub
+Chozo Seal
 Extra - total_boundings: {'x1': 11300.0, 'x2': 21150.0, 'y1': -14200.0, 'y2': -7000.0}
-Extra - polygon: [[11300.0, -7000.0], [11300.0, -12600.0], [13000.0, -12600.0], [13900.0, -12900.0], [13900.0, -13000.0], [13300.0, -13000.0], [13300.0, -14200.0], [17800.0, -14200.0], [17800.0, -8700.0], [18100.0, -8300.0], [20700.0, -7900.0], [21150.0, -7900.0], [21150.0, -7140.64013671875], [16300.0, -7140.64013671875], [15200.0, -7000.0]]
+Extra - polygon: [[11300.0, -7000.0], [11300.0, -13000.0], [13300.0, -13000.0], [13300.0, -14500.0], [17800.0, -14500.0], [17800.0, -8700.0], [18100.0, -8300.0], [20700.0, -7900.0], [21150.0, -7900.0], [21150.0, -7140.64013671875], [16300.0, -7140.64013671875], [15200.0, -7000.0]]
 Extra - asset_id: collision_camera_004
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -125,7 +125,7 @@ Extra - asset_id: collision_camera_004
           Morph Ball and Phase Drift and Screw Attack
           Space Jump or Spider Ball
   > Below Chozo Seal
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
   > Below Center Tunnel
       Morph Ball and After Area 5 (Entrance) - Transport Hub Grapple Block Middle
 
@@ -134,13 +134,13 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
   > Elevator to Area 4 West - Transport to Area 5 Entrance
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
   > Save Station
-      After Area 5 (Entrance) - Chozo Seal Unlocked or Climb Rooms (High Jump)
+      After Area 5 (Entrance) - Chozo Seal Unlocked or Climb/Traverse Rooms (High Jump)
   > Event - Chozo Seal Unlocked
       After Area 5 (Entrance) - Alpha Metroid+ and After Area 5 (Entrance) - Gamma Metroid+ and After Area 5 (Interior) - Gamma Metroid+ and After Area 5 (Exterior) - Gamma Metroid+ and After Area 5 (Exterior) - Gamma Metroid and After Area 5 (Interior) - Zeta Metroid+ and After Area 5 (Exterior) - Zeta Metroid
   > Below Chozo Seal
-      After Area 5 (Entrance) - Chozo Seal Unlocked
+      Trivial
 
 > Elevator to Area 4 West - Transport to Area 5 Entrance; Heals? False; Spawn Point
   * Layers: default
@@ -163,7 +163,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_Platform_SaveStation_002
   * Extra - actor_type: weightactivatedplatform
   > Chozo Seal
-      After Area 5 (Entrance) - Chozo Seal Unlocked or Climb Rooms (High Jump)
+      After Area 5 (Entrance) - Chozo Seal Unlocked or Climb/Traverse Rooms (High Jump)
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -177,13 +177,13 @@ Extra - asset_id: collision_camera_004
 
 > Dock to Transport Hub Access; Heals? False
   * Layers: default
-  * Open Passage to Transport Hub Access/Dock to Transport Hub
+  * Open Passage to Transport Hub Access/Dock to Chozo Seal
   > Save Station
       Trivial
 
 > Tunnel to Transport Hub Access; Heals? False
   * Layers: default
-  * Tunnel to Transport Hub Access/Tunnel to Transport Hub
+  * Tunnel to Transport Hub Access/Tunnel to Chozo Seal
   > Below Chozo Seal
       Morph Ball
 
@@ -238,7 +238,7 @@ Extra - asset_id: collision_camera_004
   > Ammo Recharge Station
       Morph Ball and After Area 5 (Entrance) - Transport Hub Grapple Block Middle
   > Elevator to Area 6 - Transport to Area 5 Entrance
-      Morph Ball and Super Missile and After Area 5 (Entrance) - Transport Hub Grapple Block Bottom and Destroy Bomb Blocks
+      Morph Ball and Super Missile and After Area 5 (Entrance) - Transport Hub Grapple Block Bottom and Destroy Bomb Block
   > Above Center Tunnel
       All of the following:
           Screw Attack
@@ -246,7 +246,7 @@ Extra - asset_id: collision_camera_004
   > Event - Grapple Block Middle
       Grapple Beam
   > Event - Grapple Block Bottom
-      Grapple Beam and Super Missile and Destroy Bomb Blocks
+      Grapple Beam and Super Missile and Destroy Bomb Block
 
 > Bottom of Right Shaft; Heals? False
   * Layers: default
@@ -352,7 +352,7 @@ Extra - asset_id: collision_camera_006
   > Teleporter
       After Area 5 (Entrance) - Teleporter Unlocked (West)
   > Door to Transport to Area 5 Interior (West)
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
   > Event - Teleporter Unlocked
       Trivial
   > Next to Left Pool
@@ -371,7 +371,7 @@ Extra - asset_id: collision_camera_006
           Can Spiderspark
           Gravity Suit and Space Jump
   > Tunnel to Connecting Tunnel (Top)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Next to Grapple Block
       Gravity Suit and Screw Attack and Space Jump
   > Next to Teleporter
@@ -386,7 +386,7 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Tunnel with Bomb Block to Phase Drift Tutorial/Tunnel to Connecting Tunnel
   > Tunnel to Pool West (Top)
-      Spider Ball and Destroy Bomb Blocks
+      Spider Ball and Destroy Bomb Block
   > Tunnel to Pool West (Bottom)
       Morph Ball and After Area 5 (Entrance) - Pool West Grapple Block
 
@@ -394,13 +394,13 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Tunnel with Bomb Block to Pool West/Tunnel to Connecting Tunnel (Top)
   > Tunnel to Phase Drift Tutorial
-      Spider Ball and Destroy Bomb Blocks
+      Spider Ball and Destroy Bomb Block
 
 > Tunnel to Pool West (Bottom); Heals? False
   * Layers: default
   * Tunnel to Pool West/Tunnel to Connecting Tunnel (Bottom)
   > Tunnel to Phase Drift Tutorial
-      Climb Rooms (No High Jump) and Destroy Bomb Blocks
+      Climb/Traverse Rooms (No High Jump) and Destroy Bomb Block
 
 ----------------
 Transport to Area 5 Interior (West)
@@ -489,11 +489,11 @@ Extra - asset_id: collision_camera_011
           Morph Ball
           Lighting Armor or After Area 5 (Interior) - Gravity Suit Room Pickup
   > Door to Alpha+ Arena
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
   > Event - Teleporter Activated
       Trivial
   > Next to Pickup
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Next to Pickup; Heals? False
   * Layers: default
@@ -505,7 +505,7 @@ Extra - asset_id: collision_camera_011
       Grapple Beam
   > Next to Teleporter
       All of the following:
-          Destroy Bomb Blocks
+          Destroy Bomb Block
           Gravity Suit or Space Jump or Spider Ball
 
 ----------------
@@ -555,7 +555,7 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Tunnel to Gamma+ Arena
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Tunnel to Gamma+ Arena; Heals? False
   * Layers: default
@@ -605,16 +605,16 @@ Extra - asset_id: collision_camera_014
   > Pickup (Phase Drift)
       Morph Ball
   > Pickup (Super Missile Tank)
-      Phase Drift and Destroy Bomb Blocks
+      Phase Drift and Destroy Bomb Block
   > Tunnel to Pool East (Top)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Tunnel to Pool East (Bottom)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Pool East
 Extra - total_boundings: {'x1': -1900.0, 'x2': 3150.0, 'y1': -8600.0, 'y2': -5200.0}
-Extra - polygon: [[3150.0, -8600.0], [3150.0, -5200.0], [-1900.0, -5200.0], [-1900.0, -6800.0], [-1600.0, -6800.0], [-1600.0, -8600.0]]
+Extra - polygon: [[3150.0, -8600.0], [3150.0, -5200.0], [-1900.0, -5200.0], [-1900.0, -8600.0]]
 Extra - asset_id: collision_camera_015
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -646,7 +646,7 @@ Extra - asset_id: collision_camera_015
   * Layers: default
   * Tunnel with Bomb Block to Phase Drift Room/Tunnel to Pool East (Top)
   > Door to Phase Drift Tutorial
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Tunnel to Phase Drift Room (Bottom); Heals? False
   * Layers: default
@@ -664,6 +664,8 @@ Extra - asset_id: collision_camera_015
       Any of the following:
           High Jump Boots or Gravity Suit
           Morph Ball and Spider Ball
+  > Door to Alpha+ Arena
+      Trivial
 
 ----------------
 Gamma+ Arena
@@ -680,7 +682,7 @@ Extra - asset_id: collision_camera_016
   * Layers: default
   * Event Area 5 (Entrance) - Gamma Metroid+
   > Tunnel to Gamma+ Arena Access
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Transport Hub Access
@@ -693,7 +695,7 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_name: Door001
   * Extra - actor_type: doorchargecharge
   > Room Center
-      Climb Rooms (High Jump)
+      Climb/Traverse Rooms (High Jump)
 
 > Tunnel to Alpha+ Arena Access; Heals? False
   * Layers: default
@@ -701,15 +703,15 @@ Extra - asset_id: collision_camera_017
   > Room Center
       Morph Ball
 
-> Dock to Transport Hub; Heals? False
+> Dock to Chozo Seal; Heals? False
   * Layers: default
-  * Open Passage to Transport Hub/Dock to Transport Hub Access
+  * Open Passage to Chozo Seal/Dock to Transport Hub Access
   > Room Center
       Trivial
 
-> Tunnel to Transport Hub; Heals? False
+> Tunnel to Chozo Seal; Heals? False
   * Layers: default
-  * Tunnel to Transport Hub/Tunnel to Transport Hub Access
+  * Tunnel to Chozo Seal/Tunnel to Transport Hub Access
   > Room Center
       Morph Ball
 
@@ -719,8 +721,8 @@ Extra - asset_id: collision_camera_017
       Trivial
   > Tunnel to Alpha+ Arena Access
       Morph Ball and After Area 5 (Entrance) - Alpha+ Arena Access Grapple Block
-  > Dock to Transport Hub
+  > Dock to Chozo Seal
       Trivial
-  > Tunnel to Transport Hub
+  > Tunnel to Chozo Seal
       Morph Ball and After Area 5 (Entrance) - Chozo Seal Unlocked
 

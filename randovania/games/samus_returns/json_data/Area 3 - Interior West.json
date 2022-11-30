@@ -2,15 +2,15 @@
     "name": "Area 3 - Interior (West)",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s033_area3b/s033_area3b.bmsld",
-        "map_min_x": 11,
-        "map_max_x": 13,
-        "map_min_y": 33,
-        "map_max_y": 23,
+        "map_min_x": 41,
+        "map_max_x": 30,
+        "map_min_y": 18,
+        "map_max_y": 27,
         "scenario_id": "s033_area3b"
     },
     "areas": {
         "Transport to Area 3 Exterior (Upper)": {
-            "default_node": "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)",
+            "default_node": "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (East)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -64,12 +64,12 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)": {
+                "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (East)": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -12000.0,
-                        "y": 6400.0,
+                        "x": -12013.906600543158,
+                        "y": 6330.759239579644,
                         "z": 0.0
                     },
                     "description": "",
@@ -82,7 +82,7 @@
                     },
                     "destination": {
                         "world_name": "Area 3 - Exterior",
-                        "area_name": "Transport to Area 3 Interior West (Upper)"
+                        "area_name": "Transport to Area 3 Interior West (East)"
                     },
                     "keep_name_when_vanilla": false,
                     "editable": true,
@@ -100,8 +100,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -12500.0,
-                        "y": -6100.0,
+                        "x": -12500.150549061284,
+                        "y": -5892.407604203567,
                         "z": 0.0
                     },
                     "description": "",
@@ -113,7 +113,7 @@
                         "actor_type": "weightactivatedplatform"
                     },
                     "connections": {
-                        "Door to Gamma Arena Lower": {
+                        "Door to Gamma Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -122,12 +122,12 @@
                         }
                     }
                 },
-                "Door to Gamma Arena Upper": {
+                "Door to Gamma Arena North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -10850.0,
-                        "y": -1600.0,
+                        "x": -10840.214311016649,
+                        "y": -1415.6098712953117,
                         "z": 0.0
                     },
                     "description": "",
@@ -141,14 +141,14 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma Arena Upper",
+                        "area_name": "Gamma Arena North",
                         "node_name": "Door to Transport to Area 3 Exterior (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Lower": {
+                        "Door to Gamma Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -164,16 +164,16 @@
                         },
                         "Pickup (Missile Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
-                "Door to Gamma Arena Lower": {
+                "Door to Gamma Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -11650.0,
-                        "y": -6300.0,
+                        "x": -11678.565946392726,
+                        "y": -6060.077931278782,
                         "z": 0.0
                     },
                     "description": "",
@@ -187,7 +187,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma Arena Lower",
+                        "area_name": "Gamma Arena South",
                         "node_name": "Door to Transport to Area 3 Exterior (Upper)"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -201,14 +201,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Gamma Arena Upper": {
+                        "Door to Gamma Arena North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Gamma Arena Lower": {
+                        "Tunnel to Gamma Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -286,8 +286,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -14100.0,
-                        "y": 800.0,
+                        "x": -14109.785688983351,
+                        "y": 881.4736096351398,
                         "z": 0.0
                     },
                     "description": "",
@@ -308,11 +308,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)": {
+                        "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (East)": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
-                        "Door to Gamma Arena Upper": {
+                        "Door to Gamma Arena North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -325,8 +325,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -12650.0,
-                        "y": -2700.0,
+                        "x": -12684.58790884402,
+                        "y": -2572.5351281142994,
                         "z": 0.0
                     },
                     "description": "",
@@ -340,7 +340,7 @@
                     "pickup_index": 70,
                     "major_location": false,
                     "connections": {
-                        "Door to Gamma Arena Upper": {
+                        "Door to Gamma Arena North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -349,12 +349,12 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Arena Lower": {
+                "Tunnel to Gamma Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -11678.57,
-                        "y": -6999.03,
+                        "x": -11645.031880977684,
+                        "y": -6898.4295666548605,
                         "z": 0.0
                     },
                     "description": "",
@@ -365,14 +365,14 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma Arena Lower",
+                        "area_name": "Gamma Arena South",
                         "node_name": "Tunnel to Transport to Area 3 Exterior (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Lower": {
+                        "Door to Gamma Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -488,8 +488,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -14100.0,
-                        "y": 800.0,
+                        "x": -14099.949619858937,
+                        "y": 900.1786205001374,
                         "z": 0.0
                     },
                     "description": "",
@@ -523,8 +523,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -17800.0,
-                        "y": 800.0,
+                        "x": -17800.050380141063,
+                        "y": 914.1018594852064,
                         "z": 0.0
                     },
                     "description": "",
@@ -558,8 +558,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15951.98,
-                        "y": 1140.98,
+                        "x": -15962.182834111936,
+                        "y": 1241.2979756343318,
                         "z": 0.0
                     },
                     "description": "",
@@ -582,8 +582,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -15958.796296296296,
-                        "y": 900.3472222222222,
+                        "x": -15966.536118363794,
+                        "y": 983.5847596944202,
                         "z": 0.0
                     },
                     "description": "",
@@ -618,7 +618,7 @@
                 }
             }
         },
-        "Gamma Arena Upper": {
+        "Gamma Arena North": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -626,12 +626,12 @@
                     "x1": -10900.0,
                     "x2": -7200.0,
                     "y1": -1900.0,
-                    "y2": 300.0
+                    "y2": 400.0
                 },
                 "polygon": [
                     [
                         -10900.0,
-                        300.0
+                        400.0
                     ],
                     [
                         -10900.0,
@@ -643,7 +643,7 @@
                     ],
                     [
                         -7200.0,
-                        300.0
+                        400.0
                     ]
                 ],
                 "asset_id": "collision_camera_008"
@@ -653,8 +653,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -10850.0,
-                        "y": -1600.0,
+                        "x": -10851.364843821562,
+                        "y": -1428.698360355409,
                         "z": 0.0
                     },
                     "description": "",
@@ -669,7 +669,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Transport to Area 3 Exterior (Upper)",
-                        "node_name": "Door to Gamma Arena Upper"
+                        "node_name": "Door to Gamma Arena North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -684,12 +684,12 @@
                         }
                     }
                 },
-                "Door to Upper Shaft Access": {
+                "Door to Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7250.0,
-                        "y": -1800.0,
+                        "x": -7255.413575158011,
+                        "y": -1611.715672803884,
                         "z": 0.0
                     },
                     "description": "",
@@ -703,8 +703,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Upper Shaft Access",
-                        "node_name": "Door to Gamma Arena Upper"
+                        "area_name": "Teleporter Access",
+                        "node_name": "Door to Gamma Arena North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -742,8 +742,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -9086.67,
-                        "y": -554.88,
+                        "x": -8922.904644133003,
+                        "y": -496.6657506641018,
                         "z": 0.0
                     },
                     "description": "",
@@ -766,8 +766,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -9071.23,
-                        "y": -917.74,
+                        "x": -9397.393972703123,
+                        "y": -1249.0702573967208,
                         "z": 0.0
                     },
                     "description": "",
@@ -785,7 +785,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Upper Shaft Access": {
+                        "Door to Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -828,7 +828,7 @@
                 }
             }
         },
-        "Gamma Arena Lower": {
+        "Gamma Arena South": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -836,12 +836,12 @@
                     "x1": -11700.0,
                     "x2": -3800.0,
                     "y1": -7800.0,
-                    "y2": -4300.0
+                    "y2": -4100.0
                 },
                 "polygon": [
                     [
                         -11700.0,
-                        -4300.0
+                        -4100.0
                     ],
                     [
                         -11700.0,
@@ -853,7 +853,7 @@
                     ],
                     [
                         -3800.0,
-                        -4300.0
+                        -4100.0
                     ]
                 ],
                 "asset_id": "collision_camera_009"
@@ -863,8 +863,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -8850.0,
-                        "y": -7100.0,
+                        "x": -8849.130434782608,
+                        "y": -6938.454106280193,
                         "z": 0.0
                     },
                     "description": "",
@@ -970,8 +970,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -11650.0,
-                        "y": -6300.0,
+                        "x": -11658.019323671497,
+                        "y": -6045.410628019324,
                         "z": 0.0
                     },
                     "description": "",
@@ -986,7 +986,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Transport to Area 3 Exterior (Upper)",
-                        "node_name": "Door to Gamma Arena Lower"
+                        "node_name": "Door to Gamma Arena South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -1007,8 +1007,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3850.0,
-                        "y": -6300.0,
+                        "x": -3864.8792270531403,
+                        "y": -6060.676328502415,
                         "z": 0.0
                     },
                     "description": "",
@@ -1023,7 +1023,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Shaft West",
-                        "node_name": "Door to Gamma Arena Lower"
+                        "node_name": "Door to Gamma Arena South"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "override_default_open_requirement": null,
@@ -1040,7 +1040,7 @@
                         },
                         "Event - Gamma Metroid": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Left of Fan": {
                             "type": "template",
@@ -1052,8 +1052,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -11678.57,
-                        "y": -6999.03,
+                        "x": -11658.019323671497,
+                        "y": -6892.657004830918,
                         "z": 0.0
                     },
                     "description": "",
@@ -1065,7 +1065,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Transport to Area 3 Exterior (Upper)",
-                        "node_name": "Tunnel to Gamma Arena Lower"
+                        "node_name": "Tunnel to Gamma Arena South"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
@@ -1086,8 +1086,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -7016.66,
-                        "y": -5286.88,
+                        "x": -6070.772946859904,
+                        "y": -5144.734299516908,
                         "z": 0.0
                     },
                     "description": "",
@@ -1099,7 +1099,7 @@
                     "connections": {
                         "Door to Shaft West": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -1107,8 +1107,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -8833.262651964942,
-                        "y": -7483.182546414098,
+                        "x": -8856.763285024155,
+                        "y": -7518.550724637681,
                         "z": 0.0
                     },
                     "description": "",
@@ -1213,8 +1213,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -9518.212232588823,
-                        "y": -6798.232965790217,
+                        "x": -8879.661835748793,
+                        "y": -6442.31884057971,
                         "z": 0.0
                     },
                     "description": "",
@@ -1282,8 +1282,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -8192.983696164358,
-                        "y": -6932.244840260108,
+                        "x": -7345.458937198067,
+                        "y": -6625.507246376812,
                         "z": 0.0
                     },
                     "description": "",
@@ -1303,11 +1303,11 @@
                         },
                         "Door to Shaft West": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
                         "Below Pickup": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -1348,8 +1348,8 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": -3050.0,
-                        "y": 1100.0,
+                        "x": -3047.5886232481453,
+                        "y": 1170.156636438582,
                         "z": 0.0
                     },
                     "description": "",
@@ -1374,8 +1374,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -1650.0,
-                        "y": 900.0,
+                        "x": -1664.653751030503,
+                        "y": 970.6512778235779,
                         "z": 0.0
                     },
                     "description": "",
@@ -1400,8 +1400,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4500.0,
-                        "y": 500.0,
+                        "x": -4512.139323990107,
+                        "y": 684.9958779884582,
                         "z": 0.0
                     },
                     "description": "",
@@ -1449,8 +1449,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 350.0,
-                        "y": 600.0,
+                        "x": 357.6051112943114,
+                        "y": 789.2827699917559,
                         "z": 0.0
                     },
                     "description": "",
@@ -1490,12 +1490,12 @@
                     "x1": -6500.0,
                     "x2": -4450.0,
                     "y1": -4400.0,
-                    "y2": 6500.0
+                    "y2": 5900.0
                 },
                 "polygon": [
                     [
                         -6500.0,
-                        6500.0
+                        5900.0
                     ],
                     [
                         -6500.0,
@@ -1523,7 +1523,7 @@
                     ],
                     [
                         -5050.0,
-                        6500.0
+                        5900.0
                     ]
                 ],
                 "asset_id": "collision_camera_012"
@@ -1533,8 +1533,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4500.0,
-                        "y": 500.0,
+                        "x": -4503.279607982052,
+                        "y": 657.4507025622861,
                         "z": 0.0
                     },
                     "description": "",
@@ -1557,9 +1557,9 @@
                     "connections": {
                         "Door to Alpha+ Arena East": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
-                        "Above Pickup": {
+                        "Below Grapple Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1572,8 +1572,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5100.0,
-                        "y": 5300.0,
+                        "x": -5121.062108867634,
+                        "y": 5406.653678120203,
                         "z": 0.0
                     },
                     "description": "",
@@ -1607,8 +1607,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -6050.0,
-                        "y": -3900.0,
+                        "x": -6047.735860196009,
+                        "y": -3782.861022552841,
                         "z": 0.0
                     },
                     "description": "",
@@ -1622,18 +1622,18 @@
                     "pickup_index": 71,
                     "major_location": false,
                     "connections": {
-                        "Above Pickup": {
+                        "Below Grapple Point": {
                             "type": "template",
-                            "data": "Climb Rooms (High Jump)"
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         }
                     }
                 },
-                "Tunnel to Upper Shaft Access": {
+                "Tunnel to Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -6016.81,
-                        "y": -1813.48,
+                        "x": -6047.735860196009,
+                        "y": -1517.6585193057044,
                         "z": 0.0
                     },
                     "description": "",
@@ -1644,14 +1644,14 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Upper Shaft Access",
+                        "area_name": "Teleporter Access",
                         "node_name": "Tunnel to Upper Shaft"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Above Pickup": {
+                        "Below Grapple Point": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1662,12 +1662,12 @@
                         }
                     }
                 },
-                "Above Pickup": {
+                "Below Grapple Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -5326.989609162829,
-                        "y": -2470.0732081709775,
+                        "x": -5256.202030936356,
+                        "y": -2341.3685204864814,
                         "z": 0.0
                     },
                     "description": "",
@@ -1732,7 +1732,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Upper Shaft Access": {
+                        "Tunnel to Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1762,7 +1762,7 @@
                 }
             }
         },
-        "Grappling Steps": {
+        "Mid-Shaft Shortcut": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1770,12 +1770,12 @@
                     "x1": -2100.0,
                     "x2": 1200.0,
                     "y1": -3300.0,
-                    "y2": -1200.0
+                    "y2": -900.0
                 },
                 "polygon": [
                     [
                         -2100.0,
-                        -1200.0
+                        -900.0
                     ],
                     [
                         -2100.0,
@@ -1787,7 +1787,7 @@
                     ],
                     [
                         1200.0,
-                        -1200.0
+                        -900.0
                     ]
                 ],
                 "asset_id": "collision_camera_024"
@@ -1797,8 +1797,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -300.0,
-                        "y": -2500.0,
+                        "x": -300.370981038747,
+                        "y": -2390.560593569662,
                         "z": 0.0
                     },
                     "description": "",
@@ -1814,9 +1814,9 @@
                     "connections": {
                         "Tunnel to Shaft West": {
                             "type": "template",
-                            "data": "Destroy Bomb Blocks"
+                            "data": "Destroy Bomb Block"
                         },
-                        "Above Pickup": {
+                        "Left of Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1878,8 +1878,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2081.71,
-                        "y": -3241.86,
+                        "x": -2059.6455070074194,
+                        "y": -3061.624072547403,
                         "z": 0.0
                     },
                     "description": "",
@@ -1891,7 +1891,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Shaft West",
-                        "node_name": "Tunnel to Grappling Steps"
+                        "node_name": "Tunnel to Mid-Shaft Shortcut"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
@@ -1959,8 +1959,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1175.72,
-                        "y": -1502.95,
+                        "x": 1165.6911239351466,
+                        "y": -1483.7180544105524,
                         "z": 0.0
                     },
                     "description": "",
@@ -1972,13 +1972,13 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Shaft East",
-                        "node_name": "Tunnel to Grappling Steps"
+                        "node_name": "Tunnel to Mid-Shaft Shortcut"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Above Pickup": {
+                        "Left of Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1993,8 +1993,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 818.3253076511501,
-                        "y": -1492.2418405564474,
+                        "x": 1038.7331684528713,
+                        "y": -1474.6496290189611,
                         "z": 0.0
                     },
                     "description": "",
@@ -2004,7 +2004,7 @@
                     "extra": {},
                     "event_name": "Area 3 (Interior West) - Grappling Steps Grapple Block",
                     "connections": {
-                        "Above Pickup": {
+                        "Left of Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2013,12 +2013,12 @@
                         }
                     }
                 },
-                "Above Pickup": {
+                "Left of Grapple Block": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 273.92,
-                        "y": -1498.13,
+                        "x": 576.2434734817257,
+                        "y": -1604.6303929651003,
                         "z": 0.0
                     },
                     "description": "",
@@ -2083,12 +2083,12 @@
                     "x1": -3900.0,
                     "x2": -1100.0,
                     "y1": -13100.0,
-                    "y2": -2200.0
+                    "y2": -2000.0
                 },
                 "polygon": [
                     [
                         -3900.0,
-                        -2200.0
+                        -2000.0
                     ],
                     [
                         -3900.0,
@@ -2116,7 +2116,7 @@
                     ],
                     [
                         -2000.0,
-                        -2200.0
+                        -2000.0
                     ]
                 ],
                 "asset_id": "collision_camera_025"
@@ -2126,8 +2126,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -1500.0,
-                        "y": -12200.0,
+                        "x": -1425.3158578344555,
+                        "y": -12058.135553194003,
                         "z": 0.0
                     },
                     "description": "",
@@ -2148,7 +2148,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "or",
@@ -2198,12 +2198,12 @@
                         }
                     }
                 },
-                "Door to Gamma Arena Lower": {
+                "Door to Gamma Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3850.0,
-                        "y": -6300.0,
+                        "x": -3870.704923839887,
+                        "y": -6060.497107096469,
                         "z": 0.0
                     },
                     "description": "",
@@ -2217,7 +2217,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma Arena Lower",
+                        "area_name": "Gamma Arena South",
                         "node_name": "Door to Shaft West"
                     },
                     "default_dock_weakness": "Wave Beam Door",
@@ -2231,14 +2231,14 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Grappling Steps": {
+                        "Tunnel to Mid-Shaft Shortcut": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "or",
@@ -2279,8 +2279,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2050.0,
-                        "y": -8900.0,
+                        "x": -2055.968827488488,
+                        "y": -8608.849923249498,
                         "z": 0.0
                     },
                     "description": "",
@@ -2438,7 +2438,7 @@
                                 ]
                             }
                         },
-                        "Door to Gamma Arena Lower": {
+                        "Door to Gamma Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2447,12 +2447,12 @@
                         }
                     }
                 },
-                "Tunnel to Grappling Steps": {
+                "Tunnel to Mid-Shaft Shortcut": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2081.71,
-                        "y": -3241.86,
+                        "x": -2055.968827488488,
+                        "y": -3061.677884047703,
                         "z": 0.0
                     },
                     "description": "",
@@ -2463,14 +2463,14 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Grappling Steps",
+                        "area_name": "Mid-Shaft Shortcut",
                         "node_name": "Tunnel to Shaft West"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Lower": {
+                        "Door to Gamma Arena South": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2491,12 +2491,12 @@
                     "x1": -2100.0,
                     "x2": 1200.0,
                     "y1": -15500.0,
-                    "y2": -5200.0
+                    "y2": -5100.0
                 },
                 "polygon": [
                     [
                         -1600.0,
-                        -5200.0
+                        -5100.0
                     ],
                     [
                         -1600.0,
@@ -2523,11 +2523,11 @@
                         -11300.0
                     ],
                     [
-                        -1000.0,
+                        -1100.0,
                         -11300.0
                     ],
                     [
-                        -1000.0,
+                        -1100.0,
                         -15500.0
                     ],
                     [
@@ -2547,12 +2547,12 @@
                         -12400.0
                     ],
                     [
-                        600.0,
+                        800.0,
                         -11900.0
                     ],
                     [
-                        600.0,
-                        -5200.0
+                        800.0,
+                        -5100.0
                     ]
                 ],
                 "asset_id": "collision_camera_026"
@@ -2562,8 +2562,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.0,
-                        "y": -6400.0,
+                        "x": 66.8851104026453,
+                        "y": -6245.324123273113,
                         "z": 0.0
                     },
                     "description": "",
@@ -2590,8 +2590,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -300.0,
-                        "y": -14500.0,
+                        "x": -273.65096233321515,
+                        "y": -14296.569842956666,
                         "z": 0.0
                     },
                     "description": "",
@@ -2610,16 +2610,16 @@
                                 "items": []
                             }
                         },
-                        "Door to Gamma+ Arena Access": {
+                        "Door to Gamma+ Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Next to Teleporter": {
+                        "Above Teleporter": {
                             "type": "template",
-                            "data": "Climb Rooms (High Jump)"
+                            "data": "Climb/Traverse Rooms (High Jump)"
                         }
                     }
                 },
@@ -2627,8 +2627,8 @@
                     "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
-                        "x": -800.0,
-                        "y": -10200.0,
+                        "x": -735.8070610461682,
+                        "y": -10027.706931160705,
                         "z": 0.0
                     },
                     "description": "",
@@ -2649,7 +2649,7 @@
                         }
                     },
                     "connections": {
-                        "Next to Teleporter": {
+                        "Above Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2662,8 +2662,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2050.0,
-                        "y": -8900.0,
+                        "x": -2061.465344196481,
+                        "y": -8616.914629826426,
                         "z": 0.0
                     },
                     "description": "",
@@ -2757,7 +2757,7 @@
                                 ]
                             }
                         },
-                        "Next to Teleporter": {
+                        "Above Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2770,8 +2770,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1150.0,
-                        "y": -13700.0,
+                        "x": 1137.141339001063,
+                        "y": -13433.067658519307,
                         "z": 0.0
                     },
                     "description": "",
@@ -2801,12 +2801,12 @@
                         }
                     }
                 },
-                "Door to Gamma+ Arena Access": {
+                "Door to Gamma+ Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 650.0,
-                        "y": -15400.0,
+                        "x": 650.6612350926912,
+                        "y": -15123.586019600898,
                         "z": 0.0
                     },
                     "description": "",
@@ -2820,7 +2820,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma+ Arena Access",
+                        "area_name": "Gamma+ Arena South Access",
                         "node_name": "Door to Central Shaft"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2840,8 +2840,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -1483.7702208052897,
-                        "y": -10197.974967528633,
+                        "x": -930.3991026095171,
+                        "y": -9820.952886999647,
                         "z": 0.0
                     },
                     "description": "",
@@ -2851,7 +2851,7 @@
                     "extra": {},
                     "event_name": "Area 3 Interior East Teleporter Lower",
                     "connections": {
-                        "Next to Teleporter": {
+                        "Above Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2860,12 +2860,12 @@
                         }
                     }
                 },
-                "Next to Teleporter": {
+                "Above Teleporter": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -1143.2341480694295,
-                        "y": -10185.812964930925,
+                        "x": -747.9690636438775,
+                        "y": -9431.768803872948,
                         "z": 0.0
                     },
                     "description": "",
@@ -2882,15 +2882,17 @@
                             }
                         },
                         "Teleporter": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "Area 3 Interior East Teleporter Lower",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Shaft West": {
                             "type": "template",
-                            "data": "Climb Rooms (No High Jump)"
+                            "data": "Climb/Traverse Rooms (No High Jump)"
                         },
                         "Event - Teleporter Unlocked": {
                             "type": "and",
@@ -2928,11 +2930,11 @@
                     ],
                     [
                         3400.0,
-                        -7500.0
+                        -7100.0
                     ],
                     [
                         3900.0,
-                        -7500.0
+                        -7100.0
                     ],
                     [
                         3900.0,
@@ -2946,8 +2948,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 2900.0,
-                        "y": -8000.0,
+                        "x": 2945.6252213956777,
+                        "y": -7747.561695595703,
                         "z": 0.0
                     },
                     "description": "",
@@ -2961,7 +2963,7 @@
                     "pickup_index": 68,
                     "major_location": false,
                     "connections": {
-                        "Door to Grappling Fans": {
+                        "Door to Side Passage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2974,8 +2976,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1150.0,
-                        "y": -13700.0,
+                        "x": 1145.6488369347023,
+                        "y": -13444.574329909081,
                         "z": 0.0
                     },
                     "description": "",
@@ -3005,7 +3007,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Grappling Fans": {
+                        "Tunnel to Side Passage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3021,19 +3023,19 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Grappling Fans": {
+                "Door to Side Passage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3350.0,
-                        "y": -8000.0,
+                        "x": 3347.561695595701,
+                        "y": -7695.135198960916,
                         "z": 0.0
                     },
                     "description": "",
@@ -3047,7 +3049,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Grappling Fans",
+                        "area_name": "Side Passage",
                         "node_name": "Door to Shaft East"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
@@ -3067,8 +3069,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3850.0,
-                        "y": 0.0,
+                        "x": 3854.3511630652965,
+                        "y": 186.31479513519912,
                         "z": 0.0
                     },
                     "description": "",
@@ -3098,7 +3100,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Grappling Steps": {
+                        "Tunnel to Mid-Shaft Shortcut": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3126,12 +3128,12 @@
                         }
                     }
                 },
-                "Tunnel to Grappling Steps": {
+                "Tunnel to Mid-Shaft Shortcut": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1175.72,
-                        "y": -1502.95,
+                        "x": 1163.1243358129643,
+                        "y": -1473.857598299681,
                         "z": 0.0
                     },
                     "description": "",
@@ -3142,7 +3144,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Grappling Steps",
+                        "area_name": "Mid-Shaft Shortcut",
                         "node_name": "Tunnel to Shaft East"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -3165,19 +3167,19 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Tunnel to Grappling Fans": {
+                "Tunnel to Side Passage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3478.63,
-                        "y": -8411.63,
+                        "x": 3312.6106978391776,
+                        "y": -8533.95914511749,
                         "z": 0.0
                     },
                     "description": "",
@@ -3188,7 +3190,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Grappling Fans",
+                        "area_name": "Side Passage",
                         "node_name": "Tunnel to Shaft East"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -3208,20 +3210,20 @@
                 }
             }
         },
-        "Grappling Fans": {
+        "Side Passage": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 2900.0,
                     "x2": 4900.0,
-                    "y1": -9100.0,
-                    "y2": -7500.0
+                    "y1": -8800.0,
+                    "y2": -7200.0
                 },
                 "polygon": [
                     [
                         3300.0,
-                        -7500.0
+                        -7200.0
                     ],
                     [
                         3300.0,
@@ -3233,15 +3235,15 @@
                     ],
                     [
                         2900.0,
-                        -9100.0
+                        -8800.0
                     ],
                     [
                         4900.0,
-                        -9100.0
+                        -8800.0
                     ],
                     [
                         4900.0,
-                        -7500.0
+                        -7200.0
                     ]
                 ],
                 "asset_id": "collision_camera_028"
@@ -3251,8 +3253,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3350.0,
-                        "y": -8000.0,
+                        "x": 3371.9565474081946,
+                        "y": -7707.72228126107,
                         "z": 0.0
                     },
                     "description": "",
@@ -3267,7 +3269,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Shaft East",
-                        "node_name": "Door to Grappling Fans"
+                        "node_name": "Door to Side Passage"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
@@ -3288,8 +3290,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3478.63,
-                        "y": -8411.63,
+                        "x": 2924.2059275002953,
+                        "y": -8542.767741173693,
                         "z": 0.0
                     },
                     "description": "",
@@ -3301,7 +3303,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Shaft East",
-                        "node_name": "Tunnel to Grappling Fans"
+                        "node_name": "Tunnel to Side Passage"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
@@ -3389,8 +3391,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 350.0,
-                        "y": 600.0,
+                        "x": 357.2135201978566,
+                        "y": 773.1141797197033,
                         "z": 0.0
                     },
                     "description": "",
@@ -3435,8 +3437,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3850.0,
-                        "y": 600.0,
+                        "x": 3846.084089035449,
+                        "y": 766.5189612530916,
                         "z": 0.0
                     },
                     "description": "",
@@ -3472,8 +3474,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 2513.547237076649,
-                        "y": 943.2040998217468,
+                        "x": 2119.1470844212363,
+                        "y": 773.7053959965185,
                         "z": 0.0
                     },
                     "description": "",
@@ -3529,8 +3531,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 7350.0,
-                        "y": 800.0,
+                        "x": 7437.185124118348,
+                        "y": 872.8038838508747,
                         "z": 0.0
                     },
                     "description": "",
@@ -3613,8 +3615,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3850.0,
-                        "y": 600.0,
+                        "x": 3850.9434826417514,
+                        "y": 778.5472199322157,
                         "z": 0.0
                     },
                     "description": "",
@@ -3648,8 +3650,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3850.0,
-                        "y": 0.0,
+                        "x": 3846.455070074196,
+                        "y": 208.51882385270665,
                         "z": 0.0
                     },
                     "description": "",
@@ -3713,8 +3715,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 8150.0,
-                        "y": 100.0,
+                        "x": 8249.587798845838,
+                        "y": 190.56517358248607,
                         "z": 0.0
                     },
                     "description": "",
@@ -3741,8 +3743,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 7976.4,
-                        "y": 106.7,
+                        "x": 8141.865897224512,
+                        "y": 195.05358615004116,
                         "z": 0.0
                     },
                     "description": "",
@@ -3763,7 +3765,7 @@
                 }
             }
         },
-        "Gamma+ Arena Lower": {
+        "Gamma+ Arena South": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -3776,7 +3778,7 @@
                 "polygon": [
                     [
                         -5700.0,
-                        -15500.0
+                        -15000.0
                     ],
                     [
                         -5700.0,
@@ -3788,26 +3790,26 @@
                     ],
                     [
                         2500.0,
-                        -17000.0
+                        -16700.0
                     ],
                     [
                         700.0,
-                        -17000.0
+                        -16700.0
                     ],
                     [
                         700.0,
-                        -15500.0
+                        -15000.0
                     ]
                 ],
                 "asset_id": "collision_camera_034"
             },
             "nodes": {
-                "Door to Gamma+ Arena Access": {
+                "Door to Gamma+ Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 650.0,
-                        "y": -15900.0,
+                        "x": 657.1219199413754,
+                        "y": -15591.421635980581,
                         "z": 0.0
                     },
                     "description": "",
@@ -3821,8 +3823,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma+ Arena Access",
-                        "node_name": "Door to Gamma+ Arena Lower"
+                        "area_name": "Gamma+ Arena South Access",
+                        "node_name": "Door to Gamma+ Arena South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -3839,7 +3841,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -3850,8 +3852,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -4138.59,
-                        "y": -17668.15,
+                        "x": -3729.4311624072548,
+                        "y": -17709.585966840707,
                         "z": 0.0
                     },
                     "description": "",
@@ -3861,18 +3863,18 @@
                     "extra": {},
                     "event_name": "Gamma 8",
                     "connections": {
-                        "Door to Gamma+ Arena Access": {
+                        "Door to Gamma+ Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     }
                                 ]
                             }
@@ -3881,32 +3883,32 @@
                 }
             }
         },
-        "Gamma+ Arena Access": {
+        "Gamma+ Arena South Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 600.0,
                     "x2": 1900.0,
-                    "y1": -16000.0,
-                    "y2": -15000.0
+                    "y1": -15800.0,
+                    "y2": -14800.0
                 },
                 "polygon": [
                     [
                         600.0,
-                        -15000.0
+                        -14800.0
                     ],
                     [
                         600.0,
-                        -16000.0
+                        -15800.0
                     ],
                     [
                         1900.0,
-                        -16000.0
+                        -15800.0
                     ],
                     [
                         1900.0,
-                        -15000.0
+                        -14800.0
                     ]
                 ],
                 "asset_id": "collision_camera_035"
@@ -3916,8 +3918,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 650.0,
-                        "y": -15400.0,
+                        "x": 664.7201612164514,
+                        "y": -15093.340661353852,
                         "z": 0.0
                     },
                     "description": "",
@@ -3932,13 +3934,13 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Central Shaft",
-                        "node_name": "Door to Gamma+ Arena Access"
+                        "node_name": "Door to Gamma+ Arena South Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma+ Arena Lower": {
+                        "Door to Gamma+ Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3947,12 +3949,12 @@
                         }
                     }
                 },
-                "Door to Gamma+ Arena Lower": {
+                "Door to Gamma+ Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 650.0,
-                        "y": -15900.0,
+                        "x": 664.7201612164514,
+                        "y": -15583.951635064579,
                         "z": 0.0
                     },
                     "description": "",
@@ -3966,8 +3968,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma+ Arena Lower",
-                        "node_name": "Door to Gamma+ Arena Access"
+                        "area_name": "Gamma+ Arena South",
+                        "node_name": "Door to Gamma+ Arena South Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -4019,8 +4021,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -450.0,
-                        "y": 4600.0,
+                        "x": -446.19400934322607,
+                        "y": 4732.092149858019,
                         "z": 0.0
                     },
                     "description": "",
@@ -4037,7 +4039,7 @@
                         "area_name": "Alpha+ Arena East",
                         "node_name": "Door to Gamma+ Arena Heat"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -4153,8 +4155,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 1593.72,
-                        "y": 5554.01,
+                        "x": 1822.927544197124,
+                        "y": 5727.603737290465,
                         "z": 0.0
                     },
                     "description": "",
@@ -4171,7 +4173,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "or",
@@ -4224,7 +4226,7 @@
             }
         },
         "Transport to Area 3 Exterior (Lower)": {
-            "default_node": "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)",
+            "default_node": "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (West)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4254,12 +4256,12 @@
                 "asset_id": "collision_camera_037"
             },
             "nodes": {
-                "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)": {
+                "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (West)": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -18519.7,
-                        "y": 800.0,
+                        "x": -18533.96537510305,
+                        "y": 779.6907680057569,
                         "z": 0.0
                     },
                     "description": "",
@@ -4272,7 +4274,7 @@
                     },
                     "destination": {
                         "world_name": "Area 3 - Exterior",
-                        "area_name": "Transport to Area 3 Interior West (Lower)"
+                        "area_name": "Transport to Area 3 Interior West (West)"
                     },
                     "keep_name_when_vanilla": false,
                     "editable": true,
@@ -4290,8 +4292,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -17800.0,
-                        "y": 800.0,
+                        "x": -17790.532274262758,
+                        "y": 914.4022298321968,
                         "z": 0.0
                     },
                     "description": "",
@@ -4312,7 +4314,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)": {
+                        "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (West)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4358,8 +4360,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -450.0,
-                        "y": 4600.0,
+                        "x": -453.7350004580021,
+                        "y": 4736.397361912614,
                         "z": 0.0
                     },
                     "description": "",
@@ -4387,11 +4389,11 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Climb Rooms (No High Jump)"
+                                        "data": "Climb/Traverse Rooms (No High Jump)"
                                     }
                                 ]
                             }
@@ -4402,8 +4404,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5100.0,
-                        "y": 5300.0,
+                        "x": -5104.967023907667,
+                        "y": 5406.453238069067,
                         "z": 0.0
                     },
                     "description": "",
@@ -4437,8 +4439,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -2811.56,
-                        "y": 5450.53,
+                        "x": -3451.5823944307044,
+                        "y": 5232.412750755702,
                         "z": 0.0
                     },
                     "description": "",
@@ -4461,8 +4463,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -2768.5479489269223,
-                        "y": 5248.370008149959,
+                        "x": -3464.635430979207,
+                        "y": 4949.596958871485,
                         "z": 0.0
                     },
                     "description": "",
@@ -4478,7 +4480,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Blocks"
+                                        "data": "Destroy Bomb Block"
                                     },
                                     {
                                         "type": "resource",
@@ -4509,7 +4511,7 @@
                 }
             }
         },
-        "Upper Shaft Access": {
+        "Teleporter Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -4540,12 +4542,12 @@
                 "asset_id": "collision_camera_039"
             },
             "nodes": {
-                "Door to Gamma Arena Upper": {
+                "Door to Gamma Arena North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7250.0,
-                        "y": -1800.0,
+                        "x": -7261.7014995867285,
+                        "y": -1621.6023143228244,
                         "z": 0.0
                     },
                     "description": "",
@@ -4559,14 +4561,14 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Gamma Arena Upper",
-                        "node_name": "Door to Upper Shaft Access"
+                        "area_name": "Gamma Arena North",
+                        "node_name": "Door to Teleporter Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Upper": {
+                        "Door to Teleporter Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4610,12 +4612,12 @@
                         }
                     }
                 },
-                "Door to Teleporter Upper": {
+                "Door to Teleporter Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7250.0,
-                        "y": -2200.0,
+                        "x": -7263.2365096233325,
+                        "y": -2006.88983351045,
                         "z": 0.0
                     },
                     "description": "",
@@ -4629,14 +4631,14 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Teleporter Upper",
-                        "node_name": "Door to Upper Shaft Access"
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Teleporter Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Upper": {
+                        "Door to Gamma Arena North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4649,8 +4651,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -6016.81,
-                        "y": -1813.48,
+                        "x": -6047.508560632896,
+                        "y": -1517.2216318337466,
                         "z": 0.0
                     },
                     "description": "",
@@ -4662,13 +4664,13 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Upper Shaft",
-                        "node_name": "Tunnel to Upper Shaft Access"
+                        "node_name": "Tunnel to Teleporter Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Upper": {
+                        "Door to Gamma Arena North": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4683,8 +4685,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -6234.78,
-                        "y": -1816.55,
+                        "x": -6159.564293304995,
+                        "y": -1520.291651906955,
                         "z": 0.0
                     },
                     "description": "",
@@ -4694,7 +4696,7 @@
                     "extra": {},
                     "event_name": "Area 3 (Interior West) - Upper Shaft Access Grapple Block",
                     "connections": {
-                        "Door to Gamma Arena Upper": {
+                        "Door to Gamma Arena North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4705,7 +4707,7 @@
                 }
             }
         },
-        "Teleporter Upper": {
+        "Teleporter Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -4740,8 +4742,8 @@
                     "node_type": "player_ship",
                     "heal": false,
                     "coordinates": {
-                        "x": -8850.0,
-                        "y": -3200.0,
+                        "x": -8954.946413849959,
+                        "y": -3119.066593386461,
                         "z": 0.0
                     },
                     "description": "",
@@ -4762,7 +4764,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Upper Shaft Access": {
+                        "Door to Teleporter Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4773,12 +4775,12 @@
                         }
                     }
                 },
-                "Door to Upper Shaft Access": {
+                "Door to Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7250.0,
-                        "y": -2200.0,
+                        "x": -7251.181643308601,
+                        "y": -2001.5434643217,
                         "z": 0.0
                     },
                     "description": "",
@@ -4792,8 +4794,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
-                        "area_name": "Upper Shaft Access",
-                        "node_name": "Door to Teleporter Upper"
+                        "area_name": "Teleporter Access",
+                        "node_name": "Door to Teleporter Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -4838,8 +4840,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -8846.67,
-                        "y": -2804.61,
+                        "x": -8968.686452322067,
+                        "y": -2500.764862141614,
                         "z": 0.0
                     },
                     "description": "",
@@ -4849,7 +4851,7 @@
                     "extra": {},
                     "event_name": "Area 3 Interior West Teleporter Upper",
                     "connections": {
-                        "Door to Upper Shaft Access": {
+                        "Door to Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,

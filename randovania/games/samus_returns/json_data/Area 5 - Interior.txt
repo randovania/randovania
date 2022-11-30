@@ -40,7 +40,7 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
   > Underwater
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Save Station; Heals? False
   * Layers: default
@@ -49,7 +49,7 @@ Extra - asset_id: collision_camera_003
   > Door to Transport to Area 5 Entrance (West)
       Morph Ball
   > Above Save Station
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Transport to Area 5 Entrance (East); Heals? False
   * Layers: default
@@ -57,7 +57,7 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Above Save Station
-      Morph Ball and Climb Rooms (No High Jump)
+      Morph Ball and Climb/Traverse Rooms (No High Jump)
 
 > Door to Transport to Area 5 Entrance (West); Heals? False
   * Layers: default
@@ -83,9 +83,11 @@ Extra - asset_id: collision_camera_003
   * Layers: default
   > Save Station
       Trivial
+  > Door to Transport to Area 5 Entrance (East)
+      Trivial
   > Next to Grapple Block
       Any of the following:
-          Climb Rooms (High Jump)
+          Climb/Traverse Rooms (High Jump)
           Morph Ball and After Area 5 (Interior) - Transport Connector Grapple Block
 
 > Next to Grapple Block; Heals? False
@@ -111,22 +113,22 @@ Extra - asset_id: collision_camera_003
 > Underwater; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Next to Grapple Point
       Any of the following:
           Use Spider Ball
           All of the following:
-              High Jump Boots
-              Gravity Suit or Space Jump
+              Gravity Suit
+              High Jump Boots or Space Jump
 
 ----------------
 Transport to Area 5 Exterior (East)
 Extra - total_boundings: {'x1': -3500.0, 'x2': -1100.0, 'y1': 1100.0, 'y2': 5000.0}
 Extra - polygon: [[-3500.0, 5000.0], [-3500.0, 1100.0], [-1700.0, 1100.0], [-1700.0, 3700.0], [-1100.0, 3800.0], [-1100.0, 5000.0]]
 Extra - asset_id: collision_camera_005
-> Transport to Area 5 Exterior - Outer Hub; Heals? False; Spawn Point
+> Transport to Area 5 Exterior - Tower; Heals? False; Spawn Point
   * Layers: default
-  * Teleporter to Area 5 - Exterior - Outer Hub
+  * Teleporter to Area 5 - Exterior - Tower
   * Extra - actor_name: LE_Platform_Elevator_FromArea06B_01
   * Extra - actor_type: weightactivatedplatform
   > Door to Transport to Area 5 Entrance (East)
@@ -141,15 +143,15 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Transport to Area 5 Entrance (East)/Door to Transport to Area 5 Exterior (East)
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
-  > Transport to Area 5 Exterior - Outer Hub
-      Climb Rooms (No High Jump)
+  > Transport to Area 5 Exterior - Tower
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Grapple Shuffler; Heals? False
   * Layers: default
   * Power Beam Door to Grapple Shuffler/Door to Transport to Area 5 Exterior (East)
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Transport to Area 5 Exterior - Outer Hub
+  > Transport to Area 5 Exterior - Tower
       Trivial
 
 > Door to Water Drop; Heals? False
@@ -157,7 +159,7 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Water Drop/Door to Transport to Area 5 Exterior (East)
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Transport to Area 5 Exterior - Outer Hub
+  > Transport to Area 5 Exterior - Tower
       Trivial
 
 ----------------
@@ -178,6 +180,8 @@ Extra - asset_id: collision_camera_006
   * Plasma Beam Door to Autrack Tower/Door from Plasma Beam Room
   * Extra - actor_name: Door005
   * Extra - actor_type: doorclosedpower
+  > Door from Grapple Shuffler
+      Trivial
 
 > Door from Grapple Shuffler; Heals? False
   * Layers: default
@@ -208,7 +212,7 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: Door006
   * Extra - actor_type: doorclosedpower
   > Door to Teleporter Room (Bottom)
-      After Area 5 (Interior) - Grapple Shuffler Grapple Block and Climb Rooms (No High Jump)
+      After Area 5 (Interior) - Grapple Shuffler Grapple Block and Climb/Traverse Rooms (No High Jump)
 
 > Door to Teleporter Room (Bottom); Heals? False
   * Layers: default
@@ -246,6 +250,8 @@ Extra - asset_id: collision_camera_007
 
 > Above Pickup; Heals? False
   * Layers: default
+  > Door to Teleporter Room (Bottom)
+      Trivial
   > Pickup (Missile Tank)
       Missile and Morph Ball and Phase Drift and Screw Attack
   > Event - Grapple Block
@@ -261,7 +267,7 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: LE_Platform_EnergyRecharge_001
   * Extra - actor_type: weightactivatedplatform
   > Above Crumble Blocks
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Teleporter Room; Heals? False
   * Layers: default
@@ -293,11 +299,13 @@ Extra - asset_id: collision_camera_008
       Morph Ball
   > Door to Teleporter Room
       Morph Ball
+  > Tunnel to Transport to Area 5 Exterior (West)
+      Climb/Traverse Rooms (High Jump)
 
 ----------------
 Gravity Suit Room
-Extra - total_boundings: {'x1': -7500.0, 'x2': -5000.0, 'y1': 5200.0, 'y2': 8100.0}
-Extra - polygon: [[-7500.0, 8100.0], [-7500.0, 5200.0], [-5000.0, 5200.0], [-5000.0, 8100.0]]
+Extra - total_boundings: {'x1': -7500.0, 'x2': -5000.0, 'y1': 5000.0, 'y2': 7900.0}
+Extra - polygon: [[-7500.0, 7900.0], [-7500.0, 5000.0], [-5000.0, 5000.0], [-5000.0, 7900.0]]
 Extra - asset_id: collision_camera_009
 > Pickup (Gravity Suit); Heals? False
   * Layers: default
@@ -341,8 +349,8 @@ Extra - asset_id: collision_camera_009
 
 ----------------
 Upper Path Storage
-Extra - total_boundings: {'x1': -9400.0, 'x2': -8100.0, 'y1': 11469.2998046875, 'y2': 12228.099609375}
-Extra - polygon: [[-9400.0, 12228.099609375], [-9400.0, 11469.2998046875], [-8100.0, 11469.2998046875], [-8100.0, 12228.099609375]]
+Extra - total_boundings: {'x1': -8900.0, 'x2': -7900.0, 'y1': 11300.0, 'y2': 11700.0}
+Extra - polygon: [[-8900.0, 11700.0], [-8900.0, 11300.0], [-7900.0, 11300.0], [-7900.0, 11700.0]]
 Extra - asset_id: collision_camera_010
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -362,8 +370,8 @@ Extra - asset_id: collision_camera_010
 
 ----------------
 Upper Path Left
-Extra - total_boundings: {'x1': -8200.0, 'x2': -6600.0, 'y1': 9600.0, 'y2': 12200.0}
-Extra - polygon: [[-8200.0, 12200.0], [-8200.0, 9600.0], [-6600.0, 9600.0], [-6600.0, 12200.0]]
+Extra - total_boundings: {'x1': -8200.0, 'x2': -6600.0, 'y1': 9100.0, 'y2': 11700.0}
+Extra - polygon: [[-8200.0, 11700.0], [-8200.0, 9100.0], [-6600.0, 9100.0], [-6600.0, 11700.0]]
 Extra - asset_id: collision_camera_011
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -410,12 +418,12 @@ Extra - asset_id: collision_camera_011
 > Below Crumble Blocks; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
-      Spider Ball and Destroy Bomb Blocks
+      Spider Ball and Destroy Bomb Block
 
 ----------------
 Upper Path Right
-Extra - total_boundings: {'x1': -6700.0, 'x2': -5000.0, 'y1': 9600.0, 'y2': 12200.0}
-Extra - polygon: [[-6700.0, 12200.0], [-6700.0, 9600.0], [-5000.0, 9600.0], [-5000.0, 12200.0]]
+Extra - total_boundings: {'x1': -6700.0, 'x2': -5000.0, 'y1': 9100.0, 'y2': 11700.0}
+Extra - polygon: [[-6700.0, 11700.0], [-6700.0, 9100.0], [-5000.0, 9100.0], [-5000.0, 11700.0]]
 Extra - asset_id: collision_camera_012
 > Door to Side Path; Heals? False
   * Layers: default
@@ -473,7 +481,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 5 Exterior (East)
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Door to Transport to Area 5 Exterior (East); Heals? False
   * Layers: default
@@ -482,7 +490,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: doorpowerpower
   > Door to Zeta+ Arena Access
       Any of the following:
-          Climb Rooms (No High Jump)
+          Climb/Traverse Rooms (No High Jump)
           High Jump Boots and Gravity Suit
 
 ----------------
@@ -497,7 +505,7 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_type: item_missiletank
   > Above Center Platform
       Any of the following:
-          Destroy Bomb Blocks
+          Destroy Bomb Block
           Missile and Morph Ball
 
 > Door to Water Drop; Heals? False
@@ -546,8 +554,8 @@ Extra - asset_id: collision_camera_017
   * Layers: default
   > Pickup (Missile Tank)
       Any of the following:
-          Can Spiderspark and Destroy Bomb Blocks
-          Missile and Morph Ball and Climb Rooms (No High Jump)
+          Can Spiderspark and Destroy Bomb Block
+          Missile and Morph Ball and Climb/Traverse Rooms (No High Jump)
   > Door to Zeta+ Arena
       Lighting Armor and Screw Attack and Use Spider Ball
   > Center Platform
@@ -557,8 +565,8 @@ Extra - asset_id: collision_camera_017
 
 ----------------
 Transport to Area 5 Exterior (West)
-Extra - total_boundings: {'x1': -9050.0, 'x2': -5000.0, 'y1': 8400.0, 'y2': 9700.0}
-Extra - polygon: [[-9050.0, 9700.0], [-9050.0, 8900.0], [-7600.0, 8900.0], [-7600.0, 8400.0], [-5000.0, 8400.0], [-5000.0, 9700.0]]
+Extra - total_boundings: {'x1': -9050.0, 'x2': -5000.0, 'y1': 8100.0, 'y2': 9400.0}
+Extra - polygon: [[-9050.0, 9400.0], [-9050.0, 8700.0], [-7600.0, 8700.0], [-7600.0, 8100.0], [-5000.0, 8100.0], [-5000.0, 9400.0]]
 Extra - asset_id: collision_camera_018
 > Elevator to Area 5 Exterior - Transport to Area 5 Interior (West); Heals? False; Spawn Point
   * Layers: default
@@ -576,15 +584,15 @@ Extra - asset_id: collision_camera_018
   > Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)
       Trivial
   > Tunnel to Autrack Tower
-      Destroy Bomb Blocks
+      Destroy Bomb Block
   > Tunnel to Side Path
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 > Tunnel to Autrack Tower; Heals? False
   * Layers: default
   * Tunnel to Autrack Tower/Tunnel to Transport to Area 5 Exterior (West)
   > Door to Underwater Path
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 > Tunnel to Side Path; Heals? False
   * Layers: default
@@ -606,8 +614,8 @@ Extra - asset_id: collision_camera_018
 
 ----------------
 Underwater Path
-Extra - total_boundings: {'x1': -5100.0, 'x2': -1600.0, 'y1': 5000.0, 'y2': 8900.0}
-Extra - polygon: [[-5100.0, 8900.0], [-5100.0, 5000.0], [-1600.0, 5000.0], [-1600.0, 8900.0]]
+Extra - total_boundings: {'x1': -5100.0, 'x2': -1600.0, 'y1': 4850.0, 'y2': 8750.0}
+Extra - polygon: [[-5100.0, 8750.0], [-5100.0, 4850.0], [-1600.0, 4850.0], [-1600.0, 8750.0]]
 Extra - asset_id: collision_camera_020
 > Door to Gravity Suit Room (Bottom); Heals? False
   * Layers: default
@@ -615,13 +623,13 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 5 Exterior (West)
-      Gravity Suit or Climb Rooms (High Jump)
+      Gravity Suit or Climb/Traverse Rooms (High Jump)
   > Pickup (Missile Tank)
       All of the following:
           Missile and Morph Ball
           Any of the following:
               All of the following:
-                  Grapple Beam and Destroy Bomb Blocks
+                  Grapple Beam and Destroy Bomb Block
                   Phase Drift or Spider Ball
               Power Bomb ≥ 3 and Can Spiderspark
 
@@ -655,12 +663,12 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_name: HP_ChozoHologram_001
   * Extra - actor_type: item_missiletank
   > Door to Gravity Suit Room (Bottom)
-      Destroy Bomb Blocks
+      Destroy Bomb Block
 
 ----------------
 Side Path
-Extra - total_boundings: {'x1': -5100.0, 'x2': -3800.0, 'y1': 9400.0, 'y2': 12200.0}
-Extra - polygon: [[-5100.0, 12200.0], [-5100.0, 9400.0], [-3800.0, 9400.0], [-3800.0, 12200.0]]
+Extra - total_boundings: {'x1': -5100.0, 'x2': -3800.0, 'y1': 8900.0, 'y2': 11700.0}
+Extra - polygon: [[-5100.0, 11700.0], [-5100.0, 8900.0], [-3800.0, 8900.0], [-3800.0, 11700.0]]
 Extra - asset_id: collision_camera_021
 > Door to Upper Path Right; Heals? False
   * Layers: default
@@ -674,7 +682,7 @@ Extra - asset_id: collision_camera_021
   * Layers: default
   * Tunnel to Transport to Area 5 Exterior (West)/Tunnel to Side Path
   > Door to Upper Path Right
-      Climb Rooms (No High Jump)
+      Climb/Traverse Rooms (No High Jump)
 
 ----------------
 Gamma Arena
@@ -715,7 +723,7 @@ Extra - asset_id: collision_camera_023
   * Player Ship (Unlocked by After Area 5 (Interior) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_06C_001
   * Extra - actor_type: weightactivatedplatform
-  > Next to Teleporter
+  > Door to Grapple Shuffler (Top)
       Trivial
 
 > Door to Autrack Tower; Heals? False
@@ -735,24 +743,17 @@ Extra - asset_id: collision_camera_023
       Baby Metroid and Morph Ball
   > Door to Autrack Tower
       Trivial
-  > Next to Teleporter
-      Climb Rooms (High Jump)
+  > Door to Grapple Shuffler (Top)
+      Climb/Traverse Rooms (High Jump)
 
 > Door to Grapple Shuffler (Top); Heals? False
   * Layers: default
   * Power Beam Door to Grapple Shuffler/Door to Teleporter Room (Top)
   * Extra - actor_name: Door021
   * Extra - actor_type: doorpowerpower
-  > Next to Teleporter
-      Trivial
-
-> Next to Teleporter; Heals? False
-  * Layers: default
   > Teleporter
       After Area 5 (Interior) - Teleporter Unlocked
   > Door to Grapple Shuffler (Bottom)
-      Trivial
-  > Door to Grapple Shuffler (Top)
       Trivial
   > Event - Teleporter Unlocked
       Trivial
@@ -760,7 +761,7 @@ Extra - asset_id: collision_camera_023
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 5 (Interior) - Teleporter Unlocked
-  > Next to Teleporter
+  > Door to Grapple Shuffler (Top)
       Trivial
 
 ----------------
