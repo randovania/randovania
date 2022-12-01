@@ -157,7 +157,7 @@ async def _inner_advance_depth(state: State,
                     max_attempts=max_attempts,
                 )
 
-                if not new_result[1]:
+                if new_result[0] is None:
                     debug.log_rollback(state, True, True)
 
                 # If a safe node was a dead end, we're certainly a dead end as well
