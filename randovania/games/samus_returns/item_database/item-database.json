@@ -1,0 +1,608 @@
+{
+    "schema_version": 3,
+    "item_categories": {
+        "beam": {
+            "long_name": "Beams",
+            "hint_details": [
+                "a ",
+                "beam"
+            ],
+            "is_major": true
+        },
+        "morph_ball": {
+            "long_name": "Morph Ball",
+            "hint_details": [
+                "a ",
+                "morph ball system"
+            ],
+            "is_major": true
+        },
+        "movement": {
+            "long_name": "Movement",
+            "hint_details": [
+                "a ",
+                "movement system"
+            ],
+            "is_major": true
+        },
+        "misc": {
+            "long_name": "Miscellaneous",
+            "hint_details": [
+                "a ",
+                "miscellaneous system"
+            ],
+            "is_major": true
+        },
+        "missile": {
+            "long_name": "Missile",
+            "hint_details": [
+                "a ",
+                "missile system"
+            ],
+            "is_major": true
+        },
+        "aeion": {
+            "long_name": "Aeion",
+            "hint_details": [
+                "an ",
+                "Aeion system"
+            ],
+            "is_major": true
+        },
+        "suit": {
+            "long_name": "Suit",
+            "hint_details": [
+                "a ",
+                "Suit"
+            ],
+            "is_major": true
+        },
+        "energy_tank": {
+            "long_name": "Energy Tanks",
+            "hint_details": [
+                "an ",
+                "Energy Tank"
+            ],
+            "is_major": false
+        },
+        "missile_related": {
+            "long_name": "Missile Related",
+            "hint_details": [
+                "a ",
+                "missile-related upgrade"
+            ],
+            "is_major": false
+        },
+        "morph_ball_related": {
+            "long_name": "Morph Ball Related",
+            "hint_details": [
+                "a ",
+                "morph ball-related upgrade"
+            ],
+            "is_major": false
+        },
+        "beam_related": {
+            "long_name": "Beam Related",
+            "hint_details": [
+                "a ",
+                "beam-related upgrade"
+            ],
+            "is_major": false
+        },
+        "life_support": {
+            "long_name": "Life Support",
+            "hint_details": [
+                "a ",
+                "life support system"
+            ],
+            "is_major": false
+        }
+    },
+    "items": {
+        "Wave Beam": {
+            "item_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "powerup_wavebeam",
+            "progression": [
+                "Wave"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Spazer Beam": {
+            "item_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "powerup_spazerbeam",
+            "progression": [
+                "Spazer"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "warning": "Spazer Beam automatically gives you Wave Beam.\nIt's recommended to use Progressive Beam instead."
+        },
+        "Plasma Beam": {
+            "item_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "powerup_plasmabeam",
+            "progression": [
+                "Plasma"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 125,
+            "warning": "Plasma Beam automatically gives you both Wave and Spazer Beam.\nIt's recommended to use Progressive Beam instead."
+        },
+        "Progressive Beam": {
+            "item_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "PROGRESSIVE_BEAM",
+            "progression": [
+                "Wave",
+                "Spazer",
+                "Plasma"
+            ],
+            "default_shuffled_count": 3,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Charge Beam": {
+            "item_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "powerup_chargebeam",
+            "progression": [
+                "Charge"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Ice Beam": {
+            "item_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "powerup_icebeam",
+            "progression": [
+                "Ice"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Grapple Beam": {
+            "item_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "powerup_grapplebeam",
+            "progression": [
+                "Grapple"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Missile": {
+            "item_category": "missile",
+            "broad_category": "missile_related",
+            "model_name": "itemsphere",
+            "progression": [
+                "MissileLauncher"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
+            "ammo": [
+                "MissileAmmo"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": true,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Super Missile": {
+            "item_category": "missile",
+            "broad_category": "missile_related",
+            "model_name": "powerup_supermissile",
+            "progression": [
+                "Supers"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [
+                "SMAmmo"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 100
+        },
+        "Scan Pulse": {
+            "item_category": "aeion",
+            "broad_category": "aeion",
+            "model_name": "powerup_scanningpulse",
+            "progression": [
+                "Pulse"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [
+                "Aeion"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 13
+        },
+        "Lightning Armor": {
+            "item_category": "aeion",
+            "broad_category": "aeion",
+            "model_name": "powerup_energyshield",
+            "progression": [
+                "Armor"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [
+                "Aeion"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Beam Burst": {
+            "item_category": "aeion",
+            "broad_category": "aeion",
+            "model_name": "powerup_energywave",
+            "progression": [
+                "Burst"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [
+                "Aeion"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Phase Drift": {
+            "item_category": "aeion",
+            "broad_category": "aeion",
+            "model_name": "powerup_phasedisplacement",
+            "progression": [
+                "Phase"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [
+                "Aeion"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Varia Suit": {
+            "item_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "powerup_variasuit",
+            "progression": [
+                "Varia"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Gravity Suit": {
+            "item_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "powerup_gravitysuit",
+            "progression": [
+                "Gravity"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "warning": "Gravity Suit automatically gives you Varia Suit.\nIt's recommended to use Progressive Suit instead."
+        },
+        "Progressive Suit": {
+            "item_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "PROGRESSIVE_SUIT",
+            "progression": [
+                "Varia",
+                "Gravity"
+            ],
+            "default_shuffled_count": 2,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Morph Ball": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "powerup_morphball",
+            "progression": [
+                "Morph"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 144
+        },
+        "Spider Ball": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "powerup_spiderball",
+            "progression": [
+                "Spider"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Bomb": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "powerup_bomb",
+            "progression": [
+                "Bomb"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Spring Ball": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "powerup_springball",
+            "progression": [
+                "Spring"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Power Bomb": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "powerup_powerbomb",
+            "progression": [
+                "MainPB"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [
+                "PBAmmo"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "High Jump Boots": {
+            "item_category": "movement",
+            "broad_category": "movement",
+            "model_name": "powerup_highjumpboots",
+            "progression": [
+                "Boots"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Space Jump": {
+            "item_category": "movement",
+            "broad_category": "movement",
+            "model_name": "powerup_spacejump",
+            "progression": [
+                "Space"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Screw Attack": {
+            "item_category": "misc",
+            "broad_category": "misc",
+            "model_name": "powerup_screwattack",
+            "progression": [
+                "Screw"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Energy Tank": {
+            "item_category": "energy_tank",
+            "broad_category": "life_support",
+            "model_name": "item_energytank",
+            "progression": [
+                "ETank"
+            ],
+            "default_shuffled_count": 10,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Baby Metroid": {
+            "item_category": "misc",
+            "broad_category": "misc",
+            "model_name": "item_energytank",
+            "progression": [
+                "Baby"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        }
+    },
+    "ammo": {
+        "Missile Tank": {
+            "model_name": "item_missiletank",
+            "items": [
+                "MissileAmmo"
+            ],
+            "broad_category": "missile_related",
+            "extra": {}
+        },
+        "Super Missile Tank": {
+            "model_name": "item_supermissiletank",
+            "items": [
+                "SMAmmo"
+            ],
+            "broad_category": "missile_related",
+            "extra": {},
+            "temporary": "SMAmmo",
+            "unlocked_by": "Supers"
+        },
+        "Power Bomb Tank": {
+            "model_name": "item_powerbombtank",
+            "items": [
+                "PBAmmo"
+            ],
+            "broad_category": "morph_ball_related",
+            "extra": {},
+            "temporary": "PBAmmo",
+            "unlocked_by": "MainPB"
+        },
+        "Aeion Tank": {
+            "model_name": "item_senergytank",
+            "items": [
+                "Aeion"
+            ],
+            "broad_category": "aeion",
+            "extra": {}
+        }
+    },
+    "default_items": {}
+}
