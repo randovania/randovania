@@ -772,9 +772,9 @@
                 "description": "By chaining and timing bomb jumps it`s possible to reach the top of a room.",
                 "extra": {}
             },
-            "WBJ": {
-                "long_name": "Water Bomb Jump",
-                "description": "Performing a WBJ will make higher bomb jumps underwater possible. To setup a WBJ you need to bomb jump under water and demorph midair. If you now perform a bomb jump midair without touching the ground as morphball you\u00b4ll be blasted higher than normal.",
+            "UBJ": {
+                "long_name": "Underwater Bomb Jump",
+                "description": "Bomb Jump technique that allows for climbing submerged rooms without Gravity Suit.",
                 "extra": {}
             },
             "SWJ": {
@@ -784,10 +784,10 @@
             },
             "Walljump": {
                 "long_name": "Walljump",
-                "description": "Basic movement ability which can be abused in unended ways.",
+                "description": "Basic movement ability which can be abused in unintended ways.",
                 "extra": {}
             },
-            "Suitless": {
+            "Heatrun": {
                 "long_name": "Heat Runs",
                 "description": "You can run through heat rooms without a suit. It depends on your health how long you can stay in these rooms.",
                 "extra": {
@@ -802,6 +802,56 @@
             "FrozenEnemy": {
                 "long_name": "Stand on Frozen Enemy",
                 "description": "After you receive the Ice Beam you\u00b4ll be able to freeze some enemies in place allowing you to reach certain spots.",
+                "extra": {}
+            },
+            "SpiderClip": {
+                "long_name": "Spider Ball Clip",
+                "description": "There are gaps in the collision that connect solid tiles to breakable blocks and pedestals. By Spider Balling over these gaps and rotating the Circle Pad in its direction, Samus can latch onto the wrong side of them and clip out of bounds.",
+                "extra": {}
+            },
+            "IceClip": {
+                "long_name": "Ice Beam Clip",
+                "description": "By freezing certain enemies a small distance from walls, Samus can clip through the walls or floor by jumping in the gap between the wall and the frozen enemy.",
+                "extra": {}
+            },
+            "PhaseClip": {
+                "long_name": "Phase Drift Clip",
+                "description": "Samus can clip through walls if she stands on a crumble block with Phase Drift active, grabbing an adjacent ledge, and deactivate Phase Drift mid-climb.",
+                "extra": {}
+            },
+            "CornerClip": {
+                "long_name": "Corner Clip",
+                "description": "Forcing Samus into a tight space can cause her to clip Out of Bounds.",
+                "extra": {}
+            },
+            "MeleeClip": {
+                "long_name": "Melee Clip",
+                "description": "With a specific setup, Samus can clip through walls that are two tiles high using the Melee.",
+                "extra": {}
+            },
+            "DBJ": {
+                "long_name": "Diagonal Bomb Jump",
+                "description": "An interation of the IBJ that allows for crossing horizontal gaps using Bombs.",
+                "extra": {}
+            },
+            "UnmorphExtend": {
+                "long_name": "Unmorph Extend",
+                "description": "By performing a spin jump, morphing in midair at the peak of the jump, then unmoprhing, Samus can gain extra height.",
+                "extra": {}
+            },
+            "PhaseSkip": {
+                "long_name": "Phase Drift Skip",
+                "description": "With a specific positioning and timing, Samus can be launched horizontally with Bombs. This can be used to cross crumble block lines that normally require Phase Drift to pass.",
+                "extra": {}
+            },
+            "AirMorph": {
+                "long_name": "Mid-Air Morph",
+                "description": "Jump and enter Morph Ball while in the air.",
+                "extra": {}
+            },
+            "SuperJump": {
+                "long_name": "Super Jump",
+                "description": "By performing a neutral jump then initiating a respin a few frames after jumping, Samus can jump higher than normal.",
                 "extra": {}
             }
         },
@@ -836,7 +886,7 @@
             }
         },
         "requirement_template": {
-            "Climb/Traverse Rooms (No High Jump)": {
+            "Climb Rooms Vertically (No High Jump)": {
                 "type": "or",
                 "data": {
                     "comment": null,
@@ -851,35 +901,17 @@
                             }
                         },
                         {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spider",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Use Spider Ball"
+                        },
+                        {
+                            "type": "template",
+                            "data": "Simple IBJ"
                         }
                     ]
                 }
             },
-            "Climb/Traverse Rooms (High Jump)": {
+            "Climb Rooms Vertically (High Jump)": {
                 "type": "or",
                 "data": {
                     "comment": null,
@@ -903,30 +935,72 @@
                             }
                         },
                         {
-                            "type": "and",
+                            "type": "template",
+                            "data": "Use Spider Ball"
+                        },
+                        {
+                            "type": "template",
+                            "data": "Simple IBJ"
+                        }
+                    ]
+                }
+            },
+            "Cross Rooms Horizontally (High Jump)": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spider",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
                             }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Boots",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Use Spider Ball"
+                        }
+                    ]
+                }
+            },
+            "Cross Rooms Horizontally (No High Jump)": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Boots",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Use Spider Ball"
                         }
                     ]
                 }
@@ -976,15 +1050,6 @@
                             "data": {
                                 "type": "items",
                                 "name": "PBAmmo",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MainPB",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1095,32 +1160,6 @@
                     ]
                 }
             },
-            "Shoot Missiles": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MissileAmmo",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MissileLauncher",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
             "Destroy Bomb Block": {
                 "type": "or",
                 "data": {
@@ -1185,45 +1224,267 @@
                 }
             },
             "Defeat Alpha Metroid": {
-                "type": "and",
+                "type": "or",
                 "data": {
                     "comment": null,
-                    "items": []
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Shoot Beam Burst"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 5,
+                                "negate": false
+                            }
+                        }
+                    ]
                 }
             },
             "Defeat Alpha Metroid+": {
-                "type": "and",
+                "type": "or",
                 "data": {
                     "comment": null,
-                    "items": []
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 20,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Shoot Beam Burst"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 7,
+                                "negate": false
+                            }
+                        }
+                    ]
                 }
             },
             "Defeat Gamma Metroid": {
-                "type": "and",
+                "type": "or",
                 "data": {
                     "comment": null,
-                    "items": []
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Shoot Beam Burst"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 7,
+                                "negate": false
+                            }
+                        }
+                    ]
                 }
             },
             "Defeat Gamma Metroid+": {
-                "type": "and",
+                "type": "or",
                 "data": {
                     "comment": null,
-                    "items": []
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 25,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Shoot Beam Burst"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 9,
+                                "negate": false
+                            }
+                        }
+                    ]
                 }
             },
             "Defeat Zeta Metroid": {
-                "type": "and",
+                "type": "or",
                 "data": {
                     "comment": null,
-                    "items": []
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SMAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 }
             },
             "Defeat Omega Metroid": {
-                "type": "and",
+                "type": "or",
                 "data": {
                     "comment": null,
-                    "items": []
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Shoot Beam Burst"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
                 }
             },
             "Defeat Larva Metroid": {
@@ -1259,6 +1520,109 @@
                                         "data": {
                                             "type": "items",
                                             "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Destroy Missile Block": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Simple IBJ": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Bomb",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "IBJ",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Beam Burst": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Burst",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Wave Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Spazer Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1451,8 +1815,20 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "template",
-                                                        "data": "Lay Power Bomb"
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Lay Power Bomb"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Beam Burst"
+                                                                }
+                                                            ]
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -1476,8 +1852,20 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "template",
-                                "data": "Shoot Wave Beam"
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Wave Beam"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Lay Power Bomb"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     },
@@ -1495,8 +1883,20 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "template",
-                                "data": "Shoot Spazer Beam"
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Spazer Beam"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Lay Power Bomb"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     },
@@ -1514,12 +1914,24 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "Plasma",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Plasma",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Lay Power Bomb"
+                                        }
+                                    ]
                                 }
                             }
                         }
