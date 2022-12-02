@@ -5,13 +5,14 @@ import pytest
 
 import randovania
 from randovania.games.game import RandovaniaGame
-from randovania.server.discord import preset_lookup
 
 
 async def test_on_message_from_bot(mocker):
     mock_look_for: AsyncMock = mocker.patch("randovania.server.discord.preset_lookup.look_for_permalinks",
                                             new_callable=AsyncMock)
     client = MagicMock()
+
+    from randovania.server.discord import preset_lookup
     cog = preset_lookup.PermalinkLookupCog(None, client)
 
     message = MagicMock()
@@ -32,18 +33,21 @@ async def test_on_message_from_bot(mocker):
 def test_get_version_success(mocker, is_dev, git_result, expected_result):
     mocker.patch("randovania.is_dev_version", return_value=is_dev)
     mocker.patch("subprocess.run", return_value=subprocess.CalledProcessError(0, [], output=git_result))
+    from randovania.server.discord import preset_lookup
     result = preset_lookup.get_version("foo", b'J/A')
     assert result == expected_result
 
 
 def test_get_version_failure_missing(mocker):
     mocker.patch("subprocess.run", side_effect=FileNotFoundError)
+    from randovania.server.discord import preset_lookup
     result = preset_lookup.get_version("foo", b'J/A')
     assert result == f"(Unknown version: 4a2f41)"
 
 
 def test_get_version_failure_unknown(mocker):
     mocker.patch("subprocess.run", side_effect=subprocess.CalledProcessError(0, []))
+    from randovania.server.discord import preset_lookup
     result = preset_lookup.get_version("foo", b'J/A')
     assert result is None
 
@@ -72,7 +76,9 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version
     else:
         mocked_git_describe = "v4.0.0"
         mocked_rdv_version = "4.0.0"
-    mocker.patch("randovania.server.discord.preset_lookup._git_describe", return_value=mocked_git_describe)
+
+    mock_git_describe = mocker.patch("randovania.server.discord.preset_lookup._git_describe",
+                                     return_value=mocked_git_describe)
 
     mock_describe: MagicMock = mocker.patch("randovania.layout.preset_describer.describe",
                                             return_value=[
@@ -91,9 +97,12 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version
         message.content = "yu4abbceWfLI- foo???"
 
     # Run
+    from randovania.server.discord import preset_lookup
     await preset_lookup.look_for_permalinks(message)
 
     # Assert
+    # mock_git_describe.assert_called()
+
     if has_multiple:
         mock_from_str.assert_has_calls([
             call("yu4abbceWfLI-"),
@@ -147,6 +156,7 @@ async def test_reply_for_preset(mocker):
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
 
     # Run
+    from randovania.server.discord import preset_lookup
     await preset_lookup.reply_for_preset(message, versioned_preset)
 
     # Assert

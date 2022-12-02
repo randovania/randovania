@@ -167,7 +167,7 @@ Server and logic written by Henrique, including Dolphin and Nintendont integrati
 
 ## Dependencies
 
-* [Python 3.10 64-bit](https://www.python.org/ftp/python/3.10.1/python-3.10.1-amd64.exe)
+* [Python 3.11 64-bit](https://www.python.org/ftp/python/3.11.0/python-3.11.0rc1-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
 ## Setup
