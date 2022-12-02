@@ -49,6 +49,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
         self.tracker_elements: list[Element] = []
         game_enum = RandovaniaGame(tracker_config["game"])
         resource_database = default_database.resource_database_for(game_enum)
+        self.resource_database = resource_database
 
         for element in tracker_config["elements"]:
             text_template = ""

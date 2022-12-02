@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.3.0] - 2023-??-??
 
-- Nothing.
+- Added: You can now open a tracker for other player's inventories in a multiworld session.
 - Changed: LogbookNodes are now called HintNodes.
 
 ### Metroid Prime

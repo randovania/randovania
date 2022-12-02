@@ -243,9 +243,10 @@ async def test_session_self_update(client: NetworkClient):
 
     inventory: Inventory = {ItemResourceInfo(33, "None", "None", 1): InventoryItem(1, 1)}
 
-    await client.session_self_update(inventory, GameConnectionStatus.InGame, MemoryExecutorChoice.DOLPHIN)
+    await client.session_self_update(RandovaniaGame.METROID_PRIME_ECHOES, inventory,
+                                     GameConnectionStatus.InGame, MemoryExecutorChoice.DOLPHIN)
 
     client._emit_with_result.assert_awaited_once_with(
         "game_session_self_update",
-        (1234, b'\x01None\x00\x01\x01', "In-game (Dolphin)")
+        (1234, b'\x01prime2\x00\x01None\x00\x01\x01', "In-game (Dolphin)")
     )

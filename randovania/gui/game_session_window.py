@@ -16,6 +16,7 @@ from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
+from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
@@ -27,6 +28,7 @@ from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetwor
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
+from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
@@ -38,7 +40,7 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
-    GameSessionAuditLog
+    GameSessionAuditLog, GameSessionInventory
 from randovania.network_client.network_client import ConnectionState, UnableToConnect
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
@@ -54,7 +56,7 @@ class PlayerWidget:
     tool: QtWidgets.QToolButton
     kick: QtGui.QAction
     promote: QtGui.QAction
-    open_tracker: QtGui.QAction
+    open_tracker: QtWidgets.QMenu
     abandon: QtGui.QAction
     move_up: QtGui.QAction
     move_down: QtGui.QAction
@@ -158,6 +160,22 @@ class RowWidget:
         self.export_menu.setEnabled(not preset.is_included_preset)
 
 
+class ItemTrackerDock(QtWidgets.QDockWidget):
+    def __init__(self, parent: QtWidgets.QWidget, title: str, tracker_details: dict,
+                 on_close):
+        super().__init__(parent)
+        self.on_close = on_close
+
+        self.item_tracker = ItemTrackerWidget(tracker_details)
+        self.item_tracker.update_state({})
+        self.setWindowTitle(title)
+        self.setWidget(self.item_tracker)
+
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        self.on_close()
+        return super().closeEvent(event)
+
+
 _PRESET_COLUMNS = 3
 
 
@@ -165,6 +183,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     team_players: list[PlayerWidget]
     observers: list[PlayerWidget]
     rows: list[RowWidget]
+    tracker_docks: dict[int, ItemTrackerDock]
     _game_session: GameSessionEntry
     has_closed = False
     _logic_settings_window: CustomizePresetDialog | None = None
@@ -187,6 +206,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self._preset_manager = preset_manager
         self._window_manager = window_manager
         self._options = options
+        self._trackers = load_trackers_configuration()
         self._update_status_lock = asyncio.Lock()
 
         # Advanced Options
@@ -245,6 +265,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.rows = []
         self.observers = []
         self.team_players = []
+        self.tracker_docks = {}
 
         # tab stuff
         self.splitDockWidget(self.players_dock, self.game_dock, Qt.Vertical)
@@ -296,6 +317,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.network_client.GameSessionMetaUpdated.connect(self.on_game_session_meta_update)
         self.network_client.GameSessionActionsUpdated.connect(self.on_game_session_actions_update)
         self.network_client.GameSessionAuditLogUpdated.connect(self.on_game_session_audit_log_update)
+        self.network_client.GameSessionInventoryUpdated.connect(self.on_game_session_inventory_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self.game_connection.Updated.connect(self.on_game_connection_updated)
 
@@ -356,6 +378,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         finally:
             for d in [self.players_dock, self.game_dock, self.observers_dock, self.history_dock]:
                 d.close()
+            for d in self.tracker_docks.values():
+                d.close()
             super().closeEvent(event)
         self.has_closed = True
 
@@ -368,7 +392,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.players_layout.addWidget(preset_name, len(self.rows) + 2, 0)
 
         tool_button = QtWidgets.QToolButton(self.players_box)
-        tool_button.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        tool_button.setPopupMode(QtWidgets.QToolButton.ToolButtonPopupMode.InstantPopup)
         tool_button.setText("...")
         self.players_layout.addWidget(tool_button, len(self.rows) + 2, 1)
 
@@ -491,7 +515,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 await async_dialog.warning(self, "Customize in progress",
                                            "A window for customizing a preset is already open. "
                                            "Please close it before continuing.",
-                                           QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+                                           async_dialog.StandardButton.Ok, async_dialog.StandardButton.Ok)
             return
 
         row_index = self.rows.index(row)
@@ -508,7 +532,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         result = await async_dialog.execute_dialog(self._logic_settings_window)
         self._logic_settings_window = None
 
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             new_preset = VersionedPreset.with_preset(editor.create_custom_preset_with())
 
             if self._preset_manager.add_new_preset(new_preset):
@@ -536,7 +560,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         except InvalidPreset:
             await async_dialog.message_box(
                 self._window_manager,
-                QtWidgets.QMessageBox.Critical,
+                QtWidgets.QMessageBox.Icon.Critical,
                 "Error loading preset",
                 f"The file at '{path}' contains an invalid preset."
             )
@@ -550,7 +574,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return await async_dialog.warning(
                 self, "Incompatible preset",
                 "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible),
-                QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok
+                async_dialog.StandardButton.Ok, async_dialog.StandardButton.Ok
             )
 
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
@@ -576,10 +600,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def _row_delete(self, row: RowWidget):
         row_index = self.rows.index(row)
         if row != self.rows[-1]:
-            await async_dialog.message_box(self, QMessageBox.Critical,
+            await async_dialog.message_box(self, QMessageBox.Icon.Critical,
                                            "Unable to delete row", "Can only delete the last row.")
         elif len(self.rows) <= 1:
-            await async_dialog.message_box(self, QMessageBox.Critical,
+            await async_dialog.message_box(self, QMessageBox.Icon.Critical,
                                            "Unable to delete row", "At least one row must remain.")
         else:
             await self._admin_global_action(SessionAdminGlobalAction.DELETE_ROW, row_index)
@@ -609,7 +633,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             parent_layout.addWidget(connection_state, 2 + row_id, _PRESET_COLUMNS + 1 + team_id * 3)
 
         tool_button = QtWidgets.QToolButton(self.players_box)
-        tool_button.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        tool_button.setPopupMode(QtWidgets.QToolButton.ToolButtonPopupMode.InstantPopup)
         tool_button.setText("...")
         parent_layout.addWidget(tool_button, 2 + row_id, _PRESET_COLUMNS + 2 + team_id * 3)
 
@@ -622,7 +646,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             tool=tool_button,
             kick=QtGui.QAction(tool_button_menu),
             promote=QtGui.QAction(tool_button_menu),
-            open_tracker=QtGui.QAction(tool_button_menu),
+            open_tracker=QtWidgets.QMenu(tool_button_menu),
             abandon=QtGui.QAction(tool_button_menu),
             move_up=QtGui.QAction(tool_button_menu),
             move_down=QtGui.QAction(tool_button_menu),
@@ -640,12 +664,18 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         widget.promote.triggered.connect(player_action(SessionAdminUserAction.SWITCH_ADMIN, None))
         tool_button_menu.addAction(widget.promote)
 
-        widget.open_tracker.setText("Open Tracker (NYI)")
-        tool_button_menu.addAction(widget.open_tracker)
+        if not is_observer:
+            widget.open_tracker.setTitle("Open tracker")
+            widget.open_tracker.aboutToShow.connect(functools.partial(self._about_to_show_item_tracker_menu,
+                                                                      row_id, widget))
+            widget.open_tracker.triggered.connect(functools.partial(self._selected_item_tracker_menu, row_id))
+            widget.open_tracker.addAction("You should not see this")
+            tool_button_menu.addMenu(widget.open_tracker)
 
-        widget.abandon.setText("Abandon (NYI)")
-        widget.abandon.triggered.connect(player_action(SessionAdminUserAction.ABANDON, None))
-        tool_button_menu.addAction(widget.abandon)
+            widget.abandon.setText("Abandon (NYI)")
+            widget.abandon.triggered.connect(player_action(SessionAdminUserAction.ABANDON, None))
+            widget.abandon.setVisible(False)
+            tool_button_menu.addAction(widget.abandon)
 
         widget.move_up.setText("Move up one slot")
         widget.move_up.triggered.connect(player_action(SessionAdminUserAction.MOVE, -1))
@@ -689,6 +719,18 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot(GameSessionAuditLog)
     async def on_game_session_audit_log_update(self, audit_log: GameSessionAuditLog):
         self.update_session_audit_log(audit_log)
+
+    @asyncSlot(GameSessionInventory)
+    async def on_game_session_inventory_update(self, inventory: GameSessionInventory):
+        if self._game_session.id != inventory.session_id or inventory.row_id not in self.tracker_docks:
+            return
+
+        tracker = self.tracker_docks[inventory.row_id].item_tracker
+        if tracker.resource_database.game_enum == inventory.game:
+            tracker.update_state({
+                tracker.resource_database.get_item(name): item
+                for name, item in inventory.inventory.items()
+            })
 
     async def _on_kicked(self):
         if self._already_kicked:
@@ -905,7 +947,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.setModal(True)
         dialog.setWindowTitle("Enter new title")
         dialog.setLabelText("Enter the new title for the session:")
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
             await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, dialog.textValue())
 
     @asyncSlot()
@@ -915,8 +957,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.setModal(True)
         dialog.setWindowTitle("Enter password")
         dialog.setLabelText("Enter the new password for the session:")
-        dialog.setTextEchoMode(QtWidgets.QLineEdit.Password)
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+        dialog.setTextEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
             await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, dialog.textValue())
 
     @asyncSlot()
@@ -926,7 +968,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.setModal(True)
         dialog.setWindowTitle("Enter new title")
         dialog.setLabelText("Enter the title for the duplicated copy of the session:")
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
             await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, dialog.textValue())
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
@@ -952,8 +994,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             message = ("The following presets have settings that can cause an impossible game:\n"
                        f"\n{warnings}\n"
                        "\nDo you want to continue?")
-            result = await async_dialog.warning(self, "Dangerous preset", message, QMessageBox.Yes | QMessageBox.No)
-            if result != QMessageBox.Yes:
+            result = await async_dialog.warning(self, "Dangerous preset", message,
+                                                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No)
+            if result != async_dialog.StandardButton.Yes:
                 return False
 
         return True
@@ -1045,10 +1088,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 self, "Different presets",
                 f"Given {source_name} has different presets compared to the session.\n"
                 f"Do you want to overwrite the session's presets?",
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
+                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+                async_dialog.StandardButton.No
             )
-            if response != QMessageBox.Yes:
+            if response != async_dialog.StandardButton.Yes:
                 return False
 
         return True
@@ -1058,7 +1101,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def import_permalink(self):
         dialog = PermalinkDialog()
         result = await async_dialog.execute_dialog(dialog)
-        if result != QtWidgets.QDialog.Accepted:
+        if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
         permalink = dialog.get_permalink_from_field()
@@ -1091,11 +1134,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         num_players = sum(1 for player in self._game_session.players.values() if not player.is_observer)
         if num_players != self._game_session.num_rows:
             await async_dialog.message_box(self,
-                                           QMessageBox.Critical,
+                                           QMessageBox.Icon.Critical,
                                            "Missing players",
                                            "Unable to start the session: there are missing players.\n"
                                            "All slots of all teams must be filled before start.",
-                                           QMessageBox.Ok)
+                                           async_dialog.StandardButton.Ok)
             return
 
         await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
@@ -1107,10 +1150,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self, "Finish session?",
             "It's no longer possible to collect items after the session is finished."
             "\nDo you want to continue?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
+            async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+            async_dialog.StandardButton.No,
         )
-        if result == QMessageBox.Yes:
+        if result == async_dialog.StandardButton.Yes:
             await self._admin_global_action(SessionAdminGlobalAction.FINISH_SESSION, None)
 
     @asyncSlot()
@@ -1142,8 +1185,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def save_iso(self):
         membership = self.current_player_membership
         if membership.is_observer:
-            return await async_dialog.message_box(self, QtWidgets.QMessageBox.Critical,
-                                                  "Invalid action", "Observers can't export a game.", QMessageBox.Ok)
+            return await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Critical,
+                                                  "Invalid action", "Observers can't export a game.",
+                                                  async_dialog.StandardButton.Ok)
 
         if any(player.player is None for player in self.team_players):
             user_response = await async_dialog.warning(
@@ -1152,10 +1196,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 ("This session is currently missing a player.\n"
                  "If you export your game right now, all references to that player will use a generic name instead.\n\n"
                  "Do you want to proceed?"),
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
+                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+                async_dialog.StandardButton.No
             )
-            if user_response == QMessageBox.No:
+            if user_response == async_dialog.StandardButton.No:
                 return
 
         options = self._options
@@ -1175,7 +1219,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                         other_worlds)
         result = await async_dialog.execute_dialog(dialog)
 
-        if result != QtWidgets.QDialog.Accepted:
+        if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
         dialog.save_options()
@@ -1267,7 +1311,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
         result = dialog.exec_()
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             with self._options as options:
                 options.set_options_for_game(game, dataclasses.replace(per_game_options,
                                                                        cosmetic_patches=dialog.cosmetic_patches))
@@ -1301,9 +1345,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def on_game_connection_updated(self):
         try:
             async with self._update_status_lock:
-                await self.network_client.session_self_update(self.game_connection.get_current_inventory(),
-                                                              self.game_connection.current_status,
-                                                              self.game_connection.backend_choice)
+                await self.network_client.session_self_update(
+                    self.game_connection.expected_game,
+                    self.game_connection.get_current_inventory(),
+                    self.game_connection.current_status,
+                    self.game_connection.backend_choice,
+                )
         except UnableToConnect:
             logger.info("Unable to connect to server to update status")
             await asyncio.sleep(1)
@@ -1311,3 +1358,42 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         except error.BaseNetworkError as e:
             logger.warning(f"Received a {e} when updating status for server")
             await asyncio.sleep(1)
+
+    def _about_to_show_item_tracker_menu(self, row_id: int, widget: PlayerWidget):
+        preset = self._game_session.presets[row_id]
+
+        widget.open_tracker.clear()
+
+        if row_id in self.tracker_docks:
+            widget.open_tracker.addAction("Tracker already open").setEnabled(False)
+        elif preset.game not in self._trackers:
+            widget.open_tracker.addAction(f"No tracker available for {preset.game.long_name}").setEnabled(False)
+        else:
+            for name in sorted(self._trackers[preset.game].keys()):
+                widget.open_tracker.addAction(name).setData(self._trackers[preset.game][name])
+
+    def _on_close_item_tracker(self, row_id: int):
+        self.tracker_docks.pop(row_id)
+        asyncio.run_coroutine_threadsafe(
+            self.network_client.session_track_inventory(row_id, False),
+            asyncio.get_event_loop()
+        )
+
+    def _selected_item_tracker_menu(self, row_id: int, action: QtGui.QAction):
+        tracker_path: Path = action.data()
+
+        with tracker_path.open("r") as tracker_details_file:
+            tracker_details = json.load(tracker_details_file)
+
+        item_tracker = ItemTrackerDock(
+            self, self.team_players[row_id].player.name, tracker_details,
+            lambda: self._on_close_item_tracker(row_id)
+        )
+        self.addDockWidget(Qt.TopDockWidgetArea, item_tracker)
+        item_tracker.setFloating(True)
+
+        self.tracker_docks[row_id] = item_tracker
+        asyncio.run_coroutine_threadsafe(
+            self.network_client.session_track_inventory(row_id, True),
+            asyncio.get_event_loop()
+        )
