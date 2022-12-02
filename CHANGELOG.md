@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Door locks can now be randomized.
 
+## [5.2.1] - 2022-12-01
+
+- Fixed: Exporting Metroid Prime 2 when converting Metroid Prime models now works.
+
 ## [5.2.0] - 2022-12-01
 
 - Added: Help -> Dependencies window, to see all dependencies included in Randovania, including their versions and licenses.
