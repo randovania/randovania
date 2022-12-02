@@ -1,5 +1,6 @@
 import json
 import logging
+from pathlib import Path
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot
@@ -15,12 +16,22 @@ from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.interface_common.options import Options
 
 
-def path_for(name: str):
-    return get_data_path().joinpath(f"gui_assets/tracker", name)
+def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:
+    with get_data_path().joinpath(f"gui_assets/tracker/trackers.json").open("r") as trackers_file:
+        data = json.load(trackers_file)["trackers"]
+
+    return {
+        RandovaniaGame(game): {
+            name: get_data_path().joinpath(f"gui_assets/tracker", file_name)
+            for name, file_name in trackers.items()
+        }
+        for game, trackers in data.items()
+    }
 
 
 class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
-    trackers: dict[str, str]
+    trackers: dict[RandovaniaGame, dict[str, Path]]
+    _full_name_to_path: dict[str, Path]
     _current_tracker_game: RandovaniaGame = None
     _current_tracker_name: str = None
     _item_tracker: ItemTrackerWidget
@@ -32,20 +43,27 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.options = options
         common_qt_lib.set_default_window_icon(self)
 
-        with get_data_path().joinpath(f"gui_assets/tracker/trackers.json").open("r") as trackers_file:
-            self.trackers = json.load(trackers_file)["trackers"]
+        self.trackers = load_trackers_configuration()
 
         self._action_to_name = {}
+        self._full_name_to_path = {}
         theme_group = QtGui.QActionGroup(self)
-        for name in self.trackers.keys():
-            action = QtGui.QAction(self.menu_tracker)
-            action.setText(name)
-            action.setCheckable(True)
-            action.setChecked(name == options.selected_tracker)
-            action.triggered.connect(self._on_action_select_tracker)
-            self.menu_tracker.addAction(action)
-            self._action_to_name[action] = name
-            theme_group.addAction(action)
+
+        for game in sorted(self.trackers.keys(), key=lambda k: k.long_name):
+            game_menu = QtWidgets.QMenu(self.menu_tracker)
+            game_menu.setTitle(game.long_name)
+            self.menu_tracker.addMenu(game_menu)
+            for name in sorted(self.trackers[game].keys()):
+                action = QtGui.QAction(game_menu)
+                action.setText(name)
+                action.setCheckable(True)
+                full_name = f"{game.long_name} - {name}"
+                action.setChecked(full_name == options.selected_tracker)
+                action.triggered.connect(self._on_action_select_tracker)
+                game_menu.addAction(action)
+                self._action_to_name[action] = full_name
+                self._full_name_to_path[full_name] = self.trackers[game][name]
+                theme_group.addAction(action)
 
         self.create_tracker()
 
@@ -118,7 +136,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
         self.delete_tracker()
 
-        with path_for(self.trackers[tracker_name]).open("r") as tracker_details_file:
+        with self._full_name_to_path[tracker_name].open("r") as tracker_details_file:
             tracker_details = json.load(tracker_details_file)
 
         game_enum = RandovaniaGame(tracker_details["game"])
