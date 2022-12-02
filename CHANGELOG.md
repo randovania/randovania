@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [5.2.1] - 2022-12-01
 
 - Fixed: Exporting Metroid Prime 2 when converting Metroid Prime models now works.
+- Fixed: Experimental Metroid Prime 2 patcher no longer errors with some settings.
 
 ## [5.2.0] - 2022-12-01
 
