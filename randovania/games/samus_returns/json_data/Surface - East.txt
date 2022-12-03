@@ -12,6 +12,8 @@ Extra - asset_id: collision_camera_000
       Trivial
   > Top of Mountain
       Climb Rooms Vertically (No High Jump)
+  > Dock to Crumble Drop Shaft (Top)
+      Climb Rooms Vertically (No High Jump) and Lay Power Bomb
 
 > Door to Landing Site Storage; Heals? False
   * Layers: default
@@ -32,7 +34,7 @@ Extra - asset_id: collision_camera_000
   > Dock to Entrance Pathway
       Trivial
   > Top of Mountain
-      Climb Rooms Vertically (No High Jump)
+      Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (No High Jump)
 
 > Top of Mountain; Heals? False
   * Layers: default
@@ -40,13 +42,11 @@ Extra - asset_id: collision_camera_000
       Trivial
   > Ship
       Trivial
-  > Dock to Crumble Drop Shaft (Top)
-      Space Jump
 
 > Dock to Crumble Drop Shaft (Top); Heals? False
   * Layers: default
   * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Top)
-  > Top of Mountain
+  > Save Station
       Trivial
 
 > Dock to Crumble Drop Shaft (Bottom); Heals? False
@@ -73,7 +73,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: LE_Platform_AmmoRecharge_002
   * Extra - actor_type: weightactivatedplatform
   > Door to Entrance Pathway
-      High Jump Boots
+      Trivial
   > Door to Morph Ball Room
       Trivial
 
@@ -113,7 +113,11 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
   > Door to Melee Tutorial Pathway
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Super Jump (Advanced) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+              Ice Beam and Stand on Frozen Enemy (Beginner)
   > Door to Chozo Seal
       Trivial
 
@@ -159,7 +163,7 @@ Extra - asset_id: collision_camera_004
   > Door to Transport to Area 1
       Trivial
   > Event - Chozo Seal Unlocked
-      After Surface (East) - Alpha Metroid
+      After Surface (East) - Chozo Seal Unlocked
 
 > Door to Morph Ball Room; Heals? False
   * Layers: default
@@ -185,7 +189,9 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: Door011
   * Extra - actor_type: doorchargecharge
   > Chozo Seal
-      Trivial
+      Any of the following:
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Ice Beam and Stand on Frozen Enemy (Intermediate)
 
 > Tunnel to Scan Pulse Room; Heals? False
   * Layers: default
@@ -218,7 +224,7 @@ Extra - asset_id: collision_camera_006
   > Next to Teleporter
       Trivial
 
-> Elevator to Area 1 - Chozo Seal; Heals? False
+> Elevator to Area 1 - Chozo Seal; Heals? False; Spawn Point
   * Layers: default
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
@@ -226,7 +232,7 @@ Extra - asset_id: collision_camera_006
   > Next to Teleporter
       Trivial
 
-> Teleporter; Heals? False; Spawn Point
+> Teleporter; Heals? False
   * Layers: default
   * Teleporter Network (Unlocked by After Surface (East) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_00_01
@@ -263,13 +269,15 @@ Extra - asset_id: collision_camera_006
 > Next to Teleporter; Heals? False
   * Layers: default
   > Pickup (Missile Expansion)
-      Morph Ball and Climb Rooms Vertically (High Jump)
+      All of the following:
+          Morph Ball
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (No High Jump)
   > Elevator to Area 1 - Chozo Seal
       After Surface (East) - Alpha Metroid
   > Teleporter
       After Surface (East) - Teleporter Unlocked
   > Door to Chozo Seal
-      After Surface (East) - Alpha Metroid
+      Trivial
   > Tunnel to Chozo Seal
       After Surface (East) - Alpha Metroid and Destroy Bomb Block
   > Dock to Transport Storage
@@ -309,7 +317,9 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: LE_PowerUP_ChargeBeam
   * Extra - actor_type: itemsphere_chargebeam
   > Door to Charge Beam Shaft (Upper)
-      Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
   > Door to Charge Beam Shaft (Lower)
       Trivial
 
@@ -342,18 +352,16 @@ Extra - asset_id: collision_camera_010
   > Tunnel to Side Path
       Morph Ball
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_002
   * Extra - actor_type: weightactivatedplatform
   > Door to Alpha Storage
-      Any of the following:
-          High Jump Boots or Space Jump
-          Morph Ball and Spider Ball
+      Trivial
   > Dock to Side Path
       Trivial
   > Inside Arena
-      Missile and Morph Ball
+      Morph Ball and Destroy Missile Block
   > Tunnel to Alpha Arena Access
       Morph Ball
 
@@ -394,7 +402,7 @@ Extra - asset_id: collision_camera_010
 > Inside Arena; Heals? False
   * Layers: default
   > Save Station
-      Missile and Morph Ball and After Surface (East) - Alpha Metroid
+      Morph Ball and Destroy Missile Block
   > Door to Ammo Recharge Station
       After Surface (East) - Alpha Metroid
   > Event - Alpha Metroid
@@ -500,9 +508,7 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Tunnel to Upper Storage
-      All of the following:
-          Morph Ball
-          High Jump Boots or Space Jump or Spider Ball
+      Morph Ball
 
 > Dock to Scan Pulse Room; Heals? False
   * Layers: default
@@ -606,16 +612,54 @@ Extra - asset_id: collision_camera_018
   * Pickup 1; Major Location? False
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_senergytank
-  > Door to Landing Site
-      Trivial
+  > Below Right Crumble Blocks
+      Morph Ball
 
 > Door to Landing Site; Heals? False
   * Layers: default
   * Spazer Beam Door to Landing Site/Door to Landing Site Storage
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
+  > Room Center
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Any of the following:
+              Grapple Beam or Phase Drift
+              Movement (Beginner) and Can Spiderspark
+              Bomb and Diagonal Bomb Jump (Intermediate)
+
+> Room Center; Heals? False
+  * Layers: default
   > Pickup (Aeion Tank)
-      Grapple Beam and Missile and Morph Ball and Phase Drift
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Simple IBJ
+              Spider Ball and Mid-Air Morph (Intermediate) and Walljump (Advanced)
+          Any of the following:
+              Phase Drift or Spider Ball
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Phase Drift Skip (Expert)
+                      Space Jump and Phase Drift Skip (Advanced)
+  > Door to Landing Site
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Any of the following:
+              Phase Drift or Can Spiderspark
+              Bomb and Spider Ball and Diagonal Bomb Jump (Intermediate)
+
+> Below Right Crumble Blocks; Heals? False
+  * Layers: default
+  > Door to Landing Site
+      All of the following:
+          Morph Ball
+          Grapple Beam or Can Spiderspark
+  > Room Center
+      Any of the following:
+          Grapple Beam and Movement (Intermediate)
+          Spider Ball and Diagonal Bomb Jump (Advanced) and Lay Bomb
 
 ----------------
 Crumble Drop Shaft
@@ -688,7 +732,9 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_name: LE_Platform_EnergyRecharge
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Missile Tank)
-      Morph Ball and Climb Rooms Vertically (High Jump)
+      All of the following:
+          Morph Ball
+          Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
   > Tunnel to Alpha Arena
       Morph Ball
 
