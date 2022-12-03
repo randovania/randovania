@@ -7,7 +7,7 @@ from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,
                        Short, PrefixedArray, Switch, VarInt, Float64b, Compressed)
 
 from randovania.game_description import game_migration
-from randovania.game_description.world.logbook_node import LoreType
+from randovania.game_description.world.hint_node import HintNodeKind
 from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
 
@@ -144,7 +144,7 @@ ConstructResourceGain = Struct(
     amount=VarInt,
 )
 
-ConstructLoreType = construct.Enum(Byte, **{enum_value.value: i for i, enum_value in enumerate(LoreType)})
+ConstructHintNodeKind = construct.Enum(Byte, **{enum_value.value: i for i, enum_value in enumerate(HintNodeKind)})
 
 ConstructNodeCoordinates = Struct(
     x=Float64b,
@@ -179,7 +179,7 @@ class NodeAdapter(construct.Adapter):
 
 ConstructNode = NodeAdapter(Struct(
     node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, configurable_node=5,
-                             logbook=6, player_ship=7),
+                             hint=6, teleporter_network=7),
     data=Switch(
         lambda this: this.node_type,
         {
@@ -212,14 +212,16 @@ ConstructNode = NodeAdapter(Struct(
             "configurable_node": Struct(
                 **NodeBaseFields,
             ),
-            "logbook": Struct(
+            "hint": Struct(
                 **NodeBaseFields,
-                string_asset_id=VarInt,
-                lore_type=ConstructLoreType,
+                kind=ConstructHintNodeKind,
+                requirement_to_collect=ConstructRequirement,
             ),
-            "player_ship": Struct(
+            "teleporter_network": Struct(
                 **NodeBaseFields,
                 is_unlocked=ConstructRequirement,
+                network=String,
+                requirement_to_activate=ConstructRequirement,
             )
         }
     )))

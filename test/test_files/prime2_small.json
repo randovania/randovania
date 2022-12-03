@@ -1,5 +1,5 @@
 {
-    "schema_version": 12,
+    "schema_version": 13,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -3671,7 +3671,7 @@
                             }
                         },
                         "Lore Scan": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": false,
                             "coordinates": null,
                             "description": "",
@@ -3679,10 +3679,36 @@
                                 "default"
                             ],
                             "extra": {
-                                "translator": "Violet"
+                                "translator": "Violet",
+                                "string_asset_id": 2392838062
                             },
-                            "string_asset_id": 2392838062,
-                            "lore_type": "requires-item",
+                            "kind": "generic",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Violet",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {
                                 "Front of Translator Gate": {
                                     "type": "resource",
@@ -7011,7 +7037,7 @@
                             }
                         },
                         "Keybearer Corpse (S-Dly)": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": false,
                             "coordinates": null,
                             "description": "",
@@ -7019,10 +7045,27 @@
                                 "default"
                             ],
                             "extra": {
-                                "hint_index": 68
+                                "hint_index": 68,
+                                "string_asset_id": 1489382579
                             },
-                            "string_asset_id": 1489382579,
-                            "lore_type": "specific-pickup",
+                            "kind": "specific-pickup",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {
                                 "Door to Temple Transport Access": {
                                     "type": "and",
@@ -7887,7 +7930,7 @@
                             }
                         },
                         "Lore Scan": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": false,
                             "coordinates": null,
                             "description": "",
@@ -7895,10 +7938,36 @@
                                 "default"
                             ],
                             "extra": {
-                                "translator": "Emerald"
+                                "translator": "Emerald",
+                                "string_asset_id": 1170414603
                             },
-                            "string_asset_id": 1170414603,
-                            "lore_type": "requires-item",
+                            "kind": "generic",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Emerald",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {
                                 "Door to Great Bridge": {
                                     "type": "and",
@@ -20671,7 +20740,7 @@
                             }
                         },
                         "Lore Scan": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": false,
                             "coordinates": null,
                             "description": "",
@@ -20679,10 +20748,36 @@
                                 "default"
                             ],
                             "extra": {
-                                "translator": "Emerald"
+                                "translator": "Emerald",
+                                "string_asset_id": 1422425996
                             },
-                            "string_asset_id": 1422425996,
-                            "lore_type": "requires-item",
+                            "kind": "generic",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Emerald",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {
                                 "Door to Torvus Grove": {
                                     "type": "and",
@@ -22745,7 +22840,7 @@
                             }
                         },
                         "Lore Scan": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": false,
                             "coordinates": null,
                             "description": "",
@@ -22753,10 +22848,36 @@
                                 "default"
                             ],
                             "extra": {
-                                "translator": "Emerald"
+                                "translator": "Emerald",
+                                "string_asset_id": 3529248034
                             },
-                            "string_asset_id": 3529248034,
-                            "lore_type": "requires-item",
+                            "kind": "generic",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Emerald",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {
                                 "Door to Controller Access": {
                                     "type": "and",

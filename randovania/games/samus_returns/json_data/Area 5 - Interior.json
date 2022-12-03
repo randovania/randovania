@@ -4093,7 +4093,7 @@
                     }
                 },
                 "Teleporter": {
-                    "node_type": "player_ship",
+                    "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
                         "x": -6755.826485649637,
@@ -4115,6 +4115,14 @@
                             "name": "Area 5 Interior Teleporter",
                             "amount": 1,
                             "negate": false
+                        }
+                    },
+                    "network": "default",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
                         }
                     },
                     "connections": {

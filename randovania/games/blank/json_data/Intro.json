@@ -914,7 +914,7 @@
                     }
                 },
                 "Hint with Translator": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 179.16,
@@ -926,10 +926,27 @@
                         "default"
                     ],
                     "extra": {
-                        "translator": "BlueKey"
+                        "translator": "BlueKey",
+                        "string_asset_id": 0
                     },
-                    "string_asset_id": 0,
-                    "lore_type": "requires-item",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "BlueKey",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Door to Explosive Depot": {
                             "type": "and",
@@ -941,7 +958,7 @@
                     }
                 },
                 "Hint no Translator": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 173.04,
@@ -952,9 +969,17 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "string_asset_id": 1,
-                    "lore_type": "generic",
+                    "extra": {
+                        "string_asset_id": 1
+                    },
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Explosive Depot": {
                             "type": "and",

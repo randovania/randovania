@@ -903,7 +903,7 @@
                     }
                 },
                 "Hint - Cthulhu": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 1734.0,
@@ -915,10 +915,17 @@
                         "default"
                     ],
                     "extra": {
-                        "event": "0310"
+                        "event": "0310",
+                        "string_asset_id": 6
                     },
-                    "string_asset_id": 6,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Lower Level": {
                             "type": "and",
@@ -1323,7 +1330,7 @@
                     }
                 },
                 "Hint - Numahachi 1": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 280.0,
@@ -1337,10 +1344,17 @@
                     "extra": {
                         "event": "0301",
                         "ending": "<CLR<EVE0302",
-                        "hint_index": 30
+                        "hint_index": 30,
+                        "string_asset_id": 12
                     },
-                    "string_asset_id": 12,
-                    "lore_type": "specific-pickup",
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Hint - Numahachi 2": {
                             "type": "and",
@@ -1352,7 +1366,7 @@
                     }
                 },
                 "Hint - Numahachi 2": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 278.8,
@@ -1366,10 +1380,17 @@
                     "extra": {
                         "event": "0302",
                         "ending": "<CLR<EVE0303",
-                        "hint_index": 31
+                        "hint_index": 31,
+                        "string_asset_id": 13
                     },
-                    "string_asset_id": 13,
-                    "lore_type": "specific-pickup",
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Passage?": {
                             "type": "and",

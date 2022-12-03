@@ -2432,7 +2432,7 @@
             },
             "nodes": {
                 "Teleporter": {
-                    "node_type": "player_ship",
+                    "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
                         "x": -679.5371354351164,
@@ -2454,6 +2454,14 @@
                             "name": "Area 4 East Teleporter",
                             "amount": 1,
                             "negate": false
+                        }
+                    },
+                    "network": "default",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
                         }
                     },
                     "connections": {

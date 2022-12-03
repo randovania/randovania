@@ -32,14 +32,14 @@ from randovania.game_description.world.dock import (
 from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.hint_node import HintNodeKind, HintNode
 from randovania.game_description.world.node import (
     GenericNode, Node,
     NodeLocation
 )
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -286,23 +286,10 @@ class WorldReader:
         self.dock_weakness_database = dock_weakness_database
         self.next_node_index = 0
 
-    def _get_scan_visor(self) -> ItemResourceInfo:
-        try:
-            return find_resource_info_with_long_name(
-                self.resource_database.item,
-                "Scan Visor"
-            )
-        except MissingResource:
+    def _get_item(self, item_name: str | None) -> ItemResourceInfo | None:
+        if item_name is None:
             return None
-
-    def _get_command_visor(self) -> ItemResourceInfo:
-        try:
-            return find_resource_info_with_long_name(
-                self.resource_database.item,
-                "Command Visor"
-            )
-        except MissingResource:
-            return None
+        return self.resource_database.get_item(item_name)
 
     def read_node(self, name: str, data: dict) -> Node:
         try:
@@ -368,33 +355,21 @@ class WorldReader:
                     **generic_args,
                 )
 
-            elif node_type == "logbook":
-                lore_type = LoreType(data["lore_type"])
+            elif node_type == "hint":
+                requirement_to_collect = read_requirement(data["requirement_to_collect"], self.resource_database)
 
-                if lore_type == LoreType.REQUIRES_ITEM:
-                    required_translator = self.resource_database.get_item(data["extra"]["translator"])
-                else:
-                    required_translator = None
-
-                if lore_type in {LoreType.SPECIFIC_PICKUP, LoreType.SKY_TEMPLE_KEY_HINT}:
-                    hint_index = data["extra"]["hint_index"]
-                else:
-                    hint_index = None
-
-                return LogbookNode(
+                return HintNode(
                     **generic_args,
-                    string_asset_id=data["string_asset_id"],
-                    scan_visor=self._get_scan_visor(),
-                    lore_type=lore_type,
-                    required_translator=required_translator,
-                    hint_index=hint_index,
+                    kind=HintNodeKind(data["kind"]),
+                    requirement_to_collect=requirement_to_collect,
                 )
 
-            elif node_type == "player_ship":
-                return PlayerShipNode(
+            elif node_type == "teleporter_network":
+                return TeleporterNetworkNode(
                     **generic_args,
                     is_unlocked=read_requirement(data["is_unlocked"], self.resource_database),
-                    item_to_summon=self._get_command_visor(),
+                    network=data["network"],
+                    requirement_to_activate=read_requirement(data["requirement_to_activate"], self.resource_database),
                 )
 
             else:

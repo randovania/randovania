@@ -940,7 +940,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 550.0,
@@ -956,10 +956,17 @@
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "weightactivatedplatform_access_000",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "hint_id": "SHIP_1"
+                        "hint_id": "SHIP_1",
+                        "string_asset_id": 11
                     },
-                    "string_asset_id": 11,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Entrance Tall Room": {
                             "type": "and",

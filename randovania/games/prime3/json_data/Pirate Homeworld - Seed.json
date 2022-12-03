@@ -46,7 +46,7 @@
                     }
                 },
                 "Samus Ship": {
-                    "node_type": "player_ship",
+                    "node_type": "teleporter_network",
                     "heal": true,
                     "coordinates": null,
                     "description": "",
@@ -61,6 +61,24 @@
                             "name": "Event111",
                             "amount": 1,
                             "negate": false
+                        }
+                    },
+                    "network": "default",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "CommandVisor",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     },
                     "connections": {
