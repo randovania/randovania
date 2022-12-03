@@ -16,7 +16,7 @@ class BackgroundTaskMixin:
 
     def _start_thread_for(self, target):
         randovania.games.prime2.patcher.csharp_subprocess.IO_LOOP = asyncio.get_event_loop()
-        self._background_thread = threading.Thread(target=target)
+        self._background_thread = threading.Thread(target=target, name=f"BackgroundThread for {self}")
         self._background_thread.start()
 
     def run_in_background_thread(self, target, starting_message: str):
