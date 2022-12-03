@@ -1820,7 +1820,7 @@
                     }
                 },
                 "Lore Scan": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -1828,10 +1828,36 @@
                         "default"
                     ],
                     "extra": {
-                        "translator": "Violet"
+                        "translator": "Violet",
+                        "string_asset_id": 3277287077
                     },
-                    "string_asset_id": 3277287077,
-                    "lore_type": "requires-item",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "Scan",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "Violet",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Door to Controller Transport": {
                             "type": "and",

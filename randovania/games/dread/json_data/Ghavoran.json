@@ -2647,7 +2647,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": -3950.0,
@@ -2663,10 +2663,17 @@
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "accesspoint_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "hint_id": "FOREST_1"
+                        "hint_id": "FOREST_1",
+                        "string_asset_id": 10
                     },
-                    "string_asset_id": 10,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Navigation Station Access": {
                             "type": "and",
