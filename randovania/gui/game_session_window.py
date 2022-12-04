@@ -7,7 +7,7 @@ import random
 from pathlib import Path
 from typing import Optional
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
@@ -38,6 +38,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
+from randovania.lib import json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog, GameSessionInventory
@@ -56,7 +57,7 @@ class PlayerWidget:
     tool: QtWidgets.QToolButton
     kick: QtGui.QAction
     promote: QtGui.QAction
-    open_tracker: QtWidgets.QMenu
+    open_tracker: QtGui.QAction
     abandon: QtGui.QAction
     move_up: QtGui.QAction
     move_down: QtGui.QAction
@@ -161,19 +162,27 @@ class RowWidget:
 
 
 class ItemTrackerDock(QtWidgets.QDockWidget):
-    def __init__(self, parent: QtWidgets.QWidget, title: str, tracker_details: dict,
+    def __init__(self, parent: QtWidgets.QWidget, title: str, tracker_layout: dict,
                  on_close):
         super().__init__(parent)
         self.on_close = on_close
 
-        self.item_tracker = ItemTrackerWidget(tracker_details)
-        self.item_tracker.update_state({})
         self.setWindowTitle(title)
+        self.item_tracker = ItemTrackerWidget(tracker_layout)
+        self.item_tracker.update_state({})
+        self.setWidget(self.item_tracker)
+
+    def change_tracker_layout(self, tracker_layout: dict):
+        self.widget().deleteLater()
+        current_state = self.item_tracker.current_state
+        self.item_tracker = ItemTrackerWidget(tracker_layout)
+        self.item_tracker.update_state(current_state)
         self.setWidget(self.item_tracker)
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         self.on_close()
         return super().closeEvent(event)
+
 
 
 _PRESET_COLUMNS = 3
@@ -378,7 +387,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         finally:
             for d in [self.players_dock, self.game_dock, self.observers_dock, self.history_dock]:
                 d.close()
-            for d in self.tracker_docks.values():
+            for d in list(self.tracker_docks.values()):
                 d.close()
             super().closeEvent(event)
         self.has_closed = True
@@ -646,7 +655,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             tool=tool_button,
             kick=QtGui.QAction(tool_button_menu),
             promote=QtGui.QAction(tool_button_menu),
-            open_tracker=QtWidgets.QMenu(tool_button_menu),
+            open_tracker=QtGui.QAction(tool_button_menu),
             abandon=QtGui.QAction(tool_button_menu),
             move_up=QtGui.QAction(tool_button_menu),
             move_down=QtGui.QAction(tool_button_menu),
@@ -665,12 +674,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         tool_button_menu.addAction(widget.promote)
 
         if not is_observer:
-            widget.open_tracker.setTitle("Open tracker")
-            widget.open_tracker.aboutToShow.connect(functools.partial(self._about_to_show_item_tracker_menu,
-                                                                      row_id, widget))
+            widget.open_tracker.setText("Open tracker")
             widget.open_tracker.triggered.connect(functools.partial(self._selected_item_tracker_menu, row_id))
-            widget.open_tracker.addAction("You should not see this")
-            tool_button_menu.addMenu(widget.open_tracker)
+            tool_button_menu.addAction(widget.open_tracker)
 
             widget.abandon.setText("Abandon (NYI)")
             widget.abandon.triggered.connect(player_action(SessionAdminUserAction.ABANDON, None))
@@ -1373,22 +1379,50 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 widget.open_tracker.addAction(name).setData(self._trackers[preset.game][name])
 
     def _on_close_item_tracker(self, row_id: int):
-        self.tracker_docks.pop(row_id)
+        self.removeDockWidget(self.tracker_docks.pop(row_id))
         asyncio.run_coroutine_threadsafe(
             self.network_client.session_track_inventory(row_id, False),
             asyncio.get_event_loop()
         )
 
-    def _selected_item_tracker_menu(self, row_id: int, action: QtGui.QAction):
-        tracker_path: Path = action.data()
+    def _item_tracker_menu_requested(self, pos: QtCore.QPoint, row_id: int):
+        preset = self._game_session.presets[row_id]
 
-        with tracker_path.open("r") as tracker_details_file:
-            tracker_details = json.load(tracker_details_file)
+        menu = QtWidgets.QMenu(self.tracker_docks[row_id])
+
+        for name in sorted(self._trackers[preset.game].keys()):
+            menu.addAction(name).setData(self._trackers[preset.game][name])
+
+        action = menu.exec(QtGui.QCursor.pos())
+        if action is None:
+            return
+        self.tracker_docks[row_id].change_tracker_layout(json_lib.read_path(action.data()))
+
+    @asyncSlot(int)
+    async def _selected_item_tracker_menu(self, row_id: int):
+        preset = self._game_session.presets[row_id]
+
+        if row_id in self.tracker_docks:
+            return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
+                                            "Tracker Open", "Tracker already open for this row.")
+        elif preset.game not in self._trackers:
+            return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
+                                            "Unsupported Game", f"No tracker available for {preset.game.long_name}")
+
+        tracker_path: Path | None = None
+        for tracker_path in self._trackers[preset.game].values():
+            break
+        assert tracker_path is not None
 
         item_tracker = ItemTrackerDock(
-            self, self.team_players[row_id].player.name, tracker_details,
+            self, f"Tracker: {self.team_players[row_id].player.name}", json_lib.read_path(tracker_path),
             lambda: self._on_close_item_tracker(row_id)
         )
+        item_tracker.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        item_tracker.customContextMenuRequested.connect(functools.partial(
+            self._item_tracker_menu_requested,
+            row_id=row_id,
+        ))
         self.addDockWidget(Qt.TopDockWidgetArea, item_tracker)
         item_tracker.setFloating(True)
 

@@ -40,6 +40,7 @@ class Element:
 
 class ItemTrackerWidget(QtWidgets.QGroupBox):
     give_item_signal = QtCore.Signal(PickupEntry)
+    current_state: dict[ItemResourceInfo, InventoryItem]
 
     def __init__(self, tracker_config: dict):
         super().__init__()
@@ -102,6 +103,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
         self._layout.addItem(self.inventory_spacer, self._layout.rowCount(), self._layout.columnCount())
 
     def update_state(self, inventory: dict[ItemResourceInfo, InventoryItem]):
+        self.current_state = inventory
         for element in self.tracker_elements:
             if len(element.labels) > 1:
                 satisfied = False
