@@ -146,10 +146,13 @@ def _emit_inventory_update(membership: GameSessionMembership):
     flask_socketio.emit("game_session_binary_inventory", (session_id, membership.row, membership.inventory),
                         room=f"game-session-{session_id}-binary-inventory",
                         namespace="/")
-    flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
-                                                        BinaryInventory.parse(membership.inventory)),
-                        room=f"game-session-{session_id}-json-inventory",
-                        namespace="/")
+    try:
+        flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
+                                                            BinaryInventory.parse(membership.inventory)),
+                            room=f"game-session-{session_id}-json-inventory",
+                            namespace="/")
+    except construct.ConstructError as e:
+        logger().warning("Unable to encode inventory for session %d, row %d: %s", session_id, membership.row, str(e))
 
 
 def _emit_session_meta_update(session: GameSession):
