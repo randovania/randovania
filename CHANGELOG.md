@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - **Major** - Added: Door locks can now be randomized.
+- TODO: add changes for ODR 1.2.4 and MEDS 0.18.0 (possibly graphical fix)
 
 ## [5.2.1] - 2022-12-01
 
