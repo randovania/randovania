@@ -5428,34 +5428,26 @@
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "or",
                                         "data": {
-                                            "comment": "To get Out of Bounds",
+                                            "comment": "To clip Out of Bounds",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MeleeClip",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "MeleeClip",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -5490,7 +5482,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "To reach the Dock",
+                                            "comment": "To reach the dock",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5507,8 +5499,13 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Lay Bomb"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -5523,6 +5520,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     }
                                 ]

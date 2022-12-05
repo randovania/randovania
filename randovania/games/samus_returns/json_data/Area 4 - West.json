@@ -84,8 +84,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 7401.775826388501,
-                        "y": -1093.5930421164494,
+                        "x": 7400.265674814028,
+                        "y": -1067.7470775770453,
                         "z": 0.0
                     },
                     "description": "",
@@ -121,8 +121,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 7735.370173574212,
-                        "y": 950.9564293304998,
+                        "x": 7735.015940488842,
+                        "y": 892.9330499468651,
                         "z": 0.0
                     },
                     "description": "",
@@ -231,8 +231,37 @@
                             }
                         },
                         "Door to Roundabout": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SpiderClip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -683,8 +712,51 @@
                     "major_location": true,
                     "connections": {
                         "Door to Moheek Hallway": {
-                            "type": "template",
-                            "data": "Climb Rooms Vertically (High Jump)"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Cross Rooms Horizontally (High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -856,8 +928,8 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Super Missile Tank)": {
-                            "type": "and",
+                        "Hang Ledge": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -865,16 +937,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
+                                            "name": "Space",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -886,6 +949,27 @@
                                             "name": "Phase",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -916,6 +1000,121 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Hang Ledge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9567.662897145934,
+                        "y": 3431.9960509782804,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Phase",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spider",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -991,13 +1190,36 @@
                                         }
                                     },
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -1008,35 +1230,34 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Morph",
+                                                                    "name": "Gravity",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Grapple",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Space",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -1290,15 +1511,6 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "DNA4L",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
                                             "name": "Area 4 (West) - Transport Area Grapple Block Pull Right",
                                             "amount": 1,
                                             "negate": false
@@ -1313,8 +1525,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 10669.756554307116,
-                        "y": -4049.4850187265915,
+                        "x": 10692.48788368336,
+                        "y": -4030.102315562736,
                         "z": 0.0
                     },
                     "description": "",
@@ -1447,25 +1659,15 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -1728,8 +1930,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 14773.26013709771,
-                        "y": -6222.133147438133,
+                        "x": 14801.265481960152,
+                        "y": -6225.848142164782,
                         "z": 0.0
                     },
                     "description": "",
@@ -1747,14 +1949,19 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
                                             "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 4 (West) - Transport Area Grapple Block Pull Right",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1911,10 +2118,6 @@
                                     {
                                         "type": "template",
                                         "data": "Destroy Bomb Block"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
                                     }
                                 ]
                             }
@@ -1925,8 +2128,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8146.84050772627,
-                        "y": -1034.5405629139073,
+                        "x": 8138.6375875067315,
+                        "y": -976.7905223478731,
                         "z": 0.0
                     },
                     "description": "",
@@ -1960,8 +2163,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8146.84050772627,
-                        "y": -2567.7221302428256,
+                        "x": 8148.061389337641,
+                        "y": -2522.2940226171245,
                         "z": 0.0
                     },
                     "description": "",
@@ -1999,8 +2202,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 11530.260253282213,
-                        "y": -6943.929359823401,
+                        "x": 11540.630048465267,
+                        "y": -6923.209477652127,
                         "z": 0.0
                     },
                     "description": "",
@@ -2038,8 +2241,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8888.996749004951,
-                        "y": -5922.624798711756,
+                        "x": 8901.965535810446,
+                        "y": -5924.28648357566,
                         "z": 0.0
                     },
                     "description": "",
@@ -2072,8 +2275,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 17254.040404040403,
-                        "y": -7338.888888888889,
+                        "x": 17232.60635433495,
+                        "y": -7290.73774905762,
                         "z": 0.0
                     },
                     "description": "",
@@ -2122,8 +2325,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 14099.703764469967,
-                        "y": -7326.325464102331,
+                        "x": 14085.056542810986,
+                        "y": -7290.73774905762,
                         "z": 0.0
                     },
                     "description": "",
@@ -2271,8 +2474,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 15554.271631982476,
-                        "y": -5170.335889010587,
+                        "x": 15602.288637587506,
+                        "y": -5189.229940764674,
                         "z": 0.0
                     },
                     "description": "",
@@ -3293,10 +3496,6 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -3506,13 +3705,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
                                     },
                                     {
                                         "type": "resource",
@@ -3524,8 +3718,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -3809,10 +4020,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
                                     },
                                     {
                                         "type": "resource",
@@ -4310,13 +4517,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
                                     },
                                     {
                                         "type": "or",
@@ -4324,21 +4526,80 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Charge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Space",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Simple IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Spiderspark"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4765,11 +5026,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Chozo Seals": {
+                        "Next to Acid Pool": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -4778,10 +5043,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Spiderspark"
                                     }
                                 ]
                             }
@@ -4811,11 +5072,40 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Next to Acid Pool": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Next to Acid Pool": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17626.803984921917,
+                        "y": -8360.46042003231,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
                         "Door to Transport to Area 5 Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -4826,8 +5116,141 @@
                                         }
                                     },
                                     {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBJ",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FrozenEnemy",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Chozo Seals": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (No High Jump)"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5125,12 +5548,64 @@
                     "extra": {},
                     "connections": {
                         "Elevator to Area 5 Entrance - Chozo Seal": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FrozenEnemy",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MeleeClip",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Chozo Seals": {
