@@ -38,7 +38,7 @@ Extra - asset_id: collision_camera_013
   > Tunnel to Gamma Arena Lower Room 2
       All of the following:
           Morph Ball
-          Grapple Beam or Space Jump
+          Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
 
 > Tunnel to Gamma Arena Lower Room 2; Heals? False
   * Layers: default
@@ -67,7 +67,13 @@ Extra - asset_id: collision_camera_014
   > Pickup (Energy Tank)
       Destroy Bomb Block
   > Door to Transport to Area 3 Interior West
-      Climb/Traverse Rooms (No High Jump)
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          All of the following:
+              High Jump Boots
+              Any of the following:
+                  Super Jump (Advanced)
+                  Morph Ball and Unmorph Extend (Beginner)
 
 > Door to Transport to Area 3 Interior West; Heals? False
   * Layers: default
@@ -88,7 +94,11 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_supermissiletank
   > Door to Gamma Awakening Access
-      Destroy Bomb Block
+      Any of the following:
+          Destroy Bomb Block
+          All of the following:
+              Destroy Missile Block
+              Movement (Intermediate) or Shoot Wave Beam
 
 > Door to Gamma Awakening Access; Heals? False
   * Layers: default
@@ -98,7 +108,7 @@ Extra - asset_id: collision_camera_015
   > Pickup (Super Missile Tank)
       Any of the following:
           Lay Power Bomb
-          Missile and Morph Ball
+          Morph Ball and Destroy Missile Block
 
 ----------------
 Double Back
@@ -138,7 +148,7 @@ Extra - asset_id: collision_camera_017
 > Room Center; Heals? False
   * Layers: default
   > Tunnel to Transport to Area 3 Exterior
-      Morph Ball and Climb/Traverse Rooms (High Jump)
+      Morph Ball
   > Tunnel to Main Shaft (Bottom)
       After Area 3 (Interior East) - Double Back Grapple Block Right and Destroy Bomb Block
   > Event - Grapple Block Left
@@ -161,15 +171,19 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyCharge001
   * Extra - actor_type: weightactivatedplatform
+  > Door to Transport to Area 3 Exterior
+      Trivial
   > Door to Mini-Shaft East
       Trivial
+  > Door to Mini-Shaft West
+      Morph Ball
 
 > Door to Transport to Area 3 Exterior; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Area 3 Exterior/Door to Main Shaft
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
-  > Door to Mini-Shaft East
+  > Energy Recharge Station
       Trivial
   > Tunnel to Double Back (Top)
       Morph Ball and After Area 3 (Exterior) - Outer Hub Access Grapple Block Left
@@ -181,17 +195,13 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: doorpowerpower
   > Energy Recharge Station
       Trivial
-  > Door to Transport to Area 3 Exterior
-      Climb/Traverse Rooms (No High Jump)
-  > Door to Mini-Shaft West
-      Morph Ball
 
 > Door to Mini-Shaft West; Heals? False
   * Layers: default
   * Power Beam Door to Mini-Shaft West/Door to Main Shaft
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Door to Mini-Shaft East
+  > Energy Recharge Station
       Morph Ball
 
 > Tunnel to Double Back (Bottom); Heals? False
@@ -207,7 +217,7 @@ Extra - asset_id: collision_camera_018
       Morph Ball
 
 ----------------
-Teleporter Dead-End
+Dead-End Teleporter
 Extra - total_boundings: {'x1': 1300.0, 'x2': 3600.0, 'y1': 7000.0, 'y2': 7758.41015625}
 Extra - polygon: [[1300.0, 7758.41015625], [1300.0, 7000.0], [3600.0, 7000.0], [3600.0, 7758.41015625]]
 Extra - asset_id: collision_camera_019
@@ -221,7 +231,7 @@ Extra - asset_id: collision_camera_019
 
 > Door to Teleporter Access; Heals? False
   * Layers: default
-  * Charge Beam Door to Teleporter Access/Door to Teleporter Dead-End
+  * Charge Beam Door to Teleporter Access/Door to Dead-End Teleporter
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
   > Teleporter
@@ -274,16 +284,45 @@ Extra - asset_id: collision_camera_022
   * Charge Beam Door to Fiery Path Access/Door to Fiery Path
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
-  > Door to Alpha Arena
-      Grapple Beam and Morph Ball and Spider Ball and Varia Suit
+  > Above Lava Pits
+      Any of the following:
+          Gravity Suit
+          All of the following:
+              Varia Suit
+              Any of the following:
+                  Grapple Beam or Space Jump
+                  Movement (Beginner) and Can Spiderspark
 
 > Door to Alpha Arena; Heals? False
   * Layers: default
   * Power Beam Door to Alpha Arena/Door to Fiery Path
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
+  > Above Lava Pits
+      All of the following:
+          Morph Ball and Varia Suit
+          Any of the following:
+              Climb Rooms Vertically (No High Jump)
+              All of the following:
+                  High Jump Boots
+                  Super Jump (Advanced) or Unmorph Extend (Beginner)
+
+> Above Lava Pits; Heals? False
+  * Layers: default
   > Door to Fiery Path Access
-      Grapple Beam and Morph Ball and Spider Ball and Varia Suit
+      Any of the following:
+          Gravity Suit
+          All of the following:
+              Varia Suit
+              Any of the following:
+                  Grapple Beam or Space Jump
+                  Movement (Beginner) and Can Spiderspark
+  > Door to Alpha Arena
+      All of the following:
+          Morph Ball and Varia Suit
+          Any of the following:
+              Grapple Beam or Climb Rooms Vertically (No High Jump)
+              Damage Boost (Intermediate) and Unmorph Extend (Intermediate)
 
 ----------------
 Transport to Area 3 Interior West
@@ -294,6 +333,8 @@ Extra - asset_id: collision_camera_023
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge001
   * Extra - actor_type: weightactivatedplatform
+  > Door to Gamma Arena Lower Room 1
+      Trivial
   > Door to Fiery Path Access
       Trivial
 
@@ -314,21 +355,25 @@ Extra - asset_id: collision_camera_023
   > Door to Gamma Arena Lower Room 1
       Morph Ball
   > Tunnel to Gamma Awakening (Bottom)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
   > Inside Arena
-      Morph Ball and Climb/Traverse Rooms (No High Jump)
+      Morph Ball and Climb Rooms Vertically (No High Jump)
 
 > Door to Gamma Arena Lower Room 1; Heals? False
   * Layers: default
   * Wave Beam Door to Gamma Arena Lower Room 1/Door to Transport to Area 3 Interior West
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Any of the following:
+          Grapple Beam or Gravity Suit or Space Jump or Can Spiderspark
+          Underwater Bomb Jump (Intermediate) and Lay Bomb
   > Elevator to Area 3 Interior West - Transport to Area 3 Interior East
       Morph Ball and After Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block
   > Save Station
       Morph Ball
-  > Door to Fiery Path Access
-      Grapple Beam or Gravity Suit
 
 > Door to Fiery Path Access; Heals? False
   * Layers: default
@@ -336,8 +381,6 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
-      Trivial
-  > Door to Gamma Arena Lower Room 1
       Trivial
 
 > Tunnel to Gamma Awakening (Bottom); Heals? False
@@ -369,12 +412,16 @@ Extra - asset_id: collision_camera_023
   > Save Station
       All of the following:
           Morph Ball
-          Grapple Beam or Space Jump
+          Any of the following:
+              Grapple Beam or Space Jump or Simple IBJ
+              Movement (Beginner) and Can Spiderspark
           Before Area 3 (Interior East) - Gamma Metroid Upper Awakened or After Area 3 (Interior East) - Gamma Metroid Upper
   > Tunnel to Gamma Awakening (Top)
       All of the following:
-          Morph Ball and After Area 3 (Interior East) - Gamma Metroid Upper
-          Grapple Beam or Space Jump
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Space Jump or Simple IBJ
+              Movement (Beginner) and Can Spiderspark
   > Event - Gamma Metroid
       After Area 3 (Interior East) - Gamma Metroid Upper Awakened and Defeat Gamma Metroid
 
@@ -397,7 +444,7 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Door to Main Shaft
-      Climb/Traverse Rooms (No High Jump)
+      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 ----------------
 Gamma Awakening Access
@@ -419,8 +466,12 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_type: doorpowerpower
   > Door to Fan Puzzle Room
       Any of the following:
-          Can Spiderspark
-          Morph Ball and Space Jump
+          Movement (Beginner) and Can Spiderspark
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+                  Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
   > Door to Gamma Awakening
       Trivial
 
@@ -443,7 +494,7 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Room Center
-      Trivial
+      Varia Suit
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -466,7 +517,7 @@ Extra - asset_id: collision_camera_026
   > Pickup (Super Missile Tank)
       All of the following:
           Grapple Beam and Gravity Suit and Super Missile
-          High Jump Boots or Space Jump
+          High Jump Boots or Space Jump or Can Spiderspark or Simple IBJ
   > Event - Alpha Metroid
       Varia Suit and Defeat Alpha Metroid
 
@@ -498,11 +549,16 @@ Extra - asset_id: collision_camera_027
 > Room Center; Heals? False
   * Layers: default
   > Door to Gamma Storage
-      Morph Ball and After Area 3 (Interior East) - Gamma Metroid Lower and Climb/Traverse Rooms (High Jump)
+      All of the following:
+          After Area 3 (Interior East) - Gamma Metroid Lower
+          Any of the following:
+              Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Beginner)
+              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
   > Tunnel to Gamma Arena Lower Room 1
       All of the following:
           Morph Ball and After Area 3 (Interior East) - Gamma Metroid Lower
-          Grapple Beam or Space Jump
+          Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
   > Event - Gamma Metroid
       Defeat Gamma Metroid
 
@@ -525,27 +581,27 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Door to Main Shaft
-      Climb/Traverse Rooms (No High Jump)
+      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 ----------------
 Teleporter Access
 Extra - total_boundings: {'x1': 3500.0, 'x2': 5900.0, 'y1': 6900.0, 'y2': 9400.0}
 Extra - polygon: [[3500.0, 9400.0], [3500.0, 6900.0], [5900.0, 6900.0], [5900.0, 9400.0]]
 Extra - asset_id: collision_camera_029
-> Door to Teleporter Dead-End; Heals? False
+> Door to Dead-End Teleporter; Heals? False
   * Layers: default
-  * Charge Beam Door to Teleporter Dead-End/Door to Teleporter Access
+  * Charge Beam Door to Dead-End Teleporter/Door to Teleporter Access
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
   > Door to Mini-Shaft West
-      Climb/Traverse Rooms (No High Jump)
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 > Door to Mini-Shaft West; Heals? False
   * Layers: default
   * Power Beam Door to Mini-Shaft West/Door to Teleporter Access
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Door to Teleporter Dead-End
+  > Door to Dead-End Teleporter
       Trivial
 
 ----------------
@@ -566,7 +622,8 @@ Extra - asset_id: collision_camera_030
   * Tunnel to Transport to Area 3 Interior West/Tunnel to Gamma Awakening (Bottom)
   > Event - Gamma Awakened
       All of the following:
-          Morph Ball and Climb/Traverse Rooms (High Jump)
+          Morph Ball
+          Movement (Intermediate) or Climb Rooms Vertically (High Jump)
           Lighting Armor or Destroy Bomb Block
 
 > Tunnel to Transport to Area 3 Interior West (Top); Heals? False

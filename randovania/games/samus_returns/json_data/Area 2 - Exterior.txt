@@ -33,15 +33,17 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: LE_Platform_Elevator_FromArea02C
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Missile Tank)
-      Space Jump or Can Spiderspark
+      Any of the following:
+          Space Jump or Can Spiderspark
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
   > Save Station Right
       Trivial
   > Door to Split Pathways
       Trivial
   > Tunnel to Split Pathways
       Morph Ball
-  > Above Wall
-      Space Jump or Can Spiderspark
+  > Top of Wall
+      Space Jump or Can Spiderspark or Simple IBJ
 
 > Save Station Left; Heals? False
   * Layers: default
@@ -70,8 +72,8 @@ Extra - asset_id: collision_camera_005
   * Missile Door to Arachnus Arena/Door from Outer Hub
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Above Wall
-      Trivial
+  > Top of Wall
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 > Door to Outer Hub Shaft (Bottom); Heals? False
   * Layers: default
@@ -99,9 +101,11 @@ Extra - asset_id: collision_camera_005
   > Save Station Left
       Trivial
   > Door to Alpha+ Arena North
-      Climb/Traverse Rooms (No High Jump)
-  > Above Wall
-      Climb/Traverse Rooms (No High Jump)
+      Any of the following:
+          Space Jump or Can Spiderspark or Simple IBJ
+          Lighting Armor and Spider Ball
+  > Top of Wall
+      Climb Rooms Vertically (No High Jump)
 
 > Door from Arachnus Exit; Heals? False
   * Layers: default
@@ -139,7 +143,7 @@ Extra - asset_id: collision_camera_005
   > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
       Morph Ball
 
-> Above Wall; Heals? False
+> Top of Wall; Heals? False
   * Layers: default
   > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
       Trivial
@@ -200,10 +204,8 @@ Extra - asset_id: collision_camera_007
   * Tunnel with Bomb Block to Arachnus Arena/Tunnel to Spring Ball Tutorial
   > Tunnel to Arachnus Exit
       Any of the following:
-          Spider Ball and Spring Ball and Destroy Bomb Block
-          All of the following:
-              Lay Power Bomb
-              High Jump Boots or Space Jump
+          Lay Power Bomb
+          Spring Ball and Lay Bomb
 
 > Tunnel to Arachnus Exit; Heals? False
   * Layers: default
@@ -221,18 +223,18 @@ Extra - asset_id: collision_camera_008
   * Pickup 35; Major Location? False
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
-  > Door to Rock Icicle Path
-      Baby Metroid and Climb/Traverse Rooms (No High Jump)
   > Tunnel to Outer Hub
       Morph Ball
+  > Below Baby Blocks
+      Baby Metroid
 
 > Door to Outer Hub; Heals? False
   * Layers: default
   * Power Beam Door to Outer Hub/Door to Split Pathways
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Door to Rock Icicle Path
-      Climb/Traverse Rooms (No High Jump)
+  > Below Baby Blocks
+      Morph Ball
 
 > Door to Alpha Arena North; Heals? False
   * Layers: default
@@ -248,10 +250,10 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
-      Baby Metroid
-  > Door to Outer Hub
-      Morph Ball
+      Baby Metroid and Movement (Beginner)
   > Door to Alpha Arena North
+      Trivial
+  > Below Baby Blocks
       Trivial
 
 > Tunnel to Outer Hub; Heals? False
@@ -259,6 +261,25 @@ Extra - asset_id: collision_camera_008
   * Tunnel to Outer Hub/Tunnel to Split Pathways
   > Pickup (Missile Tank)
       Destroy Bomb Block
+
+> Below Baby Blocks; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Spider Ball
+                      Bomb and Infinite Bomb Jump (Intermediate)
+              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+  > Door to Outer Hub
+      Trivial
+  > Door to Rock Icicle Path
+      Any of the following:
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
 
 ----------------
 Outer Hub Shaft
@@ -347,9 +368,13 @@ Extra - asset_id: collision_camera_024
   * Layers: default
   * Tunnel to Outer Hub Shaft/Tunnel to Grapple Gap (Bottom)
   > Pickup (Aeion Tank)
-      Can Spiderspark
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          Spiderspark (Beginner) and Can Spiderspark
   > Tunnel to Outer Hub Shaft (Top)
-      Climb/Traverse Rooms (No High Jump) and Destroy Bomb Block
+      All of the following:
+          Destroy Bomb Block
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
 
 > Tunnel to Outer Hub Shaft (Top); Heals? False
   * Layers: default
@@ -411,7 +436,7 @@ Extra - asset_id: collision_camera_027
   > Door to Alpha Arena West
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation003
   * Extra - actor_type: weightactivatedplatform
@@ -484,9 +509,29 @@ Extra - asset_id: collision_camera_028
 > Room Center; Heals? False
   * Layers: default
   > Door to Hot Split
-      After Area 2 (Exterior) - Alpha Metroid West
+      All of the following:
+          After Area 2 (Exterior) - Alpha Metroid West
+          Any of the following:
+              High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Diagonal Bomb Jump (Beginner)
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Spring Ball or Mid-Air Morph (Intermediate)
   > Door to Alpha Shaft
-      After Area 2 (Exterior) - Alpha Metroid West
+      All of the following:
+          After Area 2 (Exterior) - Alpha Metroid West
+          Any of the following:
+              High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Diagonal Bomb Jump (Beginner)
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Spring Ball or Mid-Air Morph (Intermediate)
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -557,7 +602,9 @@ Extra - asset_id: collision_camera_031
   > Tunnel to Alpha Arena South
       Any of the following:
           Lay Power Bomb
-          Spring Ball and Lay Bomb
+          All of the following:
+              Lay Bomb
+              Spring Ball or Movement (Intermediate)
 
 ----------------
 Fiery Crossing
@@ -566,7 +613,7 @@ Extra - polygon: [[-18600.0, -7000.0], [-18600.0, -8200.0], [-15600.0, -8200.0],
 Extra - asset_id: collision_camera_032
 > Teleporter; Heals? False
   * Layers: default
-  * Teleporter Network (Unlocked by After Area 2 (Exterior) - Alpha Metroid+ Heat)
+  * Teleporter Network (Unlocked by After Area 2 (Exterior) - Teleporter Unlocked (Heat))
   * Extra - actor_name: LE_Platform_Teleporter_02_03
   * Extra - actor_type: weightactivatedplatform
   > Below Pickup
@@ -585,8 +632,10 @@ Extra - asset_id: collision_camera_032
   * Power Beam Door to Alpha+ Arena Heated/Door to Fiery Crossing
   * Extra - actor_name: Door022
   * Extra - actor_type: doorpowerpower
-  > Below Pickup
-      Missile and Varia Suit
+  > Right of Missile Block
+      All of the following:
+          Varia Suit
+          Gravity Suit or Ice Beam or Morph Ball or Space Jump
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -608,14 +657,31 @@ Extra - asset_id: collision_camera_032
       Varia Suit and After Area 2 (Exterior) - Teleporter Unlocked (Heat)
   > Door to Hot Split
       Varia Suit
-  > Door to Alpha+ Arena Heated
-      All of the following:
-          High Jump Boots and Missile and Varia Suit
-          Ice Beam or Spider Ball
   > Pickup (Missile Tank)
-      Bomb and Beam Burst and Morph Ball and Varia Suit
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Knowledge (Beginner) and Lay Power Bomb
+              Lay Bomb and Shoot Beam Burst
   > Event - Teleporter Unlocked
       Trivial
+  > Right of Missile Block
+      All of the following:
+          Destroy Missile Block
+          Any of the following:
+              High Jump Boots or Space Jump
+              Mid-Air Morph (Intermediate) and Lay Bomb
+
+> Right of Missile Block; Heals? False
+  * Layers: default
+  > Door to Alpha+ Arena Heated
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Gravity Suit or Ice Beam or Space Jump or Use Spider Ball
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+  > Below Pickup
+      Destroy Missile Block
 
 ----------------
 Alpha+ Arena North
@@ -647,7 +713,7 @@ Extra - asset_id: collision_camera_033
 > Room Bottom; Heals? False
   * Layers: default
   > Door to Alpha+ Storage
-      After Area 2 (Exterior) - Alpha Metroid+ North and Climb/Traverse Rooms (High Jump)
+      After Area 2 (Exterior) - Alpha Metroid+ North
   > Door to Outer Hub
       After Area 2 (Exterior) - Alpha Metroid+ North
   > Event - Alpha Metroid+
@@ -668,15 +734,20 @@ Extra - asset_id: collision_camera_034
 
 > Door to Alpha+ Arena North; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha+ Arena North/Door to Alpha+ Storage
+  * Super Missile Door to Alpha+ Arena North/Door to Alpha+ Storage
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Pickup (Super Missile Tank)
       All of the following:
-          Destroy Bomb Block
           Any of the following:
-              Space Jump
-              High Jump Boots and Phase Drift
+              # Reaching the pickup
+              Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Any of the following:
+              # Collecting the pickup
+              Lay Bomb
+              All of the following:
+                  Lay Power Bomb
+                  Phase Drift or Space Jump
 
 ----------------
 Alpha+ Arena Heated
@@ -748,7 +819,7 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: Door014
   * Extra - actor_type: doorclosedpower
   > Tunnel to Spring Ball Tutorial
-      Morph Ball
+      Destroy Bomb Block
 
 > Tunnel to Spring Ball Tutorial; Heals? False
   * Layers: default
@@ -791,5 +862,12 @@ Extra - asset_id: collision_camera_040
   * Layers: default
   * Event Area 2 (Exterior) - Alpha Metroid South
   > Tunnel to Alpha Arena South Access
-      Climb/Traverse Rooms (High Jump) and Destroy Bomb Block
+      Any of the following:
+          Spider Ball and Destroy Bomb Block
+          Infinite Bomb Jump (Beginner) and Lay Bomb
+          All of the following:
+              Any of the following:
+                  Lay Power Bomb
+                  Mid-Air Morph (Beginner) and Lay Bomb
+              High Jump Boots or Space Jump or Single-wall Wall Jump (Beginner) or Unmorph Extend (Beginner)
 

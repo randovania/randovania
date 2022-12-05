@@ -24,7 +24,11 @@ Extra - asset_id: collision_camera009
   * Extra - actor_name: LE_Platform_SaveStation
   * Extra - actor_type: weightactivatedplatform
   > Elevator to Area 2 Exterior - Outer Hub
-      Climb/Traverse Rooms (High Jump)
+      Any of the following:
+          Super Jump (Intermediate) or Can Spiderspark or Climb Rooms Vertically (High Jump)
+          Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+          Morph Ball and Unmorph Extend (Beginner)
+          Phase Drift and Mid-Air Morph (Intermediate) and Use Spider Ball
   > Door to Fiery Path
       Trivial
   > Door to Fiery Balcony
@@ -32,7 +36,7 @@ Extra - asset_id: collision_camera009
   > Door to Varia Suit Room (Bottom)
       Morph Ball
   > Door to Varia Suit Room (Top)
-      Morph Ball and Climb/Traverse Rooms (High Jump)
+      Lighting Armor and Morph Ball and Stand on Frozen Enemy (Beginner) and Single-wall Wall Jump (Intermediate) and Climb Rooms Vertically (High Jump) and Fully Freeze Enemy
 
 > Door to Fiery Path; Heals? False
   * Layers: default
@@ -67,6 +71,8 @@ Extra - asset_id: collision_camera009
   * Extra - actor_type: doorclosedpower
   > Save Station
       Morph Ball
+  > Door to Varia Suit Room (Middle)
+      Morph Ball and Melee Clip (Intermediate)
 
 > Door to Varia Suit Room (Middle); Heals? False
   * Layers: default
@@ -101,6 +107,8 @@ Extra - asset_id: collision_camera011
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge
   * Extra - actor_type: weightactivatedplatform
+  > Pickup (Varia Suit)
+      Morph Ball and Spider Ball Clip (Advanced)
   > Door to Main Hub (Bottom)
       Trivial
   > Door to Main Hub (Middle)
@@ -151,8 +159,10 @@ Extra - asset_id: collision_camera011
   * Power Beam Door to Teleporter Shaft Access/Door to Varia Suit Room
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Door to Main Hub (Top)
-      Trivial
+  > Right Shaft
+      Any of the following:
+          Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Beginner)
 
 > Door to Gamma Arena; Heals? False
   * Layers: default
@@ -160,14 +170,21 @@ Extra - asset_id: collision_camera011
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Bottom of Morph Ball Shaft
-      Spider Ball and Destroy Bomb Block and Shoot Missiles
+      All of the following:
+          Destroy Missile Block
+          Any of the following:
+              Destroy Bomb Block and Use Spider Ball
+              Phase Drift and Lay Power Bomb
+              All of the following:
+                  Phase Drift and Lay Bomb
+                  Spring Ball or Mid-Air Morph (Intermediate)
 
 > Door to Main Hub (Top); Heals? False
   * Layers: default
   * Wave Beam Door to Main Hub/Door to Varia Suit Room (Top)
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
-  > Door to Teleporter Shaft Access
+  > Right Shaft
       Trivial
 
 > Pickup (Super Missile Tank); Heals? False
@@ -182,11 +199,11 @@ Extra - asset_id: collision_camera011
   * Layers: default
   > Door to Wallfire Path
       Screw Attack
-  > Door to Teleporter Shaft Access
-      Screw Attack
   > Pickup (Super Missile Tank)
       Destroy Bomb Block
   > Bottom of Morph Ball Shaft
+      Screw Attack
+  > Right Shaft
       Screw Attack
 
 > Bottom of Morph Ball Shaft; Heals? False
@@ -194,9 +211,7 @@ Extra - asset_id: collision_camera011
   > Door to Gamma Arena
       Destroy Bomb Block
   > Top of Morph Ball Shaft
-      All of the following:
-          Morph Ball
-          Space Jump or Spider Ball
+      Morph Ball and Climb Rooms Vertically (No High Jump)
 
 > Top of Morph Ball Shaft; Heals? False
   * Layers: default
@@ -206,6 +221,15 @@ Extra - asset_id: collision_camera011
       Screw Attack
   > Bottom of Morph Ball Shaft
       Trivial
+
+> Right Shaft; Heals? False
+  * Layers: default
+  > Door to Teleporter Shaft Access
+      Trivial
+  > Door to Main Hub (Top)
+      Trivial
+  > Inside Shortcut
+      Screw Attack
 
 ----------------
 Fiery Path
@@ -250,7 +274,7 @@ Extra - asset_id: collision_camera012
   * Extra - actor_name: HP_Item_001
   * Extra - actor_type: item_missiletank
   > Under Pickup
-      Trivial
+      Destroy Bomb Block
 
 > Under Pickup; Heals? False
   * Layers: default
@@ -265,7 +289,15 @@ Extra - asset_id: collision_camera012
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
-          High Jump Boots or Space Jump or Spider Ball
+          Any of the following:
+              Power Bomb
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Spider Ball
+                      All of the following:
+                          Mid-Air Morph (Intermediate)
+                          High Jump Boots or Space Jump or Walljump (Beginner)
 
 ----------------
 Fiery Storage
@@ -286,7 +318,16 @@ Extra - asset_id: collision_camera013
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Pickup (Power Bomb Tank)
-      Grapple Beam and Morph Ball and Phase Drift and Screw Attack
+      All of the following:
+          Grapple Beam and Morph Ball and Screw Attack
+          Any of the following:
+              Phase Drift
+              All of the following:
+                  Spiderspark (Advanced) and Can Spiderspark
+                  Any of the following:
+                      Walljump (Expert)
+                      Bomb and Movement (Intermediate)
+                      Power Bomb ≥ 2 and Movement (Expert)
 
 ----------------
 Teleporter Shaft Access
@@ -326,8 +367,8 @@ Extra - asset_id: collision_camera016
   * Teleporter Network (Unlocked by After Area 2 (Interior) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_02_04
   * Extra - actor_type: weightactivatedplatform
-  > Under Teleporter
-      Morph Ball
+  > Next to Teleporter
+      Trivial
 
 > Door to Horseshoe Path; Heals? False
   * Layers: default
@@ -359,10 +400,6 @@ Extra - asset_id: collision_camera016
 
 > Under Teleporter; Heals? False
   * Layers: default
-  > Teleporter
-      All of the following:
-          Morph Ball and After Area 2 (Interior) - Teleporter Unlocked
-          High Jump Boots or Space Jump
   > Door to Horseshoe Path
       Trivial
   > Door to Fan Tunnel
@@ -371,15 +408,24 @@ Extra - asset_id: collision_camera016
       Morph Ball
   > Tunnel to Teleporter Shaft Access
       Morph Ball
-  > Event - Teleporter Unlocked
+  > Next to Teleporter
       All of the following:
           Morph Ball
-          High Jump Boots or Space Jump
+          High Jump Boots or Space Jump or Unmorph Extend (Beginner) or Can Spiderspark or Simple IBJ
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 2 (Interior) - Teleporter Unlocked
+  > Next to Teleporter
+      Trivial
+
+> Next to Teleporter; Heals? False
+  * Layers: default
+  > Teleporter
+      After Area 2 (Interior) - Teleporter Unlocked
   > Under Teleporter
+      Morph Ball
+  > Event - Teleporter Unlocked
       Trivial
 
 ----------------
@@ -393,7 +439,7 @@ Extra - asset_id: collision_camera017
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Door to Teleporter Shaft
-      Morph Ball and Climb/Traverse Rooms (No High Jump)
+      Morph Ball
 
 > Door to Teleporter Shaft; Heals? False
   * Layers: default
@@ -455,7 +501,11 @@ Extra - asset_id: collision_camera019
   * Layers: default
   * Tunnel with Bomb Block to High Jump Room/Tunnel to High Jump Secret
   > Tunnel to High Jump Storage
-      Morph Ball and Climb/Traverse Rooms (High Jump)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              High Jump Boots or Space Jump or Infinite Bomb Jump (Beginner) or Unmorph Extend (Intermediate) or Walljump (Intermediate) or Can Spiderspark
+              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
 
 ----------------
 High Jump Room
@@ -497,11 +547,18 @@ Extra - asset_id: collision_camera022
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Tunnel to Teleporter Shaft
-      Any of the following:
-          Can Spiderspark
-          All of the following:
-              Morph Ball
-              High Jump Boots or Space Jump
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Space Jump or Can Spiderspark
+              All of the following:
+                  Spider Ball
+                  High Jump Boots or Walljump (Intermediate)
+              Bomb and Infinite Bomb Jump (Intermediate)
+              All of the following:
+                  Unmorph Extend (Intermediate)
+                  High Jump Boots or Walljump (Intermediate)
+              High Jump Boots and Super Jump (Intermediate)
 
 > Tunnel to Teleporter Shaft; Heals? False
   * Layers: default
@@ -551,7 +608,7 @@ Extra - asset_id: collision_camera036
   > Pickup (Aeion Tank)
       Any of the following:
           Lay Power Bomb
-          Missile and Lay Bomb
+          Destroy Missile Block and Lay Bomb
 
 ----------------
 Gamma Arena

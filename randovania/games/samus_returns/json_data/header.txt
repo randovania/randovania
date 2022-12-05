@@ -1,21 +1,23 @@
 ====================
 Templates
 
-* Climb/Traverse Rooms (No High Jump):
-      Any of the following:
-          Space Jump
-          Morph Ball and Spider Ball
+* Climb Rooms Vertically (No High Jump):
+      Space Jump or Simple IBJ or Use Spider Ball
 
-* Climb/Traverse Rooms (High Jump):
-      Any of the following:
-          High Jump Boots or Space Jump
-          Morph Ball and Spider Ball
+* Climb Rooms Vertically (High Jump):
+      High Jump Boots or Space Jump or Simple IBJ or Use Spider Ball
+
+* Cross Rooms Horizontally (High Jump):
+      High Jump Boots or Space Jump or Use Spider Ball
+
+* Cross Rooms Horizontally (No High Jump):
+      Space Jump or Use Spider Ball
 
 * Lay Bomb:
       Bomb and Morph Ball
 
 * Lay Power Bomb:
-      Main Power Bomb and Morph Ball and Power Bomb
+      Morph Ball and Power Bomb
 
 * Shoot Wave Beam:
       Any of the following:
@@ -29,9 +31,6 @@ Templates
           Spazer Beam
           Plasma Beam and Disabled Separate Beam Behaviors
 
-* Shoot Missiles:
-      Missile and Missile Launcher
-
 * Destroy Bomb Block:
       Lay Bomb or Lay Power Bomb
 
@@ -42,27 +41,47 @@ Templates
       Morph Ball and Spider Ball
 
 * Defeat Alpha Metroid:
-      Trivial
+      Ice Beam or Missile or Super Missile ≥ 5 or Shoot Beam Burst
 
 * Defeat Alpha Metroid+:
-      Trivial
+      Ice Beam or Missile ≥ 20 or Super Missile ≥ 7 or Shoot Beam Burst
 
 * Defeat Gamma Metroid:
-      Trivial
+      Ice Beam or Missile or Super Missile ≥ 7 or Shoot Beam Burst
 
 * Defeat Gamma Metroid+:
-      Trivial
+      Ice Beam or Missile ≥ 25 or Super Missile ≥ 9 or Shoot Beam Burst
 
 * Defeat Zeta Metroid:
-      Trivial
+      Any of the following:
+          Ice Beam
+          All of the following:
+              Grapple Beam
+              Missile or Super Missile
 
 * Defeat Omega Metroid:
-      Trivial
+      Ice Beam or Missile or Super Missile or Space Jump or Shoot Beam Burst
 
 * Defeat Larva Metroid:
       All of the following:
           Ice Beam
           Missile ≥ 5 or Super Missile
+
+* Destroy Missile Block:
+      Missile or Super Missile
+
+* Simple IBJ:
+      Bomb and Morph Ball and Infinite Bomb Jump (Beginner)
+
+* Shoot Beam Burst:
+      All of the following:
+          Beam Burst
+          Plasma Beam or Shoot Spazer Beam or Shoot Wave Beam
+
+* Fully Freeze Enemy:
+      All of the following:
+          Ice Beam
+          Charge Beam or Freeze Enemy with Melee (Intermediate)
 
 ====================
 Dock Weaknesses
@@ -102,7 +121,9 @@ Dock Weaknesses
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
           Any of the following:
               Charge Beam
-              Knowledge (Beginner) and Lay Power Bomb
+              All of the following:
+                  Knowledge (Beginner)
+                  Lay Power Bomb or Shoot Beam Burst
 
 
   * Wave Beam Door
@@ -110,7 +131,7 @@ Dock Weaknesses
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
-          Shoot Wave Beam
+          Lay Power Bomb or Shoot Wave Beam
 
 
   * Spazer Beam Door
@@ -118,7 +139,7 @@ Dock Weaknesses
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
-          Shoot Spazer Beam
+          Lay Power Bomb or Shoot Spazer Beam
 
 
   * Plasma Beam Door
@@ -126,7 +147,7 @@ Dock Weaknesses
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
-          Plasma Beam
+          Plasma Beam or Lay Power Bomb
 
 
   * Missile Door
