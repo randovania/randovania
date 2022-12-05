@@ -598,7 +598,7 @@
                 "extra": {}
             },
             "Area 3 (Interior West) - Transport to Area 3 Interior West Grapple Block": {
-                "long_name": "Area 3 (Interior West) - Transport to Area 3 Interior West Grapple Block",
+                "long_name": "Area 3 (Interior West) - Transport to Area 3 Interior East Grapple Block",
                 "extra": {}
             },
             "Area 3 (Interior West) - Grappling Steps Grapple Block": {
@@ -857,6 +857,11 @@
             "OoB": {
                 "long_name": "Out of Bounds Movement",
                 "description": "Movement done after clipping Out of Bounds.",
+                "extra": {}
+            },
+            "Freeze": {
+                "long_name": "Freeze Enemy with Melee",
+                "description": "By abusing how the Melee works, this trick can be used to freeze enemies for the full freeze timer without having Charge Beam.",
                 "extra": {}
             }
         },
@@ -1620,6 +1625,49 @@
                                             "type": "items",
                                             "name": "Plasma",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Fully Freeze Enemy": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Freeze",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
