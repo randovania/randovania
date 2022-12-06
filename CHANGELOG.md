@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing.
 - Changed: LogbookNodes are now called HintNodes.
 
+### Metroid Prime
+
+- Fixed: Spring ball can no longer be used to abuse steep terrain marked as standable
+- Fixed: Vanilla blast shields not being removed in door lock randomizer
+
 ### Metroid Dread
 
 - **Major** - Added: Door locks can now be randomized.
