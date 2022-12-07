@@ -1,61 +1,40 @@
-import dataclasses
 import json
 import logging
-from enum import Enum
+from pathlib import Path
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot
 
 from randovania import get_data_path
-from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.tracker_item_image import TrackerItemImage
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
-from randovania.gui.lib.pixmap_lib import paint_with_opacity
+from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.interface_common.options import Options
 
 
-def path_for(name: str):
-    return get_data_path().joinpath(f"gui_assets/tracker", name)
+def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:
+    with get_data_path().joinpath(f"gui_assets/tracker/trackers.json").open("r") as trackers_file:
+        data = json.load(trackers_file)["trackers"]
 
-
-class FieldToCheck(Enum):
-    AMOUNT = "amount"
-    CAPACITY = "capacity"
-    MAX_CAPACITY = "max_capacity"
-
-
-@dataclasses.dataclass(frozen=True)
-class Element:
-    labels: list[QtWidgets.QLabel | TrackerItemImage | TrackerItemImage]
-    resources: list[ItemResourceInfo]
-    text_template: str
-    minimum_to_check: int
-    field_to_check: FieldToCheck
-
-    def __post_init__(self):
-        if len(self.labels) > 1 and len(self.labels) != len(self.resources):
-            raise ValueError("Label has {} progressive icons, but has {} resources ({}).".format(
-                len(self.labels),
-                len(self.resources),
-                str([r.long_name for r in self.resources])
-            ))
+    return {
+        RandovaniaGame(game): {
+            name: get_data_path().joinpath(f"gui_assets/tracker", file_name)
+            for name, file_name in trackers.items()
+        }
+        for game, trackers in data.items()
+    }
 
 
 class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
-    _hooked = False
-    _base_address: int
-    trackers: dict[str, str]
+    trackers: dict[RandovaniaGame, dict[str, Path]]
+    _full_name_to_path: dict[str, Path]
     _current_tracker_game: RandovaniaGame = None
     _current_tracker_name: str = None
-    give_item_signal = QtCore.Signal(PickupEntry)
+    _item_tracker: ItemTrackerWidget
 
     def __init__(self, game_connection: GameConnection, options: Options):
         super().__init__()
@@ -64,22 +43,28 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.options = options
         common_qt_lib.set_default_window_icon(self)
 
-        with get_data_path().joinpath(f"gui_assets/tracker/trackers.json").open("r") as trackers_file:
-            self.trackers = json.load(trackers_file)["trackers"]
+        self.trackers = load_trackers_configuration()
 
         self._action_to_name = {}
+        self._full_name_to_path = {}
         theme_group = QtGui.QActionGroup(self)
-        for name in self.trackers.keys():
-            action = QtGui.QAction(self.menu_tracker)
-            action.setText(name)
-            action.setCheckable(True)
-            action.setChecked(name == options.selected_tracker)
-            action.triggered.connect(self._on_action_select_tracker)
-            self.menu_tracker.addAction(action)
-            self._action_to_name[action] = name
-            theme_group.addAction(action)
 
-        self._tracker_elements: list[Element] = []
+        for game in sorted(self.trackers.keys(), key=lambda k: k.long_name):
+            game_menu = QtWidgets.QMenu(self.menu_tracker)
+            game_menu.setTitle(game.long_name)
+            self.menu_tracker.addMenu(game_menu)
+            for name in sorted(self.trackers[game].keys()):
+                action = QtGui.QAction(game_menu)
+                action.setText(name)
+                action.setCheckable(True)
+                full_name = f"{game.long_name} - {name}"
+                action.setChecked(full_name == options.selected_tracker)
+                action.triggered.connect(self._on_action_select_tracker)
+                game_menu.addAction(action)
+                self._action_to_name[action] = full_name
+                self._full_name_to_path[full_name] = self.trackers[game][name]
+                theme_group.addAction(action)
+
         self.create_tracker()
 
         self.game_connection_setup = GameConnectionSetup(self, self.connection_status_label,
@@ -109,54 +94,6 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             if action.isChecked():
                 return name
 
-    def _update_tracker_from_hook(self, inventory: dict[ItemResourceInfo, InventoryItem]):
-        for element in self._tracker_elements:
-            if len(element.labels) > 1:
-                satisfied = False
-                for i, resource in reversed(list(enumerate(element.resources))):
-                    current = inventory.get(resource, InventoryItem(0, 0))
-                    fields = {"amount": current.amount, "capacity": current.capacity,
-                              "max_capacity": resource.max_capacity}
-
-                    if satisfied:
-                        element.labels[i].setVisible(False)
-
-                    elif fields[element.field_to_check.value] >= element.minimum_to_check:
-                        # This tier is satisfied
-                        satisfied = True
-                        element.labels[i].setVisible(True)
-                        element.labels[i].set_checked(True)
-                    else:
-                        element.labels[i].setVisible(False)
-
-                if not satisfied:
-                    element.labels[0].setVisible(True)
-                    element.labels[0].set_checked(False)
-
-            else:
-                label = element.labels[0]
-
-                amount = 0
-                capacity = 0
-                max_capacity = 0
-                for resource in element.resources:
-                    current = inventory.get(resource, InventoryItem(0, 0))
-                    amount += current.amount
-                    capacity += current.capacity
-                    max_capacity += resource.max_capacity
-
-                if isinstance(label, TrackerItemImage):
-                    fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
-                    value_target = element.minimum_to_check
-                    value = fields[element.field_to_check.value]
-                    label.set_checked(max_capacity == 0 or value >= value_target)
-                else:
-                    label.setText(element.text_template.format(
-                        amount=amount,
-                        capacity=capacity,
-                        max_capacity=max_capacity,
-                    ))
-
     def _on_action_select_tracker(self):
         with self.options as options:
             options.selected_tracker = self.selected_tracker
@@ -178,7 +115,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
                 if self.game_connection.connector.game_enum == self._current_tracker_game:
                     inventory = self.game_connection.get_current_inventory()
-                    self._update_tracker_from_hook(inventory)
+                    self.item_tracker.update_state(inventory)
                     self.game_connection_setup.on_game_connection_updated()
                 else:
                     self.connection_status_label.setText("{}: Wrong Game ({})".format(
@@ -189,11 +126,8 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self._update_timer.start()
 
     def delete_tracker(self):
-        for element in self._tracker_elements:
-            for l in element.labels:
-                l.deleteLater()
-
-        self._tracker_elements.clear()
+        self.item_tracker.deleteLater()
+        self.item_tracker = None
 
     def create_tracker(self):
         tracker_name = self.selected_tracker
@@ -202,65 +136,15 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
         self.delete_tracker()
 
-        with path_for(self.trackers[tracker_name]).open("r") as tracker_details_file:
+        with self._full_name_to_path[tracker_name].open("r") as tracker_details_file:
             tracker_details = json.load(tracker_details_file)
 
         game_enum = RandovaniaGame(tracker_details["game"])
-        resource_database = default_database.resource_database_for(game_enum)
-
-        for element in tracker_details["elements"]:
-            text_template = ""
-            minimum_to_check = element.get("minimum_to_check", 1)
-            field_to_check = FieldToCheck(element.get("field_to_check", FieldToCheck.CAPACITY.value))
-
-            labels = []
-            if "image_path" in element:
-                paths = element["image_path"]
-                if not isinstance(paths, list):
-                    paths = [paths]
-
-                visible = True
-                for path in paths:
-                    image_path = get_data_path().joinpath(path)
-                    if not image_path.exists():
-                        logging.error("Tracker asset not found: %s", image_path)
-                    pixmap = QtGui.QPixmap(str(image_path))
-
-                    label = TrackerItemImage(self.inventory_group, paint_with_opacity(pixmap, 0.3),
-                                             paint_with_opacity(pixmap, 1.0))
-                    label.set_checked(False)
-                    label.set_ignore_mouse_events(True)
-                    label.setVisible(visible)
-                    visible = False
-                    labels.append(label)
-
-            elif "label" in element:
-                label = QtWidgets.QLabel(self.inventory_group)
-                label.setAlignment(QtCore.Qt.AlignCenter)
-                text_template = element["label"]
-                labels.append(label)
-
-            else:
-                raise ValueError(f"Invalid element: {element}")
-
-            resources = [
-                find_resource_info_with_long_name(resource_database.item, resource_name)
-                for resource_name in element["resources"]
-            ]
-            for resource, label in zip(resources, labels):
-                label.setToolTip(resource.long_name)
-
-            self._tracker_elements.append(Element(labels, resources, text_template, minimum_to_check, field_to_check))
-            for label in labels:
-                self.inventory_layout.addWidget(label, element["row"], element["column"])
-
-        self.inventory_spacer = QtWidgets.QSpacerItem(5, 5, QtWidgets.QSizePolicy.Expanding,
-                                                      QtWidgets.QSizePolicy.Expanding)
-        self.inventory_layout.addItem(self.inventory_spacer, self.inventory_layout.rowCount(),
-                                      self.inventory_layout.columnCount())
+        self.item_tracker = ItemTrackerWidget(tracker_details)
+        self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
 
         self._current_tracker_game = game_enum
-        self._update_tracker_from_hook({})
+        self.item_tracker.update_state({})
 
         self._current_tracker_name = tracker_name
 
