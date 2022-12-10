@@ -1,0 +1,4098 @@
+{
+    "name": "Area 3 - Interior (East)",
+    "extra": {
+        "asset_id": "maps/levels/c10_samus/s036_area3c/s036_area3c.bmsld",
+        "map_min_x": 0,
+        "map_max_x": 14,
+        "map_min_y": 42,
+        "map_max_y": 25,
+        "scenario_id": "s036_area3c"
+    },
+    "areas": {
+        "Gamma Storage": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -4600.0,
+                    "x2": -1900.0,
+                    "y1": 1900.0,
+                    "y2": 3400.0
+                },
+                "polygon": [
+                    [
+                        -4600.0,
+                        3400.0
+                    ],
+                    [
+                        -4600.0,
+                        1900.0
+                    ],
+                    [
+                        -1900.0,
+                        1900.0
+                    ],
+                    [
+                        -1900.0,
+                        3400.0
+                    ]
+                ],
+                "asset_id": "collision_camera_011"
+            },
+            "nodes": {
+                "Pickup (Power Bomb Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4038.4856070087612,
+                        "y": 2158.886107634543,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_006",
+                        "actor_type": "item_powerbombtank"
+                    },
+                    "pickup_index": 76,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Gamma Arena Lower Room 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Bomb Block"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Armor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Arena Lower Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1945.867768595041,
+                        "y": 3129.7520661157023,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door007",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Arena Lower Room 2",
+                        "node_name": "Door to Gamma Storage"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Bomb Block"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gamma Arena Lower Room 1": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 2200.0,
+                    "x2": 6600.0,
+                    "y1": 2300.0,
+                    "y2": 3900.0
+                },
+                "polygon": [
+                    [
+                        2200.0,
+                        3900.0
+                    ],
+                    [
+                        2200.0,
+                        2300.0
+                    ],
+                    [
+                        6600.0,
+                        2300.0
+                    ],
+                    [
+                        6600.0,
+                        3900.0
+                    ]
+                ],
+                "asset_id": "collision_camera_013"
+            },
+            "nodes": {
+                "Door to Transport to Area 3 Interior West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6561.145876790432,
+                        "y": 3205.2426644416632,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Transport to Area 3 Interior West",
+                        "node_name": "Door to Gamma Arena Lower Room 1"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Gamma Arena Lower Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Gamma Arena Lower Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2243.749130858017,
+                        "y": 3356.9879015435963,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Arena Lower Room 2",
+                        "node_name": "Tunnel to Gamma Arena Lower Room 1"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Transport to Area 3 Interior West": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Path Access": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 10600.0,
+                    "x2": 15700.0,
+                    "y1": 1900.0,
+                    "y2": 3700.0
+                },
+                "polygon": [
+                    [
+                        15700.0,
+                        1900.0
+                    ],
+                    [
+                        15700.0,
+                        3700.0
+                    ],
+                    [
+                        10600.0,
+                        3700.0
+                    ],
+                    [
+                        10600.0,
+                        1900.0
+                    ]
+                ],
+                "asset_id": "collision_camera_014"
+            },
+            "nodes": {
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15274.82269503546,
+                        "y": 2252.4822695035464,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_004",
+                        "actor_type": "item_energytank"
+                    },
+                    "pickup_index": 75,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Fiery Path": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15636.776859504133,
+                        "y": 2643.112947658402,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door009",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Fiery Path Access"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        },
+                        "Door to Transport to Area 3 Interior West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Transport to Area 3 Interior West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10630.440771349862,
+                        "y": 2357.438016528926,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door012",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Transport to Area 3 Interior West",
+                        "node_name": "Door to Fiery Path Access"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fan Puzzle Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 6300.0,
+                    "x2": 7600.0,
+                    "y1": 10320.400390625,
+                    "y2": 11078.7998046875
+                },
+                "polygon": [
+                    [
+                        6300.0,
+                        11078.7998046875
+                    ],
+                    [
+                        6300.0,
+                        10320.400390625
+                    ],
+                    [
+                        7600.0,
+                        10320.400390625
+                    ],
+                    [
+                        7600.0,
+                        11078.7998046875
+                    ]
+                ],
+                "asset_id": "collision_camera_015"
+            },
+            "nodes": {
+                "Pickup (Super Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6768.495341398971,
+                        "y": 10661.274412772367,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_002",
+                        "actor_type": "item_supermissiletank"
+                    },
+                    "pickup_index": 74,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Gamma Awakening Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Missile Block"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Wave Beam"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Awakening Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7528.971533516988,
+                        "y": 10576.046378647985,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door004",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Awakening Access",
+                        "node_name": "Door to Fan Puzzle Room"
+                    },
+                    "default_dock_weakness": "Super Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Missile Block"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Double Back": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 6700.0,
+                    "x2": 9600.0,
+                    "y1": 13200.0,
+                    "y2": 15400.0
+                },
+                "polygon": [
+                    [
+                        6700.0,
+                        14800.0
+                    ],
+                    [
+                        6700.0,
+                        13200.0
+                    ],
+                    [
+                        9600.0,
+                        13200.0
+                    ],
+                    [
+                        9600.0,
+                        15400.0
+                    ],
+                    [
+                        7900.0,
+                        15400.0
+                    ],
+                    [
+                        7900.0,
+                        14900.0
+                    ],
+                    [
+                        7825.0,
+                        14800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_017"
+            },
+            "nodes": {
+                "Tunnel to Transport to Area 3 Exterior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7929.00152968989,
+                        "y": 15101.72437769434,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Transport to Area 3 Exterior",
+                        "node_name": "Tunnel to Double Back"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Main Shaft (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6744.97,
+                        "y": 13459.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Main Shaft",
+                        "node_name": "Tunnel to Double Back (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Interior East) - Double Back Grapple Block Right",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Main Shaft (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6715.929634265053,
+                        "y": 14433.889584202476,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Main Shaft",
+                        "node_name": "Tunnel to Double Back (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Grapple Block Right": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Interior East) - Double Back Grapple Block Left",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block Left": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6774.002225003476,
+                        "y": 14433.889584202476,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 3 (Interior East) - Double Back Grapple Block Left",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block Right": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7519.267139479905,
+                        "y": 14043.512724238632,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 3 (Interior East) - Double Back Grapple Block Right",
+                    "connections": {
+                        "Tunnel to Main Shaft (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7941.906549853984,
+                        "y": 14301.613127520512,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Tunnel to Transport to Area 3 Exterior": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Main Shaft (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Interior East) - Double Back Grapple Block Right",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Block"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Grapple Block Left": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Main Shaft": {
+            "default_node": "Energy Recharge Station",
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 3500.0,
+                    "x2": 6800.0,
+                    "y1": 9400.0,
+                    "y2": 15600.0
+                },
+                "polygon": [
+                    [
+                        3500.0,
+                        15600.0
+                    ],
+                    [
+                        3500.0,
+                        9400.0
+                    ],
+                    [
+                        6000.0,
+                        9400.0
+                    ],
+                    [
+                        6000.0,
+                        13000.0
+                    ],
+                    [
+                        6300.0,
+                        13200.0
+                    ],
+                    [
+                        6800.0,
+                        13200.0
+                    ],
+                    [
+                        6800.0,
+                        15600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_018"
+            },
+            "nodes": {
+                "Pickup (Aeion Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6489.278892570135,
+                        "y": 13468.931674689004,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_001",
+                        "actor_type": "item_senergytank"
+                    },
+                    "pickup_index": 73,
+                    "major_location": false,
+                    "connections": {
+                        "Tunnel to Double Back (Bottom)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Energy Recharge Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4893.771401582241,
+                        "y": 9633.900106269924,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_EnergyCharge001",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Door to Transport to Area 3 Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Mini-Shaft East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Mini-Shaft West": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Transport to Area 3 Exterior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6738.617310190106,
+                        "y": 15197.72110048412,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door001",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Transport to Area 3 Exterior",
+                        "node_name": "Door to Main Shaft"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Double Back (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Left",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Mini-Shaft East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5947.969063643877,
+                        "y": 9707.108277246427,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Mini-Shaft East",
+                        "node_name": "Door to Main Shaft"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Mini-Shaft West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3554.0618727122446,
+                        "y": 10497.756523792654,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door014",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Mini-Shaft West",
+                        "node_name": "Door to Main Shaft"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Energy Recharge Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Double Back (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6738.62,
+                        "y": 13470.01,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Double Back",
+                        "node_name": "Tunnel to Main Shaft (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Aeion Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Double Back (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6753.258944385406,
+                        "y": 14429.035305230842,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Double Back",
+                        "node_name": "Tunnel to Main Shaft (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Transport to Area 3 Exterior": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Dead-End Teleporter": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 1300.0,
+                    "x2": 3600.0,
+                    "y1": 7000.0,
+                    "y2": 7758.41015625
+                },
+                "polygon": [
+                    [
+                        1300.0,
+                        7758.41015625
+                    ],
+                    [
+                        1300.0,
+                        7000.0
+                    ],
+                    [
+                        3600.0,
+                        7000.0
+                    ],
+                    [
+                        3600.0,
+                        7758.41015625
+                    ]
+                ],
+                "asset_id": "collision_camera_019"
+            },
+            "nodes": {
+                "Teleporter": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2382.42,
+                        "y": 7097.25,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Teleporter_03_01",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Area 3 Interior East Teleporter",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "default",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Door to Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Teleporter Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3556.7033976124885,
+                        "y": 7207.074683267332,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door005",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Teleporter Access",
+                        "node_name": "Door to Dead-End Teleporter"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 3 Interior East Teleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2676.76,
+                        "y": 7092.45,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 3 Interior East Teleporter",
+                    "connections": {
+                        "Door to Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport to Area 3 Exterior": {
+            "default_node": "Elevator to Area 3 Exterior - Outer Hub",
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 6700.0,
+                    "x2": 8000.0,
+                    "y1": 14841.900390625,
+                    "y2": 15600.0
+                },
+                "polygon": [
+                    [
+                        6700.0,
+                        15600.0
+                    ],
+                    [
+                        6700.0,
+                        14841.900390625
+                    ],
+                    [
+                        8000.0,
+                        14841.900390625
+                    ],
+                    [
+                        8000.0,
+                        15600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_021"
+            },
+            "nodes": {
+                "Elevator to Area 3 Exterior - Outer Hub": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7375.30941454596,
+                        "y": 15072.709338686162,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Elevator_FromArea03A",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "destination": {
+                        "world_name": "Area 3 - Exterior",
+                        "area_name": "Outer Hub"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Main Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Double Back": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Main Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6742.378328741965,
+                        "y": 15200.05946987632,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door001",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Main Shaft",
+                        "node_name": "Door to Transport to Area 3 Exterior"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Elevator to Area 3 Exterior - Outer Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Double Back": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7976.721763085399,
+                        "y": 15100.977743521866,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Double Back",
+                        "node_name": "Tunnel to Transport to Area 3 Exterior"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Elevator to Area 3 Exterior - Outer Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Path": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 15600.0,
+                    "x2": 21700.0,
+                    "y1": 1700.0,
+                    "y2": 5800.0
+                },
+                "polygon": [
+                    [
+                        18050.0,
+                        5800.0
+                    ],
+                    [
+                        18050.0,
+                        3800.0
+                    ],
+                    [
+                        15600.0,
+                        3700.0
+                    ],
+                    [
+                        15600.0,
+                        1700.0
+                    ],
+                    [
+                        21700.0,
+                        1700.0
+                    ],
+                    [
+                        21700.0,
+                        5800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_022"
+            },
+            "nodes": {
+                "Door to Fiery Path Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15647.61248852158,
+                        "y": 2649.31129476584,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door009",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Fiery Path Access",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Above Lava Pits": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Spiderspark"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Spiderspark",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PBAmmo",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Alpha Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18089.853076216714,
+                        "y": 4906.7033976124885,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door013",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Alpha Arena",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Above Lava Pits": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (No High Jump)"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Above Lava Pits": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 21296.362839614372,
+                        "y": 3040.1450968935633,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Fiery Path Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Spiderspark"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Spiderspark",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (No High Jump)"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DBoost",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport to Area 3 Interior West": {
+            "default_node": "Elevator to Area 3 Interior West - Transport to Area 3 Interior East",
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 6500.0,
+                    "x2": 10700.0,
+                    "y1": 2100.0,
+                    "y2": 5600.0
+                },
+                "polygon": [
+                    [
+                        6500.0,
+                        5600.0
+                    ],
+                    [
+                        6500.0,
+                        2100.0
+                    ],
+                    [
+                        10700.0,
+                        2100.0
+                    ],
+                    [
+                        10700.0,
+                        3800.0
+                    ],
+                    [
+                        10600.0,
+                        3800.0
+                    ],
+                    [
+                        10600.0,
+                        5600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_023"
+            },
+            "nodes": {
+                "Ammo Recharge Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10343.035152424414,
+                        "y": 2743.8898265647035,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_AmmoCharge001",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Door to Gamma Arena Lower Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fiery Path Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Elevator to Area 3 Interior West - Transport to Area 3 Interior East": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7302.32613059393,
+                        "y": 2248.571259889007,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Elevator_FromArea03B",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "destination": {
+                        "world_name": "Area 3 - Interior (West)",
+                        "area_name": "Transport to Area 3 Interior East"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Gamma Arena Lower Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7851.977801393317,
+                        "y": 3529.7142519778013,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_SaveStation",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Door to Gamma Arena Lower Room 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Gamma Awakening (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Arena Lower Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6550.657414931967,
+                        "y": 3205.7819869003215,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Arena Lower Room 1",
+                        "node_name": "Door to Transport to Area 3 Interior West"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Elevator to Area 3 Interior West - Transport to Area 3 Interior East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Path Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10641.563348683434,
+                        "y": 2347.756523792655,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door012",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Fiery Path Access",
+                        "node_name": "Door to Transport to Area 3 Interior West"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Gamma Awakening (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6545.795392191591,
+                        "y": 4187.910580456058,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Awakening",
+                        "node_name": "Tunnel to Transport to Area 3 Interior West (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6929.895188681211,
+                        "y": 2350.0659845943337,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block",
+                    "connections": {
+                        "Elevator to Area 3 Interior West - Transport to Area 3 Interior East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Gamma Awakening (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6536.071346710842,
+                        "y": 5471.48458391504,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Awakening",
+                        "node_name": "Tunnel to Transport to Area 3 Interior West (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Gamma Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8106.140040146416,
+                        "y": 5067.0858424843545,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Gamma 3",
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8169.710987476818,
+                        "y": 4766.491286560675,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 3 (Interior East) - Gamma Metroid Awakened",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Gamma 3",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Gamma Awakening (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Gamma Metroid": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Interior East) - Gamma Metroid Awakened",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Mini-Shaft East": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 5900.0,
+                    "x2": 7600.0,
+                    "y1": 7600.0,
+                    "y2": 10100.0
+                },
+                "polygon": [
+                    [
+                        5900.0,
+                        10100.0
+                    ],
+                    [
+                        5900.0,
+                        7600.0
+                    ],
+                    [
+                        7600.0,
+                        7600.0
+                    ],
+                    [
+                        7600.0,
+                        10100.0
+                    ]
+                ],
+                "asset_id": "collision_camera_024"
+            },
+            "nodes": {
+                "Door to Main Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5944.119730782855,
+                        "y": 9701.635376077458,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Main Shaft",
+                        "node_name": "Door to Mini-Shaft East"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Gamma Awakening Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Awakening Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7523.408903058213,
+                        "y": 7768.113118431927,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door010",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Awakening Access",
+                        "node_name": "Door to Mini-Shaft East"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gamma Awakening Access": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 6500.0,
+                    "x2": 9300.0,
+                    "y1": 6100.0,
+                    "y2": 11000.0
+                },
+                "polygon": [
+                    [
+                        7500.0,
+                        11000.0
+                    ],
+                    [
+                        7500.0,
+                        6859.31005859375
+                    ],
+                    [
+                        6500.0,
+                        6859.31005859375
+                    ],
+                    [
+                        6500.0,
+                        6100.0
+                    ],
+                    [
+                        9300.0,
+                        6100.0
+                    ],
+                    [
+                        9300.0,
+                        11000.0
+                    ]
+                ],
+                "asset_id": "collision_camera_025"
+            },
+            "nodes": {
+                "Door to Fan Puzzle Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7529.708348093045,
+                        "y": 10572.139567835635,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door004",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Fan Puzzle Room",
+                        "node_name": "Door to Gamma Awakening Access"
+                    },
+                    "default_dock_weakness": "Super Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Mini-Shaft East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Mini-Shaft East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7523.922541032,
+                        "y": 7789.166371472429,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door010",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Mini-Shaft East",
+                        "node_name": "Door to Gamma Awakening Access"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Fan Puzzle Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Climb Rooms Vertically (High Jump)"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Fully Freeze Enemy"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Gamma Awakening": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Awakening": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6540.335340654151,
+                        "y": 6331.142992088794,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door011",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Awakening",
+                        "node_name": "Door to Gamma Awakening Access"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Mini-Shaft East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Alpha Arena": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 10800.0,
+                    "x2": 18150.0,
+                    "y1": 4200.0,
+                    "y2": 5400.0
+                },
+                "polygon": [
+                    [
+                        18150.0,
+                        4400.0
+                    ],
+                    [
+                        18150.0,
+                        5400.0
+                    ],
+                    [
+                        10800.0,
+                        5400.0
+                    ],
+                    [
+                        10800.0,
+                        4200.0
+                    ],
+                    [
+                        12100.0,
+                        4200.0
+                    ],
+                    [
+                        13000.0,
+                        4400.0
+                    ]
+                ],
+                "asset_id": "collision_camera_026"
+            },
+            "nodes": {
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18092.63085399449,
+                        "y": 4904.61432506887,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door013",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Alpha Arena"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Super Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12066.906549853984,
+                        "y": 5106.633291614518,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "HiddenPowerup001",
+                        "actor_type": "item_supermissiletank"
+                    },
+                    "pickup_index": 77,
+                    "major_location": false,
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Alpha Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16126.536643026004,
+                        "y": 4915.839243498818,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Alpha 13",
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14636.631944444445,
+                        "y": 4744.704861111111,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 13",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Alpha Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gamma Arena Lower Room 2": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -2000.0,
+                    "x2": 2800.0,
+                    "y1": 2000.0,
+                    "y2": 3800.0
+                },
+                "polygon": [
+                    [
+                        -2000.0,
+                        3800.0
+                    ],
+                    [
+                        -2000.0,
+                        2000.0
+                    ],
+                    [
+                        2800.0,
+                        2000.0
+                    ],
+                    [
+                        2800.0,
+                        3800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_027"
+            },
+            "nodes": {
+                "Door to Gamma Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1949.31129476584,
+                        "y": 3135.8126721763083,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door007",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Storage",
+                        "node_name": "Door to Gamma Arena Lower Room 2"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Gamma Arena Lower Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2768.2937004589076,
+                        "y": 3345.8906967042135,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Arena Lower Room 1",
+                        "node_name": "Tunnel to Gamma Arena Lower Room 2"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Gamma Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 270.6697459584293,
+                        "y": 2971.850141134206,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Gamma 4",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 76.92949520233651,
+                        "y": 2603.629536921151,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Gamma Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Fully Freeze Enemy"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Gamma Arena Lower Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                }
+            }
+        },
+        "Mini-Shaft West": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 2300.0,
+                    "x2": 3600.0,
+                    "y1": 8400.0,
+                    "y2": 10900.0
+                },
+                "polygon": [
+                    [
+                        2300.0,
+                        10900.0
+                    ],
+                    [
+                        2300.0,
+                        8400.0
+                    ],
+                    [
+                        3600.0,
+                        8400.0
+                    ],
+                    [
+                        3600.0,
+                        10900.0
+                    ]
+                ],
+                "asset_id": "collision_camera_028"
+            },
+            "nodes": {
+                "Door to Main Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3555.1481875073796,
+                        "y": 10478.019837052781,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door014",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Main Shaft",
+                        "node_name": "Door to Mini-Shaft West"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Teleporter Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3558.1001298854644,
+                        "y": 8662.575274530642,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door015",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Teleporter Access",
+                        "node_name": "Door to Mini-Shaft West"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Teleporter Access": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 3500.0,
+                    "x2": 5900.0,
+                    "y1": 6900.0,
+                    "y2": 9400.0
+                },
+                "polygon": [
+                    [
+                        3500.0,
+                        9400.0
+                    ],
+                    [
+                        3500.0,
+                        6900.0
+                    ],
+                    [
+                        5900.0,
+                        6900.0
+                    ],
+                    [
+                        5900.0,
+                        9400.0
+                    ]
+                ],
+                "asset_id": "collision_camera_029"
+            },
+            "nodes": {
+                "Door to Dead-End Teleporter": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3554.6463573031056,
+                        "y": 7192.094698311489,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door005",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Dead-End Teleporter",
+                        "node_name": "Door to Teleporter Access"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Mini-Shaft West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SWJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Mini-Shaft West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3557.5982996811904,
+                        "y": 8647.402290707285,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door015",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Mini-Shaft West",
+                        "node_name": "Door to Teleporter Access"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Dead-End Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gamma Awakening": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 5000.0,
+                    "x2": 6600.0,
+                    "y1": 4000.0,
+                    "y2": 6700.0
+                },
+                "polygon": [
+                    [
+                        5000.0,
+                        6700.0
+                    ],
+                    [
+                        5000.0,
+                        4000.0
+                    ],
+                    [
+                        6600.0,
+                        4000.0
+                    ],
+                    [
+                        6600.0,
+                        6700.0
+                    ]
+                ],
+                "asset_id": "collision_camera_030"
+            },
+            "nodes": {
+                "Door to Gamma Awakening Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6552.391073326248,
+                        "y": 6343.092454835281,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door011",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Gamma Awakening Access",
+                        "node_name": "Door to Gamma Awakening"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Transport to Area 3 Interior West (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport to Area 3 Interior West (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6548.265299743702,
+                        "y": 4200.409451772208,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Transport to Area 3 Interior West",
+                        "node_name": "Tunnel to Gamma Awakening (Bottom)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Gamma Awakened": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Bomb Block"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Transport to Area 3 Interior West (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6552.016003000563,
+                        "y": 5468.147152591111,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 3 - Interior (East)",
+                        "area_name": "Transport to Area 3 Interior West",
+                        "node_name": "Tunnel to Gamma Awakening (Top)"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Gamma Awakening Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Gamma Awakened": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5888.141526536226,
+                        "y": 4766.765643558167,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 3 (Interior East) - Gamma Metroid Awakened",
+                    "connections": {
+                        "Tunnel to Transport to Area 3 Interior West (Top)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

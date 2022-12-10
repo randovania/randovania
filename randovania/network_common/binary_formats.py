@@ -1,24 +1,20 @@
+import construct
 from construct import PrefixedArray, VarInt, Struct, CString, Flag
 
 from randovania.lib.construct_lib import OptionalValue
 
 BinStr = CString("utf-8")
 
-OldBinaryInventory = PrefixedArray(
-    VarInt,
-    Struct(
-        index=VarInt,
-        amount=VarInt,
-        capacity=VarInt,
-    )
-)
-
-BinaryInventory = PrefixedArray(
-    VarInt,
-    Struct(
-        name=BinStr,
-        amount=VarInt,
-        capacity=VarInt,
+BinaryInventory = Struct(
+    version=construct.Const(1, VarInt),
+    game=BinStr,
+    elements=PrefixedArray(
+        VarInt,
+        Struct(
+            name=BinStr,
+            amount=VarInt,
+            capacity=VarInt,
+        )
     )
 )
 

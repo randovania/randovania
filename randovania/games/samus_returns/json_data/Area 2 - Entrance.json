@@ -1,0 +1,1778 @@
+{
+    "name": "Area 2 - Entrance",
+    "extra": {
+        "asset_id": "maps/levels/c10_samus/s028_area2c/s028_area2c.bmsld",
+        "map_min_x": 16,
+        "map_max_x": 22,
+        "map_min_y": 15,
+        "map_max_y": 19,
+        "scenario_id": "s028_area2c"
+    },
+    "areas": {
+        "Chozo Seal": {
+            "default_node": "Elevator To Area 1 - Chozo Seal",
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 19000.0,
+                    "x2": 25000.0,
+                    "y1": -9600.0,
+                    "y2": -900.0
+                },
+                "polygon": [
+                    [
+                        20400.0,
+                        -900.0
+                    ],
+                    [
+                        20400.0,
+                        -1900.0
+                    ],
+                    [
+                        19000.0,
+                        -2000.0
+                    ],
+                    [
+                        19000.0,
+                        -4600.0
+                    ],
+                    [
+                        20100.0,
+                        -4600.0
+                    ],
+                    [
+                        20300.0,
+                        -5200.0
+                    ],
+                    [
+                        20300.0,
+                        -9600.0
+                    ],
+                    [
+                        25000.0,
+                        -9600.0
+                    ],
+                    [
+                        25000.0,
+                        -900.0
+                    ]
+                ],
+                "asset_id": "collision_camera"
+            },
+            "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24429.507616011335,
+                        "y": -7022.051009564294,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_005",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 52,
+                    "major_location": false,
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Elevator To Area 1 - Chozo Seal": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 21255.22493800921,
+                        "y": -1515.8519305703153,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Elevator_FromArea01",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "destination": {
+                        "world_name": "Area 1",
+                        "area_name": "Chozo Seal"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Elevator to Area 3 Exterior - Transport to Area 2 Entrance": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22570.138150903294,
+                        "y": -9364.24017003188,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Elevator_FromArea03",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "destination": {
+                        "world_name": "Area 3 - Exterior",
+                        "area_name": "Transport to Area 2 Entrance"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20227.948990435707,
+                        "y": -3200.5844845908605,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_SaveStation002",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Elevator To Area 1 - Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Chozo Seal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Teleporter Room (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Chozo Seal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22436.592277718737,
+                        "y": -4258.678710591569,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE__Platform_ChozoUnlockAreaDNA",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Elevator to Area 3 Exterior - Transport to Area 2 Entrance": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Teleporter Room (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Baby",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MeleeClip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo Seal Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 6",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 11",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 7",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 9",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 10",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 8",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 12",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Teleporter Room (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19051.718030464046,
+                        "y": -2902.6744597945444,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerclosed"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Chozo Seal (Top)"
+                    },
+                    "default_dock_weakness": "Access Locked",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Teleporter Room (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19051.718030464046,
+                        "y": -4412.770102727594,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door007",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Chozo Seal (Bottom)"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Power Bomb Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20556.677293659228,
+                        "y": -5881.774707757704,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "HiddenPowerup001",
+                        "actor_type": "item_powerbombtank"
+                    },
+                    "pickup_index": 54,
+                    "major_location": false,
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Event - Chozo Seal Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22416.04675876727,
+                        "y": -3714.2224583776124,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "DNA2",
+                    "connections": {
+                        "Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Teleporter Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 13600.0,
+                    "x2": 19100.0,
+                    "y1": -5400.0,
+                    "y2": -200.0
+                },
+                "polygon": [
+                    [
+                        13800.0,
+                        -200.0
+                    ],
+                    [
+                        13800.0,
+                        -1500.0
+                    ],
+                    [
+                        14050.0,
+                        -1500.0
+                    ],
+                    [
+                        14050.0,
+                        -2650.0
+                    ],
+                    [
+                        14150.0,
+                        -2650.0
+                    ],
+                    [
+                        14150.0,
+                        -5400.0
+                    ],
+                    [
+                        19100.0,
+                        -5400.0
+                    ],
+                    [
+                        19100.0,
+                        -200.0
+                    ]
+                ],
+                "asset_id": "collision_camera_003"
+            },
+            "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17587.218089502894,
+                        "y": -2827.6301806588735,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_003",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 51,
+                    "major_location": false,
+                    "connections": {
+                        "Below Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15524.164600307002,
+                        "y": -2907.450702562286,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Teleporter_02_01",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Area 2 Interior Teleporter",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "default",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Below Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Chozo Seal (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19048.547644349983,
+                        "y": -2932.0108631479516,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerclosed"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Teleporter Room (Top)"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Chozo Seal (Bottom)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Chozo Seal (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19060.827724642815,
+                        "y": -4387.200377848625,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door007",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Chozo Seal",
+                        "node_name": "Door to Teleporter Room (Bottom)"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Chozo Seal (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Below Teleporter": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fully Freeze Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FrozenEnemy",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Alpha Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13847.93364033534,
+                        "y": -850.5372535128114,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door008",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Alpha Arena",
+                        "node_name": "Door to Teleporter Room"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Below Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15996.947691581061,
+                        "y": -3005.6913449049475,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 2 Entrance Teleporter",
+                    "connections": {
+                        "Below Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Below Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15591.705041917581,
+                        "y": -3466.1943558861735,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 2 Entrance Teleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Chozo Seal (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport to Area 2 Exterior": {
+            "default_node": "Elevator to Area 2 Exterior - Outer Hub",
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 3900.0,
+                    "x2": 8800.0,
+                    "y1": -3000.0,
+                    "y2": 700.0
+                },
+                "polygon": [
+                    [
+                        3900.0,
+                        700.0
+                    ],
+                    [
+                        3900.0,
+                        -2500.0
+                    ],
+                    [
+                        5600.0,
+                        -2500.0
+                    ],
+                    [
+                        7200.0,
+                        -3000.0
+                    ],
+                    [
+                        8800.0,
+                        -3000.0
+                    ],
+                    [
+                        8800.0,
+                        700.0
+                    ]
+                ],
+                "asset_id": "collision_camera_004"
+            },
+            "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6555.59410445014,
+                        "y": 34.736026893931694,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_002",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 50,
+                    "major_location": false,
+                    "connections": {
+                        "Above Chozo Head": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Lightning Armor)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6447.657199613816,
+                        "y": -2267.9179429476358,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_SpecialAbility_EnergyShield",
+                        "actor_type": "powerup_energyshield"
+                    },
+                    "pickup_index": 53,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Main Shaft (Bottom)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Above Chozo Head": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Elevator to Area 2 Exterior - Outer Hub": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7288.023101553764,
+                        "y": 14.176616448917684,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Elevator_FromArea02A",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "destination": {
+                        "world_name": "Area 2 - Exterior",
+                        "area_name": "Outer Hub"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Door to Main Shaft (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Main Shaft (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8746.327783681663,
+                        "y": -2794.8813319164015,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door001",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Main Shaft",
+                        "node_name": "Door to Transport to Area 2 Exterior (Bottom)"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Lightning Armor)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Main Shaft (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8750.696658401228,
+                        "y": -339.5737395206045,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorpowerclosed"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Main Shaft",
+                        "node_name": "Door to Transport to Area 2 Exterior (Top)"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Elevator to Area 2 Exterior - Outer Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Above Chozo Head": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Chozo Head": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6408.23,
+                        "y": -1477.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Lightning Armor)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Main Shaft (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Main Shaft": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 8700.0,
+                    "x2": 10500.0,
+                    "y1": -3000.0,
+                    "y2": 100.0
+                },
+                "polygon": [
+                    [
+                        8700.0,
+                        100.0
+                    ],
+                    [
+                        8700.0,
+                        -3000.0
+                    ],
+                    [
+                        10500.0,
+                        -3000.0
+                    ],
+                    [
+                        10500.0,
+                        100.0
+                    ]
+                ],
+                "asset_id": "collision_camera_005"
+            },
+            "nodes": {
+                "Door to Transport to Area 2 Exterior (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8750.78521667257,
+                        "y": -2787.8793245955844,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door001",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Transport to Area 2 Exterior",
+                        "node_name": "Door to Main Shaft (Bottom)"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Alpha Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Water Storage": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SWJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Transport to Area 2 Exterior (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8748.955012398157,
+                        "y": -339.06600543157396,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorpowerclosed"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Transport to Area 2 Exterior",
+                        "node_name": "Door to Main Shaft (Top)"
+                    },
+                    "default_dock_weakness": "Access Locked",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Alpha Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10467.516826071555,
+                        "y": -1246.8473255402055,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Alpha Arena",
+                        "node_name": "Dock to Main Shaft"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Transport to Area 2 Exterior (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Transport to Area 2 Exterior (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Water Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10438.233557680955,
+                        "y": -2000.891486598182,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Water Storage",
+                        "node_name": "Dock to Main Shaft"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Transport to Area 2 Exterior (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Water Storage": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 10300.0,
+                    "x2": 15100.0,
+                    "y1": -3200.0,
+                    "y2": -1600.0
+                },
+                "polygon": [
+                    [
+                        10400.0,
+                        -1600.0
+                    ],
+                    [
+                        10400.0,
+                        -3100.0
+                    ],
+                    [
+                        14200.0,
+                        -3100.0
+                    ],
+                    [
+                        14200.0,
+                        -1600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_006"
+            },
+            "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14040.770252324037,
+                        "y": -2886.586985391766,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_001",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 49,
+                    "major_location": false,
+                    "connections": {
+                        "Dock to Main Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Main Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10429.72972972973,
+                        "y": -2021.6216216216217,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Main Shaft",
+                        "node_name": "Dock to Water Storage"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Alpha Arena": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 10400.0,
+                    "x2": 13900.0,
+                    "y1": -1500.0,
+                    "y2": -200.0
+                },
+                "polygon": [
+                    [
+                        10400.0,
+                        -200.0
+                    ],
+                    [
+                        10400.0,
+                        -1500.0
+                    ],
+                    [
+                        13900.0,
+                        -1500.0
+                    ],
+                    [
+                        13900.0,
+                        -200.0
+                    ]
+                ],
+                "asset_id": "collision_camera_007"
+            },
+            "nodes": {
+                "Door to Teleporter Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13854.424851008245,
+                        "y": -834.2844313821536,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door008",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Teleporter Room",
+                        "node_name": "Door to Alpha Arena"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Main Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10435.44,
+                        "y": -1296.36,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Area 2 - Entrance",
+                        "area_name": "Main Shaft",
+                        "node_name": "Dock to Alpha Arena"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Alpha Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12237.149971426239,
+                        "y": -1005.7269981222956,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Alpha 6",
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12428.59417095273,
+                        "y": -1345.754755490244,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Teleporter Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 6",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to Main Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

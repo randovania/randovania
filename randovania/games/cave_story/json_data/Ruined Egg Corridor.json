@@ -513,7 +513,7 @@
                     }
                 },
                 "Hint - Blue Robot": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 35.38,
@@ -525,10 +525,17 @@
                         "default"
                     ],
                     "extra": {
-                        "event": "0210"
+                        "event": "0210",
+                        "string_asset_id": 7
                     },
-                    "string_asset_id": 7,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Teleporter to Arthur's House": {
                             "type": "and",
@@ -1887,7 +1894,7 @@
                     }
                 },
                 "Hint - Mrs. Little": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 149.03,
@@ -1900,10 +1907,17 @@
                     ],
                     "extra": {
                         "event": "0212",
-                        "hint_index": 55
+                        "hint_index": 55,
+                        "string_asset_id": 11
                     },
-                    "string_asset_id": 11,
-                    "lore_type": "specific-pickup",
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Outer Wall": {
                             "type": "and",

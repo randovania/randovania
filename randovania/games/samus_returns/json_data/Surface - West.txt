@@ -1,0 +1,176 @@
+----------------
+Landing Site
+Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
+Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
+Extra - asset_id: collision_camera_000
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_004
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Landing Site Storage
+      Trivial
+  > Top of Mountain
+      Climb Rooms Vertically (No High Jump)
+  > Dock to Transport to Area 8
+      Baby Metroid
+
+> Door to Landing Site Storage; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Landing Site Storage/Door to Landing Site
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+
+> Top of Mountain; Heals? False
+  * Layers: default
+  > Save Station
+      Trivial
+  > Dock to Crumble Drop Shaft (Top)
+      Space Jump
+  > Event - Proteus Ridley
+      Trivial
+
+> Dock to Crumble Drop Shaft (Top); Heals? False
+  * Layers: default
+  * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Top)
+  > Top of Mountain
+      Trivial
+
+> Dock to Crumble Drop Shaft (Bottom); Heals? False
+  * Layers: default
+  * Not Determined to Crumble Drop Shaft/Dock to Landing Site (Bottom)
+  > Save Station
+      Trivial
+
+> Event - Proteus Ridley; Heals? False
+  * Layers: default
+  * Event Surface (West) - Proteus Ridley
+  > Top of Mountain
+      Trivial
+
+> Dock to Transport to Area 8; Heals? False
+  * Layers: default
+  * Open Passage to Transport to Area 8/Dock to Landing Site
+  > Save Station
+      Trivial
+
+----------------
+Transport to Area 8
+Extra - total_boundings: {'x1': -40700.0, 'x2': -22900.0, 'y1': -100.0, 'y2': 4900.0}
+Extra - polygon: [[-40700.0, 4900.0], [-40700.0, 100.0], [-37000.0, 100.0], [-36500.0, -100.0], [-22900.0, -100.0], [-22900.0, 4900.0]]
+Extra - asset_id: collision_camera_017
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 169; Major Location? False
+  * Extra - actor_name: LE_Item_013
+  * Extra - actor_type: item_supermissiletank
+  > Elevator to Area 8 - Transport to Surface (West)
+      Baby Metroid and Morph Ball
+
+> Elevator to Area 8 - Transport to Surface (West); Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 1 - Chozo Seal
+  * Extra - actor_name: LE_Platform_Elevator_FromArea10
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Baby Metroid and Morph Ball
+          Space Jump or Spider Ball
+  > Save Station
+      Baby Metroid and Climb Rooms Vertically (No High Jump)
+
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyRecharge_001
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Missile Tank)
+      Baby Metroid and High Jump Boots and Lay Power Bomb
+  > Dock to Landing Site
+      Baby Metroid and Climb Rooms Vertically (No High Jump)
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_003
+  * Extra - actor_type: weightactivatedplatform
+  > Elevator to Area 8 - Transport to Surface (West)
+      Baby Metroid
+  > Pickup (Missile Tank)
+      Baby Metroid and High Jump Boots
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Surface (West) - Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_00b_01
+  * Extra - actor_type: weightactivatedplatform
+  > Dock to Landing Site
+      Baby Metroid
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 170; Major Location? False
+  * Extra - actor_name: HiddenPowerup002
+  * Extra - actor_type: item_missiletank
+  > Energy Recharge Station
+      Trivial
+  > Save Station
+      High Jump Boots
+
+> Dock to Landing Site; Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Transport to Area 8
+  > Energy Recharge Station
+      Trivial
+  > Teleporter
+      Baby Metroid and After Surface (West) - Teleporter Unlocked
+  > Event - Teleporter Unlocked
+      Baby Metroid
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Surface (West) - Teleporter Unlocked
+  > Dock to Landing Site
+      Trivial
+
+----------------
+Landing Site Storage
+Extra - total_boundings: {'x1': -19000.0, 'x2': -16300.0, 'y1': 4500.0, 'y2': 6900.0}
+Extra - polygon: [[-19000.0, 6900.0], [-19000.0, 4500.0], [-16300.0, 4500.0], [-16300.0, 6900.0]]
+Extra - asset_id: collision_camera_018
+> (Aeion Tank); Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_senergytank
+  > Door to Landing Site
+      Trivial
+
+> Door to Landing Site; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Landing Site/Door to Landing Site Storage
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > (Aeion Tank)
+      Grapple Beam and Missile and Morph Ball and Phase Drift
+
+----------------
+Crumble Drop Shaft
+Extra - total_boundings: {'x1': -24900.0, 'x2': -23000.0, 'y1': 7200.0, 'y2': 11100.0}
+Extra - polygon: [[-24900.0, 11100.0], [-24900.0, 7200.0], [-23000.0, 7200.0], [-23000.0, 11100.0]]
+Extra - asset_id: collision_camera_019
+> (Super Missile Tank); Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_supermissiletank
+  > Dock to Landing Site (Bottom)
+      Trivial
+
+> Dock to Landing Site (Top); Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Top)
+  > (Super Missile Tank)
+      Trivial
+
+> Dock to Landing Site (Bottom); Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Bottom)
+

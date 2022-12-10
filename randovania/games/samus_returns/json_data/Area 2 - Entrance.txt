@@ -1,0 +1,316 @@
+----------------
+Chozo Seal
+Extra - total_boundings: {'x1': 19000.0, 'x2': 25000.0, 'y1': -9600.0, 'y2': -900.0}
+Extra - polygon: [[20400.0, -900.0], [20400.0, -1900.0], [19000.0, -2000.0], [19000.0, -4600.0], [20100.0, -4600.0], [20300.0, -5200.0], [20300.0, -9600.0], [25000.0, -9600.0], [25000.0, -900.0]]
+Extra - asset_id: collision_camera
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 52; Major Location? False
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_missiletank
+  > Chozo Seal
+      Morph Ball
+
+> Elevator To Area 1 - Chozo Seal; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 1 - Chozo Seal
+  * Extra - actor_name: LE_Platform_Elevator_FromArea01
+  * Extra - actor_type: weightactivatedplatform
+  > Save Station
+      Trivial
+
+> Elevator to Area 3 Exterior - Transport to Area 2 Entrance; Heals? False
+  * Layers: default
+  * Teleporter to Area 3 - Exterior - Transport to Area 2 Entrance
+  * Extra - actor_name: LE_Platform_Elevator_FromArea03
+  * Extra - actor_type: weightactivatedplatform
+  > Chozo Seal
+      Morph Ball
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation002
+  * Extra - actor_type: weightactivatedplatform
+  > Elevator To Area 1 - Chozo Seal
+      Trivial
+  > Chozo Seal
+      Morph Ball
+  > Door to Teleporter Room (Top)
+      Trivial
+
+> Chozo Seal; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE__Platform_ChozoUnlockAreaDNA
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Missile Tank)
+      Lighting Armor and Destroy Bomb Block
+  > Elevator to Area 3 Exterior - Transport to Area 2 Entrance
+      Morph Ball
+  > Save Station
+      Morph Ball
+  > Door to Teleporter Room (Bottom)
+      Trivial
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bomb or Melee Clip (Beginner)
+              Baby Metroid and Bomb
+  > Event - Chozo Seal Unlocked
+      After Area 2 (Exterior) - Alpha Metroid West and After Area 2 (Exterior) - Alpha Metroid Heat and After Area 2 (Exterior) - Alpha Metroid+ Heat and After Area 2 (Entrance) - Alpha Metroid and After Area 2 (Exterior) - Alpha Metroid North and After Area 2 (Exterior) - Alpha Metroid+ North and After Area 2 (Exterior) - Alpha Metroid South
+
+> Door to Teleporter Room (Top); Heals? False
+  * Layers: default
+  * Access Locked to Teleporter Room/Door to Chozo Seal (Top)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerclosed
+  > Save Station
+      Trivial
+
+> Door to Teleporter Room (Bottom); Heals? False
+  * Layers: default
+  * Charge Beam Door to Teleporter Room/Door to Chozo Seal (Bottom)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorchargecharge
+  > Chozo Seal
+      Trivial
+
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 54; Major Location? False
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_powerbombtank
+  > Chozo Seal
+      Destroy Bomb Block
+
+> Event - Chozo Seal Unlocked; Heals? False
+  * Layers: default
+  * Event Area 2 (Entrance) - Chozo Seal Unlocked
+  > Chozo Seal
+      Trivial
+
+----------------
+Teleporter Room
+Extra - total_boundings: {'x1': 13600.0, 'x2': 19100.0, 'y1': -5400.0, 'y2': -200.0}
+Extra - polygon: [[13800.0, -200.0], [13800.0, -1500.0], [14050.0, -1500.0], [14050.0, -2650.0], [14150.0, -2650.0], [14150.0, -5400.0], [19100.0, -5400.0], [19100.0, -200.0]]
+Extra - asset_id: collision_camera_003
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 51; Major Location? False
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_missiletank
+  > Below Teleporter
+      Trivial
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 2 (Interior) - Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_02_01
+  * Extra - actor_type: weightactivatedplatform
+  > Below Teleporter
+      Trivial
+
+> Door to Chozo Seal (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Chozo Seal/Door to Teleporter Room (Top)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerclosed
+  > Door to Chozo Seal (Bottom)
+      Morph Ball
+
+> Door to Chozo Seal (Bottom); Heals? False
+  * Layers: default
+  * Charge Beam Door to Chozo Seal/Door to Teleporter Room (Bottom)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorchargecharge
+  > Door to Chozo Seal (Top)
+      Morph Ball
+  > Below Teleporter
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+          Morph Ball and Unmorph Extend (Beginner)
+
+> Door to Alpha Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Arena/Door to Teleporter Room
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Below Teleporter
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 2 (Entrance) - Teleporter Unlocked
+  > Below Teleporter
+      Trivial
+
+> Below Teleporter; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Teleporter
+      After Area 2 (Entrance) - Teleporter Unlocked
+  > Door to Chozo Seal (Bottom)
+      Trivial
+  > Door to Alpha Arena
+      Trivial
+  > Event - Teleporter Unlocked
+      Trivial
+
+----------------
+Transport to Area 2 Exterior
+Extra - total_boundings: {'x1': 3900.0, 'x2': 8800.0, 'y1': -3000.0, 'y2': 700.0}
+Extra - polygon: [[3900.0, 700.0], [3900.0, -2500.0], [5600.0, -2500.0], [7200.0, -3000.0], [8800.0, -3000.0], [8800.0, 700.0]]
+Extra - asset_id: collision_camera_004
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 50; Major Location? False
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_missiletank
+  > Above Chozo Head
+      Trivial
+
+> Pickup (Lightning Armor); Heals? False
+  * Layers: default
+  * Pickup 53; Major Location? True
+  * Extra - actor_name: LE_SpecialAbility_EnergyShield
+  * Extra - actor_type: powerup_energyshield
+  > Door to Main Shaft (Bottom)
+      Morph Ball
+  > Above Chozo Head
+      Morph Ball
+
+> Elevator to Area 2 Exterior - Outer Hub; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 2 - Exterior - Outer Hub
+  * Extra - actor_name: LE_Platform_Elevator_FromArea02A
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Main Shaft (Top)
+      Trivial
+
+> Door to Main Shaft (Bottom); Heals? False
+  * Layers: default
+  * Charge Beam Door to Main Shaft/Door to Transport to Area 2 Exterior (Bottom)
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorchargecharge
+  > Pickup (Lightning Armor)
+      Morph Ball
+
+> Door to Main Shaft (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Main Shaft/Door to Transport to Area 2 Exterior (Top)
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerclosed
+  > Elevator to Area 2 Exterior - Outer Hub
+      Trivial
+  > Above Chozo Head
+      Trivial
+
+> Above Chozo Head; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Lighting Armor and Morph Ball
+  > Pickup (Lightning Armor)
+      Morph Ball
+  > Door to Main Shaft (Top)
+      Morph Ball
+
+----------------
+Main Shaft
+Extra - total_boundings: {'x1': 8700.0, 'x2': 10500.0, 'y1': -3000.0, 'y2': 100.0}
+Extra - polygon: [[8700.0, 100.0], [8700.0, -3000.0], [10500.0, -3000.0], [10500.0, 100.0]]
+Extra - asset_id: collision_camera_005
+> Door to Transport to Area 2 Exterior (Bottom); Heals? False
+  * Layers: default
+  * Charge Beam Door to Transport to Area 2 Exterior/Door to Main Shaft (Bottom)
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorchargecharge
+  > Dock to Alpha Arena
+      Any of the following:
+          Use Spider Ball
+          All of the following:
+              Lighting Armor
+              High Jump Boots or Space Jump or Super Jump (Intermediate) or Walljump (Beginner)
+  > Dock to Water Storage
+      Any of the following:
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Lighting Armor and Walljump (Beginner)
+
+> Door to Transport to Area 2 Exterior (Top); Heals? False
+  * Layers: default
+  * Access Locked to Transport to Area 2 Exterior/Door to Main Shaft (Top)
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerclosed
+  > Dock to Alpha Arena
+      Trivial
+
+> Dock to Alpha Arena; Heals? False
+  * Layers: default
+  * Open Passage to Alpha Arena/Dock to Main Shaft
+  > Door to Transport to Area 2 Exterior (Bottom)
+      Trivial
+  > Door to Transport to Area 2 Exterior (Top)
+      Trivial
+
+> Dock to Water Storage; Heals? False
+  * Layers: default
+  * Open Passage to Water Storage/Dock to Main Shaft
+  > Door to Transport to Area 2 Exterior (Bottom)
+      Trivial
+
+----------------
+Water Storage
+Extra - total_boundings: {'x1': 10300.0, 'x2': 15100.0, 'y1': -3200.0, 'y2': -1600.0}
+Extra - polygon: [[10400.0, -1600.0], [10400.0, -3100.0], [14200.0, -3100.0], [14200.0, -1600.0]]
+Extra - asset_id: collision_camera_006
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 49; Major Location? False
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_missiletank
+  > Dock to Main Shaft
+      Trivial
+
+> Dock to Main Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Main Shaft/Dock to Water Storage
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Lighting Armor or After Area 5 (Interior) - Gravity Suit Room Pickup
+
+----------------
+Alpha Arena
+Extra - total_boundings: {'x1': 10400.0, 'x2': 13900.0, 'y1': -1500.0, 'y2': -200.0}
+Extra - polygon: [[10400.0, -200.0], [10400.0, -1500.0], [13900.0, -1500.0], [13900.0, -200.0]]
+Extra - asset_id: collision_camera_007
+> Door to Teleporter Room; Heals? False
+  * Layers: default
+  * Power Beam Door to Teleporter Room/Door to Alpha Arena
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Inside Arena
+      Trivial
+
+> Dock to Main Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Main Shaft/Dock to Alpha Arena
+  > Inside Arena
+      Morph Ball and Destroy Missile Block
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Entrance) - Alpha Metroid
+  > Inside Arena
+      Trivial
+
+> Inside Arena; Heals? False
+  * Layers: default
+  > Door to Teleporter Room
+      After Area 2 (Entrance) - Alpha Metroid
+  > Dock to Main Shaft
+      Morph Ball and Destroy Missile Block
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+

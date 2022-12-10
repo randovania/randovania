@@ -1,11 +1,12 @@
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.layout_description import LayoutDescription
 
 
 class GenerationFailure(Exception):
     generator_params: GeneratorParameters
-    source: Exception
+    source: Exception | None
 
-    def __init__(self, reason: str, generator_params: GeneratorParameters, source: Exception):
+    def __init__(self, reason: str, generator_params: GeneratorParameters, source: Exception | None):
         super().__init__(reason)
         self.generator_params = generator_params
         self.source = source
@@ -23,9 +24,19 @@ class GenerationFailure(Exception):
         return super(Exception, other).__str__() == super().__str__()
 
 
-class ImpossibleForSolver(Exception):
-    pass
+class ImpossibleForSolver(GenerationFailure):
+    def __init__(self, reason: str, generator_params: GeneratorParameters, layout: LayoutDescription):
+        super().__init__(reason, generator_params, None)
+        self.layout = layout
 
+    def __reduce__(self):
+        return ImpossibleForSolver, (super().__str__(), self.generator_params, self.layout)
 
-class InvalidConfiguration(Exception):
-    pass
+    def __eq__(self, other):
+        if not isinstance(other, ImpossibleForSolver):
+            return False
+
+        if self.layout != other.layout:
+            return False
+
+        return super().__eq__(other)

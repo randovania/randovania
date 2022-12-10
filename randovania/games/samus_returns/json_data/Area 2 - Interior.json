@@ -1,0 +1,4089 @@
+{
+    "name": "Area 2 - Interior",
+    "extra": {
+        "asset_id": "maps/levels/c10_samus/s025_area2b/s025_area2b.bmsld",
+        "map_min_x": 0,
+        "map_max_x": 13,
+        "map_min_y": 4,
+        "map_max_y": 15,
+        "scenario_id": "s025_area2b"
+    },
+    "areas": {
+        "Main Hub": {
+            "default_node": "Elevator to Area 2 Exterior - Outer Hub",
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -10700.0,
+                    "x2": -3300.0,
+                    "y1": -1500.0,
+                    "y2": 2400.0
+                },
+                "polygon": [
+                    [
+                        -8400.0,
+                        2400.0
+                    ],
+                    [
+                        -8400.0,
+                        1000.0
+                    ],
+                    [
+                        -10700.0,
+                        1000.0
+                    ],
+                    [
+                        -10700.0,
+                        -1300.0
+                    ],
+                    [
+                        -8500.0,
+                        -1300.0
+                    ],
+                    [
+                        -7500.0,
+                        -1500.0
+                    ],
+                    [
+                        -5700.0,
+                        -1500.0
+                    ],
+                    [
+                        -5700.0,
+                        -100.0
+                    ],
+                    [
+                        -5200.0,
+                        0.0
+                    ],
+                    [
+                        -3300.0,
+                        0.0
+                    ],
+                    [
+                        -3300.0,
+                        2400.0
+                    ]
+                ],
+                "asset_id": "collision_camera009"
+            },
+            "nodes": {
+                "Pickup (Wave Beam)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5464.877934852794,
+                        "y": 839.7108995406816,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_PowerUp_WaveBeam",
+                        "actor_type": "itemsphere_wavebeam"
+                    },
+                    "pickup_index": 46,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Varia Suit Room (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Elevator to Area 2 Exterior - Outer Hub": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10195.629376233588,
+                        "y": -353.14333209688266,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Elevator_FromArea02A",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "destination": {
+                        "world_name": "Area 2 - Exterior",
+                        "area_name": "Outer Hub"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": true,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8379.237705330934,
+                        "y": -502.25011105157864,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_SaveStation",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Elevator to Area 2 Exterior - Outer Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fully Freeze Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FrozenEnemy",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "AirMorph",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fiery Balcony": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Varia Suit Room (Bottom)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Varia Suit Room (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fully Freeze Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FrozenEnemy",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10642.949713097676,
+                        "y": -963.1256096388192,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door002",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Main Hub"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Balcony": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5756.313911900608,
+                        "y": -1471.4441742570998,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Balcony",
+                        "node_name": "Door to Main Hub"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Wallfire Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Wallfire Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5756.313911900608,
+                        "y": -719.1326986220447,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door005",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Wallfire Path",
+                        "node_name": "Door to Main Hub"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Fiery Balcony": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3363.827867763901,
+                        "y": 250.06136458347646,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door008",
+                        "actor_type": "doorclosedpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Main Hub (Bottom)"
+                    },
+                    "default_dock_weakness": "Access Locked",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Varia Suit Room (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MeleeClip",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room (Middle)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3370.605448625478,
+                        "y": 710.9368631707173,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door009",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Main Hub (Middle)"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Wave Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3370.605448625478,
+                        "y": 1741.1291541304317,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door019",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Main Hub (Top)"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Varia Suit Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -4200.0,
+                    "x2": 1000.0,
+                    "y1": -4600.0,
+                    "y2": 2400.0
+                },
+                "polygon": [
+                    [
+                        -3400.0,
+                        2400.0
+                    ],
+                    [
+                        -3400.0,
+                        350.0
+                    ],
+                    [
+                        -4200.0,
+                        100.0
+                    ],
+                    [
+                        -4200.0,
+                        -1600.0
+                    ],
+                    [
+                        -3800.0,
+                        -1600.0
+                    ],
+                    [
+                        -3200.0,
+                        -2000.0
+                    ],
+                    [
+                        -3200.0,
+                        -4000.0
+                    ],
+                    [
+                        -1850.0,
+                        -4100.0
+                    ],
+                    [
+                        -1850.0,
+                        -4600.0
+                    ],
+                    [
+                        1000.0,
+                        -4600.0
+                    ],
+                    [
+                        1000.0,
+                        -3000.0
+                    ],
+                    [
+                        100.0,
+                        -3000.0
+                    ],
+                    [
+                        -200.0,
+                        -2900.0
+                    ],
+                    [
+                        -200.0,
+                        2400.0
+                    ]
+                ],
+                "asset_id": "collision_camera011"
+            },
+            "nodes": {
+                "Pickup (Varia Suit)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2048.0737799156054,
+                        "y": -852.0368402408785,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_PowerUp_VariaSuite",
+                        "actor_type": "itemsphere_variasuit"
+                    },
+                    "pickup_index": 45,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Wallfire Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Ammo Recharge Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1285.9133309717795,
+                        "y": 524.1586964222458,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_AmmoCharge",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Pickup (Varia Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SpiderClip",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Main Hub (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Main Hub (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Top of Morph Ball Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Balcony": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4170.986445923523,
+                        "y": -1382.765006742858,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door004",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Balcony",
+                        "node_name": "Door to Varia Suit Room"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Wallfire Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Wallfire Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4144.885060685721,
+                        "y": -730.2303757978011,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Wallfire Path",
+                        "node_name": "Door to Varia Suit Room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Varia Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fiery Balcony": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Shortcut": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Main Hub (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3370.543965297587,
+                        "y": 244.22133974681674,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door008",
+                        "actor_type": "doorclosedpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Varia Suit Room (Bottom)"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Main Hub (Middle)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3361.843503551653,
+                        "y": 722.7467357731914,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door009",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Varia Suit Room (Middle)"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Teleporter Shaft Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -238.3777367613152,
+                        "y": -2096.2028699094526,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door012",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft Access",
+                        "node_name": "Door to Varia Suit Room"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Right Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1804.460851029451,
+                        "y": -4445.327541311656,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door018",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Gamma Arena",
+                        "node_name": "Door to Varia Suit Room"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Bottom of Morph Ball Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Destroy Bomb Block"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Phase",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Phase",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spring",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "AirMorph",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Main Hub (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3370.543965297587,
+                        "y": 1758.101683539348,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door019",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Varia Suit Room (Top)"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Right Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Super Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2361.290402769233,
+                        "y": -1556.7742416615397,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "HP_Item_002",
+                        "actor_type": "item_supermissiletank"
+                    },
+                    "pickup_index": 48,
+                    "major_location": false,
+                    "connections": {
+                        "Inside Shortcut": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Shortcut": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2700.608410860662,
+                        "y": -1365.3640832509896,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Wallfire Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Super Missile Tank)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        },
+                        "Bottom of Morph Ball Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Right Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Bottom of Morph Ball Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1543.4469986514287,
+                        "y": -3549.1799814804453,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        },
+                        "Top of Morph Ball Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Top of Morph Ball Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1134.5252965925265,
+                        "y": -25.492974377139944,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Ammo Recharge Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Inside Shortcut": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Bottom of Morph Ball Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Right Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -624.6782382807887,
+                        "y": -1128.929035305231,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Teleporter Shaft Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Main Hub (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Shortcut": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Path": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -13000.0,
+                    "x2": -5700.0,
+                    "y1": -4600.0,
+                    "y2": -200.0
+                },
+                "polygon": [
+                    [
+                        -5700.0,
+                        -1500.0
+                    ],
+                    [
+                        -7100.0,
+                        -1500.0
+                    ],
+                    [
+                        -8700.0,
+                        -1000.0
+                    ],
+                    [
+                        -9700.0,
+                        -1000.0
+                    ],
+                    [
+                        -10600.0,
+                        -900.0
+                    ],
+                    [
+                        -10600.0,
+                        -200.0
+                    ],
+                    [
+                        -13000.0,
+                        -200.0
+                    ],
+                    [
+                        -13000.0,
+                        -3300.0
+                    ],
+                    [
+                        -10100.0,
+                        -3300.0
+                    ],
+                    [
+                        -8500.0,
+                        -4600.0
+                    ],
+                    [
+                        -5750.0,
+                        -4600.0
+                    ],
+                    [
+                        -5750.0,
+                        -3400.0
+                    ],
+                    [
+                        -5700.0,
+                        -3200.0
+                    ]
+                ],
+                "asset_id": "collision_camera012"
+            },
+            "nodes": {
+                "Door to Main Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10647.047047047046,
+                        "y": -947.6726726726727,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door002",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Gamma Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5818.471564783136,
+                        "y": -4441.367889893925,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door010",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Gamma Arena",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5818.471564783136,
+                        "y": -3886.3591153603807,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door015",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Storage",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Balcony": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5757.24057390724,
+                        "y": -2597.906239572906,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door020",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Balcony",
+                        "node_name": "Door to Fiery Path"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10273.74748090172,
+                        "y": -2023.6584337067065,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "HP_Item_001",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 47,
+                    "major_location": false,
+                    "connections": {
+                        "Under Pickup": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Under Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10296.55606067707,
+                        "y": -3057.647383522624,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Gamma Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Fiery Storage": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Fiery Balcony": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spider",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Boots",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Space",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Storage": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5850.0,
+                    "x2": -2700.0,
+                    "y1": -4002.070068359375,
+                    "y2": -2800.0
+                },
+                "polygon": [
+                    [
+                        -5850.0,
+                        -2800.0
+                    ],
+                    [
+                        -5850.0,
+                        -4002.070068359375
+                    ],
+                    [
+                        -2700.0,
+                        -4002.070068359375
+                    ],
+                    [
+                        -2700.0,
+                        -2800.0
+                    ]
+                ],
+                "asset_id": "collision_camera013"
+            },
+            "nodes": {
+                "Pickup (Power Bomb Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3472.8722407086284,
+                        "y": -2979.4668662085573,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_006",
+                        "actor_type": "item_powerbombtank"
+                    },
+                    "pickup_index": 43,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5809.534534534535,
+                        "y": -3862.183682828336,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door015",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Fiery Storage"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Bomb",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "PBAmmo",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Teleporter Shaft Access": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -1700.0,
+                    "x2": 3100.0,
+                    "y1": -3100.0,
+                    "y2": -1700.0
+                },
+                "polygon": [
+                    [
+                        -300.0,
+                        -1700.0
+                    ],
+                    [
+                        -300.0,
+                        -2339.639892578125
+                    ],
+                    [
+                        -1700.0,
+                        -2339.639892578125
+                    ],
+                    [
+                        -1700.0,
+                        -3100.0
+                    ],
+                    [
+                        3100.0,
+                        -3100.0
+                    ],
+                    [
+                        3100.0,
+                        -1700.0
+                    ]
+                ],
+                "asset_id": "collision_camera015"
+            },
+            "nodes": {
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -250.0,
+                        "y": -2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door012",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Teleporter Shaft Access"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Teleporter Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Energy Recharge Station": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Tunnel to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3046.3463463463468,
+                        "y": -2414.014014014014,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Tunnel to Teleporter Shaft Access"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Energy Recharge Station": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -1097.1911077783504,
+                        "y": -3042.3895892893406,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_EnergyCharge",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                }
+            }
+        },
+        "Teleporter Shaft": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 2200.0,
+                    "x2": 4700.0,
+                    "y1": -6800.0,
+                    "y2": -1600.0
+                },
+                "polygon": [
+                    [
+                        3000.0,
+                        -1600.0
+                    ],
+                    [
+                        3000.0,
+                        -5200.0
+                    ],
+                    [
+                        2200.0,
+                        -5200.0
+                    ],
+                    [
+                        2200.0,
+                        -6800.0
+                    ],
+                    [
+                        4700.0,
+                        -6800.0
+                    ],
+                    [
+                        4700.0,
+                        -1600.0
+                    ]
+                ],
+                "asset_id": "collision_camera016"
+            },
+            "nodes": {
+                "Teleporter": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3311.0411966863667,
+                        "y": -3427.647581582365,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Platform_Teleporter_02_04",
+                        "actor_type": "weightactivatedplatform"
+                    },
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Area 2 Interior Teleporter",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "default",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Horseshoe Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2264.972251741646,
+                        "y": -5922.281261069785,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door016",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Horseshoe Path",
+                        "node_name": "Door to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Fan Tunnel": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2264.002771718527,
+                        "y": -6517.057255252904,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door017",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fan Tunnel",
+                        "node_name": "Door to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Plasma Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to High Jump Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4629.534028127349,
+                        "y": -4209.694800231184,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Shaft",
+                        "node_name": "Tunnel to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Teleporter Shaft Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3032.4772700436883,
+                        "y": -2404.03825717322,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft Access",
+                        "node_name": "Tunnel to Teleporter Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Under Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Under Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3789.318008091429,
+                        "y": -3815.4395908297133,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Horseshoe Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fan Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to High Jump Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Teleporter Shaft Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Teleporter Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3330.430797148734,
+                        "y": -3117.4139741844865,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Area 2 Interior Teleporter",
+                    "connections": {
+                        "Next to Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3498.4740011559184,
+                        "y": -3421.184381428243,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Area 2 Interior Teleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Under Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Horseshoe Path": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -4000.0,
+                    "x2": 2300.0,
+                    "y1": -8100.0,
+                    "y2": -5400.0
+                },
+                "polygon": [
+                    [
+                        -4000.0,
+                        -5400.0
+                    ],
+                    [
+                        -4000.0,
+                        -8100.0
+                    ],
+                    [
+                        -1700.0,
+                        -8100.0
+                    ],
+                    [
+                        -1700.0,
+                        -7100.0
+                    ],
+                    [
+                        -400.0,
+                        -6200.0
+                    ],
+                    [
+                        2300.0,
+                        -6200.0
+                    ],
+                    [
+                        2300.0,
+                        -5400.0
+                    ]
+                ],
+                "asset_id": "collision_camera017"
+            },
+            "nodes": {
+                "Door to High Jump Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1759.1591591591591,
+                        "y": -7735.360360360361,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door014",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Storage",
+                        "node_name": "Door to Horseshoe Path"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Teleporter Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2268.740469026915,
+                        "y": -5910.45006800478,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door016",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Door to Horseshoe Path"
+                    },
+                    "default_dock_weakness": "Wave Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to High Jump Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Storage": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -1800.0,
+                    "x2": 300.0,
+                    "y1": -8100.0,
+                    "y2": -7100.0
+                },
+                "polygon": [
+                    [
+                        -1800.0,
+                        -7100.0
+                    ],
+                    [
+                        -1800.0,
+                        -8100.0
+                    ],
+                    [
+                        300.0,
+                        -8100.0
+                    ],
+                    [
+                        300.0,
+                        -7100.0
+                    ]
+                ],
+                "asset_id": "collision_camera018"
+            },
+            "nodes": {
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6.618445094725985,
+                        "y": -7849.076096662958,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_001",
+                        "actor_type": "item_energytank"
+                    },
+                    "pickup_index": 40,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Horseshoe Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1302.9681682671835,
+                        "y": -7485.559631262966,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_002",
+                        "actor_type": "item_missiletank"
+                    },
+                    "pickup_index": 41,
+                    "major_location": false,
+                    "connections": {
+                        "Tunnel to High Jump Secret": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Horseshoe Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1743.2432432432433,
+                        "y": -7739.264264264264,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door014",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Horseshoe Path",
+                        "node_name": "Door to High Jump Storage"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to High Jump Secret": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 195.33514679415862,
+                        "y": -7185.514294742337,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Secret",
+                        "node_name": "Tunnel to High Jump Storage"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Secret": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 200.0,
+                    "x2": 2300.0,
+                    "y1": -8400.0,
+                    "y2": -7100.0
+                },
+                "polygon": [
+                    [
+                        200.0,
+                        -7100.0
+                    ],
+                    [
+                        200.0,
+                        -8400.0
+                    ],
+                    [
+                        2300.0,
+                        -8400.0
+                    ],
+                    [
+                        2300.0,
+                        -7100.0
+                    ]
+                ],
+                "asset_id": "collision_camera019"
+            },
+            "nodes": {
+                "Tunnel to High Jump Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 216.73126614987075,
+                        "y": -7192.6679586563305,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Storage",
+                        "node_name": "Tunnel to High Jump Secret"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to High Jump Room": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Tunnel to High Jump Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2265.18,
+                        "y": -8187.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Room",
+                        "node_name": "Tunnel to High Jump Secret"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to High Jump Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Fully Freeze Enemy"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 2200.0,
+                    "x2": 4700.0,
+                    "y1": -8960.0,
+                    "y2": -7100.0
+                },
+                "polygon": [
+                    [
+                        2200.0,
+                        -7100.0
+                    ],
+                    [
+                        2200.0,
+                        -8960.0
+                    ],
+                    [
+                        4700.0,
+                        -8960.0
+                    ],
+                    [
+                        4700.0,
+                        -7100.0
+                    ]
+                ],
+                "asset_id": "collision_camera021"
+            },
+            "nodes": {
+                "Pickup (High Jump Boots)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2752.981151071089,
+                        "y": -7790.724872755747,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_PowerUp_HighJumpBoots",
+                        "actor_type": "itemsphere_highjumpboots"
+                    },
+                    "pickup_index": 44,
+                    "major_location": true,
+                    "connections": {
+                        "Door to High Jump Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to High Jump Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4638.168614948636,
+                        "y": -7894.930924548353,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door013",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Shaft",
+                        "node_name": "Door to High Jump Room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (High Jump Boots)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to High Jump Secret": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Tunnel to High Jump Secret": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2259.6351399220684,
+                        "y": -8187.031526744598,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Secret",
+                        "node_name": "Tunnel to High Jump Room"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to High Jump Shaft": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                }
+            }
+        },
+        "High Jump Shaft": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": 4600.0,
+                    "x2": 6100.0,
+                    "y1": -8200.0,
+                    "y2": -3900.0
+                },
+                "polygon": [
+                    [
+                        4600.0,
+                        -3900.0
+                    ],
+                    [
+                        4600.0,
+                        -8200.0
+                    ],
+                    [
+                        6100.0,
+                        -8200.0
+                    ],
+                    [
+                        6100.0,
+                        -3900.0
+                    ]
+                ],
+                "asset_id": "collision_camera022"
+            },
+            "nodes": {
+                "Door to High Jump Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4641.844560036293,
+                        "y": -7923.271560054937,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door013",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "High Jump Room",
+                        "node_name": "Door to High Jump Shaft"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Teleporter Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spider",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boots",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boots",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4636.633604912032,
+                        "y": -4204.386586373834,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Tunnel to High Jump Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to High Jump Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Wallfire Path": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5800.0,
+                    "x2": -4100.0,
+                    "y1": -800.0,
+                    "y2": -41.720699310302734
+                },
+                "polygon": [
+                    [
+                        -5800.0,
+                        -41.720699310302734
+                    ],
+                    [
+                        -5800.0,
+                        -800.0
+                    ],
+                    [
+                        -4100.0,
+                        -800.0
+                    ],
+                    [
+                        -4100.0,
+                        -41.720699310302734
+                    ]
+                ],
+                "asset_id": "collision_camera035"
+            },
+            "nodes": {
+                "Door to Main Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5756.475970275942,
+                        "y": -696.1776128338759,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door005",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Wallfire Path"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4157.688261913317,
+                        "y": -710.3418450231351,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Wallfire Path"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fan Tunnel": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -100.0,
+                    "x2": 2300.0,
+                    "y1": -7000.0,
+                    "y2": -6200.0
+                },
+                "polygon": [
+                    [
+                        -100.0,
+                        -6200.0
+                    ],
+                    [
+                        -100.0,
+                        -7000.0
+                    ],
+                    [
+                        2300.0,
+                        -7000.0
+                    ],
+                    [
+                        2300.0,
+                        -6200.0
+                    ]
+                ],
+                "asset_id": "collision_camera036"
+            },
+            "nodes": {
+                "Pickup (Aeion Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 156.84754521963805,
+                        "y": -6774.418604651162,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_005",
+                        "actor_type": "item_senergytank"
+                    },
+                    "pickup_index": 42,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Teleporter Shaft": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Door to Teleporter Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2262.7906976744184,
+                        "y": -6490.180878552971,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door017",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Teleporter Shaft",
+                        "node_name": "Door to Fan Tunnel"
+                    },
+                    "default_dock_weakness": "Plasma Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Aeion Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Missile Block"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gamma Arena": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5850.0,
+                    "x2": -1750.0,
+                    "y1": -5100.0,
+                    "y2": -3900.0
+                },
+                "polygon": [
+                    [
+                        -1750.0,
+                        -3900.0
+                    ],
+                    [
+                        -5850.0,
+                        -3900.0
+                    ],
+                    [
+                        -5850.0,
+                        -5100.0
+                    ],
+                    [
+                        -1750.0,
+                        -5100.0
+                    ]
+                ],
+                "asset_id": "collision_camera037"
+            },
+            "nodes": {
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5809.0817724037015,
+                        "y": -4433.8134591450425,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door010",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Gamma Arena"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1807.9986252362878,
+                        "y": -4433.8134591450425,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door018",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Gamma Arena"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gamma Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3836.2958449849766,
+                        "y": -4485.05465206501,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Gamma 1",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3823.485546754985,
+                        "y": -4826.662604864789,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Fiery Path": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gamma 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Varia Suit Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gamma 1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                }
+            }
+        },
+        "Fiery Balcony": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5800.0,
+                    "x2": -4100.0,
+                    "y1": -2800.0,
+                    "y2": -800.0
+                },
+                "polygon": [
+                    [
+                        -5800.0,
+                        -800.0
+                    ],
+                    [
+                        -5800.0,
+                        -2800.0
+                    ],
+                    [
+                        -4100.0,
+                        -2800.0
+                    ],
+                    [
+                        -4100.0,
+                        -800.0
+                    ]
+                ],
+                "asset_id": "collision_camera041"
+            },
+            "nodes": {
+                "Door to Main Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5757.651434643995,
+                        "y": -1468.2016767032708,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Main Hub",
+                        "node_name": "Door to Fiery Balcony"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Varia Suit Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Fiery Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4154.156334868343,
+                        "y": -1364.2933049946864,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door004",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Varia Suit Room",
+                        "node_name": "Door to Fiery Balcony"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Fiery Path": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5755.289880741528,
+                        "y": -2604.1091037902943,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door020",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 2 - Interior",
+                        "area_name": "Fiery Path",
+                        "node_name": "Door to Fiery Balcony"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

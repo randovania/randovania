@@ -1,0 +1,796 @@
+----------------
+Landing Site
+(Valid Starting Location)
+Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
+Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
+Extra - asset_id: collision_camera_000
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_004
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Landing Site Storage
+      Trivial
+  > Top of Mountain
+      Climb Rooms Vertically (No High Jump)
+  > Dock to Crumble Drop Shaft (Top)
+      Climb Rooms Vertically (No High Jump) and Lay Power Bomb
+
+> Door to Landing Site Storage; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Landing Site Storage/Door to Landing Site
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+
+> Dock to Entrance Pathway; Heals? False
+  * Layers: default
+  * Open Passage to Entrance Pathway/Dock to Landing Site
+  > Ship
+      Trivial
+
+> Ship; Heals? True; Spawn Point
+  * Layers: default
+  > Dock to Entrance Pathway
+      Trivial
+  > Top of Mountain
+      Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (No High Jump)
+
+> Top of Mountain; Heals? False
+  * Layers: default
+  > Save Station
+      Trivial
+  > Ship
+      Trivial
+
+> Dock to Crumble Drop Shaft (Top); Heals? False
+  * Layers: default
+  * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Top)
+  > Save Station
+      Trivial
+
+> Dock to Crumble Drop Shaft (Bottom); Heals? False
+  * Layers: default
+  * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Bottom)
+  > Save Station
+      Trivial
+
+----------------
+Melee Tutorial Pathway
+Extra - total_boundings: {'x1': 0.0, 'x2': 9400.0, 'y1': -4200.0, 'y2': 1700.0}
+Extra - polygon: [[0.0, 1700.0], [0.0, -800.0], [5300.0, -800.0], [6300.0, -1400.0], [6300.0, -4200.0], [9400.0, -4200.0], [9400.0, -2400.0], [8400.0, -2300.0], [8300.0, -2100.0], [8300.0, 300.0], [3100.0, 300.0], [3100.0, 1700.0]]
+Extra - asset_id: collision_camera_002
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 5; Major Location? False
+  * Extra - actor_name: LE_Item_006
+  * Extra - actor_type: item_missiletank
+  > Door to Morph Ball Room
+      Trivial
+
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoRecharge_002
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Entrance Pathway
+      Trivial
+  > Door to Morph Ball Room
+      Trivial
+
+> Door to Entrance Pathway; Heals? False
+  * Layers: default
+  * Power Beam Door to Entrance Pathway/Door to Melee Tutorial Pathway
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+
+> Door to Morph Ball Room; Heals? False
+  * Layers: default
+  * Power Beam Door to Morph Ball Room/Door to Melee Tutorial Pathway
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Ammo Recharge Station
+      Trivial
+
+----------------
+Morph Ball Room
+Extra - total_boundings: {'x1': 9300.0, 'x2': 12600.0, 'y1': -5400.0, 'y2': -2900.0}
+Extra - polygon: [[9300.0, -2900.0], [9300.0, -4400.0], [10200.0, -4610.0], [10200.0, -5400.0], [12600.0, -5400.0], [12600.0, -3800.0], [11250.0, -3800.0], [11250.0, -2900.0]]
+Extra - asset_id: collision_camera_003
+> Pickup (Morph Ball); Heals? False
+  * Layers: default
+  * Pickup 12; Major Location? True
+  * Extra - actor_name: LE_PowerUP_Morphball
+  * Extra - actor_type: itemsphere_morphball
+  > Door to Melee Tutorial Pathway
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Melee Tutorial Pathway
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Super Jump (Advanced) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+  > Door to Chozo Seal
+      Trivial
+
+> Door to Melee Tutorial Pathway; Heals? False
+  * Layers: default
+  * Power Beam Door to Melee Tutorial Pathway/Door to Morph Ball Room
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Morph Ball)
+      Trivial
+  > Save Station
+      Morph Ball
+
+> Door to Chozo Seal; Heals? False
+  * Layers: default
+  * Power Beam Door to Chozo Seal/Door to Morph Ball Room
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+
+----------------
+Chozo Seal
+Extra - total_boundings: {'x1': 4550.0, 'x2': 10300.0, 'y1': -8700.0, 'y2': -4000.0}
+Extra - polygon: [[4550.0, -4000.0], [4550.0, -8700.0], [6500.0, -8700.0], [6500.0, -7000.0], [10300.0, -6900.0], [10300.0, -4400.0], [6050.0, -4400.0], [5950.0, -4000.0]]
+Extra - asset_id: collision_camera_004
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 4; Major Location? False
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Transport to Area 1
+      Destroy Bomb Block
+
+> Chozo Seal; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Morph Ball Room
+      Trivial
+  > Door to Scan Pulse Room
+      Trivial
+  > Door to Transport to Area 1
+      Trivial
+  > Event - Chozo Seal Unlocked
+      After Surface (East) - Alpha Metroid
+
+> Door to Morph Ball Room; Heals? False
+  * Layers: default
+  * Power Beam Door to Morph Ball Room/Door to Chozo Seal
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Chozo Seal
+      Trivial
+
+> Door to Scan Pulse Room; Heals? False
+  * Layers: default
+  * Charge Beam Door to Scan Pulse Room/Door to Chozo Seal
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorchargecharge
+  > Chozo Seal
+      Trivial
+  > Tunnel to Scan Pulse Room
+      Trivial
+
+> Door to Transport to Area 1; Heals? False
+  * Layers: default
+  * Charge Beam Door to Transport to Area 1/Door to Chozo Seal
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorchargecharge
+  > Chozo Seal
+      Any of the following:
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+
+> Tunnel to Scan Pulse Room; Heals? False
+  * Layers: default
+  * Tunnel to Scan Pulse Room/Tunnel to Chozo Seal
+  > Door to Scan Pulse Room
+      Morph Ball
+
+> Tunnel to Transport to Area 1; Heals? False
+  * Layers: default
+  * Tunnel to Transport to Area 1/Tunnel to Chozo Seal
+  > Pickup (Missile Tank)
+      Morph Ball
+
+> Event - Chozo Seal Unlocked; Heals? False
+  * Layers: default
+  * Event Surface (East) - Chozo Seal Unlocked
+  > Chozo Seal
+      Trivial
+
+----------------
+Transport to Area 1
+Extra - total_boundings: {'x1': 6400.0, 'x2': 10700.0, 'y1': -10700.0, 'y2': -6800.0}
+Extra - polygon: [[6400.0, -6800.0], [6400.0, -10700.0], [10700.0, -10700.0], [10700.0, -6800.0]]
+Extra - asset_id: collision_camera_006
+> Pickup (Missile Expansion); Heals? False
+  * Layers: default
+  * Pickup 3; Major Location? False
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_missiletank
+  > Next to Teleporter
+      Trivial
+
+> Elevator to Area 1 - Chozo Seal; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 1 - Chozo Seal
+  * Extra - actor_name: LE_Platform_Elevator_FromArea01
+  * Extra - actor_type: weightactivatedplatform
+  > Next to Teleporter
+      Trivial
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Surface (East) - Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_00_01
+  * Extra - actor_type: weightactivatedplatform
+  > Next to Teleporter
+      Trivial
+
+> Door to Chozo Seal; Heals? False
+  * Layers: default
+  * Charge Beam Door to Chozo Seal/Door to Transport to Area 1
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorchargecharge
+  > Next to Teleporter
+      Trivial
+
+> Tunnel to Chozo Seal; Heals? False
+  * Layers: default
+  * Tunnel to Chozo Seal/Tunnel to Transport to Area 1
+  > Next to Teleporter
+      Destroy Bomb Block
+
+> Dock to Transport Storage; Heals? False
+  * Layers: default
+  * Open Passage to Transport Storage/Dock to Transport to Area 1
+  > Next to Teleporter
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Surface (East) - Teleporter Unlocked
+  > Next to Teleporter
+      Trivial
+
+> Next to Teleporter; Heals? False
+  * Layers: default
+  > Pickup (Missile Expansion)
+      All of the following:
+          Morph Ball
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (No High Jump)
+  > Elevator to Area 1 - Chozo Seal
+      After Surface (East) - Alpha Metroid
+  > Teleporter
+      After Surface (East) - Teleporter Unlocked
+  > Door to Chozo Seal
+      Trivial
+  > Tunnel to Chozo Seal
+      Destroy Bomb Block
+  > Dock to Transport Storage
+      All of the following:
+          After Surface (East) - Alpha Metroid
+          Baby Metroid or Lay Power Bomb
+  > Event - Teleporter Unlocked
+      Trivial
+
+----------------
+Charge Beam Storage
+Extra - total_boundings: {'x1': 1400.0, 'x2': 2700.0, 'y1': -8656.4697265625, 'y2': -7897.68017578125}
+Extra - polygon: [[1400.0, -7897.68017578125], [1400.0, -8656.4697265625], [2700.0, -8656.4697265625], [2700.0, -7897.68017578125]]
+Extra - asset_id: collision_camera_007
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 6; Major Location? False
+  * Extra - actor_name: LE_Item_007
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Charge Beam Shaft
+      Morph Ball
+
+> Tunnel to Charge Beam Shaft; Heals? False
+  * Layers: default
+  * Tunnel to Charge Beam Shaft/Tunnel to Charge Beam Storage
+  > Pickup (Missile Tank)
+      Morph Ball
+
+----------------
+Charge Beam Room
+Extra - total_boundings: {'x1': 1400.0, 'x2': 3000.0, 'y1': -10300.0, 'y2': -9000.0}
+Extra - polygon: [[1400.0, -9000.0], [1400.0, -10300.0], [3000.0, -10300.0], [3000.0, -9000.0]]
+Extra - asset_id: collision_camera_008
+> Pickup (Charge Beam); Heals? False
+  * Layers: default
+  * Pickup 11; Major Location? True
+  * Extra - actor_name: LE_PowerUP_ChargeBeam
+  * Extra - actor_type: itemsphere_chargebeam
+  > Door to Charge Beam Shaft (Upper)
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+  > Door to Charge Beam Shaft (Lower)
+      Trivial
+
+> Door to Charge Beam Shaft (Upper); Heals? False
+  * Layers: default
+  * Missile Door to Charge Beam Shaft/Door to Charge Beam Room (Upper)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Charge Beam)
+      Trivial
+
+> Door to Charge Beam Shaft (Lower); Heals? False
+  * Layers: default
+  * Charge Beam Door to Charge Beam Shaft/Door to Charge Beam Room (Lower)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorchargecharge
+  > Pickup (Charge Beam)
+      Trivial
+
+----------------
+Alpha Arena
+Extra - total_boundings: {'x1': -5900.0, 'x2': -1000.0, 'y1': -10400.0, 'y2': -5900.0}
+Extra - polygon: [[-1000.0, -5900.0], [-3400.0, -5900.0], [-3400.0, -6700.0], [-3500.0, -7000.0], [-5900.0, -7000.0], [-5900.0, -10400.0], [-1300.0, -10400.0], [-1300.0, -8900.0], [-1000.0, -8800.0]]
+Extra - asset_id: collision_camera_010
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 0; Major Location? False
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Side Path
+      Morph Ball
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_002
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Alpha Storage
+      Trivial
+  > Dock to Side Path
+      Trivial
+  > Inside Arena
+      Morph Ball and Destroy Missile Block
+  > Tunnel to Alpha Arena Access
+      Morph Ball
+
+> Door to Alpha Storage; Heals? False
+  * Layers: default
+  * Plasma Beam Door to Alpha Storage/Door to Alpha Arena
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+
+> Door to Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Ammo Recharge Station/Door to Alpha Arena
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Inside Arena
+      Trivial
+
+> Dock to Side Path; Heals? False
+  * Layers: default
+  * Open Passage to Side Path/Dock to Alpha Arena
+  > Save Station
+      Trivial
+
+> Tunnel to Side Path; Heals? False
+  * Layers: default
+  * Tunnel to Side Path/Tunnel to Alpha Arena
+  > Pickup (Missile Tank)
+      Morph Ball
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Surface (East) - Alpha Metroid
+  > Inside Arena
+      Trivial
+
+> Inside Arena; Heals? False
+  * Layers: default
+  > Save Station
+      Morph Ball and Destroy Missile Block
+  > Door to Ammo Recharge Station
+      After Surface (East) - Alpha Metroid
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+
+> Tunnel to Alpha Arena Access; Heals? False
+  * Layers: default
+  * Tunnel to Alpha Arena Access/Tunnel to Alpha Arena
+  > Save Station
+      Trivial
+
+----------------
+Scan Pulse Room
+Extra - total_boundings: {'x1': -1700.0, 'x2': 4650.0, 'y1': -6300.0, 'y2': -4000.0}
+Extra - polygon: [[-1700.0, -4500.0], [-1700.0, -5258.77978515625], [-400.0, -5258.77978515625], [1400.0, -5800.0], [1400.0, -6300.0], [4650.0, -6300.0], [4650.0, -4000.0], [2300.0, -4000.0], [0.0, -4500.0]]
+Extra - asset_id: collision_camera_011
+> Pickup (Scan Pulse); Heals? False
+  * Layers: default
+  * Pickup 13; Major Location? True
+  * Extra - actor_name: LE_SpecialAbility_ScanningPulse
+  * Extra - actor_type: powerup_scanningpulse
+  > Door to Chozo Seal
+      Morph Ball
+  > Dock to One-Way Drop
+      Morph Ball
+
+> Door to Chozo Seal; Heals? False
+  * Layers: default
+  * Charge Beam Door to Chozo Seal/Door to Scan Pulse Room
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorchargecharge
+  > Pickup (Scan Pulse)
+      Morph Ball
+  > Door to Charge Beam Shaft
+      Morph Ball
+
+> Door to Charge Beam Shaft; Heals? False
+  * Layers: default
+  * Charge Beam Door to Charge Beam Shaft/Door to Scan Pulse Room
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorchargecharge
+  > Door to Chozo Seal
+      Morph Ball
+
+> Dock to One-Way Drop; Heals? False
+  * Layers: default
+  * Open Passage to One-Way Drop/Dock to Scan Pulse Room
+  > Pickup (Scan Pulse)
+      Morph Ball
+
+> Tunnel to Chozo Seal; Heals? False
+  * Layers: default
+  * Tunnel to Chozo Seal/Tunnel to Scan Pulse Room
+  > Door to Chozo Seal
+      Morph Ball
+
+----------------
+Alpha Storage
+Extra - total_boundings: {'x1': -4600.0, 'x2': -3300.0, 'y1': -6658.85009765625, 'y2': -5900.1201171875}
+Extra - polygon: [[-4600.0, -5900.1201171875], [-4600.0, -6658.85009765625], [-3300.0, -6658.85009765625], [-3300.0, -5900.1201171875]]
+Extra - asset_id: collision_camera_012
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 7; Major Location? False
+  * Extra - actor_name: LE_Item_008
+  * Extra - actor_type: item_supermissiletank
+  > Door to Alpha Arena
+      Trivial
+
+> Door to Alpha Arena; Heals? False
+  * Layers: default
+  * Plasma Beam Door to Alpha Arena/Door to Alpha Storage
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Super Missile Tank)
+      Trivial
+
+----------------
+Side Path
+Extra - total_boundings: {'x1': -7100.0, 'x2': -5800.0, 'y1': -9900.0, 'y2': -8600.0}
+Extra - polygon: [[-7100.0, -8600.0], [-7100.0, -9900.0], [-5800.0, -9900.0], [-5800.0, -8600.0]]
+Extra - asset_id: collision_camera_013
+> Dock to Alpha Arena; Heals? False
+  * Layers: default
+  * Open Passage to Alpha Arena/Dock to Side Path
+  > Tunnel to Alpha Arena
+      Morph Ball
+
+> Tunnel to Alpha Arena; Heals? False
+  * Layers: default
+  * Tunnel to Alpha Arena/Tunnel to Side Path
+  > Dock to Alpha Arena
+      Morph Ball
+
+----------------
+One-Way Drop
+Extra - total_boundings: {'x1': -3800.0, 'x2': -1600.0, 'y1': -5900.0, 'y2': -3700.0}
+Extra - polygon: [[-3800.0, -3700.0], [-3800.0, -5900.0], [-1600.0, -5900.0], [-1600.0, -4500.0], [-2300.0, -4500.0], [-2300.0, -3700.0]]
+Extra - asset_id: collision_camera_014
+> Door to Alpha Arena Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Arena Access/Door to One-Way Drop
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Tunnel to Upper Storage
+      Morph Ball
+
+> Dock to Scan Pulse Room; Heals? False
+  * Layers: default
+  * Open Passage to Scan Pulse Room/Dock to One-Way Drop
+  > Door to Alpha Arena Access
+      Trivial
+
+> Tunnel to Upper Storage; Heals? False
+  * Layers: default
+  * Tunnel to Upper Storage/Tunnel to One-Way Drop
+  > Door to Alpha Arena Access
+      Morph Ball
+
+----------------
+Charge Beam Shaft
+Extra - total_boundings: {'x1': -200.0, 'x2': 1500.0, 'y1': -10300.0, 'y2': -5500.0}
+Extra - polygon: [[-200.0, -5500.0], [-200.0, -10300.0], [1500.0, -10300.0], [1500.0, -5500.0]]
+Extra - asset_id: collision_camera_015
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 8; Major Location? True
+  * Extra - actor_name: LE_Item_010
+  * Extra - actor_type: item_energytank
+  > Door to Charge Beam Room (Lower)
+      Trivial
+
+> Door to Scan Pulse Room; Heals? False
+  * Layers: default
+  * Charge Beam Door to Scan Pulse Room/Door to Charge Beam Shaft
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorchargecharge
+  > Door to Ammo Recharge Station
+      Trivial
+
+> Door to Charge Beam Room (Upper); Heals? False
+  * Layers: default
+  * Missile Door to Charge Beam Room/Door to Charge Beam Shaft (Upper)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Door to Ammo Recharge Station
+      Trivial
+  > Tunnel to Charge Beam Storage
+      Morph Ball
+
+> Door to Charge Beam Room (Lower); Heals? False
+  * Layers: default
+  * Charge Beam Door to Charge Beam Room/Door to Charge Beam Shaft (Lower)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorchargecharge
+  > Pickup (Energy Tank)
+      Morph Ball
+  > Door to Ammo Recharge Station
+      Trivial
+
+> Door to Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Ammo Recharge Station/Door to Charge Beam Shaft
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Scan Pulse Room
+      Trivial
+  > Door to Charge Beam Room (Upper)
+      Trivial
+  > Door to Charge Beam Room (Lower)
+      Trivial
+  > Tunnel to Charge Beam Storage
+      Morph Ball
+
+> Tunnel to Charge Beam Storage; Heals? False
+  * Layers: default
+  * Tunnel to Charge Beam Storage/Tunnel to Charge Beam Shaft
+  > Door to Ammo Recharge Station
+      Morph Ball
+
+----------------
+Entrance Pathway
+Extra - total_boundings: {'x1': -3400.0, 'x2': 5600.0, 'y1': 1000.0, 'y2': 4600.009765625}
+Extra - polygon: [[2600.0, 2100.0], [3000.0, 2100.0], [3000.0, 1000.0], [5600.0, 1000.0], [5600.0, 4600.009765625], [-3400.0, 4599.990234375], [-3400.0, 1800.0], [-300.0, 1800.0], [1300.0, 2100.0]]
+Extra - asset_id: collision_camera_016
+> Door to Melee Tutorial Pathway; Heals? False
+  * Layers: default
+  * Access Open to Melee Tutorial Pathway/Door to Entrance Pathway
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorpowerpower
+  > Dock to Landing Site
+      Trivial
+
+> Dock to Landing Site; Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Entrance Pathway
+  > Door to Melee Tutorial Pathway
+      Missile ≥ 3
+
+----------------
+Landing Site Storage
+Extra - total_boundings: {'x1': -19000.0, 'x2': -16300.0, 'y1': 4500.0, 'y2': 6900.0}
+Extra - polygon: [[-19000.0, 6900.0], [-19000.0, 4500.0], [-16300.0, 4500.0], [-16300.0, 6900.0]]
+Extra - asset_id: collision_camera_018
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 1; Major Location? False
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_senergytank
+  > Below Right Crumble Blocks
+      Morph Ball
+
+> Door to Landing Site; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Landing Site/Door to Landing Site Storage
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Any of the following:
+              Grapple Beam or Phase Drift
+              Spiderspark (Beginner) and Can Spiderspark
+              Bomb and Diagonal Bomb Jump (Intermediate)
+
+> Room Center; Heals? False
+  * Layers: default
+  > Pickup (Aeion Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Simple IBJ
+              Spider Ball and Mid-Air Morph (Intermediate) and Walljump (Advanced)
+          Any of the following:
+              Phase Drift or Spider Ball
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Phase Drift Skip (Expert)
+                      Space Jump and Phase Drift Skip (Advanced)
+  > Door to Landing Site
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Any of the following:
+              Phase Drift or Can Spiderspark
+              Bomb and Spider Ball and Diagonal Bomb Jump (Intermediate)
+
+> Below Right Crumble Blocks; Heals? False
+  * Layers: default
+  > Door to Landing Site
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam
+              Spiderspark (Beginner) and Can Spiderspark
+  > Room Center
+      Any of the following:
+          Grapple Beam and Movement (Intermediate)
+          Spider Ball and Diagonal Bomb Jump (Advanced) and Lay Bomb
+
+----------------
+Crumble Drop Shaft
+Extra - total_boundings: {'x1': -24800.0, 'x2': -23000.0, 'y1': 7200.0, 'y2': 11100.0}
+Extra - polygon: [[-24800.0, 11100.0], [-24800.0, 7200.0], [-23000.0, 7200.0], [-23000.0, 11100.0]]
+Extra - asset_id: collision_camera_019
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 2; Major Location? False
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_supermissiletank
+  > Dock to Landing Site (Bottom)
+      Trivial
+
+> Dock to Landing Site (Top); Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Top)
+  > Pickup (Super Missile Tank)
+      Trivial
+
+> Dock to Landing Site (Bottom); Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Bottom)
+
+----------------
+Transport Storage
+Extra - total_boundings: {'x1': 5200.0, 'x2': 6500.0, 'y1': -9458.5498046875, 'y2': -8700.169921875}
+Extra - polygon: [[5200.0, -8700.169921875], [5200.0, -9458.5498046875], [6500.0, -9458.5498046875], [6500.0, -8700.169921875]]
+Extra - asset_id: collision_camera_020
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 10; Major Location? False
+  * Extra - actor_name: LE_Item_012
+  * Extra - actor_type: item_powerbombtank
+  > Dock to Transport to Area 1
+      Baby Metroid or Lay Power Bomb
+
+> Dock to Transport to Area 1; Heals? False
+  * Layers: default
+  * Open Passage to Transport to Area 1/Dock to Transport Storage
+  > Pickup (Power Bomb Tank)
+      Trivial
+
+----------------
+Upper Storage
+Extra - total_boundings: {'x1': -2400.0, 'x2': -1100.0, 'y1': -4458.56005859375, 'y2': -3699.97998046875}
+Extra - polygon: [[-2400.0, -3699.97998046875], [-2400.0, -4458.56005859375], [-1100.0, -4458.56005859375], [-1100.0, -3699.97998046875]]
+Extra - asset_id: collision_camera_021
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 9; Major Location? False
+  * Extra - actor_name: LE_Item_011
+  * Extra - actor_type: item_missiletank
+  > Tunnel to One-Way Drop
+      Morph Ball
+
+> Tunnel to One-Way Drop; Heals? False
+  * Layers: default
+  * Tunnel to One-Way Drop/Tunnel to Upper Storage
+  > Pickup (Missile Tank)
+      Morph Ball
+
+----------------
+Alpha Arena Access
+Extra - total_boundings: {'x1': -1700.0, 'x2': -100.0, 'y1': -8400.0, 'y2': -5300.0}
+Extra - polygon: [[-1700.0, -5300.0], [-1700.0, -8400.0], [-100.0, -8400.0], [-100.0, -5300.0]]
+Extra - asset_id: collision_camera_023
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyRecharge
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+  > Tunnel to Alpha Arena
+      Morph Ball
+
+> Door to One-Way Drop; Heals? False
+  * Layers: default
+  * Power Beam Door to One-Way Drop/Door to Alpha Arena Access
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      Morph Ball
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 14; Major Location? False
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_missiletank
+  > Energy Recharge Station
+      Trivial
+  > Door to One-Way Drop
+      Trivial
+
+> Tunnel to Alpha Arena; Heals? False
+  * Layers: default
+  * Tunnel to Alpha Arena/Tunnel to Alpha Arena Access
+  > Energy Recharge Station
+      Morph Ball
+
+----------------
+Ammo Recharge Station
+Extra - total_boundings: {'x1': -1400.0, 'x2': -100.0, 'y1': -10300.0, 'y2': -9300.0}
+Extra - polygon: [[-1400.0, -9300.0], [-1400.0, -10300.0], [-100.0, -10300.0], [-100.0, -9300.0]]
+Extra - asset_id: collision_camera_024
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoRecharge
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Charge Beam Shaft
+      Trivial
+  > Door to Alpha Arena
+      Trivial
+
+> Door to Charge Beam Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Charge Beam Shaft/Door to Ammo Recharge Station
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+
+> Door to Alpha Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Arena/Door to Ammo Recharge Station
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+

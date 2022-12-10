@@ -1,0 +1,640 @@
+----------------
+Gamma Storage
+Extra - total_boundings: {'x1': -4600.0, 'x2': -1900.0, 'y1': 1900.0, 'y2': 3400.0}
+Extra - polygon: [[-4600.0, 3400.0], [-4600.0, 1900.0], [-1900.0, 1900.0], [-1900.0, 3400.0]]
+Extra - asset_id: collision_camera_011
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 76; Major Location? False
+  * Extra - actor_name: LE_Item_006
+  * Extra - actor_type: item_powerbombtank
+  > Door to Gamma Arena Lower Room 2
+      Any of the following:
+          Baby Metroid
+          All of the following:
+              Destroy Bomb Block
+              Lighting Armor or Grapple Beam
+
+> Door to Gamma Arena Lower Room 2; Heals? False
+  * Layers: default
+  * Power Bomb Door to Gamma Arena Lower Room 2/Door to Gamma Storage
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Power Bomb Tank)
+      Any of the following:
+          Baby Metroid
+          Lighting Armor and Destroy Bomb Block
+
+----------------
+Gamma Arena Lower Room 1
+Extra - total_boundings: {'x1': 2200.0, 'x2': 6600.0, 'y1': 2300.0, 'y2': 3900.0}
+Extra - polygon: [[2200.0, 3900.0], [2200.0, 2300.0], [6600.0, 2300.0], [6600.0, 3900.0]]
+Extra - asset_id: collision_camera_013
+> Door to Transport to Area 3 Interior West; Heals? False
+  * Layers: default
+  * Wave Beam Door to Transport to Area 3 Interior West/Door to Gamma Arena Lower Room 1
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Tunnel to Gamma Arena Lower Room 2
+      All of the following:
+          Morph Ball
+          Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
+
+> Tunnel to Gamma Arena Lower Room 2; Heals? False
+  * Layers: default
+  * Tunnel to Gamma Arena Lower Room 2/Tunnel to Gamma Arena Lower Room 1
+  > Door to Transport to Area 3 Interior West
+      Morph Ball
+
+----------------
+Fiery Path Access
+Extra - total_boundings: {'x1': 10600.0, 'x2': 15700.0, 'y1': 1900.0, 'y2': 3700.0}
+Extra - polygon: [[15700.0, 1900.0], [15700.0, 3700.0], [10600.0, 3700.0], [10600.0, 1900.0]]
+Extra - asset_id: collision_camera_014
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 75; Major Location? False
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_energytank
+  > Door to Fiery Path
+      Destroy Bomb Block
+
+> Door to Fiery Path; Heals? False
+  * Layers: default
+  * Charge Beam Door to Fiery Path/Door to Fiery Path Access
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorchargecharge
+  > Pickup (Energy Tank)
+      Destroy Bomb Block
+  > Door to Transport to Area 3 Interior West
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          All of the following:
+              High Jump Boots
+              Any of the following:
+                  Super Jump (Advanced)
+                  Morph Ball and Unmorph Extend (Beginner)
+
+> Door to Transport to Area 3 Interior West; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 3 Interior West/Door to Fiery Path Access
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Door to Fiery Path
+      Trivial
+
+----------------
+Fan Puzzle Room
+Extra - total_boundings: {'x1': 6300.0, 'x2': 7600.0, 'y1': 10320.400390625, 'y2': 11078.7998046875}
+Extra - polygon: [[6300.0, 11078.7998046875], [6300.0, 10320.400390625], [7600.0, 10320.400390625], [7600.0, 11078.7998046875]]
+Extra - asset_id: collision_camera_015
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 74; Major Location? False
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_supermissiletank
+  > Door to Gamma Awakening Access
+      Any of the following:
+          Destroy Bomb Block
+          All of the following:
+              Destroy Missile Block
+              Movement (Intermediate) or Shoot Wave Beam
+
+> Door to Gamma Awakening Access; Heals? False
+  * Layers: default
+  * Super Missile Door to Gamma Awakening Access/Door to Fan Puzzle Room
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Super Missile Tank)
+      Any of the following:
+          Lay Power Bomb
+          Morph Ball and Destroy Missile Block
+
+----------------
+Double Back
+Extra - total_boundings: {'x1': 6700.0, 'x2': 9600.0, 'y1': 13200.0, 'y2': 15400.0}
+Extra - polygon: [[6700.0, 14800.0], [6700.0, 13200.0], [9600.0, 13200.0], [9600.0, 15400.0], [7900.0, 15400.0], [7900.0, 14900.0], [7825.0, 14800.0]]
+Extra - asset_id: collision_camera_017
+> Tunnel to Transport to Area 3 Exterior; Heals? False
+  * Layers: default
+  * Tunnel to Transport to Area 3 Exterior/Tunnel to Double Back
+  > Room Center
+      Morph Ball
+
+> Tunnel to Main Shaft (Bottom); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Main Shaft/Tunnel to Double Back (Bottom)
+  > Room Center
+      Morph Ball and After Area 3 (Interior East) - Double Back Grapple Block Right
+
+> Tunnel to Main Shaft (Top); Heals? False
+  * Layers: default
+  * Tunnel to Main Shaft/Tunnel to Double Back (Top)
+  > Event - Grapple Block Right
+      Grapple Beam and Morph Ball and After Area 3 (Interior East) - Double Back Grapple Block Left
+
+> Event - Grapple Block Left; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Double Back Grapple Block Left
+  > Room Center
+      Trivial
+
+> Event - Grapple Block Right; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Double Back Grapple Block Right
+  > Tunnel to Main Shaft (Top)
+      Morph Ball
+
+> Room Center; Heals? False
+  * Layers: default
+  > Tunnel to Transport to Area 3 Exterior
+      Morph Ball
+  > Tunnel to Main Shaft (Bottom)
+      After Area 3 (Interior East) - Double Back Grapple Block Right and Destroy Bomb Block
+  > Event - Grapple Block Left
+      Grapple Beam
+
+----------------
+Main Shaft
+Extra - total_boundings: {'x1': 3500.0, 'x2': 6800.0, 'y1': 9400.0, 'y2': 15600.0}
+Extra - polygon: [[3500.0, 15600.0], [3500.0, 9400.0], [6000.0, 9400.0], [6000.0, 13000.0], [6300.0, 13200.0], [6800.0, 13200.0], [6800.0, 15600.0]]
+Extra - asset_id: collision_camera_018
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 73; Major Location? False
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_senergytank
+  > Tunnel to Double Back (Bottom)
+      Destroy Bomb Block
+
+> Energy Recharge Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyCharge001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Transport to Area 3 Exterior
+      Trivial
+  > Door to Mini-Shaft East
+      Trivial
+  > Door to Mini-Shaft West
+      Morph Ball
+
+> Door to Transport to Area 3 Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 3 Exterior/Door to Main Shaft
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorpowerpower
+  > Energy Recharge Station
+      Trivial
+  > Tunnel to Double Back (Top)
+      Morph Ball and After Area 3 (Exterior) - Outer Hub Access Grapple Block Left
+
+> Door to Mini-Shaft East; Heals? False
+  * Layers: default
+  * Power Beam Door to Mini-Shaft East/Door to Main Shaft
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Energy Recharge Station
+      Trivial
+
+> Door to Mini-Shaft West; Heals? False
+  * Layers: default
+  * Power Beam Door to Mini-Shaft West/Door to Main Shaft
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Energy Recharge Station
+      Morph Ball
+
+> Tunnel to Double Back (Bottom); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Double Back/Tunnel to Main Shaft (Bottom)
+  > Pickup (Aeion Tank)
+      Morph Ball
+
+> Tunnel to Double Back (Top); Heals? False
+  * Layers: default
+  * Tunnel to Double Back/Tunnel to Main Shaft (Top)
+  > Door to Transport to Area 3 Exterior
+      Morph Ball
+
+----------------
+Dead-End Teleporter
+Extra - total_boundings: {'x1': 1300.0, 'x2': 3600.0, 'y1': 7000.0, 'y2': 7758.41015625}
+Extra - polygon: [[1300.0, 7758.41015625], [1300.0, 7000.0], [3600.0, 7000.0], [3600.0, 7758.41015625]]
+Extra - asset_id: collision_camera_019
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 3 (Interior East) - Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_03_01
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Teleporter Access
+      Trivial
+
+> Door to Teleporter Access; Heals? False
+  * Layers: default
+  * Charge Beam Door to Teleporter Access/Door to Dead-End Teleporter
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorchargecharge
+  > Teleporter
+      After Area 3 (Interior East) - Teleporter Unlocked
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Teleporter Unlocked
+  > Door to Teleporter Access
+      Trivial
+
+----------------
+Transport to Area 3 Exterior
+Extra - total_boundings: {'x1': 6700.0, 'x2': 8000.0, 'y1': 14841.900390625, 'y2': 15600.0}
+Extra - polygon: [[6700.0, 15600.0], [6700.0, 14841.900390625], [8000.0, 14841.900390625], [8000.0, 15600.0]]
+Extra - asset_id: collision_camera_021
+> Elevator to Area 3 Exterior - Outer Hub; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 3 - Exterior - Outer Hub
+  * Extra - actor_name: LE_Platform_Elevator_FromArea03A
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Main Shaft
+      Trivial
+  > Tunnel to Double Back
+      Morph Ball
+
+> Door to Main Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Main Shaft/Door to Transport to Area 3 Exterior
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 3 Exterior - Outer Hub
+      Trivial
+
+> Tunnel to Double Back; Heals? False
+  * Layers: default
+  * Tunnel to Double Back/Tunnel to Transport to Area 3 Exterior
+  > Elevator to Area 3 Exterior - Outer Hub
+      Morph Ball
+
+----------------
+Fiery Path
+Extra - total_boundings: {'x1': 15600.0, 'x2': 21700.0, 'y1': 1700.0, 'y2': 5800.0}
+Extra - polygon: [[18050.0, 5800.0], [18050.0, 3800.0], [15600.0, 3700.0], [15600.0, 1700.0], [21700.0, 1700.0], [21700.0, 5800.0]]
+Extra - asset_id: collision_camera_022
+> Door to Fiery Path Access; Heals? False
+  * Layers: default
+  * Charge Beam Door to Fiery Path Access/Door to Fiery Path
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorchargecharge
+  > Above Lava Pits
+      Any of the following:
+          Gravity Suit
+          All of the following:
+              Varia Suit
+              Any of the following:
+                  Grapple Beam or Space Jump
+                  Power Bomb ≥ 2 and Spiderspark (Beginner) and Can Spiderspark
+
+> Door to Alpha Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Arena/Door to Fiery Path
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Above Lava Pits
+      All of the following:
+          Morph Ball and Varia Suit
+          Any of the following:
+              Climb Rooms Vertically (No High Jump)
+              All of the following:
+                  High Jump Boots
+                  Super Jump (Advanced) or Unmorph Extend (Beginner)
+
+> Above Lava Pits; Heals? False
+  * Layers: default
+  > Door to Fiery Path Access
+      Any of the following:
+          Gravity Suit
+          All of the following:
+              Varia Suit
+              Any of the following:
+                  Grapple Beam or Space Jump
+                  Spiderspark (Beginner) and Can Spiderspark
+  > Door to Alpha Arena
+      All of the following:
+          Morph Ball and Varia Suit
+          Any of the following:
+              Grapple Beam or Climb Rooms Vertically (No High Jump)
+              Damage Boost (Intermediate) and Unmorph Extend (Intermediate)
+
+----------------
+Transport to Area 3 Interior West
+Extra - total_boundings: {'x1': 6500.0, 'x2': 10700.0, 'y1': 2100.0, 'y2': 5600.0}
+Extra - polygon: [[6500.0, 5600.0], [6500.0, 2100.0], [10700.0, 2100.0], [10700.0, 3800.0], [10600.0, 3800.0], [10600.0, 5600.0]]
+Extra - asset_id: collision_camera_023
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Gamma Arena Lower Room 1
+      Trivial
+  > Door to Fiery Path Access
+      Trivial
+
+> Elevator to Area 3 Interior West - Transport to Area 3 Interior East; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 3 - Interior (West) - Transport to Area 3 Interior East
+  * Extra - actor_name: LE_Platform_Elevator_FromArea03B
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Gamma Arena Lower Room 1
+      Morph Ball and After Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block
+  > Event - Grapple Block
+      Grapple Beam
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Gamma Arena Lower Room 1
+      Morph Ball
+  > Tunnel to Gamma Awakening (Bottom)
+      All of the following:
+          Morph Ball
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+  > Inside Arena
+      Morph Ball and Climb Rooms Vertically (No High Jump)
+
+> Door to Gamma Arena Lower Room 1; Heals? False
+  * Layers: default
+  * Wave Beam Door to Gamma Arena Lower Room 1/Door to Transport to Area 3 Interior West
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Any of the following:
+          Grapple Beam or Gravity Suit or Space Jump or Can Spiderspark
+          Underwater Bomb Jump (Intermediate) and Lay Bomb
+  > Elevator to Area 3 Interior West - Transport to Area 3 Interior East
+      Morph Ball and After Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block
+  > Save Station
+      Morph Ball
+
+> Door to Fiery Path Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Fiery Path Access/Door to Transport to Area 3 Interior West
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+
+> Tunnel to Gamma Awakening (Bottom); Heals? False
+  * Layers: default
+  * Tunnel to Gamma Awakening/Tunnel to Transport to Area 3 Interior West (Bottom)
+  > Save Station
+      Morph Ball
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block
+  > Elevator to Area 3 Interior West - Transport to Area 3 Interior East
+      Trivial
+
+> Tunnel to Gamma Awakening (Top); Heals? False
+  * Layers: default
+  * Tunnel to Gamma Awakening/Tunnel to Transport to Area 3 Interior West (Top)
+  > Inside Arena
+      Morph Ball
+
+> Event - Gamma Metroid; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Gamma Metroid Upper
+  > Inside Arena
+      Trivial
+
+> Inside Arena; Heals? False
+  * Layers: default
+  > Save Station
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Space Jump or Simple IBJ
+              Movement (Beginner) and Can Spiderspark
+          Before Area 3 (Interior East) - Gamma Metroid Upper Awakened or After Area 3 (Interior East) - Gamma Metroid Upper
+  > Tunnel to Gamma Awakening (Top)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Space Jump or Simple IBJ
+              Movement (Beginner) and Can Spiderspark
+  > Event - Gamma Metroid
+      After Area 3 (Interior East) - Gamma Metroid Upper Awakened and Defeat Gamma Metroid
+
+----------------
+Mini-Shaft East
+Extra - total_boundings: {'x1': 5900.0, 'x2': 7600.0, 'y1': 7600.0, 'y2': 10100.0}
+Extra - polygon: [[5900.0, 10100.0], [5900.0, 7600.0], [7600.0, 7600.0], [7600.0, 10100.0]]
+Extra - asset_id: collision_camera_024
+> Door to Main Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Main Shaft/Door to Mini-Shaft East
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Door to Gamma Awakening Access
+      Trivial
+
+> Door to Gamma Awakening Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Awakening Access/Door to Mini-Shaft East
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Main Shaft
+      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
+
+----------------
+Gamma Awakening Access
+Extra - total_boundings: {'x1': 6500.0, 'x2': 9300.0, 'y1': 6100.0, 'y2': 11000.0}
+Extra - polygon: [[7500.0, 11000.0], [7500.0, 6859.31005859375], [6500.0, 6859.31005859375], [6500.0, 6100.0], [9300.0, 6100.0], [9300.0, 11000.0]]
+Extra - asset_id: collision_camera_025
+> Door to Fan Puzzle Room; Heals? False
+  * Layers: default
+  * Super Missile Door to Fan Puzzle Room/Door to Gamma Awakening Access
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Door to Mini-Shaft East
+      Morph Ball
+
+> Door to Mini-Shaft East; Heals? False
+  * Layers: default
+  * Power Beam Door to Mini-Shaft East/Door to Gamma Awakening Access
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Fan Puzzle Room
+      Any of the following:
+          Movement (Beginner) and Can Spiderspark
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+                  Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+  > Door to Gamma Awakening
+      Trivial
+
+> Door to Gamma Awakening; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Awakening/Door to Gamma Awakening Access
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Door to Mini-Shaft East
+      Trivial
+
+----------------
+Alpha Arena
+Extra - total_boundings: {'x1': 10800.0, 'x2': 18150.0, 'y1': 4200.0, 'y2': 5400.0}
+Extra - polygon: [[18150.0, 4400.0], [18150.0, 5400.0], [10800.0, 5400.0], [10800.0, 4200.0], [12100.0, 4200.0], [13000.0, 4400.0]]
+Extra - asset_id: collision_camera_026
+> Door to Fiery Path; Heals? False
+  * Layers: default
+  * Power Beam Door to Fiery Path/Door to Alpha Arena
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Varia Suit
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 77; Major Location? False
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_supermissiletank
+  > Room Center
+      Gravity Suit
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Alpha Metroid
+  > Room Center
+      Varia Suit
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Fiery Path
+      Varia Suit and After Area 3 (Interior East) - Alpha Metroid
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Grapple Beam and Gravity Suit and Super Missile
+          High Jump Boots or Space Jump or Can Spiderspark or Simple IBJ
+  > Event - Alpha Metroid
+      Varia Suit and Defeat Alpha Metroid
+
+----------------
+Gamma Arena Lower Room 2
+Extra - total_boundings: {'x1': -2000.0, 'x2': 2800.0, 'y1': 2000.0, 'y2': 3800.0}
+Extra - polygon: [[-2000.0, 3800.0], [-2000.0, 2000.0], [2800.0, 2000.0], [2800.0, 3800.0]]
+Extra - asset_id: collision_camera_027
+> Door to Gamma Storage; Heals? False
+  * Layers: default
+  * Power Bomb Door to Gamma Storage/Door to Gamma Arena Lower Room 2
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Tunnel to Gamma Arena Lower Room 1; Heals? False
+  * Layers: default
+  * Tunnel to Gamma Arena Lower Room 1/Tunnel to Gamma Arena Lower Room 2
+  > Room Center
+      Morph Ball
+
+> Event - Gamma Metroid; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Gamma Metroid Lower
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Gamma Storage
+      All of the following:
+          After Area 3 (Interior East) - Gamma Metroid Lower
+          Any of the following:
+              Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Beginner)
+              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+  > Tunnel to Gamma Arena Lower Room 1
+      All of the following:
+          Morph Ball and After Area 3 (Interior East) - Gamma Metroid Lower
+          Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
+  > Event - Gamma Metroid
+      Defeat Gamma Metroid
+
+----------------
+Mini-Shaft West
+Extra - total_boundings: {'x1': 2300.0, 'x2': 3600.0, 'y1': 8400.0, 'y2': 10900.0}
+Extra - polygon: [[2300.0, 10900.0], [2300.0, 8400.0], [3600.0, 8400.0], [3600.0, 10900.0]]
+Extra - asset_id: collision_camera_028
+> Door to Main Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Main Shaft/Door to Mini-Shaft West
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Door to Teleporter Access
+      Trivial
+
+> Door to Teleporter Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Teleporter Access/Door to Mini-Shaft West
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Door to Main Shaft
+      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
+
+----------------
+Teleporter Access
+Extra - total_boundings: {'x1': 3500.0, 'x2': 5900.0, 'y1': 6900.0, 'y2': 9400.0}
+Extra - polygon: [[3500.0, 9400.0], [3500.0, 6900.0], [5900.0, 6900.0], [5900.0, 9400.0]]
+Extra - asset_id: collision_camera_029
+> Door to Dead-End Teleporter; Heals? False
+  * Layers: default
+  * Charge Beam Door to Dead-End Teleporter/Door to Teleporter Access
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorchargecharge
+  > Door to Mini-Shaft West
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+
+> Door to Mini-Shaft West; Heals? False
+  * Layers: default
+  * Power Beam Door to Mini-Shaft West/Door to Teleporter Access
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Door to Dead-End Teleporter
+      Trivial
+
+----------------
+Gamma Awakening
+Extra - total_boundings: {'x1': 5000.0, 'x2': 6600.0, 'y1': 4000.0, 'y2': 6700.0}
+Extra - polygon: [[5000.0, 6700.0], [5000.0, 4000.0], [6600.0, 4000.0], [6600.0, 6700.0]]
+Extra - asset_id: collision_camera_030
+> Door to Gamma Awakening Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Awakening Access/Door to Gamma Awakening
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Tunnel to Transport to Area 3 Interior West (Top)
+      Morph Ball
+
+> Tunnel to Transport to Area 3 Interior West (Bottom); Heals? False
+  * Layers: default
+  * Tunnel to Transport to Area 3 Interior West/Tunnel to Gamma Awakening (Bottom)
+  > Event - Gamma Awakened
+      All of the following:
+          Morph Ball
+          Movement (Intermediate) or Climb Rooms Vertically (High Jump)
+          Lighting Armor or Destroy Bomb Block
+
+> Tunnel to Transport to Area 3 Interior West (Top); Heals? False
+  * Layers: default
+  * Tunnel to Transport to Area 3 Interior West/Tunnel to Gamma Awakening (Top)
+  > Door to Gamma Awakening Access
+      Morph Ball
+
+> Event - Gamma Awakened; Heals? False
+  * Layers: default
+  * Event Area 3 (Interior East) - Gamma Metroid Upper Awakened
+  > Tunnel to Transport to Area 3 Interior West (Top)
+      Destroy Bomb Block
+

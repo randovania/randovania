@@ -159,7 +159,7 @@
                     }
                 },
                 "Hint - Blue Robot": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 91.65,
@@ -171,10 +171,17 @@
                         "default"
                     ],
                     "extra": {
-                        "event": "0200"
+                        "event": "0200",
+                        "string_asset_id": 1
                     },
-                    "string_asset_id": 1,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Teleporter to Arthur's House": {
                             "type": "and",
@@ -853,7 +860,7 @@
                     }
                 },
                 "Hint - Cthulhu": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 200.3,
@@ -865,10 +872,17 @@
                         "default"
                     ],
                     "extra": {
-                        "event": "0200"
+                        "event": "0200",
+                        "string_asset_id": 0
                     },
-                    "string_asset_id": 0,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Egg Corridor (Lower)": {
                             "type": "and",

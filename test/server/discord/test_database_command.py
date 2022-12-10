@@ -69,7 +69,7 @@ async def test_on_database_world_selected():
     await item.callback(ctx)
 
     # Assert
-    ctx.edit_original_message.assert_awaited_once_with(
+    ctx.edit_original_response.assert_awaited_once_with(
         embed=ANY,
         view=view,
     )
@@ -143,14 +143,14 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
     ctx.response = AsyncMock(spec=discord.InteractionResponse)
     item._selected_values = [area.nodes[0].name, area.nodes[2].name]
 
-    original_message = ctx.original_message.return_value
+    original_response = ctx.original_response.return_value
 
     # Run
     await item.callback(ctx)
 
     # Assert
-    ctx.original_message.assert_awaited_once_with()
-    original_message.edit.assert_awaited_once_with(embeds=[mock_embed.return_value, mock_embed.return_value])
+    ctx.original_response.assert_awaited_once_with()
+    original_response.edit.assert_awaited_once_with(embeds=[mock_embed.return_value, mock_embed.return_value])
     mock_embed.assert_has_calls([
         call(title=area.nodes[0].name,
              description=ANY),

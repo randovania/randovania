@@ -2455,10 +2455,7 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "excluded_dock_weaknesses": [
-                            "Grapple Beam Door"
-                        ]
+                        "right_shield_def": null
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -2582,10 +2579,7 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "excluded_dock_weaknesses": [
-                            "Grapple Beam Door"
-                        ]
+                        "right_shield_def": null
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -2653,7 +2647,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": -3950.0,
@@ -2669,10 +2663,17 @@
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "accesspoint_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "hint_id": "FOREST_1"
+                        "hint_id": "FOREST_1",
+                        "string_asset_id": 10
                     },
-                    "string_asset_id": 10,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Navigation Station Access": {
                             "type": "and",
@@ -4616,15 +4617,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLocks",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
                                                 }
                                             ]
                                         }
@@ -5015,7 +5007,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -5316,7 +5309,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -9376,7 +9370,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -9556,7 +9551,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Wide Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -15886,7 +15884,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Wide Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -16655,7 +16656,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {

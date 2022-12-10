@@ -5,12 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.3.0] - 2023-??-??
 
-## [5.2.0] - 2022-11-01
+- Added: You can now open a tracker for other player's inventories in a multiworld session.
+- Changed: LogbookNodes are now called HintNodes.
+
+### Metroid Prime
+
+- Fixed: Spring ball can no longer be used to abuse steep terrain marked as standable
+- Fixed: Vanilla blast shields not being removed in door lock randomizer
+
+### Metroid Dread
+
+- **Major** - Added: Door locks can now be randomized.
+- TODO: add changes for ODR 1.2.4 and MEDS 0.18.0 (possibly graphical fix)
+
+## [5.2.1] - 2022-12-01
+
+- Fixed: Exporting Metroid Prime 2 when converting Metroid Prime models now works.
+- Fixed: Experimental Metroid Prime 2 patcher no longer errors with some settings.
+
+## [5.2.0] - 2022-12-01
 
 - Added: Help -> Dependencies window, to see all dependencies included in Randovania, including their versions and licenses.
 - Added: A warning is now displayed when using presets with unsupported features enabled. These features are not present in the UI.
+- Added: When the generated game fails due to the solver, you're now offered to retry, cancel or keep the generated game.
 - Changed: Experimental games are no longer available on stable versions.
+- Fixed: Solver debug now contains previously missing rollback instances.
 
 ### Cave Story
 
@@ -18,7 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
  
-- **Major** - Added: Door locks can now be randomized.
 - Added: The Power Beam tiles in the Artaria EMMI Zone Speed Boost puzzle have been changed to Speed Boost tiles to prevent softlocks.
 - Added: Entering Golzuna's arena without releasing the X displays a message explaining why the boss won't spawn.
 - Added: All doors locked while fighting an EMMI now unlock immediately upon defeating it.

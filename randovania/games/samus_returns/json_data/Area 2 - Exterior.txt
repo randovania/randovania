@@ -1,0 +1,873 @@
+----------------
+Outer Hub
+Extra - total_boundings: {'x1': -13000.0, 'x2': 8800.0, 'y1': -900.0, 'y2': 8500.0}
+Extra - polygon: [[-7700.0, 8500.0], [-7700.0, 5500.0], [-8400.0, 5300.0], [-13000.0, 5300.0], [-13000.0, -200.0], [-10600.0, -200.0], [-10600.0, 1400.0], [-10100.0, 1600.0], [-8150.0, 1900.0], [-8150.0, 2600.0], [-7500.0, 2600.0], [-4700.0, 2600.0], [-4100.0, 2600.0], [-4100.0, 5700.0], [-3500.0, 5800.0], [-1300.0, 5800.0], [-1000.0, 5600.0], [-1000.0, 4800.0], [750.0, 4800.0], [750.0, 6400.0], [1600.0, 6400.0], [1600.0, 5500.0], [2200.0, 5200.0], [2200.0, 500.0], [2600.0, 300.0], [2600.0, -900.0], [6300.0, -900.0], [8200.0, 0.0], [8800.0, 0.0], [8800.0, 8500.0]]
+Extra - asset_id: collision_camera_005
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 34; Major Location? False
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_missiletank
+  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+      Trivial
+
+> Elevator to Area 2 Interior - Main Hub; Heals? False
+  * Layers: default
+  * Teleporter to Area 2 - Interior - Main Hub
+  * Extra - actor_name: LE_Platform_Elevator_FromArea02B
+  * Extra - actor_type: weightactivatedplatform
+  > Teleporter
+      After Area 2 (Exterior) - Teleporter Unlocked (Upper)
+  > Door to Outer Hub Shaft (Bottom)
+      Baby Metroid or Destroy Bomb Block
+  > Door to Outer Hub Shaft (Top)
+      Trivial
+  > Door to Rock Icicle Path
+      Trivial
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Elevator to Area 2 Entrance - Transport to Area 2 Exterior; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 2 - Entrance - Transport to Area 2 Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea02C
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Missile Tank)
+      Any of the following:
+          Space Jump or Can Spiderspark
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+  > Save Station Right
+      Trivial
+  > Door to Split Pathways
+      Trivial
+  > Tunnel to Split Pathways
+      Morph Ball
+  > Top of Wall
+      Space Jump or Can Spiderspark or Simple IBJ
+
+> Save Station Left; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Rock Icicle Path
+      Trivial
+
+> Save Station Right; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation002
+  * Extra - actor_type: weightactivatedplatform
+  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+      Trivial
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 2 (Exterior) - Teleporter Unlocked (Upper))
+  * Extra - actor_name: LE_Platform_Teleporter_02_02
+  * Extra - actor_type: weightactivatedplatform
+  > Elevator to Area 2 Interior - Main Hub
+      Trivial
+
+> Door to Arachnus Arena; Heals? False
+  * Layers: default
+  * Missile Door to Arachnus Arena/Door from Outer Hub
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Top of Wall
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+
+> Door to Outer Hub Shaft (Bottom); Heals? False
+  * Layers: default
+  * Access Locked to Outer Hub Shaft/Door to Outer Hub (Bottom)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerclosed
+  > Elevator to Area 2 Interior - Main Hub
+      Baby Metroid or Destroy Bomb Block
+
+> Door to Outer Hub Shaft (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub Shaft/Door to Outer Hub (Top)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 2 Interior - Main Hub
+      Trivial
+
+> Door to Rock Icicle Path; Heals? False
+  * Layers: default
+  * Power Beam Door to Rock Icicle Path/Door to Outer Hub
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 2 Interior - Main Hub
+      Trivial
+  > Save Station Left
+      Trivial
+  > Door to Alpha+ Arena North
+      Any of the following:
+          Space Jump or Can Spiderspark or Simple IBJ
+          Lighting Armor and Spider Ball
+  > Top of Wall
+      Climb Rooms Vertically (No High Jump)
+
+> Door from Arachnus Exit; Heals? False
+  * Layers: default
+  * Access Closed to Arachnus Exit/Door to Outer Hub
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorclosedpower
+  > Door to Arachnus Arena
+      Trivial
+
+> Door to Split Pathways; Heals? False
+  * Layers: default
+  * Power Beam Door to Split Pathways/Door to Outer Hub
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+      Trivial
+
+> Door to Alpha+ Arena North; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha+ Arena North/Door to Outer Hub
+  * Extra - actor_name: Door020
+  * Extra - actor_type: doorpowerpower
+  > Door to Rock Icicle Path
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Teleporter Unlocked (Upper)
+  > Elevator to Area 2 Interior - Main Hub
+      Trivial
+
+> Tunnel to Split Pathways; Heals? False
+  * Layers: default
+  * Tunnel to Split Pathways/Tunnel to Outer Hub
+  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+      Morph Ball
+
+> Top of Wall; Heals? False
+  * Layers: default
+  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+      Trivial
+  > Door to Arachnus Arena
+      Trivial
+  > Door to Rock Icicle Path
+      Trivial
+
+----------------
+Arachnus Arena
+Extra - total_boundings: {'x1': -3100.0, 'x2': -900.0, 'y1': 4500.0, 'y2': 5600.0}
+Extra - polygon: [[-3100.0, 5600.0], [-3100.0, 4500.0], [-850.0, 4500.0], [-850.0, 5600.0]]
+Extra - asset_id: collision_camera_006
+> Pickup (Spring Ball); Heals? False
+  * Layers: default
+  * Pickup 37; Major Location? True
+  * Extra - actor_name: LE_PowerUp_Springball
+  * Extra - actor_type: powerup_springball
+  > Room Center
+      Trivial
+
+> Door from Outer Hub; Heals? False
+  * Layers: default
+  * Access Closed to Outer Hub/Door to Arachnus Arena
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Room Center
+      Trivial
+
+> Tunnel to Spring Ball Tutorial; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Spring Ball Tutorial/Tunnel to Arachnus Arena
+  > Room Center
+      Morph Ball
+
+> Event - Arachnus; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Arachnus
+  > Pickup (Spring Ball)
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door from Outer Hub
+      Trivial
+  > Tunnel to Spring Ball Tutorial
+      Destroy Bomb Block
+  > Event - Arachnus
+      Trivial
+
+----------------
+Spring Ball Tutorial
+Extra - total_boundings: {'x1': -1000.0, 'x2': 700.0, 'y1': 3900.0, 'y2': 4900.0}
+Extra - polygon: [[-1000.0, 4900.0], [-1000.0, 3900.0], [700.0, 3900.0], [700.0, 4900.0]]
+Extra - asset_id: collision_camera_007
+> Tunnel to Arachnus Arena; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Arachnus Arena/Tunnel to Spring Ball Tutorial
+  > Tunnel to Arachnus Exit
+      Any of the following:
+          Lay Power Bomb
+          Spring Ball and Lay Bomb
+
+> Tunnel to Arachnus Exit; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Arachnus Exit/Tunnel to Spring Ball Tutorial
+  > Tunnel to Arachnus Arena
+      Destroy Bomb Block
+
+----------------
+Split Pathways
+Extra - total_boundings: {'x1': -1850.0, 'x2': 2700.0, 'y1': -900.0, 'y2': 3800.0}
+Extra - polygon: [[-1850.0, 3800.0], [-1850.0, -900.0], [2700.0, -900.0], [2700.0, 300.0], [2300.0, 500.0], [2300.0, 3800.0]]
+Extra - asset_id: collision_camera_008
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 35; Major Location? False
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Outer Hub
+      Morph Ball
+  > Below Baby Blocks
+      Baby Metroid
+
+> Door to Outer Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub/Door to Split Pathways
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Below Baby Blocks
+      Morph Ball
+
+> Door to Alpha Arena North; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Arena North/Door to Split Pathways
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Door to Rock Icicle Path
+      Trivial
+
+> Door to Rock Icicle Path; Heals? False
+  * Layers: default
+  * Power Beam Door to Rock Icicle Path/Door to Split Pathways
+  * Extra - actor_name: Door018
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      Baby Metroid and Movement (Beginner)
+  > Door to Alpha Arena North
+      Trivial
+  > Below Baby Blocks
+      Trivial
+
+> Tunnel to Outer Hub; Heals? False
+  * Layers: default
+  * Tunnel to Outer Hub/Tunnel to Split Pathways
+  > Pickup (Missile Tank)
+      Destroy Bomb Block
+
+> Below Baby Blocks; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Spider Ball
+                      Bomb and Infinite Bomb Jump (Intermediate)
+              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+  > Door to Outer Hub
+      Trivial
+  > Door to Rock Icicle Path
+      Any of the following:
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+
+----------------
+Outer Hub Shaft
+Extra - total_boundings: {'x1': -14800.0, 'x2': -12900.0, 'y1': -5000.0, 'y2': 3500.0}
+Extra - polygon: [[-14800.0, 3500.0], [-14800.0, -5000.0], [-12900.0, -5000.0], [-12900.0, 3500.0]]
+Extra - asset_id: collision_camera_023
+> Door to Outer Hub (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub/Door to Outer Hub Shaft (Bottom)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerclosed
+  > Door to Alpha Shaft
+      Trivial
+
+> Door to Outer Hub (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub/Door to Outer Hub Shaft (Top)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Door to Alpha Shaft
+      Trivial
+
+> Door to Alpha Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Shaft/Door to Outer Hub Shaft
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Door to Outer Hub (Bottom)
+      Trivial
+  > Door to Outer Hub (Top)
+      Trivial
+  > Door to Ammo Station Access
+      Trivial
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Destroy Bomb Block
+          Baby Metroid or Super Missile
+          Phase Drift or Spider Ball
+  > Tunnel to Grapple Gap (Bottom)
+      Morph Ball
+  > Tunnel to Grapple Gap (Top)
+      Destroy Bomb Block
+
+> Door to Ammo Station Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Ammo Station Access/Door to Outer Hub Shaft
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Door to Alpha Shaft
+      Trivial
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 39; Major Location? False
+  * Extra - actor_name: HiddenPowerup002
+  * Extra - actor_type: item_supermissiletank
+  > Door to Alpha Shaft
+      Trivial
+
+> Tunnel to Grapple Gap (Bottom); Heals? False
+  * Layers: default
+  * Tunnel to Grapple Gap/Tunnel to Outer Hub Shaft (Bottom)
+  > Door to Alpha Shaft
+      Morph Ball
+
+> Tunnel to Grapple Gap (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Grapple Gap/Tunnel to Outer Hub Shaft (Top)
+  > Door to Alpha Shaft
+      Morph Ball
+
+----------------
+Grapple Gap
+Extra - total_boundings: {'x1': -16000.0, 'x2': -14700.0, 'y1': -4000.0, 'y2': -2200.0}
+Extra - polygon: [[-16000.0, -2200.0], [-16000.0, -4000.0], [-14700.0, -4000.0], [-14700.0, -2200.0]]
+Extra - asset_id: collision_camera_024
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 32; Major Location? False
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_senergytank
+  > Tunnel to Outer Hub Shaft (Bottom)
+      Trivial
+
+> Tunnel to Outer Hub Shaft (Bottom); Heals? False
+  * Layers: default
+  * Tunnel to Outer Hub Shaft/Tunnel to Grapple Gap (Bottom)
+  > Pickup (Aeion Tank)
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          Spiderspark (Beginner) and Can Spiderspark
+  > Tunnel to Outer Hub Shaft (Top)
+      All of the following:
+          Destroy Bomb Block
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+
+> Tunnel to Outer Hub Shaft (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Outer Hub Shaft/Tunnel to Grapple Gap (Top)
+  > Pickup (Aeion Tank)
+      Grapple Beam and Morph Ball
+  > Tunnel to Outer Hub Shaft (Bottom)
+      Morph Ball
+
+----------------
+Ammo Station Access
+Extra - total_boundings: {'x1': -16000.0, 'x2': -14700.0, 'y1': 1542.68994140625, 'y2': 2300.0}
+Extra - polygon: [[-16000.0, 2300.0], [-16000.0, 1542.68994140625], [-14700.0, 1542.68994140625], [-14700.0, 2300.0]]
+Extra - asset_id: collision_camera_025
+> Door to Outer Hub Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub Shaft/Door to Ammo Station Access
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Door to Ammo Recharge Station
+      Varia Suit
+
+> Door to Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Ammo Recharge Station/Door to Ammo Station Access
+  * Extra - actor_name: Door019
+  * Extra - actor_type: doorpowerpower
+  > Door to Outer Hub Shaft
+      Varia Suit
+
+----------------
+Glow Fly Tunnel
+Extra - total_boundings: {'x1': -11200.0, 'x2': -8600.0, 'y1': -5100.0, 'y2': -3500.0}
+Extra - polygon: [[-11200.0, -3500.0], [-11200.0, -5100.0], [-8600.0, -5100.0], [-8600.0, -3500.0]]
+Extra - asset_id: collision_camera_026
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 36; Major Location? False
+  * Extra - actor_name: LE_Item_006
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Alpha Shaft
+      Destroy Bomb Block
+
+> Tunnel to Alpha Shaft; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Alpha Shaft/Tunnel to Glow Fly Tunnel
+  > Pickup (Missile Tank)
+      Destroy Bomb Block
+
+----------------
+Alpha Shaft
+Extra - total_boundings: {'x1': -13000.0, 'x2': -11000.0, 'y1': -6300.0, 'y2': -3700.0}
+Extra - polygon: [[-13000.0, -3700.0], [-13000.0, -6300.0], [-11000.0, -6300.0], [-11000.0, -3700.0]]
+Extra - asset_id: collision_camera_027
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyCharge001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Alpha Arena West
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation003
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Alpha Arena West
+      Trivial
+
+> Door to Outer Hub Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub Shaft/Door to Alpha Shaft
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Door to Alpha Arena West
+      Trivial
+
+> Door to Alpha Arena West; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Arena West/Door to Alpha Shaft
+  * Extra - actor_name: Door021
+  * Extra - actor_type: doorpowerpower
+  > Energy Recharge Station
+      Trivial
+  > Save Station
+      Trivial
+  > Door to Outer Hub Shaft
+      Trivial
+  > Dock to Alpha Arena South Access
+      Trivial
+  > Tunnel to Glow Fly Tunnel
+      Destroy Bomb Block
+
+> Dock to Alpha Arena South Access; Heals? False
+  * Layers: default
+  * Open Passage to Alpha Arena South Access/Dock to Alpha Shaft
+  > Door to Alpha Arena West
+      Trivial
+
+> Tunnel to Glow Fly Tunnel; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Glow Fly Tunnel/Tunnel to Alpha Shaft
+  > Door to Alpha Arena West
+      Trivial
+
+----------------
+Alpha Arena West
+Extra - total_boundings: {'x1': -18600.0, 'x2': -12900.0, 'y1': -6800.0, 'y2': -5300.0}
+Extra - polygon: [[-18600.0, -5300.0], [-18600.0, -6800.0], [-12900.0, -6800.0], [-12900.0, -5300.0]]
+Extra - asset_id: collision_camera_028
+> Door to Hot Split; Heals? False
+  * Layers: default
+  * Charge Beam Door to Hot Split/Door to Alpha Arena West
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorchargecharge
+  > Room Center
+      Trivial
+
+> Door to Alpha Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha Shaft/Door to Alpha Arena West
+  * Extra - actor_name: Door021
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Alpha Metroid West
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Hot Split
+      All of the following:
+          After Area 2 (Exterior) - Alpha Metroid West
+          Any of the following:
+              High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Diagonal Bomb Jump (Beginner)
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Spring Ball or Mid-Air Morph (Intermediate)
+  > Door to Alpha Shaft
+      All of the following:
+          After Area 2 (Exterior) - Alpha Metroid West
+          Any of the following:
+              High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Diagonal Bomb Jump (Beginner)
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Spring Ball or Mid-Air Morph (Intermediate)
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+
+----------------
+Hot Split
+Extra - total_boundings: {'x1': -21850.0, 'x2': -18500.0, 'y1': -8100.0, 'y2': -5400.0}
+Extra - polygon: [[-21850.0, -5400.0], [-21850.0, -8100.0], [-18500.0, -8100.0], [-18500.0, -5400.0]]
+Extra - asset_id: collision_camera_029
+> Door to Alpha Arena West; Heals? False
+  * Layers: default
+  * Charge Beam Door to Alpha Arena West/Door to Hot Split
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorchargecharge
+  > Door to Alpha Arena Heated
+      Varia Suit
+  > Door to Fiery Crossing
+      Varia Suit
+
+> Door to Alpha Arena Heated; Heals? False
+  * Layers: default
+  * Wave Beam Door to Alpha Arena Heated/Door to Hot Split
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Alpha Arena West
+      Varia Suit
+
+> Door to Fiery Crossing; Heals? False
+  * Layers: default
+  * Power Beam Door to Fiery Crossing/Door to Hot Split
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Door to Alpha Arena West
+      Varia Suit
+
+----------------
+Alpha Arena Heated
+Extra - total_boundings: {'x1': -25900.0, 'x2': -21750.0, 'y1': -8400.0, 'y2': -6100.0}
+Extra - polygon: [[-25900.0, -6100.0], [-25900.0, -8400.0], [-21750.0, -8400.0], [-21750.0, -6100.0]]
+Extra - asset_id: collision_camera_030
+> Door to Hot Split; Heals? False
+  * Layers: default
+  * Wave Beam Door to Hot Split/Door to Alpha Arena Heated
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Event - Alpha Metroid
+      Varia Suit and Defeat Alpha Metroid
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Alpha Metroid Heat
+  > Door to Hot Split
+      Varia Suit
+
+----------------
+Alpha Arena South Access
+Extra - total_boundings: {'x1': -11200.0, 'x2': -7400.0, 'y1': -6500.0, 'y2': -5100.0}
+Extra - polygon: [[-11200.0, -5100.0], [-11200.0, -6500.0], [-7400.0, -6500.0], [-7400.0, -5100.0]]
+Extra - asset_id: collision_camera_031
+> Tunnel to Alpha Arena South; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Alpha Arena South/Tunnel to Alpha Arena South Access
+  > Dock to Alpha Shaft
+      Destroy Bomb Block
+
+> Dock to Alpha Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Alpha Shaft/Dock to Alpha Arena South Access
+  > Tunnel to Alpha Arena South
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Spring Ball or Movement (Intermediate)
+
+----------------
+Fiery Crossing
+Extra - total_boundings: {'x1': -18600.0, 'x2': -7600.0, 'y1': -8600.0, 'y2': -7000.0}
+Extra - polygon: [[-18600.0, -7000.0], [-18600.0, -8200.0], [-15600.0, -8200.0], [-14300.0, -8600.0], [-12000.0, -8600.0], [-11400.0, -8500.0], [-7600.0, -8500.0], [-7600.0, -7000.0]]
+Extra - asset_id: collision_camera_032
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 2 (Exterior) - Teleporter Unlocked (Heat))
+  * Extra - actor_name: LE_Platform_Teleporter_02_03
+  * Extra - actor_type: weightactivatedplatform
+  > Below Pickup
+      Varia Suit
+
+> Door to Hot Split; Heals? False
+  * Layers: default
+  * Power Beam Door to Hot Split/Door to Fiery Crossing
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Below Pickup
+      Varia Suit
+
+> Door to Alpha+ Arena Heated; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha+ Arena Heated/Door to Fiery Crossing
+  * Extra - actor_name: Door022
+  * Extra - actor_type: doorpowerpower
+  > Right of Missile Block
+      All of the following:
+          Varia Suit
+          Gravity Suit or Ice Beam or Morph Ball or Space Jump
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 38; Major Location? False
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_missiletank
+  > Below Pickup
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Teleporter Unlocked (Heat)
+  > Below Pickup
+      Trivial
+
+> Below Pickup; Heals? False
+  * Layers: default
+  > Teleporter
+      Varia Suit and After Area 2 (Exterior) - Teleporter Unlocked (Heat)
+  > Door to Hot Split
+      Varia Suit
+  > Pickup (Missile Tank)
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Knowledge (Beginner) and Lay Power Bomb
+              Lay Bomb and Shoot Beam Burst
+  > Event - Teleporter Unlocked
+      Trivial
+  > Right of Missile Block
+      All of the following:
+          Destroy Missile Block
+          Any of the following:
+              High Jump Boots or Space Jump
+              Mid-Air Morph (Intermediate) and Lay Bomb
+
+> Right of Missile Block; Heals? False
+  * Layers: default
+  > Door to Alpha+ Arena Heated
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Gravity Suit or Ice Beam or Space Jump or Use Spider Ball
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+  > Below Pickup
+      Destroy Missile Block
+
+----------------
+Alpha+ Arena North
+Extra - total_boundings: {'x1': -11450.0, 'x2': -7600.0, 'y1': 5500.0, 'y2': 8000.0}
+Extra - polygon: [[-11450.0, 8000.0], [-11450.0, 5500.0], [-7600.0, 5500.0], [-7600.0, 8000.0]]
+Extra - asset_id: collision_camera_033
+> Door to Alpha+ Storage; Heals? False
+  * Layers: default
+  * Super Missile Door to Alpha+ Storage/Door to Alpha+ Arena North
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Room Bottom
+      Trivial
+
+> Door to Outer Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub/Door to Alpha+ Arena North
+  * Extra - actor_name: Door020
+  * Extra - actor_type: doorpowerpower
+  > Room Bottom
+      Trivial
+
+> Event - Alpha Metroid+; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Alpha Metroid+ North
+  > Room Bottom
+      Trivial
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Alpha+ Storage
+      After Area 2 (Exterior) - Alpha Metroid+ North
+  > Door to Outer Hub
+      After Area 2 (Exterior) - Alpha Metroid+ North
+  > Event - Alpha Metroid+
+      Defeat Alpha Metroid+
+
+----------------
+Alpha+ Storage
+Extra - total_boundings: {'x1': -14400.0, 'x2': -11350.0, 'y1': 5500.0, 'y2': 7800.0}
+Extra - polygon: [[-14400.0, 7800.0], [-14400.0, 5500.0], [-11350.0, 5500.0], [-11350.0, 7800.0]]
+Extra - asset_id: collision_camera_034
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 33; Major Location? False
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_supermissiletank
+  > Door to Alpha+ Arena North
+      Trivial
+
+> Door to Alpha+ Arena North; Heals? False
+  * Layers: default
+  * Super Missile Door to Alpha+ Arena North/Door to Alpha+ Storage
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Any of the following:
+              # Reaching the pickup
+              Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Any of the following:
+              # Collecting the pickup
+              Lay Bomb
+              All of the following:
+                  Lay Power Bomb
+                  Phase Drift or Space Jump
+
+----------------
+Alpha+ Arena Heated
+Extra - total_boundings: {'x1': -7700.0, 'x2': -4200.0, 'y1': -8400.0, 'y2': -7100.0}
+Extra - polygon: [[-7700.0, -7100.0], [-7700.0, -8400.0], [-4200.0, -8400.0], [-4200.0, -7100.0]]
+Extra - asset_id: collision_camera_035
+> Door to Fiery Crossing; Heals? False
+  * Layers: default
+  * Power Beam Door to Fiery Crossing/Door to Alpha+ Arena Heated
+  * Extra - actor_name: Door022
+  * Extra - actor_type: doorpowerpower
+  > Event - Alpha Metroid+
+      Varia Suit and Defeat Alpha Metroid+
+
+> Event - Alpha Metroid+; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Alpha Metroid+ Heat
+  > Door to Fiery Crossing
+      Varia Suit
+
+----------------
+Alpha Arena North
+Extra - total_boundings: {'x1': -4100.0, 'x2': -1750.0, 'y1': 3100.0, 'y2': 4200.0}
+Extra - polygon: [[-4100.0, 4200.0], [-4100.0, 3100.0], [-1750.0, 3100.0], [-1750.0, 4200.0]]
+Extra - asset_id: collision_camera_036
+> Door to Split Pathways; Heals? False
+  * Layers: default
+  * Power Beam Door to Split Pathways/Door to Alpha Arena North
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Alpha Metroid North
+  > Door to Split Pathways
+      Trivial
+
+----------------
+Rock Icicle Path
+Extra - total_boundings: {'x1': -4200.0, 'x2': -1750.0, 'y1': 2342.35009765625, 'y2': 3100.0}
+Extra - polygon: [[-4200.0, 3100.0], [-4200.0, 2342.35009765625], [-1750.0, 2342.35009765625], [-1750.0, 3100.0]]
+Extra - asset_id: collision_camera_037
+> Door to Outer Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub/Door to Rock Icicle Path
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Door to Split Pathways
+      Trivial
+
+> Door to Split Pathways; Heals? False
+  * Layers: default
+  * Power Beam Door to Split Pathways/Door to Rock Icicle Path
+  * Extra - actor_name: Door018
+  * Extra - actor_type: doorpowerpower
+  > Door to Outer Hub
+      Trivial
+
+----------------
+Arachnus Exit
+Extra - total_boundings: {'x1': 580.0, 'x2': 1900.0, 'y1': 4102.5, 'y2': 5400.0}
+Extra - polygon: [[580.0, 5400.0], [580.0, 4102.5], [1900.0, 4102.5], [1900.0, 5400.0]]
+Extra - asset_id: collision_camera_038
+> Door to Outer Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Outer Hub/Door from Arachnus Exit
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorclosedpower
+  > Tunnel to Spring Ball Tutorial
+      Destroy Bomb Block
+
+> Tunnel to Spring Ball Tutorial; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Spring Ball Tutorial/Tunnel to Arachnus Exit
+  > Door to Outer Hub
+      Morph Ball
+
+----------------
+Ammo Recharge Station
+Extra - total_boundings: {'x1': -17200.0, 'x2': -15900.0, 'y1': 1542.68994140625, 'y2': 2300.0}
+Extra - polygon: [[-17200.0, 2300.0], [-17200.0, 1542.68994140625], [-15900.0, 1542.68994140625], [-15900.0, 2300.0]]
+Extra - asset_id: collision_camera_039
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Ammo Station Access
+      Trivial
+
+> Door to Ammo Station Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Ammo Station Access/Door to Ammo Recharge Station
+  * Extra - actor_name: Door019
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+
+----------------
+Alpha Arena South
+Extra - total_boundings: {'x1': -7500.0, 'x2': -4300.0, 'y1': -6700.0, 'y2': -5400.0}
+Extra - polygon: [[-7500.0, -5400.0], [-7500.0, -6700.0], [-4300.0, -6700.0], [-4300.0, -5400.0]]
+Extra - asset_id: collision_camera_040
+> Tunnel to Alpha Arena South Access; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Alpha Arena South Access/Tunnel to Alpha Arena South
+  > Event - Alpha Metroid
+      Morph Ball and Defeat Alpha Metroid
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Exterior) - Alpha Metroid South
+  > Tunnel to Alpha Arena South Access
+      Any of the following:
+          Spider Ball and Destroy Bomb Block
+          Infinite Bomb Jump (Beginner) and Lay Bomb
+          All of the following:
+              Any of the following:
+                  Lay Power Bomb
+                  Mid-Air Morph (Beginner) and Lay Bomb
+              High Jump Boots or Space Jump or Single-wall Wall Jump (Beginner) or Unmorph Extend (Beginner)
+

@@ -1,0 +1,213 @@
+====================
+Templates
+
+* Climb Rooms Vertically (No High Jump):
+      Space Jump or Simple IBJ or Use Spider Ball
+
+* Climb Rooms Vertically (High Jump):
+      High Jump Boots or Space Jump or Simple IBJ or Use Spider Ball
+
+* Cross Rooms Horizontally (High Jump):
+      High Jump Boots or Space Jump or Use Spider Ball
+
+* Cross Rooms Horizontally (No High Jump):
+      Space Jump or Use Spider Ball
+
+* Lay Bomb:
+      Bomb and Morph Ball
+
+* Lay Power Bomb:
+      Morph Ball and Power Bomb
+
+* Shoot Wave Beam:
+      Any of the following:
+          Wave Beam
+          All of the following:
+              Disabled Separate Beam Behaviors
+              Plasma Beam or Spazer Beam
+
+* Shoot Spazer Beam:
+      Any of the following:
+          Spazer Beam
+          Plasma Beam and Disabled Separate Beam Behaviors
+
+* Destroy Bomb Block:
+      Lay Bomb or Lay Power Bomb
+
+* Can Spiderspark:
+      Spider Ball and Lay Power Bomb
+
+* Use Spider Ball:
+      Morph Ball and Spider Ball
+
+* Defeat Alpha Metroid:
+      Ice Beam or Missile or Super Missile ≥ 5 or Shoot Beam Burst
+
+* Defeat Alpha Metroid+:
+      Ice Beam or Missile ≥ 20 or Super Missile ≥ 7 or Shoot Beam Burst
+
+* Defeat Gamma Metroid:
+      Ice Beam or Missile or Super Missile ≥ 7 or Shoot Beam Burst
+
+* Defeat Gamma Metroid+:
+      Ice Beam or Missile ≥ 25 or Super Missile ≥ 9 or Shoot Beam Burst
+
+* Defeat Zeta Metroid:
+      Any of the following:
+          Ice Beam
+          All of the following:
+              Grapple Beam
+              Missile or Super Missile
+
+* Defeat Omega Metroid:
+      Ice Beam or Missile or Super Missile or Space Jump or Shoot Beam Burst
+
+* Defeat Larva Metroid:
+      All of the following:
+          Ice Beam
+          Missile ≥ 5 or Super Missile
+
+* Destroy Missile Block:
+      Missile or Super Missile
+
+* Simple IBJ:
+      Bomb and Morph Ball and Infinite Bomb Jump (Beginner)
+
+* Shoot Beam Burst:
+      All of the following:
+          Beam Burst
+          Plasma Beam or Shoot Spazer Beam or Shoot Wave Beam
+
+* Fully Freeze Enemy:
+      All of the following:
+          Ice Beam
+          Charge Beam or Freeze Enemy with Melee (Intermediate)
+
+====================
+Dock Weaknesses
+
+> Door
+  * Access Open
+      Extra - type: frame
+      Open:
+          Trivial
+      No lock
+
+
+  * Access Closed
+      Open:
+          Impossible
+      No lock
+
+
+  * Access Locked
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Impossible
+
+
+  * Power Beam Door
+      Extra - type: power_beam
+      Open:
+          Trivial
+      No lock
+
+
+  * Charge Beam Door
+      Extra - type: charge_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Any of the following:
+              Charge Beam
+              All of the following:
+                  Knowledge (Beginner)
+                  Lay Power Bomb or Shoot Beam Burst
+
+
+  * Wave Beam Door
+      Extra - type: wave_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Power Bomb or Shoot Wave Beam
+
+
+  * Spazer Beam Door
+      Extra - type: spazer_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Power Bomb or Shoot Spazer Beam
+
+
+  * Plasma Beam Door
+      Extra - type: plasma_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Plasma Beam or Lay Power Bomb
+
+
+  * Missile Door
+      Extra - type: missile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Missile
+
+
+  * Super Missile Door
+      Extra - type: super_missile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Super Missile
+
+
+  * Power Bomb Door
+      Extra - type: power_bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Power Bomb
+
+  > Dock Rando: Disabled
+
+
+> Tunnel
+  * Tunnel
+      Open:
+          Morph Ball
+      No lock
+
+
+  * Tunnel with Bomb Block
+      Open:
+          Destroy Bomb Block
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Dock
+  * Open Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Not Determined
+      Open:
+          Impossible
+      No lock
+
+
+  * Blocked Passage
+      Open:
+          Impossible
+      No lock
+
+  > Dock Rando: Disabled
+

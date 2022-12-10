@@ -1,0 +1,954 @@
+----------------
+Entrance Shaft
+Extra - total_boundings: {'x1': -22000.0, 'x2': -16000.0, 'y1': -8700.0, 'y2': 2000.0}
+Extra - polygon: [[-21100.0, 2000.0], [-21100.0, -1800.0], [-22000.0, -2700.0], [-22000.0, -8700.0], [-19550.0, -8700.0], [-19550.0, -6300.0], [-18600.0, -6200.0], [-16000.0, -6200.0], [-16000.0, -4400.0], [-17000.0, -4400.0], [-17700.0, -4300.0], [-17700.0, -200.0], [-18100.0, 600.0], [-18100.0, 2000.0]]
+Extra - asset_id: collision_camera_005
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 146; Major Location? False
+  * Extra - actor_name: LE_Item_008
+  * Extra - actor_type: item_powerbombtank
+  > Door to Transport to Area 6
+      Any of the following:
+          Can Spiderspark
+          All of the following:
+              Grapple Beam and Morph Ball
+              Bomb or Power Bomb ≥ 2
+
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyCharge_002
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Omega Shaft West
+      Morph Ball
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation002
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Omega Shaft West
+      Climb Rooms Vertically (No High Jump)
+  > 3rd Level
+      Destroy Bomb Block
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 7 - Teleporter Unlocked (West))
+  * Extra - actor_name: LE_Platform_Teleporter_09_01
+  * Extra - actor_type: weightactivatedplatform
+  > Next to Teleporter
+      Trivial
+
+> Door to Transport to Area 6; Heals? False
+  * Layers: default
+  * Charge Beam Door to Transport to Area 6/Door to Entrance Shaft
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorchargecharge
+  > Pickup (Power Bomb Tank)
+      Power Bomb ≥ 2 and Can Spiderspark
+  > 2nd Level
+      All of the following:
+          Screw Attack
+          High Jump Boots or Space Jump
+
+> Door to Omega Shaft West; Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Shaft West/Door to Entrance Shaft
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Energy Recharge Station
+      Morph Ball
+  > Save Station
+      Trivial
+
+> Next to Teleporter; Heals? False
+  * Layers: default
+  > Teleporter
+      After Area 7 - Teleporter Unlocked (West)
+  > Event - Teleporter Unlocked
+      Trivial
+  > 2nd Level
+      Lighting Armor
+  > 3rd Level
+      Destroy Bomb Block
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 7 - Teleporter Unlocked (West)
+  > Next to Teleporter
+      Trivial
+
+> 2nd Level; Heals? False
+  * Layers: default
+  > Door to Transport to Area 6
+      Any of the following:
+          Screw Attack
+          High Jump Boots and Destroy Bomb Block
+  > Next to Teleporter
+      Lighting Armor
+  > 3rd Level
+      All of the following:
+          Morph Ball and Screw Attack
+          High Jump Boots or Space Jump
+
+> 3rd Level; Heals? False
+  * Layers: default
+  > Save Station
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bomb ≥ 2
+              All of the following:
+                  Screw Attack
+                  High Jump Boots or Space Jump
+  > Next to Teleporter
+      Destroy Bomb Block
+
+----------------
+Exit Puzzle Room 1
+Extra - total_boundings: {'x1': -22700.0, 'x2': -19200.0, 'y1': -13100.0, 'y2': -11200.0}
+Extra - polygon: [[-22700.0, -11200.0], [-22700.0, -13100.0], [-19200.0, -13100.0], [-19200.0, -11200.0]]
+Extra - asset_id: collision_camera_006
+> Door to Transport to Area 6; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 6/Door to Exit Puzzle Room 1
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Door to Exit Puzzle Room 2 (Top)
+      Trivial
+  > Middle Level
+      Screw Attack
+
+> Door to Exit Puzzle Room 2 (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Exit Puzzle Room 2/Door to Exit Puzzle Room 1 (Top)
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Transport to Area 6
+      Trivial
+
+> Door to Exit Puzzle Room 2 (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Exit Puzzle Room 2/Door to Exit Puzzle Room 1 (Bottom)
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Middle Level
+      Missile and Morph Ball and Space Jump
+
+> Tunnel to Exit Puzzle Room 2; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Exit Puzzle Room 2/Tunnel to Exit Puzzle Room 1
+  > Event - Grapple Block Middle
+      Grapple Beam and Missile
+
+> Middle Level; Heals? False
+  * Layers: default
+  > Door to Transport to Area 6
+      All of the following:
+          Screw Attack
+          High Jump Boots or Space Jump
+  > Door to Exit Puzzle Room 2 (Bottom)
+      Missile and Morph Ball and After Area 7 - Exit Puzzle Room 1 Grapple Block Right
+  > Event - Grapple Block Left
+      Grapple Beam
+  > Event - Grapple Block Right
+      Grapple Beam and Missile and Morph Ball and After Area 7 - Exit Puzzle Room 1 Grapple Block Middle
+
+> Event - Grapple Block Left; Heals? False
+  * Layers: default
+  * Event Area 7 - Exit Puzzle Room 1 Grapple Block Left
+  > Middle Level
+      Trivial
+
+> Event - Grapple Block Middle; Heals? False
+  * Layers: default
+  * Event Area 7 - Exit Puzzle Room 1 Grapple Block Middle
+  > Tunnel to Exit Puzzle Room 2
+      Destroy Bomb Block
+
+> Event - Grapple Block Right; Heals? False
+  * Layers: default
+  * Event Area 7 - Exit Puzzle Room 1 Grapple Block Right
+  > Middle Level
+      Missile or Destroy Bomb Block
+
+----------------
+Launch Tunnel South
+Extra - total_boundings: {'x1': -16300.0, 'x2': -8200.0, 'y1': 2300.0, 'y2': 5600.0}
+Extra - polygon: [[-16300.0, 5600.0], [-16300.0, 2300.0], [-8200.0, 2300.0], [-8200.0, 5600.0]]
+Extra - asset_id: collision_camera_007
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 144; Major Location? False
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_energytank
+  > Right of Pickup
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation004
+  * Extra - actor_type: weightactivatedplatform
+  > Above Save Station
+      Screw Attack
+
+> Door to Omega Shaft West; Heals? False
+  * Layers: default
+  * Charge Beam Door to Omega Shaft West/Door to Launch Tunnel South
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorchargecharge
+  > Door to Launch Tunnels Shaft
+      Morph Ball
+  > Dock to Launch Tunnels Shaft
+      Any of the following:
+          Lighting Armor and Morph Ball
+          After Area 7 - Launch Tunnel South Grapple Block Top and Can Spiderspark
+  > Event - Grapple Block Top
+      All of the following:
+          Grapple Beam and Morph Ball
+          Any of the following:
+              Space Jump
+              All of the following:
+                  Spider Ball
+                  Bomb or Power Bomb or Phase Drift or Spring Ball
+
+> Door to Launch Tunnels Shaft; Heals? False
+  * Layers: default
+  * Charge Beam Door to Launch Tunnels Shaft/Door to Launch Tunnel South
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorchargecharge
+  > Door to Omega Shaft West
+      Morph Ball
+  > Above Save Station
+      Destroy Bomb Block
+
+> Dock to Launch Tunnels Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Launch Tunnels Shaft/Dock to Launch Tunnel South
+  > Door to Omega Shaft West
+      Lighting Armor and Morph Ball
+
+> Tunnel to Omega Shaft West; Heals? False
+  * Layers: default
+  * Tunnel to Omega Shaft West/Tunnel to Launch Tunnel South
+  > Right of Pickup
+      Morph Ball
+
+> Right of Pickup; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Lay Power Bomb
+  > Tunnel to Omega Shaft West
+      Morph Ball and After Area 7 - Launch Tunnel South Grapple Block Bottom
+  > Event - Grapple Block Bottom
+      Grapple Beam
+  > Above Save Station
+      All of the following:
+          Destroy Bomb Block
+          Phase Drift or Spider Ball
+
+> Event - Grapple Block Bottom; Heals? False
+  * Layers: default
+  * Event Area 7 - Launch Tunnel South Grapple Block Bottom
+  > Right of Pickup
+      Trivial
+
+> Above Save Station; Heals? False
+  * Layers: default
+  > Save Station
+      Trivial
+  > Door to Launch Tunnels Shaft
+      Any of the following:
+          Lay Power Bomb
+          Spider Ball and Lay Bomb
+  > Right of Pickup
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Phase Drift or Spider Ball
+
+> Event - Grapple Block Top; Heals? False
+  * Layers: default
+  * Event Area 7 - Launch Tunnel South Grapple Block Top
+  > Door to Omega Shaft West
+      Trivial
+
+----------------
+Omega Shaft East
+Extra - total_boundings: {'x1': -10600.0, 'x2': -8200.0, 'y1': -4000.0, 'y2': 1800.0}
+Extra - polygon: [[-10600.0, 1800.0], [-10600.0, -4000.0], [-8200.0, -4000.0], [-8200.0, 1800.0]]
+Extra - asset_id: collision_camera_008
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 7 - Teleporter Unlocked (East))
+  * Extra - actor_name: LE_Platform_Teleporter_09_02
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Omega Metroid South Access
+      Trivial
+
+> Door to Launch Tunnels Shaft; Heals? False
+  * Layers: default
+  * Plasma Beam Door to Launch Tunnels Shaft/Door to Omega Shaft East
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Door to Omega Metroid+ Access (Top)
+      Trivial
+
+> Door to Omega Metroid+ Access (Top); Heals? False
+  * Layers: default
+  * Access Locked to Omega Metroid+ Access/Door to Omega Shaft East (Top)
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Door to Launch Tunnels Shaft
+      Trivial
+  > Door to Omega Metroid South Access
+      Trivial
+
+> Door to Omega Metroid+ Access (Bottom); Heals? False
+  * Layers: default
+  * Charge Beam Door to Omega Metroid+ Access/Door to Omega Shaft East (Bottom)
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorchargecharge
+  > Door to Omega Metroid South Access
+      Morph Ball
+
+> Door to Omega Metroid South Access; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Omega Metroid South Access/Door to Omega Shaft East
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Teleporter
+      After Area 7 - Teleporter Unlocked (East)
+  > Door to Omega Metroid+ Access (Top)
+      Trivial
+  > Door to Omega Metroid+ Access (Bottom)
+      Morph Ball
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 7 - Teleporter Unlocked (East)
+  > Door to Omega Metroid South Access
+      Trivial
+
+----------------
+Omega Metroid+ Arena
+Extra - total_boundings: {'x1': -1050.0, 'x2': 3100.0, 'y1': -3700.0, 'y2': -2400.0}
+Extra - polygon: [[-1050.0, -2400.0], [-1050.0, -3700.0], [3100.0, -3700.0], [3100.0, -2400.0]]
+Extra - asset_id: collision_camera_009
+> Door to Omega Metroid+ Access; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Omega Metroid+ Access/Door to Omega Metroid+ Arena
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Event - Omega Metroid+
+      Defeat Omega Metroid
+
+> Event - Omega Metroid+; Heals? False
+  * Layers: default
+  * Event Area 7 - Omega Metroid+
+  > Door to Omega Metroid+ Access
+      Trivial
+
+----------------
+Launch Tunnels Shaft
+Extra - total_boundings: {'x1': -8300.0, 'x2': -4800.0, 'y1': 1200.0, 'y2': 9300.0}
+Extra - polygon: [[-8300.0, 9300.0], [-8300.0, 1200.0], [-4800.0, 1200.0], [-4800.0, 9300.0]]
+Extra - asset_id: collision_camera_010
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 142; Major Location? False
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_missiletank
+  > Energy Recharge Station
+      Any of the following:
+          Can Spiderspark
+          Grapple Beam and Morph Ball
+
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 151; Major Location? False
+  * Extra - actor_name: LE_Item_013
+  * Extra - actor_type: item_senergytank
+  > Door to Launch Tunnel South
+      Morph Ball
+
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge_001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Launch Tunnel South
+      Trivial
+  > Door to Omega Shaft East
+      Trivial
+
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyCharge_003
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Missile Tank)
+      Any of the following:
+          Power Bomb ≥ 2 and Can Spiderspark
+          Grapple Beam and Morph Ball and Space Jump
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation003
+  * Extra - actor_type: weightactivatedplatform
+  > Energy Recharge Station
+      Trivial
+  > Door to Launch Tunnel South
+      Trivial
+  > Tunnel to Launch Tunnel North
+      Climb Rooms Vertically (No High Jump)
+
+> Door to Launch Tunnel South; Heals? False
+  * Layers: default
+  * Charge Beam Door to Launch Tunnel South/Door to Launch Tunnels Shaft
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorchargecharge
+  > Ammo Recharge Station
+      Trivial
+  > Save Station
+      High Jump Boots or Space Jump
+  > Dock to Launch Tunnel South
+      Lighting Armor
+
+> Door to Omega Shaft East; Heals? False
+  * Layers: default
+  * Plasma Beam Door to Omega Shaft East/Door to Launch Tunnels Shaft
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+
+> Tunnel to Launch Tunnel North; Heals? False
+  * Layers: default
+  * Tunnel to Launch Tunnel North/Tunnel to Launch Tunnels Shaft
+  > Save Station
+      Morph Ball
+
+> Dock to Launch Tunnel South; Heals? False
+  * Layers: default
+  * Open Passage to Launch Tunnel South/Dock to Launch Tunnels Shaft
+  > Pickup (Aeion Tank)
+      After Area 7 - Launch Tunnel South Grapple Block Top and Can Spiderspark
+  > Door to Launch Tunnel South
+      Lighting Armor
+
+----------------
+Transport to Area 6
+Extra - total_boundings: {'x1': -19650.0, 'x2': -1650.0, 'y1': -12400.0, 'y2': -5100.0}
+Extra - polygon: [[-19300.0, -10300.0], [-19300.0, -12400.0], [-11500.0, -12400.0], [-3000.0, -9800.0], [-1650.0, -9800.0], [-1650.0, -7400.0], [-5000.0, -7600.0], [-5600.0, -7450.0], [-6000.0, -7000.0], [-6100.0, -6300.0], [-6100.0, -5100.0], [-12000.0, -5100.0], [-15307.2998046875, -7400.0], [-19650.0, -7400.0], [-19650.0, -10100.0]]
+Extra - asset_id: collision_camera_011
+> Pickup (Missile Tank West); Heals? False
+  * Layers: default
+  * Pickup 143; Major Location? False
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_missiletank
+  > Below West Pickup
+      Trivial
+
+> Pickup (Missile Tank Baby Locked); Heals? False
+  * Layers: default
+  * Pickup 148; Major Location? False
+  * Extra - actor_name: LE_Item_010
+  * Extra - actor_type: item_missiletank
+  > Save Station
+      Baby Metroid and Destroy Bomb Block
+
+> Chozo Seal; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_PlatformADN
+  * Extra - actor_type: weightactivatedplatform
+  > Save Station
+      Trivial
+  > Door to Entrance Shaft
+      Climb Rooms Vertically (High Jump)
+  > Event - Chozo Seal Unlocked
+      After Area 7 - Omega Metroid North and After Area 7 - Omega Metroid South and After Area 7 - Omega Metroid+
+  > Below West Pickup
+      Trivial
+
+> Elevator to Area 6 - Transport to Area 7; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 6 - Transport to Area 7
+  * Extra - actor_name: LE_Platform_Elevator_FromArea07
+  * Extra - actor_type: weightactivatedplatform
+  > Save Station
+      Morph Ball
+  > Inside Mountain
+      Lay Power Bomb
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation001
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Missile Tank Baby Locked)
+      Baby Metroid and Destroy Bomb Block
+  > Chozo Seal
+      Trivial
+  > Inside Mountain
+      Destroy Bomb Block
+
+> Door to Exit Puzzle Room 1; Heals? False
+  * Layers: default
+  * Power Beam Door to Exit Puzzle Room 1/Door to Transport to Area 6
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank West)
+      All of the following:
+          Lay Power Bomb
+          Phase Drift or Spider Ball
+  > Below West Pickup
+      Trivial
+
+> Door to Omega Metroid+ Access; Heals? False
+  * Layers: default
+  * Access Locked to Omega Metroid+ Access/Door to Transport to Area 6
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorclosedpower
+  > Below Hidden Pickup
+      Trivial
+
+> Door to Entrance Shaft; Heals? False
+  * Layers: default
+  * Charge Beam Door to Entrance Shaft/Door to Transport to Area 6
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorchargecharge
+  > Chozo Seal
+      Trivial
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 152; Major Location? False
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_supermissiletank
+  > Inside Mountain
+      Trivial
+
+> Pickup (Missile Tank Hidden); Heals? False
+  * Layers: default
+  * Pickup 154; Major Location? False
+  * Extra - actor_name: HiddenPowerup003
+  * Extra - actor_type: item_missiletank
+  > Below Hidden Pickup
+      Trivial
+
+> Event - Chozo Seal Unlocked; Heals? False
+  * Layers: default
+  * Event Area 7 - Chozo Seal Unlocked
+  > Chozo Seal
+      Trivial
+
+> Below Hidden Pickup; Heals? False
+  * Layers: default
+  > Elevator to Area 6 - Transport to Area 7
+      Trivial
+  > Save Station
+      Trivial
+  > Door to Omega Metroid+ Access
+      Climb Rooms Vertically (No High Jump)
+  > Pickup (Missile Tank Hidden)
+      Missile and Morph Ball and Climb Rooms Vertically (No High Jump)
+
+> Below West Pickup; Heals? False
+  * Layers: default
+  > Chozo Seal
+      Climb Rooms Vertically (No High Jump)
+  > Door to Exit Puzzle Room 1
+      Climb Rooms Vertically (High Jump)
+
+> Inside Mountain; Heals? False
+  * Layers: default
+  > Elevator to Area 6 - Transport to Area 7
+      Lay Power Bomb
+  > Save Station
+      Destroy Bomb Block
+  > Pickup (Super Missile Tank)
+      Super Missile and Climb Rooms Vertically (High Jump) and Destroy Bomb Block
+
+----------------
+Omega Metroid South Access
+Extra - total_boundings: {'x1': -16100.0, 'x2': -10500.0, 'y1': -3800.0, 'y2': -1300.0}
+Extra - polygon: [[-16100.0, -1300.0], [-16100.0, -3800.0], [-10500.0, -3800.0], [-10500.0, -2000.0], [-14000.0, -2000.0], [-14550.0, -1900.0], [-14550.0, -1300.0]]
+Extra - asset_id: collision_camera_012
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 147; Major Location? False
+  * Extra - actor_name: LE_Item_009
+  * Extra - actor_type: item_missiletank
+  > Door to Omega Metroid South Arena
+      Can Spiderspark
+
+> Door to Omega Shaft East; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Omega Shaft East/Door to Omega Metroid South Access
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Door to Omega Metroid South Arena
+      Lighting Armor or Screw Attack
+
+> Door to Omega Metroid South Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Metroid South Arena/Door to Omega Metroid South Access
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      Can Spiderspark
+  > Door to Omega Shaft East
+      Lighting Armor or Screw Attack
+
+> Dock to Omega Metroid South Arena; Heals? False
+  * Layers: default
+  * Open Passage to Omega Metroid South Arena/Tunnel to Omega Metroid South Access
+  > Door to Omega Shaft East
+      Trivial
+
+----------------
+Omega Metroid South Arena
+Extra - total_boundings: {'x1': -14650.0, 'x2': -10700.0, 'y1': -2000.0, 'y2': -700.0}
+Extra - polygon: [[-14650.0, -700.0], [-14650.0, -2000.0], [-10700.0, -2000.0], [-10700.0, -700.0]]
+Extra - asset_id: collision_camera_013
+> Door to Omega Metroid South Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Metroid South Access/Door to Omega Metroid South Arena
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Tunnel to Omega Metroid South Access
+      Missile and Morph Ball
+  > Event - Omega Metroid
+      Defeat Omega Metroid
+
+> Tunnel to Omega Metroid South Access; Heals? False
+  * Layers: default
+  * Tunnel to Omega Metroid South Access/Dock to Omega Metroid South Arena
+
+> Event - Omega Metroid; Heals? False
+  * Layers: default
+  * Event Area 7 - Omega Metroid South
+  > Door to Omega Metroid South Access
+      Trivial
+
+----------------
+Omega Metroid North Arena
+Extra - total_boundings: {'x1': -29100.0, 'x2': -24950.0, 'y1': 6700.0, 'y2': 8000.0}
+Extra - polygon: [[-29100.0, 8000.0], [-29100.0, 6700.0], [-24950.0, 6700.0], [-24950.0, 8000.0]]
+Extra - asset_id: collision_camera_014
+> Door to Omega Metroid North Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Metroid North Access/Door to Omega Metroid North Arena
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Event - Omega Metroid
+      Defeat Omega Metroid
+
+> Event - Omega Metroid; Heals? False
+  * Layers: default
+  * Event Area 7 - Omega Metroid North
+  > Door to Omega Metroid North Access
+      Trivial
+
+----------------
+Omega Metroid North Access
+Extra - total_boundings: {'x1': -25050.0, 'x2': -18100.0, 'y1': 5500.0, 'y2': 7500.0}
+Extra - polygon: [[-25050.0, 7500.0], [-25050.0, 5500.0], [-18100.0, 5500.0], [-18100.0, 7500.0]]
+Extra - asset_id: collision_camera_015
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 145; Major Location? False
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Omega Shaft West
+      Destroy Bomb Block
+
+> Door to Omega Metroid North Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Metroid North Arena/Door to Omega Metroid North Access
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Bomb or Power Bomb ≥ 2
+  > Door to Omega Shaft West
+      Lighting Armor or Space Jump or Can Spiderspark
+
+> Door to Omega Shaft West; Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Shaft West/Door to Omega Metroid North Access
+  * Extra - actor_name: Door018
+  * Extra - actor_type: doorpowerpower
+  > Door to Omega Metroid North Arena
+      Lighting Armor or Space Jump or Can Spiderspark
+
+> Tunnel to Omega Shaft West; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Omega Metroid North Access
+
+----------------
+Omega Metroid+ Access
+Extra - total_boundings: {'x1': -8300.0, 'x2': -950.0, 'y1': -6000.0, 'y2': 500.0}
+Extra - polygon: [[-8300.0, 500.0], [-8300.0, -4800.0], [-6200.0, -5200.0], [-6200.0, -6000.0], [-3300.0, -6000.0], [-3300.0, -4500.0], [-950.0, -4300.0], [-950.0, -2000.0], [-1700.0, -1800.0], [-1700.0, 500.0]]
+Extra - asset_id: collision_camera_016
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation005
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Omega Shaft East (Bottom)
+      Trivial
+  > Door to Transport to Area 6
+      Lay Power Bomb
+
+> Door to Omega Shaft East (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Shaft East/Door to Omega Metroid+ Access (Top)
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Door to Omega Metroid+ Arena
+      Phase Drift
+  > Below Pickup
+      Trivial
+
+> Door to Omega Shaft East (Bottom); Heals? False
+  * Layers: default
+  * Charge Beam Door to Omega Shaft East/Door to Omega Metroid+ Access (Bottom)
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorchargecharge
+  > Save Station
+      Trivial
+
+> Door to Omega Metroid+ Arena; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Omega Metroid+ Arena/Door to Omega Metroid+ Access
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Door to Omega Shaft East (Top)
+      Phase Drift
+  > Below Pickup
+      Morph Ball and Screw Attack
+
+> Door to Transport to Area 6; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 6/Door to Omega Metroid+ Access
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorclosedpower
+  > Save Station
+      Lay Power Bomb
+  > Below Pickup
+      Morph Ball and Climb Rooms Vertically (High Jump)
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 153; Major Location? False
+  * Extra - actor_name: HiddenPowerup002
+  * Extra - actor_type: item_missiletank
+  > Below Pickup
+      Trivial
+
+> Below Pickup; Heals? False
+  * Layers: default
+  > Door to Omega Shaft East (Top)
+      Climb Rooms Vertically (No High Jump)
+  > Door to Transport to Area 6
+      Morph Ball and Climb Rooms Vertically (High Jump)
+  > Pickup (Missile Tank)
+      Missile and Morph Ball and Climb Rooms Vertically (High Jump)
+
+----------------
+Exit Puzzle Room 2
+Extra - total_boundings: {'x1': -24750.0, 'x2': -22600.0, 'y1': -13100.0, 'y2': -11000.0}
+Extra - polygon: [[-24750.0, -11000.0], [-24750.0, -13100.0], [-22600.0, -13100.0], [-22600.0, -11000.0]]
+Extra - asset_id: collision_camera_017
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 149; Major Location? False
+  * Extra - actor_name: LE_Item_011
+  * Extra - actor_type: item_senergytank
+  > Door to Exit Puzzle Room 1 (Bottom)
+      Trivial
+  > Middle Level
+      Morph Ball and Screw Attack
+
+> Door to Exit Puzzle Room 1 (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Exit Puzzle Room 1/Door to Exit Puzzle Room 2 (Top)
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Transport to Area 8
+      Trivial
+
+> Door to Exit Puzzle Room 1 (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Exit Puzzle Room 1/Door to Exit Puzzle Room 2 (Bottom)
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Aeion Tank)
+      Trivial
+
+> Door to Transport to Area 8; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 8/Door to Exit Puzzle Room 2
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Door to Exit Puzzle Room 1 (Top)
+      Trivial
+  > Middle Level
+      Screw Attack
+
+> Tunnel to Exit Puzzle Room 1; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Exit Puzzle Room 1/Tunnel to Exit Puzzle Room 2
+  > Middle Level
+      Morph Ball
+
+> Middle Level; Heals? False
+  * Layers: default
+  > Door to Transport to Area 8
+      Screw Attack
+  > Tunnel to Exit Puzzle Room 1
+      After Area 7 - Exit Puzzle Room 1 Grapple Block Left and Climb Rooms Vertically (No High Jump) and Destroy Bomb Block
+
+----------------
+Omega Shaft West
+Extra - total_boundings: {'x1': -18200.0, 'x2': -16200.0, 'y1': 1300.0, 'y2': 8100.0}
+Extra - polygon: [[-18200.0, 8100.0], [-18200.0, 1300.0], [-16200.0, 1300.0], [-16200.0, 2600.0], [-16400.0, 2600.0], [-16400.0, 3200.0], [-16200.0, 3200.0], [-16200.0, 8100.0]]
+Extra - asset_id: collision_camera_018
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge_002
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Omega Metroid North Access
+      Destroy Bomb Block
+  > Tunnel to Launch Tunnel North (Top)
+      Destroy Bomb Block
+  > Tunnel to Launch Tunnel North (Bottom)
+      Destroy Bomb Block
+
+> Door to Launch Tunnel South; Heals? False
+  * Layers: default
+  * Charge Beam Door to Launch Tunnel South/Door to Omega Shaft West
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorchargecharge
+  > Door to Omega Metroid North Access
+      Trivial
+  > Aeion Orb
+      Trivial
+
+> Door to Entrance Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Entrance Shaft/Door to Omega Shaft West
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Aeion Orb
+      Trivial
+
+> Door to Omega Metroid North Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Omega Metroid North Access/Door to Omega Shaft West
+  * Extra - actor_name: Door018
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Any of the following:
+          Lay Power Bomb
+          Spider Ball and Lay Bomb
+  > Door to Launch Tunnel South
+      Trivial
+
+> Tunnel to Launch Tunnel North (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Launch Tunnel North/Tunnel to Omega Shaft West (Top)
+  > Ammo Recharge Station
+      Morph Ball
+
+> Tunnel to Launch Tunnel North (Bottom); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Launch Tunnel North/Tunnel to Omega Shaft West (Bottom)
+  > Ammo Recharge Station
+      Morph Ball
+
+> Tunnel to Launch Tunnel South; Heals? False
+  * Layers: default
+  * Tunnel to Launch Tunnel South/Tunnel to Omega Shaft West
+  > Aeion Orb
+      Morph Ball
+
+> Tunnel to Omega Metroid North Access; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Omega Metroid North Access/Tunnel to Omega Shaft West
+  > Ammo Recharge Station
+      Morph Ball
+
+> Aeion Orb; Heals? False
+  * Layers: default
+  > Door to Launch Tunnel South
+      Trivial
+  > Door to Entrance Shaft
+      Trivial
+  > Tunnel to Launch Tunnel South
+      Morph Ball and After Area 7 - Launch Tunnel South Grapple Block Bottom
+
+----------------
+Launch Tunnel North
+Extra - total_boundings: {'x1': -16300.0, 'x2': -8200.0, 'y1': 6600.0, 'y2': 8100.0}
+Extra - polygon: [[-16300.0, 8100.0], [-16300.0, 6600.0], [-8200.0, 6600.0], [-8200.0, 8100.0]]
+Extra - asset_id: collision_camera_019
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 150; Major Location? False
+  * Extra - actor_name: LE_Item_012
+  * Extra - actor_type: item_supermissiletank
+  > Tunnel to Omega Shaft West (Bottom)
+      Destroy Bomb Block
+
+> Tunnel to Omega Shaft West (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Launch Tunnel North (Top)
+  > Tunnel to Launch Tunnels Shaft
+      Can Spiderspark
+
+> Tunnel to Omega Shaft West (Bottom); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Launch Tunnel North (Bottom)
+  > Pickup (Super Missile Tank)
+      Lighting Armor and Morph Ball and Phase Drift
+
+> Tunnel to Launch Tunnels Shaft; Heals? False
+  * Layers: default
+  * Tunnel to Launch Tunnels Shaft/Tunnel to Launch Tunnel North
+  > Tunnel to Omega Shaft West (Top)
+      Can Spiderspark
+
+----------------
+Transport to Area 8
+Extra - total_boundings: {'x1': -30850.0, 'x2': -24100.0, 'y1': -11700.0, 'y2': -3200.0}
+Extra - polygon: [[-30850.0, -3200.0], [-30850.0, -4300.0], [-29800.0, -4300.0], [-27400.0, -5200.0], [-27400.0, -7800.0], [-27000.0, -8300.0], [-27000.0, -11700.0], [-24650.0, -11700.0], [-24650.0, -9600.0], [-24100.0, -9500.0], [-24100.0, -3200.0]]
+Extra - asset_id: collision_camera_021
+> Elevator to Area 8 - Transport to Area 7; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 8 - Transport to Area 7
+  * Extra - actor_name: LE_Platform_Elevator_FromArea10
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Exit Puzzle Room 2
+      Morph Ball and After Area 7 - Transport to Area 8 Grapple Block and After Area 7 - Chozo Seal Unlocked
+
+> Door to Exit Puzzle Room 2; Heals? False
+  * Layers: default
+  * Power Beam Door to Exit Puzzle Room 2/Door to Transport to Area 8
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 8 - Transport to Area 7
+      Morph Ball and After Area 7 - Transport to Area 8 Grapple Block
+  > Event - Grapple Block
+      Grapple Beam and Missile and Morph Ball
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 7 - Transport to Area 8 Grapple Block
+  > Door to Exit Puzzle Room 2
+      Missile and Morph Ball
+

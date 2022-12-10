@@ -460,7 +460,6 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Dock to Blue EMMI Introduction
       Trivial
 
@@ -492,7 +491,6 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Flipper Room
       Trivial
   > Navigation Room
@@ -512,12 +510,13 @@ Extra - asset_id: collision_camera_006
 
 > Navigation Room; Heals? False; Spawn Point
   * Layers: default
-  * Logbook Generic for a
+  * Hint
   * Extra - actor_name: accesspoint_000
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: accesspoint_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
   * Extra - hint_id: FOREST_1
+  * Extra - string_asset_id: 10
   > Door to Navigation Station Access
       Trivial
 
@@ -886,7 +885,7 @@ Extra - asset_id: collision_camera_011
           Slide and Slide Jump (Beginner)
           All of the following:
               # The boost must be charged from the map room
-              Speed Booster and Disabled Door Lock Randomizer
+              Speed Booster
               Lay Bomb or Lay Power Bomb
 
 > Dock to EMMI Zone Exit West; Heals? False
@@ -951,6 +950,7 @@ Extra - asset_id: collision_camera_012
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Tile Group (BOMB) 2
       Morph Ball
   > Tile Group (BOMB) 3
@@ -1030,6 +1030,7 @@ Extra - asset_id: collision_camera_013
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Map Station
       Trivial
 
@@ -1785,6 +1786,7 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Door to Above Golzuna
       Any of the following:
           Space Jump or Speed Booster or Simple IBJ
@@ -1807,6 +1809,7 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Wide Beam Door',)
   > Door to Save Station East
       Trivial
   > Pickup (Energy Part)
@@ -3114,6 +3117,7 @@ Extra - asset_id: collision_camera_036
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Wide Beam Door',)
   > Door to Cross Bomb Tutorial
       Trivial
   > Tunnel to Golzuna Arena
@@ -3299,6 +3303,7 @@ Extra - asset_id: collision_camera_040
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Save Station
       Trivial
 

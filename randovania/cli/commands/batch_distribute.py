@@ -81,11 +81,10 @@ def batch_distribute_command_logic(args):
     def with_result(seed: int, r: Future):
         try:
             report_update(seed, f"Finished seed in {r.result()} seconds.")
+        except ImpossibleForSolver as e:
+            report_update(seed, f"Failed to generate seed: {e}")
         except GenerationFailure as e:
-            if isinstance(e.source, (asyncio.TimeoutError, ImpossibleForSolver)):
-                report_update(seed, f"Failed to generate seed: {e}")
-            else:
-                report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
+            report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
         except CancelledError:
             nonlocal finished_count
             finished_count += 1

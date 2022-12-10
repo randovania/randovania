@@ -161,12 +161,13 @@ Extra - asset_id: collision_camera_002
 
 > Navigation Room; Heals? False; Spawn Point
   * Layers: default
-  * Logbook Generic for 3
+  * Hint
   * Extra - actor_name: accesspoint
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: accesspoint_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
   * Extra - hint_id: MAGMA_1
+  * Extra - string_asset_id: 3
   > Door to Transport to Artaria
       Trivial
 
@@ -1778,6 +1779,7 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Dock to Map Station
       Trivial
 
@@ -1921,6 +1923,7 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Wide Beam Door',)
   > Event - Blob above Kraid, below
       Lay Bomb or Shoot Beam
   > Dock to Kraid Arena
@@ -2145,6 +2148,7 @@ Extra - asset_id: collision_camera_025
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Door to Path to Kraid Entryway
       Trivial
 
@@ -2571,6 +2575,7 @@ Extra - asset_id: collision_camera_029
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Door to EMMI Zone Exits West
       Can Slide
   > Center of Tunnel
@@ -2601,9 +2606,7 @@ Extra - asset_id: collision_camera_029
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
   > Pickup (Power Bomb Tank)
-      All of the following:
-          # Item logically unattainable with door rando
-          Disabled Door Lock Randomizer and Ballspark
+      Ballspark
   > Center of Tunnel
       Morph Ball
 
@@ -4771,12 +4774,13 @@ Extra - asset_id: collision_camera_058
 
 > Navigation Room; Heals? False; Spawn Point
   * Layers: default
-  * Logbook Generic for 4
+  * Hint
   * Extra - actor_name: accesspoint_000
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: accesspoint_platform_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
   * Extra - hint_id: MAGMA_2
+  * Extra - string_asset_id: 4
   > Door to Teleport to Artaria (Red)
       Trivial
 
@@ -4865,6 +4869,7 @@ Extra - asset_id: collision_camera_061
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - excluded_dock_weaknesses: ('Wide Beam Door',)
   > Safe Ledge
       All of the following:
           Flash Shift or Gravity Suit or Spider Magnet or Movement (Beginner) or Lava Damage ≥ 10 or Lay Cross Bomb or Use Spin Boost
@@ -4988,6 +4993,7 @@ Extra - asset_id: collision_camera_062
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Save Station
       Trivial
 

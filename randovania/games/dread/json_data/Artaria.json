@@ -10929,7 +10929,7 @@
                     "heal": false,
                     "coordinates": {
                         "x": 17850.0,
-                        "y": -500.0000305175781,
+                        "y": -500.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -10943,7 +10943,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Wide Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -17117,45 +17120,12 @@
                     "major_location": false,
                     "connections": {
                         "Tunnel to EMMI Zone Hub": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Diffusion or Wave"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -20838,7 +20808,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 11850.0,
@@ -20854,10 +20824,17 @@
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "PRP_CV_AccessPoint002_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "hint_id": "CAVE_2"
+                        "hint_id": "CAVE_2",
+                        "string_asset_id": 1
                     },
-                    "string_asset_id": 1,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to David Jaffe Room": {
                             "type": "and",
@@ -21511,7 +21488,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 7850.0,
@@ -21527,10 +21504,17 @@
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "PRP_CV_AccessPoint001_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "hint_id": "CAVE_1"
+                        "hint_id": "CAVE_1",
+                        "string_asset_id": 2
                     },
-                    "string_asset_id": 2,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Melee Tutorial West": {
                             "type": "and",
@@ -23089,7 +23073,7 @@
                     "heal": false,
                     "coordinates": {
                         "x": 17850.0,
-                        "y": -500.0000305175781,
+                        "y": -500.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -23103,7 +23087,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Wide Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {

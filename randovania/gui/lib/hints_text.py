@@ -3,7 +3,7 @@ import collections
 from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
-from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.hint_node import HintNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 
@@ -109,7 +109,7 @@ def update_hint_locations(game: RandovaniaGame,
                           hint_tree_widget: QtWidgets.QTreeWidget):
     game_description = default_database.game_description_for(game)
 
-    used_hint_types = set()
+    used_hint_kind = set()
 
     hint_tree_widget.clear()
     hint_tree_widget.setSortingEnabled(False)
@@ -123,19 +123,19 @@ def update_hint_locations(game: RandovaniaGame,
             hint_types = {}
 
             for node in area.nodes:
-                if isinstance(node, LogbookNode):
-                    used_hint_types.add(node.lore_type)
-                    if node.required_translator is not None:
-                        hint_types[node.lore_type] = node.required_translator.short_name
+                if isinstance(node, HintNode):
+                    used_hint_kind.add(node.kind)
+                    if "translator" in node.extra:
+                        hint_types[node.kind] = node.extra["translator"]
                     else:
-                        hint_types[node.lore_type] = "✓"
+                        hint_types[node.kind] = "✓"
 
             if hint_types:
                 hint_type_tree[world.correct_name(area.in_dark_aether)][area.name] = hint_types
 
     number_for_hint_type = {
         hint_type: i + 1
-        for i, hint_type in enumerate(sorted(used_hint_types, key=lambda it: it.long_name))
+        for i, hint_type in enumerate(sorted(used_hint_kind, key=lambda it: it.long_name))
     }
 
     for world_name, area_hints in hint_type_tree.items():
@@ -149,11 +149,11 @@ def update_hint_locations(game: RandovaniaGame,
 
             for hint_type, text in hint_types.items():
                 area_item.setText(number_for_hint_type[hint_type], text)
-                used_hint_types.add(hint_type)
+                used_hint_kind.add(hint_type)
 
     hint_tree_widget.resizeColumnToContents(0)
     hint_tree_widget.setSortingEnabled(True)
     hint_tree_widget.sortByColumn(0, QtCore.Qt.AscendingOrder)
 
-    for hint_type in used_hint_types:
-        hint_tree_widget.headerItem().setText(number_for_hint_type[hint_type], hint_type.long_name)
+    for hint_kind in used_hint_kind:
+        hint_tree_widget.headerItem().setText(number_for_hint_type[hint_kind], hint_kind.long_name)

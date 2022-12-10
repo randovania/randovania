@@ -1439,7 +1439,7 @@
                     }
                 },
                 "Hint - Cthulhu (East)": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 4422.56,
@@ -1451,10 +1451,17 @@
                         "default"
                     ],
                     "extra": {
-                        "event": "0205"
+                        "event": "0205",
+                        "string_asset_id": 3
                     },
-                    "string_asset_id": 3,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "East Side": {
                             "type": "and",
@@ -1490,7 +1497,7 @@
                     }
                 },
                 "Hint - Cthulhu (West)": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 253.14,
@@ -1502,10 +1509,17 @@
                         "default"
                     ],
                     "extra": {
-                        "event": "0201"
+                        "event": "0201",
+                        "string_asset_id": 2
                     },
-                    "string_asset_id": 2,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "West Side": {
                             "type": "and",
@@ -2207,7 +2221,7 @@
                     }
                 },
                 "Hint - MALCO": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 199.77,
@@ -2220,10 +2234,17 @@
                     ],
                     "extra": {
                         "event": "0306",
-                        "hint_index": 13
+                        "hint_index": 13,
+                        "string_asset_id": 8
                     },
-                    "string_asset_id": 8,
-                    "lore_type": "specific-pickup",
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Grasstown": {
                             "type": "and",

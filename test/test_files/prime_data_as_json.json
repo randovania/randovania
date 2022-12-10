@@ -1,5 +1,5 @@
 {
-    "schema_version": 12,
+    "schema_version": 13,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -17,7 +17,7 @@
                     "item_id": 24
                 }
             },
-            "ScanVisor": {
+            "Scan": {
                 "long_name": "Scan Visor",
                 "max_capacity": 1,
                 "extra": {
@@ -384,7 +384,7 @@
                             "connections": {}
                         },
                         "Luminoth Lore": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": true,
                             "coordinates": null,
                             "description": "",
@@ -392,14 +392,40 @@
                                 "default"
                             ],
                             "extra": {
-                                "translator": "ScanVisor"
+                                "translator": "Scan",
+                                "string_asset_id": 1000
                             },
-                            "string_asset_id": 1000,
-                            "lore_type": "requires-item",
+                            "kind": "generic",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {}
                         },
                         "Luminoth Warrior": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": true,
                             "coordinates": null,
                             "description": "",
@@ -407,23 +433,58 @@
                                 "default"
                             ],
                             "extra": {
-                                "hint_index": 2
+                                "hint_index": 2,
+                                "string_asset_id": 2000
                             },
-                            "string_asset_id": 2000,
-                            "lore_type": "specific-pickup",
+                            "kind": "specific-pickup",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {}
                         },
                         "Pirate Lore": {
-                            "node_type": "logbook",
+                            "node_type": "hint",
                             "heal": true,
                             "coordinates": null,
                             "description": "",
                             "layers": [
                                 "default"
                             ],
-                            "extra": {},
-                            "string_asset_id": 3000,
-                            "lore_type": "generic",
+                            "extra": {
+                                "string_asset_id": 3000
+                            },
+                            "kind": "generic",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Scan",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
                             "connections": {}
                         }
                     }

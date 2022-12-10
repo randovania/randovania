@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
-from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
@@ -18,7 +18,7 @@ def _logbook_node(request, blank_game_description):
     node = blank_game_description.world_list.node_by_identifier(NodeIdentifier.create(
         "Intro", "Hint Room", "Hint with Translator" if has_translator else "Hint no Translator",
     ))
-    assert isinstance(node, LogbookNode)
+    assert isinstance(node, HintNode)
 
     return has_translator, translator, node
 

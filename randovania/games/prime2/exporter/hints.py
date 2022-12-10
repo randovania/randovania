@@ -6,7 +6,7 @@ from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.common.prime_family.exporter.hint_namer import colorize_text
@@ -36,12 +36,12 @@ def create_patches_hints(all_patches: dict[int, GamePatches],
 
     return [
         create_simple_logbook_hint(
-            logbook_node.string_asset_id,
+            logbook_node.extra["string_asset_id"],
             hints_for_asset.get(world_list.identifier_for_node(logbook_node),
                                 "Someone forgot to leave a message."),
         )
         for logbook_node in world_list.iterate_nodes()
-        if isinstance(logbook_node, LogbookNode)
+        if isinstance(logbook_node, HintNode)
     ]
 
 
@@ -52,8 +52,8 @@ def hide_patches_hints(world_list: WorldList) -> list:
     :return:
     """
 
-    return [create_simple_logbook_hint(logbook_node.string_asset_id, "Some item was placed somewhere.")
-            for logbook_node in world_list.iterate_nodes() if isinstance(logbook_node, LogbookNode)]
+    return [create_simple_logbook_hint(logbook_node.extra["string_asset_id"], "Some item was placed somewhere.")
+            for logbook_node in world_list.iterate_nodes() if isinstance(logbook_node, HintNode)]
 
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [

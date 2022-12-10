@@ -6,7 +6,7 @@ import pytest
 from randovania.generator import generator
 from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
 from randovania.layout.layout_description import LayoutDescription
-from randovania.resolver.exceptions import InvalidConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 
 
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)

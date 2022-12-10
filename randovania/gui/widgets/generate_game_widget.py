@@ -26,6 +26,11 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
+from randovania.resolver.exceptions import ImpossibleForSolver
+
+
+class RetryGeneration(Exception):
+    pass
 
 
 def persist_layout(history_dir: Path, description: LayoutDescription):
@@ -193,7 +198,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         result = await async_dialog.execute_dialog(self._logic_settings_window)
         self._logic_settings_window = None
 
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             self._add_new_preset(VersionedPreset.with_preset(editor.create_custom_preset_with()))
 
     @asyncSlot()
@@ -201,10 +206,10 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         result = await async_dialog.warning(
             self, "Delete preset?",
             f"Are you sure you want to delete preset {self._current_preset_data.name}?",
-            buttons=QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-            default_button=QtWidgets.QMessageBox.No,
+            buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+            default_button=async_dialog.StandardButton.No,
         )
-        if result == QtWidgets.QMessageBox.Yes:
+        if result == async_dialog.StandardButton.Yes:
             self._window_manager.preset_manager.delete_preset(self._current_preset_data)
             self._update_preset_tree_items()
             self._on_select_preset()
@@ -226,7 +231,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self._preset_history = None
         assert new_preset is not None
 
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             self._window_manager.preset_manager.add_new_preset(VersionedPreset.with_preset(new_preset))
             self._update_preset_tree_items()
 
@@ -248,7 +253,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
     def _on_open_required_tricks_for_preset(self):
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
         self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, self._current_preset_data.get_preset())
-        self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
+        self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
         self._trick_usage_popup.open()
 
     def _on_import_preset(self):
@@ -280,12 +285,12 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                     preset.name,
                     existing_preset.name,
                 ),
-                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Cancel,
-                QtWidgets.QMessageBox.Cancel
+                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No | async_dialog.StandardButton.Cancel,
+                async_dialog.StandardButton.Cancel
             )
-            if user_response == QtWidgets.QMessageBox.Cancel:
+            if user_response == async_dialog.StandardButton.Cancel:
                 return
-            elif user_response == QtWidgets.QMessageBox.No:
+            elif user_response == async_dialog.StandardButton.No:
                 preset = VersionedPreset.with_preset(dataclasses.replace(preset.get_preset(), uuid=uuid.uuid4()))
 
         self._add_new_preset(preset)
@@ -347,14 +352,18 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             if result != async_dialog.StandardButton.Yes:
                 return
 
-        return await self.generate_layout_from_permalink(
-            permalink=Permalink.from_parameters(GeneratorParameters(
-                seed_number=random.randint(0, 2 ** 31),
-                spoiler=spoiler,
-                presets=[preset.get_preset()] * num_players,
-            )),
-            retries=retries,
-        )
+        while True:
+            try:
+                return await self.generate_layout_from_permalink(
+                    permalink=Permalink.from_parameters(GeneratorParameters(
+                        seed_number=random.randint(0, 2 ** 31),
+                        spoiler=spoiler,
+                        presets=[preset.get_preset()] * num_players,
+                    )),
+                    retries=retries,
+                )
+            except RetryGeneration:
+                pass
 
     async def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None):
         def work(progress_update: ProgressUpdateCallable):
@@ -368,14 +377,34 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
         try:
             layout = await self._background_task.run_in_background_async(work, "Creating a game...")
-            self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 1)
-            persist_layout(self._options.game_history_path, layout)
-            self._window_manager.open_game_details(layout)
+        except ImpossibleForSolver as e:
+            code = await async_dialog.warning(
+                self, "Solver Error",
+                f"{e}.\n\nDo you want to:"
+                f"\n- Keep the generated game, even without any guarantees it's possible"
+                f"\n- Retry the generation"
+                f"\n- Cancel the process",
+                buttons=(async_dialog.StandardButton.Save
+                         | async_dialog.StandardButton.Retry
+                         | async_dialog.StandardButton.Cancel),
+                default_button=async_dialog.StandardButton.Cancel,
+            )
+            if code == async_dialog.StandardButton.Save:
+                layout = e.layout
+            elif code == async_dialog.StandardButton.Retry:
+                raise RetryGeneration()
+            else:
+                self._background_task.progress_update_signal.emit("Solver Error", 0)
+                return
 
         except Exception as e:
-            await self.failure_handler.handle_exception(
+            return await self.failure_handler.handle_exception(
                 e, self._background_task.progress_update_signal.emit
             )
+
+        self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 1)
+        persist_layout(self._options.game_history_path, layout)
+        self._window_manager.open_game_details(layout)
 
     def on_options_changed(self, options: Options):
         if not self._has_set_from_last_selected:

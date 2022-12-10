@@ -25,7 +25,7 @@ async def export_game(
 
     if exporter.is_busy:
         return await async_dialog.message_box(
-            None, QtWidgets.QMessageBox.Critical,
+            None, QtWidgets.QMessageBox.Icon.Critical,
             "Can't export game",
             "Error: Unable to export multiple games at the same time and "
             "another window is exporting a game right now.")

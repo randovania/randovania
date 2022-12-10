@@ -153,6 +153,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME_CORRUPTION = "prime3"
     SUPER_METROID = "super_metroid"
     METROID_DREAD = "dread"
+    METROID_SAMUS_RETURNS = "samus_returns"
     CAVE_STORY = "cave_story"
     BLANK = "blank"
 
@@ -170,6 +171,8 @@ class RandovaniaGame(BitPackEnum, Enum):
             import randovania.games.super_metroid.game_data as game_module
         elif self == RandovaniaGame.METROID_DREAD:
             import randovania.games.dread.game_data as game_module
+        elif self == RandovaniaGame.METROID_SAMUS_RETURNS:
+            import randovania.games.samus_returns.game_data as game_module
         elif self == RandovaniaGame.CAVE_STORY:
             import randovania.games.cave_story.game_data as game_module
         else:

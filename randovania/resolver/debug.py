@@ -1,9 +1,17 @@
+from __future__ import annotations
+
 import contextlib
+import typing
 
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.resource_node import ResourceNode
+
+if typing.TYPE_CHECKING:
+    from randovania.resolver.state import State
+    from randovania.resolver.resolver_reach import ResolverReach
+    from randovania.game_description.game_description import GameDescription
 
 _DEBUG_LEVEL = 0
 count = 0
@@ -40,12 +48,7 @@ def log_resolve_start():
     _last_printed_additional = {}
 
 
-def log_new_advance(state: "State", reach: "ResolverReach"):
-    from randovania.resolver.state import State
-    from randovania.resolver.resolver_reach import ResolverReach
-    state: State
-    reach: ResolverReach
-
+def log_new_advance(state: State, reach: ResolverReach):
     global _current_indent
     increment_attempts()
     _current_indent += 1
@@ -67,14 +70,14 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
         print_function(f"{_indent(1)}> {n(state.node, world_list=world_list)} for {resources}")
 
 
-def log_checking_satisfiable_actions(state: "State", actions: list[tuple[ResourceNode, int]]):
+def log_checking_satisfiable_actions(state: State, actions: list[tuple[ResourceNode, int]]):
     if _DEBUG_LEVEL > 1:
         print_function(f"{_indent()}# Satisfiable Actions")
         for action, _ in actions:
             print_function(f"{_indent(-1)}= {n(action, world_list=state.world_list)}")
 
 
-def log_rollback(state: "State", has_action, possible_action: bool,
+def log_rollback(state: State, has_action, possible_action: bool,
                  additional_requirements: RequirementSet | None = None):
     global _current_indent
     if _DEBUG_LEVEL > 0:
@@ -90,7 +93,7 @@ def log_rollback(state: "State", has_action, possible_action: bool,
     _current_indent -= 1
 
 
-def log_skip_action_missing_requirement(node: Node, game: "GameDescription", requirement_set: RequirementSet):
+def log_skip_action_missing_requirement(node: Node, game: GameDescription, requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
         if node in _last_printed_additional and _last_printed_additional[node] == requirement_set:
             print_function(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, same additional")

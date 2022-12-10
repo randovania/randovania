@@ -1,0 +1,865 @@
+----------------
+West Hub
+Extra - total_boundings: {'x1': 3100.0, 'x2': 8200.0, 'y1': -4300.0, 'y2': 3800.0}
+Extra - polygon: [[8200.0, -3000.0], [8200.0, 1800.0], [7500.0, 1800.0], [7500.0, 3800.0], [5200.0, 3800.0], [5200.0, 1200.0], [4150.0, 1200.0], [4150.0, -700.0], [3100.0, -700.0], [3100.0, -3200.0], [4500.0, -3200.0], [4500.0, -4300.0], [6600.0, -4300.0], [6600.0, -3000.0]]
+Extra - asset_id: collision_camera_001
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 82; Major Location? False
+  * Extra - actor_name: LE_Item_007
+  * Extra - actor_type: item_missiletank
+  > Save Station
+      Morph Ball
+  > Door from Chozo Seals
+      Trivial
+
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoRecharge_001
+  * Extra - actor_type: weightactivatedplatform
+  > Save Station
+      Trivial
+  > Door to Gamma Arena Room 3
+      Baby Metroid or Morph Ball
+  > Door to One-Way Bridge
+      Grapple Beam and Morph Ball
+  > Tunnel to Fleech Swarm Cave
+      Destroy Bomb Block
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation
+  * Extra - actor_type: weightactivatedplatform
+  > Ammo Recharge Station
+      Trivial
+  > Door to Chozo Seals
+      Trivial
+  > Door to Roundabout
+      Any of the following:
+          Destroy Bomb Block
+          Spider Ball Clip (Beginner) and Use Spider Ball
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 4 (West) - Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_04_01
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Roundabout
+      Morph Ball
+
+> Door from Chozo Seals; Heals? False
+  * Layers: default
+  * Access Closed to Chozo Seals/Door to West Hub (Top)
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorclosedpower
+  > Pickup (Missile Tank)
+      Trivial
+
+> Door to Gamma Arena Room 3; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Gamma Arena Room 3/Door to West Hub
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Baby Metroid or Morph Ball
+
+> Door to One-Way Bridge; Heals? False
+  * Layers: default
+  * Plasma Beam Door to One-Way Bridge/Door from West Hub
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerclosed
+
+> Door to Chozo Seals; Heals? False
+  * Layers: default
+  * Charge Beam Door to Chozo Seals/Door to West Hub (Bottom)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorchargecharge
+  > Save Station
+      Trivial
+
+> Door to Roundabout; Heals? False
+  * Layers: default
+  * Charge Beam Door to Roundabout/Door to West Hub
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorchargecharge
+  > Save Station
+      Destroy Bomb Block
+  > Teleporter
+      Morph Ball and After Area 4 (West) - Teleporter Unlocked
+  > Dock to Moheek Hallway
+      Trivial
+  > Event - Teleporter Unlocked
+      Morph Ball
+
+> Tunnel to One-Way Bridge; Heals? False
+  * Layers: default
+  * Tunnel to One-Way Bridge/Tunnel to West Hub
+  > Ammo Recharge Station
+      Morph Ball
+
+> Tunnel to Fleech Swarm Cave; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Fleech Swarm Cave/Tunnel to West Hub
+  > Ammo Recharge Station
+      Morph Ball
+
+> Dock to Moheek Hallway; Heals? False
+  * Layers: default
+  * Open Passage to Moheek Hallway/Dock to West Hub
+  > Door to Roundabout
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Teleporter Unlocked
+  > Door to Roundabout
+      Trivial
+
+----------------
+Spazer Beam Room
+Extra - total_boundings: {'x1': -6400.0, 'x2': -3900.0, 'y1': -4100.0, 'y2': -2900.0}
+Extra - polygon: [[-6400.0, -2900.0], [-6400.0, -4100.0], [-3900.0, -4100.0], [-3900.0, -2900.0]]
+Extra - asset_id: collision_camera_003
+> Pickup (Spazer Beam); Heals? False
+  * Layers: default
+  * Pickup 84; Major Location? True
+  * Extra - actor_name: LE_PowerUp_SpazerBeam
+  * Extra - actor_type: itemsphere_spazerbeam
+  > Door to Moheek Hallway
+      Any of the following:
+          Super Jump (Advanced) or Cross Rooms Horizontally (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+
+> Door from Moheek Hallway; Heals? False
+  * Layers: default
+  * Access Closed to Moheek Hallway/Door to Spazer Beam Room
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorclosedpower
+  > Pickup (Spazer Beam)
+      Trivial
+
+> Door to Moheek Hallway; Heals? False
+  * Layers: default
+  * Spazer Beam Door to Moheek Hallway/Door from Spazer Beam Room
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerclosed
+
+----------------
+One-Way Bridge
+Extra - total_boundings: {'x1': 7400.0, 'x2': 10500.0, 'y1': 2300.0, 'y2': 4500.0}
+Extra - polygon: [[7400.0, 4500.0], [7400.0, 2300.0], [10500.0, 2300.0], [10500.0, 4500.0]]
+Extra - asset_id: collision_camera_004
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 81; Major Location? False
+  * Extra - actor_name: LE_Item_006
+  * Extra - actor_type: item_supermissiletank
+  > Tunnel to West Hub
+      Grapple Beam and Morph Ball
+
+> Door from West Hub; Heals? False
+  * Layers: default
+  * Access Closed to West Hub/Door to One-Way Bridge
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerclosed
+  > Hang Ledge
+      Any of the following:
+          Phase Drift or Space Jump
+          Movement (Beginner) and Use Spider Ball
+
+> Tunnel to West Hub; Heals? False
+  * Layers: default
+  * Tunnel to West Hub/Tunnel to One-Way Bridge
+
+> Hang Ledge; Heals? False
+  * Layers: default
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam
+              Phase Drift and Movement (Advanced) and Can Spiderspark
+              Bomb and Spider Ball and Infinite Bomb Jump (Advanced)
+
+----------------
+Gamma Arena Room 3
+Extra - total_boundings: {'x1': -850.0, 'x2': 4250.0, 'y1': -400.0, 'y2': 1300.0}
+Extra - polygon: [[-850.0, 1300.0], [-850.0, -400.0], [4250.0, -400.0], [4250.0, 1300.0]]
+Extra - asset_id: collision_camera_005
+> Door to West Hub; Heals? False
+  * Layers: default
+  * Spazer Beam Door to West Hub/Door to Gamma Arena Room 3
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Door to Gamma Access Path Lower
+      All of the following:
+          Morph Ball and Varia Suit
+          Any of the following:
+              Grapple Beam or Space Jump
+              Gravity Suit and Simple IBJ
+              Movement (Intermediate) and Can Spiderspark
+
+> Door to Gamma Access Path Lower; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Access Path Lower/Door to Gamma Arena Room 3
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to West Hub
+      Morph Ball and Varia Suit
+
+----------------
+Chozo Seals
+Extra - total_boundings: {'x1': 8100.0, 'x2': 18600.0, 'y1': -7700.0, 'y2': -200.0}
+Extra - polygon: [[8100.0, -200.0], [8100.0, -4700.0], [8850.0, -4700.0], [8850.0, -6600.0], [11500.0, -6600.0], [11500.0, -7200.0], [13100.0, -7200.0], [13400.0, -7000.0], [14050.0, -7000.0], [14050.0, -7700.0], [17300.0, -7700.0], [17300.0, -6700.0], [18600.0, -6500.0], [18600.0, -3900.0], [16900.0, -3900.0], [16400.0, -3700.0], [16400.0, -200.0]]
+Extra - asset_id: collision_camera_006
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 78; Major Location? False
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_energytank
+  > Next to Pickup
+      Trivial
+
+> Elevator to Area 3 Exterior - Transport to Area 4 West; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 3 - Exterior - Transport to Area 4 West
+  * Extra - actor_name: LE_Platform_Elevator_FromArea03
+  * Extra - actor_type: weightactivatedplatform
+  > Right of Left Elevator
+      Trivial
+
+> Elevator to Area 4 East - Transport to Area 4 West; Heals? False
+  * Layers: default
+  * Teleporter to Area 4 - East - Transport to Area 4 West
+  * Extra - actor_name: LE_Platform_Elevator_FromArea05
+  * Extra - actor_type: weightactivatedplatform
+  > Chozo Seal Right
+      Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Pull Right
+
+> Chozo Seal Left; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_UnlockAreaDNA
+  * Extra - actor_type: weightactivatedplatform
+  > Chozo Seal Right
+      Any of the following:
+          Space Jump or Can Spiderspark
+          All of the following:
+              Morph Ball and Spider Ball
+              Grapple Beam or After Area 4 (West) - Chozo Seal Unlocked (Right)
+  > Door to West Hub (Bottom)
+      Any of the following:
+          Space Jump or Can Spiderspark or Simple IBJ
+          Grapple Beam and Use Spider Ball
+  > Tunnel to Roundabout
+      Morph Ball and Super Missile and After Area 4 (West) - Chozo Seals Grapple Block Left and After Area 4 (West) - Chozo Seal Unlocked (Left)
+  > Event - Chozo Seal Left Unlocked
+      After Area 4 (West) - Gamma Metroid
+  > Event - Grapple Block Pull Left
+      Grapple Beam and After Area 4 (West) - Chozo Seal Unlocked (Left)
+  > Next to Pickup
+      Morph Ball and Spider Ball and After Area 4 (West) - Chozo Seals Grapple Block Right and After Area 4 (West) - Chozo Seal Unlocked (Left)
+  > Right of Left Elevator
+      Any of the following:
+          Space Jump
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  All of the following:
+                      Spider Ball
+                      Bomb or Grapple Beam or Spring Ball
+                  After Area 4 (West) - Chozo Seals Grapple Block Pull Left and After Area 4 (West) - Chozo Seal Unlocked (Left)
+  > Event - Grapple Block Left
+      Grapple Beam
+
+> Chozo Seal Right; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_UnlockAreaDNA001
+  * Extra - actor_type: weightactivatedplatform
+  > Elevator to Area 4 East - Transport to Area 4 West
+      Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Pull Right
+  > Chozo Seal Left
+      All of the following:
+          After Area 4 (West) - Chozo Seal Unlocked (Left)
+          Any of the following:
+              Space Jump or Can Spiderspark
+              All of the following:
+                  Morph Ball and Spider Ball
+                  Grapple Beam or After Area 4 (West) - Chozo Seal Unlocked (Right)
+  > Door to Transport to Area 5 Entrance
+      Trivial
+  > Event - Chozo Seal Right Unlocked
+      After Area 4 (West) - Alpha Metroid+ and After Area 4 (East) - Gamma Metroid and After Area 4 (East) - Zeta Metroid
+  > Event - Grapple Block Right
+      Grapple Beam and Destroy Bomb Block
+
+> Door to West Hub (Top); Heals? False
+  * Layers: default
+  * Spazer Beam Door to West Hub/Door from Chozo Seals
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorclosedpower
+  > Door to West Hub (Bottom)
+      Trivial
+
+> Door to West Hub (Bottom); Heals? False
+  * Layers: default
+  * Charge Beam Door to West Hub/Door to Chozo Seals
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorchargecharge
+  > Chozo Seal Left
+      Trivial
+  > Door to West Hub (Top)
+      Climb Rooms Vertically (No High Jump)
+
+> Door to Transport to Area 5 Entrance; Heals? False
+  * Layers: default
+  * Charge Beam Door to Transport to Area 5 Entrance/Door to Chozo Seals
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorchargecharge
+  > Chozo Seal Right
+      Trivial
+  > Tunnel to The Big Gap
+      Destroy Bomb Block
+
+> Tunnel to Roundabout; Heals? False
+  * Layers: default
+  * Tunnel to Roundabout/Tunnel to Chozo Seals
+  > Chozo Seal Left
+      After Area 4 (West) - Chozo Seal Unlocked (Left)
+
+> Tunnel to The Big Gap; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to The Big Gap/Tunnel to Chozo Seals
+  > Door to Transport to Area 5 Entrance
+      Destroy Bomb Block
+  > Tunnel to Transport to Area 5 Entrance
+      Spider Ball and Destroy Bomb Block
+
+> Tunnel to Transport to Area 5 Entrance; Heals? False
+  * Layers: default
+  * Tunnel to Transport to Area 5 Entrance/Tunnel to Chozo Seals
+  > Tunnel to The Big Gap
+      Spider Ball and Destroy Bomb Block
+
+> Event - Chozo Seal Right Unlocked; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Chozo Seal Unlocked (Right)
+  > Chozo Seal Right
+      Trivial
+
+> Event - Chozo Seal Left Unlocked; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Chozo Seal Unlocked (Left)
+  > Chozo Seal Left
+      Trivial
+
+> Event - Grapple Block Pull Left; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Chozo Seals Grapple Block Pull Left
+  > Chozo Seal Left
+      Trivial
+
+> Event - Grapple Block Pull Right; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Chozo Seals Grapple Block Pull Right
+  > Next to Pickup
+      Trivial
+  > Right of Left Elevator
+      Trivial
+
+> Event - Grapple Block Right; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Chozo Seals Grapple Block Right
+  > Right of Left Elevator
+      Trivial
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Morph Ball
+  > Chozo Seal Left
+      Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Right
+  > Event - Grapple Block Pull Right
+      Grapple Beam and Morph Ball
+
+> Right of Left Elevator; Heals? False
+  * Layers: default
+  > Elevator to Area 3 Exterior - Transport to Area 4 West
+      Trivial
+  > Chozo Seal Left
+      Any of the following:
+          Space Jump
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Spider Ball
+                  After Area 4 (West) - Chozo Seals Grapple Block Pull Left and After Area 4 (West) - Chozo Seal Unlocked (Left)
+  > Event - Grapple Block Right
+      Grapple Beam and Morph Ball and After Area 4 (West) - Chozo Seal Unlocked (Left)
+
+> Event - Grapple Block Left; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Chozo Seals Grapple Block Left
+  > Chozo Seal Left
+      Trivial
+
+----------------
+Alpha+ Arena
+Extra - total_boundings: {'x1': 100.0, 'x2': 5000.0, 'y1': -6700.0, 'y2': -4700.0}
+Extra - polygon: [[100.0, -4700.0], [100.0, -6700.0], [5000.0, -6700.0], [5000.0, -4700.0]]
+Extra - asset_id: collision_camera_007
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 79; Major Location? False
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_missiletank
+  > Event - Alpha Metroid+
+      Defeat Alpha Metroid+
+  > Tunnel to Alpha+ Arena Access
+      Climb Rooms Vertically (No High Jump)
+
+> Door to Alpha+ Arena Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha+ Arena Access/Door to Alpha+ Arena
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+
+> Event - Alpha Metroid+; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Alpha Metroid+
+  > Door to Alpha+ Arena Access
+      Trivial
+
+> Tunnel to Alpha+ Arena Access; Heals? False
+  * Layers: default
+  * Tunnel to Alpha+ Arena Access/Tunnel to Alpha+ Arena
+  > Pickup (Missile Tank)
+      Morph Ball
+
+----------------
+Roundabout
+Extra - total_boundings: {'x1': 6500.0, 'x2': 9050.0, 'y1': -6400.0, 'y2': -3000.0}
+Extra - polygon: [[6500.0, -3000.0], [6500.0, -6400.0], [9050.0, -6400.0], [9050.0, -4500.0], [8100.0, -4500.0], [8100.0, -3000.0]]
+Extra - asset_id: collision_camera_010
+> Door to West Hub; Heals? False; Spawn Point
+  * Layers: default
+  * Charge Beam Door to West Hub/Door to Roundabout
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorchargecharge
+  > Door to Alpha+ Arena Access (Top)
+      Trivial
+
+> Door to Alpha+ Arena Access (Top); Heals? False
+  * Layers: default
+  * Access Locked to Alpha+ Arena Access/Door to Roundabout
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerclosed
+  > Door to West Hub
+      Trivial
+  > Next to Pickup
+      Lighting Armor or Use Spider Ball
+
+> Door to Alpha+ Arena Access (Bottom); Heals? False
+  * Layers: default
+  * Spazer Beam Door to Alpha+ Arena Access/Door from Roundabout
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorclosedpower
+  > Next to Pickup
+      Destroy Bomb Block
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 88; Major Location? False
+  * Extra - actor_name: HiddenPowerup004
+  * Extra - actor_type: item_missiletank
+  > Next to Pickup
+      Trivial
+
+> Tunnel to Chozo Seals; Heals? False
+  * Layers: default
+  * Tunnel to Chozo Seals/Tunnel to Roundabout
+  > Next to Grapple Blocks
+      Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Left
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Roundabout Grapple Block
+  > Next to Grapple Blocks
+      Trivial
+
+> Next to Grapple Blocks; Heals? False
+  * Layers: default
+  > Tunnel to Chozo Seals
+      Morph Ball and Super Missile and After Area 4 (West) - Chozo Seals Grapple Block Left
+  > Event - Grapple Block
+      Grapple Beam
+  > Next to Pickup
+      Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Left
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Door to Alpha+ Arena Access (Top)
+      Lighting Armor or Use Spider Ball
+  > Door to Alpha+ Arena Access (Bottom)
+      Any of the following:
+          Lay Power Bomb
+          After Area 4 (West) - Roundabout Grapple Block and Lay Bomb
+  > Pickup (Missile Tank)
+      All of the following:
+          Destroy Bomb Block
+          Lighting Armor or Spider Ball
+  > Next to Grapple Blocks
+      Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Left
+
+----------------
+Fleech Swarm Cave
+Extra - total_boundings: {'x1': 3100.0, 'x2': 5400.0, 'y1': 1400.0, 'y2': 3300.0}
+Extra - polygon: [[3100.0, 3300.0], [3100.0, 1400.0], [5400.0, 1400.0], [5400.0, 3300.0]]
+Extra - asset_id: collision_camera_011
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 80; Major Location? False
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_senergytank
+  > Tunnel to West Hub
+      All of the following:
+          Destroy Bomb Block
+          Lighting Armor or After Area 5 (Interior) - Gravity Suit Room Pickup
+
+> Tunnel to West Hub; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to West Hub/Tunnel to Fleech Swarm Cave
+  > Pickup (Aeion Tank)
+      All of the following:
+          Morph Ball
+          Lighting Armor or After Area 5 (Interior) - Gravity Suit Room Pickup
+
+----------------
+Gamma Arena Room 2
+Extra - total_boundings: {'x1': -6800.0, 'x2': -3600.0, 'y1': 1300.0, 'y2': 2800.0}
+Extra - polygon: [[-6800.0, 2800.0], [-6800.0, 1300.0], [-3600.0, 1300.0], [-3600.0, 2800.0]]
+Extra - asset_id: collision_camera_012
+> Tunnel to Gamma Access Path Lower; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Gamma Access Path Lower/Tunnel to Gamma Arena Room 2
+
+----------------
+Gamma Arena Room 1
+Extra - total_boundings: {'x1': -850.0, 'x2': 3400.0, 'y1': 1200.0, 'y2': 5300.0}
+Extra - polygon: [[-850.0, 4700.0], [-850.0, 1200.0], [3400.0, 1200.0], [3400.0, 4700.0]]
+Extra - asset_id: collision_camera_013
+> Door to Gamma Access Path Upper; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Access Path Upper/Door to Gamma Arena Room 1
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Inside Arena
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 85; Major Location? False
+  * Extra - actor_name: HP_ChozoHologram_002
+  * Extra - actor_type: item_missiletank
+  > Dock to Gamma Access Path Lower
+      Climb Rooms Vertically (High Jump)
+
+> Dock to Gamma Access Path Lower; Heals? False
+  * Layers: default
+  * Open Passage to Gamma Access Path Lower/Dock to Gamma Arena Room 1
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (High Jump)
+  > Inside Arena
+      Destroy Bomb Block
+
+> Event - Gamma Metroid; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Gamma Metroid
+  > Inside Arena
+      Trivial
+
+> Inside Arena; Heals? False
+  * Layers: default
+  > Door to Gamma Access Path Upper
+      After Area 4 (West) - Gamma Metroid
+  > Dock to Gamma Access Path Lower
+      Destroy Bomb Block
+  > Event - Gamma Metroid
+      Defeat Gamma Metroid
+
+----------------
+Gamma Access Path Lower
+Extra - total_boundings: {'x1': -7200.0, 'x2': -750.0, 'y1': -100.0, 'y2': 2700.0}
+Extra - polygon: [[-3750.0, 2700.0], [-3750.0, 1200.0], [-7200.0, 1200.0], [-7200.0, -100.0], [-750.0, -100.0], [-750.0, 2700.0]]
+Extra - asset_id: collision_camera_014
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 83; Major Location? False
+  * Extra - actor_name: LE_Item_008
+  * Extra - actor_type: item_senergytank
+  > Door to Gamma Arena Room 3
+      Trivial
+
+> Door to Gamma Arena Room 3; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Arena Room 3/Door to Gamma Access Path Lower
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Aeion Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Baby Metroid or Power Bomb
+              Lighting Armor and Bomb
+  > Dock to Gamma Access Shaft
+      Lighting Armor or Grapple Beam or Space Jump or Can Spiderspark
+  > Dock to Gamma Arena Room 1
+      Morph Ball and After Area 4 (West) - Gamma Access Path Lower Grapple Block
+
+> Tunnel to Gamma Arena Room 2; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Gamma Arena Room 2/Tunnel to Gamma Access Path Lower
+  > Dock to Gamma Arena Room 1
+      Morph Ball
+
+> Dock to Gamma Access Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Gamma Access Shaft/Dock to Gamma Access Path Lower
+  > Door to Gamma Arena Room 3
+      Lighting Armor or Grapple Beam or Space Jump or Can Spiderspark
+
+> Dock to Gamma Arena Room 1; Heals? False
+  * Layers: default
+  * Not Determined to Gamma Arena Room 1/Dock to Gamma Access Path Lower
+  > Door to Gamma Arena Room 3
+      Missile Launcher and After Area 4 (West) - Gamma Access Path Lower Grapple Block
+  > Tunnel to Gamma Arena Room 2
+      Destroy Bomb Block
+  > Event - Grapple Block
+      Grapple Beam
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 4 (West) - Gamma Access Path Lower Grapple Block
+  > Dock to Gamma Arena Room 1
+      Trivial
+
+----------------
+Gamma Access Shaft
+Extra - total_boundings: {'x1': -9000.0, 'x2': -7000.0, 'y1': 100.0, 'y2': 4000.0}
+Extra - polygon: [[-9000.0, 4000.0], [-9000.0, 100.0], [-7100.0, 100.0], [-7100.0, 2100.0], [-7000.0, 2100.0], [-7000.0, 4000.0]]
+Extra - asset_id: collision_camera_015
+> Dock to Gamma Access Path Lower; Heals? False
+  * Layers: default
+  * Open Passage to Gamma Access Path Lower/Dock to Gamma Access Shaft
+  > Dock to Gamma Access Path Upper
+      Trivial
+
+> Dock to Gamma Access Path Upper; Heals? False
+  * Layers: default
+  * Open Passage to Gamma Access Path Upper/Dock to Gamma Access Shaft
+  > Dock to Gamma Access Path Lower
+      Trivial
+
+----------------
+Moheek Hallway
+Extra - total_boundings: {'x1': -4050.0, 'x2': 4600.0, 'y1': -4600.0, 'y2': -2600.0}
+Extra - polygon: [[-4050.0, -2600.0], [-4050.0, -4600.0], [4600.0, -4600.0], [4600.0, -2600.0]]
+Extra - asset_id: collision_camera_016
+> Door to Spazer Beam Room; Heals? False
+  * Layers: default
+  * Missile Door to Spazer Beam Room/Door from Moheek Hallway
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorclosedpower
+
+> Door from Spazer Beam Room; Heals? False
+  * Layers: default
+  * Access Closed to Spazer Beam Room/Door to Moheek Hallway
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerclosed
+  > Below Pickup
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 86; Major Location? False
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_missiletank
+  > Below Pickup
+      Trivial
+
+> Dock to West Hub; Heals? False
+  * Layers: default
+  * Open Passage to West Hub/Dock to Moheek Hallway
+  > Below Pickup
+      Trivial
+
+> Below Pickup; Heals? False
+  * Layers: default
+  > Door to Spazer Beam Room
+      Trivial
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Any of the following:
+              High Jump Boots and Charge Beam and Ice Beam
+              All of the following:
+                  Movement (Beginner)
+                  Space Jump or Can Spiderspark or Simple IBJ
+  > Dock to West Hub
+      Trivial
+
+----------------
+Gamma Access Path Upper
+Extra - total_boundings: {'x1': -7100.0, 'x2': -700.0, 'y1': 2800.0, 'y2': 4300.0}
+Extra - polygon: [[-7100.0, 4300.0], [-7100.0, 2800.0], [-700.0, 2800.0], [-700.0, 4300.0]]
+Extra - asset_id: collision_camera_018
+> Door to Gamma Arena Room 1; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Arena Room 1/Door to Gamma Access Path Upper
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Dock to Gamma Access Shaft
+      Lighting Armor or Grapple Beam or Space Jump or Can Spiderspark
+
+> Dock to Gamma Access Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Gamma Access Shaft/Dock to Gamma Access Path Upper
+  > Door to Gamma Arena Room 1
+      Lighting Armor or Grapple Beam or Space Jump or Can Spiderspark
+
+----------------
+Alpha+ Arena Access
+Extra - total_boundings: {'x1': 4900.0, 'x2': 6600.0, 'y1': -6400.0, 'y2': -4700.0}
+Extra - polygon: [[4900.0, -4700.0], [4900.0, -6400.0], [6600.0, -6400.0], [6600.0, -4700.0]]
+Extra - asset_id: collision_camera_019
+> Door to Roundabout; Heals? False
+  * Layers: default
+  * Power Beam Door to Roundabout/Door to Alpha+ Arena Access (Top)
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerclosed
+  > Tunnel to Alpha+ Arena
+      Morph Ball
+
+> Door from Roundabout; Heals? False
+  * Layers: default
+  * Access Closed to Roundabout/Door to Alpha+ Arena Access (Bottom)
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorclosedpower
+  > Door to Roundabout
+      Morph Ball
+
+> Door to Alpha+ Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Alpha+ Arena/Door to Alpha+ Arena Access
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Door to Roundabout
+      Morph Ball
+
+> Tunnel to Alpha+ Arena; Heals? False
+  * Layers: default
+  * Tunnel to Alpha+ Arena/Tunnel to Alpha+ Arena Access
+  > Door to Roundabout
+      Morph Ball
+
+----------------
+The Big Gap
+Extra - total_boundings: {'x1': 14050.0, 'x2': 19300.0, 'y1': -9000.0, 'y2': -7000.0}
+Extra - polygon: [[16900.0, -7700.0], [14050.0, -7700.0], [14050.0, -9000.0], [19300.0, -9000.0], [19300.0, -7000.0], [16900.0, -7000.0]]
+Extra - asset_id: collision_camera_022
+> Door to Transport to Area 5 Entrance; Heals? False
+  * Layers: default
+  * Charge Beam Door to Transport to Area 5 Entrance/Door to The Big Gap
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorchargecharge
+  > Next to Acid Pool
+      Space Jump or Can Spiderspark
+
+> Tunnel to Chozo Seals; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Chozo Seals/Tunnel to The Big Gap
+  > Next to Acid Pool
+      Morph Ball
+
+> Next to Acid Pool; Heals? False
+  * Layers: default
+  > Door to Transport to Area 5 Entrance
+      Any of the following:
+          Space Jump or Can Spiderspark
+          Charge Beam and Ice Beam and Diagonal Bomb Jump (Hypermode) and Stand on Frozen Enemy (Intermediate) and Movement (Hypermode) and Lay Bomb
+  > Tunnel to Chozo Seals
+      All of the following:
+          Destroy Bomb Block
+          Any of the following:
+              Can Spiderspark or Climb Rooms Vertically (No High Jump)
+              Ice Beam and Stand on Frozen Enemy (Beginner)
+              Unmorph Extend (Intermediate) and Walljump (Intermediate)
+
+----------------
+Transport to Area 5 Entrance
+Extra - total_boundings: {'x1': 10100.0, 'x2': 14150.0, 'y1': -8800.0, 'y2': -6600.0}
+Extra - polygon: [[11600.0, -6600.0], [10100.0, -6600.0], [10100.0, -8800.0], [14150.0, -8800.0], [14150.0, -7200.0], [11600.0, -7200.0]]
+Extra - asset_id: collision_camera_023
+> Elevator to Area 5 Entrance - Chozo Seal; Heals? False; Spawn Point
+  * Layers: default
+  * Teleporter to Area 5 - Entrance - Chozo Seal
+  * Extra - actor_name: LE_Platform_Elevator_FromArea06
+  * Extra - actor_type: weightactivatedplatform
+  > Door to The Big Gap
+      After Area 4 (West) - Chozo Seal Unlocked (Right)
+  > Next to Grapple Block
+      Screw Attack and After Area 4 (West) - Chozo Seal Unlocked (Right)
+
+> Door to Chozo Seals; Heals? False
+  * Layers: default
+  * Charge Beam Door to Chozo Seals/Door to Transport to Area 5 Entrance
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorchargecharge
+  > Next to Grapple Block
+      Morph Ball and After Area 4 (West) -Transport to Area 5 Entrance Grapple Block
+
+> Door to The Big Gap; Heals? False
+  * Layers: default
+  * Charge Beam Door to The Big Gap/Door to Transport to Area 5 Entrance
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorchargecharge
+  > Elevator to Area 5 Entrance - Chozo Seal
+      Trivial
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 87; Major Location? False
+  * Extra - actor_name: HiddenPowerup003
+  * Extra - actor_type: item_supermissiletank
+  > Next to Grapple Block
+      Trivial
+
+> Tunnel to Chozo Seals; Heals? False
+  * Layers: default
+  * Tunnel to Chozo Seals/Tunnel to Transport to Area 5 Entrance
+  > Next to Grapple Block
+      Morph Ball
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 4 (West) -Transport to Area 5 Entrance Grapple Block
+  > Next to Grapple Block
+      Trivial
+
+> Next to Grapple Block; Heals? False
+  * Layers: default
+  > Elevator to Area 5 Entrance - Chozo Seal
+      Any of the following:
+          Screw Attack
+          Ice Beam and Morph Ball and Stand on Frozen Enemy (Beginner) and Melee Clip (Advanced)
+  > Door to Chozo Seals
+      Morph Ball and After Area 4 (West) -Transport to Area 5 Entrance Grapple Block
+  > Pickup (Super Missile Tank)
+      Morph Ball and Super Missile and After Area 4 (West) -Transport to Area 5 Entrance Grapple Block
+  > Tunnel to Chozo Seals
+      Morph Ball
+  > Event - Grapple Block
+      Grapple Beam
+

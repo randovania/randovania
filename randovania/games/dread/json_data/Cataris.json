@@ -706,7 +706,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 7450.0,
@@ -722,10 +722,17 @@
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "accesspoint_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "hint_id": "MAGMA_1"
+                        "hint_id": "MAGMA_1",
+                        "string_asset_id": 3
                     },
-                    "string_asset_id": 3,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Transport to Artaria": {
                             "type": "and",
@@ -9935,7 +9942,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -10609,7 +10617,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Wide Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -12161,7 +12172,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -14487,7 +14499,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -14605,25 +14618,8 @@
                     },
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": "Item logically unattainable with door rando",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Ballspark"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLocks",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Ballspark"
                         },
                         "Center of Tunnel": {
                             "type": "resource",
@@ -27286,7 +27282,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "logbook",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": -13450.0,
@@ -27302,10 +27298,17 @@
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "accesspoint_platform_000",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
-                        "hint_id": "MAGMA_2"
+                        "hint_id": "MAGMA_2",
+                        "string_asset_id": 4
                     },
-                    "string_asset_id": 4,
-                    "lore_type": "generic",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Teleport to Artaria (Red)": {
                             "type": "and",
@@ -27750,7 +27753,10 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "excluded_dock_weaknesses": [
+                            "Wide Beam Door"
+                        ]
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -28726,7 +28732,8 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
+                        "right_shield_def": null,
+                        "exclude_from_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
