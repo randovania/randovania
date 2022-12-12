@@ -793,7 +793,7 @@ def setup_app(sio: ServerApp):
     sio.on("game_session_self_update", game_session_self_update)
     sio.on("game_session_watch_row_inventory", game_session_watch_row_inventory)
 
-    @sio.admin_route("/sessions")
+    @sio.route_with_user("/sessions", need_admin=True)
     def admin_sessions(user):
         paginated_query = flask_utils.PaginatedQuery(
             GameSession.select().order_by(GameSession.creation_date.desc()),
@@ -837,7 +837,7 @@ def setup_app(sio: ServerApp):
             next=next_link,
         )
 
-    @sio.admin_route("/session/<session_id>")
+    @sio.route_with_user("/session/<session_id>", need_admin=True)
     def admin_session(user, session_id):
         session: GameSession = GameSession.get_by_id(session_id)
 

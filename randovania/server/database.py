@@ -57,13 +57,23 @@ class User(BaseModel):
         }
 
 
+def _datetime_now():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
+class UserAccessToken(BaseModel):
+    user = peewee.ForeignKeyField(User, backref="access_tokens")
+    name = peewee.CharField()
+    creation_date = peewee.DateTimeField(default=_datetime_now)
+    last_used = peewee.DateTimeField(default=_datetime_now)
+
+    class Meta:
+        primary_key = peewee.CompositeKey('user', 'name')
+
+
 @functools.lru_cache
 def _decode_layout_description(s):
     return LayoutDescription.from_json_dict(json.loads(s))
-
-
-def _datetime_now():
-    return datetime.datetime.now(datetime.timezone.utc)
 
 
 class GameSession(BaseModel):
@@ -288,4 +298,7 @@ class GameSessionAudit(BaseModel):
         }
 
 
-all_classes = [User, GameSession, GameSessionPreset, GameSessionMembership, GameSessionTeamAction, GameSessionAudit]
+all_classes = [
+    User, UserAccessToken, GameSession, GameSessionPreset,
+    GameSessionMembership, GameSessionTeamAction, GameSessionAudit,
+]
