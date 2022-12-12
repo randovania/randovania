@@ -223,7 +223,6 @@ class GameSessionMembership(BaseModel):
             "name": self.user.name,
             "row": self.row,
             "admin": self.admin,
-            # "inventory": self.inventory,
             "connection_state": self.connection_state,
         }
 

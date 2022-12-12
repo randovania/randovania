@@ -3,6 +3,7 @@ import datetime
 import json
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
@@ -155,6 +156,14 @@ class GameSessionAuditEntry:
 @dataclasses.dataclass(frozen=True)
 class GameSessionAuditLog:
     entries: tuple[GameSessionAuditEntry, ...]
+
+
+@dataclasses.dataclass(frozen=True)
+class GameSessionInventory:
+    session_id: int
+    row_id: int
+    game: RandovaniaGame
+    inventory: dict[str, InventoryItem]
 
 
 @dataclasses.dataclass(frozen=True)

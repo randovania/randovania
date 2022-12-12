@@ -13,16 +13,16 @@ from playhouse import flask_utils
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
-from randovania.network_common.binary_formats import BinaryInventory, OldBinaryInventory
+from randovania.network_common.binary_formats import BinaryInventory
 from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
@@ -136,6 +136,23 @@ def _get_preset(preset_json: dict) -> VersionedPreset:
         return preset
     except Exception as e:
         raise InvalidAction(f"invalid preset: {e}")
+
+
+def _emit_inventory_update(membership: GameSessionMembership):
+    if membership.inventory is None:
+        return
+
+    session_id = membership.session.id
+    flask_socketio.emit("game_session_binary_inventory", (session_id, membership.row, membership.inventory),
+                        room=f"game-session-{session_id}-binary-inventory",
+                        namespace="/")
+    try:
+        flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
+                                                            BinaryInventory.parse(membership.inventory)),
+                            room=f"game-session-{session_id}-json-inventory",
+                            namespace="/")
+    except construct.ConstructError as e:
+        logger().warning("Unable to encode inventory for session %d, row %d: %s", session_id, membership.row, str(e))
 
 
 def _emit_session_meta_update(session: GameSession):
@@ -514,6 +531,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             logger().info(f"{_describe_session(session)}, User {user_id}. "
                           f"Performing {action}, new row is {new_row}, from {membership.row}.")
             membership.row = new_row
+            membership.inventory = None
             membership.save()
 
     elif action == SessionAdminUserAction.SWITCH_IS_OBSERVER:
@@ -521,6 +539,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             membership.row = _find_empty_row(session)
         else:
             membership.row = None
+            membership.inventory = None
         logger().info(f"{_describe_session(session)}, User {user_id}. Performing {action}, "
                       f"new row is {membership.row}.")
         membership.save()
@@ -707,18 +726,42 @@ def _emit_game_session_pickups_update(sio: ServerApp, membership: GameSessionMem
     flask_socketio.emit("game_session_pickups_update", data, room=f"game-session-{session.id}-{membership.user.id}")
 
 
-def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes, game_connection_state: str):
+def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes | None, game_connection_state: str):
     current_user = sio.get_current_user()
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
+    session = membership.session
 
     old_state = membership.connection_state
     # old_inventory = membership.inventory
 
     membership.connection_state = f"Online, {game_connection_state}"
-    membership.inventory = inventory
+    if session.state == GameSessionState.IN_PROGRESS and not membership.is_observer and inventory is not None:
+        membership.inventory = inventory
+
     membership.save()
+
+    if session.state == GameSessionState.IN_PROGRESS:
+        _emit_inventory_update(membership)
+
     if old_state != membership.connection_state:
-        _emit_session_meta_update(membership.session)
+        _emit_session_meta_update(session)
+
+
+def game_session_watch_row_inventory(sio: ServerApp, session_id: int, row: int, watch: bool, binary: bool):
+    current_user = sio.get_current_user()
+    session = GameSession.get_by_id(session_id)
+    GameSessionMembership.get_by_ids(current_user.id, session_id)
+
+    if not (0 <= row < session.num_rows):
+        raise InvalidAction(f"Invalid row {row}")
+
+    data_format = "binary" if binary else "json"
+    room = f"game-session-{session_id}-{data_format}-inventory"
+    if watch:
+        flask_socketio.join_room(room)
+        _emit_inventory_update(GameSessionMembership.get_by_session_position(session, row))
+    else:
+        flask_socketio.leave_room(room)
 
 
 def report_user_disconnected(sio: ServerApp, user_id: int, log):
@@ -748,6 +791,7 @@ def setup_app(sio: ServerApp):
     sio.on("game_session_admin_player", game_session_admin_player)
     sio.on("game_session_collect_locations", game_session_collect_locations)
     sio.on("game_session_self_update", game_session_self_update)
+    sio.on("game_session_watch_row_inventory", game_session_watch_row_inventory)
 
     @sio.admin_route("/sessions")
     def admin_sessions(user):
@@ -810,33 +854,26 @@ def setup_app(sio: ServerApp):
                 ])
             else:
                 preset = presets[player.row]
-                db = default_database.resource_database_for(preset.game)
 
                 inventory = []
+
                 if player.inventory is not None:
                     try:
-                        parsed_inventory: list[dict] = BinaryInventory.parse(player.inventory)
-                    except construct.ConstructError:
-                        # Handle old format in an adhoc way
-                        # TODO 4.3: remove this code and purge all old inventory from the server db
-                        items_by_id: dict[int, ItemResourceInfo] = {
-                            item.extra["item_id"]: item
-                            for item in db.item
-                        }
-                        parsed_inventory = [
-                            {
-                                "name": items_by_id[item["index"]].short_name,
-                                **item,
-                            }
-                            for item in OldBinaryInventory.parse(player.inventory)
-                        ]
+                        parsed_inventory = BinaryInventory.parse(player.inventory)
+                    except construct.ConstructError as e:
+                        inventory.append(f"Error parsing: {e}")
+                        parsed_inventory = None
 
-                    for item in parsed_inventory:
-                        if item["amount"] + item["capacity"] > 0:
-                            inventory.append("{} x{}/{}".format(
-                                db.get_item(item["name"]).long_name,
-                                item["amount"], item["capacity"]
-                            ))
+                    if parsed_inventory is not None:
+                        db = default_database.resource_database_for(RandovaniaGame(parsed_inventory.game))
+                        for item in parsed_inventory.elements:
+                            if item["amount"] + item["capacity"] > 0:
+                                inventory.append("{} x{}/{}".format(
+                                    db.get_item(item["name"]).long_name,
+                                    item["amount"], item["capacity"]
+                                ))
+                else:
+                    inventory.append("Missing")
 
                 rows.append([
                     player.effective_name,
