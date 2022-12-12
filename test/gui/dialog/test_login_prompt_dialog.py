@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, AsyncMock
 
 import pytest
+from PySide6 import QtWidgets
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 
@@ -15,7 +16,7 @@ async def test_on_login_as_guest_button(prompt, mocker):
     prompt.network_client.login_as_guest = AsyncMock()
     mock_dialog = mocker.patch("PySide6.QtWidgets.QInputDialog").return_value
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       return_value=mock_dialog.Accepted)
+                                       return_value=QtWidgets.QDialog.DialogCode.Accepted)
 
     # Run
     await prompt.on_login_as_guest_button()
