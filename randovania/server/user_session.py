@@ -21,6 +21,17 @@ def _encrypt_session_for_user(sio: ServerApp, session: dict) -> bytes:
     return base64.b85encode(encrypted_session)
 
 
+def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
+    logger().info(f"Client at {sio.current_client_ip()} is user {user.name} ({user.id}).")
+
+    return {
+        "user": user.as_json,
+        "sessions": [
+            membership.session.create_list_entry()
+            for membership in GameSessionMembership.select().where(GameSessionMembership.user == user)
+        ],
+    }
+
 def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
     """
 
@@ -33,16 +44,10 @@ def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
     elif user.id != session["user-id"]:
         raise RuntimeError(f"Provided user does not match the session's user")
 
-    logger().info(f"Client at {sio.current_client_ip()} is user {user.name} ({user.id}).")
+    result = _create_client_side_session_raw(sio, user)
+    result["encoded_session_b85"] = _encrypt_session_for_user(sio, session)
 
-    return {
-        "user": user.as_json,
-        "sessions": [
-            membership.session.create_list_entry()
-            for membership in GameSessionMembership.select().where(GameSessionMembership.user == user)
-        ],
-        "encoded_session_b85": _encrypt_session_for_user(sio, session),
-    }
+    return result
 
 
 def _create_user_from_discord(discord_user: flask_discord.models.User) -> User:
@@ -137,6 +142,8 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: i
             user, result = _create_session_with_discord_token(sio, session["discord-access-token"])
         else:
             user = User.get_by_id(session["user-id"])
+            sio.save_session(session)
+
             if "rdv-access-token" in session:
                 access_token = UserAccessToken.get(
                     user=user,
@@ -145,8 +152,10 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: i
                 access_token.last_used = datetime.datetime.now(datetime.timezone.utc)
                 access_token.save()
 
-            sio.save_session(session)
-            result = _create_client_side_session(sio, user)
+                result = _create_client_side_session_raw(sio, user)
+
+            else:
+                result = _create_client_side_session(sio, user)
 
         if session_id is not None:
             sio.join_game_session(GameSessionMembership.get_by_ids(user.id, session_id))
@@ -154,15 +163,18 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: i
         return result
 
     except UserNotAuthorized:
+        sio.save_session({})
         raise
 
     except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, InvalidTokenError) as e:
         # InvalidTokenError: discord token expired and couldn't renew
+        sio.save_session({})
         logger().info("Client at %s was unable to restore session: (%s) %s",
                       sio.current_client_ip(), str(type(e)), str(e))
         raise InvalidSession()
 
     except Exception:
+        sio.save_session({})
         logger().exception("Error decoding user session")
         raise InvalidSession()
 
