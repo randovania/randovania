@@ -62,7 +62,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         dialog.setModal(True)
         dialog.setWindowTitle("Enter guest name")
         dialog.setLabelText("Select a name for the guest account:")
-        if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
+        if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
         await self.network_client.login_as_guest(dialog.textValue())
