@@ -44,7 +44,7 @@ Extra - asset_id: collision_camera_034
   > Event - Grapple Blocks Top
       Grapple Beam and Destroy Bomb Block
   > Before Diggernaut Area
-      Morph Ball and After Area 6 - Transport to Area 7 Grapple Blocks Top
+      After Area 6 - Transport to Area 7 Grapple Blocks Top and Destroy Bomb Block
 
 > Door to Diggernaut Arena; Heals? False
   * Layers: default
@@ -93,11 +93,14 @@ Extra - asset_id: collision_camera_034
                   Bomb or Spring Ball
   > Event - Grapple Blocks Bottom
       All of the following:
-          Grapple Beam and Morph Ball and Climb Rooms Vertically (High Jump)
+          Grapple Beam and Morph Ball
+          Any of the following:
+              Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
           Any of the following:
               Power Bomb ≥ 2
               All of the following:
-                  Bomb and Missile
+                  Bomb and Destroy Missile Block
                   Phase Drift or Spider Ball
 
 > Event - Grapple Blocks Bottom; Heals? False
@@ -109,7 +112,11 @@ Extra - asset_id: collision_camera_034
           Bomb or Power Bomb
           Any of the following:
               Spider Ball
-              Phase Drift and Space Jump
+              All of the following:
+                  Phase Drift
+                  Any of the following:
+                      Space Jump
+                      Bomb and Infinite Bomb Jump (Intermediate)
 
 ----------------
 Teleporter Room South
@@ -202,8 +209,8 @@ Extra - asset_id: collision_camera_038
   * Pickup 133; Major Location? False
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_powerbombtank
-  > Grapple Cubby
-      Trivial
+  > Door to Omega Arena Access (Bottom)
+      Morph Ball and After Area 6 - Stolen Power Bomb Room Grapple Block
   > Middle Level
       Trivial
 
@@ -213,18 +220,24 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_supermissiletank
   > Middle Level
-      Grapple Beam
+      All of the following:
+          Grapple Beam and Morph Ball
+          Any of the following:
+              High Jump Boots or Gravity Suit
+              Underwater Bomb Jump (Beginner) and Lay Bomb
 
 > Door to Omega Arena Access (Bottom); Heals? False
   * Layers: default
   * Power Bomb Door to Omega Arena Access/Door to Stolen Power Bomb Room (Bottom)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Grapple Cubby
+  > Pickup (Power Bomb Tank)
+      Morph Ball and After Area 6 - Stolen Power Bomb Room Grapple Block
+  > Event - Grapple Block
       All of the following:
-          Morph Ball
+          Grapple Beam and Morph Ball
           Any of the following:
-              Destroy Bomb Block
+              Bomb or Power Bomb
               Super Missile and Screw Attack
 
 > Door to Omega Arena Access (Top); Heals? False
@@ -246,28 +259,33 @@ Extra - asset_id: collision_camera_038
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 6 - Stolen Power Bomb Room Grapple Block
-  > Grapple Cubby
-      Trivial
-
-> Grapple Cubby; Heals? False
-  * Layers: default
-  > Pickup (Power Bomb Tank)
-      Morph Ball and After Area 6 - Stolen Power Bomb Room Grapple Block
   > Door to Omega Arena Access (Bottom)
       All of the following:
           Morph Ball
           Any of the following:
-              Destroy Bomb Block
+              Bomb or Power Bomb
               Super Missile and Screw Attack
-  > Event - Grapple Block
-      Grapple Beam
 
 > Middle Level; Heals? False
   * Layers: default
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          Morph Ball and Out of Bounds Movement (Intermediate)
+          Any of the following:
+              Spider Ball and Spider Ball Clip (Advanced)
+              Screw Attack and Melee Clip (Intermediate)
+          Any of the following:
+              High Jump Boots or Space Jump or Single-wall Wall Jump (Advanced)
+              Bomb and Infinite Bomb Jump (Advanced)
   > Pickup (Super Missile Tank)
       Grapple Beam and Power Bomb ≥ 2 and Screw Attack and Can Spiderspark
   > Door to Omega Arena Access (Top)
-      Screw Attack
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Super Jump (Intermediate) or Cross Rooms Horizontally (High Jump)
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+              Morph Ball and Unmorph Extend (Beginner)
   > Door to Stolen Access
       Trivial
 
@@ -290,9 +308,11 @@ Extra - asset_id: collision_camera_039
   * Extra - actor_name: Door009
   * Extra - actor_type: doorclosedpower
   > Door to Red Plant Tunnel
-      Climb Rooms Vertically (High Jump)
+      Single-wall Wall Jump (Beginner) or Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Tunnel to Red Plant Tunnel
-      Morph Ball and After Area 6 - Red Plant Tunnel Grapple Block and Climb Rooms Vertically (High Jump)
+      All of the following:
+          Morph Ball and After Area 6 - Red Plant Tunnel Grapple Block
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Walljump (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Tunnel to Red Plant Tunnel; Heals? False
   * Layers: default
@@ -324,8 +344,18 @@ Extra - asset_id: collision_camera_040
       Morph Ball
   > Left of Bridge
       Any of the following:
-          Can Spiderspark
-          Morph Ball and Phase Drift
+          Spiderspark (Beginner) and Can Spiderspark
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Phase Drift
+                  All of the following:
+                      Bomb
+                      Any of the following:
+                          Phase Drift Skip (Hypermode)
+                          Space Jump and Phase Drift Skip (Expert)
+  > Out of Bounds
+      Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Intermediate)
 
 > Door to Zeta Arena; Heals? False
   * Layers: default
@@ -334,6 +364,8 @@ Extra - asset_id: collision_camera_040
   * Extra - actor_type: doorpowerpower
   > Left of Bridge
       Trivial
+  > Out of Bounds
+      Charge Beam and Ice Beam and Ice Beam Clip (Intermediate) and Out of Bounds Movement (Intermediate)
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -347,10 +379,15 @@ Extra - asset_id: collision_camera_040
   * Layers: default
   > Pickup (Missile Tank)
       Any of the following:
-          Bomb and Use Spider Ball
-          Space Jump and Lay Power Bomb
+          Spider Ball and Destroy Bomb Block
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          All of the following:
+              Space Jump
+              Any of the following:
+                  Lay Power Bomb
+                  Mid-Air Morph (Beginner) and Lay Bomb
   > Pickup (Energy Tank)
-      Missile and Morph Ball
+      Morph Ball and Destroy Missile Block
 
 > Left of Bridge; Heals? False
   * Layers: default
@@ -358,11 +395,20 @@ Extra - asset_id: collision_camera_040
       Lay Power Bomb
   > Door to Chozo Seal East
       Any of the following:
-          Can Spiderspark
           Morph Ball and Phase Drift
+          Spiderspark (Beginner) and Can Spiderspark
   > Door to Zeta Arena
       Trivial
   > Under Bridge
+      Trivial
+
+> Out of Bounds; Heals? False
+  * Layers: default
+  > Door to Chozo Seal East
+      Trivial
+  > Under Bridge
+      Trivial
+  > Left of Bridge
       Trivial
 
 ----------------
@@ -377,9 +423,14 @@ Extra - asset_id: collision_camera_041
   * Extra - actor_type: doorchargecharge
   > Door to Stolen Power Bomb Room
       Any of the following:
-          Screw Attack and Space Jump
+          All of the following:
+              Screw Attack
+              Any of the following:
+                  Space Jump
+                  Spider Ball and Movement (Intermediate) and Walljump (Intermediate)
           Space Jump and Lay Power Bomb
           Spider Ball and Destroy Bomb Block
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
 
 > Door to Stolen Power Bomb Room; Heals? False
   * Layers: default
@@ -405,8 +456,13 @@ Extra - asset_id: collision_camera_042
       Any of the following:
           Space Jump
           High Jump Boots and Phase Drift
+          Spider Ball and Diagonal Bomb Jump (Intermediate) and Lay Bomb
   > Pickup (Missile Tank)
-      Phase Drift and Destroy Bomb Block
+      Any of the following:
+          All of the following:
+              Phase Drift and Destroy Bomb Block
+              Spider Ball or Movement (Intermediate)
+          Movement (Beginner) and Lay Power Bomb
 
 > Door to Chozo Seal West; Heals? False
   * Layers: default
@@ -428,7 +484,14 @@ Extra - asset_id: collision_camera_042
   * Extra - actor_name: LE_Item_015
   * Extra - actor_type: item_missiletank
   > Door from Teleporter Room South
-      Phase Drift
+      Any of the following:
+          Phase Drift
+          Bomb and Spider Ball and Diagonal Bomb Jump (Beginner)
+          Spring Ball and Phase Drift Skip (Advanced)
+          Spiderspark (Beginner) and Can Spiderspark
+          Phase Drift Skip (Intermediate) and Walljump (Intermediate)
+  > Door to Chozo Seal West
+      Trivial
 
 ----------------
 Diggernaut Arena
@@ -500,7 +563,7 @@ Extra - asset_id: collision_camera_045
   * Pickup 131; Major Location? False
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_powerbombtank
-  > Ammo Recharge Station
+  > Top Platform
       Trivial
 
 > Ammo Recharge Station; Heals? False
@@ -508,11 +571,19 @@ Extra - asset_id: collision_camera_045
   * Extra - actor_name: LE_Platform_AmmoCharge_002
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Power Bomb Tank)
-      Can Spiderspark
+      Any of the following:
+          Can Spiderspark
+          Infinite Bomb Jump (Expert) and Lay Bomb
   > Door to Diggernaut Arena
       Trivial
   > Top Platform
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Space Jump or Single-wall Wall Jump (Expert)
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Spider Ball
+                  Bomb and Infinite Bomb Jump (Expert)
 
 > Door to Diggernaut Hallway; Heals? False
   * Layers: default
@@ -588,7 +659,7 @@ Extra - asset_id: collision_camera_046
       Trivial
   > Door to Omega Arena
       All of the following:
-          Morph Ball
+          Destroy Bomb Block
           Lighting Armor or Spider Ball
   > Tunnel to Connecting Shaft
       Morph Ball and After Area 6 - Red Plant Tunnel Grapple Block
@@ -662,7 +733,9 @@ Extra - asset_id: collision_camera_048
   > Door to Crumble Bridge
       After Area 6 - Zeta Metroid
   > Tunnel to Zeta Arena Access
-      Missile and Morph Ball and Climb Rooms Vertically (No High Jump)
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
 
@@ -677,14 +750,20 @@ Extra - asset_id: collision_camera_051
   * Extra - actor_name: LE_Platform_Elevator_FromArea06
   * Extra - actor_type: weightactivatedplatform
   > Save Station
-      Trivial
+      Any of the following:
+          High Jump Boots or Space Jump or Use Spider Ball
+          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+          Diagonal Bomb Jump (Beginner) and Simple IBJ
 
 > Save Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
   > Elevator to Area 5 Entrance - Chozo Seal
-      Trivial
+      Any of the following:
+          High Jump Boots or Space Jump or Use Spider Ball
+          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+          Diagonal Bomb Jump (Beginner) and Lay Bomb
   > Door to Chozo Seal West (Bottom)
       Trivial
 
@@ -748,15 +827,21 @@ Extra - asset_id: collision_camera_060
           Morph Ball
           Any of the following:
               Space Jump or Spider Ball
-              Lighting Armor and High Jump Boots
+              All of the following:
+                  High Jump Boots or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Simple IBJ
+                  Any of the following:
+                      Lighting Armor
+                      Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
 
 > Tunnel to Chozo Seal West; Heals? False
   * Layers: default
   * Tunnel to Chozo Seal West/Tunnel to Chozo Seal East
   > Chozo Seal
-      After Area 6 - Chozo Seal East Grapple Block
+      Morph Ball and After Area 6 - Chozo Seal East Grapple Block
   > Event - Grapple Block
-      Grapple Beam and Missile and Morph Ball and Destroy Bomb Block
+      All of the following:
+          Grapple Beam and Morph Ball and Destroy Missile Block
+          Shoot Through Walls (Beginner) or Destroy Bomb Block
 
 > Event - Chozo Seal Unlocked; Heals? False
   * Layers: default
@@ -768,21 +853,30 @@ Extra - asset_id: collision_camera_060
   * Layers: default
   * Event Area 6 - Chozo Seal East Grapple Block
   > Tunnel to Chozo Seal West
-      Trivial
+      All of the following:
+          Morph Ball
+          Destroy Bomb Block or Destroy Missile Block
 
 > Next to Pickup Puzzle; Heals? False
   * Layers: default
   > Pickup (Super Missile Tank)
-      All of the following:
-          Grapple Beam and Morph Ball
-          Bomb or Power Bomb ≥ 3
-          Baby Metroid or Phase Drift or Spider Ball
+      Any of the following:
+          Ice Beam and Ice Beam Clip (Intermediate)
+          All of the following:
+              Grapple Beam and Morph Ball
+              Bomb or Power Bomb ≥ 3
+              Baby Metroid or Phase Drift or Spider Ball or Movement (Beginner)
   > Door to Crumble Bridge
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Ice Beam and Stand on Frozen Enemy (Beginner)
+          Morph Ball and Unmorph Extend (Intermediate) and Walljump (Beginner)
   > Chozo Seal
       All of the following:
           Morph Ball
-          Lighting Armor or Space Jump or Spider Ball
+          Any of the following:
+              Lighting Armor or Space Jump or Spider Ball
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
 
 ----------------
 Omega Arena Access
@@ -795,7 +889,9 @@ Extra - asset_id: collision_camera_061
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Door to Stolen Power Bomb Room (Top)
-      Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Cross Rooms Horizontally (High Jump)
+          Ice Beam and Morph Ball and Stand on Frozen Enemy (Beginner) and Super Jump (Intermediate) and Unmorph Extend (Beginner)
   > Dock to Omega Arena
       Trivial
 
@@ -821,7 +917,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Pickup 130; Major Location? False
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
-  > Ammo Recharge Station
+  > Next to Bottom Puzzle
       Destroy Bomb Block
 
 > Pickup (Missile Tank Save); Heals? False
@@ -830,17 +926,15 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: LE_Item_007
   * Extra - actor_type: item_missiletank
   > Save Station
-      Trivial
+      Morph Ball
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 137; Major Location? False
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_supermissiletank
-  > Ammo Recharge Station
-      All of the following:
-          Climb Rooms Vertically (No High Jump) and Destroy Bomb Block
-          Grapple Beam or Can Spiderspark
+  > Next to Bottom Puzzle
+      Bomb or Power Bomb ≥ 3
 
 > Chozo Seal; Heals? False
   * Layers: default
@@ -859,22 +953,10 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge_001
   * Extra - actor_type: weightactivatedplatform
-  > Pickup (Missile Tank Ceiling)
+  > Next to Bottom Puzzle
       Any of the following:
-          Spider Ball and Destroy Bomb Block
-          Space Jump and Lay Power Bomb
-  > Pickup (Super Missile Tank)
-      All of the following:
-          Bomb and Missile and Power Bomb and Screw Attack
-          Any of the following:
-              Spider Ball
-              All of the following:
-                  Phase Drift
-                  High Jump Boots or Space Jump
-  > Save Station
-      Climb Rooms Vertically (High Jump)
-  > Door to Teleporter Room South
-      Climb Rooms Vertically (High Jump)
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
 
 > Energy Recharge Station; Heals? True
   * Layers: default
@@ -896,10 +978,10 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Pickup (Missile Tank Save)
       All of the following:
           Destroy Bomb Block
-          Phase Drift or Spider Ball
-  > Ammo Recharge Station
-      Trivial
+          Phase Drift or Spider Ball or Movement (Intermediate)
   > Energy Recharge Station
+      Trivial
+  > Next to Bottom Puzzle
       Trivial
 
 > Door to Teleporter Room South; Heals? False
@@ -932,7 +1014,9 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Chozo Seal
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          Stand on Frozen Enemy (Intermediate) and Walljump (Beginner) and Fully Freeze Enemy
   > Energy Recharge Station
       All of the following:
           Morph Ball
@@ -956,6 +1040,30 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Layers: default
   * Event Area 6 - Chozo Seal West Unlocked
   > Chozo Seal
+      Trivial
+
+> Next to Bottom Puzzle; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Ceiling)
+      All of the following:
+          Destroy Bomb Block
+          Any of the following:
+              Spider Ball
+              Bomb and Infinite Bomb Jump (Intermediate)
+              Space Jump and Mid-Air Morph (Beginner)
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Grapple Beam and Morph Ball and Screw Attack and Destroy Missile Block
+          Movement (Intermediate) or Super Jump (Advanced) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+          Phase Drift or Spider Ball or Movement (Beginner)
+          Any of the following:
+              Power Bomb ≥ 3
+              Bomb and Power Bomb
+  > Ammo Recharge Station
+      Trivial
+  > Save Station
+      Trivial
+  > Door to Teleporter Room South
       Trivial
 
 ----------------
