@@ -9,7 +9,9 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: Door010
   * Extra - actor_type: doorclosedpower
   > Tunnel to Teleporter Shaft North
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
   > Tunnel to Larva Hallway 1
       Morph Ball and Screw Attack
 
@@ -55,7 +57,7 @@ Extra - asset_id: collision_camera_008_A
   > Elevator to Surface West - Transport to Area 8
       Baby Metroid
   > Above Left Pickup
-      Baby Metroid and Screw Attack
+      Baby Metroid
 
 > Elevator to Surface West - Transport to Area 8; Heals? False; Spawn Point
   * Layers: default
@@ -72,7 +74,11 @@ Extra - asset_id: collision_camera_008_A
   > Dock to Queen Arena
       Baby Metroid
   > Above Left Pickup
-      Baby Metroid and Space Jump
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Space Jump
+              Lighting Armor and Simple IBJ
 
 > Dock to Queen Arena; Heals? False
   * Layers: default
@@ -85,7 +91,11 @@ Extra - asset_id: collision_camera_008_A
   > Pickup (Missile Tank)
       Lighting Armor and Morph Ball
   > Ammo Recharge Station
-      Baby Metroid and Screw Attack
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Screw Attack
+              Spider Ball Clip (Intermediate) and Use Spider Ball
   > Save Station
       Baby Metroid
 
@@ -149,7 +159,7 @@ Extra - asset_id: collision_camera_009
   * Pickup 157; Major Location? False
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
-  > Save Station
+  > Above Save Station
       Trivial
 
 > Pickup (Super Missile Tank); Heals? False
@@ -165,8 +175,10 @@ Extra - asset_id: collision_camera_009
   * Pickup 164; Major Location? False
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_powerbombtank
-  > Save Station
-      Destroy Bomb Block
+  > Above Save Station
+      Any of the following:
+          Destroy Bomb Block
+          Lighting Armor and Morph Ball
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
@@ -186,14 +198,17 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
-  > Pickup (Missile Tank Left)
-      Climb Rooms Vertically (No High Jump)
-  > Pickup (Power Bomb Tank)
-      Lighting Armor and Climb Rooms Vertically (No High Jump)
   > Door to Central Chamber Access
       Trivial
-  > Lower Platforms
-      Climb Rooms Vertically (No High Jump)
+  > Above Save Station
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+          All of the following:
+              Walljump (Intermediate)
+              Any of the following:
+                  Super Jump (Advanced)
+                  Morph Ball and Unmorph Extend (Intermediate)
 
 > Door to Central Chamber Access; Heals? False
   * Layers: default
@@ -209,7 +224,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Above Top Pickup
-      Climb Rooms Vertically (High Jump)
+      Trivial
 
 > Pickup (Missile Tank Hidden); Heals? False
   * Layers: default
@@ -238,20 +253,29 @@ Extra - asset_id: collision_camera_009
   > Energy Recharge Station
       Trivial
   > Pickup (Missile Tank Hidden)
-      Space Jump and Lay Power Bomb
+      Any of the following:
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          Power Bomb ≥ 2 and Spiderspark (Beginner) and Can Spiderspark
+          All of the following:
+              Space Jump
+              Any of the following:
+                  Lay Power Bomb
+                  Mid-Air Morph (Intermediate) and Lay Bomb
   > Above Tunnels
       All of the following:
           Destroy Bomb Block
-          Space Jump or Can Spiderspark
+          Space Jump or Can Spiderspark or Simple IBJ
   > Next to Bottom Grapple Block
-      After Area 8 - Central Chamber Grapple Block Bottom and Climb Rooms Vertically (No High Jump)
+      Morph Ball and After Area 8 - Central Chamber Grapple Block Bottom and Climb Rooms Vertically (High Jump)
+  > Above Save Station
+      Trivial
 
 > Above Tunnels; Heals? False
   * Layers: default
   > Pickup (Super Missile Tank)
       All of the following:
           Morph Ball and Screw Attack
-          Phase Drift or Spider Ball
+          Phase Drift or Spider Ball or Movement (Intermediate)
           Bomb or Power Bomb ≥ 2
   > Lower Platforms
       All of the following:
@@ -264,7 +288,9 @@ Extra - asset_id: collision_camera_009
   > Next to Bottom Grapple Block
       Morph Ball
   > Above Top Pickup
-      Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Beginner)
 
 > Next to Bottom Grapple Block; Heals? False
   * Layers: default
@@ -280,11 +306,27 @@ Extra - asset_id: collision_camera_009
   > Pickup (Missile Tank Top)
       Morph Ball and After Area 8 - Central Chamber Grapple Block Top
   > Door to Teleporter Shaft North
-      Climb Rooms Vertically (High Jump)
+      Trivial
   > Event - Grapple Block Top
       Grapple Beam
   > Above Tunnels
       Trivial
+
+> Above Save Station; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Left)
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          Single-wall Wall Jump (Intermediate) and Walljump (Beginner)
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          Lighting Armor and Lay Power Bomb
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+          Phase Drift or Spider Ball or Melee Clip (Intermediate) or Movement (Beginner)
+  > Save Station
+      Trivial
+  > Lower Platforms
+      Climb Rooms Vertically (No High Jump)
 
 ----------------
 Central Chamber Access
@@ -307,7 +349,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_missiletank
   > Door to Central Chamber
-      Trivial
+      Baby Metroid
 
 > Door to Teleporter Shaft South; Heals? False
   * Layers: default
@@ -344,8 +386,10 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank Baby Locked)
       All of the following:
-          Baby Metroid
-          Beam Burst or Power Bomb
+          Any of the following:
+              Baby Metroid
+              Morph Ball and Melee Clip (Beginner)
+          Lay Power Bomb or Shoot Beam Burst
   > Above Grapple Block
       Screw Attack
 
@@ -374,7 +418,19 @@ Extra - asset_id: collision_camera_010
   > Door to Shaft East (Top)
       Screw Attack
   > Door to Central Chamber
-      Screw Attack and Climb Rooms Vertically (No High Jump)
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump or Single-wall Wall Jump (Intermediate) or Use Spider Ball
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+              High Jump Boots and Walljump (Beginner)
+              All of the following:
+                  Lay Bomb
+                  Any of the following:
+                      Diagonal Bomb Jump (Intermediate)
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Gravity Suit or Spring Ball or Mid-Air Morph (Beginner)
   > Tunnel to Teleporter Shaft South
       Morph Ball and After Area 8 - Central Chamber Access Grapple Block
   > Event - Grapple Block
@@ -407,11 +463,19 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
-      Baby Metroid and Missile ≥ 2 and Morph Ball
+      All of the following:
+          Morph Ball and Climb Rooms Vertically (No High Jump)
+          Missile ≥ 2 or Super Missile ≥ 2
+          Lighting Armor or Baby Metroid or Movement (Intermediate)
   > Teleporter
       After Area 8 - Teleporter Unlocked (Lower)
   > Door to Central Chamber Access
-      Screw Attack and Climb Rooms Vertically (High Jump)
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Infinite Bomb Jump (Beginner)
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Beginner)
   > Event - Teleporter Unlocked
       Trivial
 
@@ -423,7 +487,7 @@ Extra - asset_id: collision_camera_011
   > Door to Entrance Hallway
       Screw Attack
   > Tunnel to Central Chamber Access
-      Morph Ball and After Area 8 - Central Chamber Access Grapple Block and Climb Rooms Vertically (High Jump)
+      Morph Ball and After Area 8 - Central Chamber Access Grapple Block
 
 > Tunnel to Central Chamber Access; Heals? False
   * Layers: default
@@ -455,8 +519,6 @@ Extra - asset_id: collision_camera_012
   * Pickup 162; Major Location? False
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
-  > Door to Central Chamber Access (Bottom)
-      Destroy Bomb Block
   > Dock to Central Chamber Access
       Trivial
 
@@ -477,8 +539,12 @@ Extra - asset_id: collision_camera_012
       All of the following:
           Morph Ball
           Any of the following:
-              Baby Metroid and Spider Ball
-              Power Bomb and Phase Drift
+              All of the following:
+                  Baby Metroid
+                  Lighting Armor or Spider Ball
+              All of the following:
+                  Power Bomb
+                  Phase Drift or Spider Ball
   > Door to Central Chamber Access (Bottom)
       Trivial
 
@@ -486,7 +552,9 @@ Extra - asset_id: collision_camera_012
   * Layers: default
   * Open Passage to Central Chamber Access/Dock to Shaft East
   > Pickup (Missile Tank)
-      Trivial
+      Morph Ball
+  > Door to Central Chamber Access (Bottom)
+      Destroy Bomb Block
 
 ----------------
 Larva Shaft 1
@@ -746,7 +814,9 @@ Extra - asset_id: collision_camera_018
   > Door to Larva Hallway 3
       After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
   > Event - Larva Metroid Top
-      Climb Rooms Vertically (No High Jump) and Defeat Larva Metroid
+      All of the following:
+          Defeat Larva Metroid
+          Single-wall Wall Jump (Intermediate) or Cross Rooms Horizontally (High Jump)
   > Event - Larva Metroid Middle
       Defeat Larva Metroid
   > Room Bottom
@@ -757,11 +827,11 @@ Extra - asset_id: collision_camera_018
   > Door to Queen Access Path
       After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
   > Pickup (Missile Tank)
-      Missile and Morph Ball
+      Morph Ball and Destroy Missile Block
   > Event - Larva Metroid Bottom
       Defeat Larva Metroid
   > Room Top
-      Morph Ball and Climb Rooms Vertically (High Jump)
+      Morph Ball
 
 ----------------
 Queen Access Path
@@ -773,7 +843,10 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
   > Door to Larva Shaft 3
-      Lighting Armor or Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Lighting Armor or High Jump Boots or Space Jump or Can Spiderspark
+          Diagonal Bomb Jump (Intermediate) and Lay Bomb
+          Morph Ball and Unmorph Extend (Intermediate)
   > Dock to Queen Arena
       Trivial
 
@@ -783,7 +856,9 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Save Station
-      Lighting Armor or Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Lighting Armor or High Jump Boots or Space Jump or Use Spider Ball
+          Diagonal Bomb Jump (Beginner) and Lay Bomb
 
 > Dock to Queen Arena; Heals? False
   * Layers: default
@@ -808,7 +883,11 @@ Extra - asset_id: collision_camera_021
   > Save Station
       All of the following:
           Screw Attack
-          High Jump Boots or Space Jump
+          Any of the following:
+              Space Jump
+              All of the following:
+                  Walljump (Intermediate)
+                  Simple IBJ or Use Spider Ball
 
 > Save Station; Heals? False
   * Layers: default
@@ -838,7 +917,7 @@ Extra - asset_id: collision_camera_022
   > After Queen
       After Area 8 - Queen Metroid
   > Before Queen
-      Before Area 8 - Queen Metroid
+      After Area 8 - Larva Metroid 1 and After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 2 and After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4 and After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6 and After Area 8 - Larva Metroid 7 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
 
 > Tunnel to Queen Access Path; Heals? False
   * Layers: default
@@ -908,7 +987,9 @@ Extra - asset_id: collision_camera_023
 > Below Pickup; Heals? False
   * Layers: default
   > Pickup (Energy Tank)
-      Morph Ball and Screw Attack and Space Jump
+      All of the following:
+          Morph Ball and Screw Attack and Space Jump
+          Phase Drift or Spider Ball or Movement (Beginner)
   > Door to Transport to Area 7
       Trivial
   > Door to Teleporter Shaft South
@@ -926,7 +1007,9 @@ Extra - asset_id: collision_camera_024
   > Door to Central Chamber
       Trivial
   > Tunnel to Larva Access
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Teleporter; Heals? False
   * Layers: default
