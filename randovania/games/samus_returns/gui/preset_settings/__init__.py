@@ -12,16 +12,13 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.games.samus_returns.gui.preset_settings.msr_patches_tab import PresetMSRPatches
     # from randovania.games.samus_returns.gui.preset_settings.msr_generation_tab import PresetMSRGeneration
-    # from randovania.games.samus_returns.gui.preset_settings.msr_patches_tab import PresetMSRPatches
     # from randovania.games.samus_returns.gui.preset_settings.msr_item_pool_tab import MSRPresetItemPool
     # from randovania.games.samus_returns.gui.preset_settings.msr_energy_tab import PresetMSREnergy
     # from randovania.games.samus_returns.gui.preset_settings.msr_goal_tab import PresetMSRGoal
 
     return [
         PresetTrickLevel,
-        *([
-              PresetMetroidStartingArea,
-          ] if window_manager.is_preview_mode else []),
+        PresetMetroidStartingArea,
         PresetLocationPool,
         PresetItemPool,
         PresetMSRPatches,
