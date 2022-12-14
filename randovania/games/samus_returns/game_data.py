@@ -10,13 +10,14 @@ def _options():
 
 def _gui() -> game.GameGui:
     from randovania.games.samus_returns import gui
+    from randovania.games.samus_returns.item_database import progressive_items
 
     return game.GameGui(
         game_tab=gui.MSRGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
-        progressive_item_gui_tuples=tuple(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=tuple(),
     )
 
