@@ -21,6 +21,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.construct_lib import convert_to_raw_python
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.binary_formats import BinaryInventory
 from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
@@ -148,7 +149,7 @@ def _emit_inventory_update(membership: GameSessionMembership):
                         namespace="/")
     try:
         flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
-                                                            BinaryInventory.parse(membership.inventory)),
+                                                            convert_to_raw_python(BinaryInventory.parse(membership.inventory))),
                             room=f"game-session-{session_id}-json-inventory",
                             namespace="/")
     except construct.ConstructError as e:
