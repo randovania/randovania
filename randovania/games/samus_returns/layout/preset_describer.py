@@ -15,12 +15,6 @@ class MSRPresetDescriber(GamePresetDescriber):
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
-            "Logic Settings": [
-                {
-                    "Highly Dangerous Logic":
-                        configuration.allow_highly_dangerous_logic,
-                }
-            ],
             "Difficulty": [
                 {
                     f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100
@@ -33,14 +27,14 @@ class MSRPresetDescriber(GamePresetDescriber):
                 }
             ],
             "Gameplay": [
-                {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
+                {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
             ],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_configuration,
                     {
-                        "Super Missile needs Launcher": "Super Missile Expansion",
-                        "Power Bomb needs Main": "Power Bomb Expansion",
+                        "Super Missile needs Launcher": "Super Missile Tank",
+                        "Power Bomb needs Main": "Power Bomb Tank",
                     }
                 ),
             ],

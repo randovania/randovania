@@ -13,7 +13,7 @@ def _gui() -> game.GameGui:
 
     return game.GameGui(
         game_tab=gui.MSRGameTabWidget,
-        tab_provider=gui.preset_tabs,
+        tab_provider=gui.msr_preset_tabs,
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=tuple(),
