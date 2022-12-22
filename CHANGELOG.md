@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Spring ball can no longer be used to abuse steep terrain marked as standable
 - Fixed: Vanilla blast shields not being removed in door lock randomizer
 
+### Metroid Prime 2: Echoes
+
+- Changed: The Auto Tracker icon for Spider Ball now uses the Dark Suit model instead of the Prime 1 model.
+
 ### Metroid Dread
 
 - **Major** - Added: Door locks can now be randomized.
