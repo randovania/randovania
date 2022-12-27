@@ -3,6 +3,13 @@
     "game": "samus_returns",
     "resource_database": {
         "items": {
+            "Nothing": {
+                "long_name": "Nothing",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": "ITEM_NONE"
+                }
+            },
             "Power": {
                 "long_name": "Power Beam",
                 "max_capacity": 1,
@@ -956,57 +963,6 @@
                         {
                             "type": "template",
                             "data": "Simple IBJ"
-                        }
-                    ]
-                }
-            },
-            "Cross Rooms Horizontally (High Jump)": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Space",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Boots",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Use Spider Ball"
-                        }
-                    ]
-                }
-            },
-            "Cross Rooms Horizontally (No High Jump)": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Space",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Use Spider Ball"
                         }
                     ]
                 }
