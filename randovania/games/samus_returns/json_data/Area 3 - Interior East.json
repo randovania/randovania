@@ -59,7 +59,7 @@
                     "pickup_index": 76,
                     "major_location": false,
                     "connections": {
-                        "Door to Gamma Arena Lower Room 2": {
+                        "Door to Gamma Arena South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -116,7 +116,7 @@
                         }
                     }
                 },
-                "Door to Gamma Arena Lower Room 2": {
+                "Door to Gamma Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -135,7 +135,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (East)",
-                        "area_name": "Gamma Arena Lower Room 2",
+                        "area_name": "Gamma Arena South",
                         "node_name": "Door to Gamma Storage"
                     },
                     "default_dock_weakness": "Power Bomb Door",
@@ -184,7 +184,7 @@
                 }
             }
         },
-        "Gamma Arena Lower Room 1": {
+        "Gamma Arena South Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -235,13 +235,13 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (East)",
                         "area_name": "Transport to Area 3 Interior West",
-                        "node_name": "Door to Gamma Arena Lower Room 1"
+                        "node_name": "Door to Gamma Arena South Access"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Gamma Arena Lower Room 2": {
+                        "Tunnel to Gamma Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -294,7 +294,7 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Arena Lower Room 2": {
+                "Tunnel to Gamma Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -310,8 +310,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (East)",
-                        "area_name": "Gamma Arena Lower Room 2",
-                        "node_name": "Tunnel to Gamma Arena Lower Room 1"
+                        "area_name": "Gamma Arena South",
+                        "node_name": "Tunnel to Gamma Arena South Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
@@ -2077,7 +2077,7 @@
                         "actor_type": "weightactivatedplatform"
                     },
                     "connections": {
-                        "Door to Gamma Arena Lower Room 1": {
+                        "Door to Gamma Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2117,7 +2117,7 @@
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
-                        "Door to Gamma Arena Lower Room 1": {
+                        "Door to Gamma Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2172,7 +2172,7 @@
                         "start_point_actor_name": "ST_SaveStation"
                     },
                     "connections": {
-                        "Door to Gamma Arena Lower Room 1": {
+                        "Door to Gamma Arena South Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2260,7 +2260,7 @@
                         }
                     }
                 },
-                "Door to Gamma Arena Lower Room 1": {
+                "Door to Gamma Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2279,7 +2279,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (East)",
-                        "area_name": "Gamma Arena Lower Room 1",
+                        "area_name": "Gamma Arena South Access",
                         "node_name": "Door to Transport to Area 3 Interior West"
                     },
                     "default_dock_weakness": "Wave Beam Door",
@@ -3354,7 +3354,7 @@
                 }
             }
         },
-        "Gamma Arena Lower Room 2": {
+        "Gamma Arena South": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -3405,7 +3405,7 @@
                     "default_connection": {
                         "world_name": "Area 3 - Interior (East)",
                         "area_name": "Gamma Storage",
-                        "node_name": "Door to Gamma Arena Lower Room 2"
+                        "node_name": "Door to Gamma Arena South"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "override_default_open_requirement": null,
@@ -3420,7 +3420,7 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Arena Lower Room 1": {
+                "Tunnel to Gamma Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3436,8 +3436,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (East)",
-                        "area_name": "Gamma Arena Lower Room 1",
-                        "node_name": "Tunnel to Gamma Arena Lower Room 2"
+                        "area_name": "Gamma Arena South Access",
+                        "node_name": "Tunnel to Gamma Arena South"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
@@ -3493,33 +3493,42 @@
                     "extra": {},
                     "connections": {
                         "Door to Gamma Storage": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Gamma 4",
+                                            "type": "tricks",
+                                            "name": "SWJ",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
+                                                        "type": "items",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3528,56 +3537,30 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 2,
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fully Freeze Enemy"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "UnmorphExtend",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Fully Freeze Enemy"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "FrozenEnemy",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "FrozenEnemy",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3586,7 +3569,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Gamma Arena Lower Room 1": {
+                        "Tunnel to Gamma Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,

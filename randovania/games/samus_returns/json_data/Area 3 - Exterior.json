@@ -117,15 +117,6 @@
                                     {
                                         "type": "template",
                                         "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -313,15 +304,6 @@
                                     {
                                         "type": "template",
                                         "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -2417,12 +2399,10 @@
                     "editable": true,
                     "connections": {
                         "Door to Transport to Area 2 Entrance (Bottom)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DNA3",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
