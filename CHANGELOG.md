@@ -17,7 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Changed: Sand Processing - Screw Attack clip to access the halfpipe from Main Reactor side without Missiles is now Intermediate and without Space Jump (from Expert).
 - Changed: The Auto Tracker icon for Spider Ball now uses the Dark Suit model instead of the Prime 1 model.
+- Fixed: Main Gyro now properly accounts for solving the puzzles.
 
 ### Metroid Dread
 
