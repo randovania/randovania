@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 14,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -1642,7 +1642,8 @@
     ],
     "starting_location": {
         "world_name": "Torvus Bog",
-        "area_name": "Transport to Temple Grounds"
+        "area_name": "Transport to Temple Grounds",
+        "node_name": "Elevator to Temple Grounds - Transport to Torvus Bog"
     },
     "initial_states": {
         "Default": [
@@ -2804,7 +2805,6 @@
             "areas": {
                 "Hall of Eyes": {
                     "default_node": "Portal to Base Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1198237772,
                         "in_dark_aether": false
@@ -2821,6 +2821,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -2851,6 +2852,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -2874,7 +2876,6 @@
                 },
                 "Base Access": {
                     "default_node": "Door to War Ritual Grounds",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1752128027,
                         "in_dark_aether": true
@@ -2891,6 +2892,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -3034,6 +3036,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -3066,6 +3069,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -3100,7 +3104,6 @@
                 },
                 "Path of Eyes": {
                     "default_node": "Portal from Abandoned Base",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3997643454,
                         "in_dark_aether": false
@@ -3117,6 +3120,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -3149,6 +3153,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": true,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -3179,6 +3184,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -3386,6 +3392,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -3414,6 +3421,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event3",
                             "connections": {
                                 "Front of Center Door": {
@@ -3434,6 +3442,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event72",
                             "connections": {
                                 "Door to Hall of Eyes": {
@@ -3463,6 +3472,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Hall of Eyes": {
                                     "type": "and",
@@ -3653,6 +3663,7 @@
                             "extra": {
                                 "gate_index": 4
                             },
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Torvus Transport Access": {
                                     "type": "and",
@@ -3682,6 +3693,7 @@
                                 "translator": "Violet",
                                 "string_asset_id": 2392838062
                             },
+                            "valid_starting_location": false,
                             "kind": "generic",
                             "requirement_to_collect": {
                                 "type": "and",
@@ -3730,6 +3742,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Windchamber Gateway": {
                                     "type": "resource",
@@ -3916,7 +3929,6 @@
                 },
                 "War Ritual Grounds": {
                     "default_node": "Door to Shrine Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2859985581,
                         "in_dark_aether": true
@@ -3933,6 +3945,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -4019,6 +4032,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -4103,6 +4117,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 3,
                             "major_location": false,
                             "connections": {
@@ -4138,6 +4153,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Shrine Access": {
                                     "type": "resource",
@@ -4249,7 +4265,6 @@
                 },
                 "Abandoned Base": {
                     "default_node": "Door to Base Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3337937090,
                         "in_dark_aether": true
@@ -4266,6 +4281,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -4298,6 +4314,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -4560,7 +4577,6 @@
                 },
                 "Windchamber Gateway": {
                     "default_node": "Door to Path of Eyes",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1966181726,
                         "in_dark_aether": false
@@ -4577,6 +4593,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -4619,6 +4636,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Path of Eyes": {
                                     "type": "or",
@@ -4837,6 +4855,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 4,
                             "major_location": true,
                             "connections": {
@@ -4986,7 +5005,6 @@
                 },
                 "Torvus Transport Access": {
                     "default_node": "Door to Path of Eyes",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2822315693,
                         "in_dark_aether": false
@@ -5003,6 +5021,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5033,6 +5052,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5056,7 +5076,6 @@
                 },
                 "Shrine Access": {
                     "default_node": "Door to Defiled Shrine",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 521996255,
                         "in_dark_aether": true
@@ -5073,6 +5092,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5186,6 +5206,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5230,6 +5251,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5272,6 +5294,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to War Ritual Grounds": {
                                     "type": "and",
@@ -5467,7 +5490,6 @@
                 },
                 "Transport to Torvus Bog": {
                     "default_node": "Elevator to Torvus Bog - Transport to Temple Grounds",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2889020216,
                         "in_dark_aether": false
@@ -5484,6 +5506,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5517,6 +5540,7 @@
                                 "scan_asset_id": 3917689266,
                                 "teleporter_instance_id": 1966093
                             },
+                            "valid_starting_location": true,
                             "destination": {
                                 "world_name": "Torvus Bog",
                                 "area_name": "Transport to Temple Grounds"
@@ -5537,7 +5561,6 @@
                 },
                 "Defiled Shrine": {
                     "default_node": "Door to Shrine Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 383850164,
                         "in_dark_aether": true
@@ -5554,6 +5577,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5596,6 +5620,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 11,
                             "major_location": true,
                             "connections": {
@@ -5631,6 +5656,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Shrine Access": {
                                     "type": "and",
@@ -5814,7 +5840,6 @@
                 },
                 "Gateway Access": {
                     "default_node": "Door to Shrine Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2217888920,
                         "in_dark_aether": true
@@ -5831,6 +5856,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5875,6 +5901,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -5917,6 +5944,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Sky Temple Gateway": {
                                     "type": "or",
@@ -6011,7 +6039,6 @@
                 },
                 "Sky Temple Gateway": {
                     "default_node": "Spawn Point/Front of Teleporter",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2278776548,
                         "in_dark_aether": true
@@ -6028,6 +6055,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -6100,6 +6128,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event93",
                             "connections": {
                                 "Door to Gateway Access": {
@@ -6120,6 +6149,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Gateway Access": {
                                     "type": "and",
@@ -6395,6 +6425,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": true,
                             "connections": {
                                 "Teleport to Great Temple - Sky Temple Energy Controller": {
                                     "type": "and",
@@ -6509,7 +6540,6 @@
             "areas": {
                 "Transport to Temple Grounds": {
                     "default_node": "Elevator to Temple Grounds - Transport to Torvus Bog",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1868895730,
                         "in_dark_aether": false
@@ -6526,6 +6556,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -6559,6 +6590,7 @@
                                 "scan_asset_id": 3964483773,
                                 "teleporter_instance_id": 129
                             },
+                            "valid_starting_location": true,
                             "destination": {
                                 "world_name": "Temple Grounds",
                                 "area_name": "Transport to Torvus Bog"
@@ -6579,7 +6611,6 @@
                 },
                 "Temple Transport Access": {
                     "default_node": "Door to Transport to Temple Grounds",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 668125336,
                         "in_dark_aether": false
@@ -6596,6 +6627,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -6626,6 +6658,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -6649,7 +6682,6 @@
                 },
                 "Torvus Lagoon": {
                     "default_node": "Door to Temple Transport Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2114709145,
                         "in_dark_aether": false
@@ -6666,6 +6698,7 @@
                             "extra": {
                                 "dock_index": 4
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -6835,6 +6868,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -6865,6 +6899,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -6944,6 +6979,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -6974,6 +7010,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7004,6 +7041,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 60,
                             "major_location": false,
                             "connections": {
@@ -7025,6 +7063,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event22",
                             "connections": {
                                 "Door to Portal Chamber": {
@@ -7048,6 +7087,7 @@
                                 "hint_index": 68,
                                 "string_asset_id": 1489382579
                             },
+                            "valid_starting_location": false,
                             "kind": "specific-pickup",
                             "requirement_to_collect": {
                                 "type": "and",
@@ -7080,7 +7120,6 @@
                 },
                 "Ruined Alcove": {
                     "default_node": "Door to Torvus Lagoon",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3548128276,
                         "in_dark_aether": false
@@ -7097,6 +7136,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7127,6 +7167,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7150,7 +7191,6 @@
                 },
                 "Portal Chamber (Light)": {
                     "default_node": "Door to Great Bridge",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 4092483679,
                         "in_dark_aether": false
@@ -7167,6 +7207,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7197,6 +7238,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7310,6 +7352,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7391,6 +7434,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 61,
                             "major_location": false,
                             "connections": {
@@ -7407,7 +7451,6 @@
                 },
                 "Path of Roots": {
                     "default_node": "Door to Torvus Lagoon",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1950913308,
                         "in_dark_aether": false
@@ -7424,6 +7467,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7491,6 +7535,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -7600,6 +7645,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 62,
                             "major_location": false,
                             "connections": {
@@ -7621,6 +7667,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Torvus Lagoon": {
                                     "type": "and",
@@ -7668,6 +7715,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Great Bridge": {
                                     "type": "or",
@@ -7941,6 +7989,7 @@
                                 "translator": "Emerald",
                                 "string_asset_id": 1170414603
                             },
+                            "valid_starting_location": false,
                             "kind": "generic",
                             "requirement_to_collect": {
                                 "type": "and",
@@ -7982,7 +8031,6 @@
                 },
                 "Save Station A": {
                     "default_node": "Save Station",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3681435765,
                         "in_dark_aether": false
@@ -7997,6 +8045,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": true,
                             "connections": {
                                 "Door to Torvus Lagoon": {
                                     "type": "and",
@@ -8018,6 +8067,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -8041,7 +8091,6 @@
                 },
                 "Forgotten Bridge": {
                     "default_node": "Door to Ruined Alcove",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 165596961,
                         "in_dark_aether": false
@@ -8058,6 +8107,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -8088,6 +8138,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -8242,6 +8293,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -8389,6 +8441,7 @@
                             "extra": {
                                 "dock_index": 4
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -8541,6 +8594,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -8585,6 +8639,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 63,
                             "major_location": false,
                             "connections": {
@@ -8606,6 +8661,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event23",
                             "connections": {
                                 "Door to Grove Access": {
@@ -8626,6 +8682,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Portal to Dark Forgotten Bridge": {
                                     "type": "or",
@@ -8965,7 +9022,6 @@
                 },
                 "Portal Chamber (Dark)": {
                     "default_node": "Door to Poisoned Bog",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2921206585,
                         "in_dark_aether": true
@@ -8982,6 +9038,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9091,6 +9148,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9140,6 +9198,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9363,7 +9422,6 @@
                 },
                 "Great Bridge": {
                     "default_node": "Door to Path of Roots",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3822429534,
                         "in_dark_aether": false
@@ -9380,6 +9438,7 @@
                             "extra": {
                                 "dock_index": 5
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9445,6 +9504,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9586,6 +9646,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9706,6 +9767,7 @@
                             "extra": {
                                 "dock_index": 4
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9853,6 +9915,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -9883,6 +9946,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -10128,6 +10192,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 64,
                             "major_location": false,
                             "connections": {
@@ -10278,6 +10343,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event24",
                             "connections": {
                                 "Door to Abandoned Worksite": {
@@ -10298,6 +10364,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Torvus Map Station": {
                                     "type": "and",
@@ -10418,6 +10485,7 @@
                             "extra": {
                                 "gate_index": 12
                             },
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Torvus Map Station": {
                                     "type": "and",
@@ -10439,7 +10507,6 @@
                 },
                 "Cache A": {
                     "default_node": "Door to Poisoned Bog",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 212528838,
                         "in_dark_aether": true
@@ -10456,6 +10523,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -10486,6 +10554,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 65,
                             "major_location": false,
                             "connections": {
@@ -10504,7 +10573,6 @@
                 },
                 "Plaza Access": {
                     "default_node": "Door to Forgotten Bridge",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3250751238,
                         "in_dark_aether": false
@@ -10521,6 +10589,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -10600,6 +10669,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -10791,6 +10861,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 66,
                             "major_location": false,
                             "connections": {
@@ -10849,6 +10920,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event25",
                             "connections": {
                                 "Door to Forgotten Bridge": {
@@ -10888,6 +10960,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Torvus Plaza": {
                                     "type": "resource",
@@ -10961,6 +11034,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event101",
                             "connections": {
                                 "Door to Torvus Plaza": {
@@ -10995,7 +11069,6 @@
                 },
                 "Abandoned Worksite": {
                     "default_node": "Door to Forgotten Bridge",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1423634263,
                         "in_dark_aether": false
@@ -11012,6 +11085,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -11388,6 +11462,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -11507,6 +11582,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 67,
                             "major_location": false,
                             "connections": {
@@ -11647,6 +11723,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Great Bridge": {
                                     "type": "resource",
@@ -11835,7 +11912,6 @@
                 },
                 "Dark Forgotten Bridge": {
                     "default_node": "Door to Putrid Alcove",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 39024685,
                         "in_dark_aether": true
@@ -11852,6 +11928,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -12010,6 +12087,7 @@
                             "extra": {
                                 "dock_index": 4
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -12175,6 +12253,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -12588,6 +12667,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -12736,6 +12816,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -13034,6 +13115,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event26",
                             "connections": {
                                 "Bridge Center": {
@@ -13110,6 +13192,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Brooding Ground": {
                                     "type": "and",
@@ -13856,7 +13939,6 @@
                 },
                 "Grove Access": {
                     "default_node": "Door to Torvus Grove",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1180978245,
                         "in_dark_aether": false
@@ -13873,6 +13955,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -13903,6 +13986,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -13926,7 +14010,6 @@
                 },
                 "Poisoned Bog": {
                     "default_node": "Door to Cache A",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 350405542,
                         "in_dark_aether": true
@@ -13943,6 +14026,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -13987,6 +14071,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -14031,6 +14116,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -14211,6 +14297,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 68,
                             "major_location": true,
                             "connections": {
@@ -14232,6 +14319,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Putrid Alcove": {
                                     "type": "or",
@@ -14709,7 +14797,6 @@
                 },
                 "Venomous Pond": {
                     "default_node": "Door to Brooding Ground",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2240736467,
                         "in_dark_aether": true
@@ -14726,6 +14813,7 @@
                             "extra": {
                                 "dock_index": 5
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -14984,6 +15072,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -15328,6 +15417,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -15754,6 +15844,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -15891,6 +15982,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 69,
                             "major_location": true,
                             "connections": {
@@ -16025,7 +16117,6 @@
                 },
                 "Temple Access": {
                     "default_node": "Door to Great Bridge (Top)",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 121681107,
                         "in_dark_aether": false
@@ -16042,6 +16133,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -16072,6 +16164,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -16104,6 +16197,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -16136,6 +16230,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -16164,6 +16259,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 70,
                             "major_location": true,
                             "connections": {
@@ -16185,6 +16281,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Great Bridge (Top)": {
                                     "type": "and",
@@ -16288,6 +16385,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Great Bridge (Bottom)": {
                                     "type": "and",
@@ -16415,7 +16513,6 @@
                 },
                 "Torvus Map Station": {
                     "default_node": "Door to Great Bridge",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 673929343,
                         "in_dark_aether": false
@@ -16432,6 +16529,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -16460,6 +16558,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Great Bridge": {
                                     "type": "and",
@@ -16474,7 +16573,6 @@
                 },
                 "Torvus Plaza": {
                     "default_node": "Door to Plaza Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1978751231,
                         "in_dark_aether": false
@@ -16491,6 +16589,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -16670,6 +16769,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 71,
                             "major_location": true,
                             "connections": {
@@ -16773,7 +16873,6 @@
                 },
                 "Dark Arena Tunnel": {
                     "default_node": "Door to Dark Forgotten Bridge",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 957217977,
                         "in_dark_aether": true
@@ -16790,6 +16889,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -16966,6 +17066,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -17144,7 +17245,6 @@
                 },
                 "Putrid Alcove": {
                     "default_node": "Door to Poisoned Bog",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3418828153,
                         "in_dark_aether": true
@@ -17161,6 +17261,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -17427,6 +17528,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -17691,6 +17793,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 72,
                             "major_location": false,
                             "connections": {
@@ -18012,7 +18115,6 @@
                 },
                 "Brooding Ground": {
                     "default_node": "Door to Dark Forgotten Bridge",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3706669497,
                         "in_dark_aether": true
@@ -18029,6 +18131,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18235,6 +18338,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18443,7 +18547,6 @@
                 },
                 "Dark Falls": {
                     "default_node": "Save Station",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 774215801,
                         "in_dark_aether": true
@@ -18458,6 +18561,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": true,
                             "connections": {
                                 "Door to Polluted Mire": {
                                     "type": "and",
@@ -18556,6 +18660,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18600,6 +18705,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18637,7 +18743,6 @@
                 },
                 "Torvus Grove": {
                     "default_node": "Door to Underground Tunnel",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3896048152,
                         "in_dark_aether": false
@@ -18654,6 +18759,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18684,6 +18790,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18749,6 +18856,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18842,6 +18950,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 73,
                             "major_location": false,
                             "connections": {
@@ -18858,7 +18967,6 @@
                 },
                 "Dark Torvus Temple Access": {
                     "default_node": "Door to Venomous Pond",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3851937017,
                         "in_dark_aether": true
@@ -18875,6 +18983,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -18984,6 +19093,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19086,7 +19196,6 @@
                 },
                 "Save Station 1": {
                     "default_node": "Save Station",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2591519810,
                         "in_dark_aether": true
@@ -19101,6 +19210,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": true,
                             "connections": {
                                 "Door to Venomous Pond": {
                                     "type": "resource",
@@ -19124,6 +19234,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19149,7 +19260,6 @@
                 },
                 "Torvus Temple": {
                     "default_node": "Door to Temple Access (Top)",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3863006870,
                         "in_dark_aether": false
@@ -19166,6 +19276,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19205,6 +19316,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19261,6 +19373,7 @@
                             "extra": {
                                 "dock_index": 4
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19335,6 +19448,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19367,6 +19481,7 @@
                             "extra": {
                                 "dock_index": 5
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19397,6 +19512,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19444,6 +19560,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 74,
                             "major_location": true,
                             "connections": {
@@ -19465,6 +19582,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event27",
                             "connections": {
                                 "Door to Temple Access (Top)": {
@@ -19485,6 +19603,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event84",
                             "connections": {
                                 "Door to Temple Access (Top)": {
@@ -19505,6 +19624,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Underground Tunnel": {
                                     "type": "and",
@@ -19633,6 +19753,7 @@
                             "extra": {
                                 "gate_index": 13
                             },
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Underground Tunnel": {
                                     "type": "and",
@@ -19661,6 +19782,7 @@
                             "extra": {
                                 "gate_index": 14
                             },
+                            "valid_starting_location": false,
                             "connections": {
                                 "Event - Torvus Temple Elevator": {
                                     "type": "and",
@@ -19675,7 +19797,6 @@
                 },
                 "Dark Torvus Arena": {
                     "default_node": "Door to Dark Arena Tunnel",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2761578287,
                         "in_dark_aether": true
@@ -19692,6 +19813,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -19828,6 +19950,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 75,
                             "major_location": true,
                             "connections": {
@@ -19868,6 +19991,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 76,
                             "major_location": true,
                             "connections": {
@@ -19963,6 +20087,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Dark Arena Tunnel": {
                                     "type": "and",
@@ -20373,7 +20498,6 @@
                 },
                 "Polluted Mire": {
                     "default_node": "Door to Gloom Vista",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2208154870,
                         "in_dark_aether": true
@@ -20390,6 +20514,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -20434,6 +20559,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -20549,7 +20675,6 @@
                 },
                 "Underground Tunnel": {
                     "default_node": "Door to Torvus Temple",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2162589584,
                         "in_dark_aether": false
@@ -20566,6 +20691,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -20607,6 +20733,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -20725,6 +20852,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 77,
                             "major_location": false,
                             "connections": {
@@ -20751,6 +20879,7 @@
                                 "translator": "Emerald",
                                 "string_asset_id": 1422425996
                             },
+                            "valid_starting_location": false,
                             "kind": "generic",
                             "requirement_to_collect": {
                                 "type": "and",
@@ -20792,7 +20921,6 @@
                 },
                 "Meditation Vista": {
                     "default_node": "Door to Torvus Grove",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1576678107,
                         "in_dark_aether": false
@@ -20809,6 +20937,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -20839,6 +20968,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -21007,6 +21137,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 78,
                             "major_location": true,
                             "connections": {
@@ -21037,7 +21168,6 @@
                 },
                 "Dark Torvus Temple": {
                     "default_node": "Safe Zone (Temple Access Side)",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 912503189,
                         "in_dark_aether": true
@@ -21054,6 +21184,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -21107,6 +21238,7 @@
                             "extra": {
                                 "dock_index": 5
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -21139,6 +21271,7 @@
                             "extra": {
                                 "dock_index": 3
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -21188,6 +21321,7 @@
                             "extra": {
                                 "dock_index": 2
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -21239,6 +21373,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 79,
                             "major_location": true,
                             "connections": {
@@ -21260,6 +21395,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event28",
                             "connections": {
                                 "Pickup (Dark Visor)": {
@@ -21280,6 +21416,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Ammo Station": {
                                     "type": "and",
@@ -21777,6 +21914,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": true,
                             "connections": {
                                 "Door to Dark Torvus Temple Access": {
                                     "type": "or",
@@ -21891,6 +22029,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Dark Controller Access": {
                                     "type": "and",
@@ -22010,7 +22149,6 @@
                 },
                 "Transport to Agon Wastes": {
                     "default_node": "Door to Torvus Temple",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 3479543630,
                         "in_dark_aether": false
@@ -22027,6 +22165,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22042,7 +22181,6 @@
                 },
                 "Underground Transport": {
                     "default_node": "Door to Torvus Temple",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2455297154,
                         "in_dark_aether": false
@@ -22059,6 +22197,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22074,7 +22213,6 @@
                 },
                 "Controller Access": {
                     "default_node": "Door to Torvus Temple",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 720788297,
                         "in_dark_aether": false
@@ -22091,6 +22229,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22169,6 +22308,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22240,7 +22380,6 @@
                 },
                 "Gloom Vista": {
                     "default_node": "Door to Polluted Mire",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2504558791,
                         "in_dark_aether": true
@@ -22257,6 +22396,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": false,
                             "dock_type": "portal",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22289,6 +22429,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22356,7 +22497,6 @@
                 },
                 "Ammo Station": {
                     "default_node": "Door to Dark Torvus Temple",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2258105898,
                         "in_dark_aether": true
@@ -22373,6 +22513,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22403,6 +22544,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "connections": {
                                 "Door to Dark Torvus Temple": {
                                     "type": "resource",
@@ -22419,7 +22561,6 @@
                 },
                 "Cache B": {
                     "default_node": "Door to Dark Torvus Temple",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 7688697,
                         "in_dark_aether": true
@@ -22436,6 +22577,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22466,6 +22608,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 80,
                             "major_location": true,
                             "connections": {
@@ -22526,7 +22669,6 @@
                 },
                 "Dark Controller Access": {
                     "default_node": "Door to Dark Torvus Temple",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 298078827,
                         "in_dark_aether": true
@@ -22543,6 +22685,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22638,6 +22781,7 @@
                             "extra": {
                                 "dock_index": 1
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22726,7 +22870,6 @@
                 },
                 "Torvus Energy Controller": {
                     "default_node": "Door to Controller Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 322696632,
                         "in_dark_aether": false
@@ -22743,6 +22886,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22787,6 +22931,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "pickup_index": 82,
                             "major_location": true,
                             "connections": {
@@ -22808,6 +22953,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event32",
                             "connections": {
                                 "Door to Controller Access": {
@@ -22828,6 +22974,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event87",
                             "connections": {
                                 "Pickup (Emerald Translator)": {
@@ -22851,6 +22998,7 @@
                                 "translator": "Emerald",
                                 "string_asset_id": 3529248034
                             },
+                            "valid_starting_location": false,
                             "kind": "generic",
                             "requirement_to_collect": {
                                 "type": "and",
@@ -22892,7 +23040,6 @@
                 },
                 "Dark Torvus Energy Controller": {
                     "default_node": "Door to Dark Controller Access",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1591201049,
                         "in_dark_aether": true
@@ -22909,6 +23056,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Torvus Bog",
@@ -22981,6 +23129,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": false,
                             "event_name": "Event33",
                             "connections": {
                                 "Door to Dark Controller Access": {

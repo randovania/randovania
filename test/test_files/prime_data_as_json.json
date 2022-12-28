@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 14,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -53,7 +53,8 @@
     ],
     "starting_location": {
         "world_name": "Temple Grounds",
-        "area_name": "Landing Site"
+        "area_name": "Landing Site",
+        "node_name": "Save Station"
     },
     "initial_states": {
         "Default": [
@@ -253,7 +254,6 @@
             "areas": {
                 "Landing Site": {
                     "default_node": "Save Station",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 1655756413,
                         "in_dark_aether": false
@@ -272,6 +272,7 @@
                                 "default"
                             ],
                             "extra": {},
+                            "valid_starting_location": true,
                             "connections": {
                                 "Door to Service Access": {
                                     "type": "or",
@@ -324,6 +325,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -355,7 +357,6 @@
                 },
                 "Service Access": {
                     "default_node": "Door to Landing Site",
-                    "valid_starting_location": true,
                     "extra": {
                         "asset_id": 2679590972,
                         "in_dark_aether": false
@@ -372,6 +373,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
+                            "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
                                 "world_name": "Temple Grounds",
@@ -395,6 +397,7 @@
                                 "translator": "Scan",
                                 "string_asset_id": 1000
                             },
+                            "valid_starting_location": false,
                             "kind": "generic",
                             "requirement_to_collect": {
                                 "type": "and",
@@ -436,6 +439,7 @@
                                 "hint_index": 2,
                                 "string_asset_id": 2000
                             },
+                            "valid_starting_location": false,
                             "kind": "specific-pickup",
                             "requirement_to_collect": {
                                 "type": "and",
@@ -467,6 +471,7 @@
                             "extra": {
                                 "string_asset_id": 3000
                             },
+                            "valid_starting_location": false,
                             "kind": "generic",
                             "requirement_to_collect": {
                                 "type": "and",
