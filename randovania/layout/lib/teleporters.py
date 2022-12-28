@@ -77,7 +77,7 @@ def _valid_teleporter_target(area: Area, game: RandovaniaGame):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return area.valid_starting_location and area.default_node is not None and not has_save_station
+    return area.has_start_node() and area.default_node is not None and not has_save_station
 
 
 class TeleporterTargetList(location_list.LocationList):
@@ -146,7 +146,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                 if isinstance(node, TeleporterNode) and node.editable:
                     # Valid destinations must be valid starting areas
                     area = world_list.nodes_to_area(node)
-                    if area.valid_starting_location:
+                    if area.has_start_node():
                         result.append(identifier.area_identifier)
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent on the previous room
                     elif area.name == "Metroid Prime Lair":

@@ -1,4 +1,5 @@
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 
 
@@ -21,9 +22,9 @@ class PresetCSStartingArea(PresetStartingArea):
 
     def _starting_location_on_select_classic(self):
         classics = [
-            AreaIdentifier("Mimiga Village", "Start Point"),
-            AreaIdentifier("Mimiga Village", "Arthur's House"),
-            AreaIdentifier("Labyrinth", "Camp")
+            NodeIdentifier(AreaIdentifier("Mimiga Village", "Start Point"), "Room Spawn"),
+            NodeIdentifier(AreaIdentifier("Mimiga Village", "Arthur's House"), "Room Spawn"),
+            NodeIdentifier(AreaIdentifier("Labyrinth", "Camp"), "Room Spawn")
         ]
 
         with self._editor as editor:
@@ -34,7 +35,7 @@ class PresetCSStartingArea(PresetStartingArea):
 
     def _starting_location_on_select_save_point(self):
         world_list = self.game_description.world_list
-        save_points = [world_list.node_to_area_location(node)
+        save_points = [NodeIdentifier(world_list.node_to_area_location(node), node.name)
                        for node in world_list.iterate_nodes() if "Save Point" in node.name]
 
         # remove because save point is locked behind a boss fight

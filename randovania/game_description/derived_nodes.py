@@ -34,7 +34,6 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
             areas.append(Area(
                 name=area.name,
                 default_node=area.default_node if has_default_node else None,
-                valid_starting_location=area.valid_starting_location,
                 nodes=nodes,
                 connections=connections,
                 extra=area.extra,

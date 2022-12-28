@@ -15,7 +15,6 @@ from randovania.game_description.world.pickup_node import PickupNode
 class Area:
     name: str
     default_node: str | None
-    valid_starting_location: bool
     nodes: list[Node]
     connections: dict[Node, dict[Node, Requirement]]
     extra: dict[str, typing.Any]
@@ -73,6 +72,12 @@ class Area:
 
     def clear_dock_cache(self):
         pass
+
+    def get_start_nodes(self) -> list[Node]:
+        return list(filter(lambda node: node.valid_starting_location, self.actual_nodes))
+    
+    def has_start_node(self) -> bool:
+        return any(node.valid_starting_location for node in self.actual_nodes)
 
     @property
     def map_name(self) -> str:

@@ -718,6 +718,16 @@ def _migrate_v42(preset: dict) -> dict:
         preset = _update_default_dock_rando(preset)
     return preset
 
+def _migrate_v43(preset: dict) -> dict:
+    game = default_database.game_description_for(RandovaniaGame(preset["game"]))
+    for start_loc in preset["configuration"]["starting_location"]:
+        world_name = start_loc["world_name"]
+        area_name = start_loc["area_name"]
+        world = game.world_list.world_with_name(world_name)
+        area = world.area_by_name(area_name)
+        start_loc["node_name"] = area.default_node
+    return preset
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -762,6 +772,7 @@ _MIGRATIONS = [
     _migrate_v40,
     _migrate_v41,
     _migrate_v42,
+    _migrate_v43,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
