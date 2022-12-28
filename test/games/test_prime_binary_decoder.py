@@ -34,7 +34,8 @@ sample_data = {
     "layers": ["default"],
     "starting_location": {
         "world_name": "Temple Grounds",
-        "area_name": "Landing Site"
+        "area_name": "Landing Site",
+        "node_name": "Save Station"
     },
     "initial_states": {
         "Default": [

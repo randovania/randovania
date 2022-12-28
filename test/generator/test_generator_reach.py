@@ -165,15 +165,15 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     scan_visor = echoes_resource_database.get_item("DarkVisor")
     nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
 
-    node_a = GenericNode(nc("Node A"), 0, True, None, "", ("default",), {})
-    node_b = GenericNode(nc("Node B"), 1, True, None, "", ("default",), {})
-    node_c = GenericNode(nc("Node C"), 2, True, None, "", ("default",), {})
+    node_a = GenericNode(nc("Node A"), 0, True, None, "", ("default",), {}, False)
+    node_b = GenericNode(nc("Node B"), 1, True, None, "", ("default",), {}, False)
+    node_c = GenericNode(nc("Node C"), 2, True, None, "", ("default",), {}, False)
     translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
-                                       3, True, None, "", ("default",), {})
+                                       3, True, None, "", ("default",), {}, False)
 
     world_list = WorldList([
         World("Test World", [
-            Area("Test Area A", None, True, [node_a, node_b, node_c, translator_node],
+            Area("Test Area A", None, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: Requirement.trivial(),
