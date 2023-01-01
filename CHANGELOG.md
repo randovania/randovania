@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Door locks can now be randomized.
 - TODO: add changes for ODR 1.2.4 and MEDS 0.18.0 (possibly graphical fix)
 
+#### Logic Database
+
+- Removed: Water Bomb Jump in Ghavoran - Map Station Access Secret.
+
 ## [5.2.1] - 2022-12-01
 
 - Fixed: Exporting Metroid Prime 2 when converting Metroid Prime models now works.
