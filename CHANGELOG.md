@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: Climbing Z-57 Arena with Spin Boost and Ice Missiles (Beginner).
-- Changed: Energy Tanks are now Major Locations, Energy Parts are Minor Locations, Drogyga is a Major Location
+- Changed: Major/Minor Item Location Updates: Energy Tanks -> Major, Energy Parts -> Minor, Drogyga -> Major, Missile+ Tanks -> Major
 - Removed: Water Bomb Jump in Ghavoran - Map Station Access Secret.
 
 ## [5.2.1] - 2022-12-01
