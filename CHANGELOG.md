@@ -17,8 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Changed: Sand Processing - Screw Attack clip to access the halfpipe from Main Reactor side without Missiles is now Intermediate and without Space Jump (from Expert).
 - Changed: The Auto Tracker icon for Spider Ball now uses the Dark Suit model instead of the Prime 1 model.
+
+#### Logic Database
+
+- Changed: Sand Processing - Screw Attack clip to access the halfpipe from Main Reactor side without Missiles is now Intermediate and without Space Jump (from Expert).
 - Fixed: Main Gyro now properly accounts for solving the puzzles.
 
 ### Metroid Dread
@@ -28,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: Climbing Z-57 Arena with Spin Boost and Ice Missiles (Beginner).
 - Removed: Water Bomb Jump in Ghavoran - Map Station Access Secret.
 
 ## [5.2.1] - 2022-12-01

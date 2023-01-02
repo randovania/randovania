@@ -25,12 +25,14 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (POWERBEAM) 1
+      Trivial
   > Tunnel to Total Recharge Station South
       Morph Ball and After Cataris - Artaria Transport Blob
-  > Event - Blob through Wall
-      Shoot Diffusion or Wave
-  > Mid-Level
-      Trivial
+  > Event - Blob from Door
+      Any of the following:
+          Shoot Diffusion or Wave
+          Pseudo-Wave Beam (Beginner) and Shoot Beam
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -40,7 +42,7 @@ Extra - asset_id: collision_camera_000
   > Tunnel to Total Recharge Station South
       Trivial
 
-> Event - Blob, adjacent; Heals? False
+> Event - Blob from Tunnel; Heals? False
   * Layers: default
   * Event Cataris - Artaria Transport Blob
   * Extra - actor_name: breakablemag002
@@ -69,9 +71,9 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
+  > Door to Navigation Station Southeast
       Trivial
-  > Mid-Level
+  > Tile Group (POWERBEAM) 2
       Trivial
 
 > Tile Group (POWERBEAM) 2; Heals? False
@@ -93,20 +95,13 @@ Extra - asset_id: collision_camera_000
       Morph Ball and After Cataris - Artaria Transport Blob
   > Pickup (Missile Tank)
       Trivial
-  > Event - Blob, adjacent
+  > Event - Blob from Tunnel
       Lay Bomb or Shoot Beam
 
-> Event - Blob through Wall; Heals? False
+> Event - Blob from Door; Heals? False
   * Layers: default
   * Event Cataris - Artaria Transport Blob
   > Door to Navigation Station Southeast
-      Trivial
-
-> Mid-Level; Heals? False
-  * Layers: default
-  > Door to Navigation Station Southeast
-      Trivial
-  > Tile Group (POWERBEAM) 1
       Trivial
 
 ----------------
@@ -494,7 +489,13 @@ Extra - asset_id: collision_camera_009
   > Door to Z-57 Heat Room East
       Any of the following:
           Spider Magnet or Space Jump or Speed Booster or Simple IBJ
-          Flash Shift and Use Spin Boost
+          All of the following:
+              Use Spin Boost
+              Any of the following:
+                  Flash Shift
+                  All of the following:
+                      # https://youtu.be/mRHB7DHbfbg
+                      Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
   > Tile Group (SCREWATTACK) 2
       Trivial
   > Between Thermal Gates
@@ -536,7 +537,11 @@ Extra - asset_id: collision_camera_009
   > Between Thermal Gates
       All of the following:
           After Cataris - First Thermal Device
-          Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+          Any of the following:
+              Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+              All of the following:
+                  # https://youtu.be/mRHB7DHbfbg
+                  Spin Boost and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
 
 > Between Thermal Gates; Heals? False
   * Layers: default
