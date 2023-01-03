@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.4.0] - 2023-??-??
+
+- Nothing.
+
+### Metroid Dread
+
+- **Major** - Added: Door locks can now be randomized.
+
 ## [5.3.0] - 2023-??-??
 
 - Added: You can now open a tracker for other player's inventories in a multiworld session.
@@ -26,8 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- **Major** - Added: Door locks can now be randomized.
-- TODO: add changes for ODR 1.2.4 and MEDS 0.18.0 (possibly graphical fix)
+#### Patcher Changes
+
+- Fixed: Incorrect color during animation of killing an EMMI.
 
 #### Logic Database
 
