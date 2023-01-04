@@ -20,8 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Spring ball can no longer be used to abuse steep terrain marked as standable
-- Fixed: Vanilla blast shields not being removed in door lock randomizer
+#### Patcher Changes
+
+- Fixed: Spring ball has been nerfed to prevent abusing steep terrain marked as standable.
+- Fixed: Spring ball cooldown is now properly reset when morphing/unmorphing.
+- Fixed: Vanilla blast shields not being removed in door lock randomizer.
 
 ### Metroid Prime 2: Echoes
 
