@@ -62,11 +62,23 @@ game_data: game.GameData = game.GameData(
     faq=[
         (
            "What causes the Hypermode vines in Corrupted Pool to disappear?",
-           "Collecting the ship item from the Federation Landing Site removes the vines."
+           "Collecting the ship item in Hangar Bay removes the vines."
         ),
         (
-           "While fighting Rundas, the game is lags and there are pirates and turrets in the way. What causes this?",
-           "If you collect the ship item from the Federation Landing Site, both Rundas and the pirates will be active at the same time."
+           "While fighting Rundas, the game lags and there are pirates and turrets in the way. What causes this?",
+           "If you collect the ship item in Hangar Bay before fighting Rundas, both Rundas and the pirate layers will be active at the same time."
+        ),
+        (
+            "I have Ship Missiles but I am unable to break the wall in Ancient Courtyard.",
+            "To break the wall, you must have the Main Ship Missiles in your inventory."
+        ),
+        (
+            "The item in Gearworks is blocked off. How do I collect it?",
+            "Collecting the item in SkyTown Federation Landing Site unlocks access to the item."
+        ),
+        (
+            "I don't have Command Visor. Can I still collect the items from the landing sites?",
+            "You can fly to either unlocked landing site from an already active one to collect the item."
         )
     ],
 
