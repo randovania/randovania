@@ -3,6 +3,13 @@
     "game": "samus_returns",
     "resource_database": {
         "items": {
+            "Nothing": {
+                "long_name": "Nothing",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": "ITEM_NONE"
+                }
+            },
             "Power": {
                 "long_name": "Power Beam",
                 "max_capacity": 1,
@@ -654,15 +661,15 @@
                 "extra": {}
             },
             "Area 5 (Entrance) - Transport Hub Grapple Block Top": {
-                "long_name": "Area 5 (Entrance) - Transport Hub Grapple Block Top",
+                "long_name": "Area 5 (Entrance) - Chozo Seal Grapple Block Top",
                 "extra": {}
             },
             "Area 5 (Entrance) - Transport Hub Grapple Block Middle": {
-                "long_name": "Area 5 (Entrance) - Transport Hub Grapple Block Middle",
+                "long_name": "Area 5 (Entrance) - Chozo Seal Grapple Block Middle",
                 "extra": {}
             },
             "Area 5 (Entrance) - Transport Hub Grapple Block Bottom": {
-                "long_name": "Area 5 (Entrance) - Transport Hub Grapple Block Bottom",
+                "long_name": "Area 5 (Entrance) - Chozo Seal Grapple Block Bottom",
                 "extra": {}
             },
             "Area 5 (Interior) - Grapple Shuffler Grapple Block": {
@@ -836,7 +843,7 @@
             },
             "PhaseSkip": {
                 "long_name": "Phase Drift Skip",
-                "description": "With a specific positioning and timing, Samus can be launched horizontally with Bombs. This can be used to cross crumble block lines that normally require Phase Drift to pass.",
+                "description": "This trick expects crossing consecutive crumble blocks without Phase Drift. This can be done with precise jumps or specific positioning and timing using Bombs, depending on the room.",
                 "extra": {}
             },
             "AirMorph": {
@@ -862,6 +869,11 @@
             "Freeze": {
                 "long_name": "Freeze Enemy with Melee",
                 "description": "By abusing how the Melee works, this trick can be used to freeze enemies for the full freeze timer without having Charge Beam.",
+                "extra": {}
+            },
+            "WallShot": {
+                "long_name": "Shoot Through Walls",
+                "description": "By abusing Free Aim and firing a beam or Missile at the right time, it is possible to shoot through walls and hit things not normally reachable.",
                 "extra": {}
             }
         },
@@ -951,57 +963,6 @@
                         {
                             "type": "template",
                             "data": "Simple IBJ"
-                        }
-                    ]
-                }
-            },
-            "Cross Rooms Horizontally (High Jump)": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Space",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Boots",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Use Spider Ball"
-                        }
-                    ]
-                }
-            },
-            "Cross Rooms Horizontally (No High Jump)": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Space",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Use Spider Ball"
                         }
                     ]
                 }

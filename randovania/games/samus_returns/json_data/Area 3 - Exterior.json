@@ -11,7 +11,7 @@
     "areas": {
         "Transport to Area 2 Entrance": {
             "default_node": "Elevator to Area 2 Entrance - Chozo Seal",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -26400.0,
@@ -117,15 +117,6 @@
                                     {
                                         "type": "template",
                                         "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -241,8 +232,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -24867.823828078876,
-                        "y": 3880.5880269217146,
+                        "x": -24889.79,
+                        "y": 3902.55,
                         "z": 0.0
                     },
                     "description": "",
@@ -251,7 +242,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea02"
                     },
                     "destination": {
                         "world_name": "Area 2 - Entrance",
@@ -312,15 +304,6 @@
                                     {
                                         "type": "template",
                                         "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -1074,7 +1057,7 @@
             }
         },
         "Outer Hub Teleporter": {
-            "default_node": null,
+            "default_node": "Teleporter",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1116,8 +1099,8 @@
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": -6138.714672861014,
-                        "y": 8566.027874564461,
+                        "x": -6138.71,
+                        "y": 8566.03,
                         "z": 0.0
                     },
                     "description": "",
@@ -1126,7 +1109,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_03A_001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_03A_001"
                     },
                     "is_unlocked": {
                         "type": "resource",
@@ -1224,7 +1208,7 @@
         },
         "Outer Hub": {
             "default_node": "Elevator to Area 3 Interior East - Transport to Area 3 Exterior",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -6600.0,
@@ -1381,8 +1365,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 8337.640910022545,
-                        "y": 16696.966591514654,
+                        "x": 8337.64,
+                        "y": 16696.97,
                         "z": 0.0
                     },
                     "description": "",
@@ -1391,7 +1375,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03C",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea03C"
                     },
                     "destination": {
                         "world_name": "Area 3 - Interior (East)",
@@ -1420,8 +1405,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 4064.537359659311,
-                        "y": 16590.060007742934,
+                        "x": 4064.54,
+                        "y": 16590.06,
                         "z": 0.0
                     },
                     "description": "",
@@ -1430,7 +1415,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation_002",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation_002"
                     },
                     "connections": {
                         "Elevator to Area 3 Interior East - Transport to Area 3 Exterior": {
@@ -1453,8 +1439,8 @@
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": 10296.717223474756,
-                        "y": 6985.846371068754,
+                        "x": 10296.72,
+                        "y": 6985.85,
                         "z": 0.0
                     },
                     "description": "",
@@ -1463,7 +1449,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_03A_002",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_03A_002"
                     },
                     "is_unlocked": {
                         "type": "resource",
@@ -2136,7 +2123,7 @@
         },
         "Transport to Area 3 Interior West (Lower)": {
             "default_node": "Elevator to Area 3 Interior West - Area 3 Exterior (Lower)",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -18100.0,
@@ -2169,8 +2156,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -17417.76859504132,
-                        "y": 2265.702540373999,
+                        "x": -17417.77,
+                        "y": 2265.7,
                         "z": 0.0
                     },
                     "description": "",
@@ -2179,7 +2166,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03B_02",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea03B_02"
                     },
                     "destination": {
                         "world_name": "Area 3 - Interior (West)",
@@ -2285,7 +2273,7 @@
         },
         "Transport to Area 4 West": {
             "default_node": "Elevator to Area 4 West - Chozo Seals",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -26100.0,
@@ -2390,8 +2378,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -24894.55661825481,
-                        "y": -1830.8005667729371,
+                        "x": -24894.56,
+                        "y": -1830.8,
                         "z": 0.0
                     },
                     "description": "",
@@ -2400,7 +2388,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea04",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea04"
                     },
                     "destination": {
                         "world_name": "Area 4 - West",
@@ -2410,12 +2399,10 @@
                     "editable": true,
                     "connections": {
                         "Door to Transport to Area 2 Entrance (Bottom)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DNA3",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2890,7 +2877,7 @@
         },
         "Transport to Area 3 Interior West (Upper)": {
             "default_node": "Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -11800.0,
@@ -2955,8 +2942,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -11155.601469237832,
-                        "y": 8121.349862258953,
+                        "x": -11155.6,
+                        "y": 8121.35,
                         "z": 0.0
                     },
                     "description": "",
@@ -2965,7 +2952,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03B_01",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea03B_01"
                     },
                     "destination": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3172,8 +3160,8 @@
             }
         },
         "Entrance Hub": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -20500.0,
@@ -3482,12 +3470,12 @@
                         }
                     }
                 },
-                "Save Station)": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -18467.527244691715,
-                        "y": 2882.3508574524394,
+                        "x": -18467.53,
+                        "y": 2882.35,
                         "z": 0.0
                     },
                     "description": "",
@@ -3496,7 +3484,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation_001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation001"
                     },
                     "connections": {
                         "Door to Transport to Area 2 Entrance": {
@@ -3534,7 +3523,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Save Station)": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,

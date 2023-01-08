@@ -1,5 +1,6 @@
 ----------------
 Transport to Area 5 Entrance (East)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -9200.0, 'x2': -1900.0, 'y1': -700.0, 'y2': 1800.0}
 Extra - polygon: [[-9200.0, 1800.0], [-9200.0, 100.0], [-7200.0, 100.0], [-5600.0, -200.0], [-4400.0, -700.0], [-1900.0, -700.0], [-1900.0, 1000.0], [-3400.0, 1000.0], [-3400.0, 1800.0]]
 Extra - asset_id: collision_camera_002
@@ -8,6 +9,7 @@ Extra - asset_id: collision_camera_002
   * Teleporter to Area 5 - Entrance - Transport to Area 5 Interior (East)
   * Extra - actor_name: LE_Platform_Elevator_FromArea06A_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea06A_01
   > Door to Transport to Area 5 Exterior (East)
       Morph Ball
   > Door to Transport Connector
@@ -31,6 +33,7 @@ Extra - asset_id: collision_camera_002
 
 ----------------
 Transport Connector
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -18400.0, 'x2': -9100.0, 'y1': 200.0, 'y2': 6100.0}
 Extra - polygon: [[-18400.0, 6100.0], [-18400.0, 3700.0], [-15100.0, 3700.0], [-11600.0, 2000.0], [-11600.0, 200.0], [-9100.0, 200.0], [-9100.0, 6100.0]]
 Extra - asset_id: collision_camera_003
@@ -42,22 +45,25 @@ Extra - asset_id: collision_camera_003
   > Underwater
       Destroy Bomb Block
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation001
+  > Door to Transport to Area 5 Entrance (East)
+      Morph Ball
   > Door to Transport to Area 5 Entrance (West)
       Morph Ball
-  > Above Save Station
-      Climb Rooms Vertically (No High Jump)
+  > Right of Grapple Tunnel
+      Walljump (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Door to Transport to Area 5 Entrance (East); Heals? False
   * Layers: default
   * Power Beam Door to Transport to Area 5 Entrance (East)/Door to Transport Connector
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Above Save Station
-      Morph Ball and Climb Rooms Vertically (No High Jump)
+  > Save Station
+      Morph Ball
 
 > Door to Transport to Area 5 Entrance (West); Heals? False
   * Layers: default
@@ -70,42 +76,48 @@ Extra - asset_id: collision_camera_003
 > Tunnel to Gamma Arena Access; Heals? False
   * Layers: default
   * Tunnel to Gamma Arena Access/Tunnel to Transport Connector
+  > Right of Water
+      Morph Ball and Phase Drift and Movement (Intermediate)
   > Underwater
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 5 (Interior) - Transport Connector Grapple Block
-  > Next to Grapple Block
+  > Left of Grapple Block
       Trivial
 
-> Above Save Station; Heals? False
+> Right of Grapple Tunnel; Heals? False
   * Layers: default
   > Save Station
       Trivial
-  > Door to Transport to Area 5 Entrance (East)
-      Trivial
-  > Next to Grapple Block
+  > Left of Grapple Block
       Any of the following:
-          Climb Rooms Vertically (High Jump)
+          High Jump Boots or Space Jump or Damage Boost (Intermediate) or Use Spider Ball
           Morph Ball and After Area 5 (Interior) - Transport Connector Grapple Block
+          Diagonal Bomb Jump (Intermediate) and Lay Bomb
 
-> Next to Grapple Block; Heals? False
+> Left of Grapple Block; Heals? False
   * Layers: default
   > Event - Grapple Block
       Grapple Beam
-  > Above Save Station
+  > Right of Grapple Tunnel
       Any of the following:
           Space Jump
           Morph Ball and After Area 5 (Interior) - Transport Connector Grapple Block
-  > Next to Grapple Point
+  > Right of Water
       Trivial
 
-> Next to Grapple Point; Heals? False
+> Right of Water; Heals? False
   * Layers: default
   > Tunnel to Gamma Arena Access
-      Grapple Beam and Morph Ball
-  > Next to Grapple Block
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Movement (Intermediate)
+              Bomb and Spider Ball and Diagonal Bomb Jump (Beginner)
+              Spiderspark (Beginner) and Can Spiderspark
+  > Left of Grapple Block
       Trivial
   > Underwater
       Trivial
@@ -114,15 +126,18 @@ Extra - asset_id: collision_camera_003
   * Layers: default
   > Pickup (Missile Tank)
       Destroy Bomb Block
-  > Next to Grapple Point
+  > Tunnel to Gamma Arena Access
+      Gravity Suit and Morph Ball and Walljump (Intermediate)
+  > Right of Water
       Any of the following:
           Use Spider Ball
           All of the following:
               Gravity Suit
-              High Jump Boots or Space Jump
+              High Jump Boots or Space Jump or Single-wall Wall Jump (Beginner) or Simple IBJ
 
 ----------------
 Transport to Area 5 Exterior (East)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -3500.0, 'x2': -1100.0, 'y1': 1100.0, 'y2': 5000.0}
 Extra - polygon: [[-3500.0, 5000.0], [-3500.0, 1100.0], [-1700.0, 1100.0], [-1700.0, 3700.0], [-1100.0, 3800.0], [-1100.0, 5000.0]]
 Extra - asset_id: collision_camera_005
@@ -131,6 +146,7 @@ Extra - asset_id: collision_camera_005
   * Teleporter to Area 5 - Exterior - Tower
   * Extra - actor_name: LE_Platform_Elevator_FromArea06B_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea062B_01
   > Door to Transport to Area 5 Entrance (East)
       Trivial
   > Door to Grapple Shuffler
@@ -144,7 +160,7 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Transport to Area 5 Exterior - Tower
-      Climb Rooms Vertically (No High Jump)
+      Trivial
 
 > Door to Grapple Shuffler; Heals? False
   * Layers: default
@@ -212,7 +228,9 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: Door006
   * Extra - actor_type: doorclosedpower
   > Door to Teleporter Room (Bottom)
-      After Area 5 (Interior) - Grapple Shuffler Grapple Block and Climb Rooms Vertically (No High Jump)
+      All of the following:
+          Morph Ball and After Area 5 (Interior) - Grapple Shuffler Grapple Block
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Walljump (Intermediate) or Climb Rooms Vertically (High Jump)
 
 > Door to Teleporter Room (Bottom); Heals? False
   * Layers: default
@@ -221,8 +239,12 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_type: doorpowerpower
   > Door to Plasma Beam Room
       Grapple Beam and Morph Ball and After Area 5 (Interior) - Grapple Shuffler Grapple Block
+  > Pickup (Missile Tank)
+      Charge Beam and Ice Beam and Morph Ball and Ice Beam Clip (Expert) and Destroy Missile Block
   > Above Pickup
-      Grapple Beam and Morph Ball
+      All of the following:
+          Morph Ball
+          Grapple Beam or Melee Clip (Intermediate)
 
 > Door to Teleporter Room (Top); Heals? False
   * Layers: default
@@ -240,7 +262,13 @@ Extra - asset_id: collision_camera_007
   > Door to Plasma Beam Room
       Morph Ball and Screw Attack and After Area 5 (Interior) - Grapple Shuffler Grapple Block
   > Above Pickup
-      Morph Ball and Phase Drift and Screw Attack
+      All of the following:
+          Morph Ball and Screw Attack
+          Any of the following:
+              Phase Drift
+              Spider Ball and Movement (Intermediate)
+              Bomb and Diagonal Bomb Jump (Advanced)
+              Spring Ball and Movement (Advanced)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -251,9 +279,13 @@ Extra - asset_id: collision_camera_007
 > Above Pickup; Heals? False
   * Layers: default
   > Door to Teleporter Room (Bottom)
-      Trivial
+      Morph Ball
   > Pickup (Missile Tank)
-      Missile and Morph Ball and Phase Drift and Screw Attack
+      All of the following:
+          Morph Ball and Screw Attack and Destroy Missile Block
+          Any of the following:
+              Phase Drift or Movement (Intermediate)
+              Spiderspark (Beginner) and Can Spiderspark
   > Event - Grapple Block
       Grapple Beam
 
@@ -274,10 +306,8 @@ Extra - asset_id: collision_camera_008
   * Power Beam Door to Teleporter Room/Door to Autrack Tower
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerclosed
-  > Above Crumble Blocks
-      Any of the following:
-          Use Spider Ball
-          Morph Ball and Phase Drift and Space Jump
+  > Crumble Block Tunnel
+      Climb Rooms Vertically (No High Jump)
 
 > Door from Plasma Beam Room; Heals? False
   * Layers: default
@@ -291,16 +321,30 @@ Extra - asset_id: collision_camera_008
   * Layers: default
   * Tunnel to Transport to Area 5 Exterior (West)/Tunnel to Autrack Tower
   > Above Crumble Blocks
-      Trivial
+      Morph Ball
 
 > Above Crumble Blocks; Heals? False
   * Layers: default
   > Energy Recharge Station
       Morph Ball
-  > Door to Teleporter Room
-      Morph Ball
   > Tunnel to Transport to Area 5 Exterior (West)
-      Climb Rooms Vertically (High Jump)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball
+              All of the following:
+                  Gravity Suit
+                  High Jump Boots or Walljump (Beginner) or Simple IBJ
+              Bomb and Spring Ball and Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Intermediate)
+  > Crumble Block Tunnel
+      Morph Ball
+
+> Crumble Block Tunnel; Heals? False
+  * Layers: default
+  > Door to Teleporter Room
+      Trivial
+  > Above Crumble Blocks
+      Phase Drift or Spider Ball or Phase Drift Skip (Advanced)
 
 ----------------
 Gravity Suit Room
@@ -418,7 +462,15 @@ Extra - asset_id: collision_camera_011
 > Below Crumble Blocks; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
-      Spider Ball and Destroy Bomb Block
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Spider Ball
+                  All of the following:
+                      Mid-Air Morph (Intermediate)
+                      Space Jump or Single-wall Wall Jump (Intermediate) or Walljump (Intermediate)
 
 ----------------
 Upper Path Right
@@ -451,6 +503,7 @@ Extra - asset_id: collision_camera_012
 
 ----------------
 Transport to Area 5 Entrance (West)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -12800.0, 'x2': -11500.0, 'y1': 141.14599609375, 'y2': 900.0}
 Extra - polygon: [[-12800.0, 900.0], [-12800.0, 141.14599609375], [-11500.0, 141.14599609375], [-11500.0, 900.0]]
 Extra - asset_id: collision_camera_015
@@ -459,6 +512,7 @@ Extra - asset_id: collision_camera_015
   * Teleporter to Area 5 - Entrance - Transport to Area 5 Interior (West)
   * Extra - actor_name: LE_Platform_Elevator_FromArea06A_02
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea06A_02
   > Door to Transport Connector
       Trivial
 
@@ -481,7 +535,15 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 5 Exterior (East)
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Space Jump or Use Spider Ball
+          All of the following:
+              Any of the following:
+                  Gravity Suit
+                  Underwater Bomb Jump (Beginner) and Lay Bomb
+              Any of the following:
+                  Single-wall Wall Jump (Advanced)
+                  Infinite Bomb Jump (Intermediate) and Lay Bomb
 
 > Door to Transport to Area 5 Exterior (East); Heals? False
   * Layers: default
@@ -490,8 +552,13 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: doorpowerpower
   > Door to Zeta+ Arena Access
       Any of the following:
-          Climb Rooms Vertically (No High Jump)
-          High Jump Boots and Gravity Suit
+          Space Jump or Use Spider Ball
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  High Jump Boots or Movement (Beginner) or Super Jump (Advanced) or Simple IBJ
+                  Morph Ball and Unmorph Extend (Beginner)
+          Underwater Bomb Jump (Beginner) and Lay Bomb
 
 ----------------
 Zeta+ Arena Access
@@ -506,7 +573,7 @@ Extra - asset_id: collision_camera_017
   > Above Center Platform
       Any of the following:
           Destroy Bomb Block
-          Missile and Morph Ball
+          Morph Ball and Destroy Missile Block
 
 > Door to Water Drop; Heals? False
   * Layers: default
@@ -516,7 +583,11 @@ Extra - asset_id: collision_camera_017
   > Left Platform
       Any of the following:
           Use Spider Ball
-          Gravity Suit and Space Jump
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Space Jump or Walljump (Intermediate) or Simple IBJ
+                  High Jump Boots and Walljump (Beginner)
 
 > Door to Zeta+ Arena; Heals? False
   * Layers: default
@@ -524,18 +595,38 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_name: Door022
   * Extra - actor_type: doorpowerpower
   > Center Platform
-      Screw Attack and Space Jump
+      All of the following:
+          Any of the following:
+              Screw Attack
+              Morph Ball and Melee Clip (Intermediate)
+          Any of the following:
+              Space Jump
+              Lighting Armor and Simple IBJ
   > Above Center Platform
       Lighting Armor and Screw Attack and Use Spider Ball
 
 > Center Platform; Heals? False
   * Layers: default
   > Door to Zeta+ Arena
-      Screw Attack and Space Jump
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump
+              All of the following:
+                  Lighting Armor
+                  Any of the following:
+                      High Jump Boots or Damage Boost (Expert)
+                      Infinite Bomb Jump (Intermediate) and Lay Bomb
   > Left Platform
-      Screw Attack and Space Jump
+      All of the following:
+          Any of the following:
+              Screw Attack
+              Morph Ball and Melee Clip (Intermediate)
+          Any of the following:
+              Space Jump
+              Lighting Armor and Bomb and Infinite Bomb Jump (Intermediate)
   > Above Center Platform
-      High Jump Boots or Space Jump
+      High Jump Boots or Space Jump or Simple IBJ
 
 > Left Platform; Heals? False
   * Layers: default
@@ -543,28 +634,39 @@ Extra - asset_id: collision_camera_017
       Trivial
   > Center Platform
       All of the following:
-          Screw Attack
+          Any of the following:
+              Screw Attack
+              Morph Ball and Melee Clip (Intermediate)
           Any of the following:
               Space Jump
-              Lighting Armor and High Jump Boots
+              All of the following:
+                  Lighting Armor
+                  High Jump Boots or Simple IBJ
   > Above Center Platform
-      Lighting Armor and Screw Attack and Use Spider Ball
+      All of the following:
+          Lighting Armor and Use Spider Ball
+          Screw Attack or Melee Clip (Intermediate)
 
 > Above Center Platform; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       Any of the following:
-          Can Spiderspark and Destroy Bomb Block
-          Missile and Morph Ball and Climb Rooms Vertically (No High Jump)
+          Morph Ball and Destroy Missile Block
+          Power Bomb ≥ 2 and Can Spiderspark
+          Spider Ball and Simple IBJ
+          High Jump Boots and Destroy Bomb Block
   > Door to Zeta+ Arena
       Lighting Armor and Screw Attack and Use Spider Ball
   > Center Platform
       Trivial
   > Left Platform
-      Lighting Armor and Screw Attack and Use Spider Ball
+      All of the following:
+          Lighting Armor and Use Spider Ball
+          Screw Attack or Melee Clip (Intermediate)
 
 ----------------
 Transport to Area 5 Exterior (West)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -9050.0, 'x2': -5000.0, 'y1': 8100.0, 'y2': 9400.0}
 Extra - polygon: [[-9050.0, 9400.0], [-9050.0, 8700.0], [-7600.0, 8700.0], [-7600.0, 8100.0], [-5000.0, 8100.0], [-5000.0, 9400.0]]
 Extra - asset_id: collision_camera_018
@@ -573,6 +675,7 @@ Extra - asset_id: collision_camera_018
   * Teleporter to Area 5 - Exterior - Transport to Area 5 Interior
   * Extra - actor_name: LE_Platform_Elevator_FromArea06B_02
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea06B_02
   > Door to Underwater Path
       Trivial
 
@@ -586,7 +689,9 @@ Extra - asset_id: collision_camera_018
   > Tunnel to Autrack Tower
       Destroy Bomb Block
   > Tunnel to Side Path
-      Climb Rooms Vertically (No High Jump)
+      All of the following:
+          Morph Ball
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
 
 > Tunnel to Autrack Tower; Heals? False
   * Layers: default
@@ -625,13 +730,19 @@ Extra - asset_id: collision_camera_020
   > Door to Transport to Area 5 Exterior (West)
       Gravity Suit or Climb Rooms Vertically (High Jump)
   > Pickup (Missile Tank)
+      Power Bomb ≥ 3 and Spiderspark (Beginner) and Can Spiderspark and Destroy Missile Block
+  > Right of Pickup
       All of the following:
-          Missile and Morph Ball
+          Destroy Bomb Block
           Any of the following:
+              Grapple Beam
               All of the following:
-                  Grapple Beam and Destroy Bomb Block
-                  Phase Drift or Spider Ball
-              Power Bomb ≥ 3 and Can Spiderspark
+                  Simple IBJ
+                  Any of the following:
+                      Gravity Suit
+                      All of the following:
+                          High Jump Boots
+                          Spring Ball or Mid-Air Morph (Intermediate)
 
 > Door to Gravity Suit Room (Middle); Heals? False
   * Layers: default
@@ -665,6 +776,15 @@ Extra - asset_id: collision_camera_020
   > Door to Gravity Suit Room (Bottom)
       Destroy Bomb Block
 
+> Right of Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      All of the following:
+          Destroy Missile Block
+          Any of the following:
+              Phase Drift or Spider Ball
+              Space Jump and Movement (Intermediate)
+
 ----------------
 Side Path
 Extra - total_boundings: {'x1': -5100.0, 'x2': -3800.0, 'y1': 8900.0, 'y2': 11700.0}
@@ -682,7 +802,7 @@ Extra - asset_id: collision_camera_021
   * Layers: default
   * Tunnel to Transport to Area 5 Exterior (West)/Tunnel to Side Path
   > Door to Upper Path Right
-      Climb Rooms Vertically (No High Jump)
+      Morph Ball and Climb Rooms Vertically (No High Jump)
 
 ----------------
 Gamma Arena
@@ -703,7 +823,7 @@ Extra - asset_id: collision_camera_022
   > Door to Gamma Arena Access
       All of the following:
           Varia Suit
-          Space Jump or Can Spiderspark
+          Space Jump or Can Spiderspark or Simple IBJ
 
 ----------------
 Teleporter Room
@@ -718,11 +838,12 @@ Extra - asset_id: collision_camera_023
   > Door to Grapple Shuffler (Bottom)
       Trivial
 
-> Teleporter; Heals? False
+> Teleporter; Heals? False; Spawn Point
   * Layers: default
   * Teleporter Network (Unlocked by After Area 5 (Interior) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_06C_001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_06C_001
   > Door to Grapple Shuffler (Top)
       Trivial
 
@@ -744,7 +865,9 @@ Extra - asset_id: collision_camera_023
   > Door to Autrack Tower
       Trivial
   > Door to Grapple Shuffler (Top)
-      Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Beginner)
 
 > Door to Grapple Shuffler (Top); Heals? False
   * Layers: default
@@ -781,7 +904,9 @@ Extra - asset_id: collision_camera_025
   * Layers: default
   * Event Area 5 (Interior) - Zeta Metroid+
   > Door to Zeta+ Arena Access
-      High Jump Boots or Space Jump or Can Spiderspark
+      Any of the following:
+          High Jump Boots or Space Jump or Super Jump (Expert) or Can Spiderspark or Simple IBJ
+          Morph Ball and Unmorph Extend (Beginner)
 
 ----------------
 Gamma Arena Access
@@ -794,11 +919,19 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Tunnel to Transport Connector
-      Lighting Armor or Space Jump or Can Spiderspark
+      Any of the following:
+          Spiderspark (Beginner) and Can Spiderspark
+          All of the following:
+              Morph Ball
+              Lighting Armor or Space Jump
 
 > Tunnel to Transport Connector; Heals? False
   * Layers: default
   * Tunnel to Transport Connector/Tunnel to Gamma Arena Access
   > Door to Gamma Arena
-      Lighting Armor or Space Jump or Can Spiderspark
+      Any of the following:
+          Spiderspark (Beginner) and Can Spiderspark
+          All of the following:
+              Morph Ball
+              Lighting Armor or Space Jump
 

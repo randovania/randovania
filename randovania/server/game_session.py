@@ -21,6 +21,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.construct_lib import convert_to_raw_python
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.binary_formats import BinaryInventory
 from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
@@ -148,7 +149,7 @@ def _emit_inventory_update(membership: GameSessionMembership):
                         namespace="/")
     try:
         flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
-                                                            BinaryInventory.parse(membership.inventory)),
+                                                            convert_to_raw_python(BinaryInventory.parse(membership.inventory))),
                             room=f"game-session-{session_id}-json-inventory",
                             namespace="/")
     except construct.ConstructError as e:
@@ -793,7 +794,7 @@ def setup_app(sio: ServerApp):
     sio.on("game_session_self_update", game_session_self_update)
     sio.on("game_session_watch_row_inventory", game_session_watch_row_inventory)
 
-    @sio.admin_route("/sessions")
+    @sio.route_with_user("/sessions", need_admin=True)
     def admin_sessions(user):
         paginated_query = flask_utils.PaginatedQuery(
             GameSession.select().order_by(GameSession.creation_date.desc()),
@@ -837,7 +838,7 @@ def setup_app(sio: ServerApp):
             next=next_link,
         )
 
-    @sio.admin_route("/session/<session_id>")
+    @sio.route_with_user("/session/<session_id>", need_admin=True)
     def admin_session(user, session_id):
         session: GameSession = GameSession.get_by_id(session_id)
 

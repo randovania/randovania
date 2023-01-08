@@ -11,7 +11,7 @@
     "areas": {
         "Outer Hub": {
             "default_node": "Elevator to Area 2 Entrance - Transport to Area 2 Exterior",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -13000.0,
@@ -176,8 +176,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -10446.58991801849,
-                        "y": 1794.1566370137798,
+                        "x": -10446.59,
+                        "y": 1794.16,
                         "z": 0.0
                     },
                     "description": "",
@@ -186,7 +186,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02B",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea02B"
                     },
                     "destination": {
                         "world_name": "Area 2 - Interior",
@@ -252,8 +253,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 7919.710448281876,
-                        "y": 862.5327053898482,
+                        "x": 7919.71,
+                        "y": 862.53,
                         "z": 0.0
                     },
                     "description": "",
@@ -262,7 +263,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02C",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea02C"
                     },
                     "destination": {
                         "world_name": "Area 2 - Entrance",
@@ -367,8 +369,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -4476.591662305949,
-                        "y": 3163.0734345020055,
+                        "x": -4476.59,
+                        "y": 3163.07,
                         "z": 0.0
                     },
                     "description": "",
@@ -377,7 +379,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation001"
                     },
                     "connections": {
                         "Door to Rock Icicle Path": {
@@ -393,8 +396,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6386.016628873771,
-                        "y": 586.8480725623576,
+                        "x": 6386.02,
+                        "y": 586.85,
                         "z": 0.0
                     },
                     "description": "",
@@ -403,7 +406,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation002",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation002"
                     },
                     "connections": {
                         "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
@@ -419,8 +423,8 @@
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": -8773.469387755104,
-                        "y": 2212.4367695796263,
+                        "x": -8773.47,
+                        "y": 2212.44,
                         "z": 0.0
                     },
                     "description": "",
@@ -429,7 +433,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_02_02",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_02_02"
                     },
                     "is_unlocked": {
                         "type": "resource",
@@ -2386,7 +2391,7 @@
         },
         "Alpha Shaft": {
             "default_node": "Save Station",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -13000.0,
@@ -2445,8 +2450,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -12584.838823946156,
-                        "y": -5600.188924312198,
+                        "x": -12584.84,
+                        "y": -5600.19,
                         "z": 0.0
                     },
                     "description": "",
@@ -2455,7 +2460,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation003",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation003"
                     },
                     "connections": {
                         "Door to Alpha Arena West": {
@@ -3440,7 +3446,7 @@
             }
         },
         "Fiery Crossing": {
-            "default_node": null,
+            "default_node": "Teleporter",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3500,7 +3506,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_02_03",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_02_03"
                     },
                     "is_unlocked": {
                         "type": "resource",
@@ -4127,12 +4134,10 @@
                     "extra": {},
                     "connections": {
                         "Door to Alpha+ Storage": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 8",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Outer Hub": {

@@ -1,5 +1,6 @@
 ----------------
 Landing Site
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
 Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
 Extra - asset_id: collision_camera_000
@@ -7,10 +8,13 @@ Extra - asset_id: collision_camera_000
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_004
   > Door to Landing Site Storage
       Trivial
   > Top of Mountain
       Climb Rooms Vertically (No High Jump)
+  > Dock to Crumble Drop Shaft (Top)
+      Climb Rooms Vertically (No High Jump) and Lay Power Bomb
   > Dock to Transport to Area 8
       Baby Metroid
 
@@ -26,15 +30,13 @@ Extra - asset_id: collision_camera_000
   * Layers: default
   > Save Station
       Trivial
-  > Dock to Crumble Drop Shaft (Top)
-      Space Jump
   > Event - Proteus Ridley
       Trivial
 
 > Dock to Crumble Drop Shaft (Top); Heals? False
   * Layers: default
   * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Top)
-  > Top of Mountain
+  > Save Station
       Trivial
 
 > Dock to Crumble Drop Shaft (Bottom); Heals? False
@@ -57,6 +59,7 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Transport to Area 8
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -40700.0, 'x2': -22900.0, 'y1': -100.0, 'y2': 4900.0}
 Extra - polygon: [[-40700.0, 4900.0], [-40700.0, 100.0], [-37000.0, 100.0], [-36500.0, -100.0], [-22900.0, -100.0], [-22900.0, 4900.0]]
 Extra - asset_id: collision_camera_017
@@ -65,44 +68,67 @@ Extra - asset_id: collision_camera_017
   * Pickup 169; Major Location? False
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_supermissiletank
-  > Elevator to Area 8 - Transport to Surface (West)
-      Baby Metroid and Morph Ball
+  > Above Elevator
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam
+              Lighting Armor and Baby Metroid
 
 > Elevator to Area 8 - Transport to Surface (West); Heals? False; Spawn Point
   * Layers: default
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea10
   * Extra - actor_type: weightactivatedplatform
-  > Pickup (Super Missile Tank)
+  * Extra - start_point_actor_name: ST_FromArea10
+  > Above Elevator
       All of the following:
-          Baby Metroid and Morph Ball
-          Space Jump or Spider Ball
-  > Save Station
-      Baby Metroid and Climb Rooms Vertically (No High Jump)
+          Baby Metroid
+          Any of the following:
+              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Beginner)
 
 > Energy Recharge Station; Heals? True
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyRecharge_001
   * Extra - actor_type: weightactivatedplatform
+  > Save Station
+      All of the following:
+          Baby Metroid
+          Lighting Armor or Space Jump or Can Spiderspark
   > Pickup (Missile Tank)
-      Baby Metroid and High Jump Boots and Lay Power Bomb
+      All of the following:
+          Baby Metroid and Morph Ball
+          Any of the following:
+              Can Spiderspark
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      Simple IBJ
+                      Space Jump and Mid-Air Morph (Beginner)
   > Dock to Landing Site
-      Baby Metroid and Climb Rooms Vertically (No High Jump)
+      All of the following:
+          Baby Metroid
+          Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 > Save Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_003
   * Extra - actor_type: weightactivatedplatform
-  > Elevator to Area 8 - Transport to Surface (West)
-      Baby Metroid
-  > Pickup (Missile Tank)
-      Baby Metroid and High Jump Boots
+  * Extra - start_point_actor_name: ST_SaveStation_003
+  > Energy Recharge Station
+      All of the following:
+          Baby Metroid
+          Lighting Armor or Space Jump or Can Spiderspark
+  > Above Elevator
+      Trivial
 
 > Teleporter; Heals? False
   * Layers: default
   * Teleporter Network (Unlocked by After Surface (West) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_00b_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_00b_01
   > Dock to Landing Site
       Baby Metroid
 
@@ -113,8 +139,6 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_type: item_missiletank
   > Energy Recharge Station
       Trivial
-  > Save Station
-      High Jump Boots
 
 > Dock to Landing Site; Heals? False
   * Layers: default
@@ -132,6 +156,15 @@ Extra - asset_id: collision_camera_017
   > Dock to Landing Site
       Trivial
 
+> Above Elevator; Heals? False
+  * Layers: default
+  > Pickup (Super Missile Tank)
+      Lighting Armor and Baby Metroid and Morph Ball and Climb Rooms Vertically (No High Jump)
+  > Elevator to Area 8 - Transport to Surface (West)
+      Baby Metroid
+  > Save Station
+      Single-wall Wall Jump (Beginner) or Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
+
 ----------------
 Landing Site Storage
 Extra - total_boundings: {'x1': -19000.0, 'x2': -16300.0, 'y1': 4500.0, 'y2': 6900.0}
@@ -141,16 +174,56 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_senergytank
-  > Door to Landing Site
-      Trivial
+  > Below Right Crumble Blocks
+      Morph Ball
 
 > Door to Landing Site; Heals? False
   * Layers: default
   * Spazer Beam Door to Landing Site/Door to Landing Site Storage
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
+  > Room Center
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Any of the following:
+              Grapple Beam or Phase Drift
+              Spiderspark (Beginner) and Can Spiderspark
+              Bomb and Diagonal Bomb Jump (Intermediate)
+
+> Room Center; Heals? False
+  * Layers: default
   > (Aeion Tank)
-      Grapple Beam and Missile and Morph Ball and Phase Drift
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Simple IBJ
+              Spider Ball and Mid-Air Morph (Intermediate) and Walljump (Advanced)
+          Any of the following:
+              Phase Drift or Spider Ball
+              All of the following:
+                  Bomb
+                  Any of the following:
+                      Phase Drift Skip (Expert)
+                      Space Jump and Phase Drift Skip (Advanced)
+  > Door to Landing Site
+      All of the following:
+          Morph Ball and Destroy Missile Block
+          Any of the following:
+              Phase Drift or Can Spiderspark
+              Bomb and Spider Ball and Diagonal Bomb Jump (Intermediate)
+
+> Below Right Crumble Blocks; Heals? False
+  * Layers: default
+  > Door to Landing Site
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam
+              Spiderspark (Beginner) and Can Spiderspark
+  > Room Center
+      Any of the following:
+          Grapple Beam and Movement (Intermediate)
+          Spider Ball and Diagonal Bomb Jump (Advanced) and Lay Bomb
 
 ----------------
 Crumble Drop Shaft

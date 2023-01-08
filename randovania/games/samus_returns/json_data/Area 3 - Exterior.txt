@@ -1,5 +1,6 @@
 ----------------
 Transport to Area 2 Entrance
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -26400.0, 'x2': -20400.0, 'y1': -1800.0, 'y2': 4400.0}
 Extra - polygon: [[-26400.0, 4400.0], [-26400.0, 2700.0], [-24500.0, 2700.0], [-23000.0, 2350.0], [-23000.0, -1800.0], [-21200.0, -1800.0], [-21200.0, 1700.0], [-20400.0, 2000.0], [-20400.0, 3600.0], [-20500.0, 3600.0], [-21800.0, 3800.0], [-24200.0, 3800.0], [-24200.0, 4400.0]]
 Extra - asset_id: collision_camera_002
@@ -10,7 +11,7 @@ Extra - asset_id: collision_camera_002
   > Elevator to Area 2 Entrance - Chozo Seal
       Trivial
   > Door to Entrance Hub
-      Grapple Beam or After Area 3 (Exterior) - Chozo Seal Unlocked or Climb Rooms Vertically (No High Jump)
+      Grapple Beam or Climb Rooms Vertically (No High Jump)
   > Door to Transport to Area 4 West (Top)
       Trivial
   > Event - Chozo Seal Unlocked
@@ -21,6 +22,7 @@ Extra - asset_id: collision_camera_002
   * Teleporter to Area 2 - Entrance - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea02
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02
   > Chozo Seal
       Trivial
 
@@ -30,7 +32,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
   > Chozo Seal
-      Grapple Beam or After Area 3 (Exterior) - Chozo Seal Unlocked or Climb Rooms Vertically (No High Jump)
+      Grapple Beam or Climb Rooms Vertically (No High Jump)
 
 > Door to Transport to Area 4 West (Top); Heals? False
   * Layers: default
@@ -161,11 +163,12 @@ Outer Hub Teleporter
 Extra - total_boundings: {'x1': -7800.0, 'x2': -4400.0, 'y1': 8400.0, 'y2': 10300.0}
 Extra - polygon: [[-7800.0, 10300.0], [-7800.0, 8400.0], [-5250.0, 8400.0], [-5250.0, 9150.0], [-4400.0, 9150.0], [-4400.0, 10300.0]]
 Extra - asset_id: collision_camera_023
-> Teleporter; Heals? False
+> Teleporter; Heals? False; Spawn Point
   * Layers: default
   * Teleporter Network (Unlocked by After Area 3 (Exterior) - Teleporter Unlocked (West))
   * Extra - actor_name: LE_Platform_Teleporter_03A_001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_03A_001
   > Dock to Outer Hub
       Trivial
 
@@ -185,6 +188,7 @@ Extra - asset_id: collision_camera_023
 
 ----------------
 Outer Hub
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -6600.0, 'x2': 11900.0, 'y1': 6900.0, 'y2': 19100.0}
 Extra - polygon: [[-6600.0, 10600.0], [-4500.0, 10100.0], [-4500.0, 9400.0], [-2100.0, 9400.0], [-2100.0, 13500.0], [-1300.0, 13800.0], [300.0, 13800.0], [1100.0, 13600.0], [1100.0, 12900.0], [5000.0, 12900.0], [7100.0, 15500.0], [9200.0, 15500.0], [9700.0, 15200.0], [9700.0, 6900.0], [11500.0, 6900.0], [11500.0, 7794.0400390625], [11900.0, 8700.0], [11900.0, 12500.0], [11300.0, 12600.0], [11300.0, 19100.0], [-6600.0, 19100.0]]
 Extra - asset_id: collision_camera_030
@@ -209,6 +213,7 @@ Extra - asset_id: collision_camera_030
   * Teleporter to Area 3 - Interior (East) - Transport to Area 3 Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea03C
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03C
   > Save Station
       Trivial
   > Below Crumble Blocks
@@ -218,6 +223,7 @@ Extra - asset_id: collision_camera_030
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_002
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_002
   > Elevator to Area 3 Interior East - Transport to Area 3 Exterior
       Trivial
   > Above Grapple Beam Room
@@ -228,6 +234,7 @@ Extra - asset_id: collision_camera_030
   * Teleporter Network (Unlocked by After Area 3 (Exterior) - Teleporter Unlocked (East))
   * Extra - actor_name: LE_Platform_Teleporter_03A_002
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_03A_002
   > Door to Gamma Shaft
       Trivial
 
@@ -323,6 +330,7 @@ Extra - asset_id: collision_camera_030
 
 ----------------
 Transport to Area 3 Interior West (Lower)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -18100.0, 'x2': -16800.0, 'y1': 2020.9200439453125, 'y2': 2779.080078125}
 Extra - polygon: [[-18100.0, 2779.080078125], [-18100.0, 2020.9200439453125], [-16800.0, 2020.9200439453125], [-16800.0, 2779.080078125]]
 Extra - asset_id: collision_camera_031
@@ -331,6 +339,7 @@ Extra - asset_id: collision_camera_031
   * Teleporter to Area 3 - Interior (West) - Transport to Area 3 Exterior (Lower)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03B_02
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03B_02
   > Door to Entrance Hub
       Trivial
   > Pickup (Missile Tank)
@@ -354,6 +363,7 @@ Extra - asset_id: collision_camera_031
 
 ----------------
 Transport to Area 4 West
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -26100.0, 'x2': -22900.0, 'y1': -2000.0, 'y2': 2100.0}
 Extra - polygon: [[-26100.0, 2100.0], [-26100.0, -999.9979858398438], [-25550.0, -1100.0], [-25550.0, -2000.0], [-22900.0, -2000.0], [-22900.0, 2100.0]]
 Extra - asset_id: collision_camera_032
@@ -372,8 +382,9 @@ Extra - asset_id: collision_camera_032
   * Teleporter to Area 4 - West - Chozo Seals
   * Extra - actor_name: LE_Platform_Elevator_FromArea04
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea04
   > Door to Transport to Area 2 Entrance (Bottom)
-      After Area 3 (Exterior) - Chozo Seal Unlocked
+      Trivial
 
 > Door from Transport to Area 2 Entrance; Heals? False
   * Layers: default
@@ -454,6 +465,7 @@ Extra - asset_id: collision_camera_033
 
 ----------------
 Transport to Area 3 Interior West (Upper)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -11800.0, 'x2': -8300.0, 'y1': 8000.0, 'y2': 10200.0}
 Extra - polygon: [[-11800.0, 10200.0], [-11800.0, 8000.0], [-8300.0, 8000.0], [-8300.0, 10200.0]]
 Extra - asset_id: collision_camera_035
@@ -471,6 +483,7 @@ Extra - asset_id: collision_camera_035
   * Teleporter to Area 3 - Interior (West) - Transport to Area 3 Exterior (Upper)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03B_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03B_01
   > Ammo Recharge Station
       Destroy Bomb Block
   > Door to Entrance Hub
@@ -506,6 +519,7 @@ Extra - asset_id: collision_camera_035
 
 ----------------
 Entrance Hub
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -20500.0, 'x2': -11700.0, 'y1': 2000.0, 'y2': 9800.0}
 Extra - polygon: [[-11700.0, 8600.0], [-13700.0, 8600.0], [-14100.0, 8650.0], [-14250.0, 8900.0], [-14250.0, 9800.0], [-20500.0, 9800.0], [-20500.0, 2000.0], [-18000.0, 2000.0], [-18000.0, 7100.0], [-17500.0, 7300.0], [-17400.0, 7300.0], [-16100.0, 7700.0], [-11700.0, 7700.0]]
 Extra - asset_id: collision_camera_036
@@ -534,10 +548,11 @@ Extra - asset_id: collision_camera_036
                               High Jump Boots and Spring Ball
               Power Bomb and Knowledge (Beginner)
 
-> Save Station); Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation001
   > Door to Transport to Area 2 Entrance
       Trivial
 
@@ -546,7 +561,7 @@ Extra - asset_id: collision_camera_036
   * Charge Beam Door to Transport to Area 2 Entrance/Door to Entrance Hub
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
-  > Save Station)
+  > Save Station
       Trivial
   > Door to Transport to Area 3 Interior West (Lower)
       Trivial

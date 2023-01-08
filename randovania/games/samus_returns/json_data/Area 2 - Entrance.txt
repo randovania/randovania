@@ -1,5 +1,6 @@
 ----------------
 Chozo Seal
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 19000.0, 'x2': 25000.0, 'y1': -9600.0, 'y2': -900.0}
 Extra - polygon: [[20400.0, -900.0], [20400.0, -1900.0], [19000.0, -2000.0], [19000.0, -4600.0], [20100.0, -4600.0], [20300.0, -5200.0], [20300.0, -9600.0], [25000.0, -9600.0], [25000.0, -900.0]]
 Extra - asset_id: collision_camera
@@ -16,6 +17,7 @@ Extra - asset_id: collision_camera
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea01
   > Save Station
       Trivial
 
@@ -24,6 +26,7 @@ Extra - asset_id: collision_camera
   * Teleporter to Area 3 - Exterior - Transport to Area 2 Entrance
   * Extra - actor_name: LE_Platform_Elevator_FromArea03
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03
   > Chozo Seal
       Morph Ball
 
@@ -31,6 +34,7 @@ Extra - asset_id: collision_camera
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation002
   > Elevator To Area 1 - Chozo Seal
       Trivial
   > Chozo Seal
@@ -102,11 +106,12 @@ Extra - asset_id: collision_camera_003
   > Below Teleporter
       Trivial
 
-> Teleporter; Heals? False
+> Teleporter; Heals? False; Spawn Point
   * Layers: default
   * Teleporter Network (Unlocked by After Area 2 (Interior) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_02_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_02_01
   > Below Teleporter
       Trivial
 
@@ -160,6 +165,7 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Transport to Area 2 Exterior
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 3900.0, 'x2': 8800.0, 'y1': -3000.0, 'y2': 700.0}
 Extra - polygon: [[3900.0, 700.0], [3900.0, -2500.0], [5600.0, -2500.0], [7200.0, -3000.0], [8800.0, -3000.0], [8800.0, 700.0]]
 Extra - asset_id: collision_camera_004
@@ -186,6 +192,7 @@ Extra - asset_id: collision_camera_004
   * Teleporter to Area 2 - Exterior - Outer Hub
   * Extra - actor_name: LE_Platform_Elevator_FromArea02A
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02A
   > Door to Main Shaft (Top)
       Trivial
 

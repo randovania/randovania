@@ -68,8 +68,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -21980.949803815452,
-                        "y": 4426.917873088891,
+                        "x": -21980.95,
+                        "y": 4426.92,
                         "z": 0.0
                     },
                     "description": "",
@@ -78,7 +78,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation_004",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation_004"
                     },
                     "connections": {
                         "Door to Landing Site Storage": {
@@ -181,15 +182,19 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": -9091.815616180622,
-                        "y": 2458.654750705551,
+                        "x": -9114.81,
+                        "y": 2509.22,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "StartPoint0",
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "StartPoint0"
+                    },
                     "connections": {
                         "Dock to Entrance Pathway": {
                             "type": "and",
@@ -523,8 +528,8 @@
             }
         },
         "Morph Ball Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 9300.0,
@@ -601,8 +606,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 12124.873066477743,
-                        "y": -5279.117959617428,
+                        "x": 12124.87,
+                        "y": -5279.12,
                         "z": 0.0
                     },
                     "description": "",
@@ -611,7 +616,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation_001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation_001"
                     },
                     "connections": {
                         "Door to Melee Tutorial Pathway": {
@@ -633,10 +639,6 @@
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -674,6 +676,54 @@
                                                         "name": "SuperJump",
                                                         "amount": 3,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1136,7 +1186,7 @@
         },
         "Transport to Area 1": {
             "default_node": "Elevator to Area 1 - Chozo Seal",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 6400.0,
@@ -1197,8 +1247,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 7387.229897272406,
-                        "y": -10525.239107332625,
+                        "x": 7387.23,
+                        "y": -10525.24,
                         "z": 0.0
                     },
                     "description": "",
@@ -1207,7 +1257,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea01",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea01"
                     },
                     "destination": {
                         "world_name": "Area 1",
@@ -1229,8 +1280,8 @@
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": 8262.185618136733,
-                        "y": -8098.388239461566,
+                        "x": 8262.19,
+                        "y": -8098.39,
                         "z": 0.0
                     },
                     "description": "",
@@ -1239,7 +1290,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_00_01",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_00_01"
                     },
                     "is_unlocked": {
                         "type": "resource",
@@ -1450,12 +1502,10 @@
                             }
                         },
                         "Elevator to Area 1 - Chozo Seal": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 1",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Teleporter": {
@@ -1479,39 +1529,22 @@
                             "data": "Destroy Bomb Block"
                         },
                         "Dock to Transport Storage": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Alpha 1",
+                                            "type": "items",
+                                            "name": "Baby",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Baby",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
                             }
@@ -1795,7 +1828,7 @@
         },
         "Alpha Arena": {
             "default_node": "Save Station",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -5900.0,
@@ -1878,8 +1911,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -4531.2964930924545,
-                        "y": -9603.241232731138,
+                        "x": -4531.3,
+                        "y": -9603.24,
                         "z": 0.0
                     },
                     "description": "",
@@ -1888,7 +1921,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation_002",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation_002"
                     },
                     "connections": {
                         "Door to Alpha Storage": {

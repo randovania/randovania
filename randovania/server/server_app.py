@@ -135,16 +135,16 @@ class ServerApp:
 
         return self.sio.on(message, namespace)(metric_wrapper(_handler))
 
-    def admin_route(self, route: str):
+    def route_with_user(self, route: str, *, need_admin: bool = False, **kwargs):
         def decorator(handler):
-            @self.app.route(route)
+            @self.app.route(route, **kwargs)
             @functools.wraps(handler)
             def _handler(**kwargs):
                 try:
                     user: User
                     if not self.app.debug:
                         user = User.get(discord_id=self.discord.fetch_user().id)
-                        if user is None or not user.admin:
+                        if user is None or (need_admin and not user.admin):
                             return "User not authorized", 403
                     else:
                         user = list(User.select().limit(1))[0]

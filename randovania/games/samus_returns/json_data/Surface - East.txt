@@ -8,6 +8,7 @@ Extra - asset_id: collision_camera_000
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_004
   > Door to Landing Site Storage
       Trivial
   > Top of Mountain
@@ -31,6 +32,9 @@ Extra - asset_id: collision_camera_000
 
 > Ship; Heals? True; Spawn Point
   * Layers: default
+  * Extra - actor_name: StartPoint0
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: StartPoint0
   > Dock to Entrance Pathway
       Trivial
   > Top of Mountain
@@ -97,6 +101,7 @@ Extra - asset_id: collision_camera_002
 
 ----------------
 Morph Ball Room
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 9300.0, 'x2': 12600.0, 'y1': -5400.0, 'y2': -2900.0}
 Extra - polygon: [[9300.0, -2900.0], [9300.0, -4400.0], [10200.0, -4610.0], [10200.0, -5400.0], [12600.0, -5400.0], [12600.0, -3800.0], [11250.0, -3800.0], [11250.0, -2900.0]]
 Extra - asset_id: collision_camera_003
@@ -108,16 +113,18 @@ Extra - asset_id: collision_camera_003
   > Door to Melee Tutorial Pathway
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_001
   > Door to Melee Tutorial Pathway
       All of the following:
           Morph Ball
           Any of the following:
-              Super Jump (Advanced) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+              High Jump Boots or Spider Ball or Super Jump (Advanced) or Unmorph Extend (Intermediate) or Simple IBJ
               Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+              Space Jump and Movement (Beginner)
   > Door to Chozo Seal
       Trivial
 
@@ -213,6 +220,7 @@ Extra - asset_id: collision_camera_004
 
 ----------------
 Transport to Area 1
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 6400.0, 'x2': 10700.0, 'y1': -10700.0, 'y2': -6800.0}
 Extra - polygon: [[6400.0, -6800.0], [6400.0, -10700.0], [10700.0, -10700.0], [10700.0, -6800.0]]
 Extra - asset_id: collision_camera_006
@@ -229,6 +237,7 @@ Extra - asset_id: collision_camera_006
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea01
   > Next to Teleporter
       Trivial
 
@@ -237,6 +246,7 @@ Extra - asset_id: collision_camera_006
   * Teleporter Network (Unlocked by After Surface (East) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_00_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_00_01
   > Next to Teleporter
       Trivial
 
@@ -273,7 +283,7 @@ Extra - asset_id: collision_camera_006
           Morph Ball
           Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (No High Jump)
   > Elevator to Area 1 - Chozo Seal
-      After Surface (East) - Alpha Metroid
+      Trivial
   > Teleporter
       After Surface (East) - Teleporter Unlocked
   > Door to Chozo Seal
@@ -281,9 +291,7 @@ Extra - asset_id: collision_camera_006
   > Tunnel to Chozo Seal
       Destroy Bomb Block
   > Dock to Transport Storage
-      All of the following:
-          After Surface (East) - Alpha Metroid
-          Baby Metroid or Lay Power Bomb
+      Baby Metroid or Lay Power Bomb
   > Event - Teleporter Unlocked
       Trivial
 
@@ -341,6 +349,7 @@ Extra - asset_id: collision_camera_008
 
 ----------------
 Alpha Arena
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -5900.0, 'x2': -1000.0, 'y1': -10400.0, 'y2': -5900.0}
 Extra - polygon: [[-1000.0, -5900.0], [-3400.0, -5900.0], [-3400.0, -6700.0], [-3500.0, -7000.0], [-5900.0, -7000.0], [-5900.0, -10400.0], [-1300.0, -10400.0], [-1300.0, -8900.0], [-1000.0, -8800.0]]
 Extra - asset_id: collision_camera_010
@@ -356,6 +365,7 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_002
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_002
   > Door to Alpha Storage
       Trivial
   > Dock to Side Path

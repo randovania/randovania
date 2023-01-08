@@ -10,8 +10,8 @@
     },
     "areas": {
         "West Hub": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 3100.0,
@@ -203,8 +203,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6394.775061990791,
-                        "y": -2340.1788877081117,
+                        "x": 6394.78,
+                        "y": -2340.18,
                         "z": 0.0
                     },
                     "description": "",
@@ -213,7 +213,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation"
                     },
                     "connections": {
                         "Ammo Recharge Station": {
@@ -269,8 +270,8 @@
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": 3841.994332270634,
-                        "y": -2541.7817924194123,
+                        "x": 3866.26,
+                        "y": -2511.96,
                         "z": 0.0
                     },
                     "description": "",
@@ -279,7 +280,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_04_01",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_04_01"
                     },
                     "is_unlocked": {
                         "type": "resource",
@@ -718,7 +720,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Cross Rooms Horizontally (High Jump)"
+                                        "data": "Climb Rooms Vertically (High Jump)"
                                     },
                                     {
                                         "type": "and",
@@ -1329,7 +1331,7 @@
         },
         "Chozo Seals": {
             "default_node": "Elevator to Area 3 Exterior - Transport to Area 4 West",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 8100.0,
@@ -1442,8 +1444,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 11382.21578366446,
-                        "y": -2543.577538631346,
+                        "x": 11380.05,
+                        "y": -2515.57,
                         "z": 0.0
                     },
                     "description": "",
@@ -1452,7 +1454,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea03"
                     },
                     "destination": {
                         "world_name": "Area 3 - Exterior",
@@ -1474,8 +1477,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 17643.522267206477,
-                        "y": -4615.991902834008,
+                        "x": 17643.52,
+                        "y": -4615.99,
                         "z": 0.0
                     },
                     "description": "",
@@ -1484,7 +1487,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea05",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea05"
                     },
                     "destination": {
                         "world_name": "Area 4 - East",
@@ -1508,12 +1512,46 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Area 4 (West) - Transport Area Grapple Block Pull Right",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Area 4 (West) - Transport Area Grapple Block Pull Right",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spider",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SpiderClip",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1539,89 +1577,26 @@
                     },
                     "connections": {
                         "Chozo Seal Right": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Grapple",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "DNA4R",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
                                     }
                                 ]
                             }
@@ -1699,15 +1674,6 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "DNA4L",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
                                             "name": "Area 4 (West) - Transport Area Grapple Block Left",
                                             "amount": 1,
                                             "negate": false
@@ -1726,29 +1692,12 @@
                             }
                         },
                         "Event - Grapple Block Pull Left": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA4L",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Next to Pickup": {
@@ -1761,15 +1710,6 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA4L",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1868,8 +1808,8 @@
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Grapple",
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
@@ -1881,29 +1821,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "DNA4L",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "Area 4 (West) - Transport Area Grapple Block Pull Left",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "events",
+                                                                    "name": "Area 4 (West) - Transport Area Grapple Block Pull Left",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -1911,6 +1834,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
                                     }
                                 ]
                             }
@@ -1970,91 +1897,26 @@
                             }
                         },
                         "Chozo Seal Left": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "DNA4L",
+                                            "type": "items",
+                                            "name": "Space",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Grapple",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "DNA4R",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
                                     }
                                 ]
                             }
@@ -2261,12 +2123,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Chozo Seal Left": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DNA4L",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2635,29 +2495,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "DNA4L",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "Area 4 (West) - Transport Area Grapple Block Pull Left",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "events",
+                                                                    "name": "Area 4 (West) - Transport Area Grapple Block Pull Left",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -2688,15 +2531,6 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA4L",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2881,7 +2715,7 @@
         },
         "Roundabout": {
             "default_node": "Door to West Hub",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 6500.0,
@@ -5259,7 +5093,7 @@
         },
         "Transport to Area 5 Entrance": {
             "default_node": "Elevator to Area 5 Entrance - Chozo Seal",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 10100.0,
@@ -5300,8 +5134,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 13395.47751829906,
-                        "y": -8466.599860578599,
+                        "x": 13395.48,
+                        "y": -8466.6,
                         "z": 0.0
                     },
                     "description": "",
@@ -5310,7 +5144,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea06"
                     },
                     "destination": {
                         "world_name": "Area 5 - Entrance",
@@ -5320,38 +5155,19 @@
                     "editable": true,
                     "connections": {
                         "Door to The Big Gap": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "DNA4R",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Next to Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Screw",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DNA4R",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
+                            }
+                        },
+                        "Next to Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

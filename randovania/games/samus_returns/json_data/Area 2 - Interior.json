@@ -11,7 +11,7 @@
     "areas": {
         "Main Hub": {
             "default_node": "Elevator to Area 2 Exterior - Outer Hub",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -10700.0,
@@ -100,8 +100,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": -10195.629376233588,
-                        "y": -353.14333209688266,
+                        "x": -10195.63,
+                        "y": -353.14,
                         "z": 0.0
                     },
                     "description": "",
@@ -110,7 +110,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02A",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea02A"
                     },
                     "destination": {
                         "world_name": "Area 2 - Exterior",
@@ -132,8 +133,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -8379.237705330934,
-                        "y": -502.25011105157864,
+                        "x": -8397.33,
+                        "y": -507.01,
                         "z": 0.0
                     },
                     "description": "",
@@ -142,7 +143,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation"
                     },
                     "connections": {
                         "Elevator to Area 2 Exterior - Outer Hub": {
@@ -2193,7 +2195,7 @@
             }
         },
         "Teleporter Shaft": {
-            "default_node": null,
+            "default_node": "Teleporter",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2235,8 +2237,8 @@
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": 3311.0411966863667,
-                        "y": -3427.647581582365,
+                        "x": 3311.04,
+                        "y": -3427.65,
                         "z": 0.0
                     },
                     "description": "",
@@ -2245,7 +2247,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_02_04",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_02_04"
                     },
                     "is_unlocked": {
                         "type": "resource",

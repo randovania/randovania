@@ -598,7 +598,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/eHJKUTiMgO8&t=75",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -702,7 +702,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gateway": {
+                        "Bridge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -750,7 +750,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Cliffside Airdock": {
+                        "Bridge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -895,8 +895,74 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=5E81JfTtv7k",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScanVisor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Bridge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Cliffside Airdock": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "DoubleJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Bomb Jump/Spring Space Jump (Beginner)"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1189,7 +1255,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Slope Jump https://youtu.be/4DdLS5JD4H8",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2731,7 +2797,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Boost Spring Space Jump: https://youtu.be/5n0xSf__q8w",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2774,7 +2840,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Boost Ball: https://youtu.be/-NeId4uI8zg",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2904,7 +2970,7 @@
                         "Event - Green Lock": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://youtu.be/SmwNPC9veY8&t=9",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3143,7 +3209,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Base Floor": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3177,6 +3243,50 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Reliquary III": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://www.youtube.com/watch?v=9A-GvQiuUSA",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "BoostBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "DoubleJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "BSJ",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Morph Tunnel Ledge": {
                             "type": "and",
                             "data": {
@@ -3184,7 +3294,7 @@
                                 "items": []
                             }
                         },
-                        "Base Floor": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3225,7 +3335,7 @@
                                 "items": []
                             }
                         },
-                        "Base Floor": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3275,7 +3385,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/eHJKUTiMgO8&t=66",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3304,7 +3414,7 @@
                                 ]
                             }
                         },
-                        "Base Floor": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3322,7 +3432,7 @@
                         }
                     }
                 },
-                "Base Floor": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -3491,7 +3601,7 @@
                     "extra": {},
                     "event_name": "Event28",
                     "connections": {
-                        "Base Floor": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5933,7 +6043,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=oEPrZMgEPhM",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -8754,7 +8864,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Screw Attack Method - https://youtu.be/o9PQ8dNb8sw",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",

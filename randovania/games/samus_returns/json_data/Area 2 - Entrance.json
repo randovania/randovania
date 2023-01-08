@@ -11,7 +11,7 @@
     "areas": {
         "Chozo Seal": {
             "default_node": "Elevator To Area 1 - Chozo Seal",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 19000.0,
@@ -94,8 +94,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 21255.22493800921,
-                        "y": -1515.8519305703153,
+                        "x": 21255.22,
+                        "y": -1515.85,
                         "z": 0.0
                     },
                     "description": "",
@@ -104,7 +104,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea01",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea01"
                     },
                     "destination": {
                         "world_name": "Area 1",
@@ -126,8 +127,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 22570.138150903294,
-                        "y": -9364.24017003188,
+                        "x": 22570.14,
+                        "y": -9364.24,
                         "z": 0.0
                     },
                     "description": "",
@@ -136,7 +137,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea03"
                     },
                     "destination": {
                         "world_name": "Area 3 - Exterior",
@@ -160,8 +162,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 20227.948990435707,
-                        "y": -3200.5844845908605,
+                        "x": 20227.95,
+                        "y": -3200.58,
                         "z": 0.0
                     },
                     "description": "",
@@ -170,7 +172,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_SaveStation002",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_SaveStation002"
                     },
                     "connections": {
                         "Elevator To Area 1 - Chozo Seal": {
@@ -525,7 +528,7 @@
             }
         },
         "Teleporter Room": {
-            "default_node": null,
+            "default_node": "Teleporter",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -603,8 +606,8 @@
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": 15524.164600307002,
-                        "y": -2907.450702562286,
+                        "x": 15524.16,
+                        "y": -2907.45,
                         "z": 0.0
                     },
                     "description": "",
@@ -613,7 +616,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Teleporter_02_01",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_Teleporter_02_01"
                     },
                     "is_unlocked": {
                         "type": "resource",
@@ -893,7 +897,7 @@
         },
         "Transport to Area 2 Exterior": {
             "default_node": "Elevator to Area 2 Exterior - Outer Hub",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 3900.0,
@@ -1001,8 +1005,8 @@
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
-                        "x": 7288.023101553764,
-                        "y": 14.176616448917684,
+                        "x": 7288.02,
+                        "y": 14.18,
                         "z": 0.0
                     },
                     "description": "",
@@ -1011,7 +1015,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02A",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_FromArea02A"
                     },
                     "destination": {
                         "world_name": "Area 2 - Exterior",

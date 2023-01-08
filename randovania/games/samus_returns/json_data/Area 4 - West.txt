@@ -1,5 +1,6 @@
 ----------------
 West Hub
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 3100.0, 'x2': 8200.0, 'y1': -4300.0, 'y2': 3800.0}
 Extra - polygon: [[8200.0, -3000.0], [8200.0, 1800.0], [7500.0, 1800.0], [7500.0, 3800.0], [5200.0, 3800.0], [5200.0, 1200.0], [4150.0, 1200.0], [4150.0, -700.0], [3100.0, -700.0], [3100.0, -3200.0], [4500.0, -3200.0], [4500.0, -4300.0], [6600.0, -4300.0], [6600.0, -3000.0]]
 Extra - asset_id: collision_camera_001
@@ -26,10 +27,11 @@ Extra - asset_id: collision_camera_001
   > Tunnel to Fleech Swarm Cave
       Destroy Bomb Block
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation
   > Ammo Recharge Station
       Trivial
   > Door to Chozo Seals
@@ -44,6 +46,7 @@ Extra - asset_id: collision_camera_001
   * Teleporter Network (Unlocked by After Area 4 (West) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_04_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_04_01
   > Door to Roundabout
       Morph Ball
 
@@ -127,7 +130,7 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_type: itemsphere_spazerbeam
   > Door to Moheek Hallway
       Any of the following:
-          Super Jump (Advanced) or Cross Rooms Horizontally (High Jump)
+          Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
           Morph Ball and Unmorph Extend (Intermediate)
 
 > Door from Moheek Hallway; Heals? False
@@ -209,6 +212,7 @@ Extra - asset_id: collision_camera_005
 
 ----------------
 Chozo Seals
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 8100.0, 'x2': 18600.0, 'y1': -7700.0, 'y2': -200.0}
 Extra - polygon: [[8100.0, -200.0], [8100.0, -4700.0], [8850.0, -4700.0], [8850.0, -6600.0], [11500.0, -6600.0], [11500.0, -7200.0], [13100.0, -7200.0], [13400.0, -7000.0], [14050.0, -7000.0], [14050.0, -7700.0], [17300.0, -7700.0], [17300.0, -6700.0], [18600.0, -6500.0], [18600.0, -3900.0], [16900.0, -3900.0], [16400.0, -3700.0], [16400.0, -200.0]]
 Extra - asset_id: collision_camera_006
@@ -225,6 +229,7 @@ Extra - asset_id: collision_camera_006
   * Teleporter to Area 3 - Exterior - Transport to Area 4 West
   * Extra - actor_name: LE_Platform_Elevator_FromArea03
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03
   > Right of Left Elevator
       Trivial
 
@@ -233,41 +238,42 @@ Extra - asset_id: collision_camera_006
   * Teleporter to Area 4 - East - Transport to Area 4 West
   * Extra - actor_name: LE_Platform_Elevator_FromArea05
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea05
   > Chozo Seal Right
-      Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Pull Right
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Area 4 (West) - Chozo Seals Grapple Block Pull Right
+              Spider Ball and Spider Ball Clip (Intermediate)
 
 > Chozo Seal Left; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_UnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
   > Chozo Seal Right
-      Any of the following:
-          Space Jump or Can Spiderspark
-          All of the following:
-              Morph Ball and Spider Ball
-              Grapple Beam or After Area 4 (West) - Chozo Seal Unlocked (Right)
+      Space Jump or Can Spiderspark or Use Spider Ball
   > Door to West Hub (Bottom)
       Any of the following:
           Space Jump or Can Spiderspark or Simple IBJ
           Grapple Beam and Use Spider Ball
   > Tunnel to Roundabout
-      Morph Ball and Super Missile and After Area 4 (West) - Chozo Seals Grapple Block Left and After Area 4 (West) - Chozo Seal Unlocked (Left)
+      Morph Ball and Super Missile and After Area 4 (West) - Chozo Seals Grapple Block Left
   > Event - Chozo Seal Left Unlocked
       After Area 4 (West) - Gamma Metroid
   > Event - Grapple Block Pull Left
-      Grapple Beam and After Area 4 (West) - Chozo Seal Unlocked (Left)
+      Grapple Beam
   > Next to Pickup
-      Morph Ball and Spider Ball and After Area 4 (West) - Chozo Seals Grapple Block Right and After Area 4 (West) - Chozo Seal Unlocked (Left)
+      Morph Ball and Spider Ball and After Area 4 (West) - Chozo Seals Grapple Block Right
   > Right of Left Elevator
       Any of the following:
-          Space Jump
+          Space Jump or Can Spiderspark
           All of the following:
               Morph Ball
               Any of the following:
+                  After Area 4 (West) - Chozo Seals Grapple Block Pull Left
                   All of the following:
                       Spider Ball
-                      Bomb or Grapple Beam or Spring Ball
-                  After Area 4 (West) - Chozo Seals Grapple Block Pull Left and After Area 4 (West) - Chozo Seal Unlocked (Left)
+                      Bomb or Spring Ball or Mid-Air Morph (Beginner)
   > Event - Grapple Block Left
       Grapple Beam
 
@@ -278,13 +284,7 @@ Extra - asset_id: collision_camera_006
   > Elevator to Area 4 East - Transport to Area 4 West
       Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Pull Right
   > Chozo Seal Left
-      All of the following:
-          After Area 4 (West) - Chozo Seal Unlocked (Left)
-          Any of the following:
-              Space Jump or Can Spiderspark
-              All of the following:
-                  Morph Ball and Spider Ball
-                  Grapple Beam or After Area 4 (West) - Chozo Seal Unlocked (Right)
+      Space Jump or Can Spiderspark or Use Spider Ball
   > Door to Transport to Area 5 Entrance
       Trivial
   > Event - Chozo Seal Right Unlocked
@@ -324,7 +324,7 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Tunnel to Roundabout/Tunnel to Chozo Seals
   > Chozo Seal Left
-      After Area 4 (West) - Chozo Seal Unlocked (Left)
+      Trivial
 
 > Tunnel to The Big Gap; Heals? False
   * Layers: default
@@ -390,11 +390,9 @@ Extra - asset_id: collision_camera_006
           Space Jump
           All of the following:
               Morph Ball
-              Any of the following:
-                  Spider Ball
-                  After Area 4 (West) - Chozo Seals Grapple Block Pull Left and After Area 4 (West) - Chozo Seal Unlocked (Left)
+              Spider Ball or After Area 4 (West) - Chozo Seals Grapple Block Pull Left
   > Event - Grapple Block Right
-      Grapple Beam and Morph Ball and After Area 4 (West) - Chozo Seal Unlocked (Left)
+      Grapple Beam and Morph Ball
 
 > Event - Grapple Block Left; Heals? False
   * Layers: default
@@ -437,6 +435,7 @@ Extra - asset_id: collision_camera_007
 
 ----------------
 Roundabout
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 6500.0, 'x2': 9050.0, 'y1': -6400.0, 'y2': -3000.0}
 Extra - polygon: [[6500.0, -3000.0], [6500.0, -6400.0], [9050.0, -6400.0], [9050.0, -4500.0], [8100.0, -4500.0], [8100.0, -3000.0]]
 Extra - asset_id: collision_camera_010
@@ -799,6 +798,7 @@ Extra - asset_id: collision_camera_022
 
 ----------------
 Transport to Area 5 Entrance
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 10100.0, 'x2': 14150.0, 'y1': -8800.0, 'y2': -6600.0}
 Extra - polygon: [[11600.0, -6600.0], [10100.0, -6600.0], [10100.0, -8800.0], [14150.0, -8800.0], [14150.0, -7200.0], [11600.0, -7200.0]]
 Extra - asset_id: collision_camera_023
@@ -807,10 +807,11 @@ Extra - asset_id: collision_camera_023
   * Teleporter to Area 5 - Entrance - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea06
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea06
   > Door to The Big Gap
-      After Area 4 (West) - Chozo Seal Unlocked (Right)
+      Trivial
   > Next to Grapple Block
-      Screw Attack and After Area 4 (West) - Chozo Seal Unlocked (Right)
+      Screw Attack
 
 > Door to Chozo Seals; Heals? False
   * Layers: default

@@ -1,5 +1,6 @@
 ----------------
 Chozo Seal
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -20550.0, 'x2': -10700.0, 'y1': -4600.0, 'y2': 6000.0}
 Extra - polygon: [[-15300.0, 700.0], [-14900.0, -500.0], [-14900.0, -4600.0], [-11200.0, -4600.0], [-11200.0, -3600.0], [-12000.0, -3500.0], [-12000.0, -2000.0], [-10700.0, -1800.0], [-10700.0, 2100.030029296875], [-17900.0, 2100.0], [-18200.0, 2400.0], [-18200.0, 6000.0], [-20550.0, 6000.0], [-20550.0, 700.0]]
 Extra - asset_id: collision_camera_000
@@ -35,6 +36,7 @@ Extra - asset_id: collision_camera_000
   * Teleporter to Surface - East - Transport to Area 1
   * Extra - actor_name: LE_Platform_Elevator_FromArea00
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea00
   > Save Station
       Trivial
 
@@ -43,6 +45,7 @@ Extra - asset_id: collision_camera_000
   * Teleporter to Area 2 - Entrance - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea02
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02
   > Above Bottom Elevator
       Morph Ball or Screw Attack
 
@@ -137,7 +140,7 @@ Shaft West
 Extra - total_boundings: {'x1': -7202.06005859375, 'x2': -5400.0, 'y1': 2400.0, 'y2': 8300.0}
 Extra - polygon: [[-5400.0, 8300.0], [-7200.0, 8300.0], [-7202.06005859375, 2400.0], [-5400.0, 2400.0]]
 Extra - asset_id: collision_camera_005
-> Door to Lava Shortcut; Heals? False; Spawn Point
+> Door to Lava Shortcut; Heals? False
   * Layers: default
   * Charge Beam Door to Lava Shortcut/Door to Shaft West
   * Extra - actor_name: Door010
@@ -367,7 +370,7 @@ Extra - asset_id: collision_camera_017
   > Pickup (Energy Tank)
       All of the following:
           Destroy Bomb Block
-          Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Cross Rooms Horizontally (High Jump)
+          Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -385,6 +388,7 @@ Extra - asset_id: collision_camera_017
 
 ----------------
 Outer Hub
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -2600.0, 'x2': 11950.0, 'y1': 7600.0, 'y2': 14000.0}
 Extra - polygon: [[11950.0, 7600.0], [11950.0, 13100.0], [9400.0, 13100.0], [8000.0, 14000.0], [3100.0, 14000.0], [1900.0, 13100.0], [-2600.0, 13100.0], [-2600.0, 7600.0], [1400.0, 7600.0], [1400.0, 8700.0], [2800.0, 9300.0], [3400.0, 9300.0], [3400.0, 10400.0], [3800.0, 10600.0], [9100.0, 10600.0], [9200.0, 10500.0], [9200.0, 7600.0]]
 Extra - asset_id: collision_camera_018
@@ -426,6 +430,7 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation004
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation004
   > Pickup (Missile Tank Crevice)
       Morph Ball and Climb Rooms Vertically (High Jump)
   > Door to Shaft East
@@ -503,7 +508,7 @@ Extra - asset_id: collision_camera_018
   > Dock to Outer Hub Access
       Trivial
   > 2nd Level
-      Movement (Beginner) or Cross Rooms Horizontally (High Jump)
+      Movement (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Above Wall; Heals? False
   * Layers: default
@@ -858,6 +863,7 @@ Extra - asset_id: collision_camera_035
 
 ----------------
 Save Station South
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -4300.0, 'x2': 1400.0, 'y1': 1900.0, 'y2': 3800.0}
 Extra - polygon: [[1400.0, 1900.0], [1400.0, 3800.0], [-4300.0, 3800.0], [-4300.0, 1900.0]]
 Extra - asset_id: collision_camera_041
@@ -875,6 +881,7 @@ Extra - asset_id: collision_camera_041
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation001
   > Dock to One-Way Puzzle (Top)
       Trivial
   > Tunnel to One-Way Puzzle
@@ -961,7 +968,7 @@ Extra - asset_id: collision_camera_043
   * Extra - actor_name: LE_Item_016
   * Extra - actor_type: item_missiletank
   > Door to Inner Room
-      Walljump (Intermediate) or Cross Rooms Horizontally (No High Jump)
+      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
   > Dock to Teleporter Access
       Trivial
 
@@ -971,7 +978,7 @@ Extra - asset_id: collision_camera_043
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
-      Walljump (Advanced) or Cross Rooms Horizontally (No High Jump)
+      Walljump (Advanced) or Climb Rooms Vertically (No High Jump)
   > Dock to Teleporter Access
       Trivial
 
@@ -1078,6 +1085,7 @@ Extra - asset_id: collision_camera_046
 
 ----------------
 Save Station North
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 1300.0, 'x2': 2600.0, 'y1': 7500.0, 'y2': 8500.0}
 Extra - polygon: [[2600.0, 7500.0], [2600.0, 8500.0], [1300.0, 8500.0], [1300.0, 7500.0]]
 Extra - asset_id: collision_camera_047
@@ -1085,6 +1093,7 @@ Extra - asset_id: collision_camera_047
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation
   > Dock to Central Shaft
       Trivial
   > Dock to Outer Hub
@@ -1136,11 +1145,12 @@ Teleporter Room
 Extra - total_boundings: {'x1': 5900.0, 'x2': 7900.0, 'y1': 5700.0, 'y2': 7100.0}
 Extra - polygon: [[7900.0, 7100.0], [5900.0, 7100.0], [5900.0, 5700.0], [7900.0, 5700.0]]
 Extra - asset_id: collision_camera_049
-> Teleporter; Heals? False
+> Teleporter; Heals? False; Spawn Point
   * Layers: default
-  * Teleporter Network (Unlocked by Trivial)
+  * Teleporter Network (Unlocked by After Area 1 - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_01_01
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_01_01
   > Dock to Shaft East
       Trivial
 

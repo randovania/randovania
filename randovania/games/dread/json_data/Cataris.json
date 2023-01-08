@@ -121,6 +121,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Tile Group (POWERBEAM) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel to Total Recharge Station South": {
                             "type": "and",
                             "data": {
@@ -147,15 +154,37 @@
                                 ]
                             }
                         },
-                        "Event - Blob through Wall": {
-                            "type": "template",
-                            "data": "Shoot Diffusion or Wave"
-                        },
-                        "Mid-Level": {
-                            "type": "and",
+                        "Event - Blob from Door": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -188,7 +217,7 @@
                         }
                     }
                 },
-                "Event - Blob, adjacent": {
+                "Event - Blob from Tunnel": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -279,14 +308,14 @@
                         ]
                     },
                     "connections": {
-                        "Tile Group (POWERBEAM) 2": {
+                        "Door to Navigation Station Southeast": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Mid-Level": {
+                        "Tile Group (POWERBEAM) 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -388,7 +417,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Blob, adjacent": {
+                        "Event - Blob from Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -406,7 +435,7 @@
                         }
                     }
                 },
-                "Event - Blob through Wall": {
+                "Event - Blob from Door": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -422,36 +451,6 @@
                     "event_name": "s020_magma:default:breakablemag002",
                     "connections": {
                         "Door to Navigation Station Southeast": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Mid-Level": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9459.69514237856,
-                        "y": -3397.081518704634,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Door to Navigation Station Southeast": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2033,12 +2032,41 @@
                                                     "data": "Use Spin Boost"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/mRHB7DHbfbg",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Ice Missile"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2413,6 +2441,36 @@
                                                         "name": "Speed",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/mRHB7DHbfbg",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Ice Missile"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spin",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -12211,7 +12269,7 @@
                         "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
                     },
                     "pickup_index": 50,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Door to Path to Kraid Entryway": {
                             "type": "resource",
@@ -18407,7 +18465,7 @@
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 42,
-                    "major_location": true,
+                    "major_location": false,
                     "connections": {
                         "Tunnel to Lava Button West": {
                             "type": "or",
@@ -18471,7 +18529,7 @@
                         "actor_def": "actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad"
                     },
                     "pickup_index": 49,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Past Magnet Floor": {
                             "type": "and",
@@ -25928,7 +25986,7 @@
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 44,
-                    "major_location": true,
+                    "major_location": false,
                     "connections": {
                         "Dock to Underlava Puzzle Room 1": {
                             "type": "and",

@@ -1,5 +1,6 @@
 ----------------
 Outer Hub
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -13000.0, 'x2': 8800.0, 'y1': -900.0, 'y2': 8500.0}
 Extra - polygon: [[-7700.0, 8500.0], [-7700.0, 5500.0], [-8400.0, 5300.0], [-13000.0, 5300.0], [-13000.0, -200.0], [-10600.0, -200.0], [-10600.0, 1400.0], [-10100.0, 1600.0], [-8150.0, 1900.0], [-8150.0, 2600.0], [-7500.0, 2600.0], [-4700.0, 2600.0], [-4100.0, 2600.0], [-4100.0, 5700.0], [-3500.0, 5800.0], [-1300.0, 5800.0], [-1000.0, 5600.0], [-1000.0, 4800.0], [750.0, 4800.0], [750.0, 6400.0], [1600.0, 6400.0], [1600.0, 5500.0], [2200.0, 5200.0], [2200.0, 500.0], [2600.0, 300.0], [2600.0, -900.0], [6300.0, -900.0], [8200.0, 0.0], [8800.0, 0.0], [8800.0, 8500.0]]
 Extra - asset_id: collision_camera_005
@@ -16,6 +17,7 @@ Extra - asset_id: collision_camera_005
   * Teleporter to Area 2 - Interior - Main Hub
   * Extra - actor_name: LE_Platform_Elevator_FromArea02B
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02B
   > Teleporter
       After Area 2 (Exterior) - Teleporter Unlocked (Upper)
   > Door to Outer Hub Shaft (Bottom)
@@ -32,6 +34,7 @@ Extra - asset_id: collision_camera_005
   * Teleporter to Area 2 - Entrance - Transport to Area 2 Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea02C
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02C
   > Pickup (Missile Tank)
       Any of the following:
           Space Jump or Can Spiderspark
@@ -49,6 +52,7 @@ Extra - asset_id: collision_camera_005
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation001
   > Door to Rock Icicle Path
       Trivial
 
@@ -56,6 +60,7 @@ Extra - asset_id: collision_camera_005
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation002
   > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
       Trivial
 
@@ -64,6 +69,7 @@ Extra - asset_id: collision_camera_005
   * Teleporter Network (Unlocked by After Area 2 (Exterior) - Teleporter Unlocked (Upper))
   * Extra - actor_name: LE_Platform_Teleporter_02_02
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_02_02
   > Elevator to Area 2 Interior - Main Hub
       Trivial
 
@@ -426,6 +432,7 @@ Extra - asset_id: collision_camera_026
 
 ----------------
 Alpha Shaft
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -13000.0, 'x2': -11000.0, 'y1': -6300.0, 'y2': -3700.0}
 Extra - polygon: [[-13000.0, -3700.0], [-13000.0, -6300.0], [-11000.0, -6300.0], [-11000.0, -3700.0]]
 Extra - asset_id: collision_camera_027
@@ -440,6 +447,7 @@ Extra - asset_id: collision_camera_027
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation003
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation003
   > Door to Alpha Arena West
       Trivial
 
@@ -611,11 +619,12 @@ Fiery Crossing
 Extra - total_boundings: {'x1': -18600.0, 'x2': -7600.0, 'y1': -8600.0, 'y2': -7000.0}
 Extra - polygon: [[-18600.0, -7000.0], [-18600.0, -8200.0], [-15600.0, -8200.0], [-14300.0, -8600.0], [-12000.0, -8600.0], [-11400.0, -8500.0], [-7600.0, -8500.0], [-7600.0, -7000.0]]
 Extra - asset_id: collision_camera_032
-> Teleporter; Heals? False
+> Teleporter; Heals? False; Spawn Point
   * Layers: default
   * Teleporter Network (Unlocked by After Area 2 (Exterior) - Teleporter Unlocked (Heat))
   * Extra - actor_name: LE_Platform_Teleporter_02_03
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_02_03
   > Below Pickup
       Varia Suit
 
@@ -713,7 +722,7 @@ Extra - asset_id: collision_camera_033
 > Room Bottom; Heals? False
   * Layers: default
   > Door to Alpha+ Storage
-      After Area 2 (Exterior) - Alpha Metroid+ North
+      Trivial
   > Door to Outer Hub
       After Area 2 (Exterior) - Alpha Metroid+ North
   > Event - Alpha Metroid+
