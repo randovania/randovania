@@ -86,53 +86,6 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
     )
 
 
-def _assign_remaining_items(rng: Random,
-                            world_list: WorldList,
-                            pickup_assignment: PickupAssignment,
-                            remaining_items: list[PickupEntry],
-                            randomization_mode: RandomizationMode,
-                            ) -> PickupAssignment:
-    """
-
-    :param rng:
-    :param world_list:
-    :param pickup_assignment:
-    :param remaining_items:
-    :return:
-    """
-
-    unassigned_pickup_nodes = list(filter_unassigned_pickup_nodes(world_list.iterate_nodes(), pickup_assignment))
-
-    num_etm = len(unassigned_pickup_nodes) - len(remaining_items)
-    if num_etm < 0:
-        raise InvalidConfiguration(
-            "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
-                                                                                         len(unassigned_pickup_nodes)))
-
-    # Shuffle the items to add and the spots to choose from
-    rng.shuffle(remaining_items)
-    rng.shuffle(unassigned_pickup_nodes)
-
-    assignment = {}
-
-    if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-        remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_etm)
-        unassigned_major_locations = [pickup_node for pickup_node in unassigned_pickup_nodes if
-                                      pickup_node.major_location]
-
-        for pickup_node, item in zip(unassigned_major_locations, remaining_majors):
-            if item is not None:
-                assignment[pickup_node.pickup_index] = item
-                remaining_items.remove(item)
-            unassigned_pickup_nodes.remove(pickup_node)
-
-    assignment.update({
-        pickup_node.pickup_index: item
-        for pickup_node, item in zip(unassigned_pickup_nodes, remaining_items)
-    })
-    return assignment
-
-
 async def _create_pools_and_fill(rng: Random,
                                  presets: list[Preset],
                                  status_update: Callable[[str], None],
