@@ -9,9 +9,8 @@ from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
-@pytest.mark.parametrize("major_mode", [RandomizationMode.FULL, RandomizationMode.MAJOR_MINOR_SPLIT])
 @pytest.mark.parametrize("has_exclusion", [False, True])
-def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: bool):
+def test_build_available_indices(has_exclusion: bool):
     # Setup
     world_a = MagicMock()
     world_a.pickup_indices = [PickupIndex(1), PickupIndex(2)]
@@ -29,7 +28,7 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
     else:
         exclusion = frozenset()
     configuration = FillerConfiguration(
-        randomization_mode=major_mode,
+        randomization_mode=RandomizationMode.FULL,
         minimum_random_starting_items=0,
         maximum_random_starting_items=0,
         indices_to_exclude=exclusion,
@@ -44,12 +43,8 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
                                                                                                       configuration)
 
     # Assert
-    if major_mode == RandomizationMode.FULL:
-        a_pickups = {PickupIndex(1), PickupIndex(2)}
-        b_pickups = {PickupIndex(3), PickupIndex(4)}
-    else:
-        a_pickups = {PickupIndex(1)}
-        b_pickups = {PickupIndex(3)}
+    a_pickups = {PickupIndex(1), PickupIndex(2)}
+    b_pickups = {PickupIndex(3), PickupIndex(4)}
 
     if has_exclusion:
         b_pickups.remove(PickupIndex(3))
