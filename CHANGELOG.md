@@ -15,9 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-- Added: Custom start points can be added by using coordinates from database
 - Changed: Main Power Bomb has a different color than Power Bomb tanks
-- Changed: Cutscene in Hanubia - Tank Room was removed because it teleports the player to the lower section, which can softlock the player in a door lock randomization
+- Changed: Cutscene in Hanubia - Tank Room was removed because it teleports the player to the lower section, which can softlock the player
 - Fixed: You now retain Drogyga's and Corpius's item if you reload checkpoint after defeating them. This eliminates a way of rendering a seed impossible to complete.
 
 ## [5.3.0] - 2023-01-05
