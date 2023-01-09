@@ -291,7 +291,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
     """
     assert action in current_player.pickups_left
 
-    locations_weighted = current_player.filter_usable_locations(all_locations_weighted)
+    locations_weighted = current_player.filter_usable_locations(all_locations_weighted, action)
 
     if locations_weighted and (current_player.num_random_starting_items_placed
                                >= current_player.configuration.minimum_random_starting_items):
