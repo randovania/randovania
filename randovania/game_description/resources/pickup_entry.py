@@ -63,6 +63,7 @@ class PickupEntry:
     probability_offset: float = 0
     probability_multiplier: float = 1
     required_progression: int = 0
+    is_major_override: bool | None = None
 
     def __post_init__(self):
         if not isinstance(self.progression, tuple):
@@ -157,4 +158,6 @@ class PickupEntry:
 
     @property
     def is_expansion(self) -> bool:
+        if self.is_major_override is not None:
+            return self.is_major_override
         return self.item_category.is_expansion
