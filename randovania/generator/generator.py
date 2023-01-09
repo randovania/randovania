@@ -1,7 +1,7 @@
 import asyncio
 import dataclasses
 from random import Random
-from typing import Callable
+from typing import Callable, Tuple
 
 import tenacity
 
@@ -160,11 +160,13 @@ def _distribute_remaining_items(rng: Random,
                                 filler_results: FillerResults,
                                 presets: list[Preset]
                                 ) -> FillerResults:
-    priority_major_pickup_nodes = []
-    unassigned_pickup_nodes = []
-    all_remaining_pickups = []
-    remaining_major_pickups = []
+    priority_major_pickup_nodes: list[Tuple[int, PickupNode]] = []
+    unassigned_pickup_nodes: list[Tuple[int, PickupNode]] = []
+    all_remaining_pickups: list[PickupTarget] = []
+    remaining_major_pickups: list[PickupTarget] = []
+
     assignments: dict[int, list[PickupTargetAssociation]] = {}
+    
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
     for player, filler_result in filler_results.player_results.items():
@@ -175,23 +177,26 @@ def _distribute_remaining_items(rng: Random,
             else:
                 unassigned_pickup_nodes.append((player, pickup_node))
 
-        minor_pickups = [pickup for pickup in filler_result.unassigned_pickups if pickup.is_expansion]
-        major_pickups = [pickup for pickup in filler_result.unassigned_pickups if not pickup.is_expansion]
-        all_remaining_pickups.extend(zip([player] * len(minor_pickups), minor_pickups))
-        remaining_major_pickups.extend(zip([player] * len(major_pickups), major_pickups))
+        for pickup in filler_result.unassigned_pickups:
+            target = PickupTarget(pickup, player)
+            if pickup.is_expansion:
+                all_remaining_pickups.append(target)
+            else:
+                remaining_major_pickups.append(target)
+
         assignments[player] = []
 
-    def assign_pickup(node_player: int, node: PickupNode, pickup_player: int, pickup: PickupEntry):
-        assignments[node_player].append((node.pickup_index, PickupTarget(pickup, pickup_player)))
+    def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget):
+        assignments[node_player].append((node.pickup_index, pickup_target))
 
     # minor/major split
     rng.shuffle(priority_major_pickup_nodes)
     rng.shuffle(remaining_major_pickups)
 
-    while len(priority_major_pickup_nodes) and len(remaining_major_pickups):
+    while priority_major_pickup_nodes and remaining_major_pickups:
         node_player, node = priority_major_pickup_nodes.pop()
-        pickup_player, pickup = remaining_major_pickups.pop()
-        assign_pickup(node_player, node, pickup_player, pickup)
+        pickup = remaining_major_pickups.pop()
+        assign_pickup(node_player, node, pickup)
 
     unassigned_pickup_nodes.extend(priority_major_pickup_nodes)
     all_remaining_pickups.extend(remaining_major_pickups)
@@ -207,8 +212,8 @@ def _distribute_remaining_items(rng: Random,
                 len(unassigned_pickup_nodes)
             ))
 
-    for (node_player, node), (pickup_player, pickup) in zip(unassigned_pickup_nodes, all_remaining_pickups):
-        assign_pickup(node_player, node, pickup_player, pickup)
+    for (node_player, node), pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
+        assign_pickup(node_player, node, pickup)
 
     return dataclasses.replace(
         filler_results,
