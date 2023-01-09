@@ -1,7 +1,7 @@
 import asyncio
 import dataclasses
 from random import Random
-from typing import Callable, Tuple
+from typing import Callable
 
 import tenacity
 
@@ -113,8 +113,8 @@ def _distribute_remaining_items(rng: Random,
                                 filler_results: FillerResults,
                                 presets: list[Preset]
                                 ) -> FillerResults:
-    priority_major_pickup_nodes: list[Tuple[int, PickupNode]] = []
-    unassigned_pickup_nodes: list[Tuple[int, PickupNode]] = []
+    priority_major_pickup_nodes: list[tuple[int, PickupNode]] = []
+    unassigned_pickup_nodes: list[tuple[int, PickupNode]] = []
     all_remaining_pickups: list[PickupTarget] = []
     remaining_major_pickups: list[PickupTarget] = []
 

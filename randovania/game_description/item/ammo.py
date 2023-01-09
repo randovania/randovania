@@ -19,6 +19,7 @@ class Ammo:
     broad_category: ItemCategory
     unlocked_by: str | None = None
     temporary: str | None = None
+    is_major: bool | None = None
     extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
@@ -43,6 +44,7 @@ class Ammo:
             broad_category=item_categories[value["broad_category"]],
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
+            is_major=value.get("is_major"),
             extra=frozen_lib.wrap(value.get("extra", {}))
         )
 
@@ -57,6 +59,8 @@ class Ammo:
         if self.unlocked_by is not None:
             result["temporary"] = self.temporary
             result["unlocked_by"] = self.unlocked_by
+        if self.is_major is not None:
+            result["is_major"] = self.is_major
         return result
 
     @property
