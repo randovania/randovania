@@ -27,6 +27,7 @@ class MajorItem:
     probability_offset: int = 0
     probability_multiplier: float = 1
     warning: str | None = None
+    is_major: bool | None = None
     extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
@@ -53,6 +54,7 @@ class MajorItem:
             probability_offset=value["probability_offset"],
             probability_multiplier=value["probability_multiplier"],
             warning=value.get("warning"),
+            is_major=value.get("is_major"),
             extra=frozen_lib.wrap(value.get("extra", {}))
         )
 
@@ -77,4 +79,6 @@ class MajorItem:
             result["original_index"] = self.original_index.index
         if self.warning is not None:
             result["warning"] = self.warning
+        if self.is_major is not None:
+            result["is_major"] = self.is_major
         return result

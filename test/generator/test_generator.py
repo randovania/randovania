@@ -51,7 +51,7 @@ async def test_create_patches(mock_distribute_remaining_items: MagicMock,
         for i in range(num_players)
     ])
     mock_run_filler.assert_awaited_once_with(rng, [player_pools[i] for i in range(num_players)], status_update)
-    mock_distribute_remaining_items.assert_called_once_with(rng, filler_result)
+    mock_distribute_remaining_items.assert_called_once_with(rng, filler_result, presets)
     mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)
 
     assert result == LayoutDescription.create_new(
@@ -61,7 +61,7 @@ async def test_create_patches(mock_distribute_remaining_items: MagicMock,
     )
 
 
-def test_distribute_remaining_items_no_locations_left(echoes_game_description, echoes_game_patches):
+def test_distribute_remaining_items_no_locations_left(echoes_game_description, echoes_game_patches, default_echoes_preset):
     # Setup
     rng = MagicMock()
     player_result = FillerPlayerResult(
@@ -74,4 +74,4 @@ def test_distribute_remaining_items_no_locations_left(echoes_game_description, e
     # Run
     with pytest.raises(InvalidConfiguration,
                        match=r"Received 1000 remaining pickups, but there's only \d+ unassigned locations."):
-        generator._distribute_remaining_items(rng, filler_results)
+        generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])

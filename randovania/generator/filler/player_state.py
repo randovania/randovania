@@ -207,15 +207,24 @@ class PlayerState:
             "\n".join(teleporters) or "None",
         )
 
-    def filter_usable_locations(self, locations_weighted: WeightedLocations) -> WeightedLocations:
+    def filter_usable_locations(self, locations_weighted: WeightedLocations, action: PickupEntry|None = None) -> WeightedLocations:
+        weighted = locations_weighted
+
         if self.configuration.first_progression_must_be_local and self.num_assigned_pickups == 0:
-            return {
+            weighted = {
                 loc: weight
-                for loc, weight in locations_weighted.items()
+                for loc, weight in weighted.items()
                 if loc[0] is self
             }
+        
+        if action is not None and self.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+            weighted = {
+                loc: weight
+                for loc, weight in weighted.items()
+                if loc[0].game.world_list.node_from_pickup_index(loc[1]).major_location != action.is_expansion
+            }
 
-        return locations_weighted
+        return weighted
 
     def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
                          all_locations_weighted: WeightedLocations) -> bool:
@@ -238,22 +247,13 @@ class PlayerState:
         return can_hint
 
 
-def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) -> Iterator[PickupIndex]:
-    if randomization_mode is RandomizationMode.FULL:
-        yield from world.pickup_indices
-    elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-        yield from world.major_pickup_indices
-    else:
-        raise RuntimeError(f"Unknown randomization_mode: {randomization_mode}")
-
-
 def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,
                             ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
     indices_groups = [
-        set(world_indices_for_mode(world, configuration.randomization_mode)) - configuration.indices_to_exclude
+        set(world.pickup_indices) - configuration.indices_to_exclude
         for world in world_list.worlds
     ]
     all_indices = set().union(*indices_groups)
