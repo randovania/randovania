@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Cutscene in Hanubia - Tank Room was removed because it teleports the player to the lower section, which can softlock the player
 - Fixed: You now retain Drogyga's and Corpius's item if you reload checkpoint after defeating them. This eliminates a way of rendering a seed impossible to complete.
 
+#### Logic Database
+- Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
+
 ## [5.3.0] - 2023-01-05
 
 - Added: You can now open a tracker for other player's inventories in a multiworld session.
