@@ -88,8 +88,8 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
 
     # Assert
     expected = {
-        NodeIdentifier(AreaIdentifier("Mimiga Village", "Start Point"), "Room Spawn"),
-        NodeIdentifier(AreaIdentifier("Mimiga Village", "Arthur's House"), "Room Spawn"),
-        NodeIdentifier(AreaIdentifier("Labyrinth", "Camp"), "Room Spawn")
+        NodeIdentifier.create("Mimiga Village", "Start Point", "Room Spawn"),
+        NodeIdentifier.create("Mimiga Village", "Arthur's House", "Room Spawn"),
+        NodeIdentifier.create("Labyrinth", "Camp", "Room Spawn")
     }
     assert set(editor.configuration.starting_location.locations) == expected

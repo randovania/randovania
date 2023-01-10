@@ -159,7 +159,7 @@ NodeBaseFields = {
     "layers": PrefixedArray(VarInt, String),
     "extra": JsonEncodedValue,
     "connections": ConstructDict(ConstructRequirement),
-    "valid_starting_location": Flag
+    "valid_starting_location": Flag,
 }
 
 

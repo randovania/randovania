@@ -22,9 +22,9 @@ class PresetCSStartingArea(PresetStartingArea):
 
     def _starting_location_on_select_classic(self):
         classics = [
-            NodeIdentifier(AreaIdentifier("Mimiga Village", "Start Point"), "Room Spawn"),
-            NodeIdentifier(AreaIdentifier("Mimiga Village", "Arthur's House"), "Room Spawn"),
-            NodeIdentifier(AreaIdentifier("Labyrinth", "Camp"), "Room Spawn")
+            NodeIdentifier.create("Mimiga Village", "Start Point", "Room Spawn"),
+            NodeIdentifier.create("Mimiga Village", "Arthur's House", "Room Spawn"),
+            NodeIdentifier.create("Labyrinth", "Camp", "Room Spawn")
         ]
 
         with self._editor as editor:
@@ -35,8 +35,7 @@ class PresetCSStartingArea(PresetStartingArea):
 
     def _starting_location_on_select_save_point(self):
         world_list = self.game_description.world_list
-        save_points = [NodeIdentifier(world_list.node_to_area_location(node), node.name)
-                       for node in world_list.iterate_nodes() if "Save Point" in node.name]
+        save_points = [node.identifier for node in world_list.iterate_nodes() if "Save Point" in node.name]
 
         # remove because save point is locked behind a boss fight
         save_points = [i for i in save_points if i.area_name != "Egg Observation Room?"]

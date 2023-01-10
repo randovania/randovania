@@ -23,7 +23,7 @@ from randovania.layout.lib.location_list import LocationList
 def _location_with_data(request, mocker, echoes_game_description):
     world_list = echoes_game_description.world_list
     nodes = list(itertools.islice(
-        (NodeIdentifier(AreaIdentifier(world.name, area.name), node.name)
+        (NodeIdentifier.create(world.name, area.name, node.name)
          for world in world_list.worlds
          for area in world.areas
          for node in area.actual_nodes

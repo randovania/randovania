@@ -23,7 +23,7 @@ def test_has_unsupported_features(preset_manager):
         configuration,
         trick_level=configuration.trick_level.set_level_for_trick(suitless, LayoutTrickLevel.HYPERMODE),
         starting_location=configuration.starting_location.ensure_has_location(
-            NodeIdentifier(AreaIdentifier("Burenia", "Upper Burenia Hub"), "Start Point"), True,
+            NodeIdentifier.create("Burenia", "Upper Burenia Hub", "Start Point"), True,
         ),
         elevators=dataclasses.replace(configuration.elevators, mode=TeleporterShuffleMode.TWO_WAY_RANDOMIZED),
         artifacts=DreadArtifactConfig(

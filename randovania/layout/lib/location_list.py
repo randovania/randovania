@@ -29,10 +29,7 @@ def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node],
 def node_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node], bool]) -> list[NodeIdentifier]:
     world_list = default_database.game_description_for(game).world_list
     identifiers = [
-        NodeIdentifier(AreaIdentifier(
-            world_name=world.name,
-            area_name=area.name,
-        ), node.name)
+        NodeIdentifier.create(world.name, area.name, node.name)
         for world in world_list.worlds
         for area in world.areas
         for node in area.actual_nodes
@@ -101,7 +98,7 @@ class LocationList(BitPackValue):
 
         return self.with_elements(iter(new_locations), self.game)
 
-    def ensure_has_locations(self: SelfType, node_locations: list[NodeIdentifier] | list[NodeIdentifier], enabled: bool) -> SelfType:
+    def ensure_has_locations(self: SelfType, node_locations: list[NodeIdentifier], enabled: bool) -> SelfType:
         new_locations = set(self.locations)
 
         for node_location in node_locations:
