@@ -2,6 +2,7 @@ import math
 import uuid
 
 from randovania.game_description import migration_data, default_database
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
@@ -719,13 +720,10 @@ def _migrate_v42(preset: dict) -> dict:
     return preset
 
 def _migrate_v43(preset: dict) -> dict:
-    game = default_database.game_description_for(RandovaniaGame(preset["game"]))
     for start_loc in preset["configuration"]["starting_location"]:
-        world_name = start_loc["world_name"]
-        area_name = start_loc["area_name"]
-        world = game.world_list.world_with_name(world_name)
-        area = world.area_by_name(area_name)
-        start_loc["node_name"] = area.default_node
+        area_identifier = AreaIdentifier(start_loc["world_name"], start_loc["area_name"])
+        node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
+        start_loc["node_name"] = node_identifier.node_name
     return preset
 
 
