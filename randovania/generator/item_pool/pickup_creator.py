@@ -195,7 +195,7 @@ def create_energy_cell(cell_index: int,
         name="energy_cell",
         long_name="Energy Cell",
         hint_details=("an ", "energy cell"),
-        is_major=False,
+        is_major=True,
         is_key=True
     )
 
