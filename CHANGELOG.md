@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [5.4.0] - 2023-??-??
 
 - Fixed: The minor/major split setting is obeyed much more accurately by the generator.
+- Fixed: Minor typos in the UI are fixed.
 
 ### Metroid Dread
 
@@ -293,7 +294,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Optimized the game validation. As example, Echoes' Starter Preset is 91% faster.
 - Changed: The algorithm for how locations lose value over generation has changed. This should have bigger impact in big multiworlds.
 - Changed: It's now possible to login again directly in the Game Session Window.
-- Removed: The server and discord bot are entirely removed from the distributed executables, reducing it's size.
+- Removed: The server and discord bot are entirely removed from the distributed executables, reducing its size.
 - Removed: Metroid Dread is no longer available in releases, as it was never intended to be considered stable.
 - Removed: All auto trackers based on pixel art style were removed by request of their artist.
 - Fixed: The "Spoiler: Pickups" tab no longer shows locations that aren't present in the given preset.
@@ -2798,7 +2799,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 ## [0.17.2] - 2018-12-27
 
--   Fixed: 'Clear loaded game' now properly does it's job.
+-   Fixed: 'Clear loaded game' now properly does its job.
 -   Changed: Add an error message to capture potential Randomizer failures.
 -   Changed: Improved README.
 

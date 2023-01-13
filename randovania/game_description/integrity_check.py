@@ -193,7 +193,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         if len(components) == 1:
             node = next(iter(components))
 
-            # If the component is a single node which is the default node of it's area, allow it
+            # If the component is a single node which is the default node of its area, allow it
             area = game.world_list.nodes_to_area(node)
             if area.default_node == node.name:
                 continue
