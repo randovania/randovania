@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: Traverse to the bottom of Ferenia: Space Jump Room Access with some more options.
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
 
 ## [5.3.0] - 2023-01-05
