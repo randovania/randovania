@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The minor/major split setting is obeyed much more accurately by the generator.
 - Fixed: Minor typos in the UI are fixed.
 
+### Metroid Prime
+
+#### Logic Database
+
+- Fixed: Collecting the Missile Expansion in Burn Dome before the fight no longer causes the generation to fail.
+
 ### Metroid Dread
 
 - **Major** - Added: Door locks can now be randomized.
