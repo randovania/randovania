@@ -10255,7 +10255,15 @@
                         "actor_def": "actordef:actors/props/breakablemag010/charclasses/breakablemag010.bmsad"
                     },
                     "event_name": "s020_magma:default:breakablemag010",
-                    "connections": {}
+                    "connections": {
+                        "Center Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Blob above Kraid, below": {
                     "node_type": "event",
@@ -10875,6 +10883,39 @@
                                                             }
                                                         ]
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Ceiling Blob": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
                                                 }
                                             ]
                                         }
