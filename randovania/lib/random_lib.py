@@ -34,7 +34,7 @@ def iterate_with_weights(items: Iterator[T],
     while items and any(weight > 0 for weight in weights):
         pickup_node = rng.choices(items, weights)[0]
 
-        # Remove the pickup_node from the potential list, along with it's weight
+        # Remove the pickup_node from the potential list, along with its weight
         index = items.index(pickup_node)
         items.pop(index)
         weights.pop(index)
