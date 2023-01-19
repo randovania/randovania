@@ -11415,24 +11415,11 @@
                                 ]
                             }
                         },
-                        "Event - Incinerator Drone": {
-                            "type": "or",
+                        "Before Fight": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Power Beam"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Ice Beam"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -11480,6 +11467,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Before Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -11499,6 +11493,38 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Fight": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Event - Incinerator Drone": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Power Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Wave Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Ice Beam"
+                                    }
+                                ]
                             }
                         }
                     }
