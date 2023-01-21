@@ -31,7 +31,7 @@ class RequirementSet:
         self.alternatives = frozenset(
             requirement
             for requirement in input_set
-            if not any(other.is_subset_of(requirement) for other in input_set)
+            if not any(other.is_proper_subset_of(requirement) for other in input_set)
         )
 
     def __deepcopy__(self, memodict):
