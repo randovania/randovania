@@ -1,0 +1,47 @@
+app-id: io.github.randovania.Randovania
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions: [ org.freedesktop.Sdk.Extension.mono6 ]
+finish-args:
+    - --device=dri          # UI will want hw acceleration
+    - --share=network       # Multiworld support
+    - --share=ipc           # Needed for X11 support
+    - --socket=wayland
+    - --socket=fallback-x11
+    - --filesystem=xdg-run/app/com.discordapp.Discord:create
+command: /app/share/randovania/randovania
+modules:
+  - name: randovania
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/share/randovania
+      - find . -type f -exec install -Dm 755 "{}" "/app/share/randovania/{}" \;
+    sources:
+      - type: archive
+        archive-type: tar-gzip
+        path: randovania-linux.tar.gz
+
+  - name: randovania-icon
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/share/applications
+      - mkdir -p /app/share/icons/hicolor/256x256/apps/
+      - cp io.github.randovania.Randovania.desktop /app/share/applications/io.github.randovania.Randovania.desktop
+      - cp io.github.randovania.Randovania.png /app/share/icons/hicolor/256x256/apps/io.github.randovania.Randovania.png
+    sources:
+      - type: file
+        path: io.github.randovania.Randovania.desktop
+      - type: file
+        path: io.github.randovania.Randovania.png
+
+  - name: mono6
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/mono6/install.sh
+      - cp -ar /usr/lib/sdk/mono6/lib/mono/gac/System.Drawing /app/lib/mono/gac/
+      - cp -ar /usr/lib/sdk/mono6/lib/mono/gac/System.Web /app/lib/mono/gac/
+      - cp -ar /usr/lib/sdk/mono6/lib/mono/gac/System.Web.Extensions /app/lib/mono/gac/
+      - rm -f /app/lib/mono/gac/System.Drawing/*/*.pdb
+      - rm -f /app/lib/mono/gac/System.Web/*/*.pdb
+      - rm -f /app/lib/mono/gac/System.Web.Extensions/*/*.pdb
