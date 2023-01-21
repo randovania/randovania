@@ -216,7 +216,7 @@ class BitPackDataclass(BitPackValue):
             field_meta["reference"] = reference_item
 
             encoded_item = list(bit_pack_value.bit_pack_encode(field_meta))
-            if any(not (0 <= a < b) for (a, b) in encoded_item):
+            if any(not (a < b) for (a, b) in encoded_item):
                 raise ValueError(
                     f"Encoding field {field.name} of {type(self)} generated invalid value: {encoded_item}.")
             should_encode = True
@@ -434,7 +434,7 @@ def decode_tuple(decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder
 
 def _format_string_for(values: list[tuple[int, int]]) -> str:
     return "".join(
-        f"u{_bits_for_number(v)}"
+        f"s{_bits_for_number(v) + 1}"
         for _, v in values
     )
 
@@ -463,7 +463,7 @@ def pack_value(value: BitPackValue, metadata: dict | None = None) -> bytes:
     results = []
 
     for i, (value_argument, value_format) in enumerate(value.bit_pack_encode(metadata)):
-        if 0 <= value_argument < value_format:
+        if value_argument < value_format:
             results.append((value_argument, value_format))
         else:
             raise ValueError(f"At {i}, got {value_argument} which not in range [0, {value_format}[")
