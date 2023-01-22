@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Aim Down Clip (Expert) to reach the blobs in Gravity Suit Tower from the top level.
 - Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
+- Added: Climb Golzuna Tower using Spin Boost and Flash Shift using Wall Jump (Intermediate).
 - Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
