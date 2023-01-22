@@ -25,14 +25,14 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 1
+  > Elevator to Artaria - Transport to Cataris
       Trivial
   > Tunnel to Total Recharge Station South
       Morph Ball and After Cataris - Artaria Transport Blob
   > Event - Blob from Door
       Any of the following:
           Shoot Diffusion or Wave
-          Pseudo-Wave Beam (Beginner) and Shoot Beam
+          Slide and Pseudo-Wave Beam (Beginner) and Shoot Beam
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -61,31 +61,7 @@ Extra - asset_id: collision_camera_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Artaria Transport Access
       Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_065
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Door to Navigation Station Southeast
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_066
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Elevator to Artaria - Transport to Cataris
-      Trivial
-  > Tile Group (POWERBEAM) 1
       Trivial
 
 > Tunnel to Total Recharge Station South; Heals? False
@@ -122,6 +98,8 @@ Extra - asset_id: collision_camera_001
       Any of the following:
           Simple IBJ or Use Spin Boost
           Speed Booster and Can Slide
+          Flash Shift and Walljump (Intermediate)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
 
 ----------------
 Navigation Station Southeast
@@ -367,18 +345,6 @@ Extra - asset_id: collision_camera_007
   > Tunnel to Transport to Artaria
       Trivial
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_064
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tunnel to Transport to Artaria
-      Can Slide
-  > Next to Thermal Door
-      Can Slide
-
 > Tunnel to Transport to Artaria; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Transport to Artaria/Tunnel to Total Recharge Station South
@@ -388,8 +354,6 @@ Extra - asset_id: collision_camera_007
       Shoot Beam
   > Total Recharge
       Trivial
-  > Tile Group (POWERBEAM)
-      Trivial
 
 > Next to Thermal Door; Heals? False
   * Layers: default
@@ -397,7 +361,7 @@ Extra - asset_id: collision_camera_007
       Trivial
   > Dock to Thermal Device Room South
       Before Cataris - First Thermal Device
-  > Tile Group (POWERBEAM)
+  > Tunnel to Transport to Artaria
       Can Slide
 
 ----------------
@@ -451,37 +415,13 @@ Extra - asset_id: collision_camera_009
   > Door to Z-57 Heat Room West (Right)
       Trivial
 
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_057
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Pickup Corner
-      Trivial
-  > Between Thermal Gates
-      Trivial
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_067
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Pickup Corner
-      Trivial
-  > Center Hall
-      Trivial
-
 > Pickup Corner; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
-  > Tile Group (SCREWATTACK) 1
+  > Center Hall
       Trivial
-  > Tile Group (SCREWATTACK) 2
+  > Between Thermal Gates
       Trivial
 
 > Center Hall; Heals? False
@@ -492,12 +432,12 @@ Extra - asset_id: collision_camera_009
           All of the following:
               Use Spin Boost
               Any of the following:
-                  Flash Shift
+                  Flash Shift or Slide Jump (Beginner)
                   All of the following:
                       # https://youtu.be/mRHB7DHbfbg
                       Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
-  > Tile Group (SCREWATTACK) 2
-      Trivial
+  > Pickup Corner
+      Screw Attack
   > Between Thermal Gates
       After Cataris - First Thermal Device
 
@@ -520,15 +460,32 @@ Extra - asset_id: collision_camera_009
       Before Elun - Release X Parasites
   > Pickup (Z-57)
       All of the following:
-          # TODO: proper fight requirements
-          Missiles ≥ 12 and Storm Missile and After Elun - Release X Parasites and Use Spin Boost
+          After Elun - Release X Parasites
           Any of the following:
+              # Methods to stop healing
+              Missiles ≥ 12 and Storm Missile
+              Shoot Charge Beam and Shoot Plasma Beam
+              Speed Booster and Combat (Beginner)
+          Any of the following:
+              # Methods of damage
               Shoot Charge Beam and Shoot Plasma Beam
               Missiles ≥ 30 and Shoot Super Missile
+              All of the following:
+                  Combat (Beginner)
+                  Any of the following:
+                      Shoot Charge Beam
+                      Missiles ≥ 90 and Shoot Missile
+          Any of the following:
+              # Methods of dodging swipes
+              Space Jump or Combat (Intermediate)
+              Combat (Beginner) and Use Spin Boost
           Any of the following:
               # Energy Requirements
               Combat (Intermediate) or Normal Damage ≥ 699
               Combat (Beginner) and Normal Damage ≥ 349
+          Any of the following:
+              # Methods to dodge laser
+              Flash Shift or Combat (Intermediate) or Use Spin Boost
 
 > Z-57 Room; Heals? False
   * Layers: default
@@ -540,13 +497,19 @@ Extra - asset_id: collision_camera_009
           Any of the following:
               Spider Magnet or Space Jump or Speed Booster or Simple IBJ
               All of the following:
-                  # https://youtu.be/mRHB7DHbfbg
-                  Spin Boost and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+                  Use Spin Boost
+                  Any of the following:
+                      Walljump (Beginner)
+                      All of the following:
+                          # https://youtu.be/mRHB7DHbfbg
+                          Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+              Flash Shift and Walljump (Intermediate)
+              Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Between Thermal Gates; Heals? False
   * Layers: default
-  > Tile Group (SCREWATTACK) 1
-      Trivial
+  > Pickup Corner
+      Screw Attack
   > Center Hall
       After Cataris - First Thermal Device
   > Z-57 Room
@@ -579,7 +542,7 @@ Extra - asset_id: collision_camera_010
       Trivial
   > Tunnel to EMMI Zone Tower East
       Any of the following:
-          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
 
 > Dock to Tall Magnet Walls Access; Heals? False
@@ -600,7 +563,7 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to EMMI Zone Tower East (Lower)
-      Flash Shift or Speed Booster or Movement (Beginner) or Can Slide or Lay Cross Bomb or Use Spin Boost
+      Flash Shift or Speed Booster or Movement (Beginner) or Can Slide or Use Spin Boost
   > Dock to Tall Magnet Walls Access
       After Cataris - Hallway Thermal Device
 
@@ -789,10 +752,13 @@ Extra - asset_id: collision_camera_014
       Trivial
   > Door to Energy Recharge Station
       Any of the following:
-          Space Jump or Speed Booster
+          Space Jump or Speed Booster or Simple IBJ
           All of the following:
               Spider Magnet
-              Grapple Beam or After Cataris - Move Magnet Walls Button
+              Grapple Beam or After Cataris - Move Magnet Walls Button or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
+          Flash Shift and Walljump (Intermediate)
+          Morph Ball and Single-wall Wall Jump (Advanced)
   > Event - Activate Magnet Walls
       All of the following:
           Knowledge (Advanced)
@@ -811,8 +777,15 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Door to Tall Magnet Walls Access
       Trivial
-  > Tile Group (POWERBEAM)
-      Speed Booster or Simple IBJ
+  > Door to Teleport to Artaria (Blue)
+      Any of the following:
+          Space Jump or Speed Booster or Simple IBJ
+          All of the following:
+              Spider Magnet
+              Grapple Beam or After Cataris - Lower Lava Button or Use Spin Boost
+          Flash Shift and Walljump (Intermediate)
+          Grapple Beam and Grapple Movement (Beginner)
+          Morph Ball and Single-wall Wall Jump (Advanced)
 
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
@@ -827,8 +800,6 @@ Extra - asset_id: collision_camera_014
       Trivial
   > Dock to Energy Recharge Station
       Trivial
-  > Tile Group (POWERBEAM)
-      Spider Magnet or Space Jump
 
 > Dock to Energy Recharge Station; Heals? False
   * Layers: default
@@ -851,22 +822,10 @@ Extra - asset_id: collision_camera_014
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM)
-      Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_045
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Tall Magnet Walls Access
+  > Door to Lava Button East Access
       Trivial
   > Door to Energy Recharge Station
-      Spider Magnet or Space Jump
-  > Door to Teleport to Artaria (Blue)
-      Trivial
+      Flash Shift or Spider Magnet or Use Spin Boost
 
 > Event - Activate Magnet Walls; Heals? False
   * Layers: default
@@ -894,23 +853,30 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Lava Room
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit
-              All of the following:
-                  Lava Damage ≥ 1000
-                  Any of the following:
-                      Varia Suit and Heat/Cold Runs (Intermediate)
-                      Heat/Cold Runs (Advanced) and Heat Damage ≥ 500
+      Gravity Suit and Can Slide
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 45; Major Location? False
   * Extra - actor_name: item_missiletank_009
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB) 3
-      Morph Ball
+  > Top Platform
+      All of the following:
+          Any of the following:
+              Lay Bomb
+              Power Bombs ≥ 2 and Lay Power Bomb
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 210
+          Space Jump or Simple IBJ
+  > Right Room
+      All of the following:
+          Any of the following:
+              Lay Bomb
+              Power Bombs ≥ 2 and Lay Power Bomb
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -937,16 +903,15 @@ Extra - asset_id: collision_camera_015
       All of the following:
           Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
           Any of the following:
-              Varia Suit or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+              Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Tile Group (POWERBEAM) 4
+  > Event - Lower PB Tank Ceiling
       All of the following:
+          Spider Magnet and Shoot Missile
+          Lay Bomb or Lay Power Bomb
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-          Any of the following:
-              Simple IBJ or Use Spin Boost
-              Grapple Beam and Grapple Movement (Beginner)
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 150
 
 > Event - East Blob, below; Heals? False
   * Layers: default
@@ -974,213 +939,29 @@ Extra - asset_id: collision_camera_015
   * Extra - start_point_actor_name: teleporter_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Event - East Blob, below
-      Shoot Beam
-  > Tile Group (POWERBOMB)
-      All of the following:
-          After Cataris - Blue Teleport Blob
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+      Lay Bomb or Shoot Beam
   > Lava Room
-      Any of the following:
-          Gravity Suit
-          All of the following:
-              Lava Damage ≥ 200
-              Any of the following:
-                  Varia Suit and Heat/Cold Runs (Intermediate)
-                  Heat/Cold Runs (Advanced) and Heat Damage ≥ 50
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_028
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
+      Gravity Suit
   > Right Room
       All of the following:
-          Can Slide
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Center Room
-      All of the following:
-          Can Slide
+          After Cataris - Blue Teleport Blob and Lay Power Bomb
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
-> Tile Group (BOMB) 1; Heals? False
+> Top Platform; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_037
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Center Room
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_038
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 1
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Tile Group (BOMB) 3
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_039
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
-      Morph Ball
-  > Tile Group (BOMB) 2
       All of the following:
-          Morph Ball
-          Space Jump or Simple IBJ
+          Lay Bomb or Lay Power Bomb
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
-  > Tile Group (BOMB) 4
-      Morph Ball
-
-> Tile Group (BOMB) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_040
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-  > Right Room
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_041
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Teleporter to Artaria - Screw Attack Room
-      All of the following:
-          After Cataris - Blue Teleport Blob
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
-  > Right Room
-      Trivial
-  > Event - East Blob, above
-      Wave Beam
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_042
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 3
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Upper-Left Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_043
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Center Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-
-> Tile Group (BOMB MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_044
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB', 'MISSILE')
-  > Door to Moving Magnet Walls (Tall)
-      Trivial
-  > Tile Group (POWERBEAM) 4
-      Trivial
-  > Event - Lower PB Tank Ceiling
-      All of the following:
-          Spider Magnet
-          Grapple Beam or Simple IBJ or Use Spin Boost
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-
-> Tile Group (SCREWATTACK); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_074
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Right Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
+          Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Center Room
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-
-> Tile Group (POWERBEAM) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_075
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Moving Magnet Walls (Tall)
-      Trivial
-  > Tile Group (BOMB MISSILE)
-      Trivial
 
 > Tunnel to Double Obsydomithon Room; Heals? False
   * Layers: default
@@ -1202,10 +983,6 @@ Extra - asset_id: collision_camera_015
 
 > Upper-Left Room; Heals? False
   * Layers: default
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Tunnel to Double Obsydomithon Room
       Any of the following:
           All of the following:
@@ -1215,76 +992,91 @@ Extra - asset_id: collision_camera_015
               Any of the following:
                   Spider Magnet or Space Jump
                   Walljump (Beginner) and Use Spin Boost
+                  Flash Shift and Walljump (Intermediate)
           All of the following:
-              Simple IBJ
               Any of the following:
                   Varia Suit
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
+              Any of the following:
+                  Simple IBJ
+                  Morph Ball and Single-wall Wall Jump (Intermediate)
+          All of the following:
+              # https://youtu.be/j5l9mCXL-m8
+              Phantom Cloak and Speed Booster and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer and Can Slide
+              Any of the following:
+                  Varia Suit
+                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 410
+  > Center Room
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 80
 
 > Lava Room; Heals? False
   * Layers: default
   > Door to Artaria Transport Access
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit
-              All of the following:
-                  Lava Damage ≥ 1000
-                  Any of the following:
-                      Varia Suit and Heat/Cold Runs (Intermediate)
-                      Heat/Cold Runs (Advanced) and Heat Damage ≥ 500
+      Gravity Suit and Morph Ball
   > Teleporter to Artaria - Screw Attack Room
       All of the following:
           Gravity Suit
-          Space Jump or Speed Booster or Simple IBJ
+          Speed Booster or Simple IBJ or Use Spin Boost
 
 > Right Room; Heals? False
   * Layers: default
-  > Tile Group (POWERBEAM) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Tile Group (POWERBOMB)
-      Trivial
-  > Tile Group (SCREWATTACK)
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
+  > Teleporter to Artaria - Screw Attack Room
+      All of the following:
+          After Cataris - Blue Teleport Blob
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+  > Center Room
+      All of the following:
+          Screw Attack or Can Slide
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 60
+  > Event - East Blob, above
+      Wave Beam and Lay Power Bomb
 
 > Center Room; Heals? False
   * Layers: default
   > Event - West Blob
       Lay Bomb or Shoot Beam
-  > Tile Group (POWERBEAM) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tile Group (BOMB) 1
+  > Top Platform
       Any of the following:
           All of the following:
-              Use Spin Boost
               Any of the following:
                   Varia Suit
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+              Any of the following:
+                  Use Spin Boost
+                  Flash Shift and Walljump (Beginner)
           All of the following:
-              Simple IBJ
               Any of the following:
                   Varia Suit
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
-  > Tile Group (POWERBEAM) 3
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Tile Group (SCREWATTACK)
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
+              Any of the following:
+                  Simple IBJ
+                  Morph Ball and Single-wall Wall Jump (Intermediate)
+                  Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+                  All of the following:
+                      # https://youtu.be/q4yodUPmfQU
+                      Phantom Cloak and Speed Booster and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer and Can Slide
   > Tunnel to Lava Button East Access
       All of the following:
           After Cataris - Lava Button East Blob
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+  > Upper-Left Room
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 110
+  > Right Room
+      All of the following:
+          Screw Attack or Can Slide
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
 
 > Event - Lower PB Tank Ceiling; Heals? False
   * Layers: default
@@ -1295,7 +1087,7 @@ Extra - asset_id: collision_camera_015
 > Event - East Blob, above; Heals? False
   * Layers: default
   * Event Cataris - Blue Teleport Blob
-  > Tile Group (POWERBOMB)
+  > Right Room
       Trivial
 
 ----------------
@@ -1367,7 +1159,7 @@ Extra - asset_id: collision_camera_018
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM)
+  > Door to Moving Magnet Walls (Tall) (Charge)
       Trivial
 
 > Door to Moving Magnet Walls (Tall) (Charge); Heals? False
@@ -1381,11 +1173,13 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_def: None
   > Door to Save Station East
       Trivial
-  > Tile Group (POWERBEAM)
+  > Door to Thermal Device Room North
       Any of the following:
           Spider Magnet or Simple IBJ or Use Spin Boost
           Speed Booster and Disabled Door Lock Randomizer
           Grapple Beam and Grapple Movement (Beginner)
+          Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Door to Moving Magnet Walls (Tall) (Cloak); Heals? False
   * Layers: default
@@ -1406,18 +1200,6 @@ Extra - asset_id: collision_camera_018
   * Extra - start_point_actor_name: weightactivatedplatform_002
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Door to Save Station East
-      Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_012
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Thermal Device Room North
-      Trivial
-  > Door to Moving Magnet Walls (Tall) (Charge)
       Trivial
 
 > Dock to Thermal Device Room North; Heals? False
@@ -1500,7 +1282,7 @@ Extra - asset_id: collision_camera_019
   * Morph Ball Tunnel to Z-57 Heat Room West (Right)/Tunnel to Z-57 Heat Room West (Left)
   > Tiny Alcove
       All of the following:
-          Morph Ball and After Cataris - Z-57 Second Tunnel Blob
+          Morph Ball
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
@@ -1517,7 +1299,7 @@ Extra - asset_id: collision_camera_019
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
   > Right Platform
       All of the following:
-          After Cataris - Z-57 First Tunnel Blob and Can Slide
+          Can Slide
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
@@ -1555,7 +1337,7 @@ Extra - asset_id: collision_camera_019
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Event - Open Passage Blob
-      Shoot Beam
+      Lay Bomb or Shoot Beam
   > Dock to Z-57 Heat Room West (Right)
       All of the following:
           After Cataris - Z-57 Open Passage Blob
@@ -1588,7 +1370,13 @@ Extra - asset_id: collision_camera_020
   > Door to EMMI Zone East Tower Access (Lower)
       Trivial
   > Event - Blob
-      Wave Beam
+      Any of the following:
+          Wave Beam
+          All of the following:
+              Slide
+              Any of the following:
+                  Pseudo-Wave Beam (Advanced)
+                  Pseudo-Wave Beam (Intermediate) and Shoot Diffusion Beam
   > Tunnel to EMMI Zone East Tower Access (Bottom)
       Trivial
   > Center Alcove
@@ -1617,12 +1405,17 @@ Extra - asset_id: collision_camera_020
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 1
-      Trivial
+  > Door to EMMI Zone East Tower Access (Upper)
+      Can Slide
   > Tunnel to EMMI Zone Item Tunnel
       Any of the following:
-          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          Spider Magnet or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
+          All of the following:
+              Speed Booster
+              Any of the following:
+                  Disabled Door Lock Randomizer
+                  After Cataris - Green EMMI Blob and Speedbooster Conservation (Beginner)
   > Tunnel to EMMI Zone East Tower Access (Upper)
       Trivial
   > Center Alcove
@@ -1637,8 +1430,8 @@ Extra - asset_id: collision_camera_020
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 3
-      Trivial
+  > Door to EMMI Zone West Exit Path
+      Can Slide
 
 > Event - Blob; Heals? False
   * Layers: default
@@ -1646,42 +1439,6 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_name: breakablemag005
   * Extra - actor_def: actordef:actors/props/breakablemag005/charclasses/breakablemag005.bmsad
   > Center Alcove
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_053
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to EMMI Zone West Exit Path
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_054
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Tile Group (POWERBEAM) 3
-      Trivial
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_055
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to EMMI Zone East Tower Access (Upper)
-      Trivial
-  > Tile Group (POWERBEAM) 2
       Trivial
 
 > Tunnel to EMMI Zone Item Tunnel; Heals? False
@@ -1714,6 +1471,7 @@ Extra - asset_id: collision_camera_020
           Any of the following:
               Flash Shift or Spider Magnet or Lay Cross Bomb or Use Spin Boost
               Infinite Bomb Jump (Intermediate) and Lay Bomb
+              Speed Booster and After Cataris - Green EMMI Blob and Speedbooster Conservation (Beginner)
   > Event - Blob
       Lay Bomb or Shoot Beam
 
@@ -1846,9 +1604,7 @@ Extra - asset_id: collision_camera_023
       Shoot Beam
   > Ammo Recharge
       Trivial
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Tile Group (POWERBEAM) 2
+  > Tunnel to Path to Kraid Entryway
       Trivial
 
 > Door to West Teleport Access; Heals? False
@@ -1880,38 +1636,10 @@ Extra - asset_id: collision_camera_023
   > Door to Path to Kraid Entryway
       Trivial
 
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Dock to EMMI Zone Exits West (Lower)
-      Flash Shift and Morph Ball
-  > Door to Path to Kraid Entryway
-      Trivial
-  > Tunnel to Path to Kraid Entryway
-      Morph Ball
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_073
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Path to Kraid Entryway
-      Trivial
-  > Tunnel to Path to Kraid Entryway
-      Trivial
-
 > Tunnel to Path to Kraid Entryway; Heals? False
   * Layers: default
   * Slide Tunnel to Path to Kraid Entryway/Tunnel to Long Mouth Statue Room
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Tile Group (POWERBEAM) 2
+  > Door to Path to Kraid Entryway
       Trivial
 
 ----------------
@@ -1949,7 +1677,7 @@ Extra - asset_id: collision_camera_024
   * Event Cataris - Above Kraid Ceiling Blob
   * Extra - actor_name: breakablemag010
   * Extra - actor_def: actordef:actors/props/breakablemag010/charclasses/breakablemag010.bmsad
-  > Right Tile Barrier
+  > Center Room
       Trivial
 
 > Event - Blob above Kraid, below; Heals? False
@@ -1959,44 +1687,6 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_def: actordef:actors/props/db_reg_mg_018/charclasses/db_reg_mg_018.bmsad
   > Door to Kraid Eyedoor Room
       Trivial
-
-> Left Tile Barrier; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_058
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Right Tile Barrier
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Center Room
-      Trivial
-
-> Right Tile Barrier; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_059
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Event - Ceiling Blob
-      Morph Ball and Shoot Beam
-  > Left Tile Barrier
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Tunnel to Kraid Eyedoor Room
-      All of the following:
-          Morph Ball and After Cataris - Above Kraid Ceiling Blob
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
 > Dock to Kraid Arena; Heals? False
   * Layers: default
@@ -2042,12 +1732,12 @@ Extra - asset_id: collision_camera_024
 > Tunnel to Kraid Eyedoor Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Kraid Eyedoor Room/Tunnel to Above Kraid
-  > Right Tile Barrier
+  > Center Room
       All of the following:
           Morph Ball and After Cataris - Above Kraid Ceiling Blob
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
 > Dock to Path to Kraid Entryway; Heals? False
   * Layers: default
@@ -2067,16 +1757,26 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Left Tile Barrier
-      Trivial
+  > Event - Ceiling Blob
+      All of the following:
+          Morph Ball
+          Lay Bomb or Shoot Beam
   > Left Room
       All of the following:
           Can Slide
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Tunnel to Kraid Eyedoor Room
+      All of the following:
+          Morph Ball and After Cataris - Above Kraid Ceiling Blob
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Event - Blob above Kraid, left
-      Shoot Diffusion or Wave
+      All of the following:
+          # Knowledge of where the blob is while it is occluded
+          Wave Beam and Knowledge (Intermediate)
 
 > Event - Blob above Kraid, left; Heals? False
   * Layers: default
@@ -2127,8 +1827,8 @@ Extra - asset_id: collision_camera_025
           Speed Booster and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer
   > Event - Blob
       Lay Bomb or Shoot Beam
-  > Tile Group (BOMB)
-      Trivial
+  > Teleporter to Artaria - Teleport to Cataris
+      Lay Bomb or Lay Power Bomb
   > Tunnel to Teleport to Ghavoran
       After Cataris - Ghavoran Teleport Lower Blob
 
@@ -2164,6 +1864,8 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Door to Path to Kraid Entryway
       Morph Ball
+  > Teleporter to Artaria - Teleport to Cataris
+      Morph Ball
 
 > Event - Blob; Heals? False
   * Layers: default
@@ -2182,27 +1884,11 @@ Extra - asset_id: collision_camera_025
   * Extra - target_spawn_point: LE_Platform_Teleport_FromMagma
   * Extra - start_point_actor_name: LE_Platform_Teleport_FromCave
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  > Door to West Teleport Access
+      Lay Bomb or Lay Power Bomb
   > Door to Save Station West
       Trivial
   > Pickup (Missile+ Tank)
-      Can Slide
-  > Tile Group (BOMB)
-      Morph Ball
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_020
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Path to Kraid Entryway
-      Can Slide
-  > Door to West Teleport Access
-      Trivial
-  > Pickup (Missile+ Tank)
-      Can Slide
-  > Teleporter to Artaria - Teleport to Cataris
       Can Slide
 
 > Tunnel to Teleport to Ghavoran; Heals? False
@@ -2276,7 +1962,7 @@ Extra - asset_id: collision_camera_026
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tile Group (POWERBEAM) 3
+  > Lower Center
       All of the following:
           Can Slide
           Any of the following:
@@ -2289,84 +1975,60 @@ Extra - asset_id: collision_camera_026
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
-> Tile Group (POWERBEAM) 1; Heals? False
+> Lower Center; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_056
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Pickup (Missile Tank - Top)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Top room
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_068
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Pickup (Missile Tank - Bottom)
-      Gravity Suit and Speed Booster
-  > Lower Center
-      Trivial
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_023
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Gravity Suit
+              All of the following:
+                  Morph Ball and Speedbooster Conservation (Beginner) and Lava Damage ≥ 100
+                  Any of the following:
+                      Varia Suit and Heat/Cold Runs (Beginner)
+                      Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Event - Lower Blob
+      Lay Bomb or Shoot Beam
   > Teleporter to Ghavoran - Teleport to Cataris
       All of the following:
           Morph Ball
           Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Lower Center
-      Trivial
-
-> Lower Center; Heals? False
-  * Layers: default
-  > Event - Lower Blob
-      Lay Bomb or Shoot Beam
-  > Tile Group (POWERBEAM) 2
-      Gravity Suit
-  > Tile Group (POWERBEAM) 3
-      All of the following:
-          Any of the following:
-              Flash Shift or Simple IBJ or Use Spin Boost
               All of the following:
-                  Grapple Beam
-                  Spider Magnet or Grapple Movement (Beginner)
+                  Any of the following:
+                      Flash Shift or Use Spin Boost
+                      Grapple Beam and Grapple Movement (Beginner)
+                      All of the following:
+                          Spider Magnet
+                          Grapple Beam or Damage Boost (Intermediate)
+                  Any of the following:
+                      Varia Suit
+                      Heat/Cold Runs (Intermediate) and Heat Damage ≥ 150
               All of the following:
                   Speed Booster
                   Any of the following:
                       Gravity Suit
-                      Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage
+                      All of the following:
+                          Speedbooster Conservation (Beginner)
+                          Any of the following:
+                              Varia Suit
+                              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+              All of the following:
+                  Simple IBJ
+                  Any of the following:
+                      Varia Suit
+                      Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
   > Tunnel to Teleport to Artaria (Red)
       All of the following:
           After Cataris - Ghavoran Teleport Lower Blob
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
 > Top room; Heals? False
   * Layers: default
   > Pickup (Missile Tank - Top)
       All of the following:
           Morph Ball
-          Simple IBJ or Use Spin Boost
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
@@ -2378,8 +2040,6 @@ Extra - asset_id: collision_camera_026
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tile Group (POWERBEAM) 1
-      Trivial
   > Tunnel to Ghavoran Teleport Access
       All of the following:
           After Cataris - Ghavoran Teleport Upper Blob
@@ -2556,8 +2216,8 @@ Extra - asset_id: collision_camera_029
   * Pickup 33; Major Location? False
   * Extra - actor_name: item_powerbombtank_002
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
-  > Tile Group (POWERBEAM)
-      Trivial
+  > Center of Tunnel
+      Lay Power Bomb
 
 > Door to EMMI Zone Exits West; Heals? False
   * Layers: default
@@ -2586,35 +2246,6 @@ Extra - asset_id: collision_camera_029
   > Center of Tunnel
       Morph Ball and After Cataris - Central Unit
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBOMB)
-      Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_076
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Pickup (Power Bomb Tank)
-      Ballspark
-  > Center of Tunnel
-      Morph Ball
-
 > Tunnel to Green EMMI Introduction; Heals? False
   * Layers: default
   * Cataris EMMI Tunnel to Green EMMI Introduction/Tunnel to EMMI Zone Item Tunnel
@@ -2629,10 +2260,14 @@ Extra - asset_id: collision_camera_029
 
 > Center of Tunnel; Heals? False
   * Layers: default
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          Lay Power Bomb
+          Any of the following:
+              Ballspark
+              Space Jump and Cross Bomb Skip (Hypermode)
   > Door to EMMI Zone Exit to Map Station
       Morph Ball and After Cataris - Central Unit
-  > Tile Group (POWERBOMB)
-      Morph Ball
   > Tunnel to Green EMMI Introduction
       Morph Ball
   > Tunnel to EMMI Zone Exits West
@@ -2690,7 +2325,7 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Tower East
       Any of the following:
-          Space Jump or Speed Booster or Simple IBJ
+          Space Jump or Speed Booster or Walljump (Advanced) or Simple IBJ
           All of the following:
               Grapple Beam
               Spider Magnet or Grapple Movement (Beginner)
@@ -2699,6 +2334,7 @@ Extra - asset_id: collision_camera_031
       Any of the following:
           Flash Shift or Spider Magnet or Speed Booster or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
+          Bomb and Morph Ball and Infinite Bomb Jump (Advanced)
 
 > Dock to EMMI Zone Tower East; Heals? False
   * Layers: default
@@ -2707,7 +2343,7 @@ Extra - asset_id: collision_camera_031
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Map Station
       Any of the following:
-          Space Jump or Simple IBJ
+          Space Jump or Walljump (Advanced) or Simple IBJ
           All of the following:
               Grapple Beam
               Spider Magnet or Grapple Movement (Beginner)
@@ -2764,14 +2400,10 @@ Extra - asset_id: collision_camera_032
       Any of the following:
           After Cataris - Magnet Wall Thermal Device
           All of the following:
-              After Cataris - Central Unit
+              Morph Ball and After Cataris - Central Unit
               Any of the following:
-                  Simple IBJ
-                  All of the following:
-                      Morph Ball
-                      Any of the following:
-                          Space Jump
-                          Speed Booster and Disabled Door Lock Randomizer
+                  Space Jump or Simple IBJ
+                  Speed Booster and Disabled Door Lock Randomizer
   > Door to EMMI Zone East Tower Access (Top)
       Trivial
 
@@ -3008,6 +2640,8 @@ Extra - asset_id: collision_camera_036
   * Extra - actor_def: actordef:actors/props/breakablemag008/charclasses/breakablemag008.bmsad
   > Door to Central Unit
       Trivial
+  > Room Center
+      After Cataris - Central Unit and Combat (Beginner)
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -3041,7 +2675,13 @@ Extra - asset_id: collision_camera_036
   > Upper-right Corner
       Morph Ball or After Cataris - Central Unit Top Blob
   > Pickup (Morph Ball)
-      After Cataris - Central Unit
+      All of the following:
+          After Cataris - Central Unit
+          Any of the following:
+              Morph Ball or After Cataris - Central Unit Top Blob
+              All of the following:
+                  After Cataris - Central Unit Bottom Blob
+                  Combat (Beginner) or Can Slide
   > Room Center
       After Cataris - Central Unit Bottom Blob and Can Slide
 
@@ -3463,7 +3103,7 @@ Extra - asset_id: collision_camera_043
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 1
+  > Tunnel to Long Mouth Statue Room
       Can Slide
 
 > Door to Long Mouth Statue Room; Heals? False
@@ -3475,68 +3115,24 @@ Extra - asset_id: collision_camera_043
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Dock to Above Kraid
-      Any of the following:
-          Gravity Suit
-          All of the following:
-              Lava Damage ≥ 100
-              Any of the following:
-                  Varia Suit and Heat/Cold Runs (Beginner)
-                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_019
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Teleport to Artaria (Red)
-      Can Slide
-  > Tunnel to Long Mouth Statue Room
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_026
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Long Mouth Statue Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Dock to Above Kraid
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
 
 > Dock to Above Kraid; Heals? False
   * Layers: default
   * Open Passage to Above Kraid/Dock to Path to Kraid Entryway
   > Door to Long Mouth Statue Room
       Any of the following:
-          Gravity Suit
-          All of the following:
-              Lava Damage ≥ 100
-              Any of the following:
-                  Varia Suit and Heat/Cold Runs (Beginner)
-                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
           Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
 
 > Tunnel to Long Mouth Statue Room; Heals? False
   * Layers: default
   * Slide Tunnel to Long Mouth Statue Room/Tunnel to Path to Kraid Entryway
-  > Tile Group (POWERBEAM) 1
-      Trivial
+  > Door to Teleport to Artaria (Red)
+      Can Slide
 
 ----------------
 Diffusion Beam Room
@@ -3608,110 +3204,6 @@ Extra - asset_id: collision_camera_044
   > Door from Teleport to Dairon
       Trivial
 
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_003
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Tunnel to Kraid Arena (bottom)
-      Morph Ball
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_004
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_005
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_006
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (WEIGHT) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Tile Group (BOMB) 4
-      Morph Ball
-
-> Tile Group (WEIGHT) 3; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_008
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_009
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-  > Tile Group (BOMB) 5
-      Morph Ball
-
-> Tile Group (WEIGHT) 4; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_010
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (WEIGHT) 2
-      Morph Ball
-
-> Tile Group (BOMB) 5; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_011
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (WEIGHT) 2
-      Morph Ball
-  > Tile Group (WEIGHT) 3
-      Morph Ball
-  > Tile Group (BOMB) 4
-      Morph Ball
-  > Tile Group (WEIGHT) 4
-      Trivial
-  > Alcove
-      Trivial
-
 > Tunnel to Kraid Arena (top); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (Top)
@@ -3727,8 +3219,10 @@ Extra - asset_id: collision_camera_044
 > Tunnel to Kraid Arena (bottom); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (Bottom)
-  > Tile Group (BOMB) 1
-      Morph Ball
+  > Alcove
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
 
 > Tunnel to Teleport to Dairon; Heals? False
   * Layers: default
@@ -3752,10 +3246,8 @@ Extra - asset_id: collision_camera_044
       Morph Ball and After Cataris - PB Tank Grapple Block
   > Event - Grapple Block
       Grapple Beam
-  > Tile Group (WEIGHT) 4
-      Trivial
-  > Tile Group (BOMB) 5
-      Trivial
+  > Tunnel to Kraid Arena (bottom)
+      Can Slide Underwater
 
 ----------------
 Lava Button East Access
@@ -3783,9 +3275,7 @@ Extra - asset_id: collision_camera_045
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tile Group (POWERBEAM)
+  > Pickup Corner
       Trivial
 
 > Door to Lava Button East (Cloak); Heals? False
@@ -3809,8 +3299,6 @@ Extra - asset_id: collision_camera_045
   * Pickup 46; Major Location? False
   * Extra - actor_name: item_missiletank_010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Lava Button East (Charge)
-      Can Slide
   > Pickup Corner
       Trivial
 
@@ -3822,18 +3310,6 @@ Extra - asset_id: collision_camera_045
   > Door to Lava Button East (Cloak)
       Trivial
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_036
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Lava Button East (Charge)
-      Trivial
-  > Pickup Corner
-      Trivial
-
 > Tunnel to Teleport to Artaria (Blue); Heals? False
   * Layers: default
   * Slide Tunnel to Teleport to Artaria (Blue)/Tunnel to Lava Button East Access
@@ -3842,9 +3318,9 @@ Extra - asset_id: collision_camera_045
 
 > Pickup Corner; Heals? False
   * Layers: default
-  > Pickup (Missile Tank)
+  > Door to Lava Button East (Charge)
       Trivial
-  > Tile Group (POWERBEAM)
+  > Pickup (Missile Tank)
       Trivial
   > Event - Blob through wall
       Shoot Diffusion or Wave
@@ -3983,184 +3459,24 @@ Extra - asset_id: collision_camera_048
   * Pickup 43; Major Location? False
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (POWERBEAM) 1
-      Can Slide
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_046
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBEAM) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
   > Left Floor
       All of the following:
-          After Cataris - Heated Wide Beam Block
+          Any of the following:
+              Lay Bomb
+              Power Bombs ≥ 2 and Lay Power Bomb
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_047
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tile Group (BOMB) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_049
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (MISSILE) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tile Group (MISSILE) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
-  > Tile Group (MISSILE) 3
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage
-  > Tunnel to Teleport to Artaria (Blue)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-  > Left Floor
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-
-> Tile Group (MISSILE) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_050
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tile Group (MISSILE) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tile Group (MISSILE) 3
-      All of the following:
-          Can Slide
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
-  > Tunnel to Teleport to Artaria (Blue)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 80
-
-> Tile Group (MISSILE) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_051
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Tile Group (POWERBEAM) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
-  > Tile Group (MISSILE) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tile Group (MISSILE) 3
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tunnel to Teleport to Artaria (Blue)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-
-> Tile Group (MISSILE) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_052
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Tile Group (POWERBEAM) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 60
-  > Tile Group (MISSILE) 1
-      All of the following:
-          Can Slide
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
-  > Tile Group (MISSILE) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tunnel to Teleport to Artaria (Blue)
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
 
 > Tunnel to Teleport to Artaria (Blue); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Teleport to Artaria (Blue)/Tunnel to Double Obsydomithon Room
-  > Tile Group (POWERBEAM) 2
+  > Left Floor
       All of the following:
-          Morph Ball
+          Morph Ball or Shoot Missile
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Tile Group (MISSILE) 1
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 80
-  > Tile Group (MISSILE) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 60
-  > Tile Group (MISSILE) 3
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 150
 
 > Event - Wide Beam Block; Heals? False
   * Layers: default
@@ -4172,16 +3488,19 @@ Extra - asset_id: collision_camera_048
   * Layers: default
   > Door to Total Recharge Station North
       After Cataris - Obsydomithon Blob
-  > Tile Group (BOMB) 1
+  > Pickup (Missile Tank)
       All of the following:
           After Cataris - Heated Wide Beam Block
+          Lay Bomb or Lay Power Bomb
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
+  > Tunnel to Teleport to Artaria (Blue)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 150
   > Event - Wide Beam Block
       Any of the following:
           Push Wide Beam Block
@@ -4261,6 +3580,9 @@ Extra - asset_id: collision_camera_051
                   Any of the following:
                       Varia Suit
                       Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+              All of the following:
+                  Heat/Cold Runs (Beginner) and Lava Damage ≥ 100
+                  Varia Suit or Heat Damage ≥ 100
 
 > Door to Green EMMI Introduction Access; Heals? False
   * Layers: default
@@ -4275,10 +3597,8 @@ Extra - asset_id: collision_camera_051
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
+  > Dock to Underlava Puzzle Room 1
+      Gravity Suit and Morph Ball
   > Above Tutorial Blob
       Any of the following:
           Varia Suit
@@ -4320,52 +3640,6 @@ Extra - asset_id: collision_camera_051
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (POWERBEAM) 1
-      Gravity Suit or Lava Damage ≥ 500
-  > Dock to Underlava Puzzle Room 1
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_060
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBOMB)
-      Gravity Suit or Lava Damage ≥ 500
-  > Tile Group (POWERBEAM) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Dock to Underlava Puzzle Room 1
-      Any of the following:
-          Gravity Suit and Can Slide
-          Morph Ball and Heat/Cold Runs (Intermediate) and Lava Damage ≥ 600
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_061
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Green EMMI Introduction Access
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Tile Group (POWERBEAM) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-
 > Tunnel to Diffusion Beam Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Teleport to Dairon
@@ -4395,12 +3669,8 @@ Extra - asset_id: collision_camera_051
 > Dock to Underlava Puzzle Room 1; Heals? False
   * Layers: default
   * Open Passage to Underlava Puzzle Room 1/Dock to Teleport to Dairon
-  > Tile Group (POWERBOMB)
-      Trivial
-  > Tile Group (POWERBEAM) 1
-      Any of the following:
-          Gravity Suit and Can Slide
-          Morph Ball and Heat/Cold Runs (Intermediate) and Lava Damage ≥ 600
+  > Door to Green EMMI Introduction Access
+      Gravity Suit and Morph Ball
 
 > Event - Kraid Eyedoor Blob; Heals? False
   * Layers: default
@@ -4426,6 +3696,9 @@ Extra - asset_id: collision_camera_051
                   Any of the following:
                       Varia Suit
                       Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+              All of the following:
+                  Heat/Cold Runs (Beginner) and Lava Damage ≥ 200 and Perform WBJ
+                  Varia Suit or Heat Damage ≥ 150
   > Event - Lava Blob
       All of the following:
           Shoot Diffusion or Wave
@@ -4456,9 +3729,13 @@ Extra - asset_id: collision_camera_051
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
   > Event - Kraid Eyedoor Blob
-      Wave Beam
+      Any of the following:
+          Wave Beam
+          Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
   > Event - Diffusion Blob, above
-      Wave Beam
+      Any of the following:
+          Wave Beam
+          Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
 
 ----------------
 Green EMMI Introduction Access
@@ -4554,10 +3831,12 @@ Extra - asset_id: collision_camera_053
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  > Tile Group (POWERBEAM) 1
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
+  > Above Lava
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 110
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
@@ -4565,7 +3844,7 @@ Extra - asset_id: collision_camera_053
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Dock to Underlava Puzzle Room 1
-      Morph Ball and After Cataris - Underlava Speed Blocks Destroyed
+      Trivial
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -4575,56 +3854,14 @@ Extra - asset_id: collision_camera_053
   > Below Lava
       Trivial
 
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_025
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Green EMMI Introduction Access
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-  > Above Lava
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_062
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 3
-      Trivial
-  > Tunnel to Green EMMI Introduction Access
-      Trivial
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_063
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Trivial
-  > Tunnel to Dropdown Pit
-      Trivial
-
 > Above Lava; Heals? False
   * Layers: default
-  > Tile Group (POWERBEAM) 1
+  > Door to Green EMMI Introduction Access
       All of the following:
           Morph Ball
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+              Heat/Cold Runs (Beginner) and Heat Damage ≥ 110
   > Below Lava
       Any of the following:
           Gravity Suit
@@ -4656,7 +3893,7 @@ Extra - asset_id: collision_camera_053
 > Tunnel to Dropdown Pit; Heals? False
   * Layers: default
   * Slide Tunnel to Dropdown Pit/Tunnel to Underlava Puzzle Room 2
-  > Tile Group (POWERBEAM) 3
+  > Tunnel to Green EMMI Introduction Access
       Trivial
 
 > Tunnel to Green EMMI Introduction Access; Heals? False
@@ -4666,7 +3903,7 @@ Extra - asset_id: collision_camera_053
       All of the following:
           # TODO: After proper blast shield logic is implemented, adjust this. This is a temporary connection.
           Wave Beam and Disabled Door Lock Randomizer
-  > Tile Group (POWERBEAM) 2
+  > Tunnel to Dropdown Pit
       Trivial
 
 > Dock to Underlava Puzzle Room 1; Heals? False
@@ -4674,12 +3911,12 @@ Extra - asset_id: collision_camera_053
   * Open Passage to Underlava Puzzle Room 1/Dock to Underlava Puzzle Room 2
   > Pickup (Energy Part)
       All of the following:
-          Gravity Suit and Morph Ball and After Cataris - Underlava Speed Blocks Destroyed
+          After Cataris - Underlava Speed Blocks Destroyed
           Flash Shift or Speedbooster Conservation (Beginner) or Simple IBJ or Use Spin Boost
   > Below Lava
       Morph Ball and After Cataris - Underlava Speed Blocks Destroyed
   > Event - Speed Blocks Destroyed
-      Gravity Suit and Speed Booster and After Cataris - Lava Grapple Block
+      After Cataris - Lava Grapple Block
 
 > Event - Speed Blocks Destroyed; Heals? False
   * Layers: default
@@ -4696,13 +3933,13 @@ Extra - asset_id: collision_camera_054
   * Layers: default
   * Open Passage to Underlava Puzzle Room 2/Dock to Underlava Puzzle Room 1
   > Dock to Teleport to Dairon
-      Gravity Suit
+      Trivial
 
 > Dock to Teleport to Dairon; Heals? False
   * Layers: default
   * Open Passage to Teleport to Dairon/Dock to Underlava Puzzle Room 1
   > Dock to Underlava Puzzle Room 2
-      Gravity Suit and Ballspark
+      Ballspark
 
 ----------------
 EMMI Zone Hidden Missile Room
@@ -4714,29 +3951,17 @@ Extra - asset_id: collision_camera_055
   * Pickup 47; Major Location? False
   * Extra - actor_name: item_missiletank_011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (MISSILE)
-      Morph Ball
   > Main Room
       Morph Ball
-
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_014
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Main Room
-      Trivial
 
 > Main Room; Heals? False
   * Layers: default
-  > Tile Group (MISSILE)
-      Any of the following:
-          Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
-          Grapple Beam and Grapple Movement (Beginner)
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball and Shoot Missile
+          Any of the following:
+              Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+              Grapple Beam and Grapple Movement (Beginner)
   > Tunnel to EMMI Zone Tower East
       Morph Ball
 
@@ -4862,8 +4087,12 @@ Extra - asset_id: collision_camera_061
   * Pickup 34; Major Location? False
   * Extra - actor_name: item_missiletank_012
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB)
-      Morph Ball
+  > Safe Ledge
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Lava Damage ≥ 400
 
 > Door to Above Kraid; Heals? False
   * Layers: default
@@ -4905,22 +4134,6 @@ Extra - asset_id: collision_camera_061
   > Safe Ledge
       Trivial
 
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_071
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Safe Ledge
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Beginner) and Lava Damage ≥ 400
-
 > Tunnel to Above Kraid; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Above Kraid/Tunnel to Kraid Eyedoor Room
@@ -4931,20 +4144,22 @@ Extra - asset_id: collision_camera_061
 
 > Safe Ledge; Heals? False
   * Layers: default
+  > Pickup (Missile Tank)
+      All of the following:
+          Lay Bomb or Lay Power Bomb
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Beginner) and Lava Damage ≥ 400
   > Door to Above Kraid
       All of the following:
-          Flash Shift or Grapple Beam or Gravity Suit or Spider Magnet or Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+          Any of the following:
+              Flash Shift or Gravity Suit or Spider Magnet or Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+              Grapple Beam and Grapple Movement (Beginner)
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Event - Wall Blob
       Shoot Diffusion or Wave
-  > Tile Group (BOMB)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Beginner) and Lava Damage ≥ 400
   > Tunnel to Teleport to Dairon
       All of the following:
           After Cataris - Kraid Eyedoor Blob
@@ -5031,10 +4246,12 @@ Extra - asset_id: collision_camera_063
   > Tunnel to Diffusion Beam Room (Top)
       Any of the following:
           Simple IBJ or Use Spin Boost
-          Spider Magnet and Before Elun - Release X Parasites
           All of the following:
-              Grapple Beam
-              Spider Magnet or Grapple Movement (Beginner)
+              Spider Magnet
+              Flash Shift or Grapple Beam or Before Elun - Release X Parasites
+          Grapple Beam and Grapple Movement (Beginner)
+          Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
   > Tunnel to Diffusion Beam Room (Bottom)
       All of the following:
           Morph Ball
@@ -5056,7 +4273,7 @@ Extra - asset_id: collision_camera_063
           All of the following:
               Any of the following:
                   # Requirement for getting to Kraid's mouth in phase 2
-                  Spider Magnet or Combat (Beginner)
+                  Spider Magnet or Space Jump or Combat (Beginner)
               Any of the following:
                   # Damage requirements
                   Shoot Charge Beam
@@ -5072,6 +4289,8 @@ Extra - asset_id: collision_camera_063
   * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (top)
   > Right Ledge
       Trivial
+  > Event - Kraid
+      Wave Beam and Combat (Beginner) and Shoot Charge Beam
 
 > Tunnel to Diffusion Beam Room (Bottom); Heals? False
   * Layers: default
