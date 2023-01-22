@@ -72,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Reaching the upper tunnel in Ferenia - Speedboost Slopes Maze properly accounts for the ability to destroy the beamblocks using Wave Beam, Diffusion Beam, explosives, or Movement (Beginner)
 - Fixed: Usage of Infinite Bomb Jump in Ferenia Separate Tunnels Room now correctly requires the respective Bomb type. The trick is now set at different difficulty depending on which bomb type is being used.
 - Removed: Infinite Bomb Jump for reaching Wave Beam Tutorial from the cold rooms.
+- Removed: Shinespark in Ghavoran Total Recharge Station North. This one requires either shoort boost or charging speed in the room to the left. Removing this for now.
 
 ## [5.3.0] - 2023-01-05
 
