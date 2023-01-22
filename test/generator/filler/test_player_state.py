@@ -81,3 +81,4 @@ def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pi
         assert filtered == {(state_for_blank, PickupIndex(0)): 1}
     else:
         assert filtered == locations_weighted
+

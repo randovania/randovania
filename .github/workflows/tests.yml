@@ -282,7 +282,9 @@ jobs:
           python -m pip install -r requirements-lint.txt
 
       - name: Test if requirements files are up to date
+        shell: bash
         run: |
+          set -e
           python tools/update_requirements.py --quiet
           git diff --exit-code
           

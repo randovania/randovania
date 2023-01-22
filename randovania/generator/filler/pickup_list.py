@@ -93,7 +93,11 @@ def _requirement_lists_without_satisfied_resources(state: State,
                 continue
             seen_lists.add(alternative)
 
+            print("//////////////////////////")
+            print(alternative)
+
             for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
+                print("=============", items)
                 _add_items(items)
 
     if debug.debug_level() > 2:
