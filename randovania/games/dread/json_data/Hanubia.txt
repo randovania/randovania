@@ -83,9 +83,7 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_def: None
   > Event - Grapple Block
       Grapple Beam
-  > Tile Group (BOMB) 1
-      Trivial
-  > Tile Group (SCREWATTACK) 2
+  > Shortcut Room
       Morph Ball and After Hanubia - Ferenia Shortcut Grapple Block
 
 > Pickup (Missile Tank); Heals? False
@@ -99,10 +97,10 @@ Extra - asset_id: collision_camera_002
 > Tunnel to Speedboost Puzzle Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Speedboost Puzzle Room/Tunnel to Ferenia Shortcut
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-  > Tile Group (BOMB) 4
-      Trivial
+  > Missile Tank Alcove
+      Lay Bomb or Lay Power Bomb
+  > Shortcut Room
+      Screw Attack
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -111,94 +109,38 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Transport to Ferenia
       Trivial
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_040
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_039
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Door to Transport to Ferenia
-      Trivial
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_041
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBEAM)
-      Morph Ball
-  > Missile Tank Alcove
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_042
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 4
-      Morph Ball
-  > Missile Tank Alcove
-      Morph Ball
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_043
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Transport to Ferenia
-      Morph Ball and After Hanubia - Ferenia Shortcut Grapple Block
-  > Tunnel to Speedboost Puzzle Room
-      Trivial
-  > Event - Grapple Block
-      Break/Move Grapple Block from Behind
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_036
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBEAM)
-      Morph Ball
-  > Tile Group (BOMB) 1
-      Morph Ball
-
-> Tile Group (BOMB) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_038
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Tunnel to Speedboost Puzzle Room
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
 
 > Missile Tank Alcove; Heals? False
   * Layers: default
+  > Door to Transport to Ferenia
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Lay Bomb
+              Power Bombs ≥ 2 and Lay Power Bomb
   > Pickup (Missile Tank)
       Trivial
-  > Tile Group (SCREWATTACK) 1
+  > Tunnel to Speedboost Puzzle Room
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
+
+> Shortcut Room; Heals? False
+  * Layers: default
+  > Door to Transport to Ferenia
+      Morph Ball and After Hanubia - Ferenia Shortcut Grapple Block
+  > Tunnel to Speedboost Puzzle Room
+      All of the following:
+          Screw Attack
+          Walljump (Beginner) or Use Spin Boost
+  > Event - Reverse Grapple Block
+      Grapple Beam and Reverse Grapple Block (Beginner)
+
+> Event - Reverse Grapple Block; Heals? False
+  * Layers: default
+  * Event Hanubia - Ferenia Shortcut Grapple Block
+  > Shortcut Room
       Trivial
-  > Tile Group (BOMB) 2
-      Morph Ball
 
 ----------------
 Navigation Station
@@ -226,6 +168,8 @@ Extra - asset_id: collision_camera_003
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door from Speedboost Puzzle Room
+      Trivial
   > Navigation Room
       Trivial
 
@@ -238,7 +182,7 @@ Extra - asset_id: collision_camera_003
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  > Navigation Room
+  > Door to Speedboost Puzzle Room
       Trivial
 
 > Navigation Room; Heals? False; Spawn Point
@@ -326,11 +270,11 @@ Extra - asset_id: collision_camera_004
   > Door to Total Recharge Station North
       Before Escape Sequence
   > Event - Glass Tube
-      Speed Booster and Lay Power Bomb
+      All of the following:
+          Lay Power Bomb
+          Screw Attack or Speed Booster
   > Dock to Ship Room
       After Escape Sequence
-  > Tile Group (SCREWATTACK)
-      Trivial
 
 > Inside breakable tube; Heals? False
   * Layers: default
@@ -341,11 +285,13 @@ Extra - asset_id: collision_camera_004
   > Dock to Escape Room 3
       After Escape Sequence
   > Next to Hyper Block
-      Speed Booster and After Hanubia - Entrance Glass Tube
-  > Tile Group (SCREWATTACK)
       All of the following:
           After Hanubia - Entrance Glass Tube
-          Space Jump or Simple IBJ
+          Any of the following:
+              Speed Booster
+              All of the following:
+                  Screw Attack or After Escape Sequence
+                  Space Jump or Simple IBJ
 
 > Dock to Ship Room; Heals? False
   * Layers: default
@@ -367,17 +313,6 @@ Extra - asset_id: collision_camera_004
   * Extra - start_point_actor_name: SP_AccessPoint_10
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station
-      Trivial
-
-> Tile Group (SCREWATTACK); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_031
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Event - Glass Tube
-      Lay Power Bomb
-  > Next to Hyper Block
       Trivial
 
 ----------------
@@ -464,7 +399,7 @@ Extra - asset_id: collision_camera_006
   * Pickup 134; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (MISSILE)
+  > Start Point
       Morph Ball
 
 > Event - Grapple Block; Heals? False
@@ -483,10 +418,10 @@ Extra - asset_id: collision_camera_006
       Morph Ball and After Hanubia - Total Recharge Station North Grapple Block
   > Door to Gold Chozo Warrior Arena
       Trivial
+  > Pickup (Missile Tank)
+      Can Slide and Shoot Missile
   > Total Recharge
       Trivial
-  > Tile Group (MISSILE)
-      Morph Ball
 
 > Total Recharge; Heals? True
   * Layers: default
@@ -494,17 +429,6 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_001
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  > Start Point
-      Trivial
-
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_049
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('MISSILE',)
-  > Pickup (Missile Tank)
-      Morph Ball
   > Start Point
       Trivial
 
@@ -575,8 +499,8 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_def: None
   > Door to Navigation Station (Top)
       Wave Beam and Disabled Door Lock Randomizer
-  > Tile Group (BOMB) 1
-      Trivial
+  > Start Point 1
+      Lay Bomb or Lay Power Bomb
 
 > Door to Tank Room; Heals? False
   * Layers: default
@@ -595,8 +519,10 @@ Extra - asset_id: collision_camera_009
   * Pickup 135; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
-  > Tile Group (BOMB) 2
-      Trivial
+  > Door from Tank Room
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
 
 > Door from Tank Room; Heals? False
   * Layers: default
@@ -607,9 +533,11 @@ Extra - asset_id: collision_camera_009
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          Ballspark
+          Lay Bomb or Lay Power Bomb
   > Door to Navigation Station (Top)
-      Trivial
-  > Tile Group (BOMB) 2
       Trivial
 
 > Door to Navigation Station (Top); Heals? False
@@ -621,9 +549,9 @@ Extra - asset_id: collision_camera_009
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  > Start Point 2
+  > Door from Tank Room
       Trivial
-  > Tile Group (BOMB) 2
+  > Start Point 2
       Trivial
 
 > Tunnel to Ferenia Shortcut; Heals? False
@@ -644,44 +572,20 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_StrongReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Navigation Station (Bottom)
+      Lay Bomb or Lay Power Bomb
   > Door to Tank Room
       Trivial
   > Tunnel to Ferenia Shortcut
       Morph Ball and After Hanubia - Speedbooster Puzzle Room Grapple Block
   > Event - Grapple Block
       Grapple Beam
-  > Tile Group (BOMB) 1
-      Morph Ball
 
 > Start Point 2; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: SP_AccessPoint_10B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station (Top)
-      Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_030
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Door to Navigation Station (Bottom)
-      Trivial
-  > Start Point 1
-      Can Slide
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_046
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Power Bomb Tank)
-      All of the following:
-          # Door rando does not matter here until Random Start support. If you can get in here, you can get the item.
-          Ballspark
-  > Door from Tank Room
       Trivial
 
 ----------------
@@ -703,23 +607,29 @@ Extra - asset_id: collision_camera_010
 
 > Dock to EMMI Zone Exit West (Bottom); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (dooremmy_000)
+  * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (Bottom)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door from Speedboost Puzzle Room
       Before Escape Sequence
-  > Tile Group (BOMB)
-      Simple IBJ or Use Spin Boost
+  > Center Platform
+      Any of the following:
+          Lay Bomb
+          All of the following:
+              Lay Power Bomb
+              Any of the following:
+                  Speed Booster or Single-wall Wall Jump (Beginner) or Simple IBJ or Use Spin Boost
+                  Flash Shift and Walljump (Beginner)
 
 > Dock to EMMI Zone Exit West (Top); Heals? False
   * Layers: default
-  * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (dooremmy_001)
+  * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (Top)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Speedboost Puzzle Room
       Before Escape Sequence
-  > Tile Group (POWERBOMB)
-      Trivial
+  > Center Platform
+      Lay Power Bomb
 
 > Door to Speedboost Puzzle Room; Heals? False
   * Layers: default
@@ -733,27 +643,12 @@ Extra - asset_id: collision_camera_010
   > Dock to EMMI Zone Exit West (Top)
       Trivial
 
-> Tile Group (BOMB); Heals? False
+> Center Platform; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_033
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
   > Dock to EMMI Zone Exit West (Bottom)
-      Trivial
-  > Tile Group (POWERBOMB)
-      Trivial
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_045
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
+      Lay Bomb or Lay Power Bomb
   > Dock to EMMI Zone Exit West (Top)
-      Trivial
-  > Tile Group (BOMB)
-      Trivial
+      Lay Power Bomb
 
 ----------------
 EMMI Zone Exit West
@@ -761,7 +656,7 @@ EMMI Zone Exit West
 Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': -2800.0, 'y2': 650.0}
 Extra - polygon: [[8500.0, 650.0], [6400.0, 650.0], [6400.0, -2800.0], [8500.0, -2800.0]]
 Extra - asset_id: collision_camera_011
-> Dock to Tank Room (dooremmy_000); Heals? False
+> Dock to Tank Room (Bottom); Heals? False
   * Layers: default
   * EMMI Door to Tank Room/Dock to EMMI Zone Exit West (Bottom)
   * Extra - actor_name: dooremmy_000
@@ -769,13 +664,13 @@ Extra - asset_id: collision_camera_011
   > Start Point
       Trivial
 
-> Dock to Tank Room (dooremmy_001); Heals? False
+> Dock to Tank Room (Top); Heals? False
   * Layers: default
   * EMMI Door to Tank Room/Dock to EMMI Zone Exit West (Top)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (BOMB) 1
-      Trivial
+  > Tunnel to Central Unit
+      Lay Bomb or Lay Power Bomb
 
 > Door to Orange EMMI Introduction; Heals? False
   * Layers: default
@@ -792,8 +687,8 @@ Extra - asset_id: collision_camera_011
 > Tunnel to Central Unit; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit West
-  > Tile Group (BOMB) 2
-      Trivial
+  > Dock to Tank Room (Top)
+      Lay Bomb or Lay Power Bomb
 
 > Dock to Escape Room 3; Heals? False
   * Layers: default
@@ -805,34 +700,12 @@ Extra - asset_id: collision_camera_011
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_PowerBomb
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Tank Room (dooremmy_000)
+  > Dock to Tank Room (Bottom)
       Trivial
   > Door to Orange EMMI Introduction
       Before Escape Sequence
   > Dock to Escape Room 3
       After Escape Sequence
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_047
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Dock to Tank Room (dooremmy_001)
-      Trivial
-  > Tile Group (BOMB) 2
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_034
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('BOMB',)
-  > Tunnel to Central Unit
-      Trivial
-  > Tile Group (BOMB) 1
-      Trivial
 
 ----------------
 Central Unit
@@ -862,9 +735,15 @@ Extra - asset_id: collision_camera_012
   * Extra - start_point_actor_name: centralunitmagmacontroller_000
   * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
   > Tunnel to EMMI Zone Exit East
-      Simple IBJ or Use Spin Boost
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          Morph Ball and Single-wall Wall Jump (Intermediate)
+          Flash Shift and Before Escape Sequence
   > Tunnel to EMMI Zone Exit West
-      Space Jump or Simple IBJ
+      Any of the following:
+          Space Jump or Simple IBJ
+          Movement (Intermediate) and Use Spin Boost
+          After Hanubia - EMMI Zone Speed Prep and Speedbooster Conservation (Beginner)
 
 ----------------
 EMMI Zone Exit East
@@ -904,11 +783,19 @@ Extra - asset_id: collision_camera_013
   * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit East
   > Dock to Total Recharge Station East (Upper)
       After Hanubia - EMMI Zone PB Block
+  > Event - EMMI Zone Speed Prep
+      Speed Booster
 
 > Tunnel to Orange EMMI Introduction; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Orange EMMI Introduction/Tunnel to EMMI Zone Exit East
   > Dock to Total Recharge Station East (Lower)
+      Trivial
+
+> Event - EMMI Zone Speed Prep; Heals? False
+  * Layers: default
+  * Event Hanubia - EMMI Zone Speed Prep
+  > Tunnel to Central Unit
       Trivial
 
 ----------------
@@ -973,24 +860,28 @@ Extra - asset_id: collision_camera_015
   * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (Upper)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (POWERBOMB) 2
-      Trivial
+  > Dock to EMMI Zone Exit East (Lower)
+      Lay Power Bomb
 
 > Dock to EMMI Zone Exit East (Lower); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (Lower)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to EMMI Zone Exit East (Upper)
+      All of the following:
+          Lay Power Bomb
+          Speed Booster or Simple IBJ or Use Spin Boost
   > Total Recharge
-      Trivial
-  > Tile Group (POWERBOMB) 1
       Trivial
 
 > Dock to Escape Room 2; Heals? False
   * Layers: default
   * Open Passage to Escape Room 2/Dock to Total Recharge Station East
-  > Tile Group (POWERBOMB) 3
-      Trivial
+  > Dock to EMMI Zone Exit East (Lower)
+      Any of the following:
+          After Escape Sequence
+          Power Bombs ≥ 4 and Lay Power Bomb
 
 > Total Recharge; Heals? True; Spawn Point
   * Layers: default
@@ -1001,43 +892,6 @@ Extra - asset_id: collision_camera_015
   > Dock to EMMI Zone Exit East (Lower)
       Trivial
 
-> Tile Group (POWERBOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_035
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Dock to EMMI Zone Exit East (Lower)
-      Before Escape Sequence
-  > Tile Group (POWERBOMB) 2
-      Simple IBJ or Use Spin Boost
-  > Tile Group (POWERBOMB) 3
-      After Escape Sequence
-
-> Tile Group (POWERBOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_037
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Dock to EMMI Zone Exit East (Upper)
-      Trivial
-  > Tile Group (POWERBOMB) 1
-      Trivial
-
-> Tile Group (POWERBOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_011
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Dock to EMMI Zone Exit East (Lower)
-      Trivial
-  > Dock to Escape Room 2
-      Trivial
-  > Tile Group (POWERBOMB) 1
-      After Escape Sequence
-
 ----------------
 Escape Room 3
 Extra - total_boundings: {'x1': -500.0, 'x2': 6500.0, 'y1': -8600.0, 'y2': -1900.0}
@@ -1046,194 +900,23 @@ Extra - asset_id: collision_camera_016
 > Dock to EMMI Zone Exit West; Heals? False
   * Layers: default
   * Open Passage to EMMI Zone Exit West/Dock to Escape Room 3
-  > Tile Group (POWERBOMB) 1
-      Trivial
+  > Dock to Entrance Tall Room
+      Any of the following:
+          All of the following:
+              After Escape Sequence
+              Any of the following:
+                  Space Jump or Single-wall Wall Jump (Intermediate) or Simple IBJ
+                  Walljump (Beginner) and Use Spin Boost
+          All of the following:
+              Power Bombs ≥ 3 and Screw Attack and Lay Power Bomb
+              Any of the following:
+                  Space Jump or Single-wall Wall Jump (Intermediate)
+                  Flash Shift and Walljump (Intermediate)
+                  Walljump (Beginner) and Use Spin Boost
 
 > Dock to Entrance Tall Room; Heals? False
   * Layers: default
   * Open Passage to Entrance Tall Room/Dock to Escape Room 3
-  > Tile Group (SCREWATTACK) 8
-      Trivial
-
-> Tile Group (POWERBOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_012
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Dock to EMMI Zone Exit West
-      Trivial
-  > Tile Group (POWERBOMB) 2
-      Trivial
-
-> Tile Group (POWERBOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_013
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (POWERBOMB) 1
-      Simple IBJ or Use Spin Boost
-  > Tile Group (POWERBOMB) 3
-      Trivial
-
-> Tile Group (POWERBOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_014
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (POWERBOMB) 2
-      Trivial
-  > Tile Group (SCREWATTACK) 1
-      Trivial
-
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_015
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBOMB) 3
-      Trivial
-  > Tile Group (POWERBOMB) 4
-      Trivial
-
-> Tile Group (POWERBOMB) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (SCREWATTACK) 1
-      Trivial
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBOMB) 4
-      Trivial
-  > Tile Group (POWERBOMB) 5
-      Trivial
-
-> Tile Group (POWERBOMB) 5; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-  > Tile Group (SCREWATTACK) 3
-      Trivial
-
-> Tile Group (SCREWATTACK) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_020
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBOMB) 5
-      Trivial
-  > Tile Group (POWERBOMB) 6
-      Trivial
-
-> Tile Group (POWERBOMB) 6; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_021
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (SCREWATTACK) 3
-      Trivial
-  > Tile Group (SCREWATTACK) 4
-      Trivial
-
-> Tile Group (SCREWATTACK) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_022
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBOMB) 6
-      Trivial
-  > Tile Group (SCREWATTACK) 5
-      Trivial
-
-> Tile Group (SCREWATTACK) 5; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_023
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (SCREWATTACK) 4
-      Space Jump
-  > Tile Group (SCREWATTACK) 6
-      Any of the following:
-          Use Spin Boost
-          Walljump (Beginner) and Simple IBJ
-          Morph Ball and Single-wall Wall Jump (Beginner)
-
-> Tile Group (SCREWATTACK) 6; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_025
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (SCREWATTACK) 5
-      Trivial
-  > Tile Group (SCREWATTACK) 7
-      Trivial
-
-> Tile Group (SCREWATTACK) 7; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_026
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (SCREWATTACK) 6
-      Trivial
-  > Tile Group (POWERBOMB) 7
-      Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('WEIGHT',)
-
-> Tile Group (POWERBOMB) 7; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_028
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (SCREWATTACK) 7
-      Trivial
-  > Tile Group (SCREWATTACK) 8
-      Trivial
-
-> Tile Group (SCREWATTACK) 8; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_029
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Dock to Entrance Tall Room
-      Trivial
-  > Tile Group (POWERBOMB) 7
-      Trivial
-
-> Tile Group (SCREWATTACK WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_044
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK', 'WEIGHT')
 
 ----------------
 Escape Room 2
@@ -1243,80 +926,20 @@ Extra - asset_id: collision_camera_018
 > Dock to Escape Room 1; Heals? False
   * Layers: default
   * Open Passage to Escape Room 1/Dock to Escape Room 2
-  > Tile Group (POWERBOMB) 1
-      Trivial
+  > Dock to Total Recharge Station East
+      Any of the following:
+          All of the following:
+              After Escape Sequence
+              Simple IBJ or Use Spin Boost
+          Power Bombs ≥ 3 and Screw Attack and Lay Power Bomb and Use Spin Boost
 
 > Dock to Total Recharge Station East; Heals? False
   * Layers: default
   * Open Passage to Total Recharge Station East/Dock to Escape Room 2
-  > Tile Group (POWERBOMB) 3
-      Trivial
-
-> Tile Group (POWERBOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_004
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
   > Dock to Escape Room 1
-      Trivial
-  > Tile Group (SCREWATTACK) 1
-      Trivial
-
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_006
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBOMB) 1
-      Trivial
-  > Tile Group (POWERBOMB) 2
-      Trivial
-
-> Tile Group (POWERBOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (SCREWATTACK) 1
-      Trivial
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_008
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBOMB) 2
-      Trivial
-  > Tile Group (SCREWATTACK) 3
-      Trivial
-
-> Tile Group (SCREWATTACK) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_009
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-  > Tile Group (POWERBOMB) 3
-      Trivial
-
-> Tile Group (POWERBOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_010
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Dock to Total Recharge Station East
-      Trivial
-  > Tile Group (SCREWATTACK) 3
-      Trivial
+      Any of the following:
+          After Escape Sequence
+          Power Bombs ≥ 2 and Screw Attack and Lay Power Bomb
 
 ----------------
 Escape Room 1
@@ -1326,47 +949,18 @@ Extra - asset_id: collision_camera_019
 > Dock to Raven Beak X Arena; Heals? False
   * Layers: default
   * Open Passage to Raven Beak X Arena/Dock to Escape Room 1
-  > Tile Group (SCREWATTACK)
-      Trivial
+  > Dock to Escape Room 2
+      Any of the following:
+          After Escape Sequence
+          Power Bombs ≥ 2 and Screw Attack and Lay Power Bomb
 
 > Dock to Escape Room 2; Heals? False
   * Layers: default
   * Open Passage to Escape Room 2/Dock to Escape Room 1
-  > Tile Group (POWERBOMB) 2
-      Trivial
-
-> Tile Group (SCREWATTACK); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('SCREWATTACK',)
   > Dock to Raven Beak X Arena
-      Trivial
-  > Tile Group (POWERBOMB) 1
-      Trivial
-
-> Tile Group (POWERBOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_002
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (SCREWATTACK)
-      Trivial
-  > Tile Group (POWERBOMB) 2
-      Trivial
-
-> Tile Group (POWERBOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_003
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Dock to Escape Room 2
-      Trivial
-  > Tile Group (POWERBOMB) 1
-      Trivial
+      Any of the following:
+          After Escape Sequence
+          Power Bombs ≥ 3 and Screw Attack and Lay Power Bomb
 
 ----------------
 Raven Beak X Arena
@@ -1374,41 +968,32 @@ Raven Beak X Arena
 Extra - total_boundings: {'x1': 11800.0, 'x2': 18600.0, 'y1': -8700.0, 'y2': -4500.0}
 Extra - polygon: [[18600.0, -4500.0], [15400.0, -4500.0], [15400.0, -6100.0], [11800.0, -6100.0], [11800.0, -8700.0], [18600.0, -8700.0]]
 Extra - asset_id: collision_camera_020
-> Event - Escape Squence; Heals? False
+> Event - Escape Sequence; Heals? False
   * Layers: default
   * Event Escape Sequence
   * Extra - start_point_actor_name: SP_Checkpoint_Escape
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Raven Beak X Checkpoint
       Trivial
-  > Tile Group (POWERBOMB)
-      Any of the following:
-          Space Jump or Simple IBJ
-          Speed Booster and Use Spin Boost
 
 > Raven Beak X Checkpoint; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_CommanderX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Event - Escape Squence
+  > Event - Escape Sequence
       Trivial
+  > Dock to Escape Room 1
+      All of the following:
+          After Escape Sequence or Lay Power Bomb
+          Any of the following:
+              Space Jump or Simple IBJ
+              Speed Booster and Use Spin Boost
 
 > Dock to Escape Room 1; Heals? False
   * Layers: default
   * Open Passage to Escape Room 1/Dock to Raven Beak X Arena
-  > Tile Group (POWERBOMB)
-      Trivial
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Event - Escape Squence
-      Trivial
-  > Dock to Escape Room 1
-      Trivial
+  > Raven Beak X Checkpoint
+      After Escape Sequence or Lay Power Bomb
 
 ----------------
 collision_camera_1000 (H)
