@@ -341,44 +341,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Dock to Bridge Gate": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 300.0,
-                        "y": 100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -386,48 +349,8 @@
                             }
                         },
                         "Tunnel to Ammo Recharge Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 800.0,
-                        "y": 600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_007",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Ammo Recharge Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (BOMB) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Lay Bomb"
                         }
                     }
                 },
@@ -485,15 +408,7 @@
                     "default_dock_weakness": "Morph Ball Launcher",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {
-                        "Tile Group (BOMB) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -627,51 +542,34 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: Wall Jump requirements?",
-                                "items": []
-                            }
-                        },
-                        "Tile Group (BOMB) 1": {
-                            "type": "and",
+                        "Pickup (Energy Tank)": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Bomb"
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Horizontal Bomb Maze": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
                             }
@@ -736,21 +634,11 @@
                     "pickup_index": 114,
                     "major_location": true,
                     "connections": {
-                        "Tile Group (BOMB) 3": {
+                        "Door to Chozo Soldier Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -934,224 +822,6 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1600.0,
-                        "y": 2100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_006",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Chozo Soldier Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (BOMB) 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2600.0,
-                        "y": 2700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_008",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Chozo Soldier Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (BOMB) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2800.0,
-                        "y": 3200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_009",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Horizontal Bomb Maze": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2000.0,
-                        "y": 2200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_027",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Dock from Purple Drapes": {
                     "node_type": "dock",
                     "heal": false,
@@ -1239,19 +909,18 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "and",
+                        "Door to Chozo Soldier Arena": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
                             }
@@ -1618,7 +1287,7 @@
                     "default_connection": {
                         "world_name": "Elun",
                         "area_name": "Spider Magnet Room",
-                        "node_name": "Dock to Gyroscope Room"
+                        "node_name": "Door to Gyroscope Room"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
@@ -1631,11 +1300,20 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (BOMB)": {
-                            "type": "and",
+                        "Door to Fan Room": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1670,48 +1348,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3600.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_005",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
                         "Door to Spider Magnet Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Fan Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1838,14 +1488,14 @@
                                 "items": []
                             }
                         },
-                        "Start Point": {
+                        "Door from Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1884,7 +1534,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1911,43 +1561,6 @@
                     },
                     "connections": {
                         "Door to Ammo Recharge Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4100.0,
-                        "y": -1700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Ammo Recharge Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door from Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2022,7 +1635,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gyroscope Room": {
+                        "Door to Gyroscope Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2041,7 +1654,7 @@
                         }
                     }
                 },
-                "Dock to Gyroscope Room": {
+                "Door to Gyroscope Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2061,13 +1674,13 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "world_name": "Elun",
                         "area_name": "Gyroscope Room",
                         "node_name": "Door to Spider Magnet Room"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2083,13 +1696,37 @@
                                 ]
                             }
                         },
-                        "Tile Group (BOMB)": {
-                            "type": "resource",
+                        "Tunnel to Vertical Bomb Maze": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2120,64 +1757,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7400.0,
-                        "y": 600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_003",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Dock to Gyroscope Room": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to Vertical Bomb Maze": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Tunnel to Vertical Bomb Maze": {
                     "node_type": "dock",
                     "heal": false,
@@ -2201,7 +1780,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB)": {
+                        "Door to Gyroscope Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2209,19 +1788,26 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2313,7 +1899,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
+                        "Room Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2363,7 +1949,7 @@
                     "pickup_index": 117,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Room Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2372,26 +1958,19 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
+                "Room Bottom": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 7237.08863662424,
-                        "y": -2015.4913427359247,
+                        "x": 6481.857362144291,
+                        "y": -2326.1187861612943,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_002",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
+                    "extra": {},
                     "connections": {
                         "Door to Gyroscope Room": {
                             "type": "or",
@@ -2510,7 +2089,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Room Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2697,497 +2276,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7900.0,
-                        "y": 2700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_017",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB",
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9100.0,
-                        "y": 3000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_018",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tunnel to Horizontal Bomb Maze (Lower)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8400.0,
-                        "y": 3600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_019",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (POWERBOMB) 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Horizontal Bomb Maze (Upper)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBOMB) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9400.0,
-                        "y": 3200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_020",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (WEIGHT)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (POWERBOMB) 1": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (BOMB) 1": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8900.0,
-                        "y": 2600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_021",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (POWERBOMB) 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9000.0,
-                        "y": 2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_022",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (POWERBOMB) 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (BOMB) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB) 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8200.0,
-                        "y": 1900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_023",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (BOMB) 3": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8800.0,
-                        "y": 1300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (BOMB) 4": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 4": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9000.0,
-                        "y": 1100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_025",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 3": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Grapple Block Alcove": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Tunnel to Horizontal Bomb Maze (Upper)": {
                     "node_type": "dock",
                     "heal": false,
@@ -3211,22 +2299,9 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBOMB) 1": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                        "Above Beam Blocks": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
                         }
                     }
                 },
@@ -3253,7 +2328,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB WEIGHT)": {
+                        "Above Beam Blocks": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3261,6 +2336,10 @@
                                     {
                                         "type": "template",
                                         "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
                             }
@@ -3392,15 +2471,6 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (BOMB) 4": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Tunnel to Spider Magnet Room": {
                             "type": "and",
                             "data": {
@@ -3422,6 +2492,143 @@
                                             "name": "s060_quarantine:default:grapplepulloff1x2_000",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Beam Blocks": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Above Beam Blocks": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9165.35010036604,
+                        "y": 2477.051599952769,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Tunnel to Horizontal Bomb Maze (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PBAmmo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Horizontal Bomb Maze (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Grapple Block Alcove": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3481,13 +2688,20 @@
                     "pickup_index": 118,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (WEIGHT) 3": {
-                            "type": "resource",
+                        "Tunnel to Vertical Bomb Maze (Lower)": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         },
                         "Tunnel to Vertical Bomb Maze (Upper)": {
@@ -3495,314 +2709,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3768.8916022249355,
-                        "y": 3161.8720662053993,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_010",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (WEIGHT) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to Ammo Recharge Station": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4061.389228055895,
-                        "y": 3609.5725139058472,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_011",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tunnel to Ammo Recharge Station": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4500.0,
-                        "y": 3100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_012",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5765.635598968933,
-                        "y": 3487.201058201058,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_013",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (WEIGHT) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB) 3": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6064.102564102564,
-                        "y": 3149.933387600054,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_014",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (BOMB) 4": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 3": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6347.646180979515,
-                        "y": 3537.9404422737757,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_015",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 4": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6475.986975986976,
-                        "y": 3391.6916293582963,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_016",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 3": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Vertical Bomb Maze (Lower)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -3830,18 +2736,34 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB) 1": {
+                        "Tunnel to Vertical Bomb Maze (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3872,19 +2794,18 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB) 4": {
+                        "Tunnel to Ammo Recharge Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
                             }
