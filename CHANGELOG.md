@@ -44,8 +44,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New trick "Flash Shift Skip" to account for skipping Flash Shift gates.
 - Added: Flash Shift Skip (Intermediate) with Bombs to skip the Flash Shift gate in Teleport to Ferenia.
 - Added: Shine Sink Clips (Intermediate/Advanced) to go to and from Storm Missile Gate Room without Morph Ball.
-- Added: Shine Sink Clip (Intermediate) and Speedbooster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
+- Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speedbooster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
 - Added: Shine Sink Clip (Advanced) to reach the blobs in Gravity Suit Tower from the top level.
+- Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
+- Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
 - Added: Spin Boost Movement (Intermediate) and Speedbooster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.

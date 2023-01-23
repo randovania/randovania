@@ -7209,7 +7209,7 @@
                         "Dock to Main Hub Tower Bottom": {
                             "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/xfpOoAN3HVI",
+                                "comment": "Aim Down Clip - https://youtu.be/xfpOoAN3HVI",
                                 "items": [
                                     {
                                         "type": "template",
@@ -7218,19 +7218,36 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "SSC",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "items",
                                             "name": "Gravity",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ADC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SSC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7895,7 +7912,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "SSC",
+                                            "name": "ADC",
                                             "amount": 3,
                                             "negate": false
                                         }
@@ -8112,7 +8129,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "SSC",
+                                                        "name": "ADC",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -9731,15 +9748,6 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "SSC",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "events",
                                             "name": "BureniaEPart",
                                             "amount": 1,
@@ -9776,6 +9784,32 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ADC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SSC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -12068,7 +12102,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "SSC",
+                                                        "name": "ADC",
                                                         "amount": 3,
                                                         "negate": false
                                                     }
@@ -13784,6 +13818,53 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Gravity Suit Tower (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can SSC"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ADC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SSC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Event - Gravity Suit Blob, Above": {
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
