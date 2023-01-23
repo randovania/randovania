@@ -42,6 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: "Adam Skip" added to logic as Wall Jump (Advanced) in Cataris - Moving Magnet Walls (Small).
 - Added: Space Jump method of Cross Bomb Skip (Hypermode) to skip needing Speed for the item in Cataris - EMMI Zone Item Tunnel.
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
+- Added: Spin Boost Movement (Intermediate) and Speedbooster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
+- Added: Spin Boost method to climb Hanubia - Escape Room 3.
+- Added: Morph Ball Single-Wall Walljumps to get to the Nav Station in Itorash - Transport to Hanubia.
+- Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
 
 ## [5.3.0] - 2023-01-05
