@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: New trick "Flash Shift Skip" to account for skipping Flash Shift gates.
 - Added: Traverse to the bottom of Ferenia: Space Jump Room Access with some more options.
 - Added: Pseudo-Wave Beam (Beginner) for the two blobs in Cataris - Teleport to Dairon.
 - Added: Water Bomb Jump to reach the item in Cataris - Teleport to Dairon without Gravity Suit.
@@ -41,19 +42,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Damage Boost (Intermediate) for reaching the teleport in Cataris - Teleport to Ghavoran with Spider Magnet.
 - Added: "Adam Skip" added to logic as Wall Jump (Advanced) in Cataris - Moving Magnet Walls (Small).
 - Added: Space Jump method of Cross Bomb Skip (Hypermode) to skip needing Speed for the item in Cataris - EMMI Zone Item Tunnel.
-- Added: New trick "Flash Shift Skip" to account for skipping Flash Shift gates.
+- Added: Spin Boost Movement (Intermediate) and Speedbooster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
+- Added: Spin Boost method to climb Hanubia - Escape Room 3.
+- Added: Morph Ball Single-Wall Walljumps to get to the Nav Station in Itorash - Transport to Hanubia.
 - Added: Flash Shift Skip (Intermediate) with Bombs to skip the Flash Shift gate in Teleport to Ferenia.
 - Added: Aim Down Clips (Intermediate/Advanced) to go to and from Storm Missile Gate Room without Morph Ball.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speedbooster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
 - Added: Aim Down Clip (Expert) to reach the blobs in Gravity Suit Tower from the top level.
 - Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
+- Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
-- Added: Spin Boost Movement (Intermediate) and Speedbooster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
-- Added: Spin Boost method to climb Hanubia - Escape Room 3.
-- Added: Morph Ball Single-Wall Walljumps to get to the Nav Station in Itorash - Transport to Hanubia.
-- Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
 
 ## [5.3.0] - 2023-01-05
