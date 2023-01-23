@@ -1101,7 +1101,7 @@
             },
             "SSC": {
                 "long_name": "Shinesink Clip",
-                "description": "Shinesparking and firing the grapple beam in certain locations allows you to clip through 1-tile thick floors.",
+                "description": "Utilizing Speedbooster, Flash Shift, and Grapple Beam, it is possible to clip through 1 or 2-tile floors. Full trick description: https://dreadwiki.hijumpboots.com/en/tricks/clipping#shine-sink-clip",
                 "extra": {}
             },
             "Suitless": {
@@ -1146,14 +1146,14 @@
                 "description": "Flash Shift can be manipulated to allow you to charge Speed Booster in a smaller area than intended.",
                 "extra": {}
             },
-            "ADC": {
-                "long_name": "Aim Down Clip",
-                "description": "A type of shine sink clip that allows you to clip through 2-tile thick floors.",
-                "extra": {}
-            },
             "DiffusionAbuse": {
                 "long_name": "Diffusion Abuse",
                 "description": "Using Diffusion Beam in certain situations can bypass the usual requirements for some objects. https://youtu.be/p9XJHW10QC8",
+                "extra": {}
+            },
+            "FlashSkip": {
+                "long_name": "Flash Shift Skip",
+                "description": "With certain items or movement techniques, the Shutter Platforms can be bypassed without the use of Flash Shift.",
                 "extra": {}
             }
         },
@@ -4943,7 +4943,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
+                                                        "name": "FlashSkip",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -4951,6 +4951,27 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Lay Cross Bomb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FlashSkip",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
                                                 }
                                             ]
                                         }
