@@ -60,6 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Changed: Simplified many room nodes and connections.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
+- Changed: Using Flash Shift to collect the fan pickup in Burenia Hub to Dairon is now Advanced (from Beginner).
+- Changed: All three fan skips are now classified as Movement instead of Infinite Bomb Jump.
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
 - Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
 
