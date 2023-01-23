@@ -569,7 +569,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Fan Platform - Above": {
+                        "Fan Platform": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -605,17 +605,8 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Fan Platform - Above": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "BureniaDaironSpeedBlocks",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Fan Platform - Below": {
-                            "type": "and",
+                        "Fan Platform": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -623,18 +614,35 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_000",
+                                            "name": "BureniaDaironSpeedBlocks",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:grapplepulloff1x2_000",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1013,7 +1021,7 @@
                     "pickup_index": 90,
                     "major_location": false,
                     "connections": {
-                        "Fan Platform - Above": {
+                        "Fan Platform": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1041,8 +1049,11 @@
                     "event_name": "s040_aqua:default:db_reg_aq_001",
                     "connections": {
                         "Water Bottom": {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1118,7 +1129,7 @@
                     },
                     "event_name": "s040_aqua:default:grapplepulloff1x2_000",
                     "connections": {
-                        "Fan Platform - Below": {
+                        "Fan Platform": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1215,7 +1226,7 @@
                         }
                     }
                 },
-                "Fan Platform - Above": {
+                "Fan Platform": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1333,12 +1344,46 @@
                             }
                         },
                         "Door to Upper Burenia Hub": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "BureniaDaironSpeedBlocks",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BureniaDaironSpeedBlocks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:grapplepulloff1x2_000",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Energy Part)": {
@@ -1405,64 +1450,6 @@
                                 ]
                             }
                         },
-                        "Fan Platform - Below": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Dairon Hub Speed Blocks Destroyed": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Fan Platform - Below": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3550.0,
-                        "y": 3100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Door to Upper Burenia Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_000",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Event - Dairon Hub Grapple Block": {
                             "type": "resource",
                             "data": {
@@ -1477,6 +1464,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Event - Dairon Hub Speed Blocks Destroyed": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1642,7 +1638,7 @@
                                 ]
                             }
                         },
-                        "Fan Platform - Below": {
+                        "Fan Platform": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1657,8 +1653,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Perform WBJ"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:db_reg_aq_001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -1670,13 +1671,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:db_reg_aq_001",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Perform WBJ"
                                     }
                                 ]
                             }
@@ -1910,6 +1906,10 @@
                                     {
                                         "type": "template",
                                         "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
                             }
@@ -2029,7 +2029,7 @@
                     "extra": {},
                     "event_name": "BureniaDaironSpeedBlocks",
                     "connections": {
-                        "Fan Platform - Above": {
+                        "Fan Platform": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5521,41 +5521,12 @@
                     "major_location": true,
                     "connections": {
                         "Upper Left Magnet Wall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -7920,10 +7891,10 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "BureniaStormMissileGateEtank",
+                                            "type": "misc",
+                                            "name": "DoorLocks",
                                             "amount": 1,
-                                            "negate": false
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -8238,6 +8209,15 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -8284,6 +8264,15 @@
                                                     "data": "Simple IBJ"
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -10988,22 +10977,15 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 3368.1595692608907,
-                        "y": -8452.838962310328,
+                        "x": 3368.16,
+                        "y": -8452.84,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_014",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
+                    "extra": {},
                     "connections": {
                         "Pickup (Missile+ Tank)": {
                             "type": "and",
@@ -11991,74 +11973,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Missile+ Tank)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "BureniaDestroyGravitySuitFloor",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "DoorLocks",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Start Point 4": {
                             "type": "and",
                             "data": {
@@ -12067,9 +11981,18 @@
                             }
                         },
                         "Breakable Floor": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
+                                "type": "events",
+                                "name": "BureniaDestroyGravitySuitFloor",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Blob Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://youtu.be/-NZ2QPUxno0",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -12077,34 +12000,102 @@
                                             "type": "events",
                                             "name": "BureniaDestroyGravitySuitFloor",
                                             "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ADC",
+                                            "amount": 4,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "template",
+                                        "data": "Can SSC"
+                                    }
+                                ]
+                            }
+                        },
+                        "Next to Bottom Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "https://youtu.be/-NZ2QPUxno0",
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "events",
-                                                        "name": "BureniaDestroyGravitySuitFloor",
+                                                        "type": "items",
+                                                        "name": "Flash",
                                                         "amount": 1,
-                                                        "negate": true
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can SSC"
+                                                    "data": "Simple IBJ"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "ADC",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "BureniaDestroyGravitySuitFloor",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "DoorLocks",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -12184,22 +12175,11 @@
                     "pickup_index": 88,
                     "major_location": true,
                     "connections": {
-                        "Door to Navigation Station South": {
-                            "type": "resource",
+                        "Next to Bottom Pickup": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Shaft Base": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -13354,15 +13334,6 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Pickup (Missile+ Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Start Point 2": {
                             "type": "or",
                             "data": {
@@ -13482,6 +13453,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Next to Bottom Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -13529,6 +13509,47 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Bottom Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6666.89,
+                        "y": -7424.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Door to Navigation Station South": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Missile+ Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Shaft Base": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

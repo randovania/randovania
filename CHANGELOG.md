@@ -43,9 +43,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Space Jump method of Cross Bomb Skip (Hypermode) to skip needing Speed for the item in Cataris - EMMI Zone Item Tunnel.
 - Added: New trick "Flash Shift Skip" to account for skipping Flash Shift gates.
 - Added: Flash Shift Skip (Intermediate) with Bombs to skip the Flash Shift gate in Teleport to Ferenia.
-- Added: Shine Sink Clips (Intermediate/Advanced) to go to and from Storm Missile Gate Room without Morph Ball.
+- Added: Aim Down Clips (Intermediate/Advanced) to go to and from Storm Missile Gate Room without Morph Ball.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speedbooster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
-- Added: Shine Sink Clip (Advanced) to reach the blobs in Gravity Suit Tower from the top level.
+- Added: Aim Down Clip (Expert) to reach the blobs in Gravity Suit Tower from the top level.
 - Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
