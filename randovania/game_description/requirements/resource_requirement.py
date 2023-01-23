@@ -109,6 +109,9 @@ class ResourceRequirement(Requirement):
     def iterate_resource_requirements(self, database: ResourceDatabase):
         yield self
 
+    def is_obsoleted_by(self, other: ResourceRequirement):
+        return self.resource == other.resource and self.negate == other.negate and self.amount <= other.amount
+
 
 class DamageResourceRequirement(ResourceRequirement):
     def __post_init__(self):
