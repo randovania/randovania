@@ -119,7 +119,7 @@ jobs:
           echo ::set-output name=env::${ENV}
 
       - name: start deployment
-        uses: bobheadxi/deployments@v1.3.0
+        uses: bobheadxi/deployments@v1.4.0
         id: deployment
         with:
           step: start
@@ -130,7 +130,7 @@ jobs:
         run: python tools/deploy_server.py
 
       - name: update deployment status
-        uses: bobheadxi/deployments@v1.3.0
+        uses: bobheadxi/deployments@v1.4.0
         if: always()
         with:
           step: finish
