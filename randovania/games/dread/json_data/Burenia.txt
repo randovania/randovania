@@ -89,7 +89,7 @@ Extra - asset_id: collision_camera_001
   * Pickup 92; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (MISSILE)
+  > Tunnel to Transport to Ghavoran
       Morph Ball
 
 > Start Point; Heals? False; Spawn Point
@@ -101,25 +101,13 @@ Extra - asset_id: collision_camera_001
   > Door to Navigation Station North
       Trivial
 
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_023
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tunnel to Transport to Ghavoran
-      Trivial
-
 > Tunnel to Transport to Ghavoran; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Transport to Ghavoran/Tunnel to Upper Burenia Hub
   > Door to Navigation Station North
       After Quiet Robe and Can Slide
-  > Tile Group (MISSILE)
-      Trivial
+  > Pickup (Missile Tank)
+      Morph Ball and Shoot Missile
 
 ----------------
 Burenia Hub to Dairon
@@ -135,7 +123,7 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Fan Platform - Above
+  > Fan Platform
       Can Slide
 
 > Door to Upper Burenia Hub; Heals? False
@@ -147,10 +135,10 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Fan Platform - Above
-      After Burenia - Dairon Hub Speed Blocks Destroyed
-  > Fan Platform - Below
-      Morph Ball and After Burenia - Dairon Hub Grapple Block
+  > Fan Platform
+      Any of the following:
+          After Burenia - Dairon Hub Speed Blocks Destroyed
+          Morph Ball and After Burenia - Dairon Hub Grapple Block
   > Raft - Top Water Level
       Can Slide Underwater
   > Event - Dairon Hub Speed Blocks Destroyed
@@ -207,15 +195,15 @@ Extra - asset_id: collision_camera_002
   * Pickup 90; Major Location? False
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Fan Platform - Above
+  > Fan Platform
       Trivial
 
-> Event - Water Blob Right, Adjacent; Heals? False
+> Event - Water Blob Right; Heals? False
   * Layers: default
   * Event Burenia - Dairon Hub Water Blob Right
   * Extra - actor_name: db_reg_aq_001
   * Extra - actor_def: actordef:actors/props/db_reg_aq_001/charclasses/db_reg_aq_001.bmsad
-  > Tile Group (BOMB)
+  > Water Bottom
       Trivial
 
 > Event - Water Blob Left, Adjacent; Heals? False
@@ -239,33 +227,7 @@ Extra - asset_id: collision_camera_002
   * Event Burenia - Dairon Hub Grapple Block
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Fan Platform - Below
-      Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_025
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Event - Water Blob Right, Adjacent
-      All of the following:
-          Morph Ball
-          Lay Bomb or Shoot Beam
-  > Water Bottom
-      Morph Ball
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_033
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Fan Platform - Above
-      Trivial
-  > Fan Platform - Below
+  > Fan Platform
       Trivial
 
 > Bottom-left Corner; Heals? False
@@ -279,7 +241,7 @@ Extra - asset_id: collision_camera_002
   > Water Bottom
       Can Slide Underwater
 
-> Fan Platform - Above; Heals? False
+> Fan Platform; Heals? False
   * Layers: default
   > Door to Upper Transport to Dairon
       All of the following:
@@ -289,7 +251,9 @@ Extra - asset_id: collision_camera_002
               Grapple Beam and Grapple Movement (Beginner)
               Walljump (Beginner) and Use Spin Boost
   > Door to Upper Burenia Hub
-      After Burenia - Dairon Hub Speed Blocks Destroyed
+      Any of the following:
+          After Burenia - Dairon Hub Speed Blocks Destroyed
+          Morph Ball and After Burenia - Dairon Hub Grapple Block
   > Pickup (Energy Part)
       Any of the following:
           Speed Booster
@@ -297,21 +261,12 @@ Extra - asset_id: collision_camera_002
               # A grounded bomb jump with cross bombs to get past the fan
               Infinite Bomb Jump (Beginner) and Lay Cross Bomb
           Flash Shift and Movement (Beginner)
-  > Tile Group (POWERBEAM)
+  > Event - Dairon Hub Grapple Block
+      Grapple Beam
+  > Raft - Top Water Level
       Trivial
   > Event - Dairon Hub Speed Blocks Destroyed
       Speed Booster
-
-> Fan Platform - Below; Heals? False
-  * Layers: default
-  > Door to Upper Burenia Hub
-      Morph Ball and After Burenia - Dairon Hub Grapple Block
-  > Event - Dairon Hub Grapple Block
-      Grapple Beam
-  > Tile Group (POWERBEAM)
-      Trivial
-  > Raft - Top Water Level
-      Trivial
 
 > Raft - Top Water Level; Heals? False
   * Layers: default
@@ -324,7 +279,7 @@ Extra - asset_id: collision_camera_002
               Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
   > Door to Underwater Horseshoe
       After Burenia - Dairon Hub Water Blob Right or After Burenia - Dairon Hub Water Blob Left
-  > Fan Platform - Below
+  > Fan Platform
       Gravity Suit or After Burenia - Dairon Hub Water Blob Right or After Burenia - Dairon Hub Water Blob Left or Perform WBJ
   > Event - Transport Blob from Above
       Wave Beam
@@ -349,14 +304,12 @@ Extra - asset_id: collision_camera_002
               All of the following:
                   Before Burenia - Dairon Hub Water Blob Right and Before Burenia - Dairon Hub Water Blob Left and Enabled Highly Dangerous Logic
                   Simple IBJ or Use Spin Boost
-  > Tile Group (BOMB)
-      Morph Ball
+  > Event - Water Blob Right
+      Wave Beam or Lay Bomb or Lay Power Bomb
   > Bottom-left Corner
       Can Slide Underwater
   > Event - Water Blob Left, Through Wall
       Shoot Diffusion or Wave
-  > Event - Water Blob Right, Through Wall
-      Wave Beam
   > Event - Transport Blob from Below
       Any of the following:
           Shoot Diffusion or Wave
@@ -365,12 +318,6 @@ Extra - asset_id: collision_camera_002
 > Event - Water Blob Left, Through Wall; Heals? False
   * Layers: default
   * Event Burenia - Dairon Hub Water Blob Left
-  > Water Bottom
-      Trivial
-
-> Event - Water Blob Right, Through Wall; Heals? False
-  * Layers: default
-  * Event Burenia - Dairon Hub Water Blob Right
   > Water Bottom
       Trivial
 
@@ -383,7 +330,7 @@ Extra - asset_id: collision_camera_002
 > Event - Dairon Hub Speed Blocks Destroyed; Heals? False
   * Layers: default
   * Event Burenia - Dairon Hub Speed Blocks Destroyed
-  > Fan Platform - Above
+  > Fan Platform
       Trivial
 
 ----------------
@@ -795,27 +742,33 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
   > Door to Map Station
       Trivial
-  > Tile Group (MISSILE)
-      Any of the following:
-          Flash Shift or Space Jump
-          All of the following:
-              # Carry it from the Map Station, or alternatively from the suction enemy below
-              Speed Booster
-              Any of the following:
-                  Disabled Door Lock Randomizer
-                  Morph Ball and After Burenia - Ferenia Teleport Grapple Block and Knowledge (Beginner) and Speedbooster Conservation (Intermediate)
-          All of the following:
-              # You can stand on the edge of a flash gate without it closing
-              Knowledge (Beginner)
-              Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+  > Pickup (Missile+ Tank)
+      All of the following:
+          Morph Ball and Shoot Missile
+          Any of the following:
+              Flash Shift or Space Jump
+              All of the following:
+                  # Carry it from the Map Station, or alternatively from the suction enemy below
+                  Speed Booster
+                  Any of the following:
+                      Disabled Door Lock Randomizer
+                      After Burenia - Ferenia Teleport Grapple Block and Knowledge (Beginner) and Speedbooster Conservation (Intermediate)
+              All of the following:
+                  # You can stand on the edge of a flash gate without it closing
+                  Knowledge (Beginner)
+                  Any of the following:
+                      All of the following:
+                          Flash Shift Skip (Beginner)
+                          Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+                      Flash Shift Skip (Intermediate) and Lay Bomb
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
   * Pickup 91; Major Location? True
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
-  > Tile Group (WEIGHT) 1
-      Morph Ball
+  > Door to Drogyga Eyedoor
+      Trivial
 
 > Event - Ferenia Teleport Blob; Heals? False
   * Layers: default
@@ -851,59 +804,6 @@ Extra - asset_id: collision_camera_008
   * Extra - target_spawn_point: teleporter_000_platform
   * Extra - start_point_actor_name: LE_Platform_Teleport_Secret
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Tile Group (BOMB)
-      Trivial
-  > Tile Group (WEIGHT) 4
-      Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_034
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Teleporter to Ferenia - Teleport to Burenia (Cyan)
-      Trivial
-  > Lower Left Ledge
-      After Burenia - Storm Missile Gate for Teleport
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Drogyga Eyedoor
-      Trivial
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_028
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Pickup (Missile+ Tank)
-      Morph Ball
-
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_029
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Door to Drogyga Eyedoor
-      Trivial
-  > Tile Group (WEIGHT) 2
-      Morph Ball
-
-> Tile Group (WEIGHT) 4; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_037
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
   > Door to Main Hub Tower Top
       Trivial
 
@@ -925,8 +825,10 @@ Extra - asset_id: collision_camera_008
               Water Bomb Jump (Intermediate) and Perform WBJ
   > Event - Ferenia Teleport Blob
       Shoot Diffusion or Wave
-  > Tile Group (BOMB)
-      After Burenia - Storm Missile Gate for Teleport
+  > Teleporter to Ferenia - Teleport to Burenia (Cyan)
+      All of the following:
+          After Burenia - Storm Missile Gate for Teleport
+          Lay Bomb or Lay Power Bomb
   > Event - Storm Missile Gate
       After Burenia - Ferenia Teleport Blob and Activate Storm Missile Locks
 
@@ -1027,7 +929,7 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
-  > Tile Group (POWERBEAM)
+  > Pickup (Missile Tank)
       All of the following:
           Morph Ball
           Any of the following:
@@ -1067,7 +969,7 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
 
 > Door to Flash Shift Room (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Flash Shift Room/Door from Main Hub Tower Top
+  * Missile Door to Flash Shift Room/Door from Main Hub Tower Top
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
@@ -1082,19 +984,15 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   * Pickup 82; Major Location? True
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
-  > Tile Group (WEIGHT)
-      Trivial
   > Upper Left Magnet Wall
-      All of the following:
-          Morph Ball
-          Flash Shift or Use Spin Boost
+      Morph Ball
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 84; Major Location? False
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (POWERBEAM)
+  > Door to Teleport to Ferenia
       Morph Ball
 
 > Start Point; Heals? False; Spawn Point
@@ -1103,27 +1001,6 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Flash Shift Room (Lower)
       Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Upper Left Magnet Wall
-      Morph Ball
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Teleport to Ferenia
-      Morph Ball
-  > Pickup (Missile Tank)
-      Morph Ball
 
 > Upper Left Magnet Wall; Heals? False
   * Layers: default
@@ -1157,8 +1034,6 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
                   Any of the following:
                       Spider Magnet or Movement (Intermediate)
                       Damage Boost (Beginner) and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
-  > Tile Group (WEIGHT)
-      Trivial
 
 ----------------
 Main Hub Tower Middle
@@ -1325,7 +1200,10 @@ Extra - asset_id: collision_camera_010
           Gravity Suit
           Space Jump or Speed Booster or Simple IBJ
   > Dock to Main Hub Tower Bottom
-      Shinesink Clip (Expert) and Can SSC
+      All of the following:
+          # Aim Down Clip - https://youtu.be/xfpOoAN3HVI
+          Gravity Suit and Can SSC
+          Aim Down Clip (Intermediate) or Shinesink Clip (Intermediate)
 
 > Event - Lower Magnet Wall; Heals? False
   * Layers: default
@@ -1427,7 +1305,7 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SCREWATTACK)
+  > Above Screw Attack Blocks
       Trivial
   > Water Space Jump Platform
       Space Jump
@@ -1451,6 +1329,10 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
       Gravity Suit and Morph Ball and After Burenia - Main Hub Bottom Grapple Block
   > Water Space Jump Platform
       Morph Ball and After Burenia - Main Hub Bottom Grapple Block
+  > Inside Tunnel
+      All of the following:
+          # https://youtu.be/yb_tJYnFFIw
+          Gravity Suit and Aim Down Clip (Advanced) and Disabled Door Lock Randomizer and Can SSC
 
 > Event - Main Hub Bottom Blob, Left; Heals? False
   * Layers: default
@@ -1468,42 +1350,41 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   > Alcove Across Grapple Block
       Trivial
 
-> Tile Group (SCREWATTACK); Heals? False
+> Above Screw Attack Blocks; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_008
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
   > Door to Save Station South Access (Lower)
       All of the following:
           Gravity Suit
           Speed Booster or Simple IBJ or Use Spin Boost
   > Dock to Gravity Suit Room Access
-      Trivial
-  > Tunnel to Storm Missile Gate Room
-      Morph Ball
+      Screw Attack
   > Water Space Jump Platform
       Gravity Suit or Morph Ball
+  > Inside Tunnel
+      Any of the following:
+          Morph Ball and Screw Attack
+          All of the following:
+              # https://youtu.be/yb_tJYnFFIw
+              Gravity Suit and Aim Down Clip (Intermediate) and Can SSC
 
 > Dock to Gravity Suit Room Access; Heals? False
   * Layers: default
   * Open Passage to Gravity Suit Room Access/Dock to Main Hub Tower Bottom
-  > Tile Group (SCREWATTACK)
+  > Above Screw Attack Blocks
       All of the following:
-          Gravity Suit
+          Gravity Suit and Screw Attack
           Any of the following:
               Space Jump or Speed Booster or Simple IBJ
               Flash Shift and Walljump (Beginner) and Use Spin Boost
-  > Tunnel to Storm Missile Gate Room
+  > Inside Tunnel
       All of the following:
-          Gravity Suit
+          Gravity Suit and Morph Ball
           Space Jump or Speed Booster or Simple IBJ
 
 > Tunnel to Storm Missile Gate Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Storm Missile Gate Room/Tunnel to Main Hub Tower Bottom
-  > Tile Group (SCREWATTACK)
+  > Inside Tunnel
       Morph Ball
 
 > Alcove Across Grapple Block; Heals? False
@@ -1565,7 +1446,7 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
       All of the following:
           Gravity Suit and Morph Ball and After Burenia - Main Hub Bottom Grapple Block
           Speed Booster or Single-wall Wall Jump (Beginner) or Simple IBJ or Use Spin Boost
-  > Tile Group (SCREWATTACK)
+  > Above Screw Attack Blocks
       Trivial
   > Alcove Across Grapple Block
       All of the following:
@@ -1589,6 +1470,15 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
   * Layers: default
   * Event Burenia - Prepare Speedboost in Save Station
   > Door to Save Station South Access (Upper)
+      Trivial
+
+> Inside Tunnel; Heals? False
+  * Layers: default
+  > Above Screw Attack Blocks
+      Screw Attack
+  > Dock to Gravity Suit Room Access
+      Trivial
+  > Tunnel to Storm Missile Gate Room
       Trivial
 
 ----------------
@@ -1664,9 +1554,9 @@ Extra - asset_id: collision_camera_013
   * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Main Hub Tower Bottom
       Trivial
+  > Pickup (Missile Tank)
+      Lay Bomb or Lay Power Bomb
   > Life Recharge
-      Trivial
-  > Tile Group (BOMB) 1
       Trivial
 
 > Door to Main Hub Tower Bottom; Heals? False
@@ -1681,9 +1571,7 @@ Extra - asset_id: collision_camera_013
   > Door to Main Hub Tower Middle
       Trivial
   > Pickup (Missile Tank)
-      All of the following:
-          Gravity Suit and Morph Ball
-          Simple IBJ or Use Spin Boost
+      Gravity Suit and Morph Ball
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -1692,8 +1580,6 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Main Hub Tower Bottom
       Can Slide Underwater
-  > Tile Group (BOMB) 2
-      Morph Ball
 
 > Life Recharge; Heals? True; Spawn Point
   * Layers: default
@@ -1703,30 +1589,6 @@ Extra - asset_id: collision_camera_013
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Door to Main Hub Tower Middle
       Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_005
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Main Hub Tower Middle
-      Trivial
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_006
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Can Slide Underwater
-  > Tile Group (BOMB) 1
-      Gravity Suit and Morph Ball
 
 ----------------
 Flash Shift Room
@@ -1796,6 +1658,13 @@ Extra - asset_id: collision_camera_015
       After Burenia - Ghavoran Teleport Enky
   > Event - Destroy all Enkys
       Destroy Enky
+  > Upper Water Platform
+      All of the following:
+          After Burenia - Early Gravity Pickup 1 and After Burenia - Ghavoran Teleport Enky and Speedbooster Conservation (Advanced) and Can SSC
+          Any of the following:
+              # Cross Bomb - https://www.youtube.com/watch?v=1l7rJwAUSLE Power Bomb - https://www.youtube.com/watch?v=477-pmla1kU
+              Lay Cross Bomb or Lay Power Bomb
+          Aim Down Clip (Intermediate) or Shinesink Clip (Intermediate)
   > Event - Ghavoran Teleport Speed Blocks Destroyed
       Speed Booster and After Burenia - Early Gravity Pickup 1
 
@@ -1855,8 +1724,8 @@ Extra - asset_id: collision_camera_015
       Trivial
   > Teleporter to Ghavoran - Teleport to Burenia
       Trivial
-  > Tile Group (BOMB)
-      Trivial
+  > Top of Enky Shaft
+      Lay Bomb or Lay Power Bomb
 
 > Event - Ghavoran Teleport Blob, Adjacent; Heals? False
   * Layers: default
@@ -1878,24 +1747,12 @@ Extra - asset_id: collision_camera_015
   > Door to Gravity Suit Tower
       Trivial
 
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_003
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Gravity Suit Tower
-      Trivial
-  > Top of Enky Shaft
-      Can Slide
-
 > Top of Enky Shaft; Heals? False
   * Layers: default
   > Door to Early Gravity Speedboost Room 1 (Upper)
       After Burenia - Ghavoran Teleport Enky
-  > Tile Group (BOMB)
-      Morph Ball
+  > Door to Gravity Suit Tower
+      Lay Bomb or Lay Power Bomb
   > Event - Destroy all Enkys
       Destroy Enky
 
@@ -2002,9 +1859,9 @@ Extra - asset_id: collision_camera_017
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Pickup (Missile Tank)
+      Screw Attack
   > Elevator to Artaria - Transport to Burenia
-      Trivial
-  > Tile Group (SCREWATTACK) 1
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -2012,8 +1869,8 @@ Extra - asset_id: collision_camera_017
   * Pickup 83; Major Location? False
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (SCREWATTACK) 2
-      Trivial
+  > Door to Navigation Station South
+      Screw Attack
 
 > Elevator to Artaria - Transport to Burenia; Heals? False; Spawn Point
   * Layers: default
@@ -2025,30 +1882,6 @@ Extra - asset_id: collision_camera_017
   * Extra - start_point_actor_name: elevator_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Navigation Station South
-      Trivial
-
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Navigation Station South
-      Trivial
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_040
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Pickup (Missile Tank)
-      Trivial
-  > Tile Group (SCREWATTACK) 1
       Trivial
 
 ----------------
@@ -2080,7 +1913,7 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
-  > Tile Group (POWERBEAM) 2
+  > Above Water
       Can Slide
 
 > Pickup (Energy Part); Heals? False
@@ -2096,16 +1929,11 @@ Extra - asset_id: collision_camera_018
   * Pickup 87; Major Location? True
   * Extra - actor_name: item_missiletankplus_002
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
-  > Tile Group (POWERBEAM) 1
+  > Next to Exit Tunnel
       Trivial
 
-> Tile Group (POWERBEAM) 1; Heals? False
+> Next to Exit Tunnel; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_014
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Pickup (Missile+ Tank)
       Trivial
   > Dock to Early Gravity Speedboost Room 2 (Lower)
@@ -2113,13 +1941,8 @@ Extra - asset_id: collision_camera_018
   > Tunnel to Gravity Suit Tower
       Morph Ball
 
-> Tile Group (POWERBEAM) 2; Heals? False
+> Above Water; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Door to Teleport to Ghavoran (Lower)
       All of the following:
           Morph Ball
@@ -2133,7 +1956,7 @@ Extra - asset_id: collision_camera_018
 
 > Water Bottom; Heals? False
   * Layers: default
-  > Tile Group (POWERBEAM) 2
+  > Above Water
       Any of the following:
           Spider Magnet or Simple IBJ
           Grapple Beam and Grapple Movement (Beginner)
@@ -2143,7 +1966,7 @@ Extra - asset_id: collision_camera_018
 > Dock to Early Gravity Speedboost Room 2 (Upper); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 2/Dock to Early Gravity Speedboost Room 1 (Upper)
-  > Tile Group (POWERBEAM) 2
+  > Above Water
       Use Spin Boost
   > Water Bottom
       Trivial
@@ -2151,13 +1974,13 @@ Extra - asset_id: collision_camera_018
 > Dock to Early Gravity Speedboost Room 2 (Lower); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 2/Dock to Early Gravity Speedboost Room 1 (Lower)
-  > Tile Group (POWERBEAM) 1
+  > Next to Exit Tunnel
       After Burenia - Early Gravity Speed Blocks Destroyed
 
 > Tunnel to Gravity Suit Tower; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Gravity Suit Tower/Tunnel to Early Gravity Speedboost Room 1
-  > Tile Group (POWERBEAM) 1
+  > Next to Exit Tunnel
       Morph Ball
 
 > Event - Early Gravity Pickup 1; Heals? False
@@ -2248,8 +2071,8 @@ Extra - asset_id: collision_camera_021
                   Any of the following:
                       Simple IBJ or Use Spin Boost
                       Speed Booster and Disabled Door Lock Randomizer
-  > Tile Group (POWERBOMB)
-      Trivial
+  > Door to Gravity Suit Room (Lower)
+      Lay Power Bomb
   > Breakable Floor
       All of the following:
           Gravity Suit and After Burenia - Destroy Gravity Suit Floor
@@ -2269,14 +2092,20 @@ Extra - asset_id: collision_camera_021
   * Extra - right_shield_def: None
   > Start Point 4
       Trivial
-  > Tile Group (SCREWATTACK) 2
-      Any of the following:
-          Flash Shift or Simple IBJ or Use Spin Boost
-          All of the following:
-              Speed Booster
-              Before Burenia - Destroy Gravity Suit Floor or Disabled Door Lock Randomizer
   > Breakable Floor
       After Burenia - Destroy Gravity Suit Floor
+  > Blob Alcove
+      All of the following:
+          # https://youtu.be/-NZ2QPUxno0
+          Before Burenia - Destroy Gravity Suit Floor and Aim Down Clip (Expert) and Can SSC
+  > Next to Bottom Pickup
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Flash Shift or Simple IBJ or Use Spin Boost
+              All of the following:
+                  Speed Booster
+                  Before Burenia - Destroy Gravity Suit Floor or Disabled Door Lock Randomizer
 
 > Dock to Ammo Recharge South (Lower); Heals? False
   * Layers: default
@@ -2297,7 +2126,7 @@ Extra - asset_id: collision_camera_021
   * Pickup 88; Major Location? True
   * Extra - actor_name: item_missiletankplus
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
-  > Tile Group (SCREWATTACK) 2
+  > Next to Bottom Pickup
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -2305,7 +2134,7 @@ Extra - asset_id: collision_camera_021
   * Pickup 93; Major Location? False
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (MISSILE)
+  > Door to Teleport to Ghavoran
       Trivial
 
 > Door to Gravity Suit Room (Lower); Heals? False
@@ -2317,6 +2146,8 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Gravity Suit Room (Upper)
+      Lay Power Bomb
   > Dock to Ammo Recharge South (Lower)
       All of the following:
           Before Burenia - Destroy Gravity Suit Floor
@@ -2325,8 +2156,6 @@ Extra - asset_id: collision_camera_021
               All of the following:
                   Gravity Suit
                   Flash Shift or Simple IBJ
-  > Tile Group (POWERBOMB)
-      Trivial
 
 > Door to Teleport to Ghavoran; Heals? False
   * Layers: default
@@ -2337,9 +2166,9 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Pickup (Missile Tank)
+      Shoot Missile
   > Start Point 3
-      Trivial
-  > Tile Group (MISSILE)
       Trivial
 
 > Dock to Ammo Recharge South (Upper); Heals? False
@@ -2389,8 +2218,8 @@ Extra - asset_id: collision_camera_021
   * Event Burenia - Early Gravity Blob
   * Extra - actor_name: db_reg_aq_005
   * Extra - actor_def: actordef:actors/props/db_reg_aq_005/charclasses/db_reg_aq_005.bmsad
-  > Tile Group (WEIGHT)
-      Trivial
+  > Breakable Floor
+      Can Slide Underwater
 
 > Start Point 1; Heals? False
   * Layers: default
@@ -2430,100 +2259,11 @@ Extra - asset_id: collision_camera_021
   > Door to Navigation Station South
       Trivial
 
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_011
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Door to Gravity Suit Room (Upper)
-      Trivial
-  > Door to Gravity Suit Room (Lower)
-      Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_015
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Event - Early Gravity Blob
-      Lay Bomb or Shoot Beam
-  > Breakable Floor
-      Morph Ball and After Burenia - Early Gravity Blob
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_019
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Navigation Station South
-      Trivial
-  > Pickup (Missile+ Tank)
-      Trivial
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-  > Tile Group (SCREWATTACK) 4
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_020
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-  > Shaft Base
-      Trivial
-
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_022
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Pickup (Missile Tank)
-      Trivial
-  > Door to Teleport to Ghavoran
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_041
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-  > Shaft Base
-      Trivial
-
-> Tile Group (SCREWATTACK) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_042
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-  > Shaft Base
-      Trivial
-
 > Tunnel to Early Gravity Speedboost Room 1; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Early Gravity Speedboost Room 1/Tunnel to Gravity Suit Tower
-  > Tile Group (WEIGHT)
-      Trivial
+  > Event - Early Gravity Blob
+      Lay Bomb or Shoot Beam
 
 > Breakable Floor; Heals? False
   * Layers: default
@@ -2599,12 +2339,8 @@ Extra - asset_id: collision_camera_021
           All of the following:
               Speed Booster and Speedbooster Conservation (Intermediate)
               Before Burenia - Destroy Gravity Suit Floor or Disabled Door Lock Randomizer
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-  > Tile Group (SCREWATTACK) 4
-      Trivial
+  > Next to Bottom Pickup
+      Screw Attack
 
 > Event - Early Gravity Blob through Wall; Heals? False
   * Layers: default
@@ -2617,6 +2353,15 @@ Extra - asset_id: collision_camera_021
   * Event Burenia - Twin Robot Fight
   > Start Point 3
       Trivial
+
+> Next to Bottom Pickup; Heals? False
+  * Layers: default
+  > Door to Navigation Station South
+      Screw Attack
+  > Pickup (Missile+ Tank)
+      Trivial
+  > Shaft Base
+      Screw Attack
 
 ----------------
 Ammo Recharge South
@@ -2689,6 +2434,10 @@ the blast shield issue.
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  > Door to Gravity Suit Tower (Lower)
+      All of the following:
+          Gravity Suit and Can SSC
+          Aim Down Clip (Intermediate) or Shinesink Clip (Intermediate)
   > Event - Gravity Suit Blob, Above
       Shoot Diffusion or Wave
   > Start Point
@@ -2708,8 +2457,8 @@ the blast shield issue.
   * Pickup 85; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
-  > Tile Group (POWERBOMB)
-      Morph Ball
+  > Tunnel to Gravity Suit Room Access (Lower)
+      Trivial
 
 > Door to Gravity Suit Tower (Lower); Heals? False
   * Layers: default
@@ -2751,21 +2500,10 @@ the blast shield issue.
 > Tunnel to Gravity Suit Room Access (Lower); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Gravity Suit Room Access/Tunnel to Gravity Suit Room (Lower)
-  > Tile Group (POWERBOMB)
-      Morph Ball
+  > Pickup (Power Bomb Tank)
+      Gravity Suit and Ballspark and Lay Power Bomb
   > Event - Gravity Suit Blob, Below
       Shoot Diffusion or Wave
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_036
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - tile_types: ('POWERBOMB',)
-  > Pickup (Power Bomb Tank)
-      Gravity Suit and Ballspark
-  > Tunnel to Gravity Suit Room Access (Lower)
-      Morph Ball
 
 > Event - Gravity Suit Blob, Right; Heals? False
   * Layers: default
@@ -2827,7 +2565,7 @@ Extra - asset_id: collision_camera_025
                   Flash Shift or Space Jump
                   Grapple Beam or Spider Magnet
               Grapple Beam and Grapple Movement (Beginner) and Use Spin Boost
-  > Tile Group (POWERBEAM)
+  > Tunnel to Main Hub Tower Bottom
       Morph Ball
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
@@ -2840,23 +2578,11 @@ Extra - asset_id: collision_camera_025
   > Door to Main Hub Tower Bottom
       After Burenia - Storm Missile Gate for Etank
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_009
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Main Hub Tower Bottom
-      Morph Ball
-  > Tunnel to Main Hub Tower Bottom
-      Morph Ball
-
 > Tunnel to Main Hub Tower Bottom; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Main Hub Tower Bottom/Tunnel to Storm Missile Gate Room
-  > Tile Group (POWERBEAM)
-      Morph Ball
+  > Door to Main Hub Tower Bottom
+      Can Slide Underwater
 
 > Event - Storm Missile Gate; Heals? False
   * Layers: default
