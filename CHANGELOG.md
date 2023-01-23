@@ -53,7 +53,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Morph Ball Single-Wall Walljumps to get to the Nav Station in Itorash - Transport to Hanubia.
 - Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
-- Fixed: Collecting the Power Bomb Tank in Gravity Suit Room now properly requires Speed Booster and Gravity Suit.
 
 ## [5.3.0] - 2023-01-05
 
