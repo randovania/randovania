@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Aim Down Clip (Expert) to reach the blobs in Gravity Suit Tower from the top level.
 - Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
+- Added: Climb Golzuna Tower using Spin Boost and Flash Shift using Wall Jump (Intermediate).
 - Added: Movement (Intermediate), Simple IBJ, or Spin Boost to reach top tunnel in Vertical Bomb Maze.
 - Added: Flash Shift Skip (Beginner) in Purple EMMI Introduction; (Intermediate) with normal bombs.
 - Added: Moving from Ferenia - Transport to Ghavoran to Pitfall Puzzle Room with Spin Boost, Flash Shift, or Speed Booster.
