@@ -278,7 +278,7 @@ Extra - asset_id: collision_camera_006
   > Door to Transport to Dairon
       Can Slide
   > Pickup (Missile+ Tank)
-      Speed Booster
+      Speed Booster and Can Slide
   > Tunnel to Fan Room Access
       Trivial
 
@@ -946,7 +946,7 @@ Extra - asset_id: collision_camera_015
               All of the following:
                   # The blocks can be shot with just power beam at a very tight angle
                   Movement (Beginner) and Shoot Beam
-  > Aiming Platform
+  > Door to Space Jump Room (Top)
       Trivial
 
 > Door to Space Jump Room (Bottom); Heals? False
@@ -970,7 +970,7 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Aiming Platform
+  > Door to Space Jump Room (Top)
       After Ferenia - Storm Missile Gate for SJ
 
 > Door to Space Jump Room (Top); Heals? False
@@ -982,25 +982,18 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Aiming Platform
-      Trivial
-
-> Event - Storm Missile Gate; Heals? False
-  * Layers: default
-  * Event Ferenia - Storm Missile Gate for SJ
-  > Aiming Platform
-      Trivial
-
-> Aiming Platform; Heals? False
-  * Layers: default
   > Door to Twin Robot Arena
       Trivial
   > Door to Space Jump Room (Mid)
       After Ferenia - Storm Missile Gate for SJ
-  > Door to Space Jump Room (Top)
-      Trivial
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
+
+> Event - Storm Missile Gate; Heals? False
+  * Layers: default
+  * Event Ferenia - Storm Missile Gate for SJ
+  > Door to Space Jump Room (Top)
+      Trivial
 
 ----------------
 Navigation Station
@@ -1998,7 +1991,7 @@ Extra - asset_id: collision_camera_030
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 400
   > Event - Storm Missile Gate Cold Room
-      Missiles ≥ 15 and Storm Missile and Shoot Missile
+      Activate Storm Missile Locks
 
 > Door to Cold Room (Energy Recharge Station) (Grapple); Heals? False
   * Layers: default

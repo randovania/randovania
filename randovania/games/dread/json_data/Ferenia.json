@@ -1540,12 +1540,24 @@
                             "data": "Can Slide"
                         },
                         "Pickup (Missile+ Tank)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Tunnel to Fan Room Access": {
@@ -5238,7 +5250,7 @@
                                 ]
                             }
                         },
-                        "Aiming Platform": {
+                        "Door to Space Jump Room (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5318,7 +5330,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Aiming Platform": {
+                        "Door to Space Jump Room (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -5359,12 +5371,25 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Aiming Platform": {
+                        "Door to Twin Robot Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Space Jump Room (Mid)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "FereniaStormMissileGateSJ",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Storm Missile Gate": {
+                            "type": "template",
+                            "data": "Activate Storm Missile Locks"
                         }
                     }
                 },
@@ -5383,55 +5408,12 @@
                     "extra": {},
                     "event_name": "FereniaStormMissileGateSJ",
                     "connections": {
-                        "Aiming Platform": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Aiming Platform": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10999.748743718594,
-                        "y": 3513.56783919598,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Door to Twin Robot Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Space Jump Room (Mid)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "FereniaStormMissileGateSJ",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Door to Space Jump Room (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Storm Missile Gate": {
-                            "type": "template",
-                            "data": "Activate Storm Missile Locks"
                         }
                     }
                 }
@@ -10561,34 +10543,8 @@
                             }
                         },
                         "Event - Storm Missile Gate Cold Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Missile"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Storm",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 15,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Activate Storm Missile Locks"
                         }
                     }
                 },
