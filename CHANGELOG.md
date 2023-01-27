@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Changed: Using Flash Shift to collect the fan pickup in Burenia Hub to Dairon is now Advanced (from Beginner).
 - Changed: All three fan skips are now classified as Movement instead of Infinite Bomb Jump.
+- Changed: Convert most of the harder IBJ instances to new Diagonal Bomb Jump trick.
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
 - Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
 - Fixed: Reaching the upper tunnel in Ferenia - Speedboost Slopes Maze properly accounts for the ability to destroy the beamblocks using Wave Beam, Diffusion Beam, explosives, or Movement (Beginner)
