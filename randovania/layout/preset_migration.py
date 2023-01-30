@@ -719,6 +719,12 @@ def _migrate_v42(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v43(preset: dict) -> dict:
+    preset["configuration"]["single_set_for_pickups_that_solve"] = False
+    preset["configuration"]["staggered_multi_pickup_placement"] = False
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -762,6 +768,7 @@ _MIGRATIONS = [
     _migrate_v40,
     _migrate_v41,
     _migrate_v42,
+    _migrate_v43,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

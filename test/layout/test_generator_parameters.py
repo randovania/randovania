@@ -86,7 +86,7 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
     if development:
         encoded = b'<\x00\x00\x1fF\x00\x00'
     else:
-        encoded = b'<\x00\x00\x1fD\x00\x03\xc0'
+        encoded = b'<\x00\x00\x1fD\x00\x00\xf0'
     if extra_data:
         encoded += b"="
 

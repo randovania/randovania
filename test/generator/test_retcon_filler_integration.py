@@ -36,6 +36,8 @@ def test_build_available_indices(has_exclusion: bool):
         first_progression_must_be_local=False,
         minimum_available_locations_for_hint_placement=0,
         minimum_location_weight_for_hint_placement=0,
+        single_set_for_pickups_that_solve=False,
+        staggered_multi_pickup_placement=False,
     )
 
     # Run

@@ -241,6 +241,9 @@ def retcon_playthrough_filler(rng: Random,
             current_player.reach.act_on(new_resource)
 
         if new_pickups:
+            if current_player.configuration.staggered_multi_pickup_placement:
+                new_pickups = [new_pickups[0]]
+
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
