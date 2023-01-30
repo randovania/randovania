@@ -40,7 +40,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
 
-        #Minimal Logic
+        # Minimal Logic
         for w in [
             self.trick_level_minimal_logic_check,
             self.trick_level_minimal_logic_label,
@@ -53,6 +53,12 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
                     game_specific_text=game_description.minimal_logic.description
                 )
             )
+
+        # Experimental
+        signal_handling.on_checked(self.single_set_for_pickups_that_solve_check,
+                                   self._persist_bool_layout_field("single_set_for_pickups_that_solve"))
+        signal_handling.on_checked(self.staggered_multi_pickup_placement_check,
+                                   self._persist_bool_layout_field("staggered_multi_pickup_placement"))
 
         # Damage strictness
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
@@ -69,6 +75,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         common_qt_lib.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
+
+        self.single_set_for_pickups_that_solve_check.setChecked(layout.single_set_for_pickups_that_solve)
+        self.staggered_multi_pickup_placement_check.setChecked(layout.staggered_multi_pickup_placement)
 
         common_qt_lib.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
 
