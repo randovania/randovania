@@ -401,10 +401,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
             },
-            "door_patches": {
-                "show_shields_on_minimap": self.configuration.dock_rando.mode == DockRandoMode.VANILLA,
-                "doors": self._door_patches(),
-            },
+            "show_shields_on_minimap": self.configuration.dock_rando.mode == DockRandoMode.VANILLA,
+            "door_patches": self._door_patches(),
             "tile_group_patches": self._tilegroup_patches(),
             "objective": self._objective_patches(),
         }
