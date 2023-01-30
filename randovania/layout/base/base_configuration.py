@@ -49,6 +49,8 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         "min": 0, "max": 5.0, "precision": 0.1,
     })
     dock_rando: DockRandoConfiguration
+    single_set_for_pickups_that_solve: bool
+    staggered_multi_pickup_placement: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
