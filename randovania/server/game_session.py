@@ -144,12 +144,14 @@ def _emit_inventory_update(membership: GameSessionMembership):
         return
 
     session_id = membership.session.id
-    flask_socketio.emit("game_session_binary_inventory", (session_id, membership.row, membership.inventory),
+    flask_socketio.emit("game_session_binary_inventory",
+                        (session_id, membership.row, membership.inventory),
                         room=f"game-session-{session_id}-binary-inventory",
                         namespace="/")
     try:
-        flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
-                                                            convert_to_raw_python(BinaryInventory.parse(membership.inventory))),
+        flask_socketio.emit("game_session_json_inventory",
+                            (session_id, membership.row,
+                             convert_to_raw_python(BinaryInventory.parse(membership.inventory))),
                             room=f"game-session-{session_id}-json-inventory",
                             namespace="/")
     except construct.ConstructError as e:
@@ -733,7 +735,7 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes |
     session = membership.session
 
     old_state = membership.connection_state
-    # old_inventory = membership.inventory
+    old_inventory = membership.inventory
 
     membership.connection_state = f"Online, {game_connection_state}"
     if session.state == GameSessionState.IN_PROGRESS and not membership.is_observer and inventory is not None:
@@ -741,10 +743,14 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes |
 
     membership.save()
 
-    if session.state == GameSessionState.IN_PROGRESS:
+    if old_inventory != membership.inventory and session.state == GameSessionState.IN_PROGRESS:
         _emit_inventory_update(membership)
 
     if old_state != membership.connection_state:
+        logger().info(
+            "%s has new connection state: %s",
+            _describe_session(session, membership), membership.connection_state,
+        )
         _emit_session_meta_update(session)
 
 
