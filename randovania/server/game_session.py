@@ -189,7 +189,7 @@ def game_session_request_update(sio: ServerApp, session_id: int):
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
     _emit_session_meta_update(session)
-    if session.layout_description is not None:
+    if session.layout_description_json is not None:
         _emit_session_actions_update(session)
 
     if not membership.is_observer and session.state != GameSessionState.SETUP:
