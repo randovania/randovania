@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+#### Patcher Changes
+
+- Added: CGC Tournament Winners to Artifact Temple lore scan
+- Fixed: Chapel IS giving the player lightshow on 2nd pass
+- Fixed: Items in every room incompatibility with shuffled essence elevator
+- Changed: Always apply Elite Quarters item softlock patch regardless of cutscene skip mode
+
 #### Logic Database
 
 - Fixed: Collecting the Missile Expansion in Burn Dome before the fight no longer causes the generation to fail.
