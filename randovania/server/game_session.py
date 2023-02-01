@@ -767,16 +767,17 @@ def game_session_watch_row_inventory(sio: ServerApp, session_id: int, row: int, 
 
 def report_user_disconnected(sio: ServerApp, user_id: int, log):
     memberships: list[GameSessionMembership] = list(GameSessionMembership.select().where(
-        GameSessionMembership.user == user_id))
+        GameSessionMembership.user == user_id,
+        GameSessionMembership.connection_state != "Offline",
+    ))
 
     log.info(f"User {user_id} is disconnected, disconnecting from sessions: {memberships}")
     sessions_to_update = []
 
     for membership in memberships:
-        if membership.connection_state != "Offline":
-            membership.connection_state = "Offline"
-            sessions_to_update.append(membership.session)
-            membership.save()
+        membership.connection_state = "Offline"
+        sessions_to_update.append(membership.session)
+        membership.save()
 
     for session in sessions_to_update:
         _emit_session_meta_update(session)
@@ -850,6 +851,7 @@ def setup_app(sio: ServerApp):
             if player.is_observer:
                 rows.append([
                     player.effective_name,
+                    player.connection_state,
                     "Observer",
                     "",
                 ])
@@ -878,11 +880,12 @@ def setup_app(sio: ServerApp):
 
                 rows.append([
                     player.effective_name,
+                    player.connection_state,
                     preset.name,
                     ", ".join(inventory),
                 ])
 
-        header = ["Name", "Preset", "Inventory"]
+        header = ["Name", "Connection State", "Preset", "Inventory"]
 
         return "<table border='1'><tr>{}</tr>{}</table>".format(
             "".join(f"<th>{h}</th>" for h in header),
