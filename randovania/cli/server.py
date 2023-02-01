@@ -32,6 +32,9 @@ def add_migrate_database_command(sub_parsers):
 
 
 def bot_command_logic(args):
+    import randovania.monitoring
+    randovania.monitoring.bot_init()
+
     from randovania.server.discord import bot
     bot.run()
 
