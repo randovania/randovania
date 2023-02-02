@@ -279,7 +279,12 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     "bShowEnemyDamage": c.show_enemy_damage,
                     "bShowPlayerDamage": c.show_player_damage
                 }
-            }
+            },
+            "lua": {
+                "custom_init": {
+                    "enable_death_counter": c.show_death_counter
+                },
+            },
         }
 
     def _door_patches(self):
