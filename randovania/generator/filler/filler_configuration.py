@@ -15,3 +15,5 @@ class FillerConfiguration:
     first_progression_must_be_local: bool
     minimum_available_locations_for_hint_placement: int
     minimum_location_weight_for_hint_placement: float
+    single_set_for_pickups_that_solve: bool
+    staggered_multi_pickup_placement: bool

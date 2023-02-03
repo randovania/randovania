@@ -123,7 +123,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     }
 
     # Run
-    result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes)
+    result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes, False)
 
     # Assert
     mock_req_lists.assert_called_once_with(
@@ -197,7 +197,7 @@ async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_descri
         reach_lib.reach_with_all_safe_resources(new_game, state))
 
     # Run
-    result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [])
+    result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [], False)
     r2 = sorted(
         sorted(a.name for a in it)
         for it in result

@@ -1736,8 +1736,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 3,
+                                                                    "name": "DBJ",
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8694,28 +8694,14 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Normal Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "IBJ",
+                                                        "name": "DBJ",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -11194,7 +11180,7 @@
                         "Door to Teleport to Burenia (Power Beam)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Figure out a good way to put in the shinespark here. It requires either short boost or charging speed in the room to the left.",
                                 "items": [
                                     {
                                         "type": "template",
@@ -11207,14 +11193,14 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Bomb"
+                                                    "data": "Lay Normal Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 2,
+                                                        "name": "DBJ",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -11222,12 +11208,33 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "https://youtu.be/YWkTAyzTwLA",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cross",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]

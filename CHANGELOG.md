@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.4.0] - 2023-??-??
 
+- Added: Experimental generation setting for staggering the placement of selected pickups.
+- Added: Experimental generation setting for removing redundant possible actions.
+- Added: Automatic reporting of exceptions for the client, and monitoring for requests to the server.
+- Added: New pixel icons for Prime 1 & 2 autotracker
 - Fixed: The minor/major split setting is obeyed much more accurately by the generator.
 - Fixed: Starting with ammo no longer causes all requirements for that ammo to be ignored. 
 - Fixed: The generator no longer attempts placing pickups based on alternatives to satisfied requirements, such as Missile Expansions for Quadraxis while already having Light Beam.
@@ -16,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   This results in certain pickup combinations no longer being considered for placement in the generator, such as Sunburst for unlocking the Industrial Site from behind. 
 
 ### Metroid Prime
+
+#### Patcher Changes
+
+- Added: CGC Tournament Winners to Artifact Temple lore scan
+- Fixed: Chapel IS giving the player lightshow on 2nd pass
+- Fixed: Items in every room incompatibility with shuffled essence elevator
+- Changed: Always apply Elite Quarters item softlock patch regardless of cutscene skip mode
 
 #### Logic Database
 
@@ -60,15 +71,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Movement (Intermediate), Simple IBJ, or Spin Boost to reach top tunnel in Vertical Bomb Maze.
 - Added: Flash Shift Skip (Beginner) in Purple EMMI Introduction; (Intermediate) with normal bombs.
 - Added: Moving from Ferenia - Transport to Ghavoran to Pitfall Puzzle Room with Spin Boost, Flash Shift, or Speed Booster.
+- Added: Using Normal Bomb Jump with a Cross Bomb at the top, for sideways movement, to reach the item in Artaria Proto EMMI Introduction.
 - Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Changed: Simplified many room nodes and connections.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Changed: Using Flash Shift to collect the fan pickup in Burenia Hub to Dairon is now Advanced (from Beginner).
 - Changed: All three fan skips are now classified as Movement instead of Infinite Bomb Jump.
+- Changed: Convert most of the harder IBJ instances to new Diagonal Bomb Jump trick.
+- Changed: Increase difficulty of the few harder IBJs that weren't changed to Diagonal Bomb Jumps. This should better reflect the fact that Intermediate IBJ is applied for performing Simple IBJ with Normal Bombs.
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
 - Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
 - Fixed: Reaching the upper tunnel in Ferenia - Speedboost Slopes Maze properly accounts for the ability to destroy the beamblocks using Wave Beam, Diffusion Beam, explosives, or Movement (Beginner)
+- Fixed: Usage of Infinite Bomb Jump in Ferenia Separate Tunnels Room now correctly requires the respective Bomb type. The trick is now set at different difficulty depending on which bomb type is being used.
 - Removed: Infinite Bomb Jump for reaching Wave Beam Tutorial from the cold rooms.
+- Removed: Shinespark in Ghavoran Total Recharge Station North. This one requires either short boost or charging speed in the room to the left. Removing this for now.
 
 ## [5.3.0] - 2023-01-05
 
