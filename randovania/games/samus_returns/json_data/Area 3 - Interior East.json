@@ -185,7 +185,7 @@
             }
         },
         "Gamma Arena South Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -291,6 +291,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -324,6 +331,31 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5100.0,
+                        "y": 2600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_007B_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Transport to Area 3 Interior West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1584,7 +1616,7 @@
             }
         },
         "Fiery Path": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1846,6 +1878,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2015,6 +2054,33 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18400.0,
+                        "y": 4800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_001"
+                    },
+                    "connections": {
+                        "Door to Alpha Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2380,6 +2446,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2538,15 +2611,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 8169.710987476818,
-                        "y": 4766.491286560675,
+                        "x": 8200.0,
+                        "y": 4800.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_006_Checkpoint"
+                    },
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -2729,6 +2804,31 @@
                                         "data": "Defeat Gamma Metroid"
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7100.0,
+                        "y": 3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_007"
+                    },
+                    "connections": {
+                        "Door to Gamma Arena South Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3089,7 +3189,7 @@
             }
         },
         "Alpha Arena": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3153,7 +3253,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3183,7 +3283,7 @@
                     "pickup_index": 77,
                     "major_location": false,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3209,7 +3309,7 @@
                     "extra": {},
                     "event_name": "Alpha 13",
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3220,19 +3320,21 @@
                         }
                     }
                 },
-                "Room Center": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 14636.631944444445,
-                        "y": 4744.704861111111,
+                        "x": 16200.0,
+                        "y": 4600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Fiery Path": {
                             "type": "and",
@@ -3355,7 +3457,7 @@
             }
         },
         "Gamma Arena South": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3411,7 +3513,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3443,7 +3545,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3469,7 +3571,7 @@
                     "extra": {},
                     "event_name": "Gamma 4",
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3478,19 +3580,21 @@
                         }
                     }
                 },
-                "Room Center": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 76.92949520233651,
-                        "y": 2603.629536921151,
+                        "x": -1000.0,
+                        "y": 2300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_007A_Checkpoint"
+                    },
                     "connections": {
                         "Door to Gamma Storage": {
                             "type": "or",
@@ -3872,7 +3976,7 @@
             }
         },
         "Gamma Awakening": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3935,6 +4039,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4075,6 +4186,31 @@
                         "Tunnel to Transport to Area 3 Interior West (Top)": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5600.0,
+                        "y": 5600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_006"
+                    },
+                    "connections": {
+                        "Door to Gamma Awakening Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
