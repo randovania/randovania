@@ -2393,7 +2393,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Omega Metroid South Access": {
+                        "Door to Omega Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2428,7 +2428,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Metroid+ Access (Top)": {
+                        "Door to Omega+ Arena Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2437,7 +2437,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid+ Access (Top)": {
+                "Door to Omega+ Arena Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2456,7 +2456,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid+ Access",
+                        "area_name": "Omega+ Arena Access",
                         "node_name": "Door to Omega Shaft East (Top)"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -2470,7 +2470,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Omega Metroid South Access": {
+                        "Door to Omega Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2479,7 +2479,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid+ Access (Bottom)": {
+                "Door to Omega+ Arena Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2498,14 +2498,14 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid+ Access",
+                        "area_name": "Omega+ Arena Access",
                         "node_name": "Door to Omega Shaft East (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Metroid South Access": {
+                        "Door to Omega Arena South Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2516,7 +2516,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid South Access": {
+                "Door to Omega Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2535,7 +2535,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid South Access",
+                        "area_name": "Omega Arena South Access",
                         "node_name": "Door to Omega Shaft East"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
@@ -2551,14 +2551,14 @@
                                 "negate": false
                             }
                         },
-                        "Door to Omega Metroid+ Access (Top)": {
+                        "Door to Omega+ Arena Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Omega Metroid+ Access (Bottom)": {
+                        "Door to Omega+ Arena Access (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2591,7 +2591,7 @@
                     "extra": {},
                     "event_name": "Area 7 Teleporter East",
                     "connections": {
-                        "Door to Omega Metroid South Access": {
+                        "Door to Omega Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2602,8 +2602,8 @@
                 }
             }
         },
-        "Omega Metroid+ Arena": {
-            "default_node": null,
+        "Omega+ Arena": {
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2633,7 +2633,7 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Door to Omega Metroid+ Access": {
+                "Door to Omega+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2652,16 +2652,19 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid+ Access",
-                        "node_name": "Door to Omega Metroid+ Arena"
+                        "area_name": "Omega+ Arena Access",
+                        "node_name": "Door to Omega+ Arena"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Omega Metroid+": {
-                            "type": "template",
-                            "data": "Defeat Omega Metroid"
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2680,12 +2683,43 @@
                     "extra": {},
                     "event_name": "Omega 4",
                     "connections": {
-                        "Door to Omega Metroid+ Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1200.0,
+                        "y": -3500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Omega_002_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Omega+ Arena Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Omega 4",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Omega Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Omega Metroid"
                         }
                     }
                 }
@@ -3650,8 +3684,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -16848.347107438014,
-                        "y": -9118.144252441773,
+                        "x": -16848.35,
+                        "y": -9118.14,
                         "z": 0.0
                     },
                     "description": "",
@@ -3660,7 +3694,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_PlatformADN",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
                     "connections": {
                         "Save Station": {
@@ -3989,7 +4024,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid+ Access": {
+                "Door to Omega+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4008,7 +4043,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid+ Access",
+                        "area_name": "Omega+ Arena Access",
                         "node_name": "Door to Transport to Area 6"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -4167,7 +4202,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Omega Metroid+ Access": {
+                        "Door to Omega+ Arena Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4463,8 +4498,8 @@
                 }
             }
         },
-        "Omega Metroid South Access": {
-            "default_node": null,
+        "Omega Arena South Access": {
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4577,7 +4612,7 @@
                                 ]
                             }
                         },
-                        "Door to Omega Metroid South Arena": {
+                        "Door to Omega Arena South": {
                             "type": "template",
                             "data": "Can Spiderspark"
                         }
@@ -4603,13 +4638,13 @@
                     "default_connection": {
                         "world_name": "Area 7",
                         "area_name": "Omega Shaft East",
-                        "node_name": "Door to Omega Metroid South Access"
+                        "node_name": "Door to Omega Arena South Access"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Metroid South Arena": {
+                        "Door to Omega Arena South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4637,7 +4672,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid South Arena": {
+                "Door to Omega Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4656,8 +4691,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid South Arena",
-                        "node_name": "Door to Omega Metroid South Access"
+                        "area_name": "Omega Arena South",
+                        "node_name": "Door to Omega Arena South Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -4692,10 +4727,17 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
-                "Dock to Omega Metroid South Arena": {
+                "Dock to Omega Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4711,8 +4753,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid South Arena",
-                        "node_name": "Tunnel to Omega Metroid South Access"
+                        "area_name": "Omega Arena South",
+                        "node_name": "Tunnel to Omega Arena South Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
@@ -4726,11 +4768,36 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15000.0,
+                        "y": -1800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Omega_003"
+                    },
+                    "connections": {
+                        "Door to Omega Arena South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Omega Metroid South Arena": {
-            "default_node": null,
+        "Omega Arena South": {
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4760,7 +4827,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to Omega Metroid South Access": {
+                "Door to Omega Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4779,41 +4846,23 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid South Access",
-                        "node_name": "Door to Omega Metroid South Arena"
+                        "area_name": "Omega Arena South Access",
+                        "node_name": "Door to Omega Arena South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Omega Metroid South Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Destroy Missile Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
-                        },
-                        "Event - Omega Metroid": {
-                            "type": "template",
-                            "data": "Defeat Omega Metroid"
                         }
                     }
                 },
-                "Tunnel to Omega Metroid South Access": {
+                "Tunnel to Omega Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4829,8 +4878,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid South Access",
-                        "node_name": "Dock to Omega Metroid South Arena"
+                        "area_name": "Omega Arena South Access",
+                        "node_name": "Dock to Omega Arena South"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
@@ -4852,7 +4901,7 @@
                     "extra": {},
                     "event_name": "Omega 3",
                     "connections": {
-                        "Door to Omega Metroid South Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4860,11 +4909,63 @@
                             }
                         }
                     }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12400.0,
+                        "y": -1800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Omega_003_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Omega Arena South Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Omega 3",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Omega Arena South Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Omega Metroid": {
+                            "type": "template",
+                            "data": "Defeat Omega Metroid"
+                        }
+                    }
                 }
             }
         },
-        "Omega Metroid North Arena": {
-            "default_node": null,
+        "Omega Arena North": {
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4894,7 +4995,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door to Omega Metroid North Access": {
+                "Door to Omega Arena North Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4913,16 +5014,19 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid North Access",
-                        "node_name": "Door to Omega Metroid North Arena"
+                        "area_name": "Omega Arena North Access",
+                        "node_name": "Door to Omega Arena North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Omega Metroid": {
-                            "type": "template",
-                            "data": "Defeat Omega Metroid"
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4941,7 +5045,7 @@
                     "extra": {},
                     "event_name": "Omega 2",
                     "connections": {
-                        "Door to Omega Metroid North Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4949,11 +5053,42 @@
                             }
                         }
                     }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -26600.0,
+                        "y": 6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Omega_001_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Omega Arena North Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Omega 2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Omega Metroid": {
+                            "type": "template",
+                            "data": "Defeat Omega Metroid"
+                        }
+                    }
                 }
             }
         },
-        "Omega Metroid North Access": {
-            "default_node": null,
+        "Omega Arena North Access": {
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5008,7 +5143,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid North Arena": {
+                "Door to Omega Arena North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5027,8 +5162,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid North Arena",
-                        "node_name": "Door to Omega Metroid North Access"
+                        "area_name": "Omega Arena North",
+                        "node_name": "Door to Omega Arena North Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -5106,6 +5241,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5129,13 +5271,13 @@
                     "default_connection": {
                         "world_name": "Area 7",
                         "area_name": "Omega Shaft West",
-                        "node_name": "Door to Omega Metroid North Access"
+                        "node_name": "Door to Omega Arena North Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Metroid North Arena": {
+                        "Door to Omega Arena North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5184,17 +5326,42 @@
                     "default_connection": {
                         "world_name": "Area 7",
                         "area_name": "Omega Shaft West",
-                        "node_name": "Tunnel to Omega Metroid North Access"
+                        "node_name": "Tunnel to Omega Arena North Access"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -24500.0,
+                        "y": 6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Omega_001"
+                    },
+                    "connections": {
+                        "Door to Omega Arena North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Omega Metroid+ Access": {
-            "default_node": "Save Station",
+        "Omega+ Arena Access": {
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -5299,13 +5466,13 @@
                     "default_connection": {
                         "world_name": "Area 7",
                         "area_name": "Omega Shaft East",
-                        "node_name": "Door to Omega Metroid+ Access (Top)"
+                        "node_name": "Door to Omega+ Arena Access (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Metroid+ Arena": {
+                        "Door to Omega+ Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5377,7 +5544,7 @@
                     "default_connection": {
                         "world_name": "Area 7",
                         "area_name": "Omega Shaft East",
-                        "node_name": "Door to Omega Metroid+ Access (Bottom)"
+                        "node_name": "Door to Omega+ Arena Access (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "override_default_open_requirement": null,
@@ -5392,7 +5559,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid+ Arena": {
+                "Door to Omega+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5411,8 +5578,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid+ Arena",
-                        "node_name": "Door to Omega Metroid+ Access"
+                        "area_name": "Omega+ Arena",
+                        "node_name": "Door to Omega+ Arena Access"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
@@ -5507,6 +5674,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5530,7 +5704,7 @@
                     "default_connection": {
                         "world_name": "Area 7",
                         "area_name": "Transport to Area 6",
-                        "node_name": "Door to Omega Metroid+ Access"
+                        "node_name": "Door to Omega+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -5822,6 +5996,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1440.0,
+                        "y": -3506.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Omega_002"
+                    },
+                    "connections": {
+                        "Door to Omega+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6177,7 +6376,7 @@
                         "actor_type": "weightactivatedplatform"
                     },
                     "connections": {
-                        "Door to Omega Metroid North Access": {
+                        "Door to Omega Arena North Access": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         },
@@ -6217,7 +6416,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Metroid North Access": {
+                        "Door to Omega Arena North Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6333,7 +6532,7 @@
                         }
                     }
                 },
-                "Door to Omega Metroid North Access": {
+                "Door to Omega Arena North Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6352,7 +6551,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid North Access",
+                        "area_name": "Omega Arena North Access",
                         "node_name": "Door to Omega Shaft West"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -6529,7 +6728,7 @@
                         }
                     }
                 },
-                "Tunnel to Omega Metroid North Access": {
+                "Tunnel to Omega Arena North Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6545,7 +6744,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 7",
-                        "area_name": "Omega Metroid North Access",
+                        "area_name": "Omega Arena North Access",
                         "node_name": "Tunnel to Omega Shaft West"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
