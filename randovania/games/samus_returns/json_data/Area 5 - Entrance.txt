@@ -163,6 +163,7 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Elevator to Area 4 West - Transport to Area 5 Entrance
       Any of the following:
           Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
@@ -529,7 +530,7 @@ Extra - asset_id: collision_camera_011
   > Next to Pickup
       Trivial
 
-> Teleporter; Heals? False; Spawn Point
+> Teleporter; Heals? False
   * Layers: default
   * Teleporter Network (Unlocked by After Area 5 (Entrance) - Teleporter Unlocked (East))
   * Extra - actor_name: LE_Platform_Teleporter_06A_001
@@ -554,6 +555,8 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: Door021
   * Extra - actor_type: doorpowerpower
   > Next to Teleporter
+      Trivial
+  > Start Point
       Trivial
 
 > Tunnel to Transport Hub Access; Heals? False
@@ -612,6 +615,12 @@ Extra - asset_id: collision_camera_011
                   Simple IBJ
                   Spring Ball or Mid-Air Morph (Beginner)
 
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_001
+  > Door to Alpha+ Arena
+      Trivial
+
 ----------------
 Alpha+ Arena
 Extra - total_boundings: {'x1': 3050.0, 'x2': 6050.0, 'y1': -6300.0, 'y2': -5400.0}
@@ -639,8 +648,9 @@ Extra - asset_id: collision_camera_012
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Door to Pool East
       After Area 5 (Entrance) - Alpha Metroid+
   > Door to Alpha+ Arena Access
@@ -660,12 +670,20 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_type: doorpowerpower
   > Tunnel to Gamma+ Arena
       Destroy Bomb Block
+  > Start Point
+      Trivial
 
 > Tunnel to Gamma+ Arena; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Gamma+ Arena/Tunnel to Gamma+ Arena Access
   > Door to Pool West
       Morph Ball
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_004
+  > Door to Pool West
+      Trivial
 
 ----------------
 Phase Drift Room
@@ -679,6 +697,8 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_type: powerup_phasedisplacement
   > Left of Crumble Blocks
       Trivial
+  > Left of Statue
+      Morph Ball
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -695,8 +715,8 @@ Extra - asset_id: collision_camera_014
 > Dock to Phase Drift Tutorial; Heals? False
   * Layers: default
   * Open Passage to Phase Drift Tutorial/Dock to Phase Drift Room
-  > Pickup (Phase Drift)
-      Morph Ball
+  > Left of Statue
+      Trivial
 
 > Tunnel to Pool East (Top); Heals? False
   * Layers: default
@@ -710,6 +730,7 @@ Extra - asset_id: collision_camera_014
 
 > Left of Crumble Blocks; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (Phase Drift)
       Morph Ball
   > Pickup (Super Missile Tank)
@@ -722,6 +743,12 @@ Extra - asset_id: collision_camera_014
       Destroy Bomb Block
   > Tunnel to Pool East (Bottom)
       Destroy Bomb Block
+
+> Left of Statue; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  > Pickup (Phase Drift)
+      Morph Ball
 
 ----------------
 Pool East
@@ -796,18 +823,26 @@ Extra - asset_id: collision_camera_016
 > Tunnel to Gamma+ Arena Access; Heals? False
   * Layers: default
   * Tunnel to Gamma+ Arena Access/Tunnel to Gamma+ Arena
-  > Event - Gamma Metroid+
-      Morph Ball and Defeat Gamma Metroid+
+  > Start Point
+      Morph Ball
 
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Entrance) - Gamma Metroid+
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_004_Checkpoint
   > Tunnel to Gamma+ Arena Access
       Any of the following:
           Lay Power Bomb
           All of the following:
               Lay Bomb
               Spider Ball or Spring Ball or Mid-Air Morph (Beginner)
+  > Event - Gamma Metroid+
+      Defeat Gamma Metroid+
 
 ----------------
 Transport Hub Access

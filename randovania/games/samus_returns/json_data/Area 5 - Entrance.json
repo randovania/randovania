@@ -1241,8 +1241,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 15505.544488711821,
-                        "y": -8643.299026117751,
+                        "x": 15505.54,
+                        "y": -8643.3,
                         "z": 0.0
                     },
                     "description": "",
@@ -1251,7 +1251,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
                     "connections": {
                         "Elevator to Area 4 West - Transport to Area 5 Entrance": {
@@ -3515,7 +3516,7 @@
             }
         },
         "Alpha+ Arena Access": {
-            "default_node": "Teleporter",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -3736,6 +3737,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3825,8 +3833,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6599.309245483528,
-                        "y": -7885.6181367339705,
+                        "x": 6560.34,
+                        "y": -7854.45,
                         "z": 0.0
                     },
                     "description": "",
@@ -4143,11 +4151,36 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6500.0,
+                        "y": -6000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_001"
+                    },
+                    "connections": {
+                        "Door to Alpha+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alpha+ Arena": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4275,15 +4308,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 4553.3200531208495,
-                        "y": -6117.2642762284195,
+                        "x": 4000.0,
+                        "y": -6100.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Pool East": {
                             "type": "resource",
@@ -4312,7 +4347,7 @@
             }
         },
         "Gamma+ Arena Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4371,6 +4406,13 @@
                         "Tunnel to Gamma+ Arena": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4407,11 +4449,36 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20000.0,
+                        "y": -3700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_004"
+                    },
+                    "connections": {
+                        "Door to Pool West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Phase Drift Room": {
-            "default_node": null,
+            "default_node": "Left of Statue",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4473,6 +4540,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Left of Statue": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -4575,13 +4651,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Phase Drift)": {
-                            "type": "resource",
+                        "Left of Statue": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4648,15 +4722,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3052.0991317727226,
-                        "y": -6987.7623914715905,
+                        "x": -2900.0,
+                        "y": -7000.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_002"
+                    },
                     "connections": {
                         "Pickup (Phase Drift)": {
                             "type": "resource",
@@ -4741,6 +4817,33 @@
                         "Tunnel to Pool East (Bottom)": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Left of Statue": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5000.0,
+                        "y": -7000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Bestowal"
+                    },
+                    "connections": {
+                        "Pickup (Phase Drift)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 }
@@ -5178,7 +5281,7 @@
             }
         },
         "Gamma+ Arena": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5231,25 +5334,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Gamma Metroid+": {
-                            "type": "and",
+                        "Start Point": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma Metroid+"
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5268,6 +5359,31 @@
                     ],
                     "extra": {},
                     "event_name": "Gamma 11",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22000.0,
+                        "y": -3700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_004_Checkpoint"
+                    },
                     "connections": {
                         "Tunnel to Gamma+ Arena Access": {
                             "type": "or",
@@ -5304,8 +5420,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "AirMorph",
+                                                                    "type": "items",
+                                                                    "name": "Spring",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -5313,8 +5429,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spring",
+                                                                    "type": "tricks",
+                                                                    "name": "AirMorph",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -5327,6 +5443,10 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Gamma Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid+"
                         }
                     }
                 }
