@@ -1229,7 +1229,7 @@
             }
         },
         "Bomb Room": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1303,7 +1303,7 @@
                     "pickup_index": 26,
                     "major_location": true,
                     "connections": {
-                        "Door from Bomb Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1338,18 +1338,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Bomb)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel to Bomb Access": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
-                        },
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1385,13 +1374,13 @@
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         },
-                        "Door from Bomb Access": {
+                        "Room Center": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1404,15 +1393,26 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_Checkpoint_005"
+                        "start_point_actor_name": "ST_CheckPoint_005"
                     },
                     "connections": {
+                        "Pickup (Bomb)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door from Bomb Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tunnel to Bomb Access": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -1932,7 +1932,7 @@
             }
         },
         "Spider Ball Room": {
-            "default_node": "Start Point",
+            "default_node": "Room Bottom",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2014,7 +2014,7 @@
                     "pickup_index": 28,
                     "major_location": true,
                     "connections": {
-                        "Start Point": {
+                        "Room Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2084,7 +2084,7 @@
                                 ]
                             }
                         },
-                        "Start Point": {
+                        "Room Bottom": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2161,7 +2161,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Room Bottom": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2238,7 +2238,7 @@
             }
         },
         "Alpha Arena North": {
-            "default_node": "Start Point (Bottom)",
+            "default_node": "Inside Arena",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2287,7 +2287,7 @@
                     "pickup_index": 20,
                     "major_location": true,
                     "connections": {
-                        "Start Point (Top)": {
+                        "Above Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2322,11 +2322,141 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Outer Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11940.71357285429,
+                        "y": 10568.284264803726,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 1",
+                        "area_name": "Outer Hub",
+                        "node_name": "Tunnel to Alpha Arena North"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Above Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Alpha Metroid": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13800.92648037259,
+                        "y": 9431.133566200931,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Alpha 2",
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15300.0,
+                        "y": 10400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_004B"
+                    },
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Outer Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13900.0,
+                        "y": 9000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_004_Checkpoint"
+                    },
+                    "connections": {
+                        "Door from Outer Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
                         },
-                        "Start Point (Top)": {
+                        "Above Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2366,134 +2496,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Start Point (Bottom)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Outer Hub": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 11940.71357285429,
-                        "y": 10568.284264803726,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "world_name": "Area 1",
-                        "area_name": "Outer Hub",
-                        "node_name": "Tunnel to Alpha Arena North"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Start Point (Top)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Alpha Metroid": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13800.92648037259,
-                        "y": 9431.133566200931,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "Alpha 2",
-                    "connections": {
-                        "Door from Outer Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point (Top)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 15300.0,
-                        "y": 10400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "ST_SG_Alpha_004B"
-                    },
-                    "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door from Outer Hub": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
-                        },
-                        "Tunnel to Outer Hub": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Start Point (Bottom)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13900.0,
-                        "y": 9000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "ST_Alpha_004_Checkpoint"
-                    },
-                    "connections": {
-                        "Door from Outer Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -3493,7 +3495,7 @@
             }
         },
         "Alpha Arena West Access": {
-            "default_node": "Start Point",
+            "default_node": "Second Pillar",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3546,7 +3548,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Second Pillar": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3755,7 +3757,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Second Pillar": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3764,7 +3766,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Second Pillar": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -3903,7 +3905,7 @@
             }
         },
         "Alpha Arena South": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3959,11 +3961,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid"
-                        },
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3987,7 +3985,7 @@
                     "extra": {},
                     "event_name": "Alpha 4",
                     "connections": {
-                        "Door to Alpha Shaft Left": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3996,7 +3994,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -4013,18 +4011,24 @@
                     },
                     "connections": {
                         "Door to Alpha Shaft Left": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "Alpha 4",
+                                "amount": 1,
+                                "negate": false
                             }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
                         }
                     }
                 }
             }
         },
         "Alpha Arena East": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4080,11 +4084,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid"
-                        },
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4108,7 +4108,7 @@
                     "extra": {},
                     "event_name": "Alpha 3",
                     "connections": {
-                        "Door to Alpha Arena East Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4117,7 +4117,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -4134,11 +4134,17 @@
                     },
                     "connections": {
                         "Door to Alpha Arena East Access": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "Alpha 3",
+                                "amount": 1,
+                                "negate": false
                             }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
                         }
                     }
                 }
@@ -4532,7 +4538,7 @@
             }
         },
         "Ice Beam Room": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4581,7 +4587,7 @@
                     "pickup_index": 27,
                     "major_location": true,
                     "connections": {
-                        "Door to Ice Beam Tutorial": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4616,44 +4622,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Ice Beam)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Super Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Destroy Missile Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Baby",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4681,7 +4650,7 @@
                     "pickup_index": 31,
                     "major_location": false,
                     "connections": {
-                        "Door to Ice Beam Tutorial": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4690,7 +4659,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -4703,14 +4672,51 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_Checkpoint_006"
+                        "start_point_actor_name": "ST_CheckPoint_006"
                     },
                     "connections": {
+                        "Pickup (Ice Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Ice Beam Tutorial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5996,7 +6002,7 @@
             }
         },
         "Teleporter Access": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -6052,11 +6058,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Teleporter Room": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
-                        },
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6088,7 +6090,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6120,7 +6122,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Room Center": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6131,7 +6133,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -6153,6 +6155,10 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tunnel to Teleporter Room": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -7678,7 +7684,7 @@
             }
         },
         "Alpha Arena West": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -7731,7 +7737,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Room Center": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7781,7 +7787,7 @@
                     "extra": {},
                     "event_name": "Alpha 5",
                     "connections": {
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7790,7 +7796,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {

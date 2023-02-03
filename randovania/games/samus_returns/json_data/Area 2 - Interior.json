@@ -554,7 +554,7 @@
                                 "items": []
                             }
                         },
-                        "Start Point": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -600,7 +600,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Next to Pickup": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -3184,7 +3184,7 @@
             }
         },
         "High Jump Room": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3233,7 +3233,7 @@
                     "pickup_index": 44,
                     "major_location": true,
                     "connections": {
-                        "Door to High Jump Shaft": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3268,18 +3268,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (High Jump Boots)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel to High Jump Secret": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
-                        },
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3311,13 +3300,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to High Jump Shaft": {
+                        "Room Center": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -3333,12 +3322,23 @@
                         "start_point_actor_name": "ST_CheckPoint_002"
                     },
                     "connections": {
+                        "Pickup (High Jump Boots)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to High Jump Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tunnel to High Jump Secret": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }

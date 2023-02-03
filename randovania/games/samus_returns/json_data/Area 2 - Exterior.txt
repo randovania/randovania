@@ -80,7 +80,7 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_type: doorclosedpower
   > Top of Wall
       Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-  > Start Point Right
+  > Start Point (Bottom)
       Trivial
 
 > Door to Outer Hub Shaft (Bottom); Heals? False
@@ -138,7 +138,7 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_type: doorpowerpower
   > Door to Rock Icicle Path
       Trivial
-  > Start Point Left
+  > Start Point (Top)
       Trivial
 
 > Event - Teleporter Unlocked; Heals? False
@@ -162,13 +162,13 @@ Extra - asset_id: collision_camera_005
   > Door to Rock Icicle Path
       Trivial
 
-> Start Point Left; Heals? False
+> Start Point (Top); Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_001
   > Door to Alpha+ Arena North
       Trivial
 
-> Start Point Right; Heals? False
+> Start Point (Bottom); Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Arachnus
   > Door to Arachnus Arena
@@ -184,7 +184,7 @@ Extra - asset_id: collision_camera_006
   * Pickup 37; Major Location? True
   * Extra - actor_name: LE_PowerUp_Springball
   * Extra - actor_type: powerup_springball
-  > Door from Outer Hub
+  > Room Center
       Trivial
 
 > Door from Outer Hub; Heals? False
@@ -192,18 +192,14 @@ Extra - asset_id: collision_camera_006
   * Access Closed to Outer Hub/Door to Arachnus Arena
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Tunnel to Spring Ball Tutorial
-      Destroy Bomb Block
-  > Event - Arachnus
-      Trivial
-  > Start Point
+  > Room Center
       Trivial
 
 > Tunnel to Spring Ball Tutorial; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Spring Ball Tutorial/Tunnel to Arachnus Arena
-  > Door from Outer Hub
-      Morph Ball
+  > Room Center
+      Trivial
 
 > Event - Arachnus; Heals? False
   * Layers: default
@@ -211,10 +207,14 @@ Extra - asset_id: collision_camera_006
   > Pickup (Spring Ball)
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Room Center; Heals? False; Spawn Point
   * Layers: default
-  * Extra - start_point_actor_name: ST_Checkpoint_007
+  * Extra - start_point_actor_name: ST_CheckPoint_007
   > Door from Outer Hub
+      Trivial
+  > Tunnel to Spring Ball Tutorial
+      Destroy Bomb Block
+  > Event - Arachnus
       Trivial
 
 ----------------
@@ -522,7 +522,7 @@ Extra - asset_id: collision_camera_028
   * Charge Beam Door to Hot Split/Door to Alpha Arena West
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
-  > Start Point
+  > Room Center
       Trivial
 
 > Door to Alpha Shaft; Heals? False
@@ -530,16 +530,16 @@ Extra - asset_id: collision_camera_028
   * Power Beam Door to Alpha Shaft/Door to Alpha Arena West
   * Extra - actor_name: Door021
   * Extra - actor_type: doorpowerpower
-  > Start Point
+  > Room Center
       Trivial
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 2 (Exterior) - Alpha Metroid West
-  > Start Point
+  > Room Center
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Room Center; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
   > Door to Hot Split
@@ -620,20 +620,20 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_type: doorpowerpower
   > Event - Alpha Metroid
       Varia Suit and Defeat Alpha Metroid
-  > Start Point
-      Trivial
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 2 (Exterior) - Alpha Metroid Heat
   > Door to Hot Split
       Varia Suit
+  > Start Point
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
-  > Door to Hot Split
-      Varia Suit
+  > Event - Alpha Metroid
+      Varia Suit and Defeat Alpha Metroid
 
 ----------------
 Alpha Arena South Access
@@ -760,7 +760,7 @@ Extra - asset_id: collision_camera_033
   * Super Missile Door to Alpha+ Storage/Door to Alpha+ Arena North
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Start Point
+  > Room Center
       Trivial
 
 > Door to Outer Hub; Heals? False
@@ -768,16 +768,16 @@ Extra - asset_id: collision_camera_033
   * Power Beam Door to Outer Hub/Door to Alpha+ Arena North
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
-  > Start Point
+  > Room Center
       Trivial
 
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 2 (Exterior) - Alpha Metroid+ North
-  > Start Point
+  > Room Center
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Room Center; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Door to Alpha+ Storage
@@ -827,22 +827,22 @@ Extra - asset_id: collision_camera_035
   * Power Beam Door to Fiery Crossing/Door to Alpha+ Arena Heated
   * Extra - actor_name: Door022
   * Extra - actor_type: doorpowerpower
-  > Event - Alpha Metroid+
-      Varia Suit and Defeat Alpha Metroid+
-  > Start Point
-      Trivial
+  > Room Center
+      Varia Suit
 
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 2 (Exterior) - Alpha Metroid+ Heat
-  > Door to Fiery Crossing
+  > Room Center
       Varia Suit
 
-> Start Point; Heals? False; Spawn Point
+> Room Center; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_005_Checkpoint
   > Door to Fiery Crossing
-      Varia Suit
+      Varia Suit and After Area 2 (Exterior) - Alpha Metroid+ Heat
+  > Event - Alpha Metroid+
+      Varia Suit and Defeat Alpha Metroid+
 
 ----------------
 Alpha Arena North
@@ -854,22 +854,22 @@ Extra - asset_id: collision_camera_036
   * Power Beam Door to Split Pathways/Door to Alpha Arena North
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
-  > Start Point
+  > Room Center
       Trivial
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 2 (Exterior) - Alpha Metroid North
-  > Door to Split Pathways
+  > Room Center
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Room Center; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_006_Checkpoint
   > Door to Split Pathways
-      Trivial
+      After Area 2 (Exterior) - Alpha Metroid North
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 ----------------
 Rock Icicle Path
@@ -939,16 +939,16 @@ Extra - asset_id: collision_camera_040
 > Tunnel to Alpha Arena South Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Alpha Arena South Access/Tunnel to Alpha Arena South
-  > Start Point
+  > Room Center
       Morph Ball and Defeat Alpha Metroid
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 2 (Exterior) - Alpha Metroid South
-  > Start Point
+  > Room Center
       Trivial
 
-> Start Point; Heals? False
+> Room Center; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_007_Checkpoint
   > Tunnel to Alpha Arena South Access
