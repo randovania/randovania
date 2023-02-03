@@ -29,7 +29,8 @@ def version_scheme(version):
     assert isinstance(version, setuptools_scm.version.ScmVersion)
     assert isinstance(version.config, setuptools_scm.Configuration)
 
-    full_git_hash = repr(Repo(version.config.absolute_root).head().decode("ascii"))
+    git_repo = Repo(version.config.absolute_root)
+    full_git_hash = repr(git_repo.head().decode("ascii"))
     try:
         git_hash = repr(bytes.fromhex(version.node[1:9]))
     except ValueError:
@@ -44,21 +45,20 @@ def version_scheme(version):
 git_hash = {git_hash}
 full_git_hash = {full_git_hash}
 git_branch = {version.branch!r}
+dirty = {version.dirty}
 """)
 
     if version.exact:
-        return setuptools_scm.version.guess_next_simple_semver(
+        result = setuptools_scm.version.guess_next_simple_semver(
             version, retain=setuptools_scm.version.SEMVER_LEN, increment=False
         )
     else:
         if version.branch != "stable":
-            return version.format_next_version(
-                setuptools_scm.version.guess_next_simple_semver, retain=setuptools_scm.version.SEMVER_MINOR
-            )
+            retain = setuptools_scm.version.SEMVER_MINOR
         else:
-            return version.format_next_version(
-                setuptools_scm.version.guess_next_simple_semver, retain=setuptools_scm.version.SEMVER_PATCH
-            )
+            retain = setuptools_scm.version.SEMVER_PATCH
+        result = version.format_next_version(setuptools_scm.version.guess_next_simple_semver, retain=retain)
+    return result
 
 
 setup(

@@ -1,3 +1,5 @@
+import sentry_sdk
+
 import randovania
 from randovania.version_hash import full_git_hash
 
@@ -10,6 +12,9 @@ _sampling_per_path = {
 
 
 def _init(include_flask: bool, default_url: str):
+    if randovania.is_dirty():
+        return
+
     import sentry_sdk
     from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
@@ -45,7 +50,8 @@ def _init(include_flask: bool, default_url: str):
 
 
 def client_init():
-    return _init(False, _CLIENT_DEFAULT_URL)
+    _init(False, _CLIENT_DEFAULT_URL)
+    sentry_sdk.set_tag("frozen", randovania.is_frozen())
 
 
 def server_init():
