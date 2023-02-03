@@ -84,6 +84,8 @@ Extra - asset_id: collision_camera009
   * Extra - actor_type: doorpowerpower
   > Pickup (Wave Beam)
       Trivial
+  > Start Point
+      Trivial
 
 > Door to Varia Suit Room (Top); Heals? False
   * Layers: default
@@ -92,6 +94,12 @@ Extra - asset_id: collision_camera009
   * Extra - actor_type: doorpowerpower
   > Save Station
       Morph Ball
+
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_003
+  > Door to Varia Suit Room (Middle)
+      Trivial
 
 ----------------
 Varia Suit Room
@@ -140,6 +148,8 @@ Extra - asset_id: collision_camera011
       Trivial
   > Inside Shortcut
       Screw Attack
+  > Start Point
+      Trivial
 
 > Door to Main Hub (Bottom); Heals? False
   * Layers: default
@@ -234,6 +244,12 @@ Extra - asset_id: collision_camera011
   > Inside Shortcut
       Screw Attack
 
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_004
+  > Door to Wallfire Path
+      Trivial
+
 ----------------
 Fiery Path
 Extra - total_boundings: {'x1': -13000.0, 'x2': -5700.0, 'y1': -4600.0, 'y2': -200.0}
@@ -254,6 +270,8 @@ Extra - asset_id: collision_camera012
   * Extra - actor_type: doorchargecharge
   > Under Pickup
       Varia Suit
+  > Start Point
+      Trivial
 
 > Door to Fiery Storage; Heals? False
   * Layers: default
@@ -301,6 +319,12 @@ Extra - asset_id: collision_camera012
                       All of the following:
                           Mid-Air Morph (Intermediate)
                           High Jump Boots or Space Jump or Walljump (Beginner)
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_001
+  > Door to Gamma Arena
+      Varia Suit
 
 ----------------
 Fiery Storage
@@ -533,12 +557,20 @@ Extra - asset_id: collision_camera021
       Trivial
   > Tunnel to High Jump Secret
       Destroy Bomb Block
+  > Start Point
+      Trivial
 
 > Tunnel to High Jump Secret; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to High Jump Secret/Tunnel to High Jump Room
   > Door to High Jump Shaft
       Destroy Bomb Block
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_002
+  > Door to High Jump Shaft
+      Trivial
 
 ----------------
 High Jump Shaft
@@ -641,8 +673,9 @@ Extra - asset_id: collision_camera037
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_001_Checkpoint
   > Door to Fiery Path
       After Area 2 (Interior) - Gamma Metroid
   > Door to Varia Suit Room
