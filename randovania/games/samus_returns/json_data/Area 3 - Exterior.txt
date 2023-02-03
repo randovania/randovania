@@ -8,6 +8,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Elevator to Area 2 Entrance - Chozo Seal
       Trivial
   > Door to Entrance Hub
@@ -147,16 +148,24 @@ Extra - asset_id: collision_camera_022
   * Pickup 60; Major Location? True
   * Extra - actor_name: LE_PowerUp_GrappleBeam
   * Extra - actor_type: itemsphere_grapplebeam
-  > Door to Outer Hub
-      Grapple Beam and Morph Ball
+  > Start Point
+      Trivial
 
 > Door to Outer Hub; Heals? False
   * Layers: default
   * Missile Door to Outer Hub/Door to Grapple Beam Room
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Pickup (Grapple Beam)
+  > Start Point
       Morph Ball
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_003
+  > Pickup (Grapple Beam)
+      Trivial
+  > Door to Outer Hub
+      Grapple Beam and Morph Ball
 
 ----------------
 Outer Hub Teleporter
@@ -528,25 +537,10 @@ Extra - asset_id: collision_camera_036
   * Pickup 61; Major Location? True
   * Extra - actor_name: LE_SpecialAbility_EnergyWave
   * Extra - actor_type: powerup_energywave
-  > Tunnel to Outer Hub Access
-      All of the following:
-          Morph Ball and After Area 3 (Exterior) - Outer Hub Access Grapple Block Left
-          Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
-  > Top of Climb
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Lighting Armor or Spider Ball
-              All of the following:
-                  Bomb
-                  Any of the following:
-                      Shoot Beam Burst
-                      All of the following:
-                          Phase Drift and Movement (Advanced)
-                          Any of the following:
-                              Mid-Air Morph (Intermediate) or Damage Boost (Intermediate)
-                              High Jump Boots and Spring Ball
-              Power Bomb and Knowledge (Beginner)
+  > Start Point (Right)
+      Morph Ball
+  > Start Point (Left)
+      Morph Ball
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
@@ -598,26 +592,11 @@ Extra - asset_id: collision_camera_036
 > Tunnel to Outer Hub Access; Heals? False
   * Layers: default
   * Tunnel to Outer Hub Access/Tunnel to Entrance Hub
-  > Pickup (Beam Burst)
+  > Start Point (Right)
       Morph Ball
 
 > Top of Climb; Heals? False
   * Layers: default
-  > Pickup (Beam Burst)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Lighting Armor or Spider Ball
-              All of the following:
-                  Bomb
-                  Any of the following:
-                      Shoot Beam Burst
-                      All of the following:
-                          Phase Drift and Movement (Advanced)
-                          Any of the following:
-                              Mid-Air Morph (Intermediate) or Damage Boost (Intermediate)
-                              High Jump Boots and Spring Ball
-              Power Bomb and Knowledge (Beginner)
   > Door to Transport to Area 2 Entrance
       Trivial
   > Door to Transport to Area 3 Interior West (Upper)
@@ -633,6 +612,54 @@ Extra - asset_id: collision_camera_036
                       Any of the following:
                           Mid-Air Morph (Intermediate)
                           High Jump Boots and Spring Ball
+  > Start Point (Right)
+      Any of the following:
+          Knowledge (Beginner) and Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Shoot Beam Burst
+                  All of the following:
+                      Phase Drift and Movement (Advanced)
+                      Any of the following:
+                          Mid-Air Morph (Intermediate) or Damage Boost (Intermediate)
+                          High Jump Boots and Spring Ball
+  > Start Point (Left)
+      All of the following:
+          Morph Ball
+          Lighting Armor or Spider Ball
+
+> Start Point (Right); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_001
+  > Pickup (Beam Burst)
+      Morph Ball
+  > Tunnel to Outer Hub Access
+      All of the following:
+          Morph Ball and After Area 3 (Exterior) - Outer Hub Access Grapple Block Left
+          Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > Top of Climb
+      Any of the following:
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Shoot Beam Burst
+                  All of the following:
+                      Phase Drift and Movement (Advanced)
+                      Any of the following:
+                          Mid-Air Morph (Intermediate) or Damage Boost (Intermediate)
+                          High Jump Boots and Spring Ball
+          Knowledge (Beginner) and Lay Power Bomb
+
+> Start Point (Left); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  > Pickup (Beam Burst)
+      Morph Ball
+  > Top of Climb
+      All of the following:
+          Morph Ball
+          Lighting Armor or Spider Ball
 
 ----------------
 Gamma Shaft
@@ -656,6 +683,8 @@ Extra - asset_id: collision_camera_037
                   Any of the following:
                       High Jump Boots and Spring Ball
                       Bomb and Infinite Bomb Jump (Intermediate)
+  > Start Point
+      Trivial
 
 > Door to Outer Hub; Heals? False
   * Layers: default
@@ -701,6 +730,12 @@ Extra - asset_id: collision_camera_037
   > Door to Outer Hub
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_005
+  > Door to Gamma Arena
+      Trivial
+
 ----------------
 Gamma Arena
 Extra - total_boundings: {'x1': 12200.0, 'x2': 20200.0, 'y1': 12000.0, 'y2': 17300.0}
@@ -733,6 +768,14 @@ Extra - asset_id: collision_camera_038
                       Infinite Bomb Jump (Intermediate)
                       Spring Ball or Mid-Air Morph (Intermediate)
                   Mid-Air Morph (Intermediate) and Single-wall Wall Jump (Intermediate)
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_005A_Checkpoint
+  > Event - Gamma Metroid
+      Defeat Gamma Metroid
 
 ----------------
 Outer Hub Access
