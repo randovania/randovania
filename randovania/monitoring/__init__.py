@@ -1,3 +1,7 @@
+import pprint
+import re
+import typing
+
 import sentry_sdk
 
 import randovania
@@ -9,6 +13,56 @@ _BOT_DEFAULT_URL = "https://7e7607e10378497689b443d8922870f7@o4504594031509504.i
 _sampling_per_path = {
     'restore_user_session': 1.0,
 }
+
+
+def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | None:
+    result = None
+    if isinstance(data, dict):
+        for k, v in tuple(data.items()):
+            new = _filter_data(v, str_filter)
+            if new is not None:
+                data[k] = new
+
+    elif isinstance(data, list):
+        for i, v in enumerate(data):
+            new = _filter_data(v, str_filter)
+            if new is not None:
+                data[i] = new
+
+    elif isinstance(data, tuple):
+        for i, v in enumerate(data):
+            new = _filter_data(v, str_filter)
+            if new is not None:
+                if result is None:
+                    result = list(data)
+                result[i] = new
+
+    elif isinstance(data, str):
+        new = str_filter(data)
+        if new != data:
+            result = new
+
+    return result
+
+
+_HOME_RE = re.compile(r"(:[/\\]Users[/\\])([^/\\]+)([/\\])")
+
+
+def _filter_windows_home(data):
+    def filter_home(s: str) -> str:
+        return _HOME_RE.sub(r"\1<redacted>\3", s)
+
+    return _filter_data(data, filter_home)
+
+
+def _before_send(event, hint):
+    _filter_windows_home(event["extra"])
+    return event
+
+
+def _before_breadcrumb(event, hint):
+    _filter_windows_home(event)
+    return event
 
 
 def _init(include_flask: bool, default_url: str):
@@ -46,6 +100,9 @@ def _init(include_flask: bool, default_url: str):
         release=full_git_hash,
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
+        server_name="client",  # hostname for clients contains pii
+        before_send=_before_send,
+        before_breadcrumb=_before_breadcrumb,
     )
 
 
