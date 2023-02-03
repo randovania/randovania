@@ -8,6 +8,7 @@ Extra - asset_id: collision_camera_000
   * Layers: default
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Save Station
       Trivial
   > Door to Entrance Shaft
@@ -198,7 +199,7 @@ Extra - asset_id: collision_camera_008
   * Pickup 26; Major Location? True
   * Extra - actor_name: LE_PowerUp_Bomb
   * Extra - actor_type: itemsphere_bomb
-  > Door from Bomb Access
+  > Room Center
       Trivial
 
 > Door from Bomb Access; Heals? False
@@ -206,17 +207,25 @@ Extra - asset_id: collision_camera_008
   * Access Closed to Bomb Access/Door to Bomb Room
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Pickup (Bomb)
+  > Room Center
       Trivial
-  > Tunnel to Bomb Access
-      Destroy Bomb Block
 
 > Tunnel to Bomb Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Bomb Access/Tunnel to Bomb Room
   > Pickup (Missile Tank)
       Destroy Bomb Block
+  > Room Center
+      Destroy Bomb Block
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_005
+  > Pickup (Bomb)
+      Trivial
   > Door from Bomb Access
+      Trivial
+  > Tunnel to Bomb Access
       Destroy Bomb Block
 
 ----------------
@@ -320,10 +329,8 @@ Extra - asset_id: collision_camera_016
   * Pickup 28; Major Location? True
   * Extra - actor_name: LE_PowerUp_SpiderBall
   * Extra - actor_type: powerup_spiderball
-  > Door to Outer Hub
-      Any of the following:
-          Climb Rooms Vertically (No High Jump)
-          Morph Ball and Melee Clip (Advanced) and Single-wall Wall Jump (Advanced)
+  > Room Bottom
+      Trivial
 
 > Door to Outer Hub; Heals? False
   * Layers: default
@@ -332,7 +339,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: doorclosedpower
   > Pickup (Missile Tank)
       Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
-  > Pickup (Spider Ball)
+  > Room Bottom
       Morph Ball
 
 > Tunnel to Spider Ball Balcony; Heals? False
@@ -347,6 +354,16 @@ Extra - asset_id: collision_camera_016
   > Door to Outer Hub
       Trivial
 
+> Room Bottom; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoint_007
+  > Pickup (Spider Ball)
+      Morph Ball
+  > Door to Outer Hub
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          Morph Ball and Melee Clip (Advanced) and Single-wall Wall Jump (Advanced)
+
 ----------------
 Alpha Arena North
 Extra - total_boundings: {'x1': 11870.0, 'x2': 15700.0, 'y1': 8800.0, 'y2': 10900.0}
@@ -357,34 +374,50 @@ Extra - asset_id: collision_camera_017
   * Pickup 20; Major Location? True
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_energytank
-  > Door from Outer Hub
-      Destroy Bomb Block
-  > Tunnel to Outer Hub
-      Morph Ball
+  > Above Arena
+      Trivial
 
 > Door from Outer Hub; Heals? False
   * Layers: default
   * Access Closed to Outer Hub/Door to Alpha Arena North
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerclosed
-  > Pickup (Energy Tank)
-      All of the following:
-          Destroy Bomb Block
-          Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
+  > Inside Arena
+      Trivial
 
 > Tunnel to Outer Hub; Heals? False
   * Layers: default
   * Tunnel to Outer Hub/Tunnel to Alpha Arena North
-  > Pickup (Energy Tank)
+  > Above Arena
       Morph Ball
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid North
-  > Door from Outer Hub
+  > Inside Arena
       Trivial
+
+> Above Arena; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_004B
+  > Pickup (Energy Tank)
+      Trivial
+  > Tunnel to Outer Hub
+      Morph Ball
+  > Inside Arena
+      Destroy Bomb Block
+
+> Inside Arena; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
+  > Door from Outer Hub
+      After Area 1 - Alpha Metroid North
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+  > Above Arena
+      All of the following:
+          Destroy Bomb Block
+          Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
 
 ----------------
 Outer Hub
@@ -461,6 +494,8 @@ Extra - asset_id: collision_camera_018
       Trivial
   > Tunnel to Alpha Arena North
       Morph Ball and Melee Clip (Beginner) and Climb Rooms Vertically (No High Jump)
+  > Start Point
+      Trivial
 
 > Door to Spider Ball Room; Heals? False
   * Layers: default
@@ -530,6 +565,12 @@ Extra - asset_id: collision_camera_018
   > Above Wall
       Climb Rooms Vertically (No High Jump)
 
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_004
+  > Door to Alpha Arena North
+      Trivial
+
 ----------------
 Alpha Shaft Left
 Extra - total_boundings: {'x1': -300.00201416015625, 'x2': 1400.0, 'y1': -1100.0, 'y2': 2000.0}
@@ -541,6 +582,8 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Dock to Alpha Arena West Access
+      Trivial
+  > Start Point
       Trivial
 
 > Door to Alpha Shaft Right; Heals? False
@@ -565,6 +608,12 @@ Extra - asset_id: collision_camera_023
   > Door to Alpha Shaft Right
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_002
+  > Door to Alpha Arena South
+      Trivial
+
 ----------------
 Alpha Arena West Access
 Extra - total_boundings: {'x1': -4000.0, 'x2': -200.0, 'y1': -1100.0, 'y2': 600.0}
@@ -573,7 +622,7 @@ Extra - asset_id: collision_camera_024
 > Dock to Alpha Shaft Left; Heals? False
   * Layers: default
   * Open Passage to Alpha Shaft Left/Dock to Alpha Arena West Access
-  > Left Pillar
+  > Second Pillar
       Any of the following:
           High Jump Boots or Gravity Suit or Ice Beam or Space Jump
           All of the following:
@@ -590,11 +639,12 @@ Extra - asset_id: collision_camera_024
 > Tunnel to Alpha Arena West (Bottom); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Alpha Arena West/Tunnel to Alpha Arena West Access (Bottom)
-  > Left Pillar
+  > Second Pillar
       Trivial
 
-> Left Pillar; Heals? False
+> Second Pillar; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_001
   > Dock to Alpha Shaft Left
       Trivial
   > Tunnel to Alpha Arena West (Top)
@@ -617,14 +667,22 @@ Extra - asset_id: collision_camera_025
   * Power Beam Door to Alpha Shaft Left/Door to Alpha Arena South
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
+  > Room Center
+      Trivial
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid South
-  > Door to Alpha Shaft Left
+  > Room Center
       Trivial
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
+  > Door to Alpha Shaft Left
+      After Area 1 - Alpha Metroid South
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 ----------------
 Alpha Arena East
@@ -636,14 +694,22 @@ Extra - asset_id: collision_camera_027
   * Power Beam Door to Alpha Arena East Access/Door to Alpha Arena East
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
+  > Room Center
+      Trivial
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid East
-  > Door to Alpha Arena East Access
+  > Room Center
       Trivial
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
+  > Door to Alpha Arena East Access
+      After Area 1 - Alpha Metroid East
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 ----------------
 One-Way Puzzle
@@ -721,7 +787,7 @@ Extra - asset_id: collision_camera_030
   * Pickup 27; Major Location? True
   * Extra - actor_name: LE_PowerUp_IceBeam
   * Extra - actor_type: itemsphere_icebeam
-  > Door to Ice Beam Tutorial
+  > Room Center
       Trivial
 
 > Door to Ice Beam Tutorial; Heals? False
@@ -729,18 +795,26 @@ Extra - asset_id: collision_camera_030
   * Missile Door to Ice Beam Tutorial/Door to Ice Beam Room
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Pickup (Ice Beam)
+  > Room Center
       Trivial
-  > Pickup (Super Missile Tank)
-      Baby Metroid and Missile and Destroy Missile Block
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 31; Major Location? False
   * Extra - actor_name: HiddenPowerup003
   * Extra - actor_type: item_supermissiletank
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_006
+  > Pickup (Ice Beam)
+      Trivial
   > Door to Ice Beam Tutorial
       Trivial
+  > Pickup (Super Missile Tank)
+      Baby Metroid and Morph Ball and Destroy Missile Block
 
 ----------------
 Energy Recharge Room
@@ -942,20 +1016,28 @@ Extra - asset_id: collision_camera_042
   * Power Beam Door to Central Shaft/Door to Teleporter Access
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Tunnel to Teleporter Room
-      Lay Bomb or Lay Power Bomb
+  > Room Center
+      Trivial
 
 > Dock to Inner Shaft; Heals? False
   * Layers: default
   * Open Passage to Inner Shaft/Dock to Teleporter Access
-  > Door to Central Shaft
+  > Room Center
       Trivial
 
 > Tunnel to Teleporter Room; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Teleporter Room/Tunnel to Teleporter Access
-  > Door to Central Shaft
+  > Room Center
       Morph Ball
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_CutsceneTeleport
+  > Door to Central Shaft
+      Trivial
+  > Tunnel to Teleporter Room
+      Destroy Bomb Block
 
 ----------------
 Inner Shaft
@@ -1051,10 +1133,18 @@ Extra - asset_id: collision_camera_045
   * Extra - actor_type: doorpowerpower
   > Dock to Alpha Shaft Right
       Trivial
+  > Start Point
+      Trivial
 
 > Dock to Alpha Shaft Right; Heals? False
   * Layers: default
   * Open Passage to Alpha Shaft Right/Dock to Alpha Arena East Access
+  > Door to Alpha Arena East
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_003
   > Door to Alpha Arena East
       Trivial
 
@@ -1243,8 +1333,8 @@ Extra - asset_id: collision_camera_054
 > Tunnel to Alpha Arena West Access (Top); Heals? False
   * Layers: default
   * Tunnel to Alpha Arena West Access/Tunnel to Alpha Arena West (Top)
-  > Event - Alpha Metroid
-      Morph Ball and Defeat Alpha Metroid
+  > Room Center
+      Morph Ball
 
 > Tunnel to Alpha Arena West Access (Bottom); Heals? False
   * Layers: default
@@ -1253,8 +1343,16 @@ Extra - asset_id: collision_camera_054
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid West
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Tunnel to Alpha Arena West Access (Bottom)
       Destroy Bomb Block
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 ----------------
 Outer Hub Access

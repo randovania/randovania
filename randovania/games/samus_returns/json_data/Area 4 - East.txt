@@ -196,6 +196,8 @@ Extra - asset_id: collision_camera_002
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           High Jump Boots and Walljump (Beginner)
+  > Start Point
+      Trivial
 
 > Door to Main Shaft (Bottom); Heals? False
   * Layers: default
@@ -218,6 +220,12 @@ Extra - asset_id: collision_camera_002
   > Door to Main Shaft (Bottom)
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_003
+  > Pickup (Super Missile)
+      Trivial
+
 ----------------
 Zeta Arena Access
 Extra - total_boundings: {'x1': -8850.0, 'x2': -5000.0, 'y1': 2800.0, 'y2': 7200.0}
@@ -237,6 +245,8 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Room Bottom
+      Trivial
+  > Start Point
       Trivial
 
 > Dock to Zeta Shaft; Heals? False
@@ -283,6 +293,12 @@ Extra - asset_id: collision_camera_003
                   Single-wall Wall Jump (Hypermode)
                   Morph Ball and Unmorph Extend (Advanced)
   > Room Bottom
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Zeta_001
+  > Door to Zeta Arena
       Trivial
 
 ----------------
@@ -372,21 +388,22 @@ Extra - asset_id: collision_camera_008
   * Power Beam Door to Zeta Arena Access/Door to Zeta Arena
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
-  > Room Center
+  > Start Point
       Trivial
 
 > Event - Zeta Metroid; Heals? False
   * Layers: default
   * Event Area 4 (East) - Zeta Metroid
-  > Room Center
+  > Start Point
       Trivial
 
 > Tunnel to Zeta Arena Access; Heals? False
   * Layers: default
   * Tunnel to Zeta Arena Access/Tunnel to Zeta Arena
 
-> Room Center; Heals? False
+> Start Point; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
   > Door to Zeta Arena Access
       After Area 4 (East) - Zeta Metroid
   > Event - Zeta Metroid
@@ -424,6 +441,8 @@ Extra - asset_id: collision_camera_009
   * Event Area 4 (East) - Gamma Metroid
   > Below Pickup
       Trivial
+  > Start Point
+      Trivial
 
 > Below Pickup; Heals? False
   * Layers: default
@@ -439,6 +458,12 @@ Extra - asset_id: collision_camera_009
       All of the following:
           Varia Suit and Defeat Gamma Metroid and Destroy Bomb Block
           Space Jump or Can Spiderspark
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_002C_Checkpoint
+  > Event - Gamma Metroid
+      Varia Suit and Defeat Gamma Metroid
 
 ----------------
 Diggernaut Chase Access
@@ -567,10 +592,18 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_type: doorpowerpower
   > Dock to Main Shaft
       Trivial
+  > Start Point
+      Trivial
 
 > Dock to Main Shaft; Heals? False
   * Layers: default
   * Open Passage to Main Shaft/Dock to Gamma Arena Access
+  > Door to Gamma Arena
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_002
   > Door to Gamma Arena
       Trivial
 
@@ -633,10 +666,8 @@ Extra - asset_id: collision_camera_AfterChase
   * Pickup 99; Major Location? True
   * Extra - actor_name: LE_PowerUp_SpaceJump
   * Extra - actor_type: itemsphere_spacejump
-  > Tunnel to Diggernaut Chase Room (Bottom)
-      Morph Ball and Super Missile
-  > Next to Grapple Block
-      Space Jump or Can Spiderspark
+  > Bottom Floor
+      Trivial
 
 > Door from Main Shaft; Heals? False
   * Layers: default
@@ -657,13 +688,13 @@ Extra - asset_id: collision_camera_AfterChase
 > Tunnel to Diggernaut Chase Room (Middle); Heals? False
   * Layers: default
   * Tunnel to Diggernaut Chase Room/Tunnel to Space Jump Room (Middle)
-  > Next to Grapple Block
+  > Under Grapple Block
       Morph Ball
 
 > Tunnel to Diggernaut Chase Room (Bottom); Heals? False
   * Layers: default
   * Tunnel to Diggernaut Chase Room/Tunnel to Space Jump Room (Bottom)
-  > Pickup (Space Jump)
+  > Bottom Floor
       Morph Ball and Climb Rooms Vertically (High Jump)
 
 > Tunnel to Diggernaut Chase Room (Top); Heals? False
@@ -684,17 +715,28 @@ Extra - asset_id: collision_camera_AfterChase
       Space Jump or Can Spiderspark
   > Tunnel to Diggernaut Chase Room (Top)
       Morph Ball and Super Missile
-  > Next to Grapple Block
+  > Under Grapple Block
       Trivial
 
-> Next to Grapple Block; Heals? False
+> Under Grapple Block; Heals? False
   * Layers: default
-  > Pickup (Space Jump)
-      Trivial
+  * Extra - start_point_actor_name: ST_ManicMinerBot_Stage2
   > Tunnel to Diggernaut Chase Room (Middle)
       Morph Ball and After Area 4 (East) - Diggernaut Chase Arena Grapple Block
   > Bottom of Shaft
       Space Jump or Can Spiderspark
+  > Bottom Floor
+      Trivial
+
+> Bottom Floor; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_004
+  > Pickup (Space Jump)
+      Trivial
+  > Tunnel to Diggernaut Chase Room (Bottom)
+      Morph Ball and Super Missile
+  > Under Grapple Block
+      Space Jump or Can Spiderspark or Simple IBJ
 
 ----------------
 Diggernaut Chase Room
@@ -823,6 +865,7 @@ Extra - asset_id: collision_camera_AfterChase_001
 
 > Bottom Level; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_ManicMinerBot_Stage3
   > Pickup (Missile Tank Bottom)
       Trivial
   > Tunnel to Space Jump Room (Bottom)

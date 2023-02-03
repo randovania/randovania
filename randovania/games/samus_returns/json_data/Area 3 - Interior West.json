@@ -531,7 +531,7 @@
             }
         },
         "Alpha+ Arena West": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -587,7 +587,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -622,7 +622,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -646,7 +646,7 @@
                     "extra": {},
                     "event_name": "Alpha 15",
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -655,19 +655,21 @@
                         }
                     }
                 },
-                "Room Center": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -15966.536118363794,
-                        "y": 983.5847596944202,
+                        "x": -17300.0,
+                        "y": 900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_002_Checkpoint"
+                    },
                     "connections": {
                         "Door to Transport to Area 3 Exterior (Upper)": {
                             "type": "resource",
@@ -696,7 +698,7 @@
             }
         },
         "Gamma Arena North": {
-            "default_node": null,
+            "default_node": "Start Point (Inside Arena)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -752,7 +754,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -787,59 +789,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Outside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam Burst"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -859,7 +813,7 @@
                     "extra": {},
                     "event_name": "Gamma 5",
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -868,19 +822,21 @@
                         }
                     }
                 },
-                "Inside Arena": {
+                "Start Point (Inside Arena)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -9397.393972703123,
-                        "y": -1249.0702573967208,
+                        "x": -9500.0,
+                        "y": -1300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Transport to Area 3 Exterior (Upper)": {
                             "type": "resource",
@@ -891,7 +847,11 @@
                                 "negate": false
                             }
                         },
-                        "Door to Teleporter Access": {
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
+                        },
+                        "Start Point (Outside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -945,17 +905,93 @@
                                     }
                                 ]
                             }
+                        }
+                    }
+                },
+                "Start Point (Outside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7700.0,
+                        "y": -1700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_001B"
+                    },
+                    "connections": {
+                        "Door to Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
-                        "Event - Gamma Metroid": {
-                            "type": "template",
-                            "data": "Defeat Gamma Metroid"
+                        "Start Point (Inside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam Burst"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
             }
         },
         "Gamma Arena South": {
-            "default_node": null,
+            "default_node": "Start Point (Outside Arena)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1187,6 +1223,13 @@
                         "Left of Fan": {
                             "type": "template",
                             "data": "Lay Power Bomb"
+                        },
+                        "Start Point (Outside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1242,6 +1285,13 @@
                         "Door to Shaft West": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point (Inside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1627,6 +1677,53 @@
                             "data": "Destroy Bomb Block"
                         }
                     }
+                },
+                "Start Point (Inside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5700.0,
+                        "y": -5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_002_Checkpoint"
+                    },
+                    "connections": {
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                },
+                "Start Point (Outside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4600.0,
+                        "y": -6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_002"
+                    },
+                    "connections": {
+                        "Door to Shaft West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1801,7 +1898,7 @@
             }
         },
         "Upper Shaft": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1930,6 +2027,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2105,6 +2209,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5600.0,
+                        "y": 5400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_003"
+                    },
+                    "connections": {
+                        "Door to Alpha+ Arena East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4497,7 +4626,7 @@
             }
         },
         "Gamma+ Arena South": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4576,6 +4705,10 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -4611,11 +4744,33 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3800.0,
+                        "y": -16700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_004A_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Gamma+ Arena South Access": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
                 }
             }
         },
         "Gamma+ Arena South Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4712,13 +4867,45 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1100.0,
+                        "y": -15800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_004"
+                    },
+                    "connections": {
+                        "Door to Gamma+ Arena South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
             }
         },
         "Gamma+ Arena Heat": {
-            "default_node": null,
+            "default_node": "Start Point (Left)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4774,57 +4961,50 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Gamma Metroid+": {
+                        "Start Point (Right)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bomb",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 3,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4845,39 +5025,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Varia",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma Metroid+"
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4897,6 +5063,33 @@
                     "extra": {},
                     "event_name": "Gamma 7",
                     "connections": {
+                        "Start Point (Right)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point (Right)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1800.0,
+                        "y": 5000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_003_Checkpoint"
+                    },
+                    "connections": {
                         "Door to Alpha+ Arena East": {
                             "type": "and",
                             "data": {
@@ -4905,6 +5098,15 @@
                                     {
                                         "type": "template",
                                         "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -4921,35 +5123,66 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Varia",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Gamma Metroid+": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid+"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Start Point (Left)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -200.0,
+                        "y": 4700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_003_Out"
+                    },
+                    "connections": {
+                        "Door to Alpha+ Arena East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5058,7 +5291,7 @@
             }
         },
         "Alpha+ Arena East": {
-            "default_node": null,
+            "default_node": "Start Point (Inside Arena)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5114,14 +5347,19 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Outside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "template",
@@ -5158,7 +5396,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5182,7 +5420,7 @@
                     "extra": {},
                     "event_name": "Alpha 16",
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5191,24 +5429,22 @@
                         }
                     }
                 },
-                "Inside Arena": {
+                "Start Point (Inside Arena)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3464.635430979207,
-                        "y": 4949.596958871485,
+                        "x": -3400.0,
+                        "y": 5000.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_003_Checkpoint"
+                    },
                     "connections": {
-                        "Door to Gamma+ Arena Heat": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
-                        },
                         "Door to Upper Shaft": {
                             "type": "resource",
                             "data": {
@@ -5221,6 +5457,41 @@
                         "Event - Alpha Metroid+": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid+"
+                        },
+                        "Start Point (Outside Arena)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Start Point (Outside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1300.0,
+                        "y": 5200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_003B"
+                    },
+                    "connections": {
+                        "Door to Gamma+ Arena Heat": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Start Point (Inside Arena)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }

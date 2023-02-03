@@ -509,6 +509,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -795,6 +802,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -892,11 +906,61 @@
                             }
                         }
                     }
+                },
+                "Start Point (Top)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6900.0,
+                        "y": 6500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_001"
+                    },
+                    "connections": {
+                        "Door to Alpha+ Arena North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point (Bottom)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -500.0,
+                        "y": 5000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Arachnus"
+                    },
+                    "connections": {
+                        "Door to Arachnus Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Arachnus Arena": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1013,12 +1077,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Room Center": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1051,15 +1113,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -1932.932932932933,
-                        "y": 4756.706706706706,
+                        "x": -2300.0,
+                        "y": 4700.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_007"
+                    },
                     "connections": {
                         "Door from Outer Hub": {
                             "type": "and",
@@ -1204,7 +1268,7 @@
             }
         },
         "Split Pathways": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1345,6 +1409,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Rock Icicle Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1617,6 +1688,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1500.0,
+                        "y": 3500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_006"
+                    },
+                    "connections": {
+                        "Door to Alpha Arena North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2635,7 +2731,7 @@
             }
         },
         "Alpha Arena West": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2763,15 +2859,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -15737.032487032488,
-                        "y": -6156.333606333606,
+                        "x": -15300.0,
+                        "y": -6200.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_003_Checkpoint"
+                    },
                     "connections": {
                         "Door to Hot Split": {
                             "type": "and",
@@ -3048,7 +3146,7 @@
             }
         },
         "Hot Split": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3158,6 +3256,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3197,11 +3302,38 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21400.0,
+                        "y": -7800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_004"
+                    },
+                    "connections": {
+                        "Door to Alpha Arena Heated": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alpha Arena Heated": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3303,13 +3435,59 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23500.0,
+                        "y": -6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_004_Checkpoint"
+                    },
+                    "connections": {
+                        "Event - Alpha Metroid": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Alpha Metroid"
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
             }
         },
         "Alpha Arena South Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3365,6 +3543,15 @@
                         "Dock to Alpha Shaft": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -3440,6 +3627,28 @@
                                     }
                                 ]
                             }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7800.0,
+                        "y": -6000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_007"
+                    },
+                    "connections": {
+                        "Tunnel to Alpha Arena South": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -3660,6 +3869,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3991,11 +4207,38 @@
                             "data": "Destroy Missile Block"
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8050.0,
+                        "y": -7900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_005"
+                    },
+                    "connections": {
+                        "Door to Alpha+ Arena Heated": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alpha+ Arena North": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4051,7 +4294,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Bottom": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4086,7 +4329,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Bottom": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4110,7 +4353,7 @@
                     "extra": {},
                     "event_name": "Alpha 8",
                     "connections": {
-                        "Room Bottom": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4119,19 +4362,21 @@
                         }
                     }
                 },
-                "Room Bottom": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -9786.01101101101,
-                        "y": 5735.735735735736,
+                        "x": -9700.0,
+                        "y": 7100.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Alpha+ Storage": {
                             "type": "and",
@@ -4326,7 +4571,7 @@
             }
         },
         "Alpha+ Arena Heated": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4382,6 +4627,85 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Alpha Metroid+": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5957.962507962508,
+                        "y": -7541.382291382291,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Alpha 12",
+                    "connections": {
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6000.0,
+                        "y": -7900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_005_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Fiery Crossing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Alpha 12",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Event - Alpha Metroid+": {
                             "type": "and",
                             "data": {
@@ -4404,37 +4728,11 @@
                             }
                         }
                     }
-                },
-                "Event - Alpha Metroid+": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5957.962507962508,
-                        "y": -7541.382291382291,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "Alpha 12",
-                    "connections": {
-                        "Door to Fiery Crossing": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
                 }
             }
         },
         "Alpha Arena North": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4490,9 +4788,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid"
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4511,12 +4812,43 @@
                     "extra": {},
                     "event_name": "Alpha 7",
                     "connections": {
-                        "Door to Split Pathways": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2500.0,
+                        "y": 3300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_006_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Split Pathways": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 7",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
                         }
                     }
                 }
@@ -4819,7 +5151,7 @@
             }
         },
         "Alpha Arena South": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4872,7 +5204,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4910,6 +5242,31 @@
                     "extra": {},
                     "event_name": "Alpha 9",
                     "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6200.0,
+                        "y": -6500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_007_Checkpoint"
+                    },
+                    "connections": {
                         "Tunnel to Alpha Arena South Access": {
                             "type": "or",
                             "data": {
@@ -4921,10 +5278,6 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Destroy Bomb Block"
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
@@ -4932,30 +5285,17 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Bomb Block"
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     },
                                     {
                                         "type": "and",
@@ -4977,10 +5317,6 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Lay Bomb"
-                                                                        },
-                                                                        {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
@@ -4988,6 +5324,10 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Bomb"
                                                                         }
                                                                     ]
                                                                 }
@@ -5044,6 +5384,10 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
                         }
                     }
                 }

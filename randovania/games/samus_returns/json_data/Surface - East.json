@@ -323,7 +323,7 @@
             }
         },
         "Melee Tutorial Pathway": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -517,6 +517,38 @@
                             }
                         },
                         "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9000.0,
+                        "y": -4000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Morphball"
+                    },
+                    "connections": {
+                        "Door to Morph Ball Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -782,6 +814,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -819,11 +858,36 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10600.0,
+                        "y": -3600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_004"
+                    },
+                    "connections": {
+                        "Door to Melee Tutorial Pathway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Chozo Seal": {
-            "default_node": null,
+            "default_node": "Chozo Seal",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -898,8 +962,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 7408.351044987601,
-                        "y": -5287.241705041917,
+                        "x": 7408.35,
+                        "y": -5287.24,
                         "z": 0.0
                     },
                     "description": "",
@@ -908,7 +972,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
                     "connections": {
                         "Door to Morph Ball Room": {
@@ -1658,7 +1723,7 @@
             }
         },
         "Charge Beam Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1707,6 +1772,83 @@
                     "pickup_index": 11,
                     "major_location": true,
                     "connections": {
+                        "Door to Charge Beam Shaft (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Charge Beam Shaft (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1458.5901523202265,
+                        "y": -9409.77092927146,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Charge Beam Shaft",
+                        "node_name": "Door to Charge Beam Room (Upper)"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Charge Beam Shaft (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Charge Beam Shaft (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1460.1251623568307,
+                        "y": -10123.55059629236,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door007",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Surface - East",
+                        "area_name": "Charge Beam Shaft",
+                        "node_name": "Door to Charge Beam Room (Lower)"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Charge Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Charge Beam Shaft (Upper)": {
                             "type": "or",
                             "data": {
@@ -1745,77 +1887,32 @@
                                 ]
                             }
                         },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": -10000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_003"
+                    },
+                    "connections": {
                         "Door to Charge Beam Shaft (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Charge Beam Shaft (Upper)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1458.5901523202265,
-                        "y": -9409.77092927146,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door006",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "Charge Beam Shaft",
-                        "node_name": "Door to Charge Beam Room (Upper)"
-                    },
-                    "default_dock_weakness": "Missile Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Charge Beam)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Charge Beam Shaft (Lower)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1460.1251623568307,
-                        "y": -10123.55059629236,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door007",
-                        "actor_type": "doorchargecharge"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Surface - East",
-                        "area_name": "Charge Beam Shaft",
-                        "node_name": "Door to Charge Beam Room (Lower)"
-                    },
-                    "default_dock_weakness": "Charge Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Charge Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2135,15 +2232,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -2923.963868225292,
-                        "y": -10288.682252922423,
+                        "x": -2700.0,
+                        "y": -10200.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_001_Checkpoint"
+                    },
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -2216,7 +2315,7 @@
             }
         },
         "Scan Pulse Room": {
-            "default_node": null,
+            "default_node": "Right of Statue",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2348,6 +2447,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Right of Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2419,6 +2525,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Left of Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2452,6 +2565,56 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Left of Statue": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -700.0,
+                        "y": -5100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_001"
+                    },
+                    "connections": {
+                        "Dock to One-Way Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Right of Statue": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3300.0,
+                        "y": -5600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Bestowal"
+                    },
+                    "connections": {
+                        "Door to Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2656,7 +2819,7 @@
             }
         },
         "One-Way Drop": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2728,6 +2891,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2793,6 +2963,31 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2000.0,
+                        "y": -5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_IntroLarva"
+                    },
+                    "connections": {
+                        "Door to Alpha Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3076,7 +3271,7 @@
             }
         },
         "Entrance Pathway": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3158,6 +3353,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3191,6 +3393,31 @@
                                 "name": "MissileAmmo",
                                 "amount": 3,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3400.0,
+                        "y": 1200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_MeleeTutoCutscene"
+                    },
+                    "connections": {
+                        "Door to Melee Tutorial Pathway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4091,7 +4318,7 @@
             }
         },
         "Alpha Arena Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4221,6 +4448,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4289,6 +4523,31 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1200.0,
+                        "y": -5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Checkpoint_AmiiboUnlocked"
+                    },
+                    "connections": {
+                        "Door to One-Way Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

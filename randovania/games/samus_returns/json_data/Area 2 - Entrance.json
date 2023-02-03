@@ -205,8 +205,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 22436.592277718737,
-                        "y": -4258.678710591569,
+                        "x": 22431.46,
+                        "y": -4217.59,
                         "z": 0.0
                     },
                     "description": "",
@@ -215,7 +215,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE__Platform_ChozoUnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
                     "connections": {
                         "Pickup (Missile Tank)": {
@@ -528,7 +529,7 @@
             }
         },
         "Teleporter Room": {
-            "default_node": "Teleporter",
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -811,6 +812,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -842,8 +850,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 15591.705041917581,
-                        "y": -3466.1943558861735,
+                        "x": 15572.09,
+                        "y": -3371.16,
                         "z": 0.0
                     },
                     "description": "",
@@ -885,6 +893,31 @@
                             }
                         },
                         "Event - Teleporter Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14300.0,
+                        "y": -800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_002"
+                    },
+                    "connections": {
+                        "Door to Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -953,7 +986,7 @@
                     "pickup_index": 50,
                     "major_location": false,
                     "connections": {
-                        "Above Chozo Head": {
+                        "Left of Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -990,7 +1023,7 @@
                                 "negate": false
                             }
                         },
-                        "Above Chozo Head": {
+                        "Left of Statue": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1068,6 +1101,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Right of Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1104,7 +1144,7 @@
                                 "items": []
                             }
                         },
-                        "Above Chozo Head": {
+                        "Left of Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1113,19 +1153,21 @@
                         }
                     }
                 },
-                "Above Chozo Head": {
+                "Left of Statue": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6408.23,
-                        "y": -1477.54,
+                        "x": 5300.0,
+                        "y": -2300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_002"
+                    },
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -1153,7 +1195,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Lightning Armor)": {
+                        "Door to Main Shaft (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1169,6 +1211,31 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Right of Statue": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7400.0,
+                        "y": -2300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Bestowal"
+                    },
+                    "connections": {
+                        "Door to Main Shaft (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1592,7 +1659,7 @@
             }
         },
         "Alpha Arena": {
-            "default_node": null,
+            "default_node": "Inside Arena",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1700,6 +1767,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Outside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1731,15 +1805,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 12428.59417095273,
-                        "y": -1345.754755490244,
+                        "x": 11600.0,
+                        "y": -1200.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_002_Checkpoint"
+                    },
                     "connections": {
                         "Door to Teleporter Room": {
                             "type": "resource",
@@ -1774,6 +1850,31 @@
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
+                        }
+                    }
+                },
+                "Outside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10800.0,
+                        "y": -1200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_002B"
+                    },
+                    "connections": {
+                        "Dock to Main Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

@@ -10,7 +10,7 @@
     },
     "areas": {
         "Larva Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -113,30 +113,13 @@
                                 ]
                             }
                         },
-                        "Tunnel to Larva Hallway 1": {
-                            "type": "and",
+                        "Start Point": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Screw",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -198,6 +181,42 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -900.0,
+                        "y": 9100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Larva_001"
+                    },
+                    "connections": {
+                        "Door to Larva Hallway 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Larva Hallway 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -662,7 +681,7 @@
             }
         },
         "Larva Hallway 1": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -800,15 +819,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 1948.709349593496,
-                        "y": 9191.6793699187,
+                        "x": 2100.0,
+                        "y": 9100.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Larva_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Larva Access": {
                             "type": "resource",
@@ -3637,7 +3658,7 @@
             }
         },
         "Larva Shaft 1": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3765,15 +3786,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 4992.614240170032,
-                        "y": 10042.667375132838,
+                        "x": 4800.0,
+                        "y": 11000.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Larva_002_Checkpoint"
+                    },
                     "connections": {
                         "Door to Larva Hallway 1": {
                             "type": "resource",
@@ -3802,7 +3825,7 @@
             }
         },
         "Larva Shaft 2": {
-            "default_node": null,
+            "default_node": "Room Top",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3906,15 +3929,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6659.35,
-                        "y": 13659.13,
+                        "x": 6700.0,
+                        "y": 14400.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Larva_003_Checkpoint"
+                    },
                     "connections": {
                         "Door to Larva Hallway 2": {
                             "type": "and",
@@ -4063,7 +4088,7 @@
             }
         },
         "Larva Hallway 2": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4167,15 +4192,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 2637.0339062646754,
-                        "y": 15447.99004414389,
+                        "x": 2600.0,
+                        "y": 15500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Larva_004_Checkpoint"
+                    },
                     "connections": {
                         "Door to Larva Shaft 2": {
                             "type": "and",
@@ -4290,7 +4317,7 @@
             }
         },
         "Larva Hallway 3": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4418,15 +4445,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3064.70367239598,
-                        "y": 15533.929745468207,
+                        "x": -3100.0,
+                        "y": 15600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Larva_005_Checkpoint"
+                    },
                     "connections": {
                         "Door to Larva Recharge Stations": {
                             "type": "resource",
@@ -4828,8 +4857,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -6568.198724760892,
-                        "y": 15368.933758413035,
+                        "x": -6561.114063053489,
+                        "y": 15418.52639036486,
                         "z": 0.0
                     },
                     "description": "",
@@ -4925,15 +4954,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -6164.373007438895,
-                        "y": 14596.705632306057,
+                        "x": -6200.0,
+                        "y": 14600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Larva_006_Checkpoint"
+                    },
                     "connections": {
                         "Door to Queen Access Path": {
                             "type": "and",
@@ -5877,15 +5908,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 855.7161207450226,
-                        "y": 11389.193962748875,
+                        "x": 400.0,
+                        "y": 11300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Queen_001_Checkpoint"
+                    },
                     "connections": {
                         "Event - Queen Metroid": {
                             "type": "and",
