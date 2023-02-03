@@ -2,6 +2,9 @@ from argparse import ArgumentParser
 
 
 def flask_command_logic(args):
+    import randovania.monitoring
+    randovania.monitoring.server_init()
+
     from randovania.server import app
     server_app = app.create_app()
     server_app.sio.sio.run(server_app, host="0.0.0.0")
@@ -29,6 +32,9 @@ def add_migrate_database_command(sub_parsers):
 
 
 def bot_command_logic(args):
+    import randovania.monitoring
+    randovania.monitoring.bot_init()
+
     from randovania.server.discord import bot
     bot.run()
 

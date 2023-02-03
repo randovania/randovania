@@ -30,8 +30,13 @@ def display_exception(val: Exception):
         box.exec_()
 
 
+old_handler = None
+
+
 def catch_exceptions(t, val, tb):
     display_exception(val)
+    if old_handler is not None:
+        return old_handler(t, val, tb)
 
 
 def catch_exceptions_async(loop, context):
@@ -261,8 +266,11 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
     loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)
 
+    global old_handler
+    old_handler = sys.excepthook
     sys.excepthook = catch_exceptions
     loop.set_exception_handler(catch_exceptions_async)
+
     return loop
 
 
@@ -310,6 +318,9 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
 
 
 def run(args):
+    import randovania.monitoring
+    randovania.monitoring.client_init()
+
     locale.setlocale(locale.LC_ALL, "")  # use system's default locale
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 

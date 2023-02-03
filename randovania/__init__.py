@@ -2,8 +2,7 @@ import json
 import sys
 from pathlib import Path
 
-from randovania.version import version
-from randovania.version_hash import git_hash, git_branch as _git_branch
+from . import version as _version, version_hash
 
 CONFIGURATION_FILE_PATH: Path | None = None
 
@@ -12,8 +11,12 @@ def is_frozen() -> bool:
     return getattr(sys, "frozen", False)
 
 
+def is_dirty() -> bool:
+    return version_hash.dirty
+
+
 def is_dev_version():
-    return ".dev" in VERSION and _git_branch != "stable"
+    return (".dev" in VERSION or is_dirty()) and version_hash.git_branch != "stable"
 
 
 def get_icon_path():
@@ -153,6 +156,12 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
         logging.info("Logging initialized with level %s for version %s.", default_level, VERSION)
 
 
-__version__ = version
-VERSION = version
-GIT_HASH = git_hash
+_final_version = _version.version
+
+if is_dirty():
+    _final_version += "-dirty"
+
+
+__version__ = _final_version
+VERSION = _final_version
+GIT_HASH = version_hash.git_hash

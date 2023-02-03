@@ -23,6 +23,8 @@ services:
 
     command: --configuration "/run/secrets/configuration" server flask
 
+    hostname: "{{.Node.Hostname}}"
+
     deploy:
       placement:
         constraints:
@@ -79,3 +81,5 @@ services:
       - configuration
 
     command: --configuration "/run/secrets/configuration" server bot
+
+    hostname: "{{.Node.Hostname}}"
