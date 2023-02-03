@@ -1,4 +1,4 @@
-import pprint
+import platform
 import re
 import typing
 
@@ -104,6 +104,10 @@ def _init(include_flask: bool, default_url: str):
         before_send=_before_send,
         before_breadcrumb=_before_breadcrumb,
     )
+    sentry_sdk.set_context("os", {
+        "name": platform.system(),
+        "version": platform.release(),
+    })
 
 
 def client_init():
