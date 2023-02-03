@@ -15,6 +15,7 @@ class VersionDescription(NamedTuple):
 
 
 def strict_version_for_version_string(version_name: str) -> StrictVersion:
+    version_name = version_name.replace("-dirty", "")
     try:
         return StrictVersion(version_name)
     except ValueError:
