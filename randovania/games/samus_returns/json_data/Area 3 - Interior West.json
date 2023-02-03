@@ -4770,7 +4770,7 @@
             }
         },
         "Gamma+ Arena South Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4862,6 +4862,38 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Central Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1100.0,
+                        "y": -15800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_004"
+                    },
+                    "connections": {
+                        "Door to Gamma+ Arena South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
