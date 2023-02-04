@@ -1,6 +1,7 @@
 import platform
 import re
 import typing
+from pathlib import Path
 
 import sentry_sdk
 
@@ -36,6 +37,11 @@ def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | 
                 if result is None:
                     result = list(data)
                 result[i] = new
+
+    elif isinstance(data, Path):
+        new = _filter_data(str(data), str_filter)
+        if new is not None:
+            result = type(data)(new)
 
     elif isinstance(data, str):
         new = str_filter(data)
