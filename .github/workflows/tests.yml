@@ -75,8 +75,9 @@ jobs:
 
       - name: Get pip cache dir
         id: pip-cache
+        shell: bash
         run: |
-          echo "::set-output name=dir::$(pip cache dir)"
+          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
 
       - name: Set up cache
         uses: actions/cache@v3
@@ -176,7 +177,7 @@ jobs:
         id: version
         shell: bash
         run: |
-          echo "::set-output name=version::$(ls packages/ | cut -f2 -d- | sed 's/.dev/./')"
+          echo "version=$(ls packages/ | cut -f2 -d- | sed 's/.dev/./')" >> $GITHUB_OUTPUT
 
       - name: Extract executable
         run: |
@@ -265,8 +266,9 @@ jobs:
 
       - name: Get pip cache dir
         id: pip-cache
+        shell: bash
         run: |
-          echo "::set-output name=dir::$(pip cache dir)"
+          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
 
       - name: Set up cache
         uses: actions/cache@v3
@@ -349,8 +351,9 @@ jobs:
 
       - name: Get pip cache dir
         id: pip-cache
+        shell: bash
         run: |
-          echo "::set-output name=dir::$(pip cache dir)"
+          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
 
       - name: Set up cache
         uses: actions/cache@v3
