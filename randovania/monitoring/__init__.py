@@ -111,6 +111,7 @@ def _init(include_flask: bool, default_url: str):
         server_name="client",  # hostname for clients contains pii
         before_send=_before_send,
         before_breadcrumb=_before_breadcrumb,
+        auto_session_tracking=include_flask,
     )
     sentry_sdk.set_context("os", {
         "name": platform.system(),
