@@ -57,6 +57,8 @@ def _filter_windows_home(data):
 
 def _before_send(event, hint):
     _filter_windows_home(event["extra"])
+    if "logentry" in event:
+        _filter_windows_home(event["logentry"])
     return event
 
 
