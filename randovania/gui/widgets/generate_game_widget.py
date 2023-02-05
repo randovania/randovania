@@ -1,3 +1,4 @@
+import asyncio
 import dataclasses
 import datetime
 import logging
@@ -396,6 +397,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             else:
                 self._background_task.progress_update_signal.emit("Solver Error", 0)
                 return
+
+        except asyncio.exceptions.CancelledError:
+            return
 
         except Exception as e:
             return await self.failure_handler.handle_exception(
