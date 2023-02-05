@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Changed: All included presets now have "Unlocked Save Station doors" enabled.
+- Changed: "Unlocked Save Station doors" no longer remove the lock in Chozo Ruins - Save Station 3.
 
 #### Patcher Changes
 
