@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: All included presets now have "Unlocked Save Station doors" enabled.
+
 #### Patcher Changes
 
 - Added: CGC Tournament Winners to Artifact Temple lore scan
