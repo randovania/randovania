@@ -429,7 +429,7 @@ jobs:
           body: "Release executable"
 
       - name: Discord Notifications
-        run: python tools/post_discord_webhook.py
+        run: python tools/post_discord_webhook.py --artifact packages/randovania-*-linux.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
