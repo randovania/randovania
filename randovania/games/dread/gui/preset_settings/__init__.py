@@ -5,7 +5,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 
 def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
-    from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
+    from randovania.gui.preset_settings.starting_area_tab import PresetMetroidDreadStartingArea
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.games.dread.gui.preset_settings.dread_generation_tab import PresetDreadGeneration
     from randovania.games.dread.gui.preset_settings.dread_patches_tab import PresetDreadPatches
@@ -17,8 +17,8 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     return [
         PresetTrickLevel,
         *([
-              PresetMetroidStartingArea,
-          ] if window_manager.is_preview_mode else []),
+              PresetMetroidDreadStartingArea,
+          ] if window_manager.is_preview_mode and randovania.is_dev_version() else []),
         *([
               PresetDockRando,
           ] if randovania.is_dev_version() else []),

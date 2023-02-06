@@ -1,3 +1,4 @@
+import randovania
 from randovania.game_description.game_description import GameDescription
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
@@ -13,6 +14,8 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.setupUi(self)
 
         self.include_menu_mod_label.setText(self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
+        for widget in [self.inverted_check, self.inverted_label, self.inverted_line]:
+            widget.setVisible(randovania.is_dev_version())
 
         # Signals
         self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))

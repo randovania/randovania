@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The generator no longer attempts placing pickups based on alternatives to satisfied requirements, such as Missile Expansions for Quadraxis while already having Light Beam.
 - Fixed: Minor typos in the UI are fixed.
 - Fixed: Canceling certain actions will no longer cause the UI to react as if it were an error.
+- Changed: Unsupported features are now restricted to dev builds.
 - Changed: Requirements where different amount of the same item, such as both Missile = 5 and Missile = 1, are expected are now properly simplified. 
 
   This results in certain pickup combinations no longer being considered for placement in the generator, such as Sunburst for unlocking the Industrial Site from behind. 
@@ -44,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Fixed: Collecting the Missile Expansion in Burn Dome before the fight no longer causes the generation to fail.
+
+### Metroid Prime 2: Echoes
+
+- Changed: Inverted Aether is now an unsupported feature.
 
 ### Metroid Dread
 
