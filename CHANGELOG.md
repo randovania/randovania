@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.4.1] - 2023-??-??
 
-- Nothing yet.
-- 
+- Fixed: Canceling the prompt from "View previous versions" no longer causes an error.
+
 ## [5.4.0] - 2023-02-06
 
 - Added: Experimental generation setting for staggering the placement of selected pickups.
