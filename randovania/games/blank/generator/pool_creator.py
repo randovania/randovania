@@ -27,6 +27,6 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
                  base_patches: GamePatches, rng: Random) -> None:
     assert isinstance(configuration, BlankConfiguration)
 
-    results.pickups.append(
+    results.to_place.append(
         create_victory_key(game.resource_database)
     )

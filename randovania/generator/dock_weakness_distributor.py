@@ -100,7 +100,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
             ctx = NodeContext(
                 patches,
-                patches.starting_items,
+                patches.starting_resources(),
                 game.resource_database,
                 game.world_list
             )
@@ -251,7 +251,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
         target = dock.get_target_identifier(NodeContext(
             patches,
-            patches.starting_items,
+            patches.starting_resources(),
             game.resource_database,
             game.world_list,
         ))

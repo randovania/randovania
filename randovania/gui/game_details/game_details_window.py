@@ -172,7 +172,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         layout_string = gollop_corruption_patcher.layout_string_for_items(pickup_names)
         starting_location = patches.starting_location
 
-        starting_items = patches.starting_items.duplicate()
+        starting_items = patches.starting_resources()
         starting_items.add_resource_gain([
             (game.resource_database.get_item_by_name("Suit Type"), cosmetic.player_suit.value),
         ])

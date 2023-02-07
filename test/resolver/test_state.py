@@ -92,7 +92,10 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic
     final = starting.assign_pickup_to_starting_items(p)
 
     # Assert
-    assert final.patches.starting_items == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})
+    assert final.patches.starting_equipment == [p]
+    assert final.patches.starting_resources() == ResourceCollection.from_dict(
+        db, {resource_a: 5, resource_b: 0}
+    )
     assert final.resources == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})
 
 
