@@ -29,7 +29,6 @@ async def post_to_discord():
         version = args.version
 
     print(version)
-    raise SystemExit
 
     try:
         current_branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
