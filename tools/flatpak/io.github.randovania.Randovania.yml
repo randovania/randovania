@@ -10,30 +10,27 @@ finish-args:
     - --socket=wayland
     - --socket=fallback-x11
     - --filesystem=xdg-run/app/com.discordapp.Discord:create
-command: /app/share/randovania/randovania
+command: /app/bin/randovania
 modules:
   - name: randovania
     buildsystem: simple
     build-commands:
       - mkdir -p /app/share/randovania
       - find . -type f -exec install -Dm 755 "{}" "/app/share/randovania/{}" \;
+      - mkdir -p /app/share/applications
+      - mkdir -p /app/share/icons/hicolor/256x256/apps/
+      - rm /app/share/randovania/xdg_assets/README.md
+      - mv /app/share/randovania/xdg_assets/io.github.randovania.Randovania.png /app/share/icons/hicolor/256x256/apps/io.github.randovania.Randovania.png
+      - mv /app/share/randovania/xdg_assets/io.github.randovania.Randovania.desktop /app/share/applications/io.github.randovania.Randovania.desktop
+      - desktop-file-edit /app/share/applications/io.github.randovania.Randovania.desktop --set-key=Exec --set-value=/app/bin/randovania
+      - rmdir /app/share/randovania/xdg_assets
+      - echo '#!/bin/sh' > /app/bin/randovania
+      - echo 'exec /app/share/randovania $@' >> /app/bin/randovania
+      - chmod 755 /app/bin/randovania
     sources:
       - type: archive
         archive-type: tar-gzip
         path: randovania-linux.tar.gz
-
-  - name: randovania-icon
-    buildsystem: simple
-    build-commands:
-      - mkdir -p /app/share/applications
-      - mkdir -p /app/share/icons/hicolor/256x256/apps/
-      - cp io.github.randovania.Randovania.desktop /app/share/applications/io.github.randovania.Randovania.desktop
-      - cp io.github.randovania.Randovania.png /app/share/icons/hicolor/256x256/apps/io.github.randovania.Randovania.png
-    sources:
-      - type: file
-        path: io.github.randovania.Randovania.desktop
-      - type: file
-        path: io.github.randovania.Randovania.png
 
   - name: mono6
     buildsystem: simple
