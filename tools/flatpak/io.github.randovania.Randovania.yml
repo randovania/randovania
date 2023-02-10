@@ -24,9 +24,9 @@ modules:
       - mv /app/share/randovania/xdg_assets/io.github.randovania.Randovania.desktop /app/share/applications/io.github.randovania.Randovania.desktop
       - desktop-file-edit /app/share/applications/io.github.randovania.Randovania.desktop --set-key=Exec --set-value=/app/bin/randovania
       - rmdir /app/share/randovania/xdg_assets
-      - echo '#!/bin/sh' > /app/bin/randovania
-      - echo 'exec /app/share/randovania $@' >> /app/bin/randovania
-      - chmod 755 /app/bin/randovania
+      - echo '#!/bin/sh' > randovania
+      - echo 'exec /app/share/randovania $@' >> randovania
+      - install -Dm 755 randovania /app/bin/randovania
     sources:
       - type: archive
         archive-type: tar-gzip
