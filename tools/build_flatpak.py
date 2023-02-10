@@ -5,21 +5,6 @@ import subprocess
 from pathlib import Path
 
 
-# Version field is the specification version, not the app's
-_executable_metadata = """
-[Desktop Entry]
-Version=1.0
-Name={NAME}
-GenericName={NAME}
-Comment={DESCRIPTION}
-Exec=/app/share/randovania/randovania
-StartupNotify=true
-Terminal=false
-Icon={ICON}
-Type=Application
-Categories=Game
-"""
-
 _here = Path(__file__).parent
 _production_id = "io.github.randovania.Randovania"
 
@@ -42,20 +27,9 @@ def main():
             )
         )
 
-    metadata = _executable_metadata.format(
-        NAME="Randovania",
-        DESCRIPTION="A randomizer platform for a multitude of games.",
-        ICON=flatpak_id,
-    )
-    _here.joinpath(f"flatpak/{flatpak_id}.desktop").write_text(metadata)
-
     shutil.move(
         executable_tar,
         os.fspath(_here.joinpath("flatpak/randovania-linux.tar.gz")),
-    )
-    shutil.copy2(
-        os.fspath(_here.joinpath("icons/sky_temple_key.png")),
-        os.fspath(_here.joinpath(f"flatpak/{flatpak_id}.png")),
     )
     subprocess.run([
         "flatpak-builder",
