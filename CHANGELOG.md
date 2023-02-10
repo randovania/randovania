@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.4.1] - 2023-??-??
 
+- Added: Linux releases are now also published to Flathub.
 - Fixed: Canceling the prompt from "View previous versions" no longer causes an error.
 
 ## [5.4.0] - 2023-02-06
