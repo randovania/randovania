@@ -24,13 +24,23 @@ modules:
       - mv /app/share/randovania/xdg_assets/io.github.randovania.Randovania.desktop /app/share/applications/io.github.randovania.Randovania.desktop
       - desktop-file-edit /app/share/applications/io.github.randovania.Randovania.desktop --set-key=Exec --set-value=/app/bin/randovania
       - rmdir /app/share/randovania/xdg_assets
-      - echo '#!/bin/sh' > randovania
-      - echo 'exec /app/share/randovania $@' >> randovania
-      - install -Dm 755 randovania /app/bin/randovania
+      - install -Dm 644 io.github.randovania.Randovania.metainfo.xml /app/share/appdata/io.github.randovania.Randovania.metainfo.xml
+      - install -Dm 755 randovania-wrapper /app/bin/randovania
     sources:
       - type: archive
         archive-type: tar-gzip
         path: randovania-linux.tar.gz
+      - type: file
+        path: io.github.randovania.Randovania.metainfo.xml
+      - type: script
+        commands:
+          - |
+            for i in {0..9}; do
+              test -S $XDG_RUNTIME_DIR/discord-ipc-$i ||
+                ln -sf {app/com.discordapp.Discord,$XDG_RUNTIME_DIR}/discord-ipc-$i;
+            done
+            exec /app/share/randovania/randovania "$@"
+        dest-filename: randovania-wrapper
 
   - name: mono6
     buildsystem: simple
