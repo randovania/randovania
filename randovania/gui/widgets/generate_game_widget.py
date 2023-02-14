@@ -231,9 +231,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         result = await async_dialog.execute_dialog(self._preset_history)
         new_preset = self._preset_history.selected_preset()
         self._preset_history = None
-        assert new_preset is not None
 
         if result == QtWidgets.QDialog.DialogCode.Accepted:
+            assert new_preset is not None
             self._window_manager.preset_manager.add_new_preset(VersionedPreset.with_preset(new_preset))
             self._update_preset_tree_items()
 
