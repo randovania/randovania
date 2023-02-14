@@ -106,7 +106,7 @@ Website created by [Hugoshido](https://twitch.tv/hugoshido).
 
 Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/), which has graciously provided us with an open source license.
 
-Linux Flatpak build contributed by [flibitijibibo](https://flibitijibibo.com/).
+Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 
 ## Games
 
