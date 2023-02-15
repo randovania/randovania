@@ -1,6 +1,5 @@
 ----------------
 Sand Zone
-(Valid Starting Location)
 Extra - map_name: Sand
 Extra - starting_script: <TRA0010:0099:0036:0033
 > Door to Jenka's House; Heals? False
@@ -9,7 +8,7 @@ Extra - starting_script: <TRA0010:0099:0036:0033
   > Outside Jenka's House
       Trivial
 
-> Teleporter to Arthur's House; Heals? False; Spawn Point
+> Teleporter to Arthur's House; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Arthur's House/Teleporter to Sand Zone
   > Outside Sand Zone Residence
@@ -287,10 +286,9 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 
 ----------------
 Sand Zone Residence
-(Valid Starting Location)
 Extra - map_name: Curly
 Extra - starting_script: <TRA0029:0090:0018:0009
-> Door to Sand Zone; Heals? False; Spawn Point
+> Door to Sand Zone; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Sand Zone/Door to Sand Zone Residence
   > Pickup (Curly Boss)
@@ -332,7 +330,6 @@ Extra - starting_script: <TRA0029:0090:0018:0009
 
 ----------------
 Small Room
-(Valid Starting Location)
 Extra - map_name: CurlyS
 Extra - starting_script: <TRA0032:0094:0004:0009
 Extra - softlock_warp: 0501
@@ -367,19 +364,18 @@ Extra - softlock_warp: 0501
   > Save Point
       Trivial
 
-> Save Point; Heals? False; Spawn Point
+> Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Refill
       Trivial
 
 ----------------
 Jenka's House
-(Valid Starting Location)
 Extra - map_name: Jenka2
 Extra - starting_script: <EVE0+10
 Extra - softlock_maps: ['Jenka1', 'Jenka2']
 Extra - softlock_warp: 0501
-> Door to Sand Zone; Heals? False; Spawn Point
+> Door to Sand Zone; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Sand Zone/Door to Jenka's House
   > Pickup (Jenka)
@@ -433,7 +429,6 @@ Extra - softlock_warp: 0501
 
 ----------------
 Deserted House
-(Valid Starting Location)
 Extra - map_name: Dark
 Extra - starting_script: <TRA0034:0094:0012:0011
 > Door to Sand Zone; Heals? False
@@ -451,7 +446,7 @@ Extra - starting_script: <TRA0034:0094:0012:0011
   > Door to Sand Zone
       Trivial
 
-> Save Point; Heals? False; Spawn Point
+> Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Door to Sand Zone
       Trivial
@@ -459,7 +454,7 @@ Extra - starting_script: <TRA0034:0094:0012:0011
 ----------------
 Sand Zone Storehouse
 Extra - map_name: Gard
-> Entrance from Sand Zone; Heals? False; Spawn Point
+> Entrance from Sand Zone; Heals? False; Default Node
   * Layers: default
   * Entrance to Sand Zone/Exit to Sand Zone Storehouse
   > Before Toroko+
