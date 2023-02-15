@@ -10,30 +10,37 @@ finish-args:
     - --socket=wayland
     - --socket=fallback-x11
     - --filesystem=xdg-run/app/com.discordapp.Discord:create
-command: /app/share/randovania/randovania
+command: /app/bin/randovania
 modules:
   - name: randovania
     buildsystem: simple
     build-commands:
       - mkdir -p /app/share/randovania
       - find . -type f -exec install -Dm 755 "{}" "/app/share/randovania/{}" \;
+      - mkdir -p /app/share/applications
+      - mkdir -p /app/share/icons/hicolor/256x256/apps/
+      - rm /app/share/randovania/xdg_assets/README.md
+      - mv /app/share/randovania/xdg_assets/io.github.randovania.Randovania.png /app/share/icons/hicolor/256x256/apps/io.github.randovania.Randovania.png
+      - mv /app/share/randovania/xdg_assets/io.github.randovania.Randovania.desktop /app/share/applications/io.github.randovania.Randovania.desktop
+      - desktop-file-edit /app/share/applications/io.github.randovania.Randovania.desktop --set-key=Exec --set-value=/app/bin/randovania
+      - rmdir /app/share/randovania/xdg_assets
+      - install -Dm 644 io.github.randovania.Randovania.metainfo.xml /app/share/appdata/io.github.randovania.Randovania.metainfo.xml
+      - install -Dm 755 randovania-wrapper /app/bin/randovania
     sources:
       - type: archive
         archive-type: tar-gzip
         path: randovania-linux.tar.gz
-
-  - name: randovania-icon
-    buildsystem: simple
-    build-commands:
-      - mkdir -p /app/share/applications
-      - mkdir -p /app/share/icons/hicolor/256x256/apps/
-      - cp io.github.randovania.Randovania.desktop /app/share/applications/io.github.randovania.Randovania.desktop
-      - cp io.github.randovania.Randovania.png /app/share/icons/hicolor/256x256/apps/io.github.randovania.Randovania.png
-    sources:
       - type: file
-        path: io.github.randovania.Randovania.desktop
-      - type: file
-        path: io.github.randovania.Randovania.png
+        path: io.github.randovania.Randovania.metainfo.xml
+      - type: script
+        commands:
+          - |
+            for i in {0..9}; do
+              test -S $XDG_RUNTIME_DIR/discord-ipc-$i ||
+                ln -sf {app/com.discordapp.Discord,$XDG_RUNTIME_DIR}/discord-ipc-$i;
+            done
+            exec /app/share/randovania/randovania "$@"
+        dest-filename: randovania-wrapper
 
   - name: mono6
     buildsystem: simple
