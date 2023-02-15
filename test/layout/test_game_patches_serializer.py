@@ -111,7 +111,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
         patches = patches.assign_elevators([
             (game.world_list.get_teleporter_node(teleporter),
              # TODO: Starting Locations are now NodeIdentifier not AreaIdentifier => was modified but can be refactored back if teleporter also uses Node instead of Area a.k.a default_node is removed
-             AreaIdentifier(game.starting_location.world_name, game.starting_location.area_name)),
+             game.starting_location.area_identifier),
         ])
         data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"
 
