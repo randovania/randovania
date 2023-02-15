@@ -1736,8 +1736,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 3,
+                                                                    "name": "DBJ",
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -3659,7 +3659,7 @@
                         "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
                     },
                     "pickup_index": 102,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Tunnel to Super Missile Room": {
                             "type": "and",
@@ -8238,7 +8238,7 @@
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 105,
-                    "major_location": true,
+                    "major_location": false,
                     "connections": {
                         "Tile Group (MISSILE)": {
                             "type": "resource",
@@ -8268,7 +8268,7 @@
                         "actor_def": "actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad"
                     },
                     "pickup_index": 109,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "E-Tank Alcove": {
                             "type": "and",
@@ -8694,28 +8694,14 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Normal Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "IBJ",
+                                                        "name": "DBJ",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -9413,28 +9399,70 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Shoot Ice Missile"
-                                                },
-                                                {
-                                                    "type": "template",
                                                     "data": "Use Spin Boost"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "FrozenEnemy",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "ElunReleaseX",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Ice Missile"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "ElunReleaseX",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Flash",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -9760,7 +9788,7 @@
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
                     "pickup_index": 112,
-                    "major_location": true,
+                    "major_location": false,
                     "connections": {
                         "Door to Energy Recharge Station": {
                             "type": "and",
@@ -11152,7 +11180,7 @@
                         "Door to Teleport to Burenia (Power Beam)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Figure out a good way to put in the shinespark here. It requires either short boost or charging speed in the room to the left.",
                                 "items": [
                                     {
                                         "type": "template",
@@ -11165,14 +11193,14 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Bomb"
+                                                    "data": "Lay Normal Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 2,
+                                                        "name": "DBJ",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -11180,12 +11208,33 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "https://youtu.be/YWkTAyzTwLA",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cross",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -12906,10 +12955,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Perform WBJ"
                                     },
                                     {
                                         "type": "and",

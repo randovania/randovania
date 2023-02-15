@@ -30,8 +30,13 @@ def display_exception(val: Exception):
         box.exec_()
 
 
+old_handler = None
+
+
 def catch_exceptions(t, val, tb):
     display_exception(val)
+    if old_handler is not None:
+        return old_handler(t, val, tb)
 
 
 def catch_exceptions_async(loop, context):
@@ -167,7 +172,7 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
     app.game_session_window.show()
 
 
-async def display_window_for(app, options: Options, command: str, args):
+async def display_window_for(app: QtWidgets.QApplication, options: Options, command: str, args):
     if command == "tracker":
         await show_tracker(app)
     elif command == "main":
@@ -261,8 +266,11 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
     loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)
 
+    global old_handler
+    old_handler = sys.excepthook
     sys.excepthook = catch_exceptions
     loop.set_exception_handler(catch_exceptions_async)
+
     return loop
 
 
@@ -309,7 +317,19 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
                          display_window_for(app, options, args.command, args))
 
 
+def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
+    logger.info("New application state: %s", new_state)
+    import sentry_sdk
+    if new_state == QtCore.Qt.ApplicationState.ApplicationActive:
+        sentry_sdk.Hub.current.start_session(session_mode="application")
+    elif new_state == QtCore.Qt.ApplicationState.ApplicationInactive:
+        sentry_sdk.Hub.current.end_session()
+
+
 def run(args):
+    import randovania.monitoring
+    randovania.monitoring.client_init()
+
     locale.setlocale(locale.LC_ALL, "")  # use system's default locale
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
@@ -321,6 +341,7 @@ def run(args):
     is_preview = args.preview
     start_logger(data_dir, is_preview)
     app = QtWidgets.QApplication(sys.argv)
+    app.applicationStateChanged.connect(_on_application_state_changed)
 
     def main_done(done: asyncio.Task):
         e: Exception | None = done.exception()

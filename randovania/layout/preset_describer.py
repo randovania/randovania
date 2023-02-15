@@ -96,6 +96,12 @@ class GamePresetDescriber:
         template_strings["Logic Settings"].append(
             f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
 
+        if configuration.single_set_for_pickups_that_solve:
+            template_strings["Logic Settings"].append("Experimental potential actions")
+
+        if configuration.staggered_multi_pickup_placement:
+            template_strings["Logic Settings"].append("Experimental staggered pickups")
+
         if randomization_mode != RandomizationMode.FULL:
             template_strings["Item Placement"].append(f"Randomization Mode: {randomization_mode.value}")
 

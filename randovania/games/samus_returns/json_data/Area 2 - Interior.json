@@ -553,6 +553,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Next to Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -592,11 +599,36 @@
                             }
                         }
                     }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5400.0,
+                        "y": 1200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_003"
+                    },
+                    "connections": {
+                        "Door to Varia Suit Room (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Varia Suit Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -868,6 +900,13 @@
                                 "name": "Screw",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1379,11 +1418,36 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2500.0,
+                        "y": -700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_004"
+                    },
+                    "connections": {
+                        "Door to Wallfire Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Fiery Path": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1519,6 +1583,13 @@
                                 "name": "Varia",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1790,6 +1861,33 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6200.0,
+                        "y": -4400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_001"
+                    },
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2791,7 +2889,7 @@
                         "actor_type": "item_energytank"
                     },
                     "pickup_index": 40,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Door to Horseshoe Path": {
                             "type": "and",
@@ -3086,7 +3184,7 @@
             }
         },
         "High Jump Room": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3135,7 +3233,7 @@
                     "pickup_index": 44,
                     "major_location": true,
                     "connections": {
-                        "Door to High Jump Shaft": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3170,16 +3268,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (High Jump Boots)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Tunnel to High Jump Secret": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -3206,7 +3300,43 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Room Center": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3005.3,
+                        "y": -7897.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_002"
+                    },
+                    "connections": {
+                        "Pickup (High Jump Boots)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to High Jump Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to High Jump Secret": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         }
@@ -3703,7 +3833,7 @@
             }
         },
         "Gamma Arena": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3831,15 +3961,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3823.485546754985,
-                        "y": -4826.662604864789,
+                        "x": -3700.0,
+                        "y": -4700.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Fiery Path": {
                             "type": "resource",

@@ -39,12 +39,20 @@ Extra - asset_id: collision_camera_013
       All of the following:
           Morph Ball
           Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
+  > Start Point
+      Trivial
 
 > Tunnel to Gamma Arena South; Heals? False
   * Layers: default
   * Tunnel to Gamma Arena South/Tunnel to Gamma Arena South Access
   > Door to Transport to Area 3 Interior West
       Morph Ball
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_007B_Checkpoint
+  > Door to Transport to Area 3 Interior West
+      Trivial
 
 ----------------
 Fiery Path Access
@@ -53,7 +61,7 @@ Extra - polygon: [[15700.0, 1900.0], [15700.0, 3700.0], [10600.0, 3700.0], [1060
 Extra - asset_id: collision_camera_014
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 75; Major Location? False
+  * Pickup 75; Major Location? True
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_energytank
   > Door to Fiery Path
@@ -308,6 +316,8 @@ Extra - asset_id: collision_camera_022
               All of the following:
                   High Jump Boots
                   Super Jump (Advanced) or Unmorph Extend (Beginner)
+  > Start Point
+      Trivial
 
 > Above Lava Pits; Heals? False
   * Layers: default
@@ -325,6 +335,12 @@ Extra - asset_id: collision_camera_022
           Any of the following:
               Grapple Beam or Climb Rooms Vertically (No High Jump)
               Damage Boost (Intermediate) and Unmorph Extend (Intermediate)
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_001
+  > Door to Alpha Arena
+      Varia Suit
 
 ----------------
 Transport to Area 3 Interior West
@@ -379,6 +395,8 @@ Extra - asset_id: collision_camera_023
       Morph Ball and After Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block
   > Save Station
       Morph Ball
+  > Start Point
+      Trivial
 
 > Door to Fiery Path Access; Heals? False
   * Layers: default
@@ -414,6 +432,7 @@ Extra - asset_id: collision_camera_023
 
 > Inside Arena; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_006_Checkpoint
   > Save Station
       All of the following:
           Morph Ball
@@ -429,6 +448,12 @@ Extra - asset_id: collision_camera_023
               Movement (Beginner) and Can Spiderspark
   > Event - Gamma Metroid
       After Area 3 (Interior East) - Gamma Metroid Upper Awakened and Defeat Gamma Metroid
+
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_007
+  > Door to Gamma Arena South Access
+      Trivial
 
 ----------------
 Mini-Shaft East
@@ -498,7 +523,7 @@ Extra - asset_id: collision_camera_026
   * Power Beam Door to Fiery Path/Door to Alpha Arena
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Room Center
+  > Start Point
       Varia Suit
 
 > Pickup (Super Missile Tank); Heals? False
@@ -506,17 +531,18 @@ Extra - asset_id: collision_camera_026
   * Pickup 77; Major Location? False
   * Extra - actor_name: HiddenPowerup001
   * Extra - actor_type: item_supermissiletank
-  > Room Center
+  > Start Point
       Gravity Suit
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior East) - Alpha Metroid
-  > Room Center
+  > Start Point
       Varia Suit
 
-> Room Center; Heals? False
+> Start Point; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Door to Fiery Path
       Varia Suit and After Area 3 (Interior East) - Alpha Metroid
   > Pickup (Super Missile Tank)
@@ -536,23 +562,24 @@ Extra - asset_id: collision_camera_027
   * Power Bomb Door to Gamma Storage/Door to Gamma Arena South
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Room Center
+  > Start Point
       Trivial
 
 > Tunnel to Gamma Arena South Access; Heals? False
   * Layers: default
   * Tunnel to Gamma Arena South Access/Tunnel to Gamma Arena South
-  > Room Center
+  > Start Point
       Morph Ball
 
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior East) - Gamma Metroid Lower
-  > Room Center
+  > Start Point
       Trivial
 
-> Room Center; Heals? False
+> Start Point; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_007A_Checkpoint
   > Door to Gamma Storage
       Any of the following:
           Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
@@ -619,6 +646,8 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_type: doorpowerpower
   > Tunnel to Transport to Area 3 Interior West (Top)
       Morph Ball
+  > Start Point
+      Trivial
 
 > Tunnel to Transport to Area 3 Interior West (Bottom); Heals? False
   * Layers: default
@@ -640,4 +669,10 @@ Extra - asset_id: collision_camera_030
   * Event Area 3 (Interior East) - Gamma Metroid Upper Awakened
   > Tunnel to Transport to Area 3 Interior West (Top)
       Destroy Bomb Block
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_006
+  > Door to Gamma Awakening Access
+      Trivial
 

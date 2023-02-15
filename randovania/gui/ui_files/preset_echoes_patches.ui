@@ -130,7 +130,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates the use of the new patcher in addition to the existing one.&lt;/p&gt;&lt;p&gt;With this enabled, certain in-game puzzles will have their solution randomized, but are also modified to have better accessibility.&lt;br/&gt;It's also required for certain new features, such as Inverted Aether.&lt;/p&gt;&lt;p&gt;This setting causes additional stuttering during gameplay, especially on Dolphin. It's recommended to unlock disc read speeds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       <set>Qt::AlignJustify|Qt::AlignTop</set>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -138,7 +138,7 @@
      </widget>
     </item>
     <item>
-     <widget class="Line" name="line_2">
+     <widget class="Line" name="inverted_line">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -147,14 +147,14 @@
     <item>
      <widget class="QCheckBox" name="inverted_check">
       <property name="text">
-       <string>[Experimental] Inverted Aether</string>
+       <string>[Unsupported] Inverted Aether</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="inverted_label">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this mode, it's the Light Aether atmosphere that is dangerous!&lt;br/&gt;All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous.&lt;/p&gt;&lt;p&gt;This mode has &lt;span style=&quot; font-weight:700;&quot;&gt;no logic&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this mode, it's the Light Aether atmosphere that is dangerous!&lt;br/&gt;All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous.&lt;/p&gt;&lt;p&gt;Logic always acts as if this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

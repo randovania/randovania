@@ -89,7 +89,7 @@ Extra - asset_id: collision_camera_007
   * Power Beam Door to Transport to Area 3 Exterior (Upper)/Door to Alpha+ Arena West
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Room Center
+  > Start Point
       Trivial
 
 > Door to Transport to Area 3 Exterior (Lower); Heals? False
@@ -97,17 +97,18 @@ Extra - asset_id: collision_camera_007
   * Power Beam Door to Transport to Area 3 Exterior (Lower)/Door to Alpha+ Arena West
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
-  > Room Center
+  > Start Point
       Trivial
 
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Alpha Metroid+ West
-  > Room Center
+  > Start Point
       Trivial
 
-> Room Center; Heals? False
+> Start Point; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
   > Door to Transport to Area 3 Exterior (Upper)
       After Area 3 (Interior West) - Alpha Metroid+ West
   > Door to Transport to Area 3 Exterior (Lower)
@@ -125,7 +126,7 @@ Extra - asset_id: collision_camera_008
   * Power Beam Door to Transport to Area 3 Exterior (Upper)/Door to Gamma Arena North
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
-  > Inside Arena
+  > Start Point (Inside Arena)
       Trivial
 
 > Door to Teleporter Access; Heals? False
@@ -133,31 +134,40 @@ Extra - asset_id: collision_camera_008
   * Power Beam Door to Teleporter Access/Door to Gamma Arena North
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
-  > Inside Arena
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Shoot Beam Burst
-              Power Bomb and Knowledge (Beginner)
+  > Start Point (Outside Arena)
+      Trivial
 
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid Upper
-  > Inside Arena
+  > Start Point (Inside Arena)
       Trivial
 
-> Inside Arena; Heals? False
+> Start Point (Inside Arena); Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_001_Checkpoint
   > Door to Transport to Area 3 Exterior (Upper)
       After Area 3 (Interior West) - Gamma Metroid Upper
-  > Door to Teleporter Access
+  > Event - Gamma Metroid
+      Defeat Gamma Metroid
+  > Start Point (Outside Arena)
       All of the following:
           Morph Ball
           Any of the following:
               Shoot Beam Burst
               Power Bomb and Knowledge (Beginner)
-  > Event - Gamma Metroid
-      Defeat Gamma Metroid
+
+> Start Point (Outside Arena); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_001B
+  > Door to Teleporter Access
+      Trivial
+  > Start Point (Inside Arena)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Shoot Beam Burst
+              Power Bomb and Knowledge (Beginner)
 
 ----------------
 Gamma Arena South
@@ -199,6 +209,8 @@ Extra - asset_id: collision_camera_009
       Defeat Gamma Metroid and Destroy Bomb Block
   > Left of Fan
       Lay Power Bomb
+  > Start Point (Outside Arena)
+      Trivial
 
 > Tunnel to Transport to Area 3 Exterior (Upper); Heals? False
   * Layers: default
@@ -211,6 +223,8 @@ Extra - asset_id: collision_camera_009
   * Event Area 3 (Interior West) - Gamma Metroid Lower
   > Door to Shaft West
       Destroy Bomb Block
+  > Start Point (Inside Arena)
+      Trivial
 
 > Below Pickup; Heals? False
   * Layers: default
@@ -252,6 +266,18 @@ Extra - asset_id: collision_camera_009
       Destroy Bomb Block
   > Below Pickup
       Destroy Bomb Block
+
+> Start Point (Inside Arena); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_002_Checkpoint
+  > Event - Gamma Metroid
+      Defeat Gamma Metroid
+
+> Start Point (Outside Arena); Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_002
+  > Door to Shaft West
+      Trivial
 
 ----------------
 Save Station Hallway
@@ -316,6 +342,8 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_type: doorpowerpower
   > Door to Save Station Hallway
       Trivial
+  > Start Point
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -341,6 +369,12 @@ Extra - asset_id: collision_camera_012
       Morph Ball and Destroy Missile Block
   > Tunnel to Teleporter Access
       Morph Ball and After Area 3 (Interior West) - Teleporter Access Grapple Block
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_003
+  > Door to Alpha+ Arena East
+      Trivial
 
 ----------------
 Mid-Shaft Shortcut
@@ -720,12 +754,20 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_type: doorpowerpower
   > Event - Gamma Metoid+
       Defeat Gamma Metroid+ and Destroy Bomb Block
+  > Start Point
+      Destroy Bomb Block
 
 > Event - Gamma Metoid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid+ Lower
   > Door to Gamma+ Arena South Access
       Climb Rooms Vertically (No High Jump) and Destroy Bomb Block
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_004A_Checkpoint
+  > Door to Gamma+ Arena South Access
+      Destroy Bomb Block
 
 ----------------
 Gamma+ Arena South Access
@@ -747,6 +789,14 @@ Extra - asset_id: collision_camera_035
   * Extra - actor_type: doorpowerpower
   > Door to Central Shaft
       Trivial
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_004
+  > Door to Gamma+ Arena South
+      Trivial
 
 ----------------
 Gamma+ Arena Heat
@@ -758,23 +808,35 @@ Extra - asset_id: collision_camera_036
   * Power Beam Door to Alpha+ Arena East/Door to Gamma+ Arena Heat
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Event - Gamma Metroid+
+  > Start Point (Right)
       All of the following:
-          Morph Ball and Defeat Gamma Metroid+
+          Morph Ball and Varia Suit
           Bomb or Power Bomb ≥ 3
-          Any of the following:
-              Gravity Suit
-              Spider Ball and Varia Suit
+          Gravity Suit or Spider Ball
+  > Start Point (Left)
+      Trivial
 
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid+ Heat
+  > Start Point (Right)
+      Varia Suit
+
+> Start Point (Right); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_003_Checkpoint
   > Door to Alpha+ Arena East
       All of the following:
-          Destroy Bomb Block
-          Any of the following:
-              Gravity Suit
-              Spider Ball and Varia Suit
+          Varia Suit and Destroy Bomb Block
+          Gravity Suit or Spider Ball
+  > Event - Gamma Metroid+
+      Varia Suit and Defeat Gamma Metroid+
+
+> Start Point (Left); Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_003_Out
+  > Door to Alpha+ Arena East
+      Varia Suit
 
 ----------------
 Transport to Area 3 Exterior (Lower)
@@ -809,31 +871,40 @@ Extra - asset_id: collision_camera_038
   * Power Beam Door to Gamma+ Arena Heat/Door to Alpha+ Arena East
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Inside Arena
-      Climb Rooms Vertically (No High Jump) and Destroy Bomb Block
+  > Start Point (Outside Arena)
+      Morph Ball and Climb Rooms Vertically (No High Jump)
 
 > Door to Upper Shaft; Heals? False
   * Layers: default
   * Power Beam Door to Upper Shaft/Door to Alpha+ Arena East
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
-  > Inside Arena
+  > Start Point (Inside Arena)
       Trivial
 
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Alpha Metroid+ East
-  > Inside Arena
+  > Start Point (Inside Arena)
       Trivial
 
-> Inside Arena; Heals? False
+> Start Point (Inside Arena); Heals? False; Spawn Point
   * Layers: default
-  > Door to Gamma+ Arena Heat
-      Destroy Bomb Block
+  * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
   > Door to Upper Shaft
       After Area 3 (Interior West) - Alpha Metroid+ East
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
+  > Start Point (Outside Arena)
+      Destroy Bomb Block
+
+> Start Point (Outside Arena); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_003B
+  > Door to Gamma+ Arena Heat
+      Morph Ball
+  > Start Point (Inside Arena)
+      Destroy Bomb Block
 
 ----------------
 Teleporter Access

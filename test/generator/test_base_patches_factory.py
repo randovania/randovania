@@ -232,7 +232,7 @@ def test_blue_save_doors(prime_game_description: GameDescription, default_prime_
 
     # Assert
     weaknesses = list(results.all_dock_weaknesses())
-    assert len(weaknesses) == 26
+    assert len(weaknesses) == 24
     assert all(weakness == power_weak for _, weakness in weaknesses)
 
 

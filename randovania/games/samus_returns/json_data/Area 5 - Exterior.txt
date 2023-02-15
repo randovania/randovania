@@ -249,7 +249,7 @@ Extra - polygon: [[-4900.0, 4500.0], [-4900.0, 2700.0], [900.0, 2700.0], [900.0,
 Extra - asset_id: collision_camera_004
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 110; Major Location? False
+  * Pickup 110; Major Location? True
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_energytank
   > Pickup (Power Bomb Tank)
@@ -308,22 +308,32 @@ Extra - asset_id: collision_camera_005
   * Pickup 117; Major Location? True
   * Extra - actor_name: LE_PowerUp_ScrewAttack
   * Extra - actor_type: itemsphere_screwattack
-  > Dock to Water Path
-      Screw Attack
+  > Next to Pickup
+      Trivial
 
 > Door from Water Path; Heals? False
   * Layers: default
   * Access Closed to Water Path/Door to Screw Attack Room
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerclosed
-  > Pickup (Screw Attack)
+  > Next to Pickup
       Trivial
 
 > Dock to Water Path; Heals? False
   * Layers: default
   * Open Passage to Water Path/Dock to Screw Attack Room
+  > Next to Pickup
+      Trivial
+
+> Next to Pickup; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoint_005
   > Pickup (Screw Attack)
       Trivial
+  > Door from Water Path
+      Trivial
+  > Dock to Water Path
+      Screw Attack
 
 ----------------
 Zeta Arena Access
@@ -355,12 +365,20 @@ Extra - asset_id: collision_camera_006
               Any of the following:
                   Spider Ball Clip (Expert)
                   Gravity Suit and Spider Ball Clip (Intermediate)
+  > Start Point
+      Trivial
 
 > Tunnel to Water Path Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Water Path Access/Tunnel to Zeta Arena Access
   > Door to Tower
       Morph Ball
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Zeta_001
+  > Door to Zeta Arena
+      Trivial
 
 ----------------
 Poison Plants Hallway
@@ -424,17 +442,27 @@ Extra - asset_id: collision_camera_012
   * Power Beam Door to Zeta Arena Access/Door to Zeta Arena
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Event - Zeta Metroid
-      Defeat Zeta Metroid
+  > Room Center
+      Trivial
 
 > Event - Zeta Metroid; Heals? False
   * Layers: default
   * Event Area 5 (Exterior) - Zeta Metroid
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
   > Door to Zeta Arena Access
-      Any of the following:
-          High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
-          Spiderspark (Beginner) and Can Spiderspark
-          Morph Ball and Unmorph Extend (Beginner)
+      All of the following:
+          After Area 5 (Exterior) - Zeta Metroid
+          Any of the following:
+              High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
+              Spiderspark (Beginner) and Can Spiderspark
+              Morph Ball and Unmorph Extend (Beginner)
+  > Event - Zeta Metroid
+      Defeat Zeta Metroid
 
 ----------------
 Water Path Access
@@ -488,16 +516,8 @@ Extra - asset_id: collision_camera_015
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 5 (Exterior) - Gamma Metroid
-  > Door to Tower
-      Morph Ball and Melee Clip (Beginner)
-  > Bottom of Climb
-      Morph Ball and Melee Clip (Beginner)
-  > Top of Climb
-      Any of the following:
-          Lay Power Bomb
-          All of the following:
-              Lay Bomb
-              Spider Ball or Mid-Air Morph (Beginner)
+  > Inside Arena
+      Trivial
 
 > Bottom of Climb; Heals? False
   * Layers: default
@@ -505,38 +525,37 @@ Extra - asset_id: collision_camera_015
       Any of the following:
           Lay Bomb and Shoot Beam Burst
           Knowledge (Beginner) and Lay Power Bomb
-  > Above Tunnel Out of Bounds
-      Ice Beam and Morph Ball and Melee Clip (Advanced) and Out of Bounds Movement (Beginner)
+          All of the following:
+              Ice Beam and Morph Ball and Melee Clip (Advanced)
+              Any of the following:
+                  Out of Bounds Movement (Advanced)
+                  Out of Bounds Movement (Intermediate) and Shoot Beam Burst
   > Top of Climb
       Climb Rooms Vertically (High Jump)
   > Room Bottom
       Trivial
 
-> Above Tunnel Out of Bounds; Heals? False
-  * Layers: default
-  > Pickup (Missile Tank)
-      Any of the following:
-          Out of Bounds Movement (Advanced)
-          Movement (Intermediate) and Shoot Beam Burst
-
 > Top of Climb; Heals? False
   * Layers: default
-  > Event - Gamma Metroid
+  * Extra - start_point_actor_name: ST_SG_Gamma_003
+  > Pickup (Missile Tank)
       All of the following:
-          Defeat Gamma Metroid
+          Morph Ball and Melee Clip (Beginner)
           Any of the following:
-              Lay Power Bomb
-              All of the following:
-                  Lay Bomb
-                  Any of the following:
-                      Spider Ball or Infinite Bomb Jump (Intermediate)
-                      All of the following:
-                          Mid-Air Morph (Beginner)
-                          High Jump Boots or Space Jump or Single-wall Wall Jump (Intermediate) or Walljump (Beginner)
+              Out of Bounds Movement (Advanced)
+              Out of Bounds Movement (Intermediate) and Shoot Beam Burst
   > Bottom of Climb
       Trivial
-  > Above Tunnel Out of Bounds
-      Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
+  > Inside Arena
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Spider Ball or Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      Mid-Air Morph (Beginner)
+                      High Jump Boots or Space Jump or Single-wall Wall Jump (Intermediate) or Walljump (Beginner)
 
 > Room Bottom; Heals? False
   * Layers: default
@@ -558,6 +577,22 @@ Extra - asset_id: collision_camera_015
               Any of the following:
                   Infinite Bomb Jump (Intermediate)
                   Gravity Suit and Infinite Bomb Jump (Beginner)
+
+> Inside Arena; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_003_Checkpoint
+  > Door to Tower
+      Morph Ball and Melee Clip (Beginner)
+  > Event - Gamma Metroid
+      Defeat Gamma Metroid
+  > Bottom of Climb
+      Morph Ball and Melee Clip (Beginner)
+  > Top of Climb
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Spider Ball or Mid-Air Morph (Beginner)
 
 ----------------
 Water Path
@@ -617,6 +652,14 @@ Extra - asset_id: collision_camera_017
       All of the following:
           Varia Suit
           Lighting Armor or Space Jump or Can Spiderspark
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_002
+  > Door to Gamma+ Arena
+      Varia Suit
 
 ----------------
 Gamma+ Arena
@@ -628,19 +671,27 @@ Extra - asset_id: collision_camera_018
   * Power Beam Door to Gamma+ Arena Access/Door to Gamma+ Arena
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
-  > Event - Gamma Metroid+
-      All of the following:
-          Varia Suit and Defeat Gamma Metroid+
-          Any of the following:
-              Gravity Suit or Space Jump or Can Spiderspark
-              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+  > Start Point
+      Varia Suit
 
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Exterior) - Gamma Metroid+
-  > Door to Gamma+ Arena Access
+  > Start Point
       All of the following:
           Varia Suit
+          Any of the following:
+              Gravity Suit or Space Jump or Can Spiderspark
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_002_Checkpoint
+  > Door to Gamma+ Arena Access
+      Varia Suit and After Area 5 (Exterior) - Gamma Metroid+
+  > Event - Gamma Metroid+
+      All of the following:
+          Varia Suit and Defeat Gamma Metroid+
           Any of the following:
               Gravity Suit or Space Jump or Can Spiderspark
               Diagonal Bomb Jump (Intermediate) and Lay Bomb

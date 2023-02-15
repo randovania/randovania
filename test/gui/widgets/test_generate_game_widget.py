@@ -96,7 +96,7 @@ def test_click_on_preset_tree(tab, skip_qtbot, tmp_path):
     (True, False),
     (True, True),
 ])
-async def test_generate_new_layout(tab, mocker, has_unsupported, abort_generate):
+async def test_generate_new_layout(tab, mocker, has_unsupported, abort_generate, is_dev_version):
     # Setup
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=12341234)
     mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning")
@@ -122,9 +122,11 @@ async def test_generate_new_layout(tab, mocker, has_unsupported, abort_generate)
     if has_unsupported:
         mock_warning.assert_awaited_once_with(
             tab, "Unsupported Features",
-            "Preset 'PresetName' uses the unsupported features:\nUnsup1, Unsup2\n\n"
-            "Are you sure you want to continue?",
-            buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+            "Preset 'PresetName' uses the unsupported features:\nUnsup1, Unsup2\n\n" +
+            ("Are you sure you want to continue?" if is_dev_version
+             else "These features are not available outside of development builds."),
+            buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No if is_dev_version
+            else async_dialog.StandardButton.No,
             default_button=async_dialog.StandardButton.No,
         )
     else:

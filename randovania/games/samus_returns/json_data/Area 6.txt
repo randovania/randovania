@@ -56,6 +56,8 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_type: doorclosedcharge
   > Before Diggernaut Area
       Destroy Bomb Block
+  > Start Point
+      Trivial
 
 > Event - Grapple Blocks Top; Heals? False
   * Layers: default
@@ -120,6 +122,12 @@ Extra - asset_id: collision_camera_034
                   Any of the following:
                       Space Jump
                       Bomb and Infinite Bomb Jump (Intermediate)
+
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_ManicMiner
+  > Door to Diggernaut Arena
+      Trivial
 
 ----------------
 Teleporter Room South
@@ -194,8 +202,9 @@ Extra - asset_id: collision_camera_037
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Omega_001_Checkpoint
   > Door to Zeta Arena Access
       After Area 6 - Omega Metroid
   > Door to Red Plant Tunnel
@@ -373,7 +382,7 @@ Extra - asset_id: collision_camera_040
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 140; Major Location? False
+  * Pickup 140; Major Location? True
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_energytank
   > Under Bridge
@@ -443,6 +452,14 @@ Extra - asset_id: collision_camera_041
   * Extra - actor_type: doorpowerpower
   > Door to Teleporter Room North
       Screw Attack or Destroy Bomb Block
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_ManicMinerAbsorption
+  > Door to Stolen Power Bomb Room
+      Trivial
 
 ----------------
 Crumble Steps
@@ -515,6 +532,8 @@ Extra - asset_id: collision_camera_043
   * Power Bomb Door to Diggernaut Shaft/Door to Diggernaut Arena
   * Extra - actor_name: Door024
   * Extra - actor_type: doorpowerpower
+  > Door from Transport to Area 7
+      Trivial
 
 > Door from Transport to Area 7; Heals? False
   * Layers: default
@@ -523,13 +542,21 @@ Extra - asset_id: collision_camera_043
   * Extra - actor_type: doorclosedcharge
   > Door to Diggernaut Shaft
       After Area 6 - Diggernaut and Lay Power Bomb
-  > Event - Diggernaut
-      Bomb and Beam Burst and Phase Drift and Plasma Beam and Space Jump and Spring Ball and Use Spider Ball
+  > Before Diggernaut
+      Bomb and Phase Drift and Plasma Beam and Space Jump and Spring Ball and Before Area 6 - Diggernaut and Shoot Beam Burst and Use Spider Ball
 
 > Event - Diggernaut; Heals? False
   * Layers: default
   * Event Area 6 - Diggernaut
   > Pickup (Power Bomb)
+      Trivial
+
+> Before Diggernaut; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoin_009
+  > Door from Transport to Area 7
+      Trivial
+  > Event - Diggernaut
       Trivial
 
 ----------------
@@ -682,6 +709,8 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_type: doorpowerpower
   > Door to Zeta Arena
       Destroy Bomb Block
+  > Start Point (Left)
+      Trivial
 
 > Door to Zeta Arena; Heals? False
   * Layers: default
@@ -690,12 +719,26 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_type: doorpowerpower
   > Door to Omega Arena
       Destroy Bomb Block
+  > Start Point (Right)
+      Trivial
 
 > Tunnel to Zeta Arena; Heals? False
   * Layers: default
   * Tunnel to Zeta Arena/Tunnel to Zeta Arena Access
   > Door to Zeta Arena
       Morph Ball
+
+> Start Point (Left); Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Omega_001
+  > Door to Omega Arena
+      Trivial
+
+> Start Point (Right); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Zeta_001
+  > Door to Zeta Arena
+      Trivial
 
 ----------------
 Zeta Arena
@@ -730,8 +773,9 @@ Extra - asset_id: collision_camera_048
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Spawn Point
   * Layers: default
+  * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
   > Door to Zeta Arena Access
       After Area 6 - Zeta Metroid
   > Door to Crumble Bridge
@@ -821,10 +865,11 @@ Extra - asset_id: collision_camera_060
   > Next to Pickup Puzzle
       Trivial
 
-> Chozo Seal; Heals? False
+> Chozo Seal; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_PlatformADN_002
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_002
   > Tunnel to Chozo Seal West
       After Area 6 - Chozo Seal East Grapple Block and Climb Rooms Vertically (No High Jump)
   > Event - Chozo Seal Unlocked
@@ -948,6 +993,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Layers: default
   * Extra - actor_name: LE_PlatformADN_001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_001
   > Door to Teleporter Room North
       Trivial
   > Door to Transport to Area 5 Entrance (Top)

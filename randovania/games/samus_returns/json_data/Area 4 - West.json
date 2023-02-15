@@ -664,7 +664,7 @@
             }
         },
         "Spazer Beam Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -713,51 +713,11 @@
                     "pickup_index": 84,
                     "major_location": true,
                     "connections": {
-                        "Door to Moheek Hallway": {
-                            "type": "or",
+                        "Door from Moheek Hallway": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SuperJump",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -794,6 +754,60 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Moheek Hallway": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -822,7 +836,40 @@
                     "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door from Moheek Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5793.476044852192,
+                        "y": -3619.457186544342,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Checkpoint_003"
+                    },
+                    "connections": {
+                        "Door from Moheek Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1121,7 +1168,7 @@
             }
         },
         "Gamma Arena Room 3": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1270,6 +1317,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1323,6 +1377,33 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2421.3302752293575,
+                        "y": 193.31039755351685,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001C_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to West Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1429,7 +1510,7 @@
                         "actor_type": "item_energytank"
                     },
                     "pickup_index": 78,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -1563,8 +1644,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 10692.48788368336,
-                        "y": -4030.102315562736,
+                        "x": 10692.49,
+                        "y": -4030.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -1573,7 +1654,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_UnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
                     "connections": {
                         "Chozo Seal Right": {
@@ -1857,8 +1939,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 14801.265481960152,
-                        "y": -6225.848142164782,
+                        "x": 14801.27,
+                        "y": -6225.85,
                         "z": 0.0
                     },
                     "description": "",
@@ -1867,7 +1949,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_UnlockAreaDNA001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_002"
                     },
                     "connections": {
                         "Elevator to Area 4 East - Transport to Area 4 West": {
@@ -2567,7 +2650,7 @@
             }
         },
         "Alpha+ Arena": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2616,13 +2699,16 @@
                     "pickup_index": 79,
                     "major_location": false,
                     "connections": {
-                        "Event - Alpha Metroid+": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid+"
-                        },
                         "Tunnel to Alpha+ Arena Access": {
                             "type": "template",
                             "data": "Climb Rooms Vertically (No High Jump)"
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2668,7 +2754,7 @@
                     "extra": {},
                     "event_name": "Alpha 17",
                     "connections": {
-                        "Door to Alpha+ Arena Access": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2708,6 +2794,37 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2700.0,
+                        "y": -6400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_001_Checkpoint"
+                    },
+                    "connections": {
+                        "Door to Alpha+ Arena Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 17",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid+"
                         }
                     }
                 }
@@ -3361,7 +3478,7 @@
             }
         },
         "Gamma Arena Room 2": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3413,12 +3530,39 @@
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5403.87,
+                        "y": 1530.12,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001B_Checkpoint"
+                    },
+                    "connections": {
+                        "Tunnel to Gamma Access Path Lower": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
                 }
             }
         },
         "Gamma Arena Room 1": {
-            "default_node": null,
+            "default_node": "Inside Arena",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3607,15 +3751,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -23.97272405242643,
-                        "y": 3279.228362262369,
+                        "x": 1583.6773700305807,
+                        "y": 3572.2158511722732,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001A_Checkpoint"
+                    },
                     "connections": {
                         "Door to Gamma Access Path Upper": {
                             "type": "resource",
@@ -4452,7 +4598,7 @@
             }
         },
         "Gamma Access Path Upper": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4546,6 +4692,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4612,11 +4765,36 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1078.3893985728846,
+                        "y": 3815.0356778797145,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_001"
+                    },
+                    "connections": {
+                        "Door to Gamma Arena Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alpha+ Arena Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4672,6 +4850,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door from Roundabout": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Tunnel to Alpha+ Arena": {
                             "type": "resource",
                             "data": {
@@ -4679,6 +4866,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4787,6 +4981,31 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5400.0,
+                        "y": -5200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_001"
+                    },
+                    "connections": {
+                        "Door to Roundabout": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

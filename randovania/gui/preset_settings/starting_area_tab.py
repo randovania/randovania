@@ -118,3 +118,9 @@ class PresetMetroidStartingArea(PresetStartingArea):
     @property
     def quick_fill_description(self) -> str:
         return super().quick_fill_description + "<br/>Save Stations: All areas with Save Stations."
+
+
+class PresetMetroidDreadStartingArea(PresetMetroidStartingArea):
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Starting Area [Unsupported]"

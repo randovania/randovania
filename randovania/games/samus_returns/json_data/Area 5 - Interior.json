@@ -377,7 +377,7 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Arena Access": {
+                "Tunnel to Gamma+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -393,7 +393,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "Gamma Arena Access",
+                        "area_name": "Gamma+ Arena Access",
                         "node_name": "Tunnel to Transport Connector"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -668,7 +668,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Tunnel to Gamma Arena Access": {
+                        "Tunnel to Gamma+ Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -801,7 +801,7 @@
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         },
-                        "Tunnel to Gamma Arena Access": {
+                        "Tunnel to Gamma+ Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1102,7 +1102,7 @@
             }
         },
         "Plasma Beam Room": {
-            "default_node": null,
+            "default_node": "Next to Pickup",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1151,7 +1151,7 @@
                     "pickup_index": 125,
                     "major_location": true,
                     "connections": {
-                        "Door from Grapple Shuffler": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1186,7 +1186,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Grapple Shuffler": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1221,6 +1221,31 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Next to Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6900.0,
+                        "y": 2500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_006"
+                    },
+                    "connections": {
                         "Pickup (Plasma Beam)": {
                             "type": "and",
                             "data": {
@@ -1229,6 +1254,13 @@
                             }
                         },
                         "Door to Autrack Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door from Grapple Shuffler": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2284,7 +2316,7 @@
             }
         },
         "Gravity Suit Room": {
-            "default_node": null,
+            "default_node": "Next to Pickup",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2333,7 +2365,7 @@
                     "pickup_index": 124,
                     "major_location": true,
                     "connections": {
-                        "Door from Underwater Path": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2438,16 +2470,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path (Top)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Gravity Suit Room Pickup": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2472,6 +2495,47 @@
                     "event_name": "Area 5 (Interior) - Gravity Suit Room Pickup",
                     "connections": {
                         "Pickup (Gravity Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6900.0,
+                        "y": 7400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_007"
+                    },
+                    "connections": {
+                        "Door to Underwater Path (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door from Underwater Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Gravity Suit Room Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3508,7 +3572,7 @@
             }
         },
         "Zeta+ Arena Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3848,6 +3912,13 @@
                                         "data": "Use Spider Ball"
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4471,6 +4542,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13600.0,
+                        "y": 2000.0,
+                        "z": -14.19
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Zeta_002"
+                    },
+                    "connections": {
+                        "Door to Zeta+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5298,8 +5394,8 @@
                 }
             }
         },
-        "Gamma Arena": {
-            "default_node": null,
+        "Gamma+ Arena": {
+            "default_node": "Outside Arena",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5329,7 +5425,7 @@
                 "asset_id": "collision_camera_022"
             },
             "nodes": {
-                "Door to Gamma Arena Access": {
+                "Door to Gamma+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5348,32 +5444,20 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "Gamma Arena Access",
-                        "node_name": "Door to Gamma Arena"
+                        "area_name": "Gamma+ Arena Access",
+                        "node_name": "Door to Gamma+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Gamma Metroid+": {
-                            "type": "and",
+                        "Outside Arena": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma Metroid"
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5393,7 +5477,34 @@
                     "extra": {},
                     "event_name": "Gamma 12",
                     "connections": {
-                        "Door to Gamma Arena Access": {
+                        "Inside Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -24413.86,
+                        "y": 4511.16,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001_Checkpoint"
+                    },
+                    "connections": {
+                        "Event - Gamma Metroid+": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5403,6 +5514,36 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid+"
+                                    }
+                                ]
+                            }
+                        },
+                        "Outside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 12",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5433,6 +5574,42 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Outside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22800.0,
+                        "y": 4900.0,
+                        "z": -14.19
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_001"
+                    },
+                    "connections": {
+                        "Door to Gamma+ Arena Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5772,7 +5949,7 @@
             }
         },
         "Zeta+ Arena": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5828,9 +6005,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Zeta Metroid+": {
-                            "type": "template",
-                            "data": "Defeat Zeta Metroid"
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5849,48 +6029,45 @@
                     "extra": {},
                     "event_name": "Zeta 2",
                     "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14900.0,
+                        "y": 1300.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
                         "Door to Zeta+ Arena Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Boots",
+                                            "type": "events",
+                                            "name": "Zeta 2",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Spiderspark"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SuperJump",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -5898,7 +6075,16 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Morph",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -5907,9 +6093,43 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 1,
+                                                        "name": "SuperJump",
+                                                        "amount": 4,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5917,12 +6137,16 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Zeta Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Zeta Metroid"
                         }
                     }
                 }
             }
         },
-        "Gamma Arena Access": {
+        "Gamma+ Arena Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -5953,7 +6177,7 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Door to Gamma Arena": {
+                "Door to Gamma+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5972,8 +6196,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "Gamma Arena",
-                        "node_name": "Door to Gamma Arena Access"
+                        "area_name": "Gamma+ Arena",
+                        "node_name": "Door to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -6070,13 +6294,13 @@
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
                         "area_name": "Transport Connector",
-                        "node_name": "Tunnel to Gamma Arena Access"
+                        "node_name": "Tunnel to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Door to Gamma+ Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,

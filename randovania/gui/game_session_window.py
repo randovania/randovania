@@ -1042,13 +1042,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 
+        except asyncio.exceptions.CancelledError:
+            pass
+
         except Exception as e:
-            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
             await self.failure_handler.handle_exception(
                 e, self.update_progress,
             )
 
         finally:
+            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
             self._generating_game = False
 
     async def clear_generated_game(self):

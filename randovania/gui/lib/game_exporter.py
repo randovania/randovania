@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import traceback
 
@@ -42,6 +43,10 @@ async def export_game(
 
     try:
         await background.run_in_background_async(work, "Exporting...")
+
+    except asyncio.exceptions.CancelledError:
+        pass
+
     except Exception as e:
         logging.exception("Unable to export game")
 

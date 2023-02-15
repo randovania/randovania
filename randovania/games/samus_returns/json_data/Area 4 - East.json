@@ -1109,7 +1109,7 @@
             }
         },
         "Super Missile Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1194,6 +1194,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1331,11 +1338,36 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4400.0,
+                        "y": 6100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_003"
+                    },
+                    "connections": {
+                        "Pickup (Super Missile)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Zeta Arena Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1420,6 +1452,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1969,6 +2008,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8250.0,
+                        "y": 3900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Zeta_001"
+                    },
+                    "connections": {
+                        "Door to Zeta Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2390,7 +2454,7 @@
             }
         },
         "Zeta Arena": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2446,7 +2510,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2470,7 +2534,7 @@
                     "extra": {},
                     "event_name": "Zeta 1",
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2503,19 +2567,21 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Room Center": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -10102.767134951044,
-                        "y": 4011.6006811409106,
+                        "x": -9700.77,
+                        "y": 4000.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Zeta_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Zeta Arena Access": {
                             "type": "resource",
@@ -2607,7 +2673,7 @@
             }
         },
         "Gamma Arena": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2746,6 +2812,13 @@
                     "event_name": "Gamma 10",
                     "connections": {
                         "Below Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2919,6 +2992,45 @@
                                                 }
                                             ]
                                         }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13700.0,
+                        "y": 7100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_002C_Checkpoint"
+                    },
+                    "connections": {
+                        "Event - Gamma Metroid": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid"
                                     }
                                 ]
                             }
@@ -3617,7 +3729,7 @@
             }
         },
         "Gamma Arena Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3679,6 +3791,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3704,6 +3823,31 @@
                     "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7300.0,
+                        "y": 9500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_002"
+                    },
                     "connections": {
                         "Door to Gamma Arena": {
                             "type": "and",
@@ -3772,7 +3916,7 @@
                         "actor_type": "item_energytank"
                     },
                     "pickup_index": 93,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Door to Main Shaft": {
                             "type": "and",
@@ -4051,7 +4195,7 @@
             }
         },
         "Space Jump Room": {
-            "default_node": null,
+            "default_node": "Bottom Floor",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4128,51 +4272,11 @@
                     "pickup_index": 99,
                     "major_location": true,
                     "connections": {
-                        "Tunnel to Diggernaut Chase Room (Bottom)": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Next to Grapple Block": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Spiderspark"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4272,7 +4376,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Next to Grapple Block": {
+                        "Under Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4306,7 +4410,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Space Jump)": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4456,7 +4560,7 @@
                                 ]
                             }
                         },
-                        "Next to Grapple Block": {
+                        "Under Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4465,27 +4569,22 @@
                         }
                     }
                 },
-                "Next to Grapple Block": {
+                "Under Grapple Block": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 11385.217816935878,
-                        "y": -6858.590308370044,
+                        "x": 11000.0,
+                        "y": -7000.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_ManicMinerBot_Stage2"
+                    },
                     "connections": {
-                        "Pickup (Space Jump)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Tunnel to Diggernaut Chase Room (Middle)": {
                             "type": "and",
                             "data": {
@@ -4529,6 +4628,89 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom Floor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bottom Floor": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12943.4250764526,
+                        "y": -8274.15902140673,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_004"
+                    },
+                    "connections": {
+                        "Pickup (Space Jump)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Diggernaut Chase Room (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Under Grapple Block": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -5099,8 +5281,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 2642.7456382001837,
-                        "y": -6380.991735537191,
+                        "x": 2709.5565749235475,
+                        "y": -6301.235983690112,
                         "z": 0.0
                     },
                     "description": "",
@@ -5229,15 +5411,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -230.07210396787696,
-                        "y": -8195.745002374682,
+                        "x": -2948.19,
+                        "y": -8541.55,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_ManicMinerBot_Stage3"
+                    },
                     "connections": {
                         "Pickup (Missile Tank Bottom)": {
                             "type": "and",

@@ -62,6 +62,7 @@ def create_major_item(item: MajorItem,
         unlocks_resource=item.unlocks_ammo,
         respects_lock=ammo_requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database) if ammo is not None else None,
+        is_major_override=item.is_major
     )
 
 
@@ -97,6 +98,7 @@ def create_ammo_expansion(ammo: Ammo,
         respects_lock=requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database),
         probability_multiplier=2,
+        is_major_override=ammo.is_major
     )
 
 
@@ -193,7 +195,7 @@ def create_energy_cell(cell_index: int,
         name="energy_cell",
         long_name="Energy Cell",
         hint_details=("an ", "energy cell"),
-        is_major=False,
+        is_major=True,
         is_key=True
     )
 

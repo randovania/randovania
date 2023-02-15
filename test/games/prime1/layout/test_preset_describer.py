@@ -7,6 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
+
 @pytest.mark.parametrize("use_enemy_attribute_randomizer", [False, True])
 def test_prime_format_params(use_enemy_attribute_randomizer):
     # Setup
@@ -68,7 +69,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
         ],
         "Game Changes": [
             "Varia-only heat protection, Progressive suit damage reduction",
-            "Warp to start, Unlocked Vault door, Phazon Elite without Dynamo",
+            "Warp to start, Unlocked Vault door, Unlocked Save Station doors, Phazon Elite without Dynamo",
             "53.1% chance of superheated, 28.7% chance of submerged",
             "Deterministic I. Drone RNG, Deterministic Maze RNG",
             "Competitive cutscene removal",

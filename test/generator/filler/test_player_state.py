@@ -21,6 +21,8 @@ def _default_filler_config() -> FillerConfiguration:
         first_progression_must_be_local=False,
         minimum_available_locations_for_hint_placement=0,
         minimum_location_weight_for_hint_placement=0,
+        single_set_for_pickups_that_solve=False,
+        staggered_multi_pickup_placement=False,
     )
 
 
@@ -81,3 +83,4 @@ def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pi
         assert filtered == {(state_for_blank, PickupIndex(0)): 1}
     else:
         assert filtered == locations_weighted
+

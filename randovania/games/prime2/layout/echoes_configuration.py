@@ -86,3 +86,11 @@ class EchoesConfiguration(BaseConfiguration):
             result.append("1 HP Mode")
 
         return result
+
+    def unsupported_features(self) -> list[str]:
+        result = super().unsupported_features()
+
+        if self.inverted_mode:
+            result.append("Inverted Aether")
+
+        return result

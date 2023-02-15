@@ -5,26 +5,137 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.3.0] - 2023-??-??
+## [5.5.0] - 2023-??-??
+
+- Nothing yet.
+
+## [5.4.1] - 2023-??-??
+
+- Nothing yet.
+- 
+## [5.4.0] - 2023-02-06
+
+- Added: Experimental generation setting for staggering the placement of selected pickups.
+- Added: Experimental generation setting for removing redundant possible actions.
+- Added: Automatic reporting of exceptions for the client, and monitoring for requests to the server.
+- Added: New pixel icons for Prime 1 & 2 autotracker
+- Added: New 8x3 layouts for all Prime 1 & 2 autotracker styles
+- Fixed: The minor/major split setting is obeyed much more accurately by the generator.
+- Fixed: Starting with ammo no longer causes all requirements for that ammo to be ignored. 
+- Fixed: The generator no longer attempts placing pickups based on alternatives to satisfied requirements, such as Missile Expansions for Quadraxis while already having Light Beam.
+- Fixed: Minor typos in the UI are fixed.
+- Fixed: Canceling certain actions will no longer cause the UI to react as if it were an error.
+- Changed: Unsupported features are now restricted to dev builds.
+- Changed: Requirements where different amount of the same item, such as both Missile = 5 and Missile = 1, are expected are now properly simplified. 
+
+  This results in certain pickup combinations no longer being considered for placement in the generator, such as Sunburst for unlocking the Industrial Site from behind. 
+
+### Metroid Prime
+
+- Changed: All included presets now have "Unlocked Save Station doors" enabled.
+- Changed: "Unlocked Save Station doors" no longer remove the lock in Chozo Ruins - Save Station 3.
+
+#### Patcher Changes
+
+- Added: CGC Tournament Winners to Artifact Temple lore scan
+- Fixed: Chapel IS giving the player lightshow on 2nd pass
+- Fixed: Items in every room incompatibility with shuffled essence elevator
+- Changed: Always apply Elite Quarters item softlock patch regardless of cutscene skip mode
+
+#### Logic Database
+
+- Fixed: Collecting the Missile Expansion in Burn Dome before the fight no longer causes the generation to fail.
+
+### Metroid Prime 2: Echoes
+
+- Changed: Inverted Aether is now an unsupported feature.
+
+### Metroid Dread
+
+- Fixed: Energy Parts are now considered minor items, and Missile+ Tanks are now considered major items.
+
+#### Patcher Changes
+
+- Changed: Main Power Bomb has a different color than Power Bomb tanks
+- Changed: Cutscene in Hanubia - Tank Room was removed because it teleports the player to the lower section, which can softlock the player
+- Fixed: You now retain Drogyga's and Corpius's item if you reload checkpoint after defeating them. This eliminates a way of rendering a seed impossible to complete.
+
+#### Logic Database
+
+- Added: New trick "Flash Shift Skip" to account for skipping Flash Shift gates.
+- Added: Traverse to the bottom of Ferenia: Space Jump Room Access with some more options.
+- Added: Pseudo-Wave Beam (Beginner) for the two blobs in Cataris - Teleport to Dairon.
+- Added: Water Bomb Jump to reach the item in Cataris - Teleport to Dairon without Gravity Suit.
+- Added: Flash Shift (Intermediate), Morph Ball (Intermediate), and Spin Boost (Beginner) wall jumps for climbing up Experiment Z-57's arena.
+- Added: Spin Boost and Slide Jump (Beginner) for climbing the upper part of Experiment Z-57's room.
+- Added: Speedbooster Conservation (Intermediate) for climbing to either the top platform or Double Obsydomithon Room in Cataris - Teleport to Artaria (Blue).
+- Added: Grapple Movement (Beginner) to climb Cataris - Moving Magnet Walls (Tall).
+- Added: Flash Shift (Intermediate), Morph Ball (Advanced), and Spin Boost with Spider Magnet wall jumps to climb Cataris - Moving Magnet Walls (Tall).
+- Added: Speedbooster Conservation (Beginner) to collect the lower item in Cataris - Teleport to Ghavoran without Gravity Suit.
+- Added: Damage Boost (Intermediate) for reaching the teleport in Cataris - Teleport to Ghavoran with Spider Magnet.
+- Added: "Adam Skip" added to logic as Wall Jump (Advanced) in Cataris - Moving Magnet Walls (Small).
+- Added: Space Jump method of Cross Bomb Skip (Hypermode) to skip needing Speed for the item in Cataris - EMMI Zone Item Tunnel.
+- Added: Spin Boost Movement (Intermediate) and Speedbooster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
+- Added: Spin Boost method to climb Hanubia - Escape Room 3.
+- Added: Morph Ball Single-Wall Walljumps to get to the Nav Station in Itorash - Transport to Hanubia.
+- Added: Flash Shift Skip (Intermediate) with Bombs to skip the Flash Shift gate in Teleport to Ferenia.
+- Added: Aim Down Clips (Intermediate/Advanced) to go to and from Storm Missile Gate Room without Morph Ball.
+- Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speedbooster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
+- Added: Aim Down Clip (Expert) to reach the blobs in Gravity Suit Tower from the top level.
+- Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
+- Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
+- Added: Climb Golzuna Tower using Spin Boost and Flash Shift using Wall Jump (Intermediate).
+- Added: Movement (Intermediate), Simple IBJ, or Spin Boost to reach top tunnel in Vertical Bomb Maze.
+- Added: Flash Shift Skip (Beginner) in Purple EMMI Introduction; (Intermediate) with normal bombs.
+- Added: Moving from Ferenia - Transport to Ghavoran to Pitfall Puzzle Room with Spin Boost, Flash Shift, or Speed Booster.
+- Added: Using Normal Bomb Jump with a Cross Bomb at the top, for sideways movement, to reach the item in Artaria Proto EMMI Introduction.
+- Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
+- Changed: Simplified many room nodes and connections.
+- Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
+- Changed: Using Flash Shift to collect the fan pickup in Burenia Hub to Dairon is now Advanced (from Beginner).
+- Changed: All three fan skips are now classified as Movement instead of Infinite Bomb Jump.
+- Changed: Convert most of the harder IBJ instances to new Diagonal Bomb Jump trick.
+- Changed: Increase difficulty of the few harder IBJs that weren't changed to Diagonal Bomb Jumps. This should better reflect the fact that Intermediate IBJ is applied for performing Simple IBJ with Normal Bombs.
+- Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
+- Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
+- Fixed: Reaching the upper tunnel in Ferenia - Speedboost Slopes Maze properly accounts for the ability to destroy the beamblocks using Wave Beam, Diffusion Beam, explosives, or Movement (Beginner)
+- Fixed: Usage of Infinite Bomb Jump in Ferenia Separate Tunnels Room now correctly requires the respective Bomb type. The trick is now set at different difficulty depending on which bomb type is being used.
+- Removed: Infinite Bomb Jump for reaching Wave Beam Tutorial from the cold rooms.
+- Removed: Shinespark in Ghavoran Total Recharge Station North. This one requires either short boost or charging speed in the room to the left. Removing this for now.
+
+## [5.3.0] - 2023-01-05
 
 - Added: You can now open a tracker for other player's inventories in a multiworld session.
 - Changed: LogbookNodes are now called HintNodes.
 
 ### Metroid Prime
 
-- Fixed: Spring ball can no longer be used to abuse steep terrain marked as standable
-- Fixed: Vanilla blast shields not being removed in door lock randomizer
+#### Patcher Changes
+
+- Fixed: Spring ball has been nerfed to prevent abusing steep terrain marked as standable.
+- Fixed: Spring ball cooldown is now properly reset when morphing/unmorphing.
+- Fixed: Vanilla blast shields not being removed in door lock randomizer.
 
 ### Metroid Prime 2: Echoes
 
-- Changed: Sand Processing - Screw Attack clip to access the halfpipe from Main Reactor side without Missiles is now Intermediate and without Space Jump (from Expert).
 - Changed: The Auto Tracker icon for Spider Ball now uses the Dark Suit model instead of the Prime 1 model.
+
+#### Logic Database
+
+- Changed: Sand Processing - Screw Attack clip to access the halfpipe from Main Reactor side without Missiles is now Intermediate and without Space Jump (from Expert).
 - Fixed: Main Gyro now properly accounts for solving the puzzles.
 
 ### Metroid Dread
 
-- **Major** - Added: Door locks can now be randomized.
-- TODO: add changes for ODR 1.2.4 and MEDS 0.18.0 (possibly graphical fix)
+#### Patcher Changes
+
+- Fixed: Incorrect color during animation of killing an EMMI.
+
+#### Logic Database
+
+- Added: Climbing Z-57 Arena with Spin Boost and Ice Missiles (Beginner).
+- Changed: Major/Minor Item Location Updates: Energy Tanks -> Major, Energy Parts -> Minor, Drogyga -> Major, Missile+ Tanks -> Major
+- Removed: Water Bomb Jump in Ghavoran - Map Station Access Secret.
 
 ## [5.2.1] - 2022-12-01
 
@@ -261,7 +372,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Optimized the game validation. As example, Echoes' Starter Preset is 91% faster.
 - Changed: The algorithm for how locations lose value over generation has changed. This should have bigger impact in big multiworlds.
 - Changed: It's now possible to login again directly in the Game Session Window.
-- Removed: The server and discord bot are entirely removed from the distributed executables, reducing it's size.
+- Removed: The server and discord bot are entirely removed from the distributed executables, reducing its size.
 - Removed: Metroid Dread is no longer available in releases, as it was never intended to be considered stable.
 - Removed: All auto trackers based on pixel art style were removed by request of their artist.
 - Fixed: The "Spoiler: Pickups" tab no longer shows locations that aren't present in the given preset.
@@ -2766,7 +2877,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 ## [0.17.2] - 2018-12-27
 
--   Fixed: 'Clear loaded game' now properly does it's job.
+-   Fixed: 'Clear loaded game' now properly does its job.
 -   Changed: Add an error message to capture potential Randomizer failures.
 -   Changed: Improved README.
 

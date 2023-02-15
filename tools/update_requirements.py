@@ -16,25 +16,34 @@ custom_env = {
 }
 
 is_quiet = "--quiet" in sys.argv
-has_upgrade = "--upgrade" in sys.argv
+upgrade_arg = ["--upgrade"] if ("--upgrade" in sys.argv) else []
 stdout = subprocess.PIPE if is_quiet else None
 
-subprocess.run(
-    [
+
+def print_arguments(args):
+    args = [
         sys.executable,
         "-m",
         "piptools",
         "compile",
         "--allow-unsafe",
         "--resolver", "backtracking",
+        *args,
+    ]
+    print("Running {}".format(" ".join(args)))
+    return args
+
+
+subprocess.run(
+    print_arguments([
         "--extra=gui,server,test",
         "--strip-extras",
         "--output-file",
         "requirements.txt",
-        "--upgrade" if has_upgrade else "",
+        *upgrade_arg,
         "tools/requirements/requirements.in",
         "setup.py",
-    ],
+    ]),
     env=custom_env,
     check=True,
     cwd=parent,
@@ -43,18 +52,12 @@ subprocess.run(
 )
 
 subprocess.run(
-    [
-        sys.executable,
-        "-m",
-        "piptools",
-        "compile",
-        "--allow-unsafe",
-        "--resolver", "backtracking",
+    print_arguments([
         "--output-file",
         "requirements-lint.txt",
-        "--upgrade" if has_upgrade else "",
+        *upgrade_arg,
         "tools/requirements/requirements-lint.in",
-    ],
+    ]),
     env=custom_env,
     check=True,
     cwd=parent,

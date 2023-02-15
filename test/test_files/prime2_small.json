@@ -1585,6 +1585,32 @@
                         }
                     ]
                 }
+            },
+            "Has Suit": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "DarkSuit",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "LightSuit",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -6494,6 +6520,386 @@
                                         ]
                                     }
                                 }
+                            }
+                        }
+                    }
+                },
+                "Fake Quad Arena": {
+                    "default_node": "Before Quadraxis",
+                    "valid_starting_location": true,
+                    "extra": {
+                    },
+                    "nodes": {
+                        "Before Quadraxis": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "connections": {
+                                "Event - Quadraxis": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "MorphBall",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Bombs",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": {
+                                                                "comment": null,
+                                                                "items": [
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "PowerBomb",
+                                                                            "amount": 2,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "tricks",
+                                                                            "name": "Knowledge",
+                                                                            "amount": 3,
+                                                                            "negate": false
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": {
+                                                                "comment": null,
+                                                                "items": [
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "Boost",
+                                                                            "amount": 1,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "Spider",
+                                                                            "amount": 1,
+                                                                            "negate": false
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": {
+                                                                "comment": null,
+                                                                "items": [
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "SpaceJump",
+                                                                            "amount": 1,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "tricks",
+                                                                            "name": "StandableTerrain",
+                                                                            "amount": 4,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "damage",
+                                                                            "name": "DarkWorld1",
+                                                                            "amount": 150,
+                                                                            "negate": false
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": {
+                                                                "comment": null,
+                                                                "items": [
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "Charge",
+                                                                            "amount": 1,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "or",
+                                                                        "data": {
+                                                                            "comment": null,
+                                                                            "items": [
+                                                                                {
+                                                                                    "type": "and",
+                                                                                    "data": {
+                                                                                        "comment": null,
+                                                                                        "items": [
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "items",
+                                                                                                    "name": "Light",
+                                                                                                    "amount": 1,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "items",
+                                                                                                    "name": "LightAmmo",
+                                                                                                    "amount": 50,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "tricks",
+                                                                                                    "name": "Combat",
+                                                                                                    "amount": 2,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "damage",
+                                                                                                    "name": "DarkWorld1",
+                                                                                                    "amount": 250,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "and",
+                                                                                    "data": {
+                                                                                        "comment": null,
+                                                                                        "items": [
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "tricks",
+                                                                                                    "name": "Combat",
+                                                                                                    "amount": 3,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "damage",
+                                                                                                    "name": "DarkWorld1",
+                                                                                                    "amount": 600,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": {
+                                                                "comment": null,
+                                                                "items": [
+                                                                    {
+                                                                        "type": "template",
+                                                                        "data": "Has Suit"
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "Charge",
+                                                                            "amount": 1,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "damage",
+                                                                            "name": "Damage",
+                                                                            "amount": 500,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "or",
+                                                                        "data": {
+                                                                            "comment": null,
+                                                                            "items": [
+                                                                                {
+                                                                                    "type": "and",
+                                                                                    "data": {
+                                                                                        "comment": null,
+                                                                                        "items": [
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "items",
+                                                                                                    "name": "Light",
+                                                                                                    "amount": 1,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "items",
+                                                                                                    "name": "LightAmmo",
+                                                                                                    "amount": 50,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "and",
+                                                                                    "data": {
+                                                                                        "comment": null,
+                                                                                        "items": [
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "items",
+                                                                                                    "name": "Missile",
+                                                                                                    "amount": 65,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "resource",
+                                                                                                "data": {
+                                                                                                    "type": "items",
+                                                                                                    "name": "Supers",
+                                                                                                    "amount": 1,
+                                                                                                    "negate": false
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Echo",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "tricks",
+                                                                "name": "InvisibleObjects",
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "Event - Quadraxis": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "connections": {
                             }
                         }
                     }

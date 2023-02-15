@@ -48,7 +48,7 @@ class DreadConfiguration(BaseConfiguration):
 
         gd = default_database.game_description_for(self.game)
         for trick in gd.resource_database.trick:
-            if trick.extra.get("hide_from_ui") and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
+            if trick.hide_from_ui and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
                 result.append(f"Enabled {trick.long_name}")
 
         if self.starting_location.locations != (gd.starting_location,):

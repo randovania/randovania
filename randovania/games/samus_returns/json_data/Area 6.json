@@ -326,6 +326,13 @@
                         "Before Diggernaut Area": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -908,6 +915,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17400.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_ManicMiner"
+                    },
+                    "connections": {
+                        "Door to Diggernaut Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1099,7 +1131,7 @@
             }
         },
         "Omega Arena": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1259,15 +1291,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 30.662393162393073,
-                        "y": 7451.014957264957,
+                        "x": 800.0,
+                        "y": 7600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Omega_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Zeta Arena Access": {
                             "type": "and",
@@ -2704,7 +2738,7 @@
                         "actor_type": "item_energytank"
                     },
                     "pickup_index": 140,
-                    "major_location": false,
+                    "major_location": true,
                     "connections": {
                         "Under Bridge": {
                             "type": "and",
@@ -2981,7 +3015,7 @@
             }
         },
         "Stolen Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3236,6 +3270,38 @@
                                         "data": "Destroy Bomb Block"
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8229.2,
+                        "y": 6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_ManicMinerAbsorption"
+                    },
+                    "connections": {
+                        "Door to Stolen Power Bomb Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3675,7 +3741,7 @@
             }
         },
         "Diggernaut Arena": {
-            "default_node": null,
+            "default_node": "Before Diggernaut",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3758,7 +3824,15 @@
                     "default_dock_weakness": "Power Bomb Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door from Transport to Area 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door from Transport to Area 7": {
                     "node_type": "dock",
@@ -3807,7 +3881,7 @@
                                 ]
                             }
                         },
-                        "Event - Diggernaut": {
+                        "Before Diggernaut": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3816,16 +3890,20 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Space",
+                                            "name": "Bomb",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
+                                        "type": "template",
+                                        "data": "Shoot Beam Burst"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Burst",
+                                            "name": "Phase",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3843,20 +3921,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Phase",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
+                                            "name": "Space",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3868,6 +3933,19 @@
                                             "name": "Spring",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Diggernaut",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3891,6 +3969,38 @@
                     "event_name": "Diggernaut",
                     "connections": {
                         "Pickup (Power Bomb)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Diggernaut": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18500.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Checkpoin_009"
+                    },
+                    "connections": {
+                        "Door from Transport to Area 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Diggernaut": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4714,7 +4824,7 @@
             }
         },
         "Zeta Arena Access": {
-            "default_node": null,
+            "default_node": "Start Point (Left)",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4773,6 +4883,13 @@
                         "Door to Zeta Arena": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4805,6 +4922,13 @@
                         "Door to Omega Arena": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4841,11 +4965,61 @@
                             }
                         }
                     }
+                },
+                "Start Point (Left)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": 7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Omega_001"
+                    },
+                    "connections": {
+                        "Door to Omega Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point (Right)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3800.0,
+                        "y": 7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Zeta_001"
+                    },
+                    "connections": {
+                        "Door to Zeta Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Zeta Arena": {
-            "default_node": null,
+            "default_node": "Room Center",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5005,15 +5179,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5289.690170940171,
-                        "y": 7404.834401709402,
+                        "x": 5600.0,
+                        "y": 7600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Zeta_001_Checkpoint"
+                    },
                     "connections": {
                         "Door to Zeta Arena Access": {
                             "type": "resource",
@@ -5550,7 +5726,7 @@
             }
         },
         "Chozo Seal East": {
-            "default_node": null,
+            "default_node": "Chozo Seal",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5685,8 +5861,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5798.282218870454,
-                        "y": -563.220630132395,
+                        "x": 5798.28,
+                        "y": -563.22,
                         "z": 0.0
                     },
                     "description": "",
@@ -5695,7 +5871,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_PlatformADN_002",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_002"
                     },
                     "connections": {
                         "Tunnel to Chozo Seal West": {
@@ -6774,8 +6951,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -231.55036013697008,
-                        "y": 1943.20167670327,
+                        "x": -231.55,
+                        "y": 1943.2,
                         "z": 0.0
                     },
                     "description": "",
@@ -6784,7 +6961,8 @@
                     ],
                     "extra": {
                         "actor_name": "LE_PlatformADN_001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_001"
                     },
                     "connections": {
                         "Door to Teleporter Room North": {
