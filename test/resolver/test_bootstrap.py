@@ -8,16 +8,19 @@ from randovania.game_description.resources.resource_info import ResourceCollecti
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 @pytest.mark.parametrize("vanilla_elevators", [False, True])
 def test_misc_resources_for_configuration(echoes_resource_database,
+                                          default_echoes_configuration,
                                           vanilla_elevators: bool,
                                           ):
     # Setup
-    configuration = MagicMock()
-    configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
-    configuration.elevators.is_vanilla = vanilla_elevators
+    elevators = MagicMock(spec=TeleporterConfiguration)
+    configuration = dataclasses.replace(default_echoes_configuration,
+                                        elevators=elevators)
+    elevators.is_vanilla = vanilla_elevators
     gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGFMCGate")
     torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaTorvusTempleGate")
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")

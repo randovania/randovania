@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
 
+### Metroid Prime 2: Echoes
+
+- Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
+
 ## [5.4.1] - 2023-??-??
 
 - Added: Linux releases are now also published to Flathub.

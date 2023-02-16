@@ -574,6 +574,24 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
     def new_patcher_configuration(self):
         return {
+            "worlds": {
+                "Temple Grounds": {
+                    "areas": {
+                        "Dynamo Chamber": {
+                            "layers": {
+                                "1st Pass Scripting": False,
+                                "2nd Pass Scripting": True,
+                            }
+                        },
+                        "Trooper Security Station": {
+                            "layers": {
+                                "1st Pass": False,
+                                "2nd Pass": True,
+                            }
+                        },
+                    }
+                }
+            },
             "small_randomizations": {
                 "seed": self.description.get_seed_for_player(self.players_config.player_index),
                 "echo_locks": True,
