@@ -45,7 +45,7 @@ class GamePatches:
     weaknesses_to_shuffle: list[bool]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
-    starting_location: AreaIdentifier
+    starting_location: NodeIdentifier
     hints: dict[NodeIdentifier, Hint]
 
     def __post_init__(self):
@@ -93,7 +93,7 @@ class GamePatches:
 
         return dataclasses.replace(self, configurable_nodes=new_configurable)
 
-    def assign_starting_location(self, location: AreaIdentifier) -> GamePatches:
+    def assign_starting_location(self, location: NodeIdentifier) -> GamePatches:
         return dataclasses.replace(self, starting_location=location)
 
     def assign_extra_initial_items(self, new_resources: ResourceGain) -> GamePatches:

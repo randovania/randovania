@@ -10,6 +10,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
@@ -178,6 +179,10 @@ def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
 
+def _name_for_start_location(world_list: WorldList, location: NodeIdentifier) -> str:
+    # small helper function as long as teleporter nodes use AreaIdentifier and starting locations use NodeIdentifier
+    area_loc = location.area_identifier
+    return _name_for_location(world_list, area_loc)
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
     return "{} | Seed Hash - {} ({})".format(
@@ -757,7 +762,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
 
-        starting_room = _name_for_location(db.world_list, self.patches.starting_location)
+        starting_room = _name_for_start_location(db.world_list, self.patches.starting_location)
 
         starting_items = {
             name: _starting_items_value_for(db.resource_database, self.patches.starting_items, index)

@@ -34,15 +34,15 @@ def test_connections_from_dock_blast_shield(empty_patches):
     node_1_identifier = NodeIdentifier.create("W", "Area 1", "Node 1")
     node_2_identifier = NodeIdentifier.create("W", "Area 2", "Node 2")
 
-    node_1 = DockNode(node_1_identifier, 0, False, None, "", ("default",), {}, dock_type,
+    node_1 = DockNode(node_1_identifier, 0, False, None, "", ("default",), {}, False, dock_type,
                       node_2_identifier, weak_1, None, None)
     node_1_lock = DockLockNode.create_from_dock(node_1, 1)
-    node_2 = DockNode(node_2_identifier, 2, False, None, "", ("default",), {}, dock_type,
+    node_2 = DockNode(node_2_identifier, 2, False, None, "", ("default",), {}, False, dock_type,
                       node_1_identifier, weak_2, None, None)
     node_2_lock = DockLockNode.create_from_dock(node_2, 3)
 
-    area_1 = Area("Area 1", None, True, [node_1, node_1_lock], {}, {})
-    area_2 = Area("Area 2", None, True, [node_2, node_2_lock], {}, {})
+    area_1 = Area("Area 1", None, [node_1, node_1_lock], {}, {})
+    area_2 = Area("Area 2", None, [node_2, node_2_lock], {}, {})
 
     world = World("W", [area_1, area_2], {})
     world_list = WorldList([world])

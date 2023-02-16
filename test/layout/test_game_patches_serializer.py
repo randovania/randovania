@@ -15,6 +15,7 @@ from randovania.game_description.resources.pickup_entry import (
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
@@ -51,7 +52,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
 
     data = {
         "game": echoes_game_description.game.value,
-        "starting_location": "Temple Grounds/Landing Site",
+        "starting_location": "Temple Grounds/Landing Site/Save Station",
         "starting_items": {},
         "teleporters": {
             "Temple Grounds/Temple Transport C/Elevator to Great Temple - Temple Transport C": "Great Temple/Temple Transport C",
@@ -109,7 +110,8 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
         teleporter: NodeIdentifier = request.param.get("elevator")
         patches = patches.assign_elevators([
             (game.world_list.get_teleporter_node(teleporter),
-             game.starting_location),
+             # TODO: Starting Locations are now NodeIdentifier not AreaIdentifier => was modified but can be refactored back if teleporter also uses Node instead of Area a.k.a default_node is removed
+             game.starting_location.area_identifier),
         ])
         data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"
 

@@ -229,7 +229,7 @@ class SelectNodesItem(discord.ui.Select):
             if node.heal:
                 name += " (Heals)"
             if self.area.area.default_node == node.name:
-                name += "; Spawn Point"
+                name += "; Default Node"
 
             body = pretty_print.pretty_print_node_type(node, db.world_list) + "\n"
 

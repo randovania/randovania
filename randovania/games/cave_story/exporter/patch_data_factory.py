@@ -261,7 +261,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
             # flags set during first cave in normal gameplay
             starting_script += "<FL+0301<FL+0302<FL+1641<FL+1642<FL+0320<FL+0321"
             waterway = {"Waterway", "Waterway Cabin", "Main Artery"}
-            world_name, area_name = self.patches.starting_location.as_tuple
+            world_name, area_name = self.patches.starting_location.area_identifier.as_tuple
             if world_name == "Labyrinth" and area_name not in waterway:
                 # started near camp; disable camp collision
                 starting_script += "<FL+6202"

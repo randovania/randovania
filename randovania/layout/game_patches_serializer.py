@@ -151,7 +151,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     initial_pickup_assignment = all_pools[player_index].assignment
 
     # Starting Location
-    starting_location = AreaIdentifier.from_string(game_modifications["starting_location"])
+    starting_location = NodeIdentifier.from_string(game_modifications["starting_location"])
 
     # Initial items
     starting_items = ResourceCollection.from_dict(game.resource_database, {
@@ -235,7 +235,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
         pickup_assignment=pickup_assignment,  # PickupAssignment
         configurable_nodes=configurable_nodes,
         starting_items=starting_items,  # ResourceGainTuple
-        starting_location=starting_location,  # AreaIdentifier
+        starting_location=starting_location,  # NodeIdentifier
         hints=hints,
     )
 

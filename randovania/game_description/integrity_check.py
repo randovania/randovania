@@ -124,6 +124,11 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         if node in area.connections.get(node, {}):
             yield f"{area.name} - Node '{node.name}' has a connection to itself"
 
+    # make sure only one start node exists per area like before refacor. this can be removed later if a game supports it
+    start_nodes = area.get_start_nodes()
+    if len(start_nodes) > 1:
+        yield f"{area.name} has multiple valid start nodes {list(node.name for node in start_nodes)}, but is not allowed for {game.game.long_name}"
+
     if area.default_node is not None and area.node_with_name(area.default_node) is None:
         yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
 

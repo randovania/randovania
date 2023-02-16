@@ -8,6 +8,7 @@ from PySide6.QtCore import Qt
 
 from randovania.game_description import default_database
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
 from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea, PresetStartingArea
@@ -28,7 +29,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
     window.on_preset_changed(editor.create_custom_preset_with())
 
     # Assert
-    num_areas = len(StartingLocationList.areas_list(preset.game))
+    num_areas = len(StartingLocationList.nodes_list(preset.game))
     assert len(window._starting_location_for_area) == num_areas
 
 
@@ -87,8 +88,8 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
 
     # Assert
     expected = {
-        AreaIdentifier("Mimiga Village", "Start Point"),
-        AreaIdentifier("Mimiga Village", "Arthur's House"),
-        AreaIdentifier("Labyrinth", "Camp")
+        NodeIdentifier.create("Mimiga Village", "Start Point", "Room Spawn"),
+        NodeIdentifier.create("Mimiga Village", "Arthur's House", "Room Spawn"),
+        NodeIdentifier.create("Labyrinth", "Camp", "Room Spawn")
     }
     assert set(editor.configuration.starting_location.locations) == expected

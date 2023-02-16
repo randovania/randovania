@@ -305,6 +305,7 @@ class WorldReader:
                 "description": data["description"],
                 "layers": tuple(data["layers"]),
                 "extra": frozen_lib.wrap(data["extra"]),
+                "valid_starting_location": data["valid_starting_location"]
             }
             self.next_node_index += 1
             node_type: int = data["node_type"]
@@ -417,7 +418,6 @@ class WorldReader:
 
         try:
             return Area(area_name, data["default_node"],
-                        data["valid_starting_location"],
                         nodes, connections, data["extra"])
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
@@ -508,7 +508,7 @@ def decode_data_with_world_reader(data: dict) -> tuple[WorldReader, GameDescript
     world_list = world_reader.read_world_list(data["worlds"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
-    starting_location = AreaIdentifier.from_json(data["starting_location"])
+    starting_location = NodeIdentifier.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
 
