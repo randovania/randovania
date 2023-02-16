@@ -16,7 +16,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.resources.pickup_entry import PickupModel, PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGain, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -101,10 +101,11 @@ def _area_identifier_to_json(world_list: WorldList, identifier: AreaIdentifier) 
 def _create_spawn_point_field(patches: GamePatches,
                               game: GameDescription,
                               ) -> dict:
+    starting_resources = patches.starting_resources()
     capacities = [
         {
             "index": item_id_for_item_resource(item),
-            "amount": patches.starting_items[item],
+            "amount": starting_resources[item],
         }
         for item in game.resource_database.item
     ]
@@ -380,10 +381,8 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
-def _create_starting_popup(layout_configuration: EchoesConfiguration,
-                           game_description: GameDescription,
-                           starting_items: ResourceCollection) -> list:
-    extra_items = item_names.additional_starting_items(layout_configuration, game_description, starting_items)
+def _create_starting_popup(patches: GamePatches) -> list:
+    extra_items = item_names.additional_starting_equipment(patches.configuration, patches.game, patches)
     if extra_items:
         return [
             "Extra starting items:",
@@ -529,8 +528,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         # Add Spawn Point
         result["spawn_point"] = _create_spawn_point_field(self.patches, self.game)
 
-        result["starting_popup"] = _create_starting_popup(self.configuration, self.game,
-                                                          self.patches.starting_items)
+        result["starting_popup"] = _create_starting_popup(self.patches)
 
         # Add the pickups
         result["pickups"] = _create_pickup_list(self.cosmetic_patches, self.configuration, self.game, self.patches,

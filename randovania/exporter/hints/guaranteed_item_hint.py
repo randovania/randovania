@@ -36,7 +36,7 @@ def hint_text_if_items_are_starting(
 ) -> dict[ItemResourceInfo, str]:
     result = {}
 
-    for resource, quantity in all_patches[player].starting_items.as_resource_gain():
+    for resource, quantity in all_patches[player].starting_resources().as_resource_gain():
         if quantity > 0 and resource in target_items:
             result[resource] = namer.format_resource_is_starting(resource, with_color)
 

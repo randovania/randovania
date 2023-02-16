@@ -25,9 +25,9 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
         s.layout_description = description
         s.save()
         game_details = {
-            'seed_hash': 'NGJWIB5Z',
+            'seed_hash': 'EBZ2IVCN',
             'spoiler': True,
-            'word_hash': 'Damaged Ingsphere Attack',
+            'word_hash': 'Doomed Portal Darkling',
         }
 
     # Run

@@ -120,8 +120,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.iterate_nodes()))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 
-    initial_state.resources.add_resource_gain(pool_results.initial_resources.as_resource_gain())
-    for pickup in pool_results.pickups:
+    for pickup in pool_results.starting + pool_results.to_place:
         add_pickup_to_state(initial_state, pickup)
     for pickup in pool_results.assignment.values():
         add_pickup_to_state(initial_state, pickup)

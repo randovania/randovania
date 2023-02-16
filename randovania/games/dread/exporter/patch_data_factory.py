@@ -8,7 +8,7 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.hint_node import HintNode
@@ -99,9 +99,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 continue
         return result
 
-    def _starting_inventory_text(self, resources: ResourceCollection):
+    def _starting_inventory_text(self):
         result = [r"{c1}Random starting items:{c0}"]
-        items = item_names.additional_starting_items(self.configuration, self.game, resources)
+        items = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
         if not items:
             return []
         result.extend(items)
@@ -348,8 +348,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
-        starting_items = self._calculate_starting_inventory(self.patches.starting_items)
-        starting_text = [self._starting_inventory_text(self.patches.starting_items)]
+        starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
+        starting_text = [self._starting_inventory_text()]
 
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(self.game.resource_database),
                                       self.players_config.player_index)

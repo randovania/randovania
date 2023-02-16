@@ -704,8 +704,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
         starting_memo = None
-        extra_starting = item_names.additional_starting_items(self.configuration, db,
-                                                              self.patches.starting_items)
+        extra_starting = item_names.additional_starting_equipment(self.configuration, db, self.patches)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
@@ -764,8 +763,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
         starting_room = _name_for_start_location(db.world_list, self.patches.starting_location)
 
+        starting_resources = self.patches.starting_resources()
         starting_items = {
-            name: _starting_items_value_for(db.resource_database, self.patches.starting_items, index)
+            name: _starting_items_value_for(db.resource_database, starting_resources, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
@@ -859,7 +859,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "nonvariaHeatDamage": self.configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
                 "heatDamagePerSec": self.configuration.heat_damage,
-                "autoEnabledElevators": not self.patches.starting_items.has_resource(scan_visor),
+                "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
 
                 "disableItemLoss": True,  # Item Loss in Frigate
@@ -896,7 +896,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     for artifact, text in resulting_hints.items()
                 },
                 "artifactTempleLayerOverrides": {
-                    artifact.long_name: not self.patches.starting_items.has_resource(artifact)
+                    artifact.long_name: not starting_resources.has_resource(artifact)
                     for artifact in artifacts
                 },
             },

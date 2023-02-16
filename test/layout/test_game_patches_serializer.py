@@ -1,5 +1,6 @@
 import collections
 import dataclasses
+import typing
 import uuid
 
 import pytest
@@ -31,7 +32,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
 @pytest.fixture(
     params=[
         {},
-        {"starting_item": "Morph Ball"},
+        {"starting_pickup": "Morph Ball"},
         {"elevator": NodeIdentifier.create("Temple Grounds", "Transport to Agon Wastes",
                                            "Elevator to Agon Wastes - Transport to Temple Grounds")},
         {"configurable_nodes": [("Agon Wastes/Mining Plaza/Translator Gate", "Cobalt"),
@@ -50,10 +51,10 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     game = echoes_game_description
     db = game.resource_database
 
-    data = {
+    data: dict[str, typing.Any] = {
         "game": echoes_game_description.game.value,
         "starting_location": "Temple Grounds/Landing Site/Save Station",
-        "starting_items": {},
+        "starting_equipment": {"pickups": []},
         "teleporters": {
             "Temple Grounds/Temple Transport C/Elevator to Great Temple - Temple Transport C": "Great Temple/Temple Transport C",
             "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Temple Grounds": "Agon Wastes/Transport to Temple Grounds",
@@ -99,12 +100,17 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
         for world in sorted(locations.keys())
     }
 
-    if request.param.get("starting_item"):
-        item_name = request.param.get("starting_item")
-        patches = patches.assign_extra_initial_items([
-            (db.get_item_by_name(item_name), 1),
+    def create_pickup(name, percentage=True):
+        return pickup_creator.create_major_item(echoes_item_database.major_items[name],
+                                                MajorItemState(), percentage, game.resource_database,
+                                                None, False)
+
+    if request.param.get("starting_pickup"):
+        item_name = request.param.get("starting_pickup")
+        patches = patches.assign_extra_starting_pickups([
+            create_pickup(item_name, False),
         ])
-        data["starting_items"][item_name] = 1
+        data["starting_equipment"]["pickups"].append(item_name)
 
     if request.param.get("elevator"):
         teleporter: NodeIdentifier = request.param.get("elevator")
@@ -126,9 +132,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
 
     if request.param.get("pickup"):
         pickup_name = request.param.get("pickup")
-        pickup = pickup_creator.create_major_item(echoes_item_database.major_items[pickup_name],
-                                                  MajorItemState(), True, game.resource_database,
-                                                  None, False)
+        pickup = create_pickup(pickup_name)
 
         patches = patches.assign_new_pickups([(PickupIndex(5), PickupTarget(pickup, 0))])
         data["locations"]["Temple Grounds"]['Transport to Agon Wastes/Pickup (Missile)'] = pickup_name
