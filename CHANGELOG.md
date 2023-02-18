@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 - Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.
 
+### Metroid Dread
+
+- Added: A new cosmetic option for adding a in-game death counter to the HUD.
+
 ## [5.4.1] - 2023-??-??
 
 - Added: Linux releases are now also published to Flathub.
