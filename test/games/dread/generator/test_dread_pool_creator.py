@@ -33,4 +33,4 @@ def test_dread_pool_creator(dread_game_description, preset_manager):
         c("Ghavoran", "Golzuna Arena", "Pickup (Cross Bomb)"),
     ]
 
-    assert len(results.pickups) == wl.num_pickup_nodes - 1 - len(results.assignment)
+    assert len(results.to_place) == wl.num_pickup_nodes - 1 - len(results.assignment)

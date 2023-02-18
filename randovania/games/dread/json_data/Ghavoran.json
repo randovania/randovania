@@ -11,7 +11,6 @@
     "areas": {
         "Transport to Burenia": {
             "default_node": "Elevator to Burenia - Transport to Ghavoran",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -60,6 +59,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -99,6 +99,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -145,6 +146,7 @@
                         "start_point_actor_name": "elevator_aqua_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "Transport to Ghavoran"
@@ -165,7 +167,6 @@
         },
         "Right Entrance": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -222,6 +223,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -261,6 +263,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -321,6 +324,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -442,6 +446,7 @@
                         "actor_name": "item_missiletank_000",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 97,
                     "major_location": false,
                     "connections": {
@@ -476,6 +481,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -712,6 +718,7 @@
                         "start_point_actor_name": "weightactivatedplatform_total_001",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Super Missile Room": {
                             "type": "and",
@@ -738,6 +745,7 @@
                         "start_point_actor_name": "SP_Checkpoint_ChozoRobotForest",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Robot Fight Arena": {
                             "type": "and",
@@ -768,6 +776,7 @@
                             "MISSILE"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -800,6 +809,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Spider Magnet Elevator": {
                             "type": "and",
@@ -893,6 +903,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranBureniaTransportGrappleBox",
                     "connections": {
                         "Grapple Block Alcove": {
@@ -908,7 +919,6 @@
         },
         "Robot Fight Arena": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -957,6 +967,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -1036,6 +1047,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -1111,6 +1123,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoRobotSoldier",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Left Entrance": {
                             "type": "and",
@@ -1134,6 +1147,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranRobotFight",
                     "connections": {
                         "Door to Right Entrance": {
@@ -1156,7 +1170,6 @@
         },
         "Left Entrance": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -15400.0,
@@ -1209,6 +1222,7 @@
                         "actor_name": "dooremmy_000",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -1248,6 +1262,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -1357,6 +1372,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -1449,6 +1465,7 @@
                         "actor_name": "item_missiletank_003",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 108,
                     "major_location": false,
                     "connections": {
@@ -1490,6 +1507,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 2": {
                             "type": "resource",
@@ -1526,6 +1544,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Burenia": {
                             "type": "and",
@@ -1556,6 +1575,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 2": {
                             "type": "template",
@@ -1590,6 +1610,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 1": {
                             "type": "template",
@@ -1626,6 +1647,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 1": {
                             "type": "resource",
@@ -1655,6 +1677,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Burenia": {
                             "type": "and",
@@ -1774,6 +1797,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to Blue EMMI Introduction": {
                             "type": "and",
@@ -1811,6 +1835,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Robot Fight Arena": {
                             "type": "resource",
@@ -1936,7 +1961,6 @@
         },
         "Blue EMMI Introduction": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -1981,6 +2005,7 @@
                         "actor_name": "dooremmy_000",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2112,6 +2137,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2161,6 +2187,7 @@
                         "actor_name": "dooremmy_001",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2195,6 +2222,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2227,6 +2255,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to EMMI Zone Exit Southeast": {
                             "type": "or",
@@ -2366,7 +2395,6 @@
         },
         "Navigation Station Access": {
             "default_node": "Start Point 2",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -2411,6 +2439,7 @@
                         "actor_name": "dooremmy_001",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2457,6 +2486,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2492,6 +2522,7 @@
                         "start_point_actor_name": "SP_Checkpoint_EmmyForest",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to Blue EMMI Introduction": {
                             "type": "and",
@@ -2518,6 +2549,7 @@
                         "start_point_actor_name": "SP_AccessPoint_7",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Navigation Station": {
                             "type": "and",
@@ -2532,7 +2564,6 @@
         },
         "Navigation Station": {
             "default_node": "Navigation Room",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -2581,6 +2612,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2627,6 +2659,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2666,6 +2699,7 @@
                         "hint_id": "FOREST_1",
                         "string_asset_id": 10
                     },
+                    "valid_starting_location": false,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -2688,7 +2722,6 @@
         },
         "Flipper Room": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -2737,6 +2770,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2843,6 +2877,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2889,6 +2924,7 @@
                         "start_point_actor_name": "SP_AccessPoint_7B",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Navigation Station": {
                             "type": "and",
@@ -2912,6 +2948,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -2950,6 +2987,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranSupersRotatable",
                     "connections": {
                         "Tunnel to Spider Magnet Elevator": {
@@ -2974,6 +3012,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3008,6 +3047,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3068,6 +3108,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranSuperRotatableEnky",
                     "connections": {
                         "Dock to Spin Boost Tower": {
@@ -3083,7 +3124,6 @@
         },
         "Dairon Transport Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -1000.0,
@@ -3140,6 +3180,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3179,6 +3220,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3291,6 +3333,7 @@
                         "actor_name": "item_missiletank_001",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 99,
                     "major_location": false,
                     "connections": {
@@ -3338,6 +3381,7 @@
                         "actor_name": "grapplepulloff1x2_002",
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
+                    "valid_starting_location": false,
                     "event_name": "s050_forest:default:grapplepulloff1x2_002",
                     "connections": {
                         "Door to Super Missile Room Access": {
@@ -3362,6 +3406,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3385,7 +3430,6 @@
         },
         "Super Missile Room Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -3434,6 +3478,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_002",
                         "right_shield_def": "actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3473,6 +3518,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3519,6 +3565,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3658,6 +3705,7 @@
                         "actor_name": "item_missiletankplus_000",
                         "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 102,
                     "major_location": true,
                     "connections": {
@@ -3690,6 +3738,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Dairon Transport Access": {
                             "type": "and",
@@ -3717,6 +3766,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3751,6 +3801,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3783,6 +3834,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3815,6 +3867,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Super Missile Room (Missile Lock)": {
                             "type": "and",
@@ -3838,7 +3891,6 @@
         },
         "Super Missile Room": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -3887,6 +3939,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -3926,6 +3979,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_002",
                         "right_shield_def": "actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4033,6 +4087,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4069,6 +4124,7 @@
                         "actor_def": "actordef:actors/items/itemsphere_supermissile/charclasses/itemsphere_supermissile.bmsad",
                         "map_icon_actor": "powerup_supermissile"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 100,
                     "major_location": true,
                     "connections": {
@@ -4097,6 +4153,7 @@
                         "start_point_actor_name": "SP_Checkpoint_SuperMissiles",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Super Missile Room Access (Missile Lock)": {
                             "type": "and",
@@ -4127,6 +4184,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4152,7 +4210,6 @@
         },
         "EMMI Zone Exit Southeast": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -4201,6 +4258,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4284,6 +4342,7 @@
                         "actor_name": "dooremmy_002",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4509,6 +4568,7 @@
                         "actor_name": "dooremmy_003",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4646,6 +4706,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4743,6 +4804,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4766,7 +4828,6 @@
         },
         "Map Station Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -4811,6 +4872,7 @@
                         "actor_name": "dooremmy_002",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -4968,6 +5030,7 @@
                         "actor_name": "dooremmy_003",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5010,6 +5073,7 @@
                         "right_shield_def": null,
                         "exclude_from_dock_rando": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5055,6 +5119,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit Southeast (Lower)": {
                             "type": "resource",
@@ -5096,6 +5161,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit Southeast (Lower)": {
                             "type": "and",
@@ -5126,6 +5192,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Map Station": {
                             "type": "resource",
@@ -5167,6 +5234,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit Southeast (Upper)": {
                             "type": "template",
@@ -5196,6 +5264,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5230,6 +5299,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit Southeast (Lower)": {
                             "type": "and",
@@ -5262,7 +5332,6 @@
         },
         "Map Station": {
             "default_node": "Map Station",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -5312,6 +5381,7 @@
                         "right_shield_def": null,
                         "exclude_from_dock_rando": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5349,6 +5419,7 @@
                         "start_point_actor_name": "maproom_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Map Station Access": {
                             "type": "and",
@@ -5363,7 +5434,6 @@
         },
         "EMMI Zone Exit West": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -10000.0,
@@ -5412,6 +5482,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5447,6 +5518,7 @@
                         "actor_name": "dooremmy_004",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5482,6 +5554,7 @@
                         "actor_name": "dooremmy_005",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5528,6 +5601,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5567,6 +5641,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5712,6 +5787,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5744,6 +5820,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to Early Ice Room (Lower)": {
                             "type": "and",
@@ -5772,7 +5849,6 @@
         },
         "Early Ice Room": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -12000.0,
@@ -5817,6 +5893,7 @@
                         "actor_name": "dooremmy_004",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5877,6 +5954,7 @@
                         "actor_name": "dooremmy_005",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5912,6 +5990,7 @@
                         "actor_name": "dooremmy_006",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -5944,6 +6023,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit West (Lower)": {
                             "type": "and",
@@ -6004,7 +6084,6 @@
         },
         "EMMI Zone Exit Northwest": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -10000.0,
@@ -6049,6 +6128,7 @@
                         "actor_name": "dooremmy_006",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6085,6 +6165,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6124,6 +6205,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6163,6 +6245,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Central Unit Access": {
                             "type": "template",
@@ -6174,7 +6257,6 @@
         },
         "Central Unit": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -9100.0,
@@ -6219,6 +6301,7 @@
                         "start_point_actor_name": "SP_Checkpoint_EmmyForestPhase2",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to Central Unit Access": {
                             "type": "and",
@@ -6242,6 +6325,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6271,6 +6355,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranCU",
                     "connections": {
                         "Dock to Central Unit Access": {
@@ -6286,7 +6371,6 @@
         },
         "EMMI Zone Middle Path": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -6335,6 +6419,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6381,6 +6466,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6468,6 +6554,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6500,6 +6587,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6523,7 +6611,6 @@
         },
         "Central Unit Access": {
             "default_node": "Room Center",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -7000.0,
@@ -6572,6 +6659,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6646,6 +6734,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6685,6 +6774,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6789,6 +6879,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -6824,6 +6915,7 @@
                         "start_point_actor_name": "SP_Checkpoint_IceMissiles",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to EMMI Zone Exit Northeast (Upper)": {
                             "type": "or",
@@ -7090,6 +7182,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -7193,6 +7286,7 @@
                         "callback_function": "OnEmmyForestDead",
                         "boss_hint_name": "E.M.M.I.-05IM"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 146,
                     "major_location": true,
                     "connections": {
@@ -7209,7 +7303,6 @@
         },
         "EMMI Zone Exit Northeast": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -7258,6 +7351,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -7340,6 +7434,7 @@
                         "actor_name": "dooremmy",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -7375,6 +7470,7 @@
                         "actor_name": "dooremmy_007",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -7433,6 +7529,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -7472,6 +7569,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -7532,6 +7630,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to Spin Boost Tower (Upper)": {
                             "type": "resource",
@@ -7548,7 +7647,6 @@
         },
         "Spin Boost Tower": {
             "default_node": "Ammo Recharge",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -1000.0,
@@ -7597,6 +7695,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -7636,6 +7735,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -8086,6 +8186,7 @@
                         "actor_name": "item_powerbombtank_000",
                         "actor_def": "actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 96,
                     "major_location": false,
                     "connections": {
@@ -8114,6 +8215,7 @@
                         "actor_name": "dooremmy",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -8176,6 +8278,7 @@
                         "actor_name": "dooremmy_007",
                         "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -8237,6 +8340,7 @@
                         "actor_name": "item_energyfragment_000",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 105,
                     "major_location": false,
                     "connections": {
@@ -8267,6 +8371,7 @@
                         "actor_name": "item_energytank_000",
                         "actor_def": "actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 109,
                     "major_location": true,
                     "connections": {
@@ -8295,6 +8400,7 @@
                         "actor_name": "grapplepulloff1x2_000",
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
+                    "valid_starting_location": false,
                     "event_name": "s050_forest:default:grapplepulloff1x2_000",
                     "connections": {
                         "Door to Save Station Center": {
@@ -8324,6 +8430,7 @@
                         "start_point_actor_name": "ammorecharge_001_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit Northeast (Upper)": {
                             "type": "and",
@@ -8354,6 +8461,7 @@
                             "MISSILE"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Save Station Center": {
                             "type": "resource",
@@ -8388,6 +8496,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -8420,6 +8529,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Save Station Center": {
                             "type": "and",
@@ -8566,6 +8676,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit Northeast (Upper)": {
                             "type": "resource",
@@ -8609,6 +8720,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Above Pulse Radar": {
                             "type": "or",
@@ -8804,6 +8916,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranAmmoRechargeEnkyAbove",
                     "connections": {
                         "E-Tank Alcove": {
@@ -8828,6 +8941,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranAmmoRechargeEnkyBelow",
                     "connections": {
                         "Upper Center Platform": {
@@ -8843,7 +8957,6 @@
         },
         "Save Station Center": {
             "default_node": "Save Station",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -8892,6 +9005,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
                         "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -8931,6 +9045,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -8975,6 +9090,7 @@
                         "start_point_actor_name": "savestation_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Chozo Warrior Arena": {
                             "type": "and",
@@ -8989,7 +9105,6 @@
         },
         "Chozo Warrior Arena": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -9038,6 +9153,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -9120,6 +9236,7 @@
                             "Grapple Beam Door"
                         ]
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -9195,6 +9312,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Save Station Center": {
                             "type": "and",
@@ -9218,6 +9336,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -9290,6 +9409,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranChozoX",
                     "connections": {
                         "Door to Save Station Center": {
@@ -9305,7 +9425,6 @@
         },
         "Golzuna Tower": {
             "default_node": "Teleporter to Cataris",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -9359,6 +9478,7 @@
                         "right_shield_def": null,
                         "exclude_from_dock_rando": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -9584,6 +9704,7 @@
                             "Wide Beam Door"
                         ]
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -9644,6 +9765,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -9716,6 +9838,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -9755,6 +9878,7 @@
                         "start_point_actor_name": "teleporter_magma_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "Teleport to Ghavoran"
@@ -9787,6 +9911,7 @@
                         "actor_name": "item_energyfragment",
                         "actor_def": "actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 112,
                     "major_location": false,
                     "connections": {
@@ -9815,6 +9940,7 @@
                         "actor_name": "item_missiletank",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 113,
                     "major_location": false,
                     "connections": {
@@ -9913,6 +10039,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -10021,6 +10148,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 2": {
                             "type": "template",
@@ -10057,6 +10185,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 2": {
                             "type": "resource",
@@ -10089,6 +10218,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 1": {
                             "type": "resource",
@@ -10125,6 +10255,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 2": {
                             "type": "resource",
@@ -10166,6 +10297,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 1": {
                             "type": "resource",
@@ -10207,6 +10339,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 1": {
                             "type": "resource",
@@ -10246,6 +10379,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to Energy Recharge Station": {
                             "type": "and",
@@ -10269,6 +10403,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10383,6 +10518,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10417,6 +10553,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10440,7 +10577,6 @@
         },
         "Teleport to Burenia": {
             "default_node": "Teleporter to Burenia - Teleport to Ghavoran",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -10497,6 +10633,7 @@
                             "POWERBOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Teleporter to Burenia - Teleport to Ghavoran": {
                             "type": "and",
@@ -10534,6 +10671,7 @@
                         "start_point_actor_name": "teleporter_aqua_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "Teleport to Ghavoran"
@@ -10586,6 +10724,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Teleporter to Burenia - Teleport to Ghavoran": {
                             "type": "and",
@@ -10616,6 +10755,7 @@
                             "SCREWATTACK"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Teleporter to Burenia - Teleport to Ghavoran": {
                             "type": "and",
@@ -10655,6 +10795,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10696,6 +10837,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10735,6 +10877,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10767,6 +10910,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10799,6 +10943,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10823,6 +10968,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10916,6 +11062,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -10953,6 +11100,7 @@
                         "actor_name": "item_missiletank_004",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 103,
                     "major_location": false,
                     "connections": {
@@ -11039,6 +11187,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -11064,7 +11213,6 @@
         },
         "Total Recharge Station North": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 6300.0,
@@ -11124,6 +11272,7 @@
                             "Grapple Beam Door"
                         ]
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -11283,6 +11432,7 @@
                         "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
                         "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -11455,6 +11605,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -11568,6 +11719,7 @@
                         "start_point_actor_name": "weightactivatedplatform_total_000",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Teleport to Burenia (Missile)": {
                             "type": "and",
@@ -11594,6 +11746,7 @@
                         "start_point_actor_name": "SP_Checkpoint_ChozoWarriorForest",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Teleport to Burenia (Power Beam)": {
                             "type": "and",
@@ -11624,6 +11777,7 @@
                             "SCREWATTACK"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door from Chozo Warrior Arena": {
                             "type": "and",
@@ -11659,6 +11813,7 @@
                         "actor_name": "item_missiletank_007",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 107,
                     "major_location": false,
                     "connections": {
@@ -11686,6 +11841,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -11801,6 +11957,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranFereniaTransportGrappleBox",
                     "connections": {
                         "Door to Teleport to Burenia (Missile)": {
@@ -11825,6 +11982,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranStormMissileGate",
                     "connections": {
                         "Door from Chozo Warrior Arena": {
@@ -11856,6 +12014,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -11890,6 +12049,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranFereniaTransportEnkyLeft",
                     "connections": {
                         "Door to Teleport to Burenia (Missile)": {
@@ -11914,6 +12074,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranFereniaTransportEnkyRight",
                     "connections": {
                         "Dock to Transport to Ferenia": {
@@ -11938,6 +12099,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranFereniaTransportGrappleBox",
                     "connections": {
                         "Dock to Transport to Ferenia": {
@@ -11953,7 +12115,6 @@
         },
         "Golzuna Arena": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 7000.0,
@@ -12005,6 +12166,7 @@
                             "Grapple Beam Door"
                         ]
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -12053,6 +12215,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Golzuna": {
                             "type": "and",
@@ -12428,6 +12591,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -12460,6 +12624,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Golzuna",
                     "connections": {
                         "Pickup (Cross Bomb)": {
@@ -12491,6 +12656,7 @@
                         "callback_args": 2,
                         "boss_hint_name": "Golzuna"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 145,
                     "major_location": true,
                     "connections": {
@@ -12523,6 +12689,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Before Golzuna": {
                             "type": "resource",
@@ -12548,6 +12715,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Cross Bomb Tutorial": {
                             "type": "and",
@@ -12571,6 +12739,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -12603,7 +12772,6 @@
         },
         "Transport to Ferenia": {
             "default_node": "Tram to Ferenia - Transport to Ghavoran",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 10000.0,
@@ -12652,6 +12820,7 @@
                         "start_point_actor_name": "wagontrain_sanctuary_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "Transport to Ghavoran"
@@ -12681,6 +12850,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -12704,7 +12874,6 @@
         },
         "Map Station Access Secret": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -12749,6 +12918,7 @@
                         "actor_name": "item_missiletank_002",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 101,
                     "major_location": false,
                     "connections": {
@@ -12783,6 +12953,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Map Station Access": {
                             "type": "and",
@@ -12813,6 +12984,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -12909,6 +13081,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Map Station Access": {
                             "type": "and",
@@ -12932,6 +13105,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13000,6 +13174,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 1": {
                             "type": "resource",
@@ -13030,7 +13205,6 @@
         },
         "Elun Transport Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -1000.0,
@@ -13087,6 +13261,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13126,6 +13301,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13161,6 +13337,7 @@
                         "actor_name": "item_missiletank_009",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 111,
                     "major_location": false,
                     "connections": {
@@ -13186,6 +13363,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Flipper Room": {
                             "type": "and",
@@ -13224,7 +13402,6 @@
         },
         "Spin Boost Room": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -13270,6 +13447,7 @@
                         "actor_def": "actordef:actors/items/itemsphere_doublejump/charclasses/itemsphere_doublejump.bmsad",
                         "map_icon_actor": "powerup_doublejump"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 104,
                     "major_location": true,
                     "connections": {
@@ -13298,6 +13476,7 @@
                         "start_point_actor_name": "SP_Checkpoint_DoubleJump",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Spin Boost)": {
                             "type": "and",
@@ -13363,6 +13542,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13397,6 +13577,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranChozoXTrigger",
                     "connections": {
                         "Start Point": {
@@ -13412,7 +13593,6 @@
         },
         "Energy Recharge Station": {
             "default_node": "Life Recharge",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -13461,6 +13641,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13505,6 +13686,7 @@
                         "start_point_actor_name": "energyrecharge_002_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Top Room": {
                             "type": "and",
@@ -13535,6 +13717,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM)": {
                             "type": "resource",
@@ -13576,6 +13759,7 @@
                             "SCREWATTACK"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 1": {
                             "type": "resource",
@@ -13650,6 +13834,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM)": {
                             "type": "resource",
@@ -13691,6 +13876,7 @@
                             "SCREWATTACK"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Golzuna Tower": {
                             "type": "and",
@@ -13737,6 +13923,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 1": {
                             "type": "resource",
@@ -13778,6 +13965,7 @@
                             "SCREWATTACK"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Golzuna Tower": {
                             "type": "and",
@@ -13826,6 +14014,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13864,6 +14053,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13944,6 +14134,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -13976,6 +14167,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -14010,6 +14202,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 1": {
                             "type": "and",
@@ -14303,6 +14496,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Life Recharge": {
                             "type": "and",
@@ -14357,6 +14551,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoranPulseRadarEnky",
                     "connections": {
                         "Top Room": {
@@ -14372,7 +14567,6 @@
         },
         "Pulse Radar Room": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -14417,6 +14611,7 @@
                         "actor_name": "powerup_sonar",
                         "actor_def": "actordef:actors/items/powerup_sonar/charclasses/powerup_sonar.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 110,
                     "major_location": true,
                     "connections": {
@@ -14445,6 +14640,7 @@
                         "start_point_actor_name": "SP_Checkpoint_SonarObtained",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Pulse Radar)": {
                             "type": "and",
@@ -14482,6 +14678,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Start Point": {
                             "type": "resource",
@@ -14523,6 +14720,7 @@
                             "POWERBEAM"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (WEIGHT) 2": {
                             "type": "and",
@@ -14562,6 +14760,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -14592,6 +14791,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (POWERBEAM) 2": {
                             "type": "resource",
@@ -14617,6 +14817,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -14649,6 +14850,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -14674,7 +14876,6 @@
         },
         "Cross Bomb Tutorial": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 10000.0,
@@ -14719,6 +14920,7 @@
                         "actor_name": "item_missiletank_005",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 98,
                     "major_location": false,
                     "connections": {
@@ -14754,6 +14956,7 @@
                             "Grapple Beam Door"
                         ]
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -14795,6 +14998,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -14834,6 +15038,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -14887,6 +15092,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -14933,6 +15139,7 @@
                             "BOMB"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Hanubia": {
                             "type": "and",
@@ -15026,6 +15233,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door from Golzuna Arena": {
                             "type": "and",
@@ -15056,6 +15264,7 @@
                             "SCREWATTACK"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Hanubia": {
                             "type": "and",
@@ -15095,6 +15304,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Alcove 1": {
                             "type": "and",
@@ -15118,6 +15328,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -15152,6 +15363,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 1": {
                             "type": "resource",
@@ -15245,6 +15457,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Tile Group (BOMB) 2": {
                             "type": "or",
@@ -15383,7 +15596,6 @@
         },
         "Transport to Hanubia": {
             "default_node": "Tram to Hanubia - Transport to Ghavoran",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 12000.0,
@@ -15432,6 +15644,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -15478,6 +15691,7 @@
                         "start_point_actor_name": "wagontrain_shipyard_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "Transport to Ghavoran"
@@ -15507,6 +15721,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -15530,7 +15745,6 @@
         },
         "Spider Magnet Elevator": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -15579,6 +15793,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -15720,6 +15935,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -15744,6 +15960,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -15778,6 +15995,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -15867,6 +16085,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "GhavoraSupersMagnetPlatformLowered",
                     "connections": {
                         "Tunnel to Super Missile Room Access": {
@@ -15882,7 +16101,6 @@
         },
         "Above Golzuna": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 7000.0,
@@ -15934,6 +16152,7 @@
                             "Wide Beam Door"
                         ]
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16012,6 +16231,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16044,6 +16264,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16078,6 +16299,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16093,7 +16315,6 @@
         },
         "Transport to Elun": {
             "default_node": "Tram to Elun - Transport to Ghavoran",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -16142,6 +16363,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16179,6 +16401,7 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_forest_000_platform"
                     },
+                    "valid_starting_location": false,
                     "connections": {}
                 },
                 "Tram to Elun - Transport to Ghavoran": {
@@ -16201,6 +16424,7 @@
                         "start_point_actor_name": "wagontrain_quarantine_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Transport to Ghavoran"
@@ -16221,7 +16445,6 @@
         },
         "Transport to Dairon": {
             "default_node": "Elevator to Dairon - Transport to Ghavoran",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -16270,6 +16493,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16309,6 +16533,7 @@
                         "start_point_actor_name": "elevator_baselab_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Transport to Ghavoran"
@@ -16329,7 +16554,6 @@
         },
         "Above Pulse Radar": {
             "default_node": "Start Point",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -16378,6 +16602,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16413,6 +16638,7 @@
                         "actor_name": "item_missiletank_006",
                         "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 106,
                     "major_location": false,
                     "connections": {
@@ -16511,6 +16737,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16548,6 +16775,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Sonar",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door from Spin Boost Tower": {
                             "type": "and",
@@ -16582,6 +16810,7 @@
                             "WEIGHT"
                         ]
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -16605,6 +16834,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16629,6 +16859,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16654,7 +16885,6 @@
         },
         "Save Station East": {
             "default_node": "Save Station",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 7000.0,
@@ -16704,6 +16934,7 @@
                         "right_shield_def": null,
                         "exclude_from_dock_rando": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Ghavoran",
@@ -16741,6 +16972,7 @@
                         "start_point_actor_name": "weightactivatedplatform_save",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Golzuna Tower": {
                             "type": "and",

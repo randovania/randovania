@@ -6,12 +6,19 @@ import typing
 from dataclasses import dataclass
 from typing import Iterator
 
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
 ElevatorConnection = dict[NodeIdentifier, AreaIdentifier]
+StartingEquipment = list[PickupEntry] | ResourceCollection
+
+
+class IncompatibleStartingEquipment(Exception):
+    pass
+
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -31,10 +38,7 @@ if typing.TYPE_CHECKING:
 
 @dataclass(frozen=True, slots=True)
 class GamePatches:
-    """Determines patches that are made to the game's data.
-    Currently we support:
-    * Swapping pickup locations
-    """
+    """Determines patches that are made to the game's data."""
     game: GameDescription
     player_index: int
     configuration: BaseConfiguration
@@ -44,18 +48,18 @@ class GamePatches:
     dock_weakness: list[DockWeakness | None]
     weaknesses_to_shuffle: list[bool]
     configurable_nodes: dict[NodeIdentifier, Requirement]
-    starting_items: ResourceCollection
-    starting_location: AreaIdentifier
+    starting_equipment: StartingEquipment
+    starting_location: NodeIdentifier
     hints: dict[NodeIdentifier, Hint]
 
     def __post_init__(self):
-        from randovania.game_description.resources.resource_info import ResourceCollection
-        if not isinstance(self.starting_items, ResourceCollection):
-            raise TypeError("starting_items must be a ResourceCollection")
-
-        for resource, _ in self.starting_items.as_resource_gain():
-            if resource.resource_type != ResourceType.ITEM:
-                raise ValueError(f"starting_items must have only Items, not {resource}")
+        if isinstance(self.starting_equipment, (ResourceCollection, list)):
+            if isinstance(self.starting_equipment, ResourceCollection):
+                for resource, _ in self.starting_equipment.as_resource_gain():
+                    if resource.resource_type != ResourceType.ITEM:
+                        raise ValueError(f"starting_pickups_or_items must have only Items, not {resource}")
+        else:
+            raise TypeError("starting_pickups_or_items must be a ResourceCollection or list")
 
     @classmethod
     def create_from_game(cls, game: GameDescription, player_index: int, configuration: BaseConfiguration,
@@ -69,7 +73,7 @@ class GamePatches:
             dock_weakness=[None] * len(game.world_list.all_nodes),
             weaknesses_to_shuffle=[False] * len(game.world_list.all_nodes),
             configurable_nodes={},
-            starting_items=ResourceCollection.with_database(game.resource_database),
+            starting_equipment=[],
             starting_location=game.starting_location,
             hints={},
         )
@@ -93,13 +97,27 @@ class GamePatches:
 
         return dataclasses.replace(self, configurable_nodes=new_configurable)
 
-    def assign_starting_location(self, location: AreaIdentifier) -> GamePatches:
+    def assign_starting_location(self, location: NodeIdentifier) -> GamePatches:
         return dataclasses.replace(self, starting_location=location)
 
-    def assign_extra_initial_items(self, new_resources: ResourceGain) -> GamePatches:
-        current = self.starting_items.duplicate()
+    def assign_custom_starting_items(self, new_resources: ResourceGain) -> GamePatches:
+        if isinstance(self.starting_equipment, ResourceCollection):
+            current = self.starting_equipment.duplicate()
+        elif self.starting_equipment:
+            raise IncompatibleStartingEquipment("GamePatches already has starting pickups")
+        else:
+            current = ResourceCollection.with_database(self.game.resource_database)
+
         current.add_resource_gain(new_resources)
-        return dataclasses.replace(self, starting_items=current)
+        return dataclasses.replace(self, starting_equipment=current)
+
+    def assign_extra_starting_pickups(self, new_pickups: Iterator[PickupEntry]) -> GamePatches:
+        if not isinstance(self.starting_equipment, list):
+            raise IncompatibleStartingEquipment("GamePatches already has starting items")
+
+        current = list(self.starting_equipment)
+        current.extend(new_pickups)
+        return dataclasses.replace(self, starting_equipment=current)
 
     def assign_hint(self, identifier: NodeIdentifier, hint: Hint) -> GamePatches:
         current = copy.copy(self.hints)
@@ -157,13 +175,13 @@ class GamePatches:
             new_weakness[node.node_index] = weakness
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
-    
+
     def assign_weaknesses_to_shuffle(self, weaknesses: Iterator[tuple[DockNode, bool]]) -> GamePatches:
         new_to_shuffle = list(self.weaknesses_to_shuffle)
 
         for node, shuffle in weaknesses:
             new_to_shuffle[node.node_index] = shuffle
-        
+
         return dataclasses.replace(self, weaknesses_to_shuffle=new_to_shuffle)
 
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
@@ -171,10 +189,10 @@ class GamePatches:
 
     def has_default_weakness(self, node: DockNode) -> bool:
         return self.dock_weakness[node.node_index] is None
-    
+
     def should_shuffle_weakness(self, node: DockNode) -> bool:
         return self.weaknesses_to_shuffle[node.node_index]
-    
+
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
         nodes = self.game.world_list.all_nodes
         for index, weakness in enumerate(self.dock_weakness):
@@ -182,7 +200,7 @@ class GamePatches:
                 node = nodes[index]
                 assert node is not None
                 yield node, weakness
-    
+
     def all_weaknesses_to_shuffle(self) -> Iterator[DockNode]:
         nodes = self.game.world_list.all_nodes
         for index, shuffle in enumerate(self.weaknesses_to_shuffle):
@@ -190,3 +208,12 @@ class GamePatches:
                 node = nodes[index]
                 assert node is not None
                 yield node
+
+    def starting_resources(self) -> ResourceCollection:
+        if isinstance(self.starting_equipment, ResourceCollection):
+            return self.starting_equipment.duplicate()
+        else:
+            result = ResourceCollection.with_database(self.game.resource_database)
+            for it in self.starting_equipment:
+                result.add_resource_gain(it.resource_gain(result))
+            return result

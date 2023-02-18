@@ -98,6 +98,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
+        self.default_node_check.stateChanged.connect(self.on_default_node_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_swap_button.clicked.connect(self._swap_selected_connection)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
@@ -333,12 +334,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.replace_node_with(self.current_area, old_node, new_node)
 
     def on_area_spawn_check(self, state: int):
+        old_node = self.current_node
+        assert old_node is not None
+        new_node = dataclasses.replace(old_node, valid_starting_location=bool(state))
+        self.replace_node_with(self.current_area, old_node, new_node)
+
+    def on_default_node_check(self, state: int):
         state = bool(state)
         if not state:
             return
 
         object.__setattr__(self.current_area, "default_node", self.current_node.name)
-        self.area_spawn_check.setEnabled(False)
+        self.default_node_check.setEnabled(False)
 
     def replace_node_with(self, area: Area, old_node: Node, new_node: Node):
         if old_node == new_node:
@@ -403,9 +410,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         self.node_heals_check.setChecked(node.heal)
-        is_default_spawn = self.current_area.default_node == node.name
-        self.area_spawn_check.setChecked(is_default_spawn)
-        self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
+
+        is_area_spawn = self.current_node.valid_starting_location
+        self.area_spawn_check.setChecked(is_area_spawn)
+
+        is_default_node = self.current_area.default_node == node.name
+        self.default_node_check.setChecked(is_default_node)
+        self.default_node_check.setEnabled(self.edit_mode and not is_default_node)
+
         self.area_view_canvas.highlight_node(node)
 
         try:
@@ -645,7 +657,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _do_create_node(self, node_name: str, location: NodeLocation | None):
         new_node = GenericNode(self._create_identifier(node_name), self.editor.new_node_index(),
-                               False, location, "", ("default",), {})
+                               False, location, "", ("default",), {}, False)
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
@@ -676,7 +688,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         new_node_this_area = DockNode(
             identifier=new_node_this_area_identifier,
             node_index=self.editor.new_node_index(),
-            heal=False, location=location, description="", layers=("default",), extra={},
+            heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
             dock_type=dock_weakness[0],
             default_connection=new_node_other_area_identifier,
             default_dock_weakness=dock_weakness[1],
@@ -686,7 +698,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         new_node_other_area = DockNode(
             identifier=new_node_other_area_identifier,
             node_index=self.editor.new_node_index(),
-            heal=False, location=location, description="", layers=("default",), extra={},
+            heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
             dock_type=dock_weakness[0],
             default_connection=new_node_this_area_identifier,
             default_dock_weakness=dock_weakness[1],
@@ -786,7 +798,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.save_database_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode)
-        self.area_spawn_check.setEnabled(self.edit_mode and self.area_spawn_check.isEnabled())
+        self.area_spawn_check.setEnabled(self.edit_mode)
+        self.default_node_check.setEnabled(self.edit_mode and self.default_node_check.isEnabled())
         self.node_edit_button.setVisible(self.edit_mode)
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)

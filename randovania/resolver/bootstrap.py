@@ -83,7 +83,7 @@ class Bootstrap:
     def calculate_starting_state(self, game: GameDescription, patches: GamePatches,
                                  configuration: BaseConfiguration) -> "State":
         starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
-        initial_resources = patches.starting_items.duplicate()
+        initial_resources = patches.starting_resources()
 
         starting_energy, energy_per_tank = self.energy_config(configuration)
 

@@ -37,17 +37,17 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     nc = NodeIdentifier.create
 
     logbook_node = HintNode(nc("World", "Area", "Logbook A"),
-                            0, True, None, "", ("default",), {"string_asset_id": asset_id}, None,
+                            0, True, None, "", ("default",), {"string_asset_id": asset_id}, False, None,
                             Requirement.trivial())
     pickup_node = PickupNode(nc("World", "Area", "Pickup Node"),
-                             1, True, None, "", ("default",), {}, pickup_index, True)
+                             1, True, None, "", ("default",), {}, False, pickup_index, True)
 
     world_list = WorldList([
         World("World", [
-            Area("Area", None, True, [logbook_node, pickup_node], {}, {}),
-            Area("Other Area", None, True,
+            Area("Area", None, [logbook_node, pickup_node], {}, {}),
+            Area("Other Area", None,
                  [PickupNode(nc("World", "Other Area", f"Pickup {i}"),
-                             2 + i, True, None, "", ("default",), {}, PickupIndex(i), True)
+                             2 + i, True, None, "", ("default",), {}, False, PickupIndex(i), True)
                   for i in range(pickup_index.index)],
                  {}, {}),
         ], {}),

@@ -159,6 +159,7 @@ NodeBaseFields = {
     "layers": PrefixedArray(VarInt, String),
     "extra": JsonEncodedValue,
     "connections": ConstructDict(ConstructRequirement),
+    "valid_starting_location": Flag,
 }
 
 
@@ -228,7 +229,6 @@ ConstructNode = NodeAdapter(Struct(
 
 ConstructArea = Struct(
     default_node=OptionalValue(String),
-    valid_starting_location=Flag,
     extra=JsonEncodedValue,
     nodes=ConstructDict(ConstructNode),
 )
@@ -290,7 +290,7 @@ ConstructGame = Struct(
         resource_database=ConstructResourceDatabase,
         layers=PrefixedArray(VarInt, String),
 
-        starting_location=ConstructAreaIdentifier,
+        starting_location=ConstructNodeIdentifier,
         initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
         minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
         victory_condition=ConstructRequirement,

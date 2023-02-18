@@ -125,8 +125,6 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
 
 def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function(area.name)
-    if area.valid_starting_location:
-        print_function("(Valid Starting Location)")
     for extra_name, extra_field in area.extra.items():
         print_function(f"Extra - {extra_name}: {extra_field}")
 
@@ -135,8 +133,10 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
             continue
 
         message = f"> {node.name}; Heals? {node.heal}"
-        if area.default_node == node.name:
+        if node.valid_starting_location:
             message += "; Spawn Point"
+        if area.default_node == node.name:
+            message += "; Default Node"
         print_function(message)
         print_function(f"  * Layers: {', '.join(node.layers)}")
 

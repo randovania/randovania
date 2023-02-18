@@ -10,6 +10,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
@@ -178,6 +179,10 @@ def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
 
+def _name_for_start_location(world_list: WorldList, location: NodeIdentifier) -> str:
+    # small helper function as long as teleporter nodes use AreaIdentifier and starting locations use NodeIdentifier
+    area_loc = location.area_identifier
+    return _name_for_location(world_list, area_loc)
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
     return "{} | Seed Hash - {} ({})".format(
@@ -699,8 +704,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
         starting_memo = None
-        extra_starting = item_names.additional_starting_items(self.configuration, db,
-                                                              self.patches.starting_items)
+        extra_starting = item_names.additional_starting_equipment(self.configuration, db, self.patches)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
@@ -757,10 +761,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
 
-        starting_room = _name_for_location(db.world_list, self.patches.starting_location)
+        starting_room = _name_for_start_location(db.world_list, self.patches.starting_location)
 
+        starting_resources = self.patches.starting_resources()
         starting_items = {
-            name: _starting_items_value_for(db.resource_database, self.patches.starting_items, index)
+            name: _starting_items_value_for(db.resource_database, starting_resources, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
@@ -854,7 +859,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "nonvariaHeatDamage": self.configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
                 "heatDamagePerSec": self.configuration.heat_damage,
-                "autoEnabledElevators": not self.patches.starting_items.has_resource(scan_visor),
+                "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
 
                 "disableItemLoss": True,  # Item Loss in Frigate
@@ -891,7 +896,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     for artifact, text in resulting_hints.items()
                 },
                 "artifactTempleLayerOverrides": {
-                    artifact.long_name: not self.patches.starting_items.has_resource(artifact)
+                    artifact.long_name: not starting_resources.has_resource(artifact)
                     for artifact in artifacts
                 },
             },
