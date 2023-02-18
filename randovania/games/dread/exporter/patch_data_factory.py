@@ -279,6 +279,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     "bShowEnemyDamage": c.show_enemy_damage,
                     "bShowPlayerDamage": c.show_player_damage
                 }
+            },
+            "lua": {
+                "custom_init": {
+                    "enable_death_counter": True
+                }
             }
         }
 
@@ -401,7 +406,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
             },
-            "show_shields_on_minimap": self.configuration.dock_rando.mode == DockRandoMode.VANILLA,
             "door_patches": self._door_patches(),
             "tile_group_patches": self._tilegroup_patches(),
             "objective": self._objective_patches(),
