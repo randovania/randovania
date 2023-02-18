@@ -172,7 +172,7 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
     app.game_session_window.show()
 
 
-async def display_window_for(app, options: Options, command: str, args):
+async def display_window_for(app: QtWidgets.QApplication, options: Options, command: str, args):
     if command == "tracker":
         await show_tracker(app)
     elif command == "main":
@@ -317,6 +317,15 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
                          display_window_for(app, options, args.command, args))
 
 
+def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
+    logger.info("New application state: %s", new_state)
+    import sentry_sdk
+    if new_state == QtCore.Qt.ApplicationState.ApplicationActive:
+        sentry_sdk.Hub.current.start_session(session_mode="application")
+    elif new_state == QtCore.Qt.ApplicationState.ApplicationInactive:
+        sentry_sdk.Hub.current.end_session()
+
+
 def run(args):
     import randovania.monitoring
     randovania.monitoring.client_init()
@@ -332,6 +341,7 @@ def run(args):
     is_preview = args.preview
     start_logger(data_dir, is_preview)
     app = QtWidgets.QApplication(sys.argv)
+    app.applicationStateChanged.connect(_on_application_state_changed)
 
     def main_done(done: asyncio.Task):
         e: Exception | None = done.exception()

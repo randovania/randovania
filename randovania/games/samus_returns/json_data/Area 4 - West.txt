@@ -1,6 +1,5 @@
 ----------------
 West Hub
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 3100.0, 'x2': 8200.0, 'y1': -4300.0, 'y2': 3800.0}
 Extra - polygon: [[8200.0, -3000.0], [8200.0, 1800.0], [7500.0, 1800.0], [7500.0, 3800.0], [5200.0, 3800.0], [5200.0, 1200.0], [4150.0, 1200.0], [4150.0, -700.0], [3100.0, -700.0], [3100.0, -3200.0], [4500.0, -3200.0], [4500.0, -4300.0], [6600.0, -4300.0], [6600.0, -3000.0]]
 Extra - asset_id: collision_camera_001
@@ -27,7 +26,7 @@ Extra - asset_id: collision_camera_001
   > Tunnel to Fleech Swarm Cave
       Destroy Bomb Block
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation
   * Extra - actor_type: weightactivatedplatform
@@ -128,10 +127,8 @@ Extra - asset_id: collision_camera_003
   * Pickup 84; Major Location? True
   * Extra - actor_name: LE_PowerUp_SpazerBeam
   * Extra - actor_type: itemsphere_spazerbeam
-  > Door to Moheek Hallway
-      Any of the following:
-          Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
-          Morph Ball and Unmorph Extend (Intermediate)
+  > Door from Moheek Hallway
+      Trivial
 
 > Door from Moheek Hallway; Heals? False
   * Layers: default
@@ -140,12 +137,26 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_type: doorclosedpower
   > Pickup (Spazer Beam)
       Trivial
+  > Door to Moheek Hallway
+      Any of the following:
+          Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+  > Start Point
+      Trivial
 
 > Door to Moheek Hallway; Heals? False
   * Layers: default
   * Spazer Beam Door to Moheek Hallway/Door from Spazer Beam Room
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
+  > Door from Moheek Hallway
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoint_003
+  > Door from Moheek Hallway
+      Trivial
 
 ----------------
 One-Way Bridge
@@ -201,6 +212,8 @@ Extra - asset_id: collision_camera_005
               Grapple Beam or Space Jump
               Gravity Suit and Simple IBJ
               Movement (Intermediate) and Can Spiderspark
+  > Start Point
+      Trivial
 
 > Door to Gamma Access Path Lower; Heals? False
   * Layers: default
@@ -210,9 +223,14 @@ Extra - asset_id: collision_camera_005
   > Door to West Hub
       Morph Ball and Varia Suit
 
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_001C_Checkpoint
+  > Door to West Hub
+      Varia Suit
+
 ----------------
 Chozo Seals
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 8100.0, 'x2': 18600.0, 'y1': -7700.0, 'y2': -200.0}
 Extra - polygon: [[8100.0, -200.0], [8100.0, -4700.0], [8850.0, -4700.0], [8850.0, -6600.0], [11500.0, -6600.0], [11500.0, -7200.0], [13100.0, -7200.0], [13400.0, -7000.0], [14050.0, -7000.0], [14050.0, -7700.0], [17300.0, -7700.0], [17300.0, -6700.0], [18600.0, -6500.0], [18600.0, -3900.0], [16900.0, -3900.0], [16400.0, -3700.0], [16400.0, -200.0]]
 Extra - asset_id: collision_camera_006
@@ -224,7 +242,7 @@ Extra - asset_id: collision_camera_006
   > Next to Pickup
       Trivial
 
-> Elevator to Area 3 Exterior - Transport to Area 4 West; Heals? False; Spawn Point
+> Elevator to Area 3 Exterior - Transport to Area 4 West; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 3 - Exterior - Transport to Area 4 West
   * Extra - actor_name: LE_Platform_Elevator_FromArea03
@@ -250,6 +268,7 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Extra - actor_name: LE_Platform_UnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Chozo Seal Right
       Space Jump or Can Spiderspark or Use Spider Ball
   > Door to West Hub (Bottom)
@@ -281,6 +300,7 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Extra - actor_name: LE_Platform_UnlockAreaDNA001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_002
   > Elevator to Area 4 East - Transport to Area 4 West
       Morph Ball and After Area 4 (West) - Chozo Seals Grapple Block Pull Right
   > Chozo Seal Left
@@ -410,10 +430,10 @@ Extra - asset_id: collision_camera_007
   * Pickup 79; Major Location? False
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_missiletank
-  > Event - Alpha Metroid+
-      Defeat Alpha Metroid+
   > Tunnel to Alpha+ Arena Access
       Climb Rooms Vertically (No High Jump)
+  > Start Point
+      Trivial
 
 > Door to Alpha+ Arena Access; Heals? False
   * Layers: default
@@ -424,7 +444,7 @@ Extra - asset_id: collision_camera_007
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 4 (West) - Alpha Metroid+
-  > Door to Alpha+ Arena Access
+  > Start Point
       Trivial
 
 > Tunnel to Alpha+ Arena Access; Heals? False
@@ -433,13 +453,20 @@ Extra - asset_id: collision_camera_007
   > Pickup (Missile Tank)
       Morph Ball
 
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
+  > Door to Alpha+ Arena Access
+      After Area 4 (West) - Alpha Metroid+
+  > Event - Alpha Metroid+
+      Defeat Alpha Metroid+
+
 ----------------
 Roundabout
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 6500.0, 'x2': 9050.0, 'y1': -6400.0, 'y2': -3000.0}
 Extra - polygon: [[6500.0, -3000.0], [6500.0, -6400.0], [9050.0, -6400.0], [9050.0, -4500.0], [8100.0, -4500.0], [8100.0, -3000.0]]
 Extra - asset_id: collision_camera_010
-> Door to West Hub; Heals? False; Spawn Point
+> Door to West Hub; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Charge Beam Door to West Hub/Door to Roundabout
   * Extra - actor_name: Door007
@@ -540,6 +567,14 @@ Extra - asset_id: collision_camera_012
 > Tunnel to Gamma Access Path Lower; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Gamma Access Path Lower/Tunnel to Gamma Arena Room 2
+  > Start Point
+      Destroy Bomb Block
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_001B_Checkpoint
+  > Tunnel to Gamma Access Path Lower
+      Destroy Bomb Block
 
 ----------------
 Gamma Arena Room 1
@@ -578,8 +613,9 @@ Extra - asset_id: collision_camera_013
   > Inside Arena
       Trivial
 
-> Inside Arena; Heals? False
+> Inside Arena; Heals? False; Default Node
   * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_001A_Checkpoint
   > Door to Gamma Access Path Upper
       After Area 4 (West) - Gamma Metroid
   > Dock to Gamma Access Path Lower
@@ -721,12 +757,20 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: doorpowerpower
   > Dock to Gamma Access Shaft
       Lighting Armor or Grapple Beam or Space Jump or Can Spiderspark
+  > Start Point
+      Trivial
 
 > Dock to Gamma Access Shaft; Heals? False
   * Layers: default
   * Open Passage to Gamma Access Shaft/Dock to Gamma Access Path Upper
   > Door to Gamma Arena Room 1
       Lighting Armor or Grapple Beam or Space Jump or Can Spiderspark
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_001
+  > Door to Gamma Arena Room 1
+      Trivial
 
 ----------------
 Alpha+ Arena Access
@@ -738,8 +782,12 @@ Extra - asset_id: collision_camera_019
   * Power Beam Door to Roundabout/Door to Alpha+ Arena Access (Top)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerclosed
+  > Door from Roundabout
+      Morph Ball
   > Tunnel to Alpha+ Arena
       Morph Ball
+  > Start Point
+      Trivial
 
 > Door from Roundabout; Heals? False
   * Layers: default
@@ -762,6 +810,12 @@ Extra - asset_id: collision_camera_019
   * Tunnel to Alpha+ Arena/Tunnel to Alpha+ Arena Access
   > Door to Roundabout
       Morph Ball
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_001
+  > Door to Roundabout
+      Trivial
 
 ----------------
 The Big Gap
@@ -798,11 +852,10 @@ Extra - asset_id: collision_camera_022
 
 ----------------
 Transport to Area 5 Entrance
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 10100.0, 'x2': 14150.0, 'y1': -8800.0, 'y2': -6600.0}
 Extra - polygon: [[11600.0, -6600.0], [10100.0, -6600.0], [10100.0, -8800.0], [14150.0, -8800.0], [14150.0, -7200.0], [11600.0, -7200.0]]
 Extra - asset_id: collision_camera_023
-> Elevator to Area 5 Entrance - Chozo Seal; Heals? False; Spawn Point
+> Elevator to Area 5 Entrance - Chozo Seal; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 5 - Entrance - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea06

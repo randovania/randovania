@@ -11,7 +11,6 @@
     "areas": {
         "West Hub": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 3100.0,
@@ -96,6 +95,7 @@
                         "actor_name": "LE_Item_007",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 82,
                     "major_location": false,
                     "connections": {
@@ -133,6 +133,7 @@
                         "actor_name": "LE_Platform_AmmoRecharge_001",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -216,6 +217,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "and",
@@ -283,6 +285,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_04_01"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -328,6 +331,7 @@
                         "actor_name": "Door001",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -363,6 +367,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -417,6 +422,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -444,6 +450,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -479,6 +486,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -550,6 +558,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -584,6 +593,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -618,6 +628,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -650,6 +661,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 West Teleporter",
                     "connections": {
                         "Door to Roundabout": {
@@ -664,8 +676,7 @@
             }
         },
         "Spazer Beam Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -6400.0,
@@ -710,14 +721,67 @@
                         "actor_name": "LE_PowerUp_SpazerBeam",
                         "actor_type": "itemsphere_spazerbeam"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 84,
                     "major_location": true,
                     "connections": {
+                        "Door from Moheek Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door from Moheek Hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3991.059602649007,
+                        "y": -3924.254966887417,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door002",
+                        "actor_type": "doorclosedpower"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 4 - West",
+                        "area_name": "Moheek Hallway",
+                        "node_name": "Door to Spazer Beam Room"
+                    },
+                    "default_dock_weakness": "Access Closed",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Spazer Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Moheek Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "template",
                                         "data": "Climb Rooms Vertically (High Jump)"
@@ -747,48 +811,11 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SuperJump",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Door from Moheek Hallway": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3991.059602649007,
-                        "y": -3924.254966887417,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door002",
-                        "actor_type": "doorclosedpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 4 - West",
-                        "area_name": "Moheek Hallway",
-                        "node_name": "Door to Spazer Beam Room"
-                    },
-                    "default_dock_weakness": "Access Closed",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Spazer Beam)": {
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -813,6 +840,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -822,13 +850,46 @@
                     "default_dock_weakness": "Spazer Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door from Moheek Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5793.476044852192,
+                        "y": -3619.457186544342,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Checkpoint_003"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door from Moheek Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "One-Way Bridge": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 7400.0,
@@ -873,6 +934,7 @@
                         "actor_name": "LE_Item_006",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 81,
                     "major_location": false,
                     "connections": {
@@ -920,6 +982,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -992,6 +1055,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -1016,6 +1080,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
                             "type": "and",
@@ -1121,8 +1186,7 @@
             }
         },
         "Gamma Arena Room 3": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -850.0,
@@ -1167,6 +1231,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -1270,6 +1335,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1289,6 +1361,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -1326,12 +1399,39 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2421.3302752293575,
+                        "y": 193.31039755351685,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001C_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to West Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
         "Chozo Seals": {
             "default_node": "Elevator to Area 3 Exterior - Transport to Area 4 West",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 8100.0,
@@ -1428,6 +1528,7 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_energytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 78,
                     "major_location": true,
                     "connections": {
@@ -1457,6 +1558,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 3 - Exterior",
                         "area_name": "Transport to Area 4 West"
@@ -1490,6 +1592,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea05"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Area 4 - East",
                         "area_name": "Transport to Area 4 West"
@@ -1563,8 +1666,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 10692.48788368336,
-                        "y": -4030.102315562736,
+                        "x": 10692.49,
+                        "y": -4030.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -1573,8 +1676,10 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_UnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Chozo Seal Right": {
                             "type": "or",
@@ -1857,8 +1962,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 14801.265481960152,
-                        "y": -6225.848142164782,
+                        "x": 14801.27,
+                        "y": -6225.85,
                         "z": 0.0
                     },
                     "description": "",
@@ -1867,8 +1972,10 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_UnlockAreaDNA001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_002"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 4 East - Transport to Area 4 West": {
                             "type": "and",
@@ -2002,6 +2109,7 @@
                         "actor_name": "Door001",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2037,6 +2145,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2076,6 +2185,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2112,6 +2222,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2144,6 +2255,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2194,6 +2306,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2240,6 +2353,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "DNA4R",
                     "connections": {
                         "Chozo Seal Right": {
@@ -2264,6 +2378,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "DNA4L",
                     "connections": {
                         "Chozo Seal Left": {
@@ -2288,6 +2403,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Transport Area Grapple Block Pull Left",
                     "connections": {
                         "Chozo Seal Left": {
@@ -2312,6 +2428,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Transport Area Grapple Block Pull Right",
                     "connections": {
                         "Next to Pickup": {
@@ -2343,6 +2460,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Transport Area Grapple Block Right",
                     "connections": {
                         "Right of Left Elevator": {
@@ -2367,6 +2485,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Energy Tank)": {
                             "type": "resource",
@@ -2444,6 +2563,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 3 Exterior - Transport to Area 4 West": {
                             "type": "and",
@@ -2553,6 +2673,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Transport Area Grapple Block Left",
                     "connections": {
                         "Chozo Seal Left": {
@@ -2567,8 +2688,7 @@
             }
         },
         "Alpha+ Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 100.0,
@@ -2613,16 +2733,20 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 79,
                     "major_location": false,
                     "connections": {
-                        "Event - Alpha Metroid+": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid+"
-                        },
                         "Tunnel to Alpha+ Arena Access": {
                             "type": "template",
                             "data": "Climb Rooms Vertically (No High Jump)"
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2642,6 +2766,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2666,9 +2791,10 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 17",
                     "connections": {
-                        "Door to Alpha+ Arena Access": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2690,6 +2816,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2710,12 +2837,43 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2700.0,
+                        "y": -6400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_001_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha+ Arena Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 17",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid+"
+                        }
+                    }
                 }
             }
         },
         "Roundabout": {
             "default_node": "Door to West Hub",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 6500.0,
@@ -2768,6 +2926,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2803,6 +2962,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2859,6 +3019,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2891,6 +3052,7 @@
                         "actor_name": "HiddenPowerup004",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 88,
                     "major_location": false,
                     "connections": {
@@ -2916,6 +3078,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -2967,6 +3130,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Roundabout Grapple Block",
                     "connections": {
                         "Next to Grapple Blocks": {
@@ -2991,6 +3155,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Chozo Seals": {
                             "type": "and",
@@ -3077,6 +3242,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha+ Arena Access (Top)": {
                             "type": "or",
@@ -3202,7 +3368,6 @@
         },
         "Fleech Swarm Cave": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 3100.0,
@@ -3247,6 +3412,7 @@
                         "actor_name": "LE_Item_005",
                         "actor_type": "item_senergytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 80,
                     "major_location": false,
                     "connections": {
@@ -3303,6 +3469,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -3361,8 +3528,7 @@
             }
         },
         "Gamma Arena Room 2": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -6800.0,
@@ -3404,6 +3570,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -3413,13 +3580,40 @@
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5403.87,
+                        "y": 1530.12,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001B_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Tunnel to Gamma Access Path Lower": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
                 }
             }
         },
         "Gamma Arena Room 1": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Inside Arena",
             "extra": {
                 "total_boundings": {
                     "x1": -850.0,
@@ -3464,6 +3658,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -3499,6 +3694,7 @@
                         "actor_name": "HP_ChozoHologram_002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 85,
                     "major_location": false,
                     "connections": {
@@ -3521,6 +3717,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -3592,6 +3789,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Gamma 9",
                     "connections": {
                         "Inside Arena": {
@@ -3607,15 +3805,18 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -23.97272405242643,
-                        "y": 3279.228362262369,
+                        "x": 1583.6773700305807,
+                        "y": 3572.2158511722732,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001A_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Gamma Access Path Upper": {
                             "type": "resource",
@@ -3640,7 +3841,6 @@
         },
         "Gamma Access Path Lower": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -7200.0,
@@ -3693,6 +3893,7 @@
                         "actor_name": "LE_Item_008",
                         "actor_type": "item_senergytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 83,
                     "major_location": false,
                     "connections": {
@@ -3721,6 +3922,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -3880,6 +4082,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -3914,6 +4117,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -3978,6 +4182,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4042,6 +4247,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Gamma Access Path Lower Grapple Block",
                     "connections": {
                         "Dock to Gamma Arena Room 1": {
@@ -4057,7 +4263,6 @@
         },
         "Gamma Access Shaft": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -9000.0,
@@ -4107,6 +4312,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4139,6 +4345,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4162,7 +4369,6 @@
         },
         "Moheek Hallway": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -4050.0,
@@ -4207,6 +4413,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4234,6 +4441,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4269,6 +4477,7 @@
                         "actor_name": "HiddenPowerup001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 86,
                     "major_location": false,
                     "connections": {
@@ -4294,6 +4503,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4326,6 +4536,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Spazer Beam Room": {
                             "type": "and",
@@ -4452,8 +4663,7 @@
             }
         },
         "Gamma Access Path Upper": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -7100.0,
@@ -4498,6 +4708,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4546,6 +4757,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4562,6 +4780,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4612,12 +4831,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1078.3893985728846,
+                        "y": 3815.0356778797145,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_001"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma Arena Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alpha+ Arena Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 4900.0,
@@ -4662,6 +4906,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4672,6 +4917,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door from Roundabout": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Tunnel to Alpha+ Arena": {
                             "type": "resource",
                             "data": {
@@ -4679,6 +4933,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4699,6 +4960,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4736,6 +4998,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4770,6 +5033,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4790,12 +5054,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5400.0,
+                        "y": -5200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_001"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Roundabout": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "The Big Gap": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 14050.0,
@@ -4848,6 +5137,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4894,6 +5184,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -4928,6 +5219,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Area 5 Entrance": {
                             "type": "or",
@@ -5093,7 +5385,6 @@
         },
         "Transport to Area 5 Entrance": {
             "default_node": "Elevator to Area 5 Entrance - Chozo Seal",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 10100.0,
@@ -5147,6 +5438,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea06"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 5 - Entrance",
                         "area_name": "Chozo Seal"
@@ -5188,6 +5480,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -5242,6 +5535,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -5277,6 +5571,7 @@
                         "actor_name": "HiddenPowerup003",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 87,
                     "major_location": false,
                     "connections": {
@@ -5302,6 +5597,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 4 - West",
@@ -5336,6 +5632,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 4 (West) -Transport to Area 5 Entrance Grapple Block",
                     "connections": {
                         "Next to Grapple Block": {
@@ -5360,6 +5657,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 5 Entrance - Chozo Seal": {
                             "type": "or",

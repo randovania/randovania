@@ -1,6 +1,5 @@
 ----------------
 Transport to Area 7
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -17950.0, 'x2': -8400.0, 'y1': -10600.0, 'y2': -3600.0}
 Extra - polygon: [[-16400.0, -3600.0], [-16400.0, -6600.0], [-17950.0, -6700.0], [-17950.0, -7800.0], [-15700.0, -8400.0], [-15700.0, -10600.0], [-8400.0, -10600.0], [-8400.0, -6200.0], [-12100.0, -6200.0], [-14200.0, -5700.0], [-14200.0, -4600.0], [-12300.0, -4600.0], [-12300.0, -3600.0]]
 Extra - asset_id: collision_camera_034
@@ -21,7 +20,7 @@ Extra - asset_id: collision_camera_034
   > Before Diggernaut Area
       Morph Ball and After Area 6 - Transport to Area 7 Grapple Blocks Top
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation004
   * Extra - actor_type: weightactivatedplatform
@@ -56,6 +55,8 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_type: doorclosedcharge
   > Before Diggernaut Area
       Destroy Bomb Block
+  > Start Point
+      Trivial
 
 > Event - Grapple Blocks Top; Heals? False
   * Layers: default
@@ -121,12 +122,18 @@ Extra - asset_id: collision_camera_034
                       Space Jump
                       Bomb and Infinite Bomb Jump (Intermediate)
 
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_ManicMiner
+  > Door to Diggernaut Arena
+      Trivial
+
 ----------------
 Teleporter Room South
 Extra - total_boundings: {'x1': -6100.0, 'x2': -3500.0, 'y1': -8400.0, 'y2': -7641.5400390625}
 Extra - polygon: [[-6100.0, -7641.5400390625], [-6100.0, -8400.0], [-3500.0, -8400.0], [-3500.0, -7641.5400390625]]
 Extra - asset_id: collision_camera_035
-> Teleporter; Heals? False; Spawn Point
+> Teleporter; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by After Area 6 - Teleporter Unlocked (Lower))
   * Extra - actor_name: LE_Platform_Teleporter_07_01
@@ -194,8 +201,9 @@ Extra - asset_id: collision_camera_037
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Default Node
   * Layers: default
+  * Extra - start_point_actor_name: ST_Omega_001_Checkpoint
   > Door to Zeta Arena Access
       After Area 6 - Omega Metroid
   > Door to Red Plant Tunnel
@@ -443,6 +451,14 @@ Extra - asset_id: collision_camera_041
   * Extra - actor_type: doorpowerpower
   > Door to Teleporter Room North
       Screw Attack or Destroy Bomb Block
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_ManicMinerAbsorption
+  > Door to Stolen Power Bomb Room
+      Trivial
 
 ----------------
 Crumble Steps
@@ -515,6 +531,8 @@ Extra - asset_id: collision_camera_043
   * Power Bomb Door to Diggernaut Shaft/Door to Diggernaut Arena
   * Extra - actor_name: Door024
   * Extra - actor_type: doorpowerpower
+  > Door from Transport to Area 7
+      Trivial
 
 > Door from Transport to Area 7; Heals? False
   * Layers: default
@@ -523,13 +541,21 @@ Extra - asset_id: collision_camera_043
   * Extra - actor_type: doorclosedcharge
   > Door to Diggernaut Shaft
       After Area 6 - Diggernaut and Lay Power Bomb
-  > Event - Diggernaut
-      Bomb and Beam Burst and Phase Drift and Plasma Beam and Space Jump and Spring Ball and Use Spider Ball
+  > Before Diggernaut
+      Bomb and Phase Drift and Plasma Beam and Space Jump and Spring Ball and Before Area 6 - Diggernaut and Shoot Beam Burst and Use Spider Ball
 
 > Event - Diggernaut; Heals? False
   * Layers: default
   * Event Area 6 - Diggernaut
   > Pickup (Power Bomb)
+      Trivial
+
+> Before Diggernaut; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoin_009
+  > Door from Transport to Area 7
+      Trivial
+  > Event - Diggernaut
       Trivial
 
 ----------------
@@ -682,6 +708,8 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_type: doorpowerpower
   > Door to Zeta Arena
       Destroy Bomb Block
+  > Start Point (Left)
+      Trivial
 
 > Door to Zeta Arena; Heals? False
   * Layers: default
@@ -690,12 +718,26 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_type: doorpowerpower
   > Door to Omega Arena
       Destroy Bomb Block
+  > Start Point (Right)
+      Trivial
 
 > Tunnel to Zeta Arena; Heals? False
   * Layers: default
   * Tunnel to Zeta Arena/Tunnel to Zeta Arena Access
   > Door to Zeta Arena
       Morph Ball
+
+> Start Point (Left); Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Omega_001
+  > Door to Omega Arena
+      Trivial
+
+> Start Point (Right); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Zeta_001
+  > Door to Zeta Arena
+      Trivial
 
 ----------------
 Zeta Arena
@@ -730,8 +772,9 @@ Extra - asset_id: collision_camera_048
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Default Node
   * Layers: default
+  * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
   > Door to Zeta Arena Access
       After Area 6 - Zeta Metroid
   > Door to Crumble Bridge
@@ -745,11 +788,10 @@ Extra - asset_id: collision_camera_048
 
 ----------------
 Transport to Area 5 Entrance
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -1200.0, 'x2': 19450.0, 'y1': -4400.0, 'y2': 900.0}
 Extra - polygon: [[-1200.0, 900.0], [-1200.0, -1900.0], [2700.0, -1900.0], [3900.0, -2900.0], [8900.0, -2900.0], [11100.0, -2300.0], [13800.0, -2300.0], [14700.0, -2500.0], [14700.0, -4400.0], [19450.0, -4400.0], [19450.0, -2800.0], [17600.0, -2800.0], [17600.0, -200.0], [8300.0, -200.0], [7900.0, -500.0], [1400.0, -500.0], [1200.0, -400.0], [1100.0, -200.0], [1100.0, 900.0]]
 Extra - asset_id: collision_camera_051
-> Elevator to Area 5 Entrance - Chozo Seal; Heals? False; Spawn Point
+> Elevator to Area 5 Entrance - Chozo Seal; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 5 - Entrance - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea06
@@ -821,10 +863,11 @@ Extra - asset_id: collision_camera_060
   > Next to Pickup Puzzle
       Trivial
 
-> Chozo Seal; Heals? False
+> Chozo Seal; Heals? False; Default Node
   * Layers: default
   * Extra - actor_name: LE_PlatformADN_002
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_002
   > Tunnel to Chozo Seal West
       After Area 6 - Chozo Seal East Grapple Block and Climb Rooms Vertically (No High Jump)
   > Event - Chozo Seal Unlocked
@@ -916,7 +959,6 @@ Extra - asset_id: collision_camera_061
 
 ----------------
 Chozo Seal West
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -7700.0, 'x2': 2200.0, 'y1': -10900.0, 'y2': 4200.0}
 Extra - polygon: [[-4800.0, 3200.0], [-4800.0, -100.0], [-7700.0, -1300.0], [-7700.0, -6900.0], [-3600.0, -7000.0], [-3600.0, -8100.0], [-4150.0, -8300.0], [-6100.0, -8300.0], [-6100.0, -10900.0], [2200.0, -10900.0], [2200.0, -4300.0], [-1100.0, -4100.0], [-1100.0, 1400.0], [-400.0, 1400.0], [500.0, 1000.0], [500.0, -500.0], [2000.0, -500.0], [2000.0, 4200.0], [-1200.0, 4200.0], [-1200.0, 3400.0]]
 Extra - asset_id: collision_camera_Hazard_End_A
@@ -948,6 +990,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Layers: default
   * Extra - actor_name: LE_PlatformADN_001
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_001
   > Door to Teleporter Room North
       Trivial
   > Door to Transport to Area 5 Entrance (Top)
@@ -979,7 +1022,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Door to Transport to Area 5 Entrance (Bottom)
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation006
   * Extra - actor_type: weightactivatedplatform
@@ -1077,11 +1120,10 @@ Extra - asset_id: collision_camera_Hazard_End_A
 
 ----------------
 Teleporter Room North
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -9200.0, 'x2': -1100.0, 'y1': 1800.0, 'y2': 6500.0}
 Extra - polygon: [[-9200.0, 6500.0], [-9200.0, 4300.0], [-8500.0, 4200.0], [-8500.0, 1800.0], [-2100.0, 1800.0], [-2100.0, 3000.0], [-1300.0, 3200.0], [-1100.0, 3200.0], [-1100.0, 4200.0], [-4300.0, 4200.0], [-4700.0, 4400.0], [-5100.0, 4400.0], [-5700.0, 4500.0], [-5900.0, 5200.0], [-5900.0, 6500.0]]
 Extra - asset_id: collision_camera_Hazard_End_B
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation005
   * Extra - actor_type: weightactivatedplatform

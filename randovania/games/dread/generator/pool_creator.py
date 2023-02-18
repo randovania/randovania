@@ -24,15 +24,11 @@ def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng:
     config = configuration.artifacts
 
     new_assignment: dict[PickupIndex, PickupEntry] = {}
-    initial_resources = ResourceCollection.with_database(game.resource_database)
 
     keys: list[PickupEntry] = [create_dread_artifact(i, game.resource_database) for i in range(12)]
 
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]
-
-    for key in starting_keys:
-        initial_resources.add_resource_gain(key.progression)
 
     locations: list[NodeIdentifier] = []
     if config.prefer_emmi:
@@ -50,7 +46,7 @@ def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng:
         }
         item_pool = [key for key in keys_to_shuffle if key not in new_assignment.values()]
 
-    return PoolResults(item_pool, new_assignment, initial_resources)
+    return PoolResults(item_pool, new_assignment, starting_keys)
 
 
 _c = NodeIdentifier.create

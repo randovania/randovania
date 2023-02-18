@@ -20,7 +20,7 @@ def _pickup_node():
         layers=("default",),
         description="",
         extra={},
-
+        valid_starting_location=False,
         pickup_index=PickupIndex(1),
         major_location=True,
     )

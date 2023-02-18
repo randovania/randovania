@@ -35,7 +35,6 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             save_doors = [
                 nic("Chozo Ruins", "Save Station 1", "Door to Ruined Nursery"),
                 nic("Chozo Ruins", "Save Station 2", "Door to Gathering Hall"),
-                nic("Chozo Ruins", "Save Station 3", "Door to Reflecting Pool"),
                 nic("Magmoor Caverns", "Save Station Magmoor A", "Door to Burning Trail"),
                 nic("Magmoor Caverns", "Save Station Magmoor B", "Door to Transport to Phendrana Drifts South"),
                 nic("Phazon Mines", "Save Station Mines A", "Door to Main Quarry"),

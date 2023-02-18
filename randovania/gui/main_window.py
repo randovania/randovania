@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import base64
 import functools
 import json
@@ -327,7 +328,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
             return layout
 
-        new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+        try:
+            new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+        except asyncio.exceptions.CancelledError:
+            return
 
         if permalink.seed_hash is not None and permalink.seed_hash != new_layout.shareable_hash_bytes:
             response = await async_dialog.warning(
@@ -336,9 +340,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                     base64.b32encode(permalink.seed_hash).decode(),
                     new_layout.shareable_hash,
                 ),
-                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             )
-            if response != QtWidgets.QMessageBox.Yes:
+            if response != QtWidgets.QMessageBox.StandardButton.Yes:
                 return
 
         self.open_game_details(new_layout)
@@ -348,7 +352,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         from randovania.gui.dialog.permalink_dialog import PermalinkDialog
         dialog = PermalinkDialog()
         result = await async_dialog.execute_dialog(dialog)
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             permalink = dialog.get_permalink_from_field()
             await self.generate_seed_from_permalink(permalink)
 
@@ -365,7 +369,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if not await dialog.refresh():
             return
         result = await async_dialog.execute_dialog(dialog)
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             await self.generate_seed_from_permalink(dialog.permalink)
 
     def open_game_details(self, layout: LayoutDescription):
@@ -402,9 +406,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
             message_box = ScrollMessageBox.create_new(
-                self, QtWidgets.QMessageBox.Information,
+                self, QtWidgets.QMessageBox.Icon.Information,
                 "What's new", "\n".join(new_change_logs),
-                QtWidgets.QMessageBox.Ok,
+                QtWidgets.QMessageBox.StandardButton.Ok,
             )
             message_box.label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
             message_box.scroll_area.setMinimumSize(500, 300)
@@ -557,11 +561,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             box = QtWidgets.QMessageBox(self)
             box.setWindowTitle("Disable validation?")
             box.setText(_DISABLE_VALIDATION_WARNING)
-            box.setIcon(QtWidgets.QMessageBox.Warning)
-            box.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
-            box.setDefaultButton(QtWidgets.QMessageBox.No)
+            box.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
+            box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.No)
             user_response = await async_dialog.execute_dialog(box)
-            if user_response != QtWidgets.QMessageBox.Yes:
+            if user_response != QtWidgets.QMessageBox.StandardButton.Yes:
                 self.menu_action_validate_seed_after.setChecked(True)
                 return
 
@@ -588,9 +592,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             open_directory_in_explorer(path)
 
         except OSError:
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Game History",
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Game History",
                                         f"Previously generated games can be found at:\n{path}",
-                                        QtWidgets.QMessageBox.Ok, self)
+                                        QtWidgets.QMessageBox.StandardButton.Ok, self)
             box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             box.show()
 
@@ -600,9 +604,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             open_directory_in_explorer(path)
 
         except OSError:
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Logs",
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Logs",
                                         f"Randovania logs can be found at:\n{path}",
-                                        QtWidgets.QMessageBox.Ok, self)
+                                        QtWidgets.QMessageBox.StandardButton.Ok, self)
             box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             box.show()
 
@@ -656,7 +660,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.dependencies_window is None:
             self.dependencies_window = self._create_generic_window(DependenciesWidget(), "Dependencies")
         self.dependencies_window.show()
-
 
     def _on_click_help_link(self, link: str):
         tab_name = re.match(r"^help://(.+)$", link).group(1)

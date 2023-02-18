@@ -73,16 +73,14 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
         (index, PickupTarget(pickup, player_index))
         for index, pickup in pool_results.assignment.items()
     ]
-    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_initial_items(
-        pool_results.initial_resources.as_resource_gain()
-    )
+    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_starting_pickups(pool_results.starting)
 
     return PlayerPool(
         game=game,
         game_generator=game_generator,
         configuration=configuration,
         patches=patches,
-        pickups=pool_results.pickups,
+        pickups=pool_results.to_place,
     )
 
 

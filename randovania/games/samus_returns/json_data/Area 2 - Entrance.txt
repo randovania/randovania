@@ -1,6 +1,5 @@
 ----------------
 Chozo Seal
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 19000.0, 'x2': 25000.0, 'y1': -9600.0, 'y2': -900.0}
 Extra - polygon: [[20400.0, -900.0], [20400.0, -1900.0], [19000.0, -2000.0], [19000.0, -4600.0], [20100.0, -4600.0], [20300.0, -5200.0], [20300.0, -9600.0], [25000.0, -9600.0], [25000.0, -900.0]]
 Extra - asset_id: collision_camera
@@ -12,7 +11,7 @@ Extra - asset_id: collision_camera
   > Chozo Seal
       Morph Ball
 
-> Elevator To Area 1 - Chozo Seal; Heals? False; Spawn Point
+> Elevator To Area 1 - Chozo Seal; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
@@ -46,6 +45,7 @@ Extra - asset_id: collision_camera
   * Layers: default
   * Extra - actor_name: LE__Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Pickup (Missile Tank)
       Lighting Armor and Destroy Bomb Block
   > Elevator to Area 3 Exterior - Transport to Area 2 Entrance
@@ -106,7 +106,7 @@ Extra - asset_id: collision_camera_003
   > Below Teleporter
       Trivial
 
-> Teleporter; Heals? False; Spawn Point
+> Teleporter; Heals? False
   * Layers: default
   * Teleporter Network (Unlocked by After Area 2 (Interior) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_02_01
@@ -143,6 +143,8 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_type: doorpowerpower
   > Below Teleporter
       Trivial
+  > Start Point
+      Trivial
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
@@ -163,9 +165,14 @@ Extra - asset_id: collision_camera_003
   > Event - Teleporter Unlocked
       Trivial
 
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_002
+  > Door to Alpha Arena
+      Trivial
+
 ----------------
 Transport to Area 2 Exterior
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 3900.0, 'x2': 8800.0, 'y1': -3000.0, 'y2': 700.0}
 Extra - polygon: [[3900.0, 700.0], [3900.0, -2500.0], [5600.0, -2500.0], [7200.0, -3000.0], [8800.0, -3000.0], [8800.0, 700.0]]
 Extra - asset_id: collision_camera_004
@@ -174,7 +181,7 @@ Extra - asset_id: collision_camera_004
   * Pickup 50; Major Location? False
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
-  > Above Chozo Head
+  > Left of Statue
       Trivial
 
 > Pickup (Lightning Armor); Heals? False
@@ -184,10 +191,10 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_type: powerup_energyshield
   > Door to Main Shaft (Bottom)
       Morph Ball
-  > Above Chozo Head
+  > Left of Statue
       Morph Ball
 
-> Elevator to Area 2 Exterior - Outer Hub; Heals? False; Spawn Point
+> Elevator to Area 2 Exterior - Outer Hub; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 2 - Exterior - Outer Hub
   * Extra - actor_name: LE_Platform_Elevator_FromArea02A
@@ -203,6 +210,8 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_type: doorchargecharge
   > Pickup (Lightning Armor)
       Morph Ball
+  > Right of Statue
+      Trivial
 
 > Door to Main Shaft (Top); Heals? False
   * Layers: default
@@ -211,17 +220,24 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_type: doorpowerclosed
   > Elevator to Area 2 Exterior - Outer Hub
       Trivial
-  > Above Chozo Head
+  > Left of Statue
       Trivial
 
-> Above Chozo Head; Heals? False
+> Left of Statue; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (Missile Tank)
       Lighting Armor and Morph Ball
-  > Pickup (Lightning Armor)
+  > Door to Main Shaft (Bottom)
       Morph Ball
   > Door to Main Shaft (Top)
       Morph Ball
+
+> Right of Statue; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  > Door to Main Shaft (Bottom)
+      Trivial
 
 ----------------
 Main Shaft
@@ -305,6 +321,8 @@ Extra - asset_id: collision_camera_007
   * Open Passage to Main Shaft/Dock to Alpha Arena
   > Inside Arena
       Morph Ball and Destroy Missile Block
+  > Outside Arena
+      Trivial
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
@@ -312,12 +330,19 @@ Extra - asset_id: collision_camera_007
   > Inside Arena
       Trivial
 
-> Inside Arena; Heals? False
+> Inside Arena; Heals? False; Default Node
   * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
   > Door to Teleporter Room
       After Area 2 (Entrance) - Alpha Metroid
   > Dock to Main Shaft
       Morph Ball and Destroy Missile Block
   > Event - Alpha Metroid
       Defeat Alpha Metroid
+
+> Outside Arena; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_002B
+  > Dock to Main Shaft
+      Trivial
 

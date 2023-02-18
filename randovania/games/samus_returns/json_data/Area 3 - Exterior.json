@@ -11,7 +11,6 @@
     "areas": {
         "Transport to Area 2 Entrance": {
             "default_node": "Elevator to Area 2 Entrance - Chozo Seal",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -26400.0,
@@ -80,8 +79,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -22415.350100366042,
-                        "y": 2921.560987129531,
+                        "x": -22415.35,
+                        "y": 2921.56,
                         "z": 0.0
                     },
                     "description": "",
@@ -90,8 +89,10 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 2 Entrance - Chozo Seal": {
                             "type": "and",
@@ -245,6 +246,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea02"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 2 - Entrance",
                         "area_name": "Chozo Seal"
@@ -277,6 +279,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -326,6 +329,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -368,6 +372,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -407,6 +412,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -463,6 +469,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -498,6 +505,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -560,6 +568,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -599,6 +608,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "DNA3",
                     "connections": {
                         "Chozo Seal": {
@@ -614,7 +624,6 @@
         },
         "Outer Hub Tunnel": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 6600.0,
@@ -659,6 +668,7 @@
                         "actor_name": "LE_Item_004",
                         "actor_type": "item_powerbombtank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 58,
                     "major_location": false,
                     "connections": {
@@ -769,6 +779,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -918,6 +929,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -932,8 +944,7 @@
             }
         },
         "Grapple Beam Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -2400.0,
@@ -986,9 +997,81 @@
                         "actor_name": "LE_PowerUp_GrappleBeam",
                         "actor_type": "itemsphere_grapplebeam"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 60,
                     "major_location": true,
                     "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Outer Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1163.414634146341,
+                        "y": 13186.991869918698,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door003",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 3 - Exterior",
+                        "area_name": "Outer Hub",
+                        "node_name": "Door to Grapple Beam Room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Start Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1200.0,
+                        "y": 11100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_003"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Grapple Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Outer Hub": {
                             "type": "and",
                             "data": {
@@ -1016,49 +1099,11 @@
                             }
                         }
                     }
-                },
-                "Door to Outer Hub": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1163.414634146341,
-                        "y": 13186.991869918698,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door003",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 3 - Exterior",
-                        "area_name": "Outer Hub",
-                        "node_name": "Door to Grapple Beam Room"
-                    },
-                    "default_dock_weakness": "Missile Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Grapple Beam)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
                 }
             }
         },
         "Outer Hub Teleporter": {
             "default_node": "Teleporter",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -7800.0,
@@ -1112,6 +1157,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_03A_001"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -1152,6 +1198,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -1193,6 +1240,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 Exterior Teleporter West",
                     "connections": {
                         "Dock to Outer Hub": {
@@ -1208,7 +1256,6 @@
         },
         "Outer Hub": {
             "default_node": "Elevator to Area 3 Interior East - Transport to Area 3 Exterior",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -6600.0,
@@ -1321,6 +1368,7 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 57,
                     "major_location": false,
                     "connections": {
@@ -1349,6 +1397,7 @@
                         "actor_name": "LE_Item_005",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 59,
                     "major_location": false,
                     "connections": {
@@ -1378,6 +1427,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03C"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 3 - Interior (East)",
                         "area_name": "Transport to Area 3 Exterior"
@@ -1418,6 +1468,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation_002"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 3 Interior East - Transport to Area 3 Exterior": {
                             "type": "and",
@@ -1452,6 +1503,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_03A_002"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -1495,6 +1547,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -1574,6 +1627,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -1656,6 +1710,7 @@
                         "actor_name": "Door017",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -1753,6 +1808,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -1906,6 +1962,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -1940,6 +1997,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 Exterior Teleporter East",
                     "connections": {
                         "Door to Gamma Shaft": {
@@ -1964,6 +2022,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Grapple Beam Room": {
                             "type": "and",
@@ -1994,6 +2053,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2026,6 +2086,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank Shaft)": {
                             "type": "resource",
@@ -2123,7 +2184,6 @@
         },
         "Transport to Area 3 Interior West (Lower)": {
             "default_node": "Elevator to Area 3 Interior West - Area 3 Exterior (Lower)",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -18100.0,
@@ -2169,6 +2229,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03B_02"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Transport to Area 3 Exterior (Lower)"
@@ -2222,6 +2283,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2257,6 +2319,7 @@
                         "actor_name": "HP_ChozoHologram_002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 62,
                     "major_location": false,
                     "connections": {
@@ -2273,7 +2336,6 @@
         },
         "Transport to Area 4 West": {
             "default_node": "Elevator to Area 4 West - Chozo Seals",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -26100.0,
@@ -2326,6 +2388,7 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 56,
                     "major_location": false,
                     "connections": {
@@ -2391,6 +2454,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea04"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 4 - West",
                         "area_name": "Chozo Seals"
@@ -2423,6 +2487,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2504,6 +2569,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2623,6 +2689,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2660,6 +2727,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2692,6 +2760,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Exterior) - Transport to Area 4 West Grapple Block",
                     "connections": {
                         "Door to Transport to Area 2 Entrance (Top)": {
@@ -2707,7 +2776,6 @@
         },
         "Glow Fly Tunnel": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -21300.0,
@@ -2752,6 +2820,7 @@
                         "actor_name": "LE_Item_001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 55,
                     "major_location": false,
                     "connections": {
@@ -2782,6 +2851,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2862,6 +2932,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -2877,7 +2948,6 @@
         },
         "Transport to Area 3 Interior West (Upper)": {
             "default_node": "Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -11800.0,
@@ -2922,6 +2992,7 @@
                         "actor_name": "LE_Platform_AmmoCharge",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)": {
                             "type": "template",
@@ -2955,6 +3026,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03B_01"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 3 - Interior (West)",
                         "area_name": "Transport to Area 3 Exterior (Upper)"
@@ -3046,6 +3118,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -3081,6 +3154,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -3161,7 +3235,6 @@
         },
         "Entrance Hub": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -20500.0,
@@ -3242,230 +3315,26 @@
                         "actor_name": "LE_SpecialAbility_EnergyWave",
                         "actor_type": "powerup_energywave"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 61,
                     "major_location": true,
                     "connections": {
-                        "Tunnel to Outer Hub Access": {
-                            "type": "and",
+                        "Right of Statue": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Left",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (No High Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
-                        "Top of Climb": {
-                            "type": "and",
+                        "Left of Statue": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Beam Burst"
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Phase",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "DBoost",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "AirMorph",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Boots",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Spring",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3487,6 +3356,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation001"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Transport to Area 2 Entrance": {
                             "type": "and",
@@ -3513,6 +3383,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -3562,6 +3433,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -3597,6 +3469,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -3772,6 +3645,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -3782,7 +3656,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Beam Burst)": {
+                        "Right of Statue": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3797,8 +3671,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -18890.106478298014,
-                        "y": 7693.252901585714,
+                        "x": -18777.939677400012,
+                        "y": 7740.259039395575,
                         "z": 0.0
                     },
                     "description": "",
@@ -3806,183 +3680,8 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Beam Burst)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Beam Burst"
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Phase",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "DBoost",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "AirMorph",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Boots",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Spring",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Transport to Area 2 Entrance": {
                             "type": "and",
                             "data": {
@@ -4139,14 +3838,464 @@
                                     }
                                 ]
                             }
+                        },
+                        "Right of Statue": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Beam Burst"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Phase",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "DBoost",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Boots",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Spring",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Left of Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Right of Statue": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16500.0,
+                        "y": 8800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_001"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Beam Burst)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Outer Hub Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Left",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (No High Jump)"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Top of Climb": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Beam Burst"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Phase",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "DBoost",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Boots",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Spring",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Left of Statue": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18600.0,
+                        "y": 8800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Bestowal"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Beam Burst)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Top of Climb": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
             }
         },
         "Gamma Shaft": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 11400.0,
@@ -4215,6 +4364,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -4400,6 +4550,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4419,6 +4576,7 @@
                         "actor_name": "Door017",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -4626,6 +4784,7 @@
                         "actor_name": "HiddenPowerup001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 63,
                     "major_location": false,
                     "connections": {
@@ -4673,6 +4832,7 @@
                         "actor_name": "HiddenPowerup002",
                         "actor_type": "item_powerbombtank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 64,
                     "major_location": false,
                     "connections": {
@@ -4717,9 +4877,36 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Exterior) - Gamma Shaft Grapple Block",
                     "connections": {
                         "Door to Outer Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14800.0,
+                        "y": 13000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_005"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4731,8 +4918,7 @@
             }
         },
         "Gamma Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 12200.0,
@@ -4785,6 +4971,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -4847,6 +5034,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Gamma 2",
                     "connections": {
                         "Door to Gamma Shaft": {
@@ -5030,6 +5218,36 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17700.0,
+                        "y": 14900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_005A_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
                         }
                     }
                 }
@@ -5037,7 +5255,6 @@
         },
         "Outer Hub Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -15000.0,
@@ -5094,6 +5311,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -5312,6 +5530,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -5474,6 +5693,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Exterior",
@@ -5508,6 +5728,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Left",
                     "connections": {
                         "Door to Transport to Area 3 Interior West (Upper)": {
@@ -5532,6 +5753,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Right",
                     "connections": {
                         "Right of Crumble Block": {
@@ -5558,6 +5780,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Area 3 Interior West (Upper)": {
                             "type": "or",

@@ -21,7 +21,6 @@ def add_sky_temple_key_distribution_logic(game: GameDescription,
     resource_database = game.resource_database
     item_pool: list[PickupEntry] = []
     new_assignment: dict[PickupIndex, PickupEntry] = {}
-    initial_resources = ResourceCollection.with_database(resource_database)
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
         locations_to_place = _GUARDIAN_INDICES[:]
@@ -41,12 +40,12 @@ def add_sky_temple_key_distribution_logic(game: GameDescription,
             item_pool.append(create_sky_temple_key(key_number, resource_database))
         first_automatic_key = keys_to_place
 
-    for automatic_key_number in range(first_automatic_key, 9):
-        initial_resources.add_resource_gain(
-            create_sky_temple_key(automatic_key_number, resource_database).all_resources,
-        )
+    starting = [
+        create_sky_temple_key(automatic_key_number, resource_database)
+        for automatic_key_number in range(first_automatic_key, 9)
+    ]
 
-    return PoolResults(item_pool, new_assignment, initial_resources)
+    return PoolResults(item_pool, new_assignment, starting)
 
 
 # FIXME: use node identifiers

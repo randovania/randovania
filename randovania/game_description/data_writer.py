@@ -262,6 +262,7 @@ def write_node(node: Node) -> dict:
         "description": node.description,
         "layers": frozen_lib.unwrap(node.layers),
         "extra": frozen_lib.unwrap(node.extra),
+        "valid_starting_location": frozen_lib.unwrap(node.valid_starting_location)
     }
 
     if isinstance(node, GenericNode):
@@ -347,7 +348,6 @@ def write_area(area: Area) -> dict:
     extra = frozen_lib.unwrap(area.extra)
     return {
         "default_node": area.default_node,
-        "valid_starting_location": area.valid_starting_location,
         "extra": extra,
         "nodes": nodes,
     }

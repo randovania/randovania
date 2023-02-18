@@ -1,3 +1,4 @@
+import asyncio
 import dataclasses
 import datetime
 import logging
@@ -9,6 +10,7 @@ from typing import Callable
 from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot
 
+import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.preset_history_dialog import PresetHistoryDialog
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
@@ -229,9 +231,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         result = await async_dialog.execute_dialog(self._preset_history)
         new_preset = self._preset_history.selected_preset()
         self._preset_history = None
-        assert new_preset is not None
 
         if result == QtWidgets.QDialog.DialogCode.Accepted:
+            assert new_preset is not None
             self._window_manager.preset_manager.add_new_preset(VersionedPreset.with_preset(new_preset))
             self._update_preset_tree_items()
 
@@ -339,14 +341,21 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
         unsupported_features = preset.get_preset().configuration.unsupported_features()
         if unsupported_features:
+            if randovania.is_dev_version():
+                confirmation = "Are you sure you want to continue?"
+                buttons = async_dialog.StandardButton.Yes | async_dialog.StandardButton.No
+            else:
+                confirmation = "These features are not available outside of development builds."
+                buttons = async_dialog.StandardButton.No
+
             result = await async_dialog.warning(
                 self, "Unsupported Features",
-                "Preset '{}' uses the unsupported features:\n{}\n\n"
-                "Are you sure you want to continue?".format(
+                "Preset '{}' uses the unsupported features:\n{}\n\n{}".format(
                     preset.name,
-                    ", ".join(unsupported_features)
+                    ", ".join(unsupported_features),
+                    confirmation,
                 ),
-                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+                buttons=buttons,
                 default_button=async_dialog.StandardButton.No,
             )
             if result != async_dialog.StandardButton.Yes:
@@ -396,6 +405,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             else:
                 self._background_task.progress_update_signal.emit("Solver Error", 0)
                 return
+
+        except asyncio.exceptions.CancelledError:
+            return
 
         except Exception as e:
             return await self.failure_handler.handle_exception(

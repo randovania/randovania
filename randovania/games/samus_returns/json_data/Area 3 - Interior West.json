@@ -11,7 +11,6 @@
     "areas": {
         "Transport to Area 3 Exterior (Upper)": {
             "default_node": "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -14150.0,
@@ -81,6 +80,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03A_01"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 3 - Exterior",
                         "area_name": "Transport to Area 3 Interior West (Upper)"
@@ -114,6 +114,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation002"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Gamma Arena North": {
                             "type": "and",
@@ -276,6 +277,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -322,6 +324,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -357,6 +360,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -413,6 +417,7 @@
                         "actor_name": "HiddenPowerup001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 70,
                     "major_location": false,
                     "connections": {
@@ -438,6 +443,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -531,8 +537,7 @@
             }
         },
         "Alpha+ Arena West": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -17850.0,
@@ -577,6 +582,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -587,7 +593,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -612,6 +618,7 @@
                         "actor_name": "Door018",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -622,7 +629,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -644,9 +651,10 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 15",
                     "connections": {
-                        "Room Center": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -655,19 +663,22 @@
                         }
                     }
                 },
-                "Room Center": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -15966.536118363794,
-                        "y": 983.5847596944202,
+                        "x": -17300.0,
+                        "y": 900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_002_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Area 3 Exterior (Upper)": {
                             "type": "resource",
@@ -696,8 +707,7 @@
             }
         },
         "Gamma Arena North": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point (Inside Arena)",
             "extra": {
                 "total_boundings": {
                     "x1": -10900.0,
@@ -742,6 +752,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -752,7 +763,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -777,6 +788,7 @@
                         "actor_name": "Door019",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -787,59 +799,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Outside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam Burst"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -857,9 +821,10 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Gamma 5",
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -868,19 +833,22 @@
                         }
                     }
                 },
-                "Inside Arena": {
+                "Start Point (Inside Arena)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -9397.393972703123,
-                        "y": -1249.0702573967208,
+                        "x": -9500.0,
+                        "y": -1300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Transport to Area 3 Exterior (Upper)": {
                             "type": "resource",
@@ -891,7 +859,11 @@
                                 "negate": false
                             }
                         },
-                        "Door to Teleporter Access": {
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
+                        },
+                        "Start Point (Outside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -945,18 +917,94 @@
                                     }
                                 ]
                             }
+                        }
+                    }
+                },
+                "Start Point (Outside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7700.0,
+                        "y": -1700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_001B"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
-                        "Event - Gamma Metroid": {
-                            "type": "template",
-                            "data": "Defeat Gamma Metroid"
+                        "Start Point (Inside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam Burst"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
             }
         },
         "Gamma Arena South": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point (Outside Arena)",
             "extra": {
                 "total_boundings": {
                     "x1": -11700.0,
@@ -1001,6 +1049,7 @@
                         "actor_name": "LE_Item_001",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 65,
                     "major_location": false,
                     "connections": {
@@ -1112,6 +1161,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -1149,6 +1199,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -1187,6 +1238,13 @@
                         "Left of Fan": {
                             "type": "template",
                             "data": "Lay Power Bomb"
+                        },
+                        "Start Point (Outside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1203,6 +1261,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -1237,11 +1296,19 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Gamma 6",
                     "connections": {
                         "Door to Shaft West": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point (Inside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1258,6 +1325,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Transport to Area 3 Exterior (Upper)": {
                             "type": "and",
@@ -1419,6 +1487,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
                             "type": "and",
@@ -1500,6 +1569,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
                             "type": "or",
@@ -1627,12 +1697,60 @@
                             "data": "Destroy Bomb Block"
                         }
                     }
+                },
+                "Start Point (Inside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5700.0,
+                        "y": -5700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_002_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gamma Metroid": {
+                            "type": "template",
+                            "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                },
+                "Start Point (Outside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4600.0,
+                        "y": -6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_002"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Shaft West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Save Station Hallway": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -4550.0,
@@ -1677,6 +1795,7 @@
                         "actor_name": "LE_Platform_EnergyCharge",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Upper Shaft": {
                             "type": "and",
@@ -1704,6 +1823,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation001"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Upper Shaft": {
                             "type": "and",
@@ -1730,6 +1850,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -1779,6 +1900,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -1801,8 +1923,7 @@
             }
         },
         "Upper Shaft": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -6500.0,
@@ -1863,6 +1984,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -1919,6 +2041,7 @@
                         "actor_name": "Door017",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -1930,6 +2053,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1954,6 +2084,7 @@
                         "actor_name": "HiddenPowerup002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 71,
                     "major_location": false,
                     "connections": {
@@ -1979,6 +2110,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -2013,6 +2145,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Save Station Hallway": {
                             "type": "or",
@@ -2108,12 +2241,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5600.0,
+                        "y": 5400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_003"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha+ Arena East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Mid-Shaft Shortcut": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -2100.0,
@@ -2158,6 +2316,7 @@
                         "actor_name": "LE_Item_007",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 69,
                     "major_location": false,
                     "connections": {
@@ -2235,6 +2394,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -2315,6 +2475,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -2349,6 +2510,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Interior West) - Grappling Steps Grapple Block",
                     "connections": {
                         "Left of Grapple Block": {
@@ -2373,6 +2535,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -2424,7 +2587,6 @@
         },
         "Shaft West": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -3900.0,
@@ -2485,6 +2647,7 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 66,
                     "major_location": false,
                     "connections": {
@@ -2591,6 +2754,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -2706,6 +2870,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -2912,6 +3077,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -2937,7 +3103,6 @@
         },
         "Central Shaft": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -2100.0,
@@ -3026,6 +3191,7 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 67,
                     "major_location": false,
                     "connections": {
@@ -3055,6 +3221,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation003"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Shaft East": {
                             "type": "and",
@@ -3110,6 +3277,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_03B_002"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -3153,6 +3321,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3268,6 +3437,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3303,6 +3473,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3335,6 +3506,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 Interior East Teleporter Lower",
                     "connections": {
                         "Above Teleporter": {
@@ -3359,6 +3531,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -3431,7 +3604,6 @@
         },
         "Shaft East": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 1100.0,
@@ -3484,6 +3656,7 @@
                         "actor_name": "LE_Item_004",
                         "actor_type": "item_senergytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 68,
                     "major_location": false,
                     "connections": {
@@ -3512,6 +3685,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3617,6 +3791,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3652,6 +3827,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3712,6 +3888,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3775,6 +3952,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3800,7 +3978,6 @@
         },
         "Side Passage": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 2900.0,
@@ -3853,6 +4030,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -3887,6 +4065,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4024,7 +4203,6 @@
         },
         "Diggernaut Tunnel": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 300.0,
@@ -4069,6 +4247,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4115,6 +4294,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4149,6 +4329,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Interior West) - Diggernaut Awakened",
                     "connections": {
                         "Door to Save Station Hallway": {
@@ -4164,7 +4345,6 @@
         },
         "Transport to Area 3 Interior East": {
             "default_node": "Elevator to Area 3 Interior East - Transport to Area 3 Interior West",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 3800.0,
@@ -4210,6 +4390,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03C"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 3 - Interior (East)",
                         "area_name": "Transport to Area 3 Interior West"
@@ -4289,6 +4470,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4324,6 +4506,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4458,6 +4641,7 @@
                         "actor_name": "HiddenPowerup003",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 72,
                     "major_location": false,
                     "connections": {
@@ -4483,6 +4667,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Interior West) - Transport to Area 3 Interior West Grapple Block",
                     "connections": {
                         "Elevator to Area 3 Interior East - Transport to Area 3 Interior West": {
@@ -4497,8 +4682,7 @@
             }
         },
         "Gamma+ Arena South": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -5700.0,
@@ -4551,6 +4735,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4576,6 +4761,10 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -4592,6 +4781,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Gamma 8",
                     "connections": {
                         "Door to Gamma+ Arena South Access": {
@@ -4611,12 +4801,34 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3800.0,
+                        "y": -16700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_004A_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma+ Arena South Access": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
                 }
             }
         },
         "Gamma+ Arena South Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 600.0,
@@ -4661,6 +4873,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4696,6 +4909,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4712,14 +4926,46 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1100.0,
+                        "y": -15800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_004"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma+ Arena South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
             }
         },
         "Gamma+ Arena Heat": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point (Left)",
             "extra": {
                 "total_boundings": {
                     "x1": -500.0,
@@ -4764,6 +5010,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -4774,57 +5021,50 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Gamma Metroid+": {
+                        "Start Point (Right)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bomb",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 3,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4845,39 +5085,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Varia",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma Metroid+"
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4895,7 +5121,36 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Gamma 7",
+                    "connections": {
+                        "Start Point (Right)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point (Right)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1800.0,
+                        "y": 5000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_003_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha+ Arena East": {
                             "type": "and",
@@ -4905,6 +5160,15 @@
                                     {
                                         "type": "template",
                                         "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -4921,35 +5185,67 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Varia",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Gamma Metroid+": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid+"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Start Point (Left)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -200.0,
+                        "y": 4700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_003_Out"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha+ Arena East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -4958,7 +5254,6 @@
         },
         "Transport to Area 3 Exterior (Lower)": {
             "default_node": "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -19050.0,
@@ -5004,6 +5299,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03A_02"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 3 - Exterior",
                         "area_name": "Transport to Area 3 Interior West (Lower)"
@@ -5036,6 +5332,7 @@
                         "actor_name": "Door018",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -5058,8 +5355,7 @@
             }
         },
         "Alpha+ Arena East": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point (Inside Arena)",
             "extra": {
                 "total_boundings": {
                     "x1": -5150.0,
@@ -5104,6 +5400,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -5114,14 +5411,19 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Outside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "template",
@@ -5148,6 +5450,7 @@
                         "actor_name": "Door017",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -5158,7 +5461,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5180,9 +5483,10 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 16",
                     "connections": {
-                        "Inside Arena": {
+                        "Start Point (Inside Arena)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5191,24 +5495,23 @@
                         }
                     }
                 },
-                "Inside Arena": {
+                "Start Point (Inside Arena)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3464.635430979207,
-                        "y": 4949.596958871485,
+                        "x": -3400.0,
+                        "y": 5000.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_003_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma+ Arena Heat": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
-                        },
                         "Door to Upper Shaft": {
                             "type": "resource",
                             "data": {
@@ -5221,6 +5524,42 @@
                         "Event - Alpha Metroid+": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid+"
+                        },
+                        "Start Point (Outside Arena)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Start Point (Outside Arena)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1300.0,
+                        "y": 5200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_003B"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma+ Arena Heat": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Start Point (Inside Arena)": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 }
@@ -5228,7 +5567,6 @@
         },
         "Teleporter Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -7300.0,
@@ -5273,6 +5611,7 @@
                         "actor_name": "Door019",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -5343,6 +5682,7 @@
                         "actor_name": "Door020",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -5375,6 +5715,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -5409,6 +5750,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 (Interior West) - Upper Shaft Access Grapple Block",
                     "connections": {
                         "Door to Gamma Arena North": {
@@ -5424,7 +5766,6 @@
         },
         "Teleporter Room": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -9700.0,
@@ -5470,6 +5811,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_03B_001"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -5515,6 +5857,7 @@
                         "actor_name": "Door020",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 3 - Interior (West)",
@@ -5573,6 +5916,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 3 Interior West Teleporter Upper",
                     "connections": {
                         "Door to Teleporter Access": {

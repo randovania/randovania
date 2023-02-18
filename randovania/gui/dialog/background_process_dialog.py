@@ -37,9 +37,14 @@ class BackgroundProcessDialog(QDialog, BackgroundTaskMixin, Ui_BackgroundProcess
             self.progress_bar.setRange(0, 0)
 
     async def run_in_background_async_then_close(self, *args, **kwargs):
-        result = await self.run_in_background_async(*args, **kwargs)
-        self.accept()
-        return result
+        try:
+            result = await self.run_in_background_async(*args, **kwargs)
+            self.accept()
+            return result
+
+        except (Exception, asyncio.exceptions.CancelledError):
+            self.reject()
+            raise
 
     @classmethod
     async def open_for_background_task(cls, target, starting_message: str):

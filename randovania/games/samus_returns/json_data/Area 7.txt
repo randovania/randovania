@@ -1,6 +1,5 @@
 ----------------
 Entrance Shaft
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -22000.0, 'x2': -16000.0, 'y1': -8700.0, 'y2': 2000.0}
 Extra - polygon: [[-21100.0, 2000.0], [-21100.0, -1800.0], [-22000.0, -2700.0], [-22000.0, -8700.0], [-19550.0, -8700.0], [-19550.0, -6300.0], [-18600.0, -6200.0], [-16000.0, -6200.0], [-16000.0, -4400.0], [-17000.0, -4400.0], [-17700.0, -4300.0], [-17700.0, -200.0], [-18100.0, 600.0], [-18100.0, 2000.0]]
 Extra - asset_id: collision_camera_005
@@ -19,7 +18,7 @@ Extra - asset_id: collision_camera_005
   > Door to Omega Shaft West
       Morph Ball
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
@@ -216,7 +215,6 @@ Extra - asset_id: collision_camera_006
 
 ----------------
 Launch Tunnel South
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -16300.0, 'x2': -8200.0, 'y1': 2300.0, 'y2': 5600.0}
 Extra - polygon: [[-16300.0, 5600.0], [-16300.0, 2300.0], [-8200.0, 2300.0], [-8200.0, 5600.0]]
 Extra - asset_id: collision_camera_007
@@ -228,7 +226,7 @@ Extra - asset_id: collision_camera_007
   > Right of Pickup
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation004
   * Extra - actor_type: weightactivatedplatform
@@ -324,13 +322,13 @@ Omega Shaft East
 Extra - total_boundings: {'x1': -10600.0, 'x2': -8200.0, 'y1': -4000.0, 'y2': 1800.0}
 Extra - polygon: [[-10600.0, 1800.0], [-10600.0, -4000.0], [-8200.0, -4000.0], [-8200.0, 1800.0]]
 Extra - asset_id: collision_camera_008
-> Teleporter; Heals? False; Spawn Point
+> Teleporter; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by After Area 7 - Teleporter Unlocked (East))
   * Extra - actor_name: LE_Platform_Teleporter_09_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_09_02
-  > Door to Omega Metroid South Access
+  > Door to Omega Arena South Access
       Trivial
 
 > Door to Launch Tunnels Shaft; Heals? False
@@ -338,37 +336,37 @@ Extra - asset_id: collision_camera_008
   * Plasma Beam Door to Launch Tunnels Shaft/Door to Omega Shaft East
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Door to Omega Metroid+ Access (Top)
+  > Door to Omega+ Arena Access (Top)
       Trivial
 
-> Door to Omega Metroid+ Access (Top); Heals? False
+> Door to Omega+ Arena Access (Top); Heals? False
   * Layers: default
-  * Access Locked to Omega Metroid+ Access/Door to Omega Shaft East (Top)
+  * Access Locked to Omega+ Arena Access/Door to Omega Shaft East (Top)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
   > Door to Launch Tunnels Shaft
       Trivial
-  > Door to Omega Metroid South Access
+  > Door to Omega Arena South Access
       Trivial
 
-> Door to Omega Metroid+ Access (Bottom); Heals? False
+> Door to Omega+ Arena Access (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Omega Metroid+ Access/Door to Omega Shaft East (Bottom)
+  * Charge Beam Door to Omega+ Arena Access/Door to Omega Shaft East (Bottom)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
-  > Door to Omega Metroid South Access
+  > Door to Omega Arena South Access
       Morph Ball
 
-> Door to Omega Metroid South Access; Heals? False
+> Door to Omega Arena South Access; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega Metroid South Access/Door to Omega Shaft East
+  * Spazer Beam Door to Omega Arena South Access/Door to Omega Shaft East
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Teleporter
       After Area 7 - Teleporter Unlocked (East)
-  > Door to Omega Metroid+ Access (Top)
+  > Door to Omega+ Arena Access (Top)
       Trivial
-  > Door to Omega Metroid+ Access (Bottom)
+  > Door to Omega+ Arena Access (Bottom)
       Morph Ball
   > Event - Teleporter Unlocked
       Trivial
@@ -376,31 +374,38 @@ Extra - asset_id: collision_camera_008
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 7 - Teleporter Unlocked (East)
-  > Door to Omega Metroid South Access
+  > Door to Omega Arena South Access
       Trivial
 
 ----------------
-Omega Metroid+ Arena
+Omega+ Arena
 Extra - total_boundings: {'x1': -1050.0, 'x2': 3100.0, 'y1': -3700.0, 'y2': -2400.0}
 Extra - polygon: [[-1050.0, -2400.0], [-1050.0, -3700.0], [3100.0, -3700.0], [3100.0, -2400.0]]
 Extra - asset_id: collision_camera_009
-> Door to Omega Metroid+ Access; Heals? False
+> Door to Omega+ Arena Access; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega Metroid+ Access/Door to Omega Metroid+ Arena
+  * Spazer Beam Door to Omega+ Arena Access/Door to Omega+ Arena
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Event - Omega Metroid+
-      Defeat Omega Metroid
+  > Room Center
+      Trivial
 
 > Event - Omega Metroid+; Heals? False
   * Layers: default
   * Event Area 7 - Omega Metroid+
-  > Door to Omega Metroid+ Access
+  > Room Center
       Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Omega_002_Checkpoint
+  > Door to Omega+ Arena Access
+      After Area 7 - Omega Metroid+
+  > Event - Omega Metroid+
+      Defeat Omega Metroid
 
 ----------------
 Launch Tunnels Shaft
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -8300.0, 'x2': -4800.0, 'y1': 1200.0, 'y2': 9300.0}
 Extra - polygon: [[-8300.0, 9300.0], [-8300.0, 1200.0], [-4800.0, 1200.0], [-4800.0, 9300.0]]
 Extra - asset_id: collision_camera_010
@@ -448,7 +453,7 @@ Extra - asset_id: collision_camera_010
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation003
   * Extra - actor_type: weightactivatedplatform
@@ -503,7 +508,6 @@ Extra - asset_id: collision_camera_010
 
 ----------------
 Transport to Area 6
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -19650.0, 'x2': -1650.0, 'y1': -12400.0, 'y2': -5100.0}
 Extra - polygon: [[-19300.0, -10300.0], [-19300.0, -12400.0], [-11500.0, -12400.0], [-3000.0, -9800.0], [-1650.0, -9800.0], [-1650.0, -7400.0], [-5000.0, -7600.0], [-5600.0, -7450.0], [-6000.0, -7000.0], [-6100.0, -6300.0], [-6100.0, -5100.0], [-12000.0, -5100.0], [-15307.2998046875, -7400.0], [-19650.0, -7400.0], [-19650.0, -10100.0]]
 Extra - asset_id: collision_camera_011
@@ -533,6 +537,7 @@ Extra - asset_id: collision_camera_011
   * Layers: default
   * Extra - actor_name: LE_PlatformADN
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Save Station
       Trivial
   > Door to Entrance Shaft
@@ -545,7 +550,7 @@ Extra - asset_id: collision_camera_011
   > Below West Pickup
       Trivial
 
-> Elevator to Area 6 - Transport to Area 7; Heals? False; Spawn Point
+> Elevator to Area 6 - Transport to Area 7; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 6 - Transport to Area 7
   * Extra - actor_name: LE_Platform_Elevator_FromArea07
@@ -584,9 +589,9 @@ Extra - asset_id: collision_camera_011
   > Below West Pickup
       Trivial
 
-> Door to Omega Metroid+ Access; Heals? False
+> Door to Omega+ Arena Access; Heals? False
   * Layers: default
-  * Access Locked to Omega Metroid+ Access/Door to Transport to Area 6
+  * Access Locked to Omega+ Arena Access/Door to Transport to Area 6
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
   > Below Hidden Pickup
@@ -628,7 +633,7 @@ Extra - asset_id: collision_camera_011
       Trivial
   > Save Station
       Trivial
-  > Door to Omega Metroid+ Access
+  > Door to Omega+ Arena Access
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Beginner)
@@ -661,7 +666,7 @@ Extra - asset_id: collision_camera_011
           Phase Drift or Spider Ball or Walljump (Intermediate)
 
 ----------------
-Omega Metroid South Access
+Omega Arena South Access
 Extra - total_boundings: {'x1': -16100.0, 'x2': -10500.0, 'y1': -3800.0, 'y2': -1300.0}
 Extra - polygon: [[-16100.0, -1300.0], [-16100.0, -3800.0], [-10500.0, -3800.0], [-10500.0, -2000.0], [-14000.0, -2000.0], [-14550.0, -1900.0], [-14550.0, -1300.0]]
 Extra - asset_id: collision_camera_012
@@ -674,79 +679,103 @@ Extra - asset_id: collision_camera_012
       All of the following:
           Morph Ball and Screw Attack
           Lighting Armor or Spider Ball
-  > Door to Omega Metroid South Arena
+  > Door to Omega Arena South
       Can Spiderspark
 
 > Door to Omega Shaft East; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega Shaft East/Door to Omega Metroid South Access
+  * Spazer Beam Door to Omega Shaft East/Door to Omega Arena South Access
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Omega Metroid South Arena
+  > Door to Omega Arena South
       Lighting Armor or Screw Attack
 
-> Door to Omega Metroid South Arena; Heals? False
+> Door to Omega Arena South; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Metroid South Arena/Door to Omega Metroid South Access
+  * Power Beam Door to Omega Arena South/Door to Omega Arena South Access
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Can Spiderspark
   > Door to Omega Shaft East
       Lighting Armor or Screw Attack
+  > Start Point
+      Trivial
 
-> Dock to Omega Metroid South Arena; Heals? False
+> Dock to Omega Arena South; Heals? False
   * Layers: default
-  * Open Passage to Omega Metroid South Arena/Tunnel to Omega Metroid South Access
+  * Open Passage to Omega Arena South/Tunnel to Omega Arena South Access
   > Door to Omega Shaft East
       Trivial
 
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Omega_003
+  > Door to Omega Arena South
+      Trivial
+
 ----------------
-Omega Metroid South Arena
+Omega Arena South
 Extra - total_boundings: {'x1': -14650.0, 'x2': -10700.0, 'y1': -2000.0, 'y2': -700.0}
 Extra - polygon: [[-14650.0, -700.0], [-14650.0, -2000.0], [-10700.0, -2000.0], [-10700.0, -700.0]]
 Extra - asset_id: collision_camera_013
-> Door to Omega Metroid South Access; Heals? False
+> Door to Omega Arena South Access; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Metroid South Access/Door to Omega Metroid South Arena
+  * Power Beam Door to Omega Arena South Access/Door to Omega Arena South
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Tunnel to Omega Metroid South Access
-      Morph Ball and Destroy Missile Block
-  > Event - Omega Metroid
-      Defeat Omega Metroid
+  > Room Center
+      Trivial
 
-> Tunnel to Omega Metroid South Access; Heals? False
+> Tunnel to Omega Arena South Access; Heals? False
   * Layers: default
-  * Tunnel to Omega Metroid South Access/Dock to Omega Metroid South Arena
+  * Tunnel to Omega Arena South Access/Dock to Omega Arena South
 
 > Event - Omega Metroid; Heals? False
   * Layers: default
   * Event Area 7 - Omega Metroid South
-  > Door to Omega Metroid South Access
+  > Room Center
       Trivial
 
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Omega_003_Checkpoint
+  > Door to Omega Arena South Access
+      After Area 7 - Omega Metroid South
+  > Tunnel to Omega Arena South Access
+      Morph Ball and Destroy Missile Block
+  > Event - Omega Metroid
+      Defeat Omega Metroid
+
 ----------------
-Omega Metroid North Arena
+Omega Arena North
 Extra - total_boundings: {'x1': -29100.0, 'x2': -24950.0, 'y1': 6700.0, 'y2': 8000.0}
 Extra - polygon: [[-29100.0, 8000.0], [-29100.0, 6700.0], [-24950.0, 6700.0], [-24950.0, 8000.0]]
 Extra - asset_id: collision_camera_014
-> Door to Omega Metroid North Access; Heals? False
+> Door to Omega Arena North Access; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Metroid North Access/Door to Omega Metroid North Arena
+  * Power Beam Door to Omega Arena North Access/Door to Omega Arena North
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Event - Omega Metroid
-      Defeat Omega Metroid
+  > Room Center
+      Trivial
 
 > Event - Omega Metroid; Heals? False
   * Layers: default
   * Event Area 7 - Omega Metroid North
-  > Door to Omega Metroid North Access
+  > Room Center
       Trivial
 
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Omega_001_Checkpoint
+  > Door to Omega Arena North Access
+      After Area 7 - Omega Metroid North
+  > Event - Omega Metroid
+      Defeat Omega Metroid
+
 ----------------
-Omega Metroid North Access
+Omega Arena North Access
 Extra - total_boundings: {'x1': -25050.0, 'x2': -18100.0, 'y1': 5500.0, 'y2': 7500.0}
 Extra - polygon: [[-25050.0, 7500.0], [-25050.0, 5500.0], [-18100.0, 5500.0], [-18100.0, 7500.0]]
 Extra - asset_id: collision_camera_015
@@ -758,9 +787,9 @@ Extra - asset_id: collision_camera_015
   > Tunnel to Omega Shaft West
       Destroy Bomb Block
 
-> Door to Omega Metroid North Arena; Heals? False
+> Door to Omega Arena North; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Metroid North Arena/Door to Omega Metroid North Access
+  * Power Beam Door to Omega Arena North/Door to Omega Arena North Access
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
@@ -769,26 +798,33 @@ Extra - asset_id: collision_camera_015
           Bomb or Power Bomb ≥ 2
   > Door to Omega Shaft West
       Lighting Armor or Space Jump or Can Spiderspark
+  > Start Point
+      Trivial
 
 > Door to Omega Shaft West; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Shaft West/Door to Omega Metroid North Access
+  * Power Beam Door to Omega Shaft West/Door to Omega Arena North Access
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
-  > Door to Omega Metroid North Arena
+  > Door to Omega Arena North
       Lighting Armor or Space Jump or Can Spiderspark
 
 > Tunnel to Omega Shaft West; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Omega Metroid North Access
+  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Omega Arena North Access
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Omega_001
+  > Door to Omega Arena North
+      Trivial
 
 ----------------
-Omega Metroid+ Access
-(Valid Starting Location)
+Omega+ Arena Access
 Extra - total_boundings: {'x1': -8300.0, 'x2': -950.0, 'y1': -6000.0, 'y2': 500.0}
 Extra - polygon: [[-8300.0, 500.0], [-8300.0, -4800.0], [-6200.0, -5200.0], [-6200.0, -6000.0], [-3300.0, -6000.0], [-3300.0, -4500.0], [-950.0, -4300.0], [-950.0, -2000.0], [-1700.0, -1800.0], [-1700.0, 500.0]]
 Extra - asset_id: collision_camera_016
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation005
   * Extra - actor_type: weightactivatedplatform
@@ -800,10 +836,10 @@ Extra - asset_id: collision_camera_016
 
 > Door to Omega Shaft East (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Omega Shaft East/Door to Omega Metroid+ Access (Top)
+  * Power Beam Door to Omega Shaft East/Door to Omega+ Arena Access (Top)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Door to Omega Metroid+ Arena
+  > Door to Omega+ Arena
       Any of the following:
           Phase Drift
           Morph Ball and Power Bomb ≥ 2
@@ -812,15 +848,15 @@ Extra - asset_id: collision_camera_016
 
 > Door to Omega Shaft East (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Omega Shaft East/Door to Omega Metroid+ Access (Bottom)
+  * Charge Beam Door to Omega Shaft East/Door to Omega+ Arena Access (Bottom)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
   > Save Station
       Trivial
 
-> Door to Omega Metroid+ Arena; Heals? False
+> Door to Omega+ Arena; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega Metroid+ Arena/Door to Omega Metroid+ Access
+  * Spazer Beam Door to Omega+ Arena/Door to Omega+ Arena Access
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Door to Omega Shaft East (Top)
@@ -829,10 +865,12 @@ Extra - asset_id: collision_camera_016
           Power Bomb ≥ 2 or Phase Drift
   > Below Pickup
       Morph Ball and Screw Attack
+  > Start Point
+      Trivial
 
 > Door to Transport to Area 6; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 6/Door to Omega Metroid+ Access
+  * Power Beam Door to Transport to Area 6/Door to Omega+ Arena Access
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
   > Lower Level
@@ -872,6 +910,12 @@ Extra - asset_id: collision_camera_016
       Any of the following:
           High Jump Boots or Space Jump or Use Spider Ball
           Infinite Bomb Jump (Intermediate) and Lay Bomb
+
+> Start Point; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Omega_002
+  > Door to Omega+ Arena
+      Trivial
 
 ----------------
 Exit Puzzle Room 2
@@ -936,7 +980,7 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge_002
   * Extra - actor_type: weightactivatedplatform
-  > Door to Omega Metroid North Access
+  > Door to Omega Arena North Access
       Destroy Bomb Block
   > Tunnel to Launch Tunnel North (Top)
       Destroy Bomb Block
@@ -948,7 +992,7 @@ Extra - asset_id: collision_camera_018
   * Charge Beam Door to Launch Tunnel South/Door to Omega Shaft West
   * Extra - actor_name: Door001
   * Extra - actor_type: doorchargecharge
-  > Door to Omega Metroid North Access
+  > Door to Omega Arena North Access
       Trivial
   > Aeion Orb
       Trivial
@@ -967,9 +1011,9 @@ Extra - asset_id: collision_camera_018
                   Super Jump (Intermediate)
                   Morph Ball and Unmorph Extend (Intermediate)
 
-> Door to Omega Metroid North Access; Heals? False
+> Door to Omega Arena North Access; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Metroid North Access/Door to Omega Shaft West
+  * Power Beam Door to Omega Arena North Access/Door to Omega Shaft West
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
@@ -999,9 +1043,9 @@ Extra - asset_id: collision_camera_018
   > Aeion Orb
       Morph Ball
 
-> Tunnel to Omega Metroid North Access; Heals? False
+> Tunnel to Omega Arena North Access; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Omega Metroid North Access/Tunnel to Omega Shaft West
+  * Tunnel with Bomb Block to Omega Arena North Access/Tunnel to Omega Shaft West
   > Ammo Recharge Station
       Morph Ball
 
@@ -1053,11 +1097,10 @@ Extra - asset_id: collision_camera_019
 
 ----------------
 Transport to Area 8
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -30850.0, 'x2': -24100.0, 'y1': -11700.0, 'y2': -3200.0}
 Extra - polygon: [[-30850.0, -3200.0], [-30850.0, -4300.0], [-29800.0, -4300.0], [-27400.0, -5200.0], [-27400.0, -7800.0], [-27000.0, -8300.0], [-27000.0, -11700.0], [-24650.0, -11700.0], [-24650.0, -9600.0], [-24100.0, -9500.0], [-24100.0, -3200.0]]
 Extra - asset_id: collision_camera_021
-> Elevator to Area 8 - Transport to Area 7; Heals? False; Spawn Point
+> Elevator to Area 8 - Transport to Area 7; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 8 - Transport to Area 7
   * Extra - actor_name: LE_Platform_Elevator_FromArea10

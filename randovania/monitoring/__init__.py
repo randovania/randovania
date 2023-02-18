@@ -1,3 +1,10 @@
+import platform
+import re
+import typing
+from pathlib import Path
+
+import sentry_sdk
+
 import randovania
 from randovania.version_hash import full_git_hash
 
@@ -9,7 +16,67 @@ _sampling_per_path = {
 }
 
 
+def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | None:
+    result = None
+    if isinstance(data, dict):
+        for k, v in tuple(data.items()):
+            new = _filter_data(v, str_filter)
+            if new is not None:
+                data[k] = new
+
+    elif isinstance(data, list):
+        for i, v in enumerate(data):
+            new = _filter_data(v, str_filter)
+            if new is not None:
+                data[i] = new
+
+    elif isinstance(data, tuple):
+        for i, v in enumerate(data):
+            new = _filter_data(v, str_filter)
+            if new is not None:
+                if result is None:
+                    result = list(data)
+                result[i] = new
+
+    elif isinstance(data, Path):
+        new = _filter_data(str(data), str_filter)
+        if new is not None:
+            result = type(data)(new)
+
+    elif isinstance(data, str):
+        new = str_filter(data)
+        if new != data:
+            result = new
+
+    return result
+
+
+_HOME_RE = re.compile(r"(:[/\\]Users[/\\])([^/\\]+)([/\\])")
+
+
+def _filter_windows_home(data):
+    def filter_home(s: str) -> str:
+        return _HOME_RE.sub(r"\1<redacted>\3", s)
+
+    return _filter_data(data, filter_home)
+
+
+def _before_send(event, hint):
+    _filter_windows_home(event["extra"])
+    if "logentry" in event:
+        _filter_windows_home(event["logentry"])
+    return event
+
+
+def _before_breadcrumb(event, hint):
+    _filter_windows_home(event)
+    return event
+
+
 def _init(include_flask: bool, default_url: str):
+    if randovania.is_dirty():
+        return
+
     import sentry_sdk
     from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
@@ -41,11 +108,20 @@ def _init(include_flask: bool, default_url: str):
         release=full_git_hash,
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
+        server_name="client",  # hostname for clients contains pii
+        before_send=_before_send,
+        before_breadcrumb=_before_breadcrumb,
+        auto_session_tracking=include_flask,
     )
+    sentry_sdk.set_context("os", {
+        "name": platform.system(),
+        "version": platform.release(),
+    })
 
 
 def client_init():
-    return _init(False, _CLIENT_DEFAULT_URL)
+    _init(False, _CLIENT_DEFAULT_URL)
+    sentry_sdk.set_tag("frozen", randovania.is_frozen())
 
 
 def server_init():

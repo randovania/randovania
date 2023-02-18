@@ -5,21 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.4.0] - 2023-??-??
+## [5.5.0] - 2023-??-??
+
+- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
+- Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.
+
+## [5.4.1] - 2023-??-??
+
+- Added: Linux releases are now also published to Flathub.
+- Fixed: Canceling the prompt from "View previous versions" no longer causes an error.
+
+## [5.4.0] - 2023-02-06
 
 - Added: Experimental generation setting for staggering the placement of selected pickups.
 - Added: Experimental generation setting for removing redundant possible actions.
 - Added: Automatic reporting of exceptions for the client, and monitoring for requests to the server.
 - Added: New pixel icons for Prime 1 & 2 autotracker
+- Added: New 8x3 layouts for all Prime 1 & 2 autotracker styles
 - Fixed: The minor/major split setting is obeyed much more accurately by the generator.
 - Fixed: Starting with ammo no longer causes all requirements for that ammo to be ignored. 
 - Fixed: The generator no longer attempts placing pickups based on alternatives to satisfied requirements, such as Missile Expansions for Quadraxis while already having Light Beam.
 - Fixed: Minor typos in the UI are fixed.
+- Fixed: Canceling certain actions will no longer cause the UI to react as if it were an error.
+- Changed: Unsupported features are now restricted to dev builds.
 - Changed: Requirements where different amount of the same item, such as both Missile = 5 and Missile = 1, are expected are now properly simplified. 
 
   This results in certain pickup combinations no longer being considered for placement in the generator, such as Sunburst for unlocking the Industrial Site from behind. 
 
 ### Metroid Prime
+
+- Changed: All included presets now have "Unlocked Save Station doors" enabled.
+- Changed: "Unlocked Save Station doors" no longer remove the lock in Chozo Ruins - Save Station 3.
 
 #### Patcher Changes
 
@@ -32,9 +48,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Collecting the Missile Expansion in Burn Dome before the fight no longer causes the generation to fail.
 
+### Metroid Prime 2: Echoes
+
+- Changed: Inverted Aether is now an unsupported feature.
+
 ### Metroid Dread
 
-- **Major** - Added: Door locks can now be randomized.
 - Fixed: Energy Parts are now considered minor items, and Missile+ Tanks are now considered major items.
 
 #### Patcher Changes
@@ -71,15 +90,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Movement (Intermediate), Simple IBJ, or Spin Boost to reach top tunnel in Vertical Bomb Maze.
 - Added: Flash Shift Skip (Beginner) in Purple EMMI Introduction; (Intermediate) with normal bombs.
 - Added: Moving from Ferenia - Transport to Ghavoran to Pitfall Puzzle Room with Spin Boost, Flash Shift, or Speed Booster.
+- Added: Using Normal Bomb Jump with a Cross Bomb at the top, for sideways movement, to reach the item in Artaria Proto EMMI Introduction.
 - Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Changed: Simplified many room nodes and connections.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Changed: Using Flash Shift to collect the fan pickup in Burenia Hub to Dairon is now Advanced (from Beginner).
 - Changed: All three fan skips are now classified as Movement instead of Infinite Bomb Jump.
+- Changed: Convert most of the harder IBJ instances to new Diagonal Bomb Jump trick.
+- Changed: Increase difficulty of the few harder IBJs that weren't changed to Diagonal Bomb Jumps. This should better reflect the fact that Intermediate IBJ is applied for performing Simple IBJ with Normal Bombs.
 - Fixed: Correctly require Morph Ball in all cases where Power Bombs are used.
 - Fixed: Replace some instances of Beginner Infinite Bomb Jump in Ferenia with the Simple Infinite Bomb Jump template. This ensures that the missing bomb or cross bomb item is required.
 - Fixed: Reaching the upper tunnel in Ferenia - Speedboost Slopes Maze properly accounts for the ability to destroy the beamblocks using Wave Beam, Diffusion Beam, explosives, or Movement (Beginner)
+- Fixed: Usage of Infinite Bomb Jump in Ferenia Separate Tunnels Room now correctly requires the respective Bomb type. The trick is now set at different difficulty depending on which bomb type is being used.
 - Removed: Infinite Bomb Jump for reaching Wave Beam Tutorial from the cold rooms.
+- Removed: Shinespark in Ghavoran Total Recharge Station North. This one requires either short boost or charging speed in the room to the left. Removing this for now.
 
 ## [5.3.0] - 2023-01-05
 

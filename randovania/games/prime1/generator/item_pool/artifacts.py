@@ -25,10 +25,9 @@ def add_artifacts(resource_database: ResourceDatabase,
 
     first_automatic_artifact = artifacts_to_place
 
-    for automatic_artifact in range(first_automatic_artifact, 12):
-        initial_resources.add_resource_gain(
-            pickup_creator.create_artifact(automatic_artifact, artifact_minimum_progression,
-                                           resource_database).all_resources,
-        )
+    starting = [
+        pickup_creator.create_artifact(automatic_artifact, artifact_minimum_progression, resource_database)
+        for automatic_artifact in range(first_automatic_artifact, 12)
+    ]
 
-    return PoolResults(item_pool, {}, initial_resources)
+    return PoolResults(item_pool, {}, starting)

@@ -142,7 +142,7 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
             ],
             "starting_items": [
                 sm_starting_items_to_patcher(item, qty)
-                for item, qty in self.patches.starting_items.as_resource_gain()
+                for item, qty in self.patches.starting_resources().as_resource_gain()
             ],
             "specific_patches": specific_patches,
             "starting_conditions": starting_location_info

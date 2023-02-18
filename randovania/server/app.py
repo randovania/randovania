@@ -56,6 +56,9 @@ def create_app():
 
     @app.route("/")
     def index():
+        app.logger.info("Version checked by %s (%s)",
+                        flask.request.environ["REMOTE_ADDR"],
+                        flask.request.environ.get("HTTP_X_FORWARDED_FOR"))
         return randovania.VERSION
 
     server_version = randovania.VERSION

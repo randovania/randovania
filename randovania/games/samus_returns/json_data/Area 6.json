@@ -11,7 +11,6 @@
     "areas": {
         "Transport to Area 7": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -17950.0,
@@ -92,6 +91,7 @@
                         "actor_name": "LE_Item_014",
                         "actor_type": "item_senergytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 138,
                     "major_location": false,
                     "connections": {
@@ -121,6 +121,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea09"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Area 7",
                         "area_name": "Transport to Area 6"
@@ -173,6 +174,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation004"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Crumble Steps": {
                             "type": "and",
@@ -208,6 +210,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -243,6 +246,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -313,6 +317,7 @@
                         "actor_name": "DoorManicMinerBot",
                         "actor_type": "doorclosedcharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -326,6 +331,13 @@
                         "Before Diggernaut Area": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -342,6 +354,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 - Transport to Area 7 Grapple Block",
                     "connections": {
                         "Door to Diggernaut Hallway": {
@@ -363,6 +376,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 7 - Transport to Area 6": {
                             "type": "and",
@@ -516,6 +530,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Aeion Tank)": {
                             "type": "and",
@@ -785,6 +800,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 - Transport to Area 7 Grapple Block Bottom",
                     "connections": {
                         "Above Pickup": {
@@ -908,12 +924,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17400.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_ManicMiner"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Diggernaut Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Teleporter Room South": {
             "default_node": "Teleporter",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -6100.0,
@@ -959,6 +1000,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_07_01"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -1002,6 +1044,7 @@
                         "actor_name": "Door001",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1037,6 +1080,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1085,6 +1129,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 Teleporter Lower",
                     "connections": {
                         "Door to Crumble Steps": {
@@ -1099,8 +1144,7 @@
             }
         },
         "Omega Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": -2050.0,
@@ -1145,6 +1189,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1180,6 +1225,7 @@
                         "actor_name": "Door023",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1212,6 +1258,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1244,6 +1291,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Omega 1",
                     "connections": {
                         "Room Center": {
@@ -1259,15 +1307,18 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 30.662393162393073,
-                        "y": 7451.014957264957,
+                        "x": 800.0,
+                        "y": 7600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Omega_001_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Zeta Arena Access": {
                             "type": "and",
@@ -1321,7 +1372,6 @@
         },
         "Stolen Power Bomb Room": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -11800.0,
@@ -1390,6 +1440,7 @@
                         "actor_name": "LE_Item_008",
                         "actor_type": "item_powerbombtank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 133,
                     "major_location": false,
                     "connections": {
@@ -1444,6 +1495,7 @@
                         "actor_name": "LE_Item_012",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 136,
                     "major_location": false,
                     "connections": {
@@ -1538,6 +1590,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1670,6 +1723,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1707,6 +1761,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -1736,6 +1791,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 - Stolen Power Bomb Room Grapple Block",
                     "connections": {
                         "Door to Omega Arena Access (Bottom)": {
@@ -1822,6 +1878,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
@@ -2121,7 +2178,6 @@
         },
         "Connecting Shaft": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -6000.0,
@@ -2166,6 +2222,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -2201,6 +2258,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -2330,6 +2388,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -2355,7 +2414,6 @@
         },
         "Crumble Bridge": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 6550.0,
@@ -2400,6 +2458,7 @@
                         "actor_name": "LE_Item_009",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 134,
                     "major_location": false,
                     "connections": {
@@ -2429,6 +2488,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -2624,6 +2684,7 @@
                         "actor_name": "Door022",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -2703,6 +2764,7 @@
                         "actor_name": "LE_Item_011",
                         "actor_type": "item_energytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 140,
                     "major_location": true,
                     "connections": {
@@ -2728,6 +2790,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -2865,6 +2928,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
@@ -2954,6 +3018,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Chozo Seal East": {
                             "type": "and",
@@ -2981,8 +3046,7 @@
             }
         },
         "Stolen Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -11600.0,
@@ -3039,6 +3103,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -3207,6 +3272,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -3237,6 +3303,39 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8229.2,
+                        "y": 6900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_ManicMinerAbsorption"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Stolen Power Bomb Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -3244,7 +3343,6 @@
         },
         "Crumble Steps": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -8500.0,
@@ -3289,6 +3387,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -3473,6 +3572,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -3500,6 +3600,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -3535,6 +3636,7 @@
                         "actor_name": "LE_Item_015",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 141,
                     "major_location": false,
                     "connections": {
@@ -3675,8 +3777,7 @@
             }
         },
         "Diggernaut Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Before Diggernaut",
             "extra": {
                 "total_boundings": {
                     "x1": -21150.0,
@@ -3721,6 +3822,7 @@
                         "actor_name": "LE_PowerUp_Powerbomb",
                         "actor_type": "itemsphere_powerbomb"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 139,
                     "major_location": true,
                     "connections": {
@@ -3749,6 +3851,7 @@
                         "actor_name": "Door024",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -3758,7 +3861,15 @@
                     "default_dock_weakness": "Power Bomb Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door from Transport to Area 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door from Transport to Area 7": {
                     "node_type": "dock",
@@ -3776,6 +3887,7 @@
                         "actor_name": "DoorManicMinerBot",
                         "actor_type": "doorclosedcharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -3807,7 +3919,7 @@
                                 ]
                             }
                         },
-                        "Event - Diggernaut": {
+                        "Before Diggernaut": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3816,16 +3928,20 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Space",
+                                            "name": "Bomb",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
+                                        "type": "template",
+                                        "data": "Shoot Beam Burst"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Burst",
+                                            "name": "Phase",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3843,20 +3959,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Phase",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
+                                            "name": "Space",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3868,6 +3971,19 @@
                                             "name": "Spring",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Diggernaut",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3888,9 +4004,43 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Diggernaut",
                     "connections": {
                         "Pickup (Power Bomb)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Diggernaut": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18500.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Checkpoin_009"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door from Transport to Area 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Diggernaut": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3903,7 +4053,6 @@
         },
         "Diggernaut Hallway": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -21150.0,
@@ -3948,6 +4097,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4023,6 +4173,7 @@
                         "actor_name": "Door017",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4086,7 +4237,6 @@
         },
         "Diggernaut Shaft": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -22350.0,
@@ -4131,6 +4281,7 @@
                         "actor_name": "LE_Item_004",
                         "actor_type": "item_powerbombtank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 131,
                     "major_location": false,
                     "connections": {
@@ -4159,6 +4310,7 @@
                         "actor_name": "LE_Platform_AmmoCharge_002",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
                             "type": "or",
@@ -4304,6 +4456,7 @@
                         "actor_name": "Door017",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4339,6 +4492,7 @@
                         "actor_name": "Door024",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4371,6 +4525,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "and",
@@ -4392,7 +4547,6 @@
         },
         "Red Plant Tunnel": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -4500.0,
@@ -4437,6 +4591,7 @@
                         "actor_name": "LE_Item_001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 129,
                     "major_location": false,
                     "connections": {
@@ -4465,6 +4620,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4500,6 +4656,7 @@
                         "actor_name": "Door023",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4570,6 +4727,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4604,6 +4762,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 - Red Plant Tunnel Grapple Block",
                     "connections": {
                         "Next to Pickup": {
@@ -4628,6 +4787,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -4714,8 +4874,7 @@
             }
         },
         "Zeta Arena Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point (Left)",
             "extra": {
                 "total_boundings": {
                     "x1": 1950.0,
@@ -4760,6 +4919,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4773,6 +4933,13 @@
                         "Door to Zeta Arena": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4792,6 +4959,7 @@
                         "actor_name": "Door021",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4805,6 +4973,13 @@
                         "Door to Omega Arena": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Start Point (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4821,6 +4996,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4841,12 +5017,63 @@
                             }
                         }
                     }
+                },
+                "Start Point (Left)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": 7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Omega_001"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Omega Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point (Right)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3800.0,
+                        "y": 7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Zeta_001"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Zeta Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Zeta Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": 3900.0,
@@ -4891,6 +5118,7 @@
                         "actor_name": "Door021",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4926,6 +5154,7 @@
                         "actor_name": "Door022",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4958,6 +5187,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -4990,6 +5220,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Zeta 4",
                     "connections": {
                         "Room Center": {
@@ -5005,15 +5236,18 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5289.690170940171,
-                        "y": 7404.834401709402,
+                        "x": 5600.0,
+                        "y": 7600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Zeta_001_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Zeta Arena Access": {
                             "type": "resource",
@@ -5085,7 +5319,6 @@
         },
         "Transport to Area 5 Entrance": {
             "default_node": "Elevator to Area 5 Entrance - Chozo Seal",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -1200.0,
@@ -5191,6 +5424,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea06"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 5 - Entrance",
                         "area_name": "Chozo Seal"
@@ -5303,6 +5537,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation001"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 5 Entrance - Chozo Seal": {
                             "type": "or",
@@ -5415,6 +5650,7 @@
                         "actor_name": "Door019",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -5478,6 +5714,7 @@
                         "actor_name": "Door020",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -5536,6 +5773,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 - Transport to Area 5 Entrance Grapple Block",
                     "connections": {
                         "Door to Chozo Seal West (Top)": {
@@ -5550,8 +5788,7 @@
             }
         },
         "Chozo Seal East": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Chozo Seal",
             "extra": {
                 "total_boundings": {
                     "x1": 1900.0,
@@ -5620,6 +5857,7 @@
                         "actor_name": "LE_Item_010",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 135,
                     "major_location": false,
                     "connections": {
@@ -5662,6 +5900,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -5685,8 +5924,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5798.282218870454,
-                        "y": -563.220630132395,
+                        "x": 5798.28,
+                        "y": -563.22,
                         "z": 0.0
                     },
                     "description": "",
@@ -5695,8 +5934,10 @@
                     ],
                     "extra": {
                         "actor_name": "LE_PlatformADN_002",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_002"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Chozo Seal West": {
                             "type": "and",
@@ -5885,6 +6126,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -5987,6 +6229,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "DNA6E",
                     "connections": {
                         "Chozo Seal": {
@@ -6011,6 +6254,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 - Chozo Seal East Grapple Block",
                     "connections": {
                         "Tunnel to Chozo Seal West": {
@@ -6061,6 +6305,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
                             "type": "or",
@@ -6367,7 +6612,6 @@
         },
         "Omega Arena Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -2000.0,
@@ -6412,6 +6656,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -6528,6 +6773,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -6560,6 +6806,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -6575,7 +6822,6 @@
         },
         "Chozo Seal West": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -7700.0,
@@ -6684,6 +6930,7 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 130,
                     "major_location": false,
                     "connections": {
@@ -6709,6 +6956,7 @@
                         "actor_name": "LE_Item_007",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 132,
                     "major_location": false,
                     "connections": {
@@ -6739,6 +6987,7 @@
                         "actor_name": "LE_Item_013",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 137,
                     "major_location": false,
                     "connections": {
@@ -6774,8 +7023,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -231.55036013697008,
-                        "y": 1943.20167670327,
+                        "x": -231.55,
+                        "y": 1943.2,
                         "z": 0.0
                     },
                     "description": "",
@@ -6784,8 +7033,10 @@
                     ],
                     "extra": {
                         "actor_name": "LE_PlatformADN_001",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_001"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Teleporter Room North": {
                             "type": "and",
@@ -6845,6 +7096,7 @@
                         "actor_name": "LE_Platform_AmmoCharge_001",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Next to Bottom Puzzle": {
                             "type": "or",
@@ -6906,6 +7158,7 @@
                         "actor_name": "LE_Platform_EnergyCharge",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -6983,6 +7236,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation006"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Missile Tank Save)": {
                             "type": "and",
@@ -7063,6 +7317,7 @@
                         "actor_name": "Door001",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7098,6 +7353,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7133,6 +7389,7 @@
                         "actor_name": "Door018",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7168,6 +7425,7 @@
                         "actor_name": "Door019",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7281,6 +7539,7 @@
                         "actor_name": "Door020",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7313,6 +7572,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7347,6 +7607,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "DNA6W",
                     "connections": {
                         "Chozo Seal": {
@@ -7371,6 +7632,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank Ceiling)": {
                             "type": "and",
@@ -7636,7 +7898,6 @@
         },
         "Teleporter Room North": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -9200.0,
@@ -7726,6 +7987,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation005"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Teleporter": {
                             "type": "resource",
@@ -7776,6 +8038,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_07_02"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -7819,6 +8082,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7854,6 +8118,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7896,6 +8161,7 @@
                         "actor_name": "Door018",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 6",
@@ -7928,6 +8194,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 6 Teleporter Upper",
                     "connections": {
                         "Save Station": {

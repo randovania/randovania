@@ -11,7 +11,6 @@
     "areas": {
         "Chozo Seal": {
             "default_node": "Elevator To Area 1 - Chozo Seal",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 19000.0,
@@ -76,6 +75,7 @@
                         "actor_name": "LE_Item_005",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 52,
                     "major_location": false,
                     "connections": {
@@ -107,6 +107,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea01"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 1",
                         "area_name": "Chozo Seal"
@@ -140,6 +141,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Area 3 - Exterior",
                         "area_name": "Transport to Area 2 Entrance"
@@ -175,6 +177,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation002"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator To Area 1 - Chozo Seal": {
                             "type": "and",
@@ -205,8 +208,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 22436.592277718737,
-                        "y": -4258.678710591569,
+                        "x": 22431.46,
+                        "y": -4217.59,
                         "z": 0.0
                     },
                     "description": "",
@@ -215,8 +218,10 @@
                     ],
                     "extra": {
                         "actor_name": "LE__Platform_ChozoUnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -422,6 +427,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -457,6 +463,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -492,6 +499,7 @@
                         "actor_name": "HiddenPowerup001",
                         "actor_type": "item_powerbombtank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 54,
                     "major_location": false,
                     "connections": {
@@ -514,6 +522,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "DNA2",
                     "connections": {
                         "Chozo Seal": {
@@ -528,8 +537,7 @@
             }
         },
         "Teleporter Room": {
-            "default_node": "Teleporter",
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 13600.0,
@@ -590,6 +598,7 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 51,
                     "major_location": false,
                     "connections": {
@@ -619,6 +628,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_02_01"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -662,6 +672,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -699,6 +710,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -795,6 +807,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -806,6 +819,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Below Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -827,6 +847,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 2 Entrance Teleporter",
                     "connections": {
                         "Below Teleporter": {
@@ -842,8 +863,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 15591.705041917581,
-                        "y": -3466.1943558861735,
+                        "x": 15572.09,
+                        "y": -3371.16,
                         "z": 0.0
                     },
                     "description": "",
@@ -851,6 +872,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -892,12 +914,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14300.0,
+                        "y": -800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_002"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Transport to Area 2 Exterior": {
             "default_node": "Elevator to Area 2 Exterior - Outer Hub",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 3900.0,
@@ -950,10 +997,11 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 50,
                     "major_location": false,
                     "connections": {
-                        "Above Chozo Head": {
+                        "Left of Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -978,6 +1026,7 @@
                         "actor_name": "LE_SpecialAbility_EnergyShield",
                         "actor_type": "powerup_energyshield"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 53,
                     "major_location": true,
                     "connections": {
@@ -990,7 +1039,7 @@
                                 "negate": false
                             }
                         },
-                        "Above Chozo Head": {
+                        "Left of Statue": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1018,6 +1067,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea02A"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 2 - Exterior",
                         "area_name": "Outer Hub"
@@ -1050,6 +1100,7 @@
                         "actor_name": "Door001",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1067,6 +1118,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Right of Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1087,6 +1145,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1104,7 +1163,7 @@
                                 "items": []
                             }
                         },
-                        "Above Chozo Head": {
+                        "Left of Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1113,19 +1172,22 @@
                         }
                     }
                 },
-                "Above Chozo Head": {
+                "Left of Statue": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6408.23,
-                        "y": -1477.54,
+                        "x": 5300.0,
+                        "y": -2300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_002"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -1153,7 +1215,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Lightning Armor)": {
+                        "Door to Main Shaft (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1172,12 +1234,37 @@
                             }
                         }
                     }
+                },
+                "Right of Statue": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7400.0,
+                        "y": -2300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Bestowal"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Main Shaft (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Main Shaft": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 8700.0,
@@ -1222,6 +1309,7 @@
                         "actor_name": "Door001",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1370,6 +1458,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1402,6 +1491,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1441,6 +1531,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1464,7 +1555,6 @@
         },
         "Water Storage": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 10300.0,
@@ -1509,6 +1599,7 @@
                         "actor_name": "LE_Item_001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 49,
                     "major_location": false,
                     "connections": {
@@ -1534,6 +1625,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1592,8 +1684,7 @@
             }
         },
         "Alpha Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Inside Arena",
             "extra": {
                 "total_boundings": {
                     "x1": 10400.0,
@@ -1638,6 +1729,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1670,6 +1762,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 2 - Entrance",
@@ -1700,6 +1793,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Outside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1716,6 +1816,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 6",
                     "connections": {
                         "Inside Arena": {
@@ -1731,15 +1832,18 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 12428.59417095273,
-                        "y": -1345.754755490244,
+                        "x": 11600.0,
+                        "y": -1200.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_002_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Teleporter Room": {
                             "type": "resource",
@@ -1774,6 +1878,32 @@
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
+                        }
+                    }
+                },
+                "Outside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10800.0,
+                        "y": -1200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_002B"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Main Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

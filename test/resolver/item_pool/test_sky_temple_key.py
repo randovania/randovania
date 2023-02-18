@@ -14,8 +14,8 @@ def test_sky_temple_key_distribution_logic_all_bosses_valid(echoes_game_descript
                                                                     LayoutSkyTempleKeyMode.ALL_BOSSES)
 
     # Assert
-    assert results.pickups == []
-    assert results.initial_resources == ResourceCollection.from_dict(echoes_game_description.resource_database, {})
+    assert results.to_place == []
+    assert results.starting == []
     assert list(results.assignment.keys()) == sky_temple_keys._GUARDIAN_INDICES + sky_temple_keys._SUB_GUARDIAN_INDICES
 
 
@@ -26,11 +26,11 @@ def test_sky_temple_key_distribution_logic_all_guardians_valid(echoes_game_descr
                                                                     LayoutSkyTempleKeyMode.ALL_GUARDIANS)
 
     # Assert
-    assert results.pickups == []
-    assert results.initial_resources == ResourceCollection.from_dict(db, {
-        db.get_item(f'TempleKey{i}'): 1
-        for i in range(4, 10)
-    })
+    assert results.to_place == []
+    assert results.starting == [
+        pickup_creator.create_sky_temple_key(i, db)
+        for i in range(3, 9)
+    ]
     assert list(results.assignment.keys()) == sky_temple_keys._GUARDIAN_INDICES
 
 
@@ -41,14 +41,13 @@ def test_sky_temple_key_distribution_logic_with_quantity(echoes_game_description
     results = sky_temple_keys.add_sky_temple_key_distribution_logic(echoes_game_description,
                                                                     LayoutSkyTempleKeyMode(quantity))
 
-    # ItemResourceInfo(f'Sky Temple Key {i}', , 1, frozendict({"item_id": item_ids[i - 1]})): 1
     # Assert
-    assert results.pickups == [
+    assert results.to_place == [
         pickup_creator.create_sky_temple_key(i, db)
         for i in range(quantity)
     ]
     assert results.assignment == {}
-    assert results.initial_resources == ResourceCollection.from_dict(db, {
-        db.get_item(f'TempleKey{i}'): 1
-        for i in range(quantity + 1, 10)
-    })
+    assert results.starting == [
+        pickup_creator.create_sky_temple_key(i, db)
+        for i in range(quantity, 9)
+    ]

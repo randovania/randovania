@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 14,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -1159,6 +1159,11 @@
             "FlashSkip": {
                 "long_name": "Flash Shift Skip",
                 "description": "With certain items or movement techniques, the Shutter Platforms can be bypassed without the use of Flash Shift.",
+                "extra": {}
+            },
+            "DBJ": {
+                "long_name": "Diagonal Bomb Jump",
+                "description": "This is a special kind of bomb jump where you gain diagonal momentum from bombs that explode sligtly to the side.",
                 "extra": {}
             }
         },
@@ -4584,6 +4589,32 @@
                         }
                     ]
                 }
+            },
+            "Lay Normal Bomb": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Bomb",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -4649,7 +4680,8 @@
     ],
     "starting_location": {
         "world_name": "Artaria",
-        "area_name": "Intro Room"
+        "area_name": "Intro Room",
+        "node_name": "Start Point"
     },
     "initial_states": {},
     "minimal_logic": null,

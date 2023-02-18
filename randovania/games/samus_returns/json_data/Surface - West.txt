@@ -1,10 +1,9 @@
 ----------------
 Landing Site
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
 Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
 Extra - asset_id: collision_camera_000
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
@@ -28,6 +27,7 @@ Extra - asset_id: collision_camera_000
 
 > Top of Mountain; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_Ridley
   > Save Station
       Trivial
   > Event - Proteus Ridley
@@ -59,7 +59,6 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Transport to Area 8
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -40700.0, 'x2': -22900.0, 'y1': -100.0, 'y2': 4900.0}
 Extra - polygon: [[-40700.0, 4900.0], [-40700.0, 100.0], [-37000.0, 100.0], [-36500.0, -100.0], [-22900.0, -100.0], [-22900.0, 4900.0]]
 Extra - asset_id: collision_camera_017
@@ -75,7 +74,7 @@ Extra - asset_id: collision_camera_017
               Grapple Beam
               Lighting Armor and Baby Metroid
 
-> Elevator to Area 8 - Transport to Surface (West); Heals? False; Spawn Point
+> Elevator to Area 8 - Transport to Surface (West); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea10

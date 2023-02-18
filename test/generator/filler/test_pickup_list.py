@@ -9,7 +9,7 @@ from randovania.game_description.requirements.requirement_set import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.item_pool import pickup_creator
@@ -173,7 +173,7 @@ async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_descri
     config = dataclasses.replace(
         config,
         starting_location=StartingLocationList.with_elements([
-            AreaIdentifier("Temple Grounds", "Fake Quad Arena")
+            NodeIdentifier.create("Temple Grounds", "Fake Quad Arena", "Before Quadraxis")
         ], small_echoes_game_description.game),
         major_items_configuration=config.major_items_configuration.replace_state_for_item(
             config.major_items_configuration.get_item_with_name("Missile Launcher"),

@@ -1,10 +1,9 @@
 ----------------
 Transport to Area 5 Entrance (East)
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -9200.0, 'x2': -1900.0, 'y1': -700.0, 'y2': 1800.0}
 Extra - polygon: [[-9200.0, 1800.0], [-9200.0, 100.0], [-7200.0, 100.0], [-5600.0, -200.0], [-4400.0, -700.0], [-1900.0, -700.0], [-1900.0, 1000.0], [-3400.0, 1000.0], [-3400.0, 1800.0]]
 Extra - asset_id: collision_camera_002
-> Elevator to Area 5 Entrance - Transport to Area 5 Interior (East); Heals? False; Spawn Point
+> Elevator to Area 5 Entrance - Transport to Area 5 Interior (East); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 5 - Entrance - Transport to Area 5 Interior (East)
   * Extra - actor_name: LE_Platform_Elevator_FromArea06A_01
@@ -33,7 +32,6 @@ Extra - asset_id: collision_camera_002
 
 ----------------
 Transport Connector
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -18400.0, 'x2': -9100.0, 'y1': 200.0, 'y2': 6100.0}
 Extra - polygon: [[-18400.0, 6100.0], [-18400.0, 3700.0], [-15100.0, 3700.0], [-11600.0, 2000.0], [-11600.0, 200.0], [-9100.0, 200.0], [-9100.0, 6100.0]]
 Extra - asset_id: collision_camera_003
@@ -45,7 +43,7 @@ Extra - asset_id: collision_camera_003
   > Underwater
       Destroy Bomb Block
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
@@ -73,9 +71,9 @@ Extra - asset_id: collision_camera_003
   > Save Station
       Morph Ball
 
-> Tunnel to Gamma Arena Access; Heals? False
+> Tunnel to Gamma+ Arena Access; Heals? False
   * Layers: default
-  * Tunnel to Gamma Arena Access/Tunnel to Transport Connector
+  * Tunnel to Gamma+ Arena Access/Tunnel to Transport Connector
   > Right of Water
       Morph Ball and Phase Drift and Movement (Intermediate)
   > Underwater
@@ -110,7 +108,7 @@ Extra - asset_id: collision_camera_003
 
 > Right of Water; Heals? False
   * Layers: default
-  > Tunnel to Gamma Arena Access
+  > Tunnel to Gamma+ Arena Access
       All of the following:
           Morph Ball
           Any of the following:
@@ -126,7 +124,7 @@ Extra - asset_id: collision_camera_003
   * Layers: default
   > Pickup (Missile Tank)
       Destroy Bomb Block
-  > Tunnel to Gamma Arena Access
+  > Tunnel to Gamma+ Arena Access
       Gravity Suit and Morph Ball and Walljump (Intermediate)
   > Right of Water
       Any of the following:
@@ -137,11 +135,10 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Transport to Area 5 Exterior (East)
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -3500.0, 'x2': -1100.0, 'y1': 1100.0, 'y2': 5000.0}
 Extra - polygon: [[-3500.0, 5000.0], [-3500.0, 1100.0], [-1700.0, 1100.0], [-1700.0, 3700.0], [-1100.0, 3800.0], [-1100.0, 5000.0]]
 Extra - asset_id: collision_camera_005
-> Transport to Area 5 Exterior - Tower; Heals? False; Spawn Point
+> Transport to Area 5 Exterior - Tower; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 5 - Exterior - Tower
   * Extra - actor_name: LE_Platform_Elevator_FromArea06B_01
@@ -188,7 +185,7 @@ Extra - asset_id: collision_camera_006
   * Pickup 125; Major Location? True
   * Extra - actor_name: LE_PowerUp_PlasmaBeam
   * Extra - actor_type: itemsphere_plasmabeam
-  > Door from Grapple Shuffler
+  > Next to Pickup
       Trivial
 
 > Door to Autrack Tower; Heals? False
@@ -196,7 +193,7 @@ Extra - asset_id: collision_camera_006
   * Plasma Beam Door to Autrack Tower/Door from Plasma Beam Room
   * Extra - actor_name: Door005
   * Extra - actor_type: doorclosedpower
-  > Door from Grapple Shuffler
+  > Next to Pickup
       Trivial
 
 > Door from Grapple Shuffler; Heals? False
@@ -204,9 +201,17 @@ Extra - asset_id: collision_camera_006
   * Access Closed to Grapple Shuffler/Door to Plasma Beam Room
   * Extra - actor_name: Door006
   * Extra - actor_type: doorclosedpower
+  > Next to Pickup
+      Trivial
+
+> Next to Pickup; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_006
   > Pickup (Plasma Beam)
       Trivial
   > Door to Autrack Tower
+      Trivial
+  > Door from Grapple Shuffler
       Trivial
 
 ----------------
@@ -356,7 +361,7 @@ Extra - asset_id: collision_camera_009
   * Pickup 124; Major Location? True
   * Extra - actor_name: LE_PowerUp_GravitySuite
   * Extra - actor_type: itemsphere_gravitysuit
-  > Door from Underwater Path
+  > Next to Pickup
       Trivial
 
 > Door to Underwater Path (Bottom); Heals? False
@@ -380,15 +385,23 @@ Extra - asset_id: collision_camera_009
   * Access Closed to Underwater Path/Door to Gravity Suit Room (Top)
   * Extra - actor_name: Door009
   * Extra - actor_type: doorclosedpower
-  > Door to Underwater Path (Top)
-      Morph Ball
-  > Event - Gravity Suit Room Pickup
+  > Next to Pickup
       Trivial
 
 > Event - Gravity Suit Room Pickup; Heals? False
   * Layers: default
   * Event Area 5 (Interior) - Gravity Suit Room Pickup
   > Pickup (Gravity Suit)
+      Trivial
+
+> Next to Pickup; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_007
+  > Door to Underwater Path (Top)
+      Morph Ball
+  > Door from Underwater Path
+      Trivial
+  > Event - Gravity Suit Room Pickup
       Trivial
 
 ----------------
@@ -503,11 +516,10 @@ Extra - asset_id: collision_camera_012
 
 ----------------
 Transport to Area 5 Entrance (West)
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -12800.0, 'x2': -11500.0, 'y1': 141.14599609375, 'y2': 900.0}
 Extra - polygon: [[-12800.0, 900.0], [-12800.0, 141.14599609375], [-11500.0, 141.14599609375], [-11500.0, 900.0]]
 Extra - asset_id: collision_camera_015
-> Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West); Heals? False; Spawn Point
+> Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 5 - Entrance - Transport to Area 5 Interior (West)
   * Extra - actor_name: LE_Platform_Elevator_FromArea06A_02
@@ -604,6 +616,8 @@ Extra - asset_id: collision_camera_017
               Lighting Armor and Simple IBJ
   > Above Center Platform
       Lighting Armor and Screw Attack and Use Spider Ball
+  > Start Point
+      Trivial
 
 > Center Platform; Heals? False
   * Layers: default
@@ -664,13 +678,18 @@ Extra - asset_id: collision_camera_017
           Lighting Armor and Use Spider Ball
           Screw Attack or Melee Clip (Intermediate)
 
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Zeta_002
+  > Door to Zeta+ Arena
+      Trivial
+
 ----------------
 Transport to Area 5 Exterior (West)
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -9050.0, 'x2': -5000.0, 'y1': 8100.0, 'y2': 9400.0}
 Extra - polygon: [[-9050.0, 9400.0], [-9050.0, 8700.0], [-7600.0, 8700.0], [-7600.0, 8100.0], [-5000.0, 8100.0], [-5000.0, 9400.0]]
 Extra - asset_id: collision_camera_018
-> Elevator to Area 5 Exterior - Transport to Area 5 Interior (West); Heals? False; Spawn Point
+> Elevator to Area 5 Exterior - Transport to Area 5 Interior (West); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 5 - Exterior - Transport to Area 5 Interior
   * Extra - actor_name: LE_Platform_Elevator_FromArea06B_02
@@ -805,25 +824,41 @@ Extra - asset_id: collision_camera_021
       Morph Ball and Climb Rooms Vertically (No High Jump)
 
 ----------------
-Gamma Arena
+Gamma+ Arena
 Extra - total_boundings: {'x1': -27100.0, 'x2': -21900.0, 'y1': 3400.0, 'y2': 6000.0}
 Extra - polygon: [[-27100.0, 6000.0], [-27100.0, 3400.0], [-21900.0, 3400.0], [-21900.0, 6000.0]]
 Extra - asset_id: collision_camera_022
-> Door to Gamma Arena Access; Heals? False
+> Door to Gamma+ Arena Access; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena Access/Door to Gamma Arena
+  * Power Beam Door to Gamma+ Arena Access/Door to Gamma+ Arena
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
-  > Event - Gamma Metroid+
-      Varia Suit and Defeat Gamma Metroid
+  > Outside Arena
+      Varia Suit
 
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Interior) - Gamma Metroid+
-  > Door to Gamma Arena Access
+  > Inside Arena
+      Varia Suit
+
+> Inside Arena; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_001_Checkpoint
+  > Event - Gamma Metroid+
+      Varia Suit and Defeat Gamma Metroid+
+  > Outside Arena
       All of the following:
-          Varia Suit
+          Varia Suit and After Area 5 (Interior) - Gamma Metroid+
           Space Jump or Can Spiderspark or Simple IBJ
+
+> Outside Arena; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_001
+  > Door to Gamma+ Arena Access
+      Varia Suit
+  > Inside Arena
+      Varia Suit
 
 ----------------
 Teleporter Room
@@ -838,7 +873,7 @@ Extra - asset_id: collision_camera_023
   > Door to Grapple Shuffler (Bottom)
       Trivial
 
-> Teleporter; Heals? False; Spawn Point
+> Teleporter; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by After Area 5 (Interior) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_06C_001
@@ -897,25 +932,34 @@ Extra - asset_id: collision_camera_025
   * Power Beam Door to Zeta+ Arena Access/Door to Zeta+ Arena
   * Extra - actor_name: Door022
   * Extra - actor_type: doorpowerpower
-  > Event - Zeta Metroid+
-      Defeat Zeta Metroid
+  > Room Center
+      Trivial
 
 > Event - Zeta Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Interior) - Zeta Metroid+
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
   > Door to Zeta+ Arena Access
-      Any of the following:
-          High Jump Boots or Space Jump or Super Jump (Expert) or Can Spiderspark or Simple IBJ
-          Morph Ball and Unmorph Extend (Beginner)
+      All of the following:
+          After Area 5 (Interior) - Zeta Metroid+
+          Any of the following:
+              High Jump Boots or Space Jump or Super Jump (Expert) or Can Spiderspark or Simple IBJ
+              Morph Ball and Unmorph Extend (Beginner)
+  > Event - Zeta Metroid+
+      Defeat Zeta Metroid
 
 ----------------
-Gamma Arena Access
+Gamma+ Arena Access
 Extra - total_boundings: {'x1': -22000.0, 'x2': -18300.0, 'y1': 3700.0, 'y2': 6000.0}
 Extra - polygon: [[-22000.0, 6000.0], [-22000.0, 3700.0], [-18300.0, 3700.0], [-18300.0, 6000.0]]
 Extra - asset_id: collision_camera_026
-> Door to Gamma Arena; Heals? False
+> Door to Gamma+ Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena/Door to Gamma Arena Access
+  * Power Beam Door to Gamma+ Arena/Door to Gamma+ Arena Access
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Tunnel to Transport Connector
@@ -927,8 +971,8 @@ Extra - asset_id: collision_camera_026
 
 > Tunnel to Transport Connector; Heals? False
   * Layers: default
-  * Tunnel to Transport Connector/Tunnel to Gamma Arena Access
-  > Door to Gamma Arena
+  * Tunnel to Transport Connector/Tunnel to Gamma+ Arena Access
+  > Door to Gamma+ Arena
       Any of the following:
           Spiderspark (Beginner) and Can Spiderspark
           All of the following:

@@ -11,7 +11,6 @@
     "areas": {
         "Transport to Area 5 Entrance (East)": {
             "default_node": "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -9200.0,
@@ -77,6 +76,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea06A_01"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 5 - Entrance",
                         "area_name": "Transport to Area 5 Interior (East)"
@@ -118,6 +118,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -155,6 +156,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -178,7 +180,6 @@
         },
         "Transport Connector": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -18400.0,
@@ -235,6 +236,7 @@
                         "actor_name": "LE_Item_004",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 122,
                     "major_location": false,
                     "connections": {
@@ -261,6 +263,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation001"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Transport to Area 5 Entrance (East)": {
                             "type": "resource",
@@ -319,6 +322,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -356,6 +360,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -377,7 +382,7 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Arena Access": {
+                "Tunnel to Gamma+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -390,10 +395,11 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "Gamma Arena Access",
+                        "area_name": "Gamma+ Arena Access",
                         "node_name": "Tunnel to Transport Connector"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -459,6 +465,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 5 (Interior) - Transport Connector Grapple Block",
                     "connections": {
                         "Left of Grapple Block": {
@@ -483,6 +490,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -592,6 +600,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Grapple Block": {
                             "type": "resource",
@@ -667,8 +676,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Gamma Arena Access": {
+                        "Tunnel to Gamma+ Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -796,12 +806,13 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         },
-                        "Tunnel to Gamma Arena Access": {
+                        "Tunnel to Gamma+ Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -910,7 +921,6 @@
         },
         "Transport to Area 5 Exterior (East)": {
             "default_node": "Transport to Area 5 Exterior - Tower",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -3500.0,
@@ -964,6 +974,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea062B_01"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Tower"
@@ -1010,6 +1021,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1045,6 +1057,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1080,6 +1093,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1102,8 +1116,7 @@
             }
         },
         "Plasma Beam Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Next to Pickup",
             "extra": {
                 "total_boundings": {
                     "x1": -7550.0,
@@ -1148,10 +1161,11 @@
                         "actor_name": "LE_PowerUp_PlasmaBeam",
                         "actor_type": "itemsphere_plasmabeam"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 125,
                     "major_location": true,
                     "connections": {
-                        "Door from Grapple Shuffler": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1176,6 +1190,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1186,7 +1201,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Grapple Shuffler": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1211,6 +1226,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1220,6 +1236,32 @@
                     "default_dock_weakness": "Access Closed",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Next to Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6900.0,
+                        "y": 2500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_006"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Plasma Beam)": {
                             "type": "and",
@@ -1234,6 +1276,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door from Grapple Shuffler": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1241,7 +1290,6 @@
         },
         "Grapple Shuffler": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5100.0,
@@ -1286,6 +1334,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1321,6 +1370,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1414,6 +1464,7 @@
                         "actor_name": "Door020",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1568,6 +1619,7 @@
                         "actor_name": "Door021",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -1603,6 +1655,7 @@
                         "actor_name": "HiddenPowerup002",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 127,
                     "major_location": false,
                     "connections": {
@@ -1777,6 +1830,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 5 (Interior) - Grapple Shuffler Grapple Block",
                     "connections": {
                         "Above Pickup": {
@@ -1801,6 +1855,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Teleporter Room (Bottom)": {
                             "type": "resource",
@@ -1903,7 +1958,6 @@
         },
         "Autrack Tower": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -9400.0,
@@ -1948,6 +2002,7 @@
                         "actor_name": "LE_Platform_EnergyRecharge_001",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Above Crumble Blocks": {
                             "type": "template",
@@ -1971,6 +2026,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2003,6 +2059,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2035,6 +2092,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2069,6 +2127,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "resource",
@@ -2236,6 +2295,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Teleporter Room": {
                             "type": "and",
@@ -2284,8 +2344,7 @@
             }
         },
         "Gravity Suit Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Next to Pickup",
             "extra": {
                 "total_boundings": {
                     "x1": -7500.0,
@@ -2330,10 +2389,11 @@
                         "actor_name": "LE_PowerUp_GravitySuite",
                         "actor_type": "itemsphere_gravitysuit"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 124,
                     "major_location": true,
                     "connections": {
-                        "Door from Underwater Path": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2358,6 +2418,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2393,6 +2454,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2428,6 +2490,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2438,16 +2501,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path (Top)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Gravity Suit Room Pickup": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2469,9 +2523,52 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 5 (Interior) - Gravity Suit Room Pickup",
                     "connections": {
                         "Pickup (Gravity Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6900.0,
+                        "y": 7400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_007"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Underwater Path (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door from Underwater Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Gravity Suit Room Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2484,7 +2581,6 @@
         },
         "Upper Path Storage": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -8900.0,
@@ -2529,6 +2625,7 @@
                         "actor_name": "LE_Item_001",
                         "actor_type": "item_powerbombtank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 119,
                     "major_location": false,
                     "connections": {
@@ -2557,6 +2654,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2580,7 +2678,6 @@
         },
         "Upper Path Left": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -8200.0,
@@ -2625,6 +2722,7 @@
                         "actor_name": "LE_Item_002",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 120,
                     "major_location": false,
                     "connections": {
@@ -2653,6 +2751,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2709,6 +2808,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2772,6 +2872,7 @@
                         "actor_name": "HiddenPowerup003",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 128,
                     "major_location": false,
                     "connections": {
@@ -2797,6 +2898,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -2821,6 +2923,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -2921,7 +3024,6 @@
         },
         "Upper Path Right": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -6700.0,
@@ -2966,6 +3068,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3022,6 +3125,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3075,6 +3179,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3090,7 +3195,6 @@
         },
         "Transport to Area 5 Entrance (West)": {
             "default_node": "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -12800.0,
@@ -3136,6 +3240,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea06A_02"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 5 - Entrance",
                         "area_name": "Transport to Area 5 Interior (West)"
@@ -3168,6 +3273,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3191,7 +3297,6 @@
         },
         "Water Drop": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -1200.0,
@@ -3236,6 +3341,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3369,6 +3475,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3508,8 +3615,7 @@
             }
         },
         "Zeta+ Arena Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 3200.0,
@@ -3554,6 +3660,7 @@
                         "actor_name": "LE_Item_005",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 123,
                     "major_location": false,
                     "connections": {
@@ -3608,6 +3715,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3721,6 +3829,7 @@
                         "actor_name": "Door022",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -3849,6 +3958,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3865,6 +3981,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Zeta+ Arena": {
                             "type": "and",
@@ -4120,6 +4237,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Water Drop": {
                             "type": "and",
@@ -4296,6 +4414,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -4474,12 +4593,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13600.0,
+                        "y": 2000.0,
+                        "z": -14.19
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Zeta_002"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Zeta+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Transport to Area 5 Exterior (West)": {
             "default_node": "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -9050.0,
@@ -4533,6 +4677,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea06B_02"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Area 5 - Exterior",
                         "area_name": "Transport to Area 5 Interior"
@@ -4565,6 +4710,7 @@
                         "actor_name": "Door018",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -4639,6 +4785,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -4668,6 +4815,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -4702,6 +4850,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -4734,6 +4883,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -4757,7 +4907,6 @@
         },
         "Underwater Path": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5100.0,
@@ -4802,6 +4951,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -4986,6 +5136,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5021,6 +5172,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5056,6 +5208,7 @@
                         "actor_name": "Door018",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5091,6 +5244,7 @@
                         "actor_name": "HP_ChozoHologram_001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 126,
                     "major_location": false,
                     "connections": {
@@ -5113,6 +5267,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -5184,7 +5339,6 @@
         },
         "Side Path": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5100.0,
@@ -5229,6 +5383,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5263,6 +5418,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5298,9 +5454,8 @@
                 }
             }
         },
-        "Gamma Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+        "Gamma+ Arena": {
+            "default_node": "Outside Arena",
             "extra": {
                 "total_boundings": {
                     "x1": -27100.0,
@@ -5329,7 +5484,7 @@
                 "asset_id": "collision_camera_022"
             },
             "nodes": {
-                "Door to Gamma Arena Access": {
+                "Door to Gamma+ Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5345,35 +5500,24 @@
                         "actor_name": "Door019",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "Gamma Arena Access",
-                        "node_name": "Door to Gamma Arena"
+                        "area_name": "Gamma+ Arena Access",
+                        "node_name": "Door to Gamma+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Gamma Metroid+": {
-                            "type": "and",
+                        "Outside Arena": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma Metroid"
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5391,9 +5535,38 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Gamma 12",
                     "connections": {
-                        "Door to Gamma Arena Access": {
+                        "Inside Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -24413.86,
+                        "y": 4511.16,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Gamma_001_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gamma Metroid+": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5403,6 +5576,36 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid+"
+                                    }
+                                ]
+                            }
+                        },
+                        "Outside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gamma 12",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5436,12 +5639,48 @@
                             }
                         }
                     }
+                },
+                "Outside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22800.0,
+                        "y": 4900.0,
+                        "z": -14.19
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Gamma_001"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma+ Arena Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
         "Teleporter Room": {
             "default_node": "Teleporter",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -7550.0,
@@ -5486,6 +5725,7 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 121,
                     "major_location": false,
                     "connections": {
@@ -5515,6 +5755,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_06C_001"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -5558,6 +5799,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5593,6 +5835,7 @@
                         "actor_name": "Door020",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5710,6 +5953,7 @@
                         "actor_name": "Door021",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5758,6 +6002,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 5 Interior Teleporter",
                     "connections": {
                         "Door to Grapple Shuffler (Top)": {
@@ -5772,8 +6017,7 @@
             }
         },
         "Zeta+ Arena": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": 13950.0,
@@ -5818,6 +6062,7 @@
                         "actor_name": "Door022",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
@@ -5828,9 +6073,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Zeta Metroid+": {
-                            "type": "template",
-                            "data": "Defeat Zeta Metroid"
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5847,50 +6095,49 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Zeta 2",
                     "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14900.0,
+                        "y": 1300.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Zeta+ Arena Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Boots",
+                                            "type": "events",
+                                            "name": "Zeta 2",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Spiderspark"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SuperJump",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -5898,7 +6145,16 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Morph",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -5907,9 +6163,43 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 1,
+                                                        "name": "SuperJump",
+                                                        "amount": 4,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5917,14 +6207,17 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Zeta Metroid+": {
+                            "type": "template",
+                            "data": "Defeat Zeta Metroid"
                         }
                     }
                 }
             }
         },
-        "Gamma Arena Access": {
+        "Gamma+ Arena Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -22000.0,
@@ -5953,7 +6246,7 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Door to Gamma Arena": {
+                "Door to Gamma+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5969,11 +6262,12 @@
                         "actor_name": "Door019",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
-                        "area_name": "Gamma Arena",
-                        "node_name": "Door to Gamma Arena Access"
+                        "area_name": "Gamma+ Arena",
+                        "node_name": "Door to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -6066,17 +6360,18 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 5 - Interior",
                         "area_name": "Transport Connector",
-                        "node_name": "Tunnel to Gamma Arena Access"
+                        "node_name": "Tunnel to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Door to Gamma+ Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,

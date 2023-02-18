@@ -1,6 +1,5 @@
 ----------------
 Landing Site
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
 Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
 Extra - asset_id: collision_camera_000
@@ -30,7 +29,7 @@ Extra - asset_id: collision_camera_000
   > Ship
       Trivial
 
-> Ship; Heals? True; Spawn Point
+> Ship; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: StartPoint0
   * Extra - actor_type: weightactivatedplatform
@@ -98,10 +97,17 @@ Extra - asset_id: collision_camera_002
       Morph Ball
   > Ammo Recharge Station
       Trivial
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Morphball
+  > Door to Morph Ball Room
+      Trivial
 
 ----------------
 Morph Ball Room
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 9300.0, 'x2': 12600.0, 'y1': -5400.0, 'y2': -2900.0}
 Extra - polygon: [[9300.0, -2900.0], [9300.0, -4400.0], [10200.0, -4610.0], [10200.0, -5400.0], [12600.0, -5400.0], [12600.0, -3800.0], [11250.0, -3800.0], [11250.0, -2900.0]]
 Extra - asset_id: collision_camera_003
@@ -113,7 +119,7 @@ Extra - asset_id: collision_camera_003
   > Door to Melee Tutorial Pathway
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
@@ -137,6 +143,8 @@ Extra - asset_id: collision_camera_003
       Trivial
   > Save Station
       Morph Ball
+  > Start Point
+      Trivial
 
 > Door to Chozo Seal; Heals? False
   * Layers: default
@@ -144,6 +152,12 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
   > Save Station
+      Trivial
+
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_004
+  > Door to Melee Tutorial Pathway
       Trivial
 
 ----------------
@@ -159,10 +173,11 @@ Extra - asset_id: collision_camera_004
   > Tunnel to Transport to Area 1
       Destroy Bomb Block
 
-> Chozo Seal; Heals? False
+> Chozo Seal; Heals? False; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Door to Morph Ball Room
       Trivial
   > Door to Scan Pulse Room
@@ -220,7 +235,6 @@ Extra - asset_id: collision_camera_004
 
 ----------------
 Transport to Area 1
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 6400.0, 'x2': 10700.0, 'y1': -10700.0, 'y2': -6800.0}
 Extra - polygon: [[6400.0, -6800.0], [6400.0, -10700.0], [10700.0, -10700.0], [10700.0, -6800.0]]
 Extra - asset_id: collision_camera_006
@@ -232,7 +246,7 @@ Extra - asset_id: collision_camera_006
   > Next to Teleporter
       Trivial
 
-> Elevator to Area 1 - Chozo Seal; Heals? False; Spawn Point
+> Elevator to Area 1 - Chozo Seal; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
@@ -324,10 +338,6 @@ Extra - asset_id: collision_camera_008
   * Pickup 11; Major Location? True
   * Extra - actor_name: LE_PowerUP_ChargeBeam
   * Extra - actor_type: itemsphere_chargebeam
-  > Door to Charge Beam Shaft (Upper)
-      Any of the following:
-          Climb Rooms Vertically (High Jump)
-          Morph Ball and Unmorph Extend (Intermediate)
   > Door to Charge Beam Shaft (Lower)
       Trivial
 
@@ -336,7 +346,7 @@ Extra - asset_id: collision_camera_008
   * Missile Door to Charge Beam Shaft/Door to Charge Beam Room (Upper)
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Pickup (Charge Beam)
+  > Door to Charge Beam Shaft (Lower)
       Trivial
 
 > Door to Charge Beam Shaft (Lower); Heals? False
@@ -346,10 +356,21 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_type: doorchargecharge
   > Pickup (Charge Beam)
       Trivial
+  > Door to Charge Beam Shaft (Upper)
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_003
+  > Door to Charge Beam Shaft (Lower)
+      Trivial
 
 ----------------
 Alpha Arena
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -5900.0, 'x2': -1000.0, 'y1': -10400.0, 'y2': -5900.0}
 Extra - polygon: [[-1000.0, -5900.0], [-3400.0, -5900.0], [-3400.0, -6700.0], [-3500.0, -7000.0], [-5900.0, -7000.0], [-5900.0, -10400.0], [-1300.0, -10400.0], [-1300.0, -8900.0], [-1000.0, -8800.0]]
 Extra - asset_id: collision_camera_010
@@ -361,7 +382,7 @@ Extra - asset_id: collision_camera_010
   > Tunnel to Side Path
       Morph Ball
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_002
   * Extra - actor_type: weightactivatedplatform
@@ -411,6 +432,7 @@ Extra - asset_id: collision_camera_010
 
 > Inside Arena; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Save Station
       Morph Ball and Destroy Missile Block
   > Door to Ammo Recharge Station
@@ -448,6 +470,8 @@ Extra - asset_id: collision_camera_011
       Morph Ball
   > Door to Charge Beam Shaft
       Morph Ball
+  > Right of Statue
+      Trivial
 
 > Door to Charge Beam Shaft; Heals? False
   * Layers: default
@@ -462,12 +486,26 @@ Extra - asset_id: collision_camera_011
   * Open Passage to One-Way Drop/Dock to Scan Pulse Room
   > Pickup (Scan Pulse)
       Morph Ball
+  > Left of Statue
+      Trivial
 
 > Tunnel to Chozo Seal; Heals? False
   * Layers: default
   * Tunnel to Chozo Seal/Tunnel to Scan Pulse Room
   > Door to Chozo Seal
       Morph Ball
+
+> Left of Statue; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_001
+  > Dock to One-Way Drop
+      Trivial
+
+> Right of Statue; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  > Door to Chozo Seal
+      Trivial
 
 ----------------
 Alpha Storage
@@ -519,6 +557,8 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_type: doorpowerpower
   > Tunnel to Upper Storage
       Morph Ball
+  > Start Point
+      Trivial
 
 > Dock to Scan Pulse Room; Heals? False
   * Layers: default
@@ -531,6 +571,12 @@ Extra - asset_id: collision_camera_014
   * Tunnel to Upper Storage/Tunnel to One-Way Drop
   > Door to Alpha Arena Access
       Morph Ball
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_IntroLarva
+  > Door to Alpha Arena Access
+      Trivial
 
 ----------------
 Charge Beam Shaft
@@ -605,12 +651,20 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: doorpowerpower
   > Dock to Landing Site
       Trivial
+  > Start Point
+      Trivial
 
 > Dock to Landing Site; Heals? False
   * Layers: default
   * Open Passage to Landing Site/Dock to Entrance Pathway
   > Door to Melee Tutorial Pathway
       Missile ≥ 3
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_MeleeTutoCutscene
+  > Door to Melee Tutorial Pathway
+      Trivial
 
 ----------------
 Landing Site Storage
@@ -757,6 +811,8 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Morph Ball
+  > Start Point
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -773,6 +829,12 @@ Extra - asset_id: collision_camera_023
   * Tunnel to Alpha Arena/Tunnel to Alpha Arena Access
   > Energy Recharge Station
       Morph Ball
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoint_AmiiboUnlocked
+  > Door to One-Way Drop
+      Trivial
 
 ----------------
 Ammo Recharge Station

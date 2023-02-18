@@ -11,7 +11,6 @@
     "areas": {
         "Chozo Seal": {
             "default_node": "Elevator to Surface East - Transport to Area 1",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -20550.0,
@@ -84,8 +83,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -12846.395678356359,
-                        "y": 1031.6802456016057,
+                        "x": -12850.567756917386,
+                        "y": 1096.3474632975158,
                         "z": 0.0
                     },
                     "description": "",
@@ -94,8 +93,10 @@
                     ],
                     "extra": {
                         "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
-                        "actor_type": "weightactivatedplatform"
+                        "actor_type": "weightactivatedplatform",
+                        "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -380,6 +381,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea00"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Surface - East",
                         "area_name": "Transport to Area 1"
@@ -413,6 +415,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea02"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Area 2 - Entrance",
                         "area_name": "Chozo Seal"
@@ -464,6 +467,7 @@
                         "actor_name": "LE_Platform_SaveStation003",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -497,6 +501,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -532,6 +537,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -564,6 +570,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Chozo Seal": {
                             "type": "or",
@@ -691,6 +698,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "DNA1",
                     "connections": {
                         "Chozo Seal": {
@@ -715,6 +723,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Area 2 Entrance - Chozo Seal": {
                             "type": "or",
@@ -867,7 +876,6 @@
         },
         "Entrance Shaft": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -10800.0,
@@ -912,6 +920,7 @@
                         "actor_name": "Door002",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -947,6 +956,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -986,6 +996,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1009,7 +1020,6 @@
         },
         "Shaft West": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -7202.06005859375,
@@ -1054,6 +1064,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1110,6 +1121,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1142,6 +1154,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1174,6 +1187,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1206,6 +1220,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1228,8 +1243,7 @@
             }
         },
         "Bomb Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": -2500.0,
@@ -1274,6 +1288,7 @@
                         "actor_name": "LE_Item_005",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 18,
                     "major_location": false,
                     "connections": {
@@ -1299,10 +1314,11 @@
                         "actor_name": "LE_PowerUp_Bomb",
                         "actor_type": "itemsphere_bomb"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 26,
                     "major_location": true,
                     "connections": {
-                        "Door from Bomb Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1327,6 +1343,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1337,16 +1354,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Bomb)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Tunnel to Bomb Access": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -1363,6 +1376,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1377,7 +1391,44 @@
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         },
+                        "Room Center": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1900.0,
+                        "y": 4800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_005"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Bomb)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door from Bomb Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Bomb Access": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
                         }
@@ -1387,7 +1438,6 @@
         },
         "Shaft East": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 7800.0,
@@ -1432,6 +1482,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1474,6 +1525,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1530,6 +1582,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1562,6 +1615,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1624,6 +1678,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1647,7 +1702,6 @@
         },
         "Spider Ball Balcony": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 9200.0,
@@ -1692,6 +1746,7 @@
                         "actor_name": "LE_Item_011",
                         "actor_type": "item_senergytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 21,
                     "major_location": false,
                     "connections": {
@@ -1720,6 +1775,7 @@
                         "actor_name": "Door005",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1877,6 +1933,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -1899,8 +1956,7 @@
             }
         },
         "Spider Ball Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Bottom",
             "extra": {
                 "total_boundings": {
                     "x1": 11850.0,
@@ -1953,6 +2009,7 @@
                         "actor_name": "LE_Item_013",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 22,
                     "major_location": false,
                     "connections": {
@@ -1978,9 +2035,186 @@
                         "actor_name": "LE_PowerUp_SpiderBall",
                         "actor_type": "powerup_spiderball"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 28,
                     "major_location": true,
                     "connections": {
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Outer Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11948.85759829968,
+                        "y": 8006.695005313496,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door017",
+                        "actor_type": "doorclosedpower"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Area 1",
+                        "area_name": "Outer Hub",
+                        "node_name": "Door to Spider Ball Room"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MeleeClip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Room Bottom": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Spider Ball Balcony": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13346.42519778014,
+                        "y": 4395.879088440193,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 1",
+                        "area_name": "Spider Ball Balcony",
+                        "node_name": "Tunnel to Spider Ball Room"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Outer Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11951.455307592396,
+                        "y": 8349.592631951824,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "world_name": "Area 1",
+                        "area_name": "Outer Hub",
+                        "node_name": "Tunnel to Spider Ball Room"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Outer Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14000.0,
+                        "y": 4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Checkpoint_007"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Spider Ball)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Door to Outer Hub": {
                             "type": "or",
                             "data": {
@@ -2029,150 +2263,11 @@
                             }
                         }
                     }
-                },
-                "Door to Outer Hub": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 11948.85759829968,
-                        "y": 8006.695005313496,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door017",
-                        "actor_type": "doorclosedpower"
-                    },
-                    "dock_type": "door",
-                    "default_connection": {
-                        "world_name": "Area 1",
-                        "area_name": "Outer Hub",
-                        "node_name": "Door to Spider Ball Room"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "MeleeClip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "OoB",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Spider Ball)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Spider Ball Balcony": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13346.42519778014,
-                        "y": 4395.879088440193,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "world_name": "Area 1",
-                        "area_name": "Spider Ball Balcony",
-                        "node_name": "Tunnel to Spider Ball Room"
-                    },
-                    "default_dock_weakness": "Tunnel with Bomb Block",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Outer Hub": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 11951.455307592396,
-                        "y": 8349.592631951824,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "world_name": "Area 1",
-                        "area_name": "Outer Hub",
-                        "node_name": "Tunnel to Spider Ball Room"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Outer Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
         "Alpha Arena North": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Inside Arena",
             "extra": {
                 "total_boundings": {
                     "x1": 11870.0,
@@ -2217,20 +2312,15 @@
                         "actor_name": "LE_Item_008",
                         "actor_type": "item_energytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 20,
                     "major_location": true,
                     "connections": {
-                        "Door from Outer Hub": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
-                        },
-                        "Tunnel to Outer Hub": {
-                            "type": "resource",
+                        "Above Arena": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2251,6 +2341,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2261,51 +2352,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Destroy Bomb Block"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
-                        },
-                        "Event - Alpha Metroid": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid"
                         }
                     }
                 },
@@ -2322,6 +2374,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2332,7 +2385,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
+                        "Above Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2356,13 +2409,127 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 2",
                     "connections": {
-                        "Door from Outer Hub": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15300.0,
+                        "y": 10400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_004B"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Outer Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13900.0,
+                        "y": 9000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_004_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door from Outer Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
+                        },
+                        "Above Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Block"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2371,7 +2538,6 @@
         },
         "Outer Hub": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -2600.0,
@@ -2468,6 +2634,7 @@
                         "actor_name": "LE_Item_014",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 23,
                     "major_location": false,
                     "connections": {
@@ -2496,6 +2663,7 @@
                         "actor_name": "LE_Item_017",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 25,
                     "major_location": false,
                     "connections": {
@@ -2521,6 +2689,7 @@
                         "actor_name": "LE_AmmoRecharge_Platform",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank Puzzle)": {
                             "type": "and",
@@ -2568,6 +2737,7 @@
                         "actor_name": "LE_EnergyCharge_Plaftorm",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "and",
@@ -2604,6 +2774,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation004"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Missile Tank Crevice)": {
                             "type": "and",
@@ -2675,6 +2846,7 @@
                         "actor_name": "Door012",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2710,6 +2882,7 @@
                         "actor_name": "Door016",
                         "actor_type": "doorpowerclosed"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2756,6 +2929,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2775,6 +2955,7 @@
                         "actor_name": "Door017",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2810,6 +2991,7 @@
                         "actor_name": "HiddenPowerup001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 29,
                     "major_location": false,
                     "connections": {
@@ -2835,6 +3017,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2867,6 +3050,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2901,6 +3085,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2935,6 +3120,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -2967,6 +3153,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3020,6 +3207,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "and",
@@ -3075,6 +3263,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Inner Shaft": {
                             "type": "template",
@@ -3092,12 +3281,37 @@
                             "data": "Climb Rooms Vertically (No High Jump)"
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11600.0,
+                        "y": 9500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_004"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha Arena North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alpha Shaft Left": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": -300.00201416015625,
@@ -3150,6 +3364,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3161,6 +3376,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Alpha Arena West Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3182,6 +3404,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3235,6 +3458,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3269,6 +3493,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3294,12 +3519,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 800.0,
+                        "y": -300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_002"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha Arena South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alpha Arena West Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Second Pillar",
             "extra": {
                 "total_boundings": {
                     "x1": -4000.0,
@@ -3341,6 +3591,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3351,7 +3602,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Left Pillar": {
+                        "Second Pillar": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3526,6 +3777,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3550,6 +3802,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3560,7 +3813,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Left Pillar": {
+                        "Second Pillar": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3569,19 +3822,22 @@
                         }
                     }
                 },
-                "Left Pillar": {
+                "Second Pillar": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -2967.063492063492,
-                        "y": -335.86860670193994,
+                        "x": -3100.0,
+                        "y": -800.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_001"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to Alpha Shaft Left": {
                             "type": "and",
@@ -3706,8 +3962,7 @@
             }
         },
         "Alpha Arena South": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": 1100.0,
@@ -3752,6 +4007,7 @@
                         "actor_name": "Door014",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3762,9 +4018,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid"
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3781,9 +4040,10 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 4",
                     "connections": {
-                        "Door to Alpha Shaft Left": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3791,12 +4051,43 @@
                             }
                         }
                     }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2500.0,
+                        "y": -400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_002_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha Shaft Left": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 4",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
+                        }
+                    }
                 }
             }
         },
         "Alpha Arena East": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": 7500.0,
@@ -3841,6 +4132,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -3851,9 +4143,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid"
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3870,9 +4165,10 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 3",
                     "connections": {
-                        "Door to Alpha Arena East Access": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3880,12 +4176,43 @@
                             }
                         }
                     }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8900.0,
+                        "y": 1300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_003_Checkpoint"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha Arena East Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha 3",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
+                        }
+                    }
                 }
             }
         },
         "One-Way Puzzle": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5498.08984375,
@@ -3930,6 +4257,7 @@
                         "actor_name": "LE_Item_004",
                         "actor_type": "item_senergytank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 17,
                     "major_location": false,
                     "connections": {
@@ -3958,6 +4286,7 @@
                         "actor_name": "Door011",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4039,6 +4368,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4080,6 +4410,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4112,6 +4443,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4146,6 +4478,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 1 - One-Way Puzzle Grapple Block",
                     "connections": {
                         "Next to Pickup": {
@@ -4170,6 +4503,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -4249,6 +4583,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4271,8 +4606,7 @@
             }
         },
         "Ice Beam Room": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": 3800.0,
@@ -4317,10 +4651,11 @@
                         "actor_name": "LE_PowerUp_IceBeam",
                         "actor_type": "itemsphere_icebeam"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 27,
                     "major_location": true,
                     "connections": {
-                        "Door to Ice Beam Tutorial": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4345,6 +4680,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4355,41 +4691,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Ice Beam)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Pickup (Super Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Destroy Missile Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Baby",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -4410,14 +4716,78 @@
                         "actor_name": "HiddenPowerup003",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 31,
                     "major_location": false,
                     "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4400.0,
+                        "y": 3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_006"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Ice Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Ice Beam Tutorial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Missile Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4426,7 +4796,6 @@
         },
         "Energy Recharge Room": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -1500.0,
@@ -4471,6 +4840,7 @@
                         "actor_name": "LE_EnergyCharge001_Platform",
                         "actor_type": "weightactivatedplatform"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Alpha Shaft Left": {
                             "type": "template",
@@ -4491,6 +4861,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4516,7 +4887,6 @@
         },
         "Lava Shortcut": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -9600.0,
@@ -4561,6 +4931,7 @@
                         "actor_name": "LE_Item_001",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 15,
                     "major_location": false,
                     "connections": {
@@ -4589,6 +4960,7 @@
                         "actor_name": "Door009",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4753,6 +5125,7 @@
                         "actor_name": "Door010",
                         "actor_type": "doorchargecharge"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -4980,6 +5353,7 @@
                         "actor_name": "HiddenPowerup002",
                         "actor_type": "item_supermissiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 30,
                     "major_location": false,
                     "connections": {
@@ -4996,7 +5370,6 @@
         },
         "Central Shaft": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 2400.0,
@@ -5049,6 +5422,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5148,6 +5522,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5182,6 +5557,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5261,6 +5637,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5284,7 +5661,6 @@
         },
         "Save Station South": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -4300.0,
@@ -5329,6 +5705,7 @@
                         "actor_name": "LE_Item_006",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 19,
                     "major_location": false,
                     "connections": {
@@ -5359,6 +5736,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation001"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to One-Way Puzzle (Top)": {
                             "type": "and",
@@ -5553,6 +5931,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5585,6 +5964,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5619,6 +5999,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5655,6 +6036,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5689,6 +6071,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5703,8 +6086,7 @@
             }
         },
         "Teleporter Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": 3800.0,
@@ -5749,6 +6131,7 @@
                         "actor_name": "Door006",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5759,20 +6142,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Teleporter Room": {
-                            "type": "or",
+                        "Room Center": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -5790,6 +6164,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5800,7 +6175,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5822,6 +6197,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -5832,7 +6208,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Room Center": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5842,12 +6218,41 @@
                             }
                         }
                     }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5100.0,
+                        "y": 5900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_CutsceneTeleport"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Central Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Teleporter Room": {
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
+                        }
+                    }
                 }
             }
         },
         "Inner Shaft": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 3300.0,
@@ -5900,6 +6305,7 @@
                         "actor_name": "LE_Item_016",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 24,
                     "major_location": false,
                     "connections": {
@@ -5949,6 +6355,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6002,6 +6409,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6026,6 +6434,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6060,6 +6469,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6080,7 +6490,6 @@
         },
         "Alpha Shaft Right": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 1300.0,
@@ -6122,6 +6531,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6167,6 +6577,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6196,6 +6607,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6230,6 +6642,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6262,6 +6675,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6288,8 +6702,7 @@
             }
         },
         "Alpha Arena East Access": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 2500.0,
@@ -6334,6 +6747,7 @@
                         "actor_name": "Door015",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6345,6 +6759,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Alpha Shaft Right": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6366,6 +6787,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6384,12 +6806,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7300.0,
+                        "y": 1400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Alpha_003"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Alpha Arena East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Bomb Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -100.0,
@@ -6434,6 +6881,7 @@
                         "actor_name": "Door004",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6458,6 +6906,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6494,6 +6943,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6519,7 +6969,6 @@
         },
         "Save Station North": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 1300.0,
@@ -6565,6 +7014,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation"
                     },
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to Central Shaft": {
                             "type": "and",
@@ -6595,6 +7045,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6627,6 +7078,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6650,7 +7102,6 @@
         },
         "Inner Room": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 5000.0,
@@ -6695,6 +7146,7 @@
                         "actor_name": "Door007",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6739,6 +7191,7 @@
                         "actor_name": "Door013",
                         "actor_type": "doorclosedpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6771,6 +7224,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6796,7 +7250,6 @@
         },
         "Teleporter Room": {
             "default_node": "Teleporter",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 5900.0,
@@ -6842,6 +7295,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_Teleporter_01_01"
                     },
+                    "valid_starting_location": false,
                     "is_unlocked": {
                         "type": "resource",
                         "data": {
@@ -6882,6 +7336,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6911,6 +7366,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -6956,6 +7412,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Area 1 Teleporter",
                     "connections": {
                         "Dock to Shaft East": {
@@ -6971,7 +7428,6 @@
         },
         "Ice Beam Tutorial": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 5900.0,
@@ -7016,6 +7472,7 @@
                         "actor_name": "Door003",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7119,6 +7576,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7142,7 +7600,6 @@
         },
         "Chozo Seal Storage": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -12100.0,
@@ -7187,6 +7644,7 @@
                         "actor_name": "LE_Item_003",
                         "actor_type": "item_missiletank"
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 16,
                     "major_location": false,
                     "connections": {
@@ -7217,6 +7675,7 @@
                         "actor_name": "Door008",
                         "actor_type": "doorpowerpower"
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7237,7 +7696,6 @@
         },
         "Entrance Pathway": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -9600.0,
@@ -7279,6 +7737,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7311,6 +7770,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7333,8 +7793,7 @@
             }
         },
         "Alpha Arena West": {
-            "default_node": null,
-            "valid_starting_location": false,
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": -7200.0,
@@ -7376,6 +7835,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7386,25 +7846,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
-                            "type": "and",
+                        "Room Center": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Alpha Metroid"
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -7422,6 +7870,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7446,11 +7895,42 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Alpha 5",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5600.0,
+                        "y": -800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Alpha_001_Checkpoint"
+                    },
+                    "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Alpha Arena West Access (Bottom)": {
                             "type": "template",
                             "data": "Destroy Bomb Block"
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
                         }
                     }
                 }
@@ -7458,7 +7938,6 @@
         },
         "Outer Hub Access": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": -5500.0,
@@ -7500,6 +7979,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",
@@ -7532,6 +8012,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "world_name": "Area 1",

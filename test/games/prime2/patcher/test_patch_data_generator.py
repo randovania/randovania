@@ -9,12 +9,12 @@ from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
@@ -31,36 +31,38 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
-def test_create_starting_popup_empty(default_echoes_configuration, echoes_game_description):
-    starting_items = ResourceCollection.with_database(echoes_game_description.resource_database)
-
+def test_create_starting_popup_empty(echoes_game_patches):
     # Run
-    result = patch_data_factory._create_starting_popup(default_echoes_configuration,
-                                                       echoes_game_description,
-                                                       starting_items)
+    result = patch_data_factory._create_starting_popup(echoes_game_patches)
 
     # Assert
     assert result == []
 
 
-def test_create_starting_popup_items(default_echoes_configuration, echoes_game_description):
-    db = echoes_game_description.resource_database
-    starting_items = ResourceCollection.from_dict(db, {
-        db.get_item_by_name("Missile"): 15,
-        db.energy_tank: 3,
-        db.get_item_by_name("Dark Beam"): 1,
-        db.get_item_by_name("Screw Attack"): 1,
-    })
+def test_create_starting_popup_items(echoes_game_patches, echoes_item_database):
+    db = echoes_game_patches.game.resource_database
+
+    def create_major(n):
+        return pickup_creator.create_major_item(echoes_item_database.get_item_with_name(n), MajorItemState(), False, db,
+                                                None, False)
+
+    missile = pickup_creator.create_ammo_expansion(echoes_item_database.get_item_with_name("Missile Expansion"),
+                                                   [5], False, db)
+    tank = create_major("Energy Tank")
+
+    starting_pickups = [
+        missile, missile, missile, tank, tank, tank,
+        create_major("Dark Beam"), create_major("Screw Attack"),
+    ]
+    patches = echoes_game_patches.assign_extra_starting_pickups(starting_pickups)
 
     # Run
-    result = patch_data_factory._create_starting_popup(default_echoes_configuration,
-                                                       echoes_game_description,
-                                                       starting_items)
+    result = patch_data_factory._create_starting_popup(patches)
 
     # Assert
     assert result == [
         'Extra starting items:',
-        'Dark Beam, 3 Energy Tank, 15 Missiles, Screw Attack'
+        'Dark Beam, 3 Energy Tank, 3 Missile Expansions, Screw Attack'
     ]
 
 
@@ -112,17 +114,20 @@ def test_add_header_data_to_result():
     assert json.loads(json.dumps(result)) == expected
 
 
-def test_create_spawn_point_field(echoes_game_description, empty_patches):
+def test_create_spawn_point_field(echoes_game_description, echoes_item_database, empty_patches):
     # Setup
     resource_db = echoes_game_description.resource_database
 
+    morph = pickup_creator.create_major_item(
+        echoes_item_database.get_item_with_name("Morph Ball"),
+        MajorItemState(), False, resource_db, None, False,
+    )
+
     loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
-    patches = empty_patches.assign_starting_location(loc).assign_extra_initial_items([
-        (resource_db.get_item("MorphBall"), 3),
-    ])
+    patches = empty_patches.assign_starting_location(loc).assign_extra_starting_pickups([morph])
 
     capacities = [
-        {'amount': 3 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
+        {'amount': 1 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
         for item in resource_db.item
     ]
 
@@ -480,7 +485,7 @@ def test_create_pickup_all_from_pool(echoes_game_description,
         memo_data = default_prime2_memo_data()
     creator = pickup_exporter.PickupExporterSolo(memo_data)
 
-    for item in item_pool.pickups:
+    for item in item_pool.to_place:
         data = creator.export(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
         for hud_text in data.collection_text:
             assert not hud_text.startswith("Locked")

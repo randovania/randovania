@@ -51,6 +51,7 @@ class Node:
     description: str
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
+    valid_starting_location: bool
 
     def __lt__(self, other: Node):
         return self.identifier < other.identifier
