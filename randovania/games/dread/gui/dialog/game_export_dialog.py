@@ -15,7 +15,8 @@ from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_directory, prompt_for_input_directory,
-    is_directory_validator, path_in_edit, spoiler_path_for_directory, update_validation
+    is_directory_validator, path_in_edit, spoiler_path_for_directory, update_validation,
+    output_input_intersection_validator
 )
 from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
@@ -362,7 +363,11 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     # Custom Path
     def _validate_custom_path(self):
-        common_qt_lib.set_error_border_stylesheet(self.custom_path_edit, is_directory_validator(self.custom_path_edit))
+        common_qt_lib.set_error_border_stylesheet(
+            self.custom_path_edit,
+            (is_directory_validator(self.custom_path_edit) or
+             output_input_intersection_validator(self.custom_path_edit, self.input_file_edit))
+        )
 
     def _on_custom_path_change(self):
         self._validate_custom_path()

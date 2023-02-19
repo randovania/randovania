@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Added: A new cosmetic option for adding a in-game death counter to the HUD.
+- Added: A new cosmetic option for adding an in-game death counter to the HUD.
+- Added: Exporting with a custom path now checks for conflicts with the input path.
 
 ## [5.4.1] - 2023-??-??
 
