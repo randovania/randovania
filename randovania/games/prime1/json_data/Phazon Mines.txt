@@ -347,18 +347,12 @@ Mine Security Station
 Extra - asset_id: 2507085138
 Extra - size_index: 0.6
 Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
-> Door to Security Access A; Heals? False; Spawn Point; Default Node
+> Door to Security Access A; Heals? False; Default Node
   * Layers: default
   * Ice Door to Security Access A/Door to Mine Security Station
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Door to Security Access B
-      All of the following:
-          After Mine Security Station Unlock Doors
-          Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 125
-              Shoot Ice Beam and Shoot Wave Beam
-  > Wave Pirate Shootout
+  > Room Center
       Trivial
 
 > Door to Security Access B; Heals? False
@@ -366,17 +360,7 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Wave Door to Security Access B/Door to Mine Security Station
   * Extra - dock_index: 1
   * Extra - nonstandard: False
-  > Door to Security Access A
-      All of the following:
-          After Mine Security Station Unlock Doors
-          Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 125
-              Shoot Ice Beam and Shoot Wave Beam
-  > Door to Storage Depot A
-      After Mine Security Station Barrier
-  > Event - Mine Security Station Barrier Opened
-      Morph Ball and Power Bomb and Scan Visor
-  > Wave Pirate Shootout
+  > Room Center
       Trivial
 
 > Door to Storage Depot A; Heals? False
@@ -384,15 +368,13 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Plasma Door to Storage Depot A/Door to Mine Security Station
   * Extra - dock_index: 2
   * Extra - nonstandard: False
-  > Door to Security Access B
-      After Mine Security Station Barrier and After Mine Security Station Unlock Doors
-  > Wave Pirate Shootout
-      Trivial
+  > Room Center
+      After Mine Security Station Barrier
 
 > Event - Mine Security Station Barrier Opened; Heals? False
   * Layers: default
   * Event Mine Security Station Barrier
-  > Door to Security Access B
+  > Room Center
       Trivial
 
 > Pickup (Items Every Room); Heals? False
@@ -407,9 +389,27 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
       Trivial
   > Door to Security Access B
       Trivial
+  > Room Center
+      Trivial
 
-> Wave Pirate Shootout; Heals? False
+> Room Center; Heals? False; Spawn Point
   * Layers: default
+  > Door to Security Access A
+      All of the following:
+          After Mine Security Station Unlock Doors
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Ice Beam and Shoot Wave Beam
+  > Door to Security Access B
+      All of the following:
+          After Mine Security Station Unlock Doors
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Ice Beam and Shoot Wave Beam
+  > Door to Storage Depot A
+      After Mine Security Station Barrier
+  > Event - Mine Security Station Barrier Opened
+      Morph Ball and Power Bomb and Scan Visor
   > Event - Mine Security Station Doors Unlocked
       All of the following:
           Before Mine Security Station Unlock Doors and Shoot Wave Beam
