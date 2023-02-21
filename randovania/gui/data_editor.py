@@ -160,6 +160,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_world = self.current_world
         current_area = self.current_area
         current_node = self.current_node
+        current_connection = self.current_connection_node
 
         self.game_description = game
         self.editor = Editor(self.game_description)
@@ -177,6 +178,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.focus_on_area_by_name(current_area.name)
         if current_node:
             self.focus_on_node(current_node)
+        if current_connection:
+            self.focus_on_connection(current_connection)
 
     @classmethod
     def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
