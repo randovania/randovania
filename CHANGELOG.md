@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 - Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.
+- Fixed: Changing trick filters in the Data Visualizer no longer resets the selected connection.
+- Fixed: Using trick filters in the Data Visualizer no longer unnecessarily expands templates or remove comments.
+- Fixed: Using trick filters in the Data Visualizer now properly removes extra requirements when tricks are removed.
 
 ### Metroid Dread
 

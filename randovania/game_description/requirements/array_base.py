@@ -33,7 +33,8 @@ class RequirementArrayBase(Requirement):
     def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
         return type(self)(
-            item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
+            (item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items),
+            comment=self.comment,
         )
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
