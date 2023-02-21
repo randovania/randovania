@@ -824,11 +824,11 @@ Extra - aabb: [-36.761017, -679.63837, 55.793003, 22.98051, -575.6743, 96.37796]
   * Extra - nonstandard: False
   > Door to Map Station
       All of the following:
-          Charge Beam or Combat (Beginner)
+          Charge Beam or Plasma Beam or Combat (Intermediate) or Normal Damage ≥ 300
           Any of the following:
               Shoot Any Beam
               All of the following:
-                  Morph Ball and Combat (Beginner)
+                  Morph Ball and Combat (Intermediate)
                   Morph Ball Bomb or Power Bomb ≥ 4
 
 > Door to Map Station; Heals? False
@@ -838,12 +838,12 @@ Extra - aabb: [-36.761017, -679.63837, 55.793003, 22.98051, -575.6743, 96.37796]
   * Extra - nonstandard: False
   > Door to Specimen Storage
       All of the following:
+          Charge Beam or Plasma Beam or Combat (Intermediate) or Normal Damage ≥ 300
           Any of the following:
               Shoot Any Beam
               All of the following:
-                  Morph Ball and Combat (Beginner)
+                  Morph Ball and Combat (Intermediate)
                   Morph Ball Bomb or Power Bomb ≥ 4
-          Charge Beam or Combat (Beginner)
   > Door to Hydra Lab Entryway
       Trivial
 
@@ -1582,6 +1582,12 @@ Extra - aabb: [-66.96835, -841.40247, 152.18471, 56.02846, -730.42065, 221.62587
   * Extra - dock_index: 1
   * Extra - nonstandard: False
   > Room Center
+      All of the following:
+          Knowledge (Intermediate) and Movement (Intermediate)
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Space Jump (Beginner)
+  > Fight Trigger
       Trivial
 
 > Pickup (Artifact of Elder); Heals? False
@@ -1615,12 +1621,22 @@ Extra - aabb: [-66.96835, -841.40247, 152.18471, 56.02846, -730.42065, 221.62587
           Space Jump Boots or Standable Terrain (Beginner)
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
 
-> Room Center; Heals? False; Spawn Point; Default Node
+> Room Center; Heals? False
   * Layers: default
   > Door to East Tower
       Trivial
   > Door to West Tower
-      Trivial
+      Any of the following:
+          After Research Core Power Outage or After Control Tower Fight
+          All of the following:
+              Knowledge (Intermediate) and Movement (Intermediate)
+              Any of the following:
+                  Space Jump Boots
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Morph Ball Bomb and Bomb Jump (Advanced)
+                          Boost Ball and Wall Boost (Intermediate)
   > Pickup (Artifact of Elder)
       Any of the following:
           All of the following:
@@ -1646,11 +1662,29 @@ Extra - aabb: [-66.96835, -841.40247, 152.18471, 56.02846, -730.42065, 221.62587
                       Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
                       Slope Jump (Beginner) and Standable Terrain (Beginner)
               Space Jump Boots and Standable Terrain (Intermediate)
+  > Fight Trigger
+      Trivial
 
 > Event - Tower (From Pickup); Heals? False
   * Layers: default
   * Event Control Tower Tower
   > Pickup (Artifact of Elder)
+      Trivial
+
+> Fight Trigger; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  > Room Center
+      After Research Core Power Outage or After Control Tower Fight
+  > Event - Control Tower Fight
+      All of the following:
+          Before Research Core Power Outage and Before Control Tower Fight and Shoot Any Beam
+          Charge Beam or Plasma Beam or Combat (Intermediate) or Normal Damage ≥ 300
+          Combat (Beginner) or Normal Damage ≥ 100
+
+> Event - Control Tower Fight; Heals? False
+  * Layers: default
+  * Event Control Tower Fight
+  > Room Center
       Trivial
 
 ----------------
@@ -2082,8 +2116,8 @@ Extra - aabb: [13.036665, -930.5392, 92.822716, 78.95189, -850.3618, 141.30006]
   * Extra - nonstandard: False
   > Lab Catwalk
       Any of the following:
-          Scan Visor
-          Power Bomb and Knowledge (Beginner)
+          Scan Visor and Shoot Any Beam
+          Morph Ball and Power Bomb and Knowledge (Beginner)
           Missile and Shoot Any Beam
           Knowledge (Beginner) and Shoot Plasma Beam
 
