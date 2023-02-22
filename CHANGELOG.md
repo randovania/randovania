@@ -7,17 +7,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.5.0] - 2023-??-??
 
-- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 - Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.
+
+### Metroid Prime
+
+#### Logic Database
+
+- Added: 47 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 168
+
+##### Tallon Overworld
+
+- Fixed: Landing Site - PAL SJF is now only logical if Dock Rando is disabled
+- Added: Life Grove - Alternate method to skip Bombs and SJ (Scan Dash Expert) to reach item *Found by Vertigo* 
+- Added: Life Grove - Trick to skip wallboosts when also skipping SJ and Bombs *Found by Vertigo*
+
+##### Chozo Ruins
+
+- Changed: Main Plaza - Lowered Half-Pipe roll-in to Expert ([See Video](https://youtu.be/ne8ap0xa_UE))
+- Changed: Ruined Shrine - Wave door to half-pipe item is now L-Jump instead of R-Jump
+- Added: Hive Totem - Fight Skip Intermediate Combat Dash
+- Added: Hive Totem - Fight Skip "TAS Walk" Advanced Movement+Knowledge
+- Added: Crossway Access West - Advanced Standable Terrain (Skips Morph) *Found by toasterparty*
+
+##### Magmoor Caverns
+
+- Fixed: Twin Fires Tunnel - Combat dash is now only logical if Dock Rando is disabled
+- Added: Monitor Station - NSJ Heat Run Expert *Found by JustinDM*
+- Added: Twin Fires Tunnel - NSJ Bunny Hop Expert Movement *Found by JustinDM*
+
+##### Phendrana Drifts
+
+- Changed: Quarantine Cave - More detailed Thardus Fight requirements (e.g. Plasma Beam, PBs, Boost)
+- Changed: Labs - More detailed combat requirements
+- Added: Chozo Ice Temple - Expert NSJ Bombless Climb *Found by MeriKatt*
+- Added: Quarantine Cave - Thardus Skip Hypermode Slope Jump *Found by JustinDM*
+- Added: Quarantine Cave - Expert R-Jumps to skip grapple *Found by toasterparty*
+- Added: Control Tower - SJ/DBJ/BSJ/Wallboost tricks(s) to skip fight both ways
+- Added: Transport to Magmoor Caverns South - Alternate NSJ Spider Skip BSJ Advanced *Found by Cyberpod*
+
+##### Phazon Mines
+
+- Fixed: Mine Security Station - Starting Room/Elevator doesn't account for doors locking
+- Fixed: Mine Security Station - Entering from Storage Depot A doesn't check for lowered barrier
+- Fixed: Metroid Quarantine A - Wallboost doesn't require Spider Ball
+- Added: Main Quarry - Intermediate Wallboost to skip Bombs for item
+- Added: Main Quarry - Intermediate Knowledge+Movement to skip Bombs for item *Found by toasterparty*
+- Added: Metroid Quarantine A - Advanced Dashes to skip PBs
+- Added: Metroid Quarantine A - Alternate R-Jump from item to door
+- Added: Metroid Quarantine A - NSJ Expert Dashes from item to door
+- Added: Fungal Hall Access - NSJ Advanced BSJs *Found by JustinDM*
+
+### Metroid Prime 2: Echoes
+
+- Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
+- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 
 ### Metroid Dread
 
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
-
-### Metroid Prime 2: Echoes
-
-- Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
 
 ## [5.4.1] - 2023-??-??
 
