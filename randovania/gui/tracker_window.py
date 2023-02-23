@@ -554,7 +554,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     def setup_translator_gates(self):
         world_list = self.game_description.world_list
-        resource_db = self.game_description.resource_database
         self._translator_gate_to_combo = {}
 
         if self.game_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:

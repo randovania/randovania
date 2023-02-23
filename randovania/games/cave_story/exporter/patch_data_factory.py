@@ -308,7 +308,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
         head = {}
         for event, m_ammo in missile_events.items():
             head[event] = {
-                "needle": f"<AM%+....:....",
+                "needle": "<AM%+....:....",
                 "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}"
             }
 
@@ -319,7 +319,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 self.configuration.major_items_configuration.items_state[self.item_db.major_items[name]].included_ammo[
                     0]
             head[event] = {
-                "needle": f".!<ML%+....",
+                "needle": ".!<ML%+....",
                 "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
             }
 

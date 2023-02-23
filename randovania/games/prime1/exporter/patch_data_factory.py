@@ -22,10 +22,7 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.layout_description import LayoutDescription
-from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 

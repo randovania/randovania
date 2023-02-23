@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import collections
 import re
-from typing import DefaultDict, Iterator
+from typing import DefaultDict
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
@@ -12,7 +12,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging

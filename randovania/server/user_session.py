@@ -42,7 +42,7 @@ def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
     if user is None:
         user = User.get_by_id(session["user-id"])
     elif user.id != session["user-id"]:
-        raise RuntimeError(f"Provided user does not match the session's user")
+        raise RuntimeError("Provided user does not match the session's user")
 
     result = _create_client_side_session_raw(sio, user)
     result["encoded_session_b85"] = _encrypt_session_for_user(sio, session)
@@ -206,7 +206,7 @@ def setup_app(sio: ServerApp):
         sio.discord.callback()
         discord_user = sio.discord.fetch_user()
 
-        user = _create_user_from_discord(discord_user)
+        _create_user_from_discord(discord_user)
 
         return flask.redirect(flask.url_for("browser_me"))
 

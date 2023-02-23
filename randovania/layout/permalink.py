@@ -14,6 +14,7 @@ from randovania.bitpacking.bitpacking import single_byte_hash
 from randovania.games.game import RandovaniaGame
 from randovania.layout import generator_parameters
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.lib.construct_lib import is_path_not_equals_to
 
 _CURRENT_SCHEMA_VERSION = 13
 _PERMALINK_MAX_VERSION = 256
@@ -63,7 +64,7 @@ PermalinkBinary = construct.FocusedSeq(
     schema_version=construct.Const(_CURRENT_SCHEMA_VERSION, construct.Byte),
     fields=construct.RawCopy(construct.Aligned(3, construct.Struct(
         header=construct.BitStruct(
-            has_seed_hash=construct.Rebuild(construct.Flag, construct.this._.seed_hash != None),
+            has_seed_hash=construct.Rebuild(construct.Flag, is_path_not_equals_to(construct.this._.seed_hash, None)),
             bytes_rotation=construct.Rebuild(
                 construct.BitsInteger(7),
                 lambda ctx: single_byte_hash(ctx._.generator_params) >> 1,

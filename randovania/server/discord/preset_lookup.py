@@ -205,7 +205,7 @@ class RequestPresetsView(discord.ui.View):
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
-        except (IndexError, ValueError, UnsupportedPermalink) as e:
+        except (IndexError, ValueError, UnsupportedPermalink):
             logging.exception("Unable to find permalink on message that sent attach_presets_of_permalink")
             permalink = None
 

@@ -28,7 +28,8 @@ def pool_creator(results: PoolResults,
         return [p for p in indices if p not in results.assignment.keys()]
 
     def get_valid_pickups(pickups):
-        pickup_iter = lambda w: (p for p in results.to_place if p.name == w)
+        def pickup_iter(w):
+            return (p for p in results.to_place if p.name == w)
         return [next(pickup_iter(w)) for w in pickups if next(pickup_iter(w), None) is not None]
 
     # puppies

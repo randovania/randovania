@@ -1,4 +1,3 @@
-from PySide6 import QtWidgets
 import dataclasses
 
 from randovania.game_description.game_description import GameDescription

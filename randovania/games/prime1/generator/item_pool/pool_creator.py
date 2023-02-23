@@ -2,7 +2,6 @@ from random import Random
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime1.generator.item_pool.artifacts import add_artifacts
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.generator.item_pool import PoolResults

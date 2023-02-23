@@ -1,4 +1,3 @@
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 

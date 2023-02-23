@@ -1,4 +1,3 @@
-import logging
 import os
 
 from randovania.exporter import pickup_exporter, item_names
@@ -8,7 +7,7 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
+from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.hint_node import HintNode
