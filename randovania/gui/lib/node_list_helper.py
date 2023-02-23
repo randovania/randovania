@@ -149,7 +149,8 @@ class NodeListHelper:
             for is_dark_world in dark_world_flags(world):
                 all_areas = True
                 no_areas = True
-                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world and self.game_description.world_list.identifier_for_area(area) in location_for_area]
+                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world and
+                         self.game_description.world_list.identifier_for_area(area) in location_for_area]
                 correct_name = world.correct_name(is_dark_world)
                 if correct_name not in location_for_world:
                     continue

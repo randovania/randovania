@@ -46,12 +46,13 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self._create_source_elevators()
 
         # Elevator Target
-        self._elevator_target_for_world, self._elevator_target_for_area, self._elevator_target_for_node = self.create_node_list_selection(
+        result = self.create_node_list_selection(
             self.elevators_target_group,
             self.elevators_target_layout,
             TeleporterTargetList.areas_list(self.game_enum),
             self._on_elevator_target_check_changed,
         )
+        self._elevator_target_for_world, self._elevator_target_for_area, self._elevator_target_for_node = result
 
         if self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
             self.elevators_help_sound_bug_label.setVisible(False)
