@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
+- Fixed: Ryujinx no longer hangs when stopping emulation.
 
 ### Metroid Prime 2: Echoes
 
