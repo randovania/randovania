@@ -223,7 +223,7 @@ class PickupExporterMulti(PickupExporter):
                 index=original_index,
                 name=f"{other_name}'s {name}",
                 description=description,
-                collection_text=[f"Sent {pickup_target.pickup.name} to {other_name}!"],
+                collection_text=[f"Sent {name} to {other_name}!"],
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,

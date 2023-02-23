@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Changing trick filters in the Data Visualizer no longer resets the selected connection.
 - Fixed: Using trick filters in the Data Visualizer no longer unnecessarily expands templates or remove comments.
 - Fixed: Using trick filters in the Data Visualizer now properly removes extra requirements when tricks are removed.
+- Fixed: Hiding the pickup collection message now correctly works for other player's pickups in a multiworld. 
 
 ### Metroid Dread
 
