@@ -49,7 +49,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         result = self.create_node_list_selection(
             self.elevators_target_group,
             self.elevators_target_layout,
-            TeleporterTargetList.areas_list(self.game_enum),
+            TeleporterTargetList.nodes_list(self.game_enum),
             self._on_elevator_target_check_changed,
         )
         self._elevator_target_for_world, self._elevator_target_for_area, self._elevator_target_for_node = result
@@ -111,8 +111,8 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                 "Sanctuary Fortress": 3,  # Sanctuary Fortress
                 "Temple Grounds": 5,  # Temple Grounds
             }
-        locations = TeleporterList.areas_list(self.game_enum)
-        areas: dict[NodeIdentifier, Area] = {
+        locations = TeleporterList.nodes_list(self.game_enum)
+        node_identifiers: dict[NodeIdentifier, Area] = {
             loc: world_list.area_by_area_location(loc.area_location)
             for loc in locations
         }
@@ -132,7 +132,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
 
             other_locations = [
                 node.default_connection
-                for node in areas[location].nodes
+                for node in node_identifiers[location].nodes
                 if isinstance(node, TeleporterNode) and world_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
