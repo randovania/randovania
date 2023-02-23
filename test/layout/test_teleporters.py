@@ -39,7 +39,7 @@ def _a(world, area, instance_id=None):
         _m(b'\x08', 5),
         _m(b'\x18', 5, skip_final_bosses=True),
         _m(b'\xb1', 8, mode="one-way-elevator"),
-        _m(b'\xb8\x00\xc6,@', 34, mode="one-way-elevator", excluded_teleporters=[
+        _m(b'\xb81d', 22, mode="one-way-elevator", excluded_teleporters=[
             _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
         ]),
     ],

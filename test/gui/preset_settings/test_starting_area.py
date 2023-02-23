@@ -11,6 +11,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout import prime_configuration
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea, PresetStartingArea
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import StartingLocationList
@@ -93,3 +94,16 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
         NodeIdentifier.create("Labyrinth", "Camp", "Room Spawn")
     }
     assert set(editor.configuration.starting_location.locations) == expected
+
+def test_check_credits(skip_qtbot, preset_manager):
+    # Setup
+    base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
+    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    editor = PresetEditor(preset)
+    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
+    skip_qtbot.addWidget(window)
+
+    not_expected = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
+
+    checkbox_list = window._starting_location_for_node
+    assert checkbox_list.get(not_expected, None) == None
