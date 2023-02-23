@@ -29,7 +29,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
 from randovania.server.database import (GameSession, GameSessionMembership, GameSessionTeamAction, GameSessionPreset,
-                                        GameSessionAudit)
+                                        GameSessionAudit, is_boolean)
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
@@ -115,7 +115,7 @@ def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None
 
     if not (current_membership.admin or (admin_user_id is not None and current_user.id == admin_user_id)):
         if allow_when_no_admins and GameSessionMembership.select().where(
-                GameSessionMembership.session == session_id, GameSessionMembership.admin == True).count() == 0:
+                GameSessionMembership.session == session_id, is_boolean(GameSessionMembership.admin, True)).count() == 0:
             return
         raise NotAuthorizedForAction()
 
@@ -339,7 +339,7 @@ def _start_session(sio: ServerApp, session: GameSession):
         raise InvalidAction("Unable to start session, no game is available.")
 
     num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                       GameSessionMembership.row != None).count()
+                                                       GameSessionMembership.row.is_null(False)).count()
     expected_players = session.num_rows
     if num_players != expected_players:
         raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
@@ -551,7 +551,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         # Must be admin for this
         _verify_has_admin(sio, session_id, None, allow_when_no_admins=True)
         num_admins = GameSessionMembership.select().where(GameSessionMembership.session == session_id,
-                                                          GameSessionMembership.admin == True).count()
+                                                          is_boolean(GameSessionMembership.admin, True)).count()
 
         if membership.admin and num_admins <= 1:
             raise InvalidAction("can't demote the only admin")
