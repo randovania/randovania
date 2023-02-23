@@ -115,7 +115,9 @@ def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None
 
     if not (current_membership.admin or (admin_user_id is not None and current_user.id == admin_user_id)):
         if allow_when_no_admins and GameSessionMembership.select().where(
-                GameSessionMembership.session == session_id, is_boolean(GameSessionMembership.admin, True)).count() == 0:
+                GameSessionMembership.session == session_id,
+                is_boolean(GameSessionMembership.admin, True)
+        ).count() == 0:
             return
         raise NotAuthorizedForAction()
 

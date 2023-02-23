@@ -4,11 +4,11 @@ import json
 
 import cryptography.fernet
 import flask
+import flask_discord.models
 import flask_socketio
 import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 from requests_oauthlib import OAuth2Session
-import flask_discord.models
 
 from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
 from randovania.server.database import User, UserAccessToken, GameSessionMembership
@@ -31,6 +31,7 @@ def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
             for membership in GameSessionMembership.select().where(GameSessionMembership.user == user)
         ],
     }
+
 
 def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
     """
@@ -216,7 +217,8 @@ def setup_app(sio: ServerApp):
 
         for token in user.access_tokens:
             delete = f' <a href="{flask.url_for("delete_token", token=token.name)}">Delete</a>'
-            result += f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
+            result += (f"<li>{token.name} created at {token.creation_date}."
+                       f" Last used at {token.last_used}. {delete}</li>")
 
         result += f'<li><form class="form-inline" method="POST" action="{flask.url_for("create_token")}">'
         result += '<input id="name" placeholder="Access token name" name="name">'

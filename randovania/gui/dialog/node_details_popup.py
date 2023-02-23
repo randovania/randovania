@@ -354,7 +354,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         layers = (self.layers_combo.currentText(),)
 
         if node_type == GenericNode:
-            return GenericNode(identifier, node_index, heal, location, description, layers, extra, valid_starting_location)
+            return GenericNode(
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+            )
 
         elif node_type == DockNode:
             connection_node: Node = self.dock_connection_node_combo.currentData()

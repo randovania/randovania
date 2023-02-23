@@ -59,11 +59,31 @@ class PrimePresetDescriber(GamePresetDescriber):
                 return "Enemies will be stretched randomly"
 
         if configuration.enemy_attributes is not None:
-            enemy_rando_range_scale = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_scale_low, configuration.enemy_attributes.enemy_rando_range_scale_high], "Size")
-            enemy_rando_range_health = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_health_low, configuration.enemy_attributes.enemy_rando_range_health_high], "Health")
-            enemy_rando_range_speed = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_speed_low, configuration.enemy_attributes.enemy_rando_range_speed_high], "Speed")
-            enemy_rando_range_damage = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_damage_low, configuration.enemy_attributes.enemy_rando_range_damage_high], "Damage")
-            enemy_rando_range_knockback = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_knockback_low, configuration.enemy_attributes.enemy_rando_range_knockback_high], "Knockback")
+            enemy_rando_range_scale = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_scale_low,
+                 configuration.enemy_attributes.enemy_rando_range_scale_high],
+                "Size",
+            )
+            enemy_rando_range_health = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_health_low,
+                 configuration.enemy_attributes.enemy_rando_range_health_high],
+                "Health",
+            )
+            enemy_rando_range_speed = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_speed_low,
+                 configuration.enemy_attributes.enemy_rando_range_speed_high],
+                "Speed",
+            )
+            enemy_rando_range_damage = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_damage_low,
+                 configuration.enemy_attributes.enemy_rando_range_damage_high],
+                "Damage",
+            )
+            enemy_rando_range_knockback = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_knockback_low,
+                 configuration.enemy_attributes.enemy_rando_range_knockback_high],
+                "Knockback",
+            )
             enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_attributes.enemy_rando_diff_xyz)
         else:
             enemy_rando_range_scale = None

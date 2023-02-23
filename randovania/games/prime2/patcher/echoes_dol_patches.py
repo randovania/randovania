@@ -3,7 +3,7 @@ import struct
 from enum import Enum
 
 from randovania.dol_patching.assembler import custom_ppc
-from randovania.dol_patching.assembler.ppc import *
+from randovania.dol_patching.assembler.ppc import *   # noqa: F403
 from randovania.dol_patching.dol_file import DolFile
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame

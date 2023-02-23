@@ -207,7 +207,8 @@ class PlayerState:
             "\n".join(teleporters) or "None",
         )
 
-    def filter_usable_locations(self, locations_weighted: WeightedLocations, action: PickupEntry|None = None) -> WeightedLocations:
+    def filter_usable_locations(self, locations_weighted: WeightedLocations,
+                                action: PickupEntry | None = None) -> WeightedLocations:
         weighted = locations_weighted
 
         if self.configuration.first_progression_must_be_local and self.num_assigned_pickups == 0:
@@ -216,7 +217,7 @@ class PlayerState:
                 for loc, weight in weighted.items()
                 if loc[0] is self
             }
-        
+
         if action is not None and self.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
             weighted = {
                 loc: weight
