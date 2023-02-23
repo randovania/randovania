@@ -451,7 +451,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         index=PickupIndex(10),
         name="Someone's The Name",
         description="Scan Text",
-        collection_text=['Sent Cake to Someone!'],
+        collection_text=['Sent The Name to Someone!'],
         conditional_resources=[
             ConditionalResources(None, None, ((multi, 11),)),
         ],
