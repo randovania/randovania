@@ -1,4 +1,3 @@
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 
@@ -16,7 +15,8 @@ class PresetCSStartingArea(PresetStartingArea):
     def quick_fill_description(self) -> str:
         return "<br/>".join([
             super().quick_fill_description,
-            "Classic: Mimiga Village - Start Point, Mimiga Village - Arthur's House, and Labyrinth - Camp; the three starting locations available in the classic randomizer.",
+            ("Classic: Mimiga Village - Start Point, Mimiga Village - Arthur's House, and Labyrinth - Camp; "
+             "the three starting locations available in the classic randomizer."),
             "Save Points: All rooms with a Save Point."
         ])
 

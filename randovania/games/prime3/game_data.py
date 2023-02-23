@@ -66,7 +66,8 @@ game_data: game.GameData = game.GameData(
         ),
         (
            "While fighting Rundas, the game lags and there are pirates and turrets in the way. What causes this?",
-           "If you collect the ship item in Hangar Bay before fighting Rundas, both Rundas and the pirate layers will be active at the same time."
+           "If you collect the ship item in Hangar Bay before fighting Rundas,"
+           " both Rundas and the pirate layers will be active at the same time."
         ),
         (
             "I have Ship Missiles but I am unable to break the wall in Ancient Courtyard.",

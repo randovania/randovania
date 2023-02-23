@@ -9,13 +9,16 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 HTML_HEADER_FORMAT = '''
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>%s</title>
-		<style type="text/css">
+        <title>%s</title>
+        <style type="text/css">
     
-            body{margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px}h1,h2,h3{line-height:1.2}
+            body{
+                margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px
+            }
+            h1,h2,h3{line-height:1.2}
 
             #toc_container {
                 background: #f9f9f9 none repeat scroll 0 0;
@@ -36,8 +39,8 @@ HTML_HEADER_FORMAT = '''
                 list-style: outside none none !important;
             }
         </style>
-	</head>
-	<body>
+    </head>
+    <body>
         <h1>%s</h1>
         <p><i>File generated on %s by <a href="https://github.com/randovania/randovania">Randovania</a></i></p>
 '''
@@ -52,11 +55,13 @@ HTML_CONNECTION_FORMAT = '''
 
 HTML_VIDEO_FORMAT = '''
         <p><i>%s</i></p>
-        <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n
+        <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player"
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
+            picture-in-picture" allowfullscreen></iframe>\n
 '''
 
 HTML_FOOTER = '''
-	</body>
+    </body>
 </html>
 '''
 
@@ -221,7 +226,6 @@ def export_videos(game: RandovaniaGame, out_dir):
         file.close()
 
     full_name = game.long_name
-    header = HTML_HEADER_FORMAT % (full_name, full_name, get_date())
     html = HTML_HEADER_FORMAT % ("Index - " + full_name, full_name, get_date())
 
     toc = """

@@ -29,7 +29,9 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
 
-        self._starting_location_for_world, self._starting_location_for_area, self._starting_location_for_start_node = self.create_node_list_selection(
+        (self._starting_location_for_world,
+         self._starting_location_for_area,
+         self._starting_location_for_start_node) = self.create_node_list_selection(
             self.starting_locations_contents,
             self.starting_locations_layout,
             StartingLocationList.nodes_list(self.game_description.game),

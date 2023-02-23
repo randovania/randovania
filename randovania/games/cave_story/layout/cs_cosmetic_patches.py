@@ -62,11 +62,17 @@ class MusicRandoType(BitPackEnum, Enum):
         if self == MusicRandoType.DEFAULT:
             return "Music will not be randomized."
         if self == MusicRandoType.SHUFFLE:
-            return "Remap every song to a new song. For example, all instances of *Mischievous Robot* become *Pulse*. Songs may remap to themselves."
+            return ("Remap every song to a new song. For example, all instances of *Mischievous Robot* become *Pulse*. "
+                    "Songs may remap to themselves.")
         if self == MusicRandoType.RANDOM:
-            return "Remap every cue to a new song. For example, entering the Egg Corridor by any means plays *Meltdown 2*."
+            return ("Remap every cue to a new song. "
+                    "For example, entering the Egg Corridor by any means plays *Meltdown 2*.")
         if self == MusicRandoType.CHAOS:
-            return "Remap every `<CMU` to a new song. For example, teleporting to the Egg Corridor plays *Charge*, but entering Egg Corridor from Cthulhu's Abode plays *Run!*"
+            return (
+                "Remap every `<CMU` to a new song. "
+                "For example, teleporting to the Egg Corridor plays *Charge*, "
+                "but entering Egg Corridor from Cthulhu's Abode plays *Run!*"
+            )
 
 
 @unique

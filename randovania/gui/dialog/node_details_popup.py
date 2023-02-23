@@ -9,7 +9,6 @@ from randovania.game_description import integrity_check
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.configurable_node import ConfigurableNode
@@ -355,7 +354,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         layers = (self.layers_combo.currentText(),)
 
         if node_type == GenericNode:
-            return GenericNode(identifier, node_index, heal, location, description, layers, extra, valid_starting_location)
+            return GenericNode(
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+            )
 
         elif node_type == DockNode:
             connection_node: Node = self.dock_connection_node_combo.currentData()

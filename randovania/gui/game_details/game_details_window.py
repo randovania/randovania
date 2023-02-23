@@ -281,12 +281,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                     self.validator_widget.stop_validator()
 
                 self.validator_widget = GameValidatorWidget(self.layout_description)
-                self.layout_info_tab.addTab(self.validator_widget, f"Spoiler: Playthrough")
+                self.layout_info_tab.addTab(self.validator_widget, "Spoiler: Playthrough")
 
             action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
             for item_order in description.item_order:
                 action_list_widget.addItem(item_order)
-            self.layout_info_tab.addTab(action_list_widget, f"Spoiler: Generation Order")
+            self.layout_info_tab.addTab(action_list_widget, "Spoiler: Generation Order")
 
         self._update_current_player()
 

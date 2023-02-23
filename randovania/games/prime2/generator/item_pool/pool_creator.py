@@ -2,7 +2,6 @@ from random import Random
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime2.generator.item_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.games.prime2.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration

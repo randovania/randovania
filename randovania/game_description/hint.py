@@ -116,10 +116,10 @@ class Hint(JsonDataclass):
     def __post_init__(self):
         if self.hint_type is HintType.JOKE:
             if self.target is not None or self.dark_temple is not None:
-                raise ValueError(f"Joke Hint, but had a target or dark_temple.")
+                raise ValueError("Joke Hint, but had a target or dark_temple.")
         elif self.hint_type is HintType.LOCATION:
             if self.target is None:
-                raise ValueError(f"Location Hint, but no target set.")
+                raise ValueError("Location Hint, but no target set.")
         elif self.hint_type is HintType.RED_TEMPLE_KEY_SET:
             if self.dark_temple is None:
-                raise ValueError(f"Dark Temple Hint, but no dark_temple set.")
+                raise ValueError("Dark Temple Hint, but no dark_temple set.")

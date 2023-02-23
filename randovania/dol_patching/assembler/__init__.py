@@ -1,7 +1,7 @@
 import copy
 from typing import Iterable
 
-from randovania.dol_patching.assembler.ppc import Instruction, BaseInstruction
+from randovania.dol_patching.assembler.ppc import BaseInstruction
 
 
 def assemble_instructions(address: int, instructions: list[BaseInstruction], symbols: dict[str, int] = None) -> \

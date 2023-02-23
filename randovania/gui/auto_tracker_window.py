@@ -17,12 +17,12 @@ from randovania.interface_common.options import Options
 
 
 def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:
-    with get_data_path().joinpath(f"gui_assets/tracker/trackers.json").open("r") as trackers_file:
+    with get_data_path().joinpath("gui_assets/tracker/trackers.json").open("r") as trackers_file:
         data = json.load(trackers_file)["trackers"]
 
     return {
         RandovaniaGame(game): {
-            name: get_data_path().joinpath(f"gui_assets/tracker", file_name)
+            name: get_data_path().joinpath("gui_assets/tracker", file_name)
             for name, file_name in trackers.items()
         }
         for game, trackers in data.items()

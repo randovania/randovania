@@ -28,6 +28,6 @@ class PrimeCosmeticPatches(BaseCosmeticPatches):
 
     def __post_init__(self):
         if len(self.suit_color_rotations) != 4:
-            raise ValueError(f"Suit color rotations must be a tuple of 4 ints.")
+            raise ValueError("Suit color rotations must be a tuple of 4 ints.")
         if len(self.hud_color) != 3:
-            raise ValueError(f"HUD color must be a tuple of 3 ints.")
+            raise ValueError("HUD color must be a tuple of 3 ints.")

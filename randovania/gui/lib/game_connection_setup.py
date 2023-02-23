@@ -80,7 +80,7 @@ class GameConnectionSetup:
             self.upload_nintendont_action.setEnabled(True)
         else:
             self.use_nintendont_backend.setChecked(False)
-            self.use_nintendont_backend.setText(f"Nintendont")
+            self.use_nintendont_backend.setText("Nintendont")
             self.upload_nintendont_action.setEnabled(False)
 
     def on_use_dolphin_backend(self):
@@ -129,7 +129,7 @@ class GameConnectionSetup:
 
         try:
             await wiiload.upload_file(nintendont_file, [], self.options.nintendont_ip)
-            box.setText(f"Upload finished successfully. Check your Wii for more.")
+            box.setText("Upload finished successfully. Check your Wii for more.")
         except Exception as e:
             box.setText(f"Error uploading to Wii: {e}")
         finally:

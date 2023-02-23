@@ -554,7 +554,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     def setup_translator_gates(self):
         world_list = self.game_description.world_list
-        resource_db = self.game_description.resource_database
         self._translator_gate_to_combo = {}
 
         if self.game_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
@@ -714,9 +713,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 else:
                     without_quantity_by_parent[parent_widget].append((parent_layout, pickup))
 
-        for parent_widget, l in without_quantity_by_parent.items():
-            num_rows = math.ceil(len(l) / k_column_count)
-            for parent_layout, pickup in l:
+        for parent_widget, layouts in without_quantity_by_parent.items():
+            num_rows = math.ceil(len(layouts) / k_column_count)
+            for parent_layout, pickup in layouts:
                 check_box = QtWidgets.QCheckBox(parent_widget)
                 check_box.setText(pickup.name)
                 check_box.stateChanged.connect(functools.partial(self._change_item_quantity, pickup, True))

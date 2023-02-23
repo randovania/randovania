@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import dataclasses
 import typing
-from typing import NamedTuple
 
 from frozendict import frozendict
 

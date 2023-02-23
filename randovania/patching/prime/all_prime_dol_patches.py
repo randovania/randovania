@@ -4,7 +4,7 @@ import struct
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.dol_patching import assembler
 from randovania.dol_patching.assembler import custom_ppc
-from randovania.dol_patching.assembler.ppc import *
+from randovania.dol_patching.assembler.ppc import *   # noqa: F403
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
 from randovania.games.game import RandovaniaGame

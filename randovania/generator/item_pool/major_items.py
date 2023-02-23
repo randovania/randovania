@@ -2,7 +2,6 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_major_item
 from randovania.layout.base.ammo_configuration import AmmoConfiguration

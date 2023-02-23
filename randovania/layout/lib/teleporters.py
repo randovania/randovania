@@ -148,7 +148,8 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     area = world_list.nodes_to_area(node)
                     if area.has_start_node():
                         result.append(identifier.area_identifier)
-                    # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent on the previous room
+                    # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
+                    # on the previous room
                     elif area.name == "Metroid Prime Lair":
                         result.append(AreaIdentifier.from_string("Impact Crater/Subchamber Five"))
             return result

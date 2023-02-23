@@ -107,7 +107,7 @@ class PresetManager:
     def default_preset(self) -> VersionedPreset:
         for preset in self.included_presets.values():
             return preset
-        raise ValueError(f"No included presets")
+        raise ValueError("No included presets")
 
     def default_preset_for_game(self, game: RandovaniaGame) -> VersionedPreset:
         for preset in self.included_presets.values():

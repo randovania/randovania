@@ -4,7 +4,6 @@ import randovania
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description import default_database
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
@@ -52,7 +51,7 @@ class DreadConfiguration(BaseConfiguration):
                 result.append(f"Enabled {trick.long_name}")
 
         if self.starting_location.locations != (gd.starting_location,):
-            result.append(f"Custom Starting Location")
+            result.append("Custom Starting Location")
 
         if not self.elevators.is_vanilla:
             result.append("Random Elevators")

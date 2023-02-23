@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import logging
-import os
 import typing
 
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtWidgets, QtGui
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget

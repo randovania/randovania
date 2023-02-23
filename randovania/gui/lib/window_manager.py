@@ -16,28 +16,28 @@ class WindowManager(QMainWindow):
 
     @property
     def preset_manager(self) -> PresetManager:
-        raise NotImplemented()
+        raise NotImplementedError()
 
     async def open_map_tracker(self, configuration: Preset):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def open_data_visualizer_at(self, world_name: str | None, area_name: str | None,
                                 game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def open_game_details(self, layout: LayoutDescription):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def set_games_selector_visible(self, visible: bool):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     @property
     def main_window(self) -> QMainWindow:
-        raise NotImplemented()
+        raise NotImplementedError()
 
     @property
     def is_preview_mode(self) -> bool:
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def track_window(self, window: CloseEventWidget):
         def remove_window():
