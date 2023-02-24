@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 from typing import Iterator, TextIO
 
@@ -14,7 +13,7 @@ from randovania.game_description.world.area import Area
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.hint_node import HintNodeKind, HintNode
+from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node import (
     Node
 )
@@ -107,10 +106,10 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
         return f"Event {node.event.long_name}"
 
     elif isinstance(node, ConfigurableNode):
-        return f"Configurable Node"
+        return "Configurable Node"
 
     elif isinstance(node, HintNode):
-        return f"Hint"
+        return "Hint"
 
     elif isinstance(node, TeleporterNetworkNode):
         unlocked_pretty = list(pretty_print_requirement(node.is_unlocked))
@@ -197,11 +196,11 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             output.write(f"\n      Unlocked: {dock_rando.unlocked.name}")
             output.write(f"\n      Locked: {dock_rando.locked.name}")
 
-            output.write(f"\n      Change from:")
+            output.write("\n      Change from:")
             for weakness in sorted(dock_rando.change_from):
                 output.write(f"\n          {weakness.name}")
 
-            output.write(f"\n      Change to:")
+            output.write("\n      Change to:")
             for weakness in sorted(dock_rando.change_to):
                 output.write(f"\n          {weakness.name}")
 
@@ -221,7 +220,7 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
 
 
 def write_human_readable_game(game: GameDescription, base_path: Path):
-    with base_path.joinpath(f"header.txt").open("w", encoding="utf-8") as meta:
+    with base_path.joinpath("header.txt").open("w", encoding="utf-8") as meta:
         write_human_readable_meta(game, meta)
 
     for world in game.world_list.worlds:

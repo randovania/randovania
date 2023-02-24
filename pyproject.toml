@@ -7,3 +7,10 @@ requires = [
     "dulwich",
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 120
+
+ignore = [
+    "F405",  # star import, using in pseudo-ppc assembly
+]

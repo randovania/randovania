@@ -33,6 +33,10 @@ if typing.TYPE_CHECKING:
     from randovania.resolver.bootstrap import Bootstrap
 
 
+def _get_none(h):
+    return None
+
+
 @dataclass(frozen=True)
 class GameLayout:
     configuration: type[BaseConfiguration]
@@ -44,7 +48,7 @@ class GameLayout:
     preset_describer: GamePresetDescriber
     """Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
-    get_ingame_hash: Callable[[bytes], str | None] = lambda h: None
+    get_ingame_hash: Callable[[bytes], str | None] = _get_none
     """(Optional) Takes a layout hash bytes and produces a string representing how the game 
     will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
 

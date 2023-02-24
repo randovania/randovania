@@ -4,7 +4,7 @@ from typing import Iterator, Callable, TypeVar, Iterable
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
@@ -13,17 +13,16 @@ from randovania.games.game import RandovaniaGame
 def _sorted_node_identifiers(elements: Iterable[NodeIdentifier]) -> list[NodeIdentifier]:
     return sorted(elements)
 
-def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node], bool]) -> list[NodeIdentifier]:
+
+def node_and_area_with_filter(game: RandovaniaGame, condition: Callable[[Area, Node], bool]) -> list[NodeIdentifier]:
     world_list = default_database.game_description_for(game).world_list
-    identifiers = [
-        AreaIdentifier(
-            world_name=world.name,
-            area_name=area.name,
-        )
+    identifiers = {
+        NodeIdentifier.create(world.name, area.name, node.name)
         for world in world_list.worlds
         for area in world.areas
-        if condition(area)
-    ]
+        for node in area.actual_nodes
+        if condition(area, node)
+    }
     return _sorted_node_identifiers(identifiers)
 
 def node_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node], bool]) -> list[NodeIdentifier]:
@@ -56,7 +55,7 @@ class LocationList(BitPackValue):
 
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
-        return node_locations_with_filter(game, lambda area: True)
+        return node_locations_with_filter(game, lambda node: True)
 
     @classmethod
     def element_type(cls) -> type[NodeIdentifier]:

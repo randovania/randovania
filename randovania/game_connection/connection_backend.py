@@ -125,7 +125,7 @@ class ConnectionBackend(ConnectionBase):
         for connector in possible_connectors:
             try:
                 is_version = await connector.is_this_version(self.executor)
-            except (RuntimeError, MemoryOperationException) as e:
+            except (RuntimeError, MemoryOperationException):
                 return None
 
             if is_version:

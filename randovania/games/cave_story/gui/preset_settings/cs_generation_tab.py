@@ -1,11 +1,9 @@
 from typing import Iterable
 
-from PySide6.QtWidgets import *
+from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
-from randovania.gui.lib.window_manager import WindowManager
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
 
@@ -15,17 +13,20 @@ class PresetCSGeneration(PresetGeneration):
         self._create_puppy_checkbox()
 
     @property
-    def game_specific_widgets(self) -> Iterable[QWidget] | None:
+    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget] | None:
         yield self._puppy_widget
 
     def on_preset_changed(self, preset: Preset):
+        assert isinstance(preset.configuration, CSConfiguration)
         super().on_preset_changed(preset)
         self._puppy_widget.setChecked(preset.configuration.puppies_anywhere)
 
     def _create_puppy_checkbox(self):
-        puppy = QCheckBox("Shuffle puppies anywhere")
+        puppy = QtWidgets.QCheckBox("Shuffle puppies anywhere")
         puppy.setToolTip(
-            "When disabled, puppies will only be shuffled within the Sand Zone. When enabled, puppies can be placed in any valid location.")
+            "When disabled, puppies will only be shuffled within the Sand Zone. "
+            "When enabled, puppies can be placed in any valid location."
+        )
         puppy.stateChanged.connect(self._on_puppy_changed)
         self._puppy_widget = puppy
 

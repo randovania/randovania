@@ -3,11 +3,13 @@ from random import Random
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision, PrecisionPair, HintItemPrecision
 from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
+from randovania.game_description.world.pickup_node import PickupNode
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
 from randovania.generator.hint_distributor import HintDistributor, PreFillParams, HintTargetPrecision
 
+USE_GUARANTEED_HINTS = False
 
 class CSHintDistributor(HintDistributor):
     @property
@@ -31,26 +33,28 @@ class CSHintDistributor(HintDistributor):
         }
 
     async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+        if USE_GUARANTEED_HINTS:
+            assert isinstance(patches.configuration, CSConfiguration)
+            # TODO: assign base hints *after* generation?
+            items_with_hint = []
+            if patches.configuration.objective == CSObjective.BAD_ENDING:
+                items_with_hint.append("Rusty Key")
+            else:
+                items_with_hint.append("ID Card")
+            if patches.starting_location.area_name != "Start Point":
+                items_with_hint.append("Arthur's Key")
+
+            already_hinted_indices = [hint.target for hint in patches.hints.values() if hint.target is not None]
+            indices_with_hint = [
+                (node.pickup_index, HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED)
+                for node in patches.game.world_list.iterate_nodes()
+                if isinstance(node, PickupNode)
+                   and node.pickup_index not in already_hinted_indices
+                   and patches.pickup_assignment[node.pickup_index].pickup.name in items_with_hint
+            ]
+            return indices_with_hint
+
         return []
-
-        # TODO: assign base hints *after* generation?
-        items_with_hint = []
-        if configuration.objective == CSObjective.BAD_ENDING:
-            items_with_hint.append("Rusty Key")
-        else:
-            items_with_hint.append("ID Card")
-        if patches.starting_location.area_name != "Start Point":
-            items_with_hint.append("Arthur's Key")
-
-        already_hinted_indices = [hint.target for hint in patches.hints.values() if hint.target is not None]
-        indices_with_hint = [
-            (node.pickup_index, HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED)
-            for node in world_list.iterate_nodes
-            if isinstance(node, PickupNode)
-               and node.pickup_index not in already_hinted_indices
-               and patches.pickup_assignment[node.pickup_index].pickup.name in items_with_hint
-        ]
-        return indices_with_hint
 
     def precision_pair_weighted_list(self) -> list[PrecisionPair]:
         tiers = {

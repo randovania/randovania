@@ -196,7 +196,7 @@ class HintDistributor(ABC):
             len(possible_indices), len(potential_hint_locations)))
 
         if debug.debug_level() > 1:
-            print(f"> Num pickups per asset:")
+            print("> Num pickups per asset:")
             for asset, pickups in hint_initial_pickups.items():
                 print(f"* {asset}: {len(pickups)} pickups")
             print("> Done.")

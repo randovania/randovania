@@ -302,11 +302,11 @@ def cmpwi(input_register: GeneralRegister, literal: int):
                                 (literal, 16, True)))
 
 
-def cmp(bf, l, ra: GeneralRegister, rb: GeneralRegister):
+def cmp(bf, unused, ra: GeneralRegister, rb: GeneralRegister):
     """
     https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_cmp_instr.html
     :param bf: Specifies Condition Register Field 0-7 which indicates result of compare.
-    :param l: Must be set to 0 for the 32-bit subset architecture.
+    :param unused: Must be set to 0 for the 32-bit subset architecture.
     :param ra: Specifies source general-purpose register for operation.
     :param rb: Specifies source general-purpose register for operation.
     :return:
@@ -314,7 +314,7 @@ def cmp(bf, l, ra: GeneralRegister, rb: GeneralRegister):
     return Instruction.compose(((31, 6, False),
                                 (bf, 3, False),
                                 (0, 1, False),
-                                (l, 1, False),
+                                (unused, 1, False),
                                 (ra.number, 5, False),
                                 (rb.number, 5, False),
                                 (0, 10, False),

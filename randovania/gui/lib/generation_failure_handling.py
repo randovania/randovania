@@ -8,7 +8,7 @@ from qasync import asyncSlot
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.gui.lib import async_dialog, common_qt_lib, error_message_box
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
-from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
+from randovania.resolver.exceptions import GenerationFailure
 
 
 class GenerationFailureHandler(QtWidgets.QWidget):

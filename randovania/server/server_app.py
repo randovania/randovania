@@ -133,7 +133,9 @@ class ServerApp:
 
                 except (Exception, TypeError):
                     span.set_data("message.error", ServerError.code())
-                    logger().exception(f"Unhandled exception while processing request for message {message}. Args: {args}")
+                    logger().exception(
+                        f"Unhandled exception while processing request for message {message}. Args: {args}"
+                    )
                     return ServerError().as_json
 
         metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")

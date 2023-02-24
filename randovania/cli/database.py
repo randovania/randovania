@@ -5,7 +5,7 @@ import logging
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
-from typing import BinaryIO, TextIO, Any
+from typing import Any
 
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_info import ResourceInfo
@@ -303,12 +303,12 @@ def list_paths_with_dangerous_logic(args):
                         if individual.negate:
                             area_had_resource = True
                             if not print_only_area:
-                                print("At {0}, from {1} to {2}:\n{4}\n".format(
+                                print("At {0}, from {1} to {2}:\n{3}\n".format(
                                     game.world_list.area_name(area),
                                     area,
                                     source.name,
-                                    target.name,
-                                    sorted(individual for individual in alternative.values())))
+                                    sorted(individual for individual in alternative.values()),
+                                ))
                             count += 1
 
         if area_had_resource and print_only_area:
@@ -486,7 +486,7 @@ def render_worlds_graph_logic(args):
                 color=c,
                 fillcolor=f"#{fillcolor}",
                 style="filled",
-                fontcolor=f"#ffffff",
+                fontcolor="#ffffff",
                 shape=shape,
                 penwidth="3.0",
             )

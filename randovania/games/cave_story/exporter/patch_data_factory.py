@@ -186,7 +186,10 @@ class CSPatchDataFactory(BasePatchDataFactory):
             ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode('utf-8')
             if item.short_name in {"missiles", "supers"}:
                 ammo = num_to_tsc_value(starting_items[missile]).decode('utf-8')
-            plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}" if item_num else f"<AM+{num_to_tsc_value(arms_num).decode('utf-8')}:{ammo}"
+            if item_num:
+                plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}"
+            else:
+                plus = f"<AM+{num_to_tsc_value(arms_num).decode('utf-8')}:{ammo}"
             flag = num_to_tsc_value(item.extra["flag"]).decode('utf-8')
             text = item.extra["text"]
 
@@ -308,7 +311,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
         head = {}
         for event, m_ammo in missile_events.items():
             head[event] = {
-                "needle": f"<AM%+....:....",
+                "needle": "<AM%+....:....",
                 "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}"
             }
 
@@ -319,7 +322,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 self.configuration.major_items_configuration.items_state[self.item_db.major_items[name]].included_ammo[
                     0]
             head[event] = {
-                "needle": f".!<ML%+....",
+                "needle": ".!<ML%+....",
                 "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
             }
 

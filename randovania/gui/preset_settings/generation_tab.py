@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Iterable
 
-from PySide6.QtWidgets import *
+from PySide6 import QtWidgets
 
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
@@ -94,7 +94,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         return self._editor._game
 
     @property
-    def game_specific_widgets(self) -> Iterable[QWidget] | None:
+    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget] | None:
         return None
 
     def _persist_major_minor(self, value: bool):

@@ -91,7 +91,7 @@ def batch_distribute_command_logic(args):
         except Exception as e:
             report_update(seed, f"Failed to generate seed: {e} ({type(e)})")
         except KeyboardInterrupt:
-            report_update(seed, f"Interrupt requested.")
+            report_update(seed, "Interrupt requested.")
             for f in all_futures:
                 f.cancel()
 

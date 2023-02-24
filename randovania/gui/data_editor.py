@@ -12,7 +12,9 @@ from randovania.game_description import data_reader, data_writer, pretty_print, 
     derived_nodes, default_database
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
@@ -36,6 +38,25 @@ from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
 SHOW_WORLD_MIN_MAX_SPINNER = False
+
+
+def _simplify_trivial_and_impossible(requirement: Requirement) -> Requirement:
+    if isinstance(requirement, RequirementArrayBase):
+        items = list(requirement.items)
+        if isinstance(requirement, RequirementOr):
+            remove = Requirement.impossible()
+            solve = Requirement.trivial()
+        else:
+            remove = Requirement.trivial()
+            solve = Requirement.impossible()
+
+        items = [_simplify_trivial_and_impossible(it) for it in items]
+        if solve in items:
+            return solve
+        items = [it for it in items if it != remove]
+        return type(requirement)(items, comment=requirement.comment)
+    else:
+        return requirement
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
@@ -160,6 +181,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_world = self.current_world
         current_area = self.current_area
         current_node = self.current_node
+        current_connection = self.current_connection_node
 
         self.game_description = game
         self.editor = Editor(self.game_description)
@@ -177,6 +199,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.focus_on_area_by_name(current_area.name)
         if current_node:
             self.focus_on_node(current_node)
+        if current_connection:
+            self.focus_on_connection(current_connection)
 
     @classmethod
     def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
@@ -522,11 +546,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         requirement = self.current_area.connections[current_node].get(self.current_connection_node,
                                                                       Requirement.impossible())
         if self._collection_for_filtering is not None:
-            requirement = requirement.patch_requirements(
+            requirement = _simplify_trivial_and_impossible(requirement.patch_requirements(
                 self._collection_for_filtering,
                 1.0,
                 self.game_description.resource_database,
-            )
+            ))
 
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,

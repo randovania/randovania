@@ -49,7 +49,7 @@ _TEST_RESPONSE = {
     "url": "/mp2r",
     "data_url": "/mp2r/data",
     "image": None,
-    "info": "Download the Metroid Prime 2: Echoes randomizer <a href=\"https://github.com/randovania/randovania/releases\">here</a>.\r\n<p><p>\r\n<b><u>Category Rules</b></u>\r\n<p><p>\r\nTiming starts when confirming the game's difficulty on the main menu (or selecting a new file, if you are not able to select a difficulty). \r\n<p><p>\r\n<b>Beat the game</b>: Timing stops once you have activated a cutscene, elevator, portal, or teleport that will lead to the credits or Mission Final screen without any further game input.\r\n <p>\r\n<b>Collect all Sky Temple Keys</b>: Timing stops once you have at least one of each available Sky Temple Key (Sky Temple Key 1, 2, 3, etc.) currently collected. \r\n<p>\r\n<b><u>Miscellaneous</b></u>\r\n<p><p>\r\nThe only permitted emulator is Dolphin, running on version 5.0 or later. Running the ISO on console via Nintendont is allowed.\r\n<p>\r\nISO inspection/ROM inspection/memory inspection/software reverse-engineering that determines item locations or elevator destinations of the race seed prior to or during the race is <b>banned</b>.\r\n<p>\r\nTurbo functions, increasing the disk read speed, save states, fast forward and disabling fog are all <b>banned</b>. However, any of these functions may be allowed if all racers permit it, or a category rule permits it.",
+    "info": "<category_info>",
     "streaming_required": False,
     "owners": [
         {
@@ -82,7 +82,9 @@ _TEST_RESPONSE = {
                 "name": "Beat the game",
                 "custom": False
             },
-            "info": "zasj0oGRVOUaUwbx6LFMgLrjmF0kH2aEFX9OMr1tu7xcW8az || Seed Hash: Command Caretaker Alcove (67J3ZJPT)",
+            "info": (
+                "zasj0oGRVOUaUwbx6LFMgLrjmF0kH2aEFX9OMr1tu7xcW8az || Seed Hash: Command Caretaker Alcove (67J3ZJPT)"
+            ),
             "entrants_count": 3,
             "entrants_count_inactive": 0,
             "opened_at": "2020-10-03T18:44:17.865Z",

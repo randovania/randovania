@@ -21,7 +21,8 @@ class AboutWidget(QtWidgets.QTextBrowser):
             "",
             "<https://github.com/randovania/randovania>",
             "",
-            "This software is covered by the [GNU General Public License v3 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html)",
+            "This software is covered by the"
+            " [GNU General Public License v3 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html)",
             "",
             "{community}",
             "",

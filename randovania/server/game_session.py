@@ -29,7 +29,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
 from randovania.server.database import (GameSession, GameSessionMembership, GameSessionTeamAction, GameSessionPreset,
-                                        GameSessionAudit)
+                                        GameSessionAudit, is_boolean)
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
@@ -115,7 +115,9 @@ def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None
 
     if not (current_membership.admin or (admin_user_id is not None and current_user.id == admin_user_id)):
         if allow_when_no_admins and GameSessionMembership.select().where(
-                GameSessionMembership.session == session_id, GameSessionMembership.admin == True).count() == 0:
+                GameSessionMembership.session == session_id,
+                is_boolean(GameSessionMembership.admin, True)
+        ).count() == 0:
             return
         raise NotAuthorizedForAction()
 
@@ -246,7 +248,7 @@ def _delete_row(sio: ServerApp, session: GameSession, row_id: int):
         raise InvalidAction("Can't delete row when there's only one")
 
     if row_id != session.num_rows - 1:
-        raise InvalidAction(f"Can only delete the last row")
+        raise InvalidAction("Can only delete the last row")
 
     with database.db.atomic():
         logger().info(f"{_describe_session(session)}: Deleting {row_id}.")
@@ -284,7 +286,7 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
     else:
         if session.generation_in_progress != sio.get_current_user():
             if session.generation_in_progress is None:
-                raise InvalidAction(f"Not waiting for a layout.")
+                raise InvalidAction("Not waiting for a layout.")
             else:
                 raise InvalidAction(f"Waiting for a layout from {session.generation_in_progress.name}.")
 
@@ -328,7 +330,7 @@ def _download_layout_description(sio: ServerApp, session: GameSession):
     if not session.layout_description.has_spoiler:
         raise InvalidAction("Session does not contain a spoiler")
 
-    _add_audit_entry(sio, session, f"Requested the spoiler log")
+    _add_audit_entry(sio, session, "Requested the spoiler log")
     return session.layout_description_json
 
 
@@ -339,7 +341,7 @@ def _start_session(sio: ServerApp, session: GameSession):
         raise InvalidAction("Unable to start session, no game is available.")
 
     num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                       GameSessionMembership.row != None).count()
+                                                       GameSessionMembership.row.is_null(False)).count()
     expected_players = session.num_rows
     if num_players != expected_players:
         raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
@@ -348,7 +350,7 @@ def _start_session(sio: ServerApp, session: GameSession):
     session.state = GameSessionState.IN_PROGRESS
     logger().info(f"{_describe_session(session)}: Starting session.")
     session.save()
-    _add_audit_entry(sio, session, f"Started session")
+    _add_audit_entry(sio, session, "Started session")
 
 
 def _finish_session(sio: ServerApp, session: GameSession):
@@ -359,7 +361,7 @@ def _finish_session(sio: ServerApp, session: GameSession):
     session.state = GameSessionState.FINISHED
     logger().info(f"{_describe_session(session)}: Finishing session.")
     session.save()
-    _add_audit_entry(sio, session, f"Finished session")
+    _add_audit_entry(sio, session, "Finished session")
 
 
 def _reset_session(sio: ServerApp, session: GameSession):
@@ -376,7 +378,7 @@ def _change_password(sio: ServerApp, session: GameSession, password: str):
     session.password = _hash_password(password)
     logger().info(f"{_describe_session(session)}: Changing password.")
     session.save()
-    _add_audit_entry(sio, session, f"Changed password")
+    _add_audit_entry(sio, session, "Changed password")
 
 
 def _change_title(sio: ServerApp, session: GameSession, title: str):
@@ -551,7 +553,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         # Must be admin for this
         _verify_has_admin(sio, session_id, None, allow_when_no_admins=True)
         num_admins = GameSessionMembership.select().where(GameSessionMembership.session == session_id,
-                                                          GameSessionMembership.admin == True).count()
+                                                          is_boolean(GameSessionMembership.admin, True)).count()
 
         if membership.admin and num_admins <= 1:
             raise InvalidAction("can't demote the only admin")
@@ -623,7 +625,7 @@ def _collect_location(session: GameSession, membership: GameSessionMembership,
         logger().info(f"{_describe_session(session, membership)} found item at {pickup_location}. {msg}")
 
     if pickup_target is None:
-        log(f"It's an ETM.")
+        log("It's an ETM.")
         return None
 
     if pickup_target.player == membership.row:
