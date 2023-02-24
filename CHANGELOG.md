@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Using trick filters in the Data Visualizer now properly removes extra requirements when tricks are removed.
 - Fixed: Hiding the pickup collection message now correctly works for other player's pickups in a multiworld. 
 
+### Metroid Prime
+
+#### Patcher Changes
+
+- Fixed: Several soft-locks and janky cutscenes when shuffling the Essence elevator
+- Fixed: Research Lab Aether wall not breaking when approached from behind (QoL Game Breaking)
+- Fixed: Watery Hall lore scan being replaced with QoL Scan Point text
+- Fixed: Escape sequence counting up instead of down
+- Fixed: Small Samus spawning in ship instead of on top
+- Added: Ridley shorelines, biotech research 2, and exterior docking hangar actors now scale with boss size
+
 ### Metroid Dread
 
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
