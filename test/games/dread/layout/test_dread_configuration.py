@@ -3,7 +3,6 @@ import dataclasses
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -23,7 +22,7 @@ def test_has_unsupported_features(preset_manager):
         configuration,
         trick_level=configuration.trick_level.set_level_for_trick(suitless, LayoutTrickLevel.HYPERMODE),
         starting_location=configuration.starting_location.ensure_has_location(
-            NodeIdentifier.create("Burenia", "Upper Burenia Hub", "Start Point"), True,
+            AreaIdentifier("Burenia", "Upper Burenia Hub"), True,
         ),
         elevators=dataclasses.replace(configuration.elevators, mode=TeleporterShuffleMode.TWO_WAY_RANDOMIZED),
         artifacts=DreadArtifactConfig(

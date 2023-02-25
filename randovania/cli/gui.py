@@ -1,8 +1,8 @@
 try:
-    import PySide6  # noqa: F401
+    import PySide6
 
     has_gui = True
-except ModuleNotFoundError:
+except ModuleNotFoundError as e:
     has_gui = False
 
 

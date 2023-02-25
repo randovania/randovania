@@ -92,8 +92,7 @@ game_data: game.GameData = game.GameData(
         ( 	
             "I picked up the Speed Booster / Phantom Cloak / Storm Missile but can't use them!",
             "Press ZL + ZR + D-Pad Up to fix the issue." 
-            " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab"
-            " for important rules of when to use this button combination.\n\n"
+            " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab for important rules of when to use this button combination.\n\n"
             "You can also save and reload your game."
         ),
         ( 	

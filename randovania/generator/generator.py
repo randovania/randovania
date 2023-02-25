@@ -5,10 +5,12 @@ from typing import Callable
 
 import tenacity
 
-from randovania.game_description.assignment import (PickupTarget, PickupTargetAssociation)
+from randovania.game_description.assignment import (PickupAssignment,
+                                                    PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.world_list import WorldList
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, filter_unassigned_pickup_nodes)
@@ -71,14 +73,16 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
         (index, PickupTarget(pickup, player_index))
         for index, pickup in pool_results.assignment.items()
     ]
-    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_starting_pickups(pool_results.starting)
+    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_initial_items(
+        pool_results.initial_resources.as_resource_gain()
+    )
 
     return PlayerPool(
         game=game,
         game_generator=game_generator,
         configuration=configuration,
         patches=patches,
-        pickups=pool_results.to_place,
+        pickups=pool_results.pickups,
     )
 
 

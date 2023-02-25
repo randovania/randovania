@@ -8,10 +8,8 @@ from PySide6.QtCore import Qt
 
 from randovania.game_description import default_database
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.layout import prime_configuration
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea, PresetStartingArea
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import StartingLocationList
@@ -30,7 +28,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
     window.on_preset_changed(editor.create_custom_preset_with())
 
     # Assert
-    num_areas = len(StartingLocationList.nodes_list(preset.game))
+    num_areas = len(StartingLocationList.areas_list(preset.game))
     assert len(window._starting_location_for_area) == num_areas
 
 
@@ -89,21 +87,8 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
 
     # Assert
     expected = {
-        NodeIdentifier.create("Mimiga Village", "Start Point", "Room Spawn"),
-        NodeIdentifier.create("Mimiga Village", "Arthur's House", "Room Spawn"),
-        NodeIdentifier.create("Labyrinth", "Camp", "Room Spawn")
+        AreaIdentifier("Mimiga Village", "Start Point"),
+        AreaIdentifier("Mimiga Village", "Arthur's House"),
+        AreaIdentifier("Labyrinth", "Camp")
     }
     assert set(editor.configuration.starting_location.locations) == expected
-
-def test_check_credits(skip_qtbot, preset_manager):
-    # Setup
-    base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
-    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
-    skip_qtbot.addWidget(window)
-
-    not_expected = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
-
-    checkbox_list = window._starting_location_for_node
-    assert checkbox_list.get(not_expected, None) == None

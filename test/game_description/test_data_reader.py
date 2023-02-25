@@ -19,8 +19,7 @@ def test_invalid_node_type():
             "description": "",
             "extra": {},
             "layers": ["default"],
-            "node_type": "something that doesn't exist",
-            "valid_starting_location": False
+            "node_type": "something that doesn't exist"
         })
 
     assert str(e.value) == "In node Broken Node, got error: Unknown type: something that doesn't exist"
@@ -37,11 +36,11 @@ def test_area_with_invalid_connections():
             "extra": {},
             "nodes": {
                 "A": {
-                    "heal": True, "coordinates": None, "node_type": "generic", "valid_starting_location": False,
+                    "heal": True, "coordinates": None, "node_type": "generic",
                     "connections": {}, "extra": {}, "layers": ["default"], "description": "",
                 },
                 "Broken": {
-                    "heal": True, "coordinates": None, "node_type": "generic", "valid_starting_location": False,
+                    "heal": True, "coordinates": None, "node_type": "generic",
                     "layers": ["default"], "extra": {}, "description": "",
                     "connections": {
                         "A": {

@@ -10,7 +10,6 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
@@ -22,7 +21,10 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.layout_description import LayoutDescription
+from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -177,12 +179,6 @@ def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
 
 
-def _name_for_start_location(world_list: WorldList, location: NodeIdentifier) -> str:
-    # small helper function as long as teleporter nodes use AreaIdentifier and starting locations use NodeIdentifier
-    area_loc = location.area_identifier
-    return _name_for_location(world_list, area_loc)
-
-
 def _create_results_screen_text(description: LayoutDescription) -> str:
     return "{} | Seed Hash - {} ({})".format(
         randovania.VERSION, description.shareable_word_hash, description.shareable_hash)
@@ -280,8 +276,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 return a
                             return b
 
-                        # return a quasi-random point within the provided aabb, but bias towards being closer to
-                        # in-bounds
+                        # return a quasi-random point within the provided aabb, but bias towards being closer to in-bounds
                         def pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
                             offset_xy = 0.0
                             offset_max_z = 0.0
@@ -539,8 +534,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         del world_data[world.name]["rooms"][a_name]["doors"][str(a_dock)]["destination"]
                         del world_data[world.name]["rooms"][b_name]["doors"][str(b_dock)]["destination"]
 
-                    # Randomly pick room sources, starting with the largest room first, then randomly
-                    # pick a compatible destination
+                    # Randomly pick room sources, starting with the largest room first, then randomly pick a compatible destination
                     max_index = 1.01
                     while len(candidates) != 0:
                         assert len(candidates) % 2 == 0
@@ -632,9 +626,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                             return i
                                         i += 1
 
-                                # randomly pick two room pairs which are not members of the same strongly connected
-                                # component and # put back into pool for re-randomization (cross fingers that they
-                                # connect the two strong components)
+                                        # randomply pick two room pairs which are not members of the same strongly connected component and
+
+                                # put back into pool for re-randomization (cross fingers that they connect the two strong components)
                                 assert len(shuffled) > 2
 
                                 # pick one randomly
@@ -657,9 +651,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                         src_name, src_dock, dst_name, dst_dock)
                                     break
 
-                                # If we could not find two rooms that were part of two different components, still
-                                # remove a random room pairing (this can happen if rooms exempt from randomization
-                                # are causing fractured connectivity)
+                                # If we could not find two rooms that were part of two different components, still remove a random room pairing
+                                # (this can happen if rooms exempt from randomization are causing fractured connectivity)
                                 if src_name_b is None:
                                     b = sorted(list(shuffled[0]))
                                     (src_name_b, src_dock_b) = b[0]
@@ -706,7 +699,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
         starting_memo = None
-        extra_starting = item_names.additional_starting_equipment(self.configuration, db, self.patches)
+        extra_starting = item_names.additional_starting_items(self.configuration, db,
+                                                              self.patches.starting_items)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
@@ -763,11 +757,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
 
-        starting_room = _name_for_start_location(db.world_list, self.patches.starting_location)
+        starting_room = _name_for_location(db.world_list, self.patches.starting_location)
 
-        starting_resources = self.patches.starting_resources()
         starting_items = {
-            name: _starting_items_value_for(db.resource_database, starting_resources, index)
+            name: _starting_items_value_for(db.resource_database, self.patches.starting_items, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
@@ -800,11 +793,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         boss_sizes = None
         random_enemy_sizes = False
         if self.configuration.enemy_attributes is not None:
-            random_enemy_sizes = (
-                    self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0 or
-                    self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0
-            )
-
+            if self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0 or self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0:
+                random_enemy_sizes = True
         if self.configuration.random_boss_sizes and not random_enemy_sizes:
             def get_random_size(minimum, maximum):
                 if self.rng.choice([True, False]):
@@ -864,7 +854,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "nonvariaHeatDamage": self.configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
                 "heatDamagePerSec": self.configuration.heat_damage,
-                "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
+                "autoEnabledElevators": not self.patches.starting_items.has_resource(scan_visor),
                 "multiworldDolPatches": True,
 
                 "disableItemLoss": True,  # Item Loss in Frigate
@@ -901,7 +891,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     for artifact, text in resulting_hints.items()
                 },
                 "artifactTempleLayerOverrides": {
-                    artifact.long_name: not starting_resources.has_resource(artifact)
+                    artifact.long_name: not self.patches.starting_items.has_resource(artifact)
                     for artifact in artifacts
                 },
             },
@@ -910,12 +900,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
 
-            "randEnemyAttributes": (
-                self.configuration.enemy_attributes.as_json
-                if self.configuration.enemy_attributes is not None
-                else None
-            ),
-
+            "randEnemyAttributes": self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None,
+            
             # TODO
             # "externAssetsDir": path_to_converted_assets,
         }

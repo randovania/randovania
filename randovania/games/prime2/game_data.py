@@ -55,8 +55,6 @@ def _exporter():
     return EchoesGameExporter()
 
 
-# ruff: noqa: E501
-
 game_data: game.GameData = game.GameData(
     short_name="Echoes",
     long_name="Metroid Prime 2: Echoes",

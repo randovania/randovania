@@ -164,7 +164,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
                     dependency_list.append(dependency_resource)
 
     # Write to paks now
-    updaters[2]("Writing modified PAks", 0)
+    updaters[2](f"Writing modified PAks", 0)
     for pak_i in range(1, 6):
         pak_path = echoes_files_path.joinpath("files", f"Metroid{pak_i}.pak")
 
@@ -220,7 +220,7 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
         next_id = new_id + 1
         return new_id
 
-    time.time()
+    start = time.time()
     conversion_updaters = status_update_lib.split_progress_update(status_update, 2)
     conversion_updaters[0]("Loading Prime 1 PAKs", 0)
     converter = AssetConverter(
@@ -256,13 +256,13 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
             assetdata
         )
     '''
-    time.time()
+    end = time.time()
 
     # logging.debug(f"Time took: {end - start}")
     converted_assets = converter.converted_assets
     converted_dependencies = all_converted_dependencies(converter)
     # logging.debug("Updating RandomizerData.json")
-    time.time()
+    start = time.time()
     meta_dict = {"version": PRIME_MODELS_VERSION}
 
     randomizer_data_additions = []
@@ -295,7 +295,7 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
     with open(output_path.joinpath("meta.json"), "w") as data_additions_file:
         json.dump(meta_dict, data_additions_file, indent=4)
 
-    time.time()
+    end = time.time()
     # logging.debug(f"Time took: {end - start}")
     return converted_assets, randomizer_data_additions
 

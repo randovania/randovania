@@ -201,7 +201,7 @@ class NetworkClient:
                 headers=connection_headers(),
             )
             await waiting_for_on_connect
-            self.logger.info("connected")
+            self.logger.info(f"connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
             self.logger.info(f"failed with {e} - {type(e)}")
@@ -231,9 +231,9 @@ class NetworkClient:
         return self._connect_task
 
     async def disconnect_from_server(self):
-        self.logger.debug("will disconnect")
+        self.logger.debug(f"will disconnect")
         await self.sio.disconnect()
-        self.logger.debug("disconnected")
+        self.logger.debug(f"disconnected")
 
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
@@ -252,7 +252,7 @@ class NetworkClient:
                 if self._current_game_session_meta is not None:
                     await self.game_session_request_update()
 
-                self.logger.info("session restored successful")
+                self.logger.info(f"session restored successful")
                 self.connection_state = ConnectionState.Connected
 
             except (error.InvalidSession, error.UserNotAuthorized) as e:
@@ -264,7 +264,7 @@ class NetworkClient:
                 self.connection_state = ConnectionState.ConnectedNotLogged
                 self.session_data_path.unlink()
         else:
-            self.logger.info("no session to restore")
+            self.logger.info(f"no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
@@ -297,7 +297,7 @@ class NetworkClient:
             self.notify_on_connect(socketio.exceptions.ConnectionError(error_message))
 
     async def on_disconnect(self):
-        self.logger.info("on_disconnect")
+        self.logger.info(f"on_disconnect")
         self.connection_state = ConnectionState.Disconnected
         if self._restore_session_task is not None:
             self._restore_session_task.cancel()

@@ -131,7 +131,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     world_list = MagicMock()
     world_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("World", "Area", f"Name {i}"),
-                   i, False, None, "", ("default",), {}, False, PickupIndex(i), False)
+                   i, False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)
     ]
 
@@ -257,7 +257,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     world_list = MagicMock()
     world_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("W", "A", f"Name {i}"),
-                   i, False, None, "", ("default",), {}, False, PickupIndex(i), False)
+                   i, False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)
     ]
 
@@ -451,7 +451,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         index=PickupIndex(10),
         name="Someone's The Name",
         description="Scan Text",
-        collection_text=['Sent The Name to Someone!'],
+        collection_text=['Sent Cake to Someone!'],
         conditional_resources=[
             ConditionalResources(None, None, ((multi, 11),)),
         ],

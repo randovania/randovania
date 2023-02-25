@@ -45,7 +45,7 @@ jobs:
             executable: true
             name: 'Windows Executable'
 
-          - os: 'ubuntu-latest'
+          - os: 'windows-latest'
             python: '3.11'
             executable: false
             name: 'Resolver'
@@ -113,7 +113,7 @@ jobs:
         if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
 
       - name: run pytest (resolver)
-        run: python -m pytest --cov randovania --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
+        run: python -m pytest --cov randovania --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py
         if: ${{ matrix.name == 'Resolver' }}
 
       - name: create executable
@@ -332,42 +332,6 @@ jobs:
           python tools/update_requirements.py --quiet
           git diff --exit-code
 
-  ruff:
-    runs-on: 'ubuntu-latest'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Get pip cache dir
-        id: pip-cache
-        shell: bash
-        run: |
-          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
-
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-lint.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install Python packages
-        run: |
-          python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements-lint.txt
-
-      - name: Run ruff
-        run: ruff check randovania/
-
   docker:
     runs-on: ubuntu-latest
     name: Docker
@@ -414,7 +378,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2.4.1
+        uses: docker/setup-buildx-action@v2.4.0
 
       -
         name: Login to DockerHub
@@ -495,7 +459,7 @@ jobs:
           projects: randovania-client randovania-bot randovania-server
 
       - name: Upload binaries to GitHub Release
-        uses: svenstaro/upload-release-action@2.5.0
+        uses: svenstaro/upload-release-action@2.4.1
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -523,7 +487,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
       - name: Discord Notifications
-        run: python tools/post_discord_webhook.py --artifact-dir "packages/Randovania Linux Executable/" 
+        run: python tools/post_discord_webhook.py --artifact packages/randovania-*-linux.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

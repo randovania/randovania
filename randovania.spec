@@ -1,5 +1,4 @@
 # -*- mode: python -*-
-import platform
 from PyInstaller.utils.hooks import copy_metadata
 
 import randovania
@@ -28,11 +27,6 @@ datas=[
     ("README.md", "data/")
 ]
 datas += copy_metadata('randovania', recursive=True)
-if platform.system() == "Linux":
-    linux_datas=[
-        ("randovania/data/xdg_assets", "xdg_assets")
-    ]
-    datas += linux_datas
 
 a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              pathex=[],

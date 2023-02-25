@@ -152,25 +152,6 @@ def _migrate_v12(data: dict) -> dict:
     return data
 
 
-def _migrate_v13(data: dict) -> dict:
-    for world in data["worlds"]:
-        for area_name, area in world["areas"].items():
-            old_valid_starting_location = area["valid_starting_location"]
-            start_node_name = area["default_node"]
-
-            starting_location = data["starting_location"]
-            if world["name"] == starting_location["world_name"] and area_name == starting_location["area_name"]:
-                starting_location["node_name"] = start_node_name
-
-            for node_name, node in area["nodes"].items():
-                if old_valid_starting_location and node_name == start_node_name:
-                    node["valid_starting_location"] = True
-                else:
-                    node["valid_starting_location"] = False
-            del area["valid_starting_location"]
-    return data
-
-
 _MIGRATIONS = [
     None,
     None,
@@ -184,7 +165,6 @@ _MIGRATIONS = [
     _migrate_v10,
     _migrate_v11,
     _migrate_v12,
-    _migrate_v13,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

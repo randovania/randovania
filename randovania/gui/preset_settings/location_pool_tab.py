@@ -1,15 +1,17 @@
 import collections
 import dataclasses
+import functools
 import re
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
-from randovania.gui.lib.node_list_helper import NodeListHelper, dark_world_flags
+from randovania.gui.lib.area_list_helper import AreaListHelper, dark_world_flags
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
@@ -19,7 +21,7 @@ from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.preset import Preset
 
 
-class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
+class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
     _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: dict[int, QtWidgets.QCheckBox]
     _row_widget_for_node: dict[PickupNode, LocationPoolRowWidget]

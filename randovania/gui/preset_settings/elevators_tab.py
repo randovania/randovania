@@ -12,7 +12,7 @@ from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import common_qt_lib, signal_handling
-from randovania.gui.lib.node_list_helper import NodeListHelper
+from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -23,12 +23,11 @@ from randovania.lib import enum_lib
 from randovania.patching.prime import elevators
 
 
-class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
+class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
     _elevator_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
     _elevator_source_destination: dict[NodeIdentifier, NodeIdentifier | None]
     _elevator_target_for_world: dict[str, QtWidgets.QCheckBox]
     _elevator_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
-    _elevator_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
@@ -46,13 +45,12 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self._create_source_elevators()
 
         # Elevator Target
-        result = self.create_node_list_selection(
+        self._elevator_target_for_world, self._elevator_target_for_area = self.create_area_list_selection(
             self.elevators_target_group,
             self.elevators_target_layout,
-            TeleporterTargetList.nodes_list(self.game_enum),
+            TeleporterTargetList.areas_list(self.game_enum),
             self._on_elevator_target_check_changed,
         )
-        self._elevator_target_for_world, self._elevator_target_for_area, self._elevator_target_for_node = result
 
         if self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
             self.elevators_help_sound_bug_label.setVisible(False)
@@ -111,8 +109,8 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                 "Sanctuary Fortress": 3,  # Sanctuary Fortress
                 "Temple Grounds": 5,  # Temple Grounds
             }
-        locations = TeleporterList.nodes_list(self.game_enum)
-        node_identifiers: dict[NodeIdentifier, Area] = {
+        locations = TeleporterList.areas_list(self.game_enum)
+        areas: dict[NodeIdentifier, Area] = {
             loc: world_list.area_by_area_location(loc.area_location)
             for loc in locations
         }
@@ -132,7 +130,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
 
             other_locations = [
                 node.default_connection
-                for node in node_identifiers[location].nodes
+                for node in areas[location].nodes
                 if isinstance(node, TeleporterNode) and world_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
@@ -182,7 +180,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                 excluded_teleporters=config.excluded_teleporters.ensure_has_location(location, not checked),
             )
 
-    def _on_elevator_target_check_changed(self, world_areas: list[NodeIdentifier], checked: bool):
+    def _on_elevator_target_check_changed(self, world_areas: list[AreaIdentifier], checked: bool):
         with self._editor as editor:
             config = editor.layout_configuration_elevators
             editor.layout_configuration_elevators = dataclasses.replace(
@@ -234,10 +232,9 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self.elevators_target_group.setEnabled(config_elevators.has_shuffled_target)
         self.skip_final_bosses_check.setChecked(config_elevators.skip_final_bosses)
         self.elevators_allow_unvisited_names_check.setChecked(config_elevators.allow_unvisited_room_names)
-        self.update_node_list(
+        self.update_area_list(
             config_elevators.excluded_targets.locations,
             True,
             self._elevator_target_for_world,
             self._elevator_target_for_area,
-            self._elevator_target_for_node
         )

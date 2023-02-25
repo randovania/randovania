@@ -1,3 +1,4 @@
+import logging
 import os
 
 from randovania.exporter import pickup_exporter, item_names
@@ -98,9 +99,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 continue
         return result
 
-    def _starting_inventory_text(self):
+    def _starting_inventory_text(self, resources: ResourceCollection):
         result = [r"{c1}Random starting items:{c0}"]
-        items = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
+        items = item_names.additional_starting_items(self.configuration, self.game, resources)
         if not items:
             return []
         result.extend(items)
@@ -278,12 +279,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     "bShowEnemyDamage": c.show_enemy_damage,
                     "bShowPlayerDamage": c.show_player_damage
                 }
-            },
-            "lua": {
-                "custom_init": {
-                    "enable_death_counter": c.show_death_counter
-                },
-            },
+            }
         }
 
     def _door_patches(self):
@@ -352,8 +348,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
-        starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
-        starting_text = [self._starting_inventory_text()]
+        starting_items = self._calculate_starting_inventory(self.patches.starting_items)
+        starting_text = [self._starting_inventory_text(self.patches.starting_items)]
 
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(self.game.resource_database),
                                       self.players_config.player_index)
@@ -394,7 +390,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
-            "enable_remote_lua": False,
             "constant_environment_damage": {
                 "heat": self.configuration.constant_heat_damage,
                 "cold": self.configuration.constant_cold_damage,

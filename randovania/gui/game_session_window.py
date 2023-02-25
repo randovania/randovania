@@ -1041,7 +1041,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self._generating_game = True
         try:
             layout = await self.run_in_background_async(generate_layout, "Creating a game...")
-            self.update_progress("Finished generating, uploading...", 100)
+            self.update_progress(f"Finished generating, uploading...", 100)
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 

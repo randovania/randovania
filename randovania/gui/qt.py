@@ -260,7 +260,7 @@ def start_logger(data_dir: Path, is_preview: bool):
     log_dir = data_dir.joinpath("logs")
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath("logger.log"))
+    randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath(f"logger.log"))
 
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:

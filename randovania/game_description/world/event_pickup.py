@@ -29,7 +29,7 @@ class EventPickupNode(ResourceNode):
                 "event": event_node.extra,
                 "pickup": next_node.extra,
             },
-            False, event_node, next_node
+            event_node, next_node
         )
 
     def __repr__(self):

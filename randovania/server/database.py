@@ -1,4 +1,5 @@
 import datetime
+import functools
 import json
 from typing import Iterator, Callable, Any
 
@@ -20,16 +21,12 @@ from randovania.network_common.session_state import GameSessionState
 class MonitoredDb(peewee.SqliteDatabase):
     def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):
         with record_sql_queries(
-                sentry_sdk.Hub.current, self.cursor, sql, params, paramstyle="format", executemany=False
+            sentry_sdk.Hub.current, self.cursor, sql, params, paramstyle="format", executemany=False
         ):
             return super().execute_sql(sql, params, commit)
 
 
 db = MonitoredDb(None, pragmas={'foreign_keys': 1})
-
-
-def is_boolean(field, value: bool):
-    return field == value
 
 
 class BaseModel(peewee.Model):
@@ -277,7 +274,7 @@ class GameSessionMembership(BaseModel):
     @classmethod
     def non_observer_members(cls, session: GameSession) -> Iterator["GameSessionMembership"]:
         yield from GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                        GameSessionMembership.row.is_null(False),
+                                                        GameSessionMembership.row != None,
                                                         )
 
     class Meta:

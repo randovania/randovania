@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import collections
 import re
-from typing import DefaultDict
+from typing import DefaultDict, Iterator
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
@@ -12,6 +12,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -207,8 +208,7 @@ class PlayerState:
             "\n".join(teleporters) or "None",
         )
 
-    def filter_usable_locations(self, locations_weighted: WeightedLocations,
-                                action: PickupEntry | None = None) -> WeightedLocations:
+    def filter_usable_locations(self, locations_weighted: WeightedLocations, action: PickupEntry|None = None) -> WeightedLocations:
         weighted = locations_weighted
 
         if self.configuration.first_progression_must_be_local and self.num_assigned_pickups == 0:
@@ -217,7 +217,7 @@ class PlayerState:
                 for loc, weight in weighted.items()
                 if loc[0] is self
             }
-
+        
         if action is not None and self.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
             weighted = {
                 loc: weight

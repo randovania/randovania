@@ -22,7 +22,7 @@ from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock import DockRandoParams, DockWeaknessDatabase, DockWeakness, DockLock
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.hint_node import HintNode
+from randovania.game_description.world.hint_node import HintNodeKind, HintNode
 from randovania.game_description.world.node import Node, GenericNode
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.teleporter_network_node import TeleporterNetworkNode
@@ -262,7 +262,6 @@ def write_node(node: Node) -> dict:
         "description": node.description,
         "layers": frozen_lib.unwrap(node.layers),
         "extra": frozen_lib.unwrap(node.extra),
-        "valid_starting_location": frozen_lib.unwrap(node.valid_starting_location)
     }
 
     if isinstance(node, GenericNode):
@@ -348,6 +347,7 @@ def write_area(area: Area) -> dict:
     extra = frozen_lib.unwrap(area.extra)
     return {
         "default_node": area.default_node,
+        "valid_starting_location": area.valid_starting_location,
         "extra": extra,
         "nodes": nodes,
     }
@@ -461,5 +461,5 @@ def write_as_split_files(data: dict, base_path: Path):
         with base_path.joinpath(f"{name}.json").open("w", encoding="utf-8") as world_file:
             json.dump(world, world_file, indent=4)
 
-    with base_path.joinpath("header.json").open("w", encoding="utf-8") as meta:
+    with base_path.joinpath(f"header.json").open("w", encoding="utf-8") as meta:
         json.dump(data, meta, indent=4)

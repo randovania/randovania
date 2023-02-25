@@ -4,10 +4,9 @@ from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
-from randovania.gui.lib.node_list_helper import NodeListHelper
+from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -15,11 +14,10 @@ from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.preset import Preset
 
 
-class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
+class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
     starting_area_quick_fill_default: QtWidgets.QPushButton
     _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
-    _starting_location_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
 
     _num_quick_fill_buttons: int
 
@@ -29,12 +27,10 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
 
-        (self._starting_location_for_world,
-         self._starting_location_for_area,
-         self._starting_location_for_node) = self.create_node_list_selection(
+        self._starting_location_for_world, self._starting_location_for_area = self.create_area_list_selection(
             self.starting_locations_contents,
             self.starting_locations_layout,
-            StartingLocationList.nodes_list(self.game_description.game),
+            StartingLocationList.areas_list(self.game_description.game),
             self._on_starting_area_check_changed,
         )
 
@@ -92,12 +88,11 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
             )
 
     def on_preset_changed(self, preset: Preset):
-        self.update_node_list(
+        self.update_area_list(
             preset.configuration.starting_location.locations,
             False,
             self._starting_location_for_world,
             self._starting_location_for_area,
-            self._starting_location_for_node
         )
 
 
@@ -109,7 +104,8 @@ class PresetMetroidStartingArea(PresetStartingArea):
 
     def _starting_location_on_select_save_station(self):
         world_list = self.game_description.world_list
-        save_stations = [node.identifier for node in world_list.iterate_nodes() if node.name == "Save Station"]
+        save_stations = [world_list.node_to_area_location(node)
+                         for node in world_list.iterate_nodes() if node.name == "Save Station"]
 
         with self._editor as editor:
             editor.set_configuration_field(

@@ -152,8 +152,7 @@ async def test_generate_new_layout(tab, mocker, has_unsupported, abort_generate,
         mock_randint.assert_called_once_with(0, 2 ** 31)
 
 
-@pytest.mark.parametrize("has_result", [False, True])
-async def test_on_view_preset_history(tab, has_result, mocker):
+async def test_on_view_preset_history(tab, mocker):
     default_preset = tab._window_manager.preset_manager.default_preset
     tab.create_preset_tree = MagicMock()
     tab.create_preset_tree.current_preset_data = default_preset
@@ -161,20 +160,14 @@ async def test_on_view_preset_history(tab, has_result, mocker):
     new_preset = VersionedPreset.with_preset(default_preset.get_preset().fork())
 
     mock_dialog = mocker.patch("randovania.gui.widgets.generate_game_widget.PresetHistoryDialog")
-    mock_dialog.return_value.selected_preset.return_value = new_preset.get_preset() if has_result else None
+    mock_dialog.return_value.selected_preset.return_value = new_preset
 
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    mock_execute_dialog.return_value = (
-        QtWidgets.QDialog.DialogCode.Accepted if has_result else QtWidgets.QDialog.DialogCode.Rejected
-    )
+    mock_execute_dialog.return_value = QtWidgets.QDialog.Accepted
 
     # Run
     await tab._on_view_preset_history()
 
     # Assert
     mock_execute_dialog.assert_awaited_once_with(mock_dialog.return_value)
-    if has_result:
-        assert tab._window_manager.preset_manager.custom_presets == {new_preset.uuid: new_preset}
-    else:
-        assert tab._window_manager.preset_manager.custom_presets == {}
-
+    assert new_preset.uuid in tab._window_manager.preset_manager.custom_presets

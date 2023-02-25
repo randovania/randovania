@@ -7,7 +7,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
 from randovania.layout import filtered_database
@@ -79,7 +79,7 @@ class BasePatchesFactory:
                                             configuration: BaseConfiguration,
                                             game: GameDescription,
                                             rng: Random,
-                                            ) -> NodeIdentifier:
+                                            ) -> AreaIdentifier:
         locations = list(configuration.starting_location.locations)
         if len(locations) == 0:
             raise InvalidConfiguration("No starting locations are selected")

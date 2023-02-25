@@ -65,12 +65,12 @@ class RequirementSet:
 
     @property
     def as_str(self):
-        buffer = []
-        self.pretty_print(print_function=buffer.append)
-        if len(buffer) > 1:
-            return " or ".join(f"({it})" for it in buffer)
+        l = []
+        self.pretty_print(print_function=l.append)
+        if len(l) > 1:
+            return " or ".join(f"({it})" for it in l)
         else:
-            return buffer[0]
+            return l[0]
 
     @classmethod
     @lru_cache

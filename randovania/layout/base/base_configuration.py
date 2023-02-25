@@ -17,8 +17,8 @@ from randovania.layout.lib import location_list
 
 class StartingLocationList(location_list.LocationList):
     @classmethod
-    def nodes_list(cls, game: RandovaniaGame):
-        return location_list.node_locations_with_filter(game, lambda node: node.valid_starting_location)
+    def areas_list(cls, game: RandovaniaGame):
+        return location_list.area_locations_with_filter(game, lambda area: area.valid_starting_location)
 
 
 def _collect_from_fields(obj, field_name: str):

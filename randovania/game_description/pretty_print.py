@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from typing import Iterator, TextIO
 
@@ -13,7 +14,7 @@ from randovania.game_description.world.area import Area
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.hint_node import HintNode
+from randovania.game_description.world.hint_node import HintNodeKind, HintNode
 from randovania.game_description.world.node import (
     Node
 )
@@ -106,10 +107,10 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
         return f"Event {node.event.long_name}"
 
     elif isinstance(node, ConfigurableNode):
-        return "Configurable Node"
+        return f"Configurable Node"
 
     elif isinstance(node, HintNode):
-        return "Hint"
+        return f"Hint"
 
     elif isinstance(node, TeleporterNetworkNode):
         unlocked_pretty = list(pretty_print_requirement(node.is_unlocked))
@@ -124,6 +125,8 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
 
 def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function(area.name)
+    if area.valid_starting_location:
+        print_function("(Valid Starting Location)")
     for extra_name, extra_field in area.extra.items():
         print_function(f"Extra - {extra_name}: {extra_field}")
 
@@ -132,10 +135,8 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
             continue
 
         message = f"> {node.name}; Heals? {node.heal}"
-        if node.valid_starting_location:
-            message += "; Spawn Point"
         if area.default_node == node.name:
-            message += "; Default Node"
+            message += "; Spawn Point"
         print_function(message)
         print_function(f"  * Layers: {', '.join(node.layers)}")
 
@@ -196,11 +197,11 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             output.write(f"\n      Unlocked: {dock_rando.unlocked.name}")
             output.write(f"\n      Locked: {dock_rando.locked.name}")
 
-            output.write("\n      Change from:")
+            output.write(f"\n      Change from:")
             for weakness in sorted(dock_rando.change_from):
                 output.write(f"\n          {weakness.name}")
 
-            output.write("\n      Change to:")
+            output.write(f"\n      Change to:")
             for weakness in sorted(dock_rando.change_to):
                 output.write(f"\n          {weakness.name}")
 
@@ -220,7 +221,7 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
 
 
 def write_human_readable_game(game: GameDescription, base_path: Path):
-    with base_path.joinpath("header.txt").open("w", encoding="utf-8") as meta:
+    with base_path.joinpath(f"header.txt").open("w", encoding="utf-8") as meta:
         write_human_readable_meta(game, meta)
 
     for world in game.world_list.worlds:

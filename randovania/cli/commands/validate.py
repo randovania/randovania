@@ -1,5 +1,6 @@
 import asyncio
 import time
+import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -14,7 +15,7 @@ def validate_command_logic(args):
 
     description = LayoutDescription.from_file(args.layout_file)
     if description.player_count != 1:
-        raise ValueError("Validator does not support layouts with more than 1 player.")
+        raise ValueError(f"Validator does not support layouts with more than 1 player.")
 
     output_file = None
     write_to: Path | None = args.write_to

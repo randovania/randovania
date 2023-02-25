@@ -4,6 +4,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.item_pool import PoolResults
@@ -23,11 +24,15 @@ def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng:
     config = configuration.artifacts
 
     new_assignment: dict[PickupIndex, PickupEntry] = {}
+    initial_resources = ResourceCollection.with_database(game.resource_database)
 
     keys: list[PickupEntry] = [create_dread_artifact(i, game.resource_database) for i in range(12)]
 
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]
+
+    for key in starting_keys:
+        initial_resources.add_resource_gain(key.progression)
 
     locations: list[NodeIdentifier] = []
     if config.prefer_emmi:
@@ -45,7 +50,7 @@ def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng:
         }
         item_pool = [key for key in keys_to_shuffle if key not in new_assignment.values()]
 
-    return PoolResults(item_pool, new_assignment, starting_keys)
+    return PoolResults(item_pool, new_assignment, initial_resources)
 
 
 _c = NodeIdentifier.create
