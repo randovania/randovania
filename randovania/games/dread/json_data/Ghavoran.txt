@@ -255,6 +255,8 @@ Extra - asset_id: collision_camera_003
       Speed Booster and After Ghavoran - Gold Robot Fight and Disabled Door Lock Randomizer
   > Floating Platform
       Grapple Beam or Simple IBJ or Use Spin Boost
+  > Alcove
+      Can Slide
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -286,6 +288,8 @@ Extra - asset_id: collision_camera_003
   > Dock to Blue EMMI Introduction
       Trivial
   > Door to Robot Fight Arena
+      Trivial
+  > Alcove
       Trivial
 
 > Alcove; Heals? False
@@ -633,9 +637,8 @@ Extra - asset_id: collision_camera_009
       All of the following:
           Lay Bomb or Lay Power Bomb
           Any of the following:
-              Simple IBJ or Use Spin Boost
+              Single-wall Wall Jump (Intermediate) or Simple IBJ or Use Spin Boost
               Grapple Beam and Grapple Movement (Beginner)
-              Morph Ball and Single-wall Wall Jump (Intermediate)
               All of the following:
                   Flash Shift
                   Spider Magnet or Walljump (Beginner)
@@ -1729,16 +1732,14 @@ Extra - asset_id: collision_camera_024
                   Any of the following:
                       # The pseudo for this is a melee pseudo next to the tunnel
                       Wave Beam or Pseudo-Wave Beam (Beginner)
-  > Tunnel to Pulse Radar Room
-      Morph Ball
+  > Dock to Energy Recharge Station
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to Pulse Radar Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Pulse Radar Room/Tunnel to Golzuna Tower
   > Tunnel to Above Pulse Radar
       Morph Ball
-  > Dock to Energy Recharge Station
-      Lay Bomb or Lay Power Bomb
 
 > Dock to Energy Recharge Station; Heals? False
   * Layers: default
@@ -1751,10 +1752,8 @@ Extra - asset_id: collision_camera_024
               Any of the following:
                   After Ghavoran - Pulse Radar Enky and Speedbooster Conservation (Beginner) and Ballspark
                   Cross Bomb Skip (Intermediate) and Use Spin Boost
-  > Tunnel to Pulse Radar Room
-      Any of the following:
-          Lay Bomb
-          Power Bombs ≥ 2 and Lay Power Bomb
+  > Tunnel to Above Pulse Radar
+      Lay Bomb or Lay Power Bomb
 
 ----------------
 Teleport to Burenia
@@ -1928,12 +1927,8 @@ Extra - asset_id: collision_camera_025_B
       All of the following:
           Morph Ball and Screw Attack
           Any of the following:
-              Space Jump
-              All of the following:
-                  Walljump (Beginner)
-                  Any of the following:
-                      Spin Boost
-                      Slide and Slide Jump (Beginner)
+              Use Spin Boost
+              Slide and Slide Jump (Beginner)
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
 
@@ -2173,7 +2168,7 @@ Extra - asset_id: collision_camera_028
           Any of the following:
               Lay Cross Bomb
               All of the following:
-                  Gravity Suit and Cross Bomb Skip (Advanced)
+                  Cross Bomb Skip (Advanced)
                   Flash Shift or Use Spin Boost
 
 ----------------
@@ -2285,7 +2280,9 @@ Extra - asset_id: collision_camera_031
   > Dock to Teleport to Burenia
       All of the following:
           Screw Attack
-          No Gravity Suit or Movement (Beginner)
+          Any of the following:
+              # Having Gravity Suit makes this harder, so there's a Movement trick to account for this
+              Movement (Beginner) or Enabled Highly Dangerous Logic
   > Tunnel to Teleport to Burenia (Top)
       All of the following:
           Screw Attack
