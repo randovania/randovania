@@ -20,6 +20,8 @@ from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
@@ -571,25 +573,63 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         return result
 
-    def new_patcher_configuration(self):
-        return {
-            "worlds": {
-                "Temple Grounds": {
-                    "areas": {
-                        "Dynamo Chamber": {
-                            "layers": {
-                                "1st Pass Scripting": False,
-                                "2nd Pass Scripting": True,
-                            }
-                        },
-                        "Trooper Security Station": {
-                            "layers": {
-                                "1st Pass": False,
-                                "2nd Pass": True,
-                            }
-                        },
-                    }
+    def add_dock_connection_changes(self, worlds_patch_data: dict):
+        portal_changes: dict[DockNode, Node] = {
+            source: target
+            for source, target in self.patches.all_dock_connections()
+            if source.dock_type.short_name == "portal" and source.default_connection != target.identifier
+        }
+
+        for source, target in list(portal_changes.items()):
+            if source not in portal_changes:
+                continue
+
+            assert portal_changes.pop(target) is source
+            assert isinstance(source, DockNode)
+            assert isinstance(target, DockNode)
+
+            world = self.game.world_list.nodes_to_world(source)
+            if world.name not in worlds_patch_data:
+                worlds_patch_data[world.name] = {"areas": {}}
+
+            source_area = self.game.world_list.nodes_to_area(source)
+            if source_area.name not in worlds_patch_data[world.name]["areas"]:
+                worlds_patch_data[world.name]["areas"][source_area.name] = {}
+
+            area_patch_data = worlds_patch_data[world.name]["areas"][source_area.name]
+            area_patch_data["docks"] = area_patch_data.get("docks", {})
+            area_patch_data["docks"][source.extra["dock_name"]] = {
+                "connect_to": {
+                    "area": self.game.world_list.nodes_to_area(target).name,
+                    "dock": target.extra["dock_name"],
                 }
+            }
+
+    def new_patcher_configuration(self):
+        worlds_patch_data = {
+            "Temple Grounds": {
+                "areas": {
+                    "Dynamo Chamber": {
+                        "layers": {
+                            "1st Pass Scripting": False,
+                            "2nd Pass Scripting": True,
+                        }
+                    },
+                    "Trooper Security Station": {
+                        "layers": {
+                            "1st Pass": False,
+                            "2nd Pass": True,
+                        }
+                    },
+                }
+            }
+        }
+        self.add_dock_connection_changes(worlds_patch_data)
+
+        return {
+            "worlds": worlds_patch_data,
+            "area_patches": {
+                "torvus_temple": True
             },
             "small_randomizations": {
                 "seed": self.description.get_seed_for_player(self.players_config.player_index),
