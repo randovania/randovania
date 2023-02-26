@@ -37,9 +37,9 @@ class NodeListHelper:
 
             if area not in areas_by_world[world.name]:
                 areas_by_world[world.name].append(area)
-                if identifier.area_identifier not in nodes_by_area:
-                    nodes_by_area[identifier.area_identifier] = []
-                nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node_name))
+            if identifier.area_identifier not in nodes_by_area:
+                nodes_by_area[identifier.area_identifier] = []
+            nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node_name))
 
         return worlds, areas_by_world, nodes_by_area
 
