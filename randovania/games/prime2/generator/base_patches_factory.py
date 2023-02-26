@@ -21,6 +21,9 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
                                             patches: GamePatches) -> GamePatches:
         patches = super().add_elevator_connections_to_patches(configuration, rng, patches)
 
+        if not configuration.portal_rando:
+            return patches
+
         dock_assignment = []
 
         for world in patches.game.world_list.worlds:
