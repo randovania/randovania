@@ -10,7 +10,6 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib.dict_lib import iterate_key_sorted
-from randovania.patching.prime import elevators
 
 
 class BaseConnectionDetailsTab(GameDetailsTab):
