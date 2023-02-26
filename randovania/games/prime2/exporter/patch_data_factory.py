@@ -628,9 +628,9 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         return {
             "worlds": worlds_patch_data,
-            "area_patches": {
-                "torvus_temple": True
-            },
+            # "area_patches": {
+            #     "torvus_temple": True
+            # },
             "small_randomizations": {
                 "seed": self.description.get_seed_for_player(self.players_config.player_index),
                 "echo_locks": True,
