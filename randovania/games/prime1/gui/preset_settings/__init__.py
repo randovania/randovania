@@ -1,4 +1,3 @@
-from randovania.game_description import default_database
 
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.preset_editor import PresetEditor

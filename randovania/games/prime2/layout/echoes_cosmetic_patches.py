@@ -30,4 +30,4 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
 
     def __post_init__(self):
         if len(self.hud_color) != 3:
-            raise ValueError(f"HUD color must be a tuple of 3 ints.")
+            raise ValueError("HUD color must be a tuple of 3 ints.")

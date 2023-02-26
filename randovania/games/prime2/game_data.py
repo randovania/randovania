@@ -12,7 +12,7 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.common.prime_family.gui.teleporter_details_tab import TeleporterDetailsTab
     from randovania.games.prime2 import gui
     from randovania.games.prime2.item_database import progressive_items
 
@@ -49,6 +49,8 @@ def _exporter():
     from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter
     return EchoesGameExporter()
 
+
+# ruff: noqa: E501
 
 game_data: game.GameData = game.GameData(
     short_name="Echoes",

@@ -5,12 +5,10 @@ from typing import Callable
 
 import tenacity
 
-from randovania.game_description.assignment import (PickupAssignment,
-                                                    PickupTarget, PickupTargetAssociation)
+from randovania.game_description.assignment import (PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world_list import WorldList
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, filter_unassigned_pickup_nodes)

@@ -19,9 +19,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         *([
               PresetMetroidDreadStartingArea,
           ] if window_manager.is_preview_mode and randovania.is_dev_version() else []),
-        *([
-              PresetDockRando,
-          ] if randovania.is_dev_version() else []),
+        PresetDockRando,
         PresetDreadGeneration,
         PresetLocationPool,
         PresetDreadGoal,

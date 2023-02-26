@@ -144,6 +144,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [ScorelessPine](https://github.com/ScorelessPine)
   * [Arcanox](https://twitter.com/ArcanoxDragon)
   * [Migs](https://www.twitch.tv/migslive)
+  * [hyperbola0](https://github.com/steven11sjf)
 
 * Logic Database by:
   * [KirbymastaH](https://www.twitch.tv/kirbymastah)

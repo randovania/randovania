@@ -23,4 +23,4 @@ def find_version_for_dol(dol_file: DolFile, all_versions: Iterable[DolVersion]) 
             if build_string == version.build_string:
                 return version
 
-    raise RuntimeError(f"Unsupported game version")
+    raise RuntimeError("Unsupported game version")

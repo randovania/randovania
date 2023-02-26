@@ -264,7 +264,6 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
 
             if header == 19:
                 # subset of branch without address. Consider these blr
-                end_address = current_address
                 self.logger.debug("blr")
                 break
 

@@ -1,6 +1,5 @@
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.item_pool import PoolResults, pickup_creator
 
 

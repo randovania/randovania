@@ -35,6 +35,7 @@ from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
+    from randovania.layout.preset import Preset
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -151,13 +152,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.clicked.connect(partial(self._select_game, game))
             logo.setVisible(game.data.development_state.can_view())
 
-            def highlight_logo(l: ClickableLabel, active: bool):
+            def highlight_logo(label: ClickableLabel, active: bool):
                 if active:
-                    l.new_effect = QtWidgets.QGraphicsColorizeEffect()
-                    l.new_effect.setStrength(0.5)
-                    l.setGraphicsEffect(l.new_effect)
+                    label.new_effect = QtWidgets.QGraphicsColorizeEffect()
+                    label.new_effect.setStrength(0.5)
+                    label.setGraphicsEffect(label.new_effect)
                 else:
-                    l.setGraphicsEffect(None)
+                    label.setGraphicsEffect(None)
                 
             logo.entered.connect(partial(highlight_logo, logo, True))
             logo.left.connect(partial(highlight_logo, logo, False))
@@ -479,7 +480,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
-    async def open_map_tracker(self, configuration: "Preset"):
+    async def open_map_tracker(self, configuration: Preset):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 
         try:
@@ -496,7 +497,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     # Difficulties stuff
 
-    def _exec_trick_details(self, popup: TrickDetailsPopup):
+    def _exec_trick_details(self, popup: QtWidgets.QDialog):
         self._trick_details_popup = popup
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()

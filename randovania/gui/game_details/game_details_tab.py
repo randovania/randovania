@@ -19,3 +19,8 @@ class GameDetailsTab:
     def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
                        players: PlayersConfiguration):
         raise NotImplementedError()
+
+    @classmethod
+    def should_appear_for(cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
+                          players: PlayersConfiguration) -> bool:
+        return True

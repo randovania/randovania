@@ -82,3 +82,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
     def unsupported_features(self) -> list[str]:
         return _collect_from_fields(self, "unsupported_features")
+
+    def should_hide_generation_log(self):
+        """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
+        return self.dock_rando.is_enabled()

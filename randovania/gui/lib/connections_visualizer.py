@@ -2,8 +2,10 @@ import re
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIntValidator
-from PySide6.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
+from PySide6.QtWidgets import (
+    QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox,
     QLineEdit
+)
 
 import randovania.game_description.pretty_print
 from randovania.game_description.requirements.base import Requirement

@@ -7,12 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.5.0] - 2023-??-??
 
+- Changed: Certain spoiler tabs in Game Details now only show up when relevant, such as Elevators spoiler only when elevators are shuffled.
+- Changed: Generation Order in Game Details is now hidden when there's incompatible settings, such as Door Lock rando.
+- Fixed: Customizing an included preset should properly place the resulting preset nested to that preset.
+- Fixed: Customizing a preset should no longer reset where it's been placed at.
 - Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.
 - Fixed: Changing trick filters in the Data Visualizer no longer resets the selected connection.
 - Fixed: Using trick filters in the Data Visualizer no longer unnecessarily expands templates or remove comments.
 - Fixed: Using trick filters in the Data Visualizer now properly removes extra requirements when tricks are removed.
+- Fixed: Hiding the pickup collection message now correctly works for other player's pickups in a multiworld. 
 
 ### Metroid Prime
+
+#### Patcher Changes
+
+- Fixed: Several soft-locks and janky cutscenes when shuffling the Essence elevator
+- Fixed: Research Lab Aether wall not breaking when approached from behind (QoL Game Breaking)
+- Fixed: Watery Hall lore scan being replaced with QoL Scan Point text
+- Fixed: Escape sequence counting up instead of down
+- Fixed: Small Samus spawning in ship instead of on top
+- Added: Ridley shorelines, biotech research 2, and exterior docking hangar actors now scale with boss size
 
 #### Logic Database
 
@@ -62,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 - Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
 - Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 
@@ -70,7 +85,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
 
-## [5.4.1] - 2023-??-??
+### Metroid Dread
+
+- **Major** - Added: Door Lock randomizer has been added. In this mode, the weapons needed to open doors in the game are also changed, with full support of our logic database. 
+- Added: A new cosmetic option for adding an in-game death counter to the HUD.
+- Added: Exporting with a custom path now checks for conflicts with the input path.
+- Fixed: Ryujinx no longer hangs when stopping emulation.
+
+## [5.4.1] - 2023-02-16
 
 - Added: Linux releases are now also published to Flathub.
 - Fixed: Canceling the prompt from "View previous versions" no longer causes an error.

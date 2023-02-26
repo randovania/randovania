@@ -41,7 +41,6 @@
 
 """PySide6 port of the widgets/layouts/flowlayout example from Qt v6.x"""
 
-from typing import Tuple
 from PySide6.QtCore import Qt, QMargins, QPoint, QRect, QSize
 from PySide6.QtWidgets import QLayout, QSizePolicy, QWidgetItem
 
