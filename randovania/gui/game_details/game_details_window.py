@@ -283,10 +283,11 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 self.validator_widget = GameValidatorWidget(self.layout_description)
                 self.layout_info_tab.addTab(self.validator_widget, "Spoiler: Playthrough")
 
-            action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
-            for item_order in description.item_order:
-                action_list_widget.addItem(item_order)
-            self.layout_info_tab.addTab(action_list_widget, "Spoiler: Generation Order")
+            if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):
+                action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
+                for item_order in description.item_order:
+                    action_list_widget.addItem(item_order)
+                self.layout_info_tab.addTab(action_list_widget, "Spoiler: Generation Order")
 
         self._update_current_player()
 
@@ -324,6 +325,8 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             spoiler_visualizer = list(preset.game.gui.spoiler_visualizer)
             spoiler_visualizer.insert(0, PickupDetailsTab)
             for missing_tab in spoiler_visualizer:
+                if not missing_tab.should_appear_for(preset.configuration, description.all_patches, players_config):
+                    continue
                 new_tab = missing_tab(self.layout_info_tab, preset.game)
                 new_tab.update_content(preset.configuration, description.all_patches, players_config)
                 self.layout_info_tab.addTab(new_tab.widget(), f"Spoiler: {new_tab.tab_title()}")

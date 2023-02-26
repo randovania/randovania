@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.5.0] - 2023-??-??
 
+- Changed: Certain spoiler tabs in Game Details now only show up when relevant, such as Elevators spoiler only when elevators are shuffled.
+- Changed: Generation Order in Game Details is now hidden when there's incompatible settings, such as Door Lock rando.
 - Fixed: Customizing an included preset should properly place the resulting preset nested to that preset.
 - Fixed: Customizing a preset should no longer reset where it's been placed at.
 - Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.

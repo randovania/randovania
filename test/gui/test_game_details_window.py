@@ -118,8 +118,22 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir, twice
     assert isinstance(pickup_details_tab, PickupDetailsTab)
     assert len(pickup_details_tab.pickup_spoiler_buttons) == 119
     assert pickup_details_tab.pickup_spoiler_show_all_button.text() == "Show All"
-    skip_qtbot.mouseClick(pickup_details_tab.pickup_spoiler_show_all_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(pickup_details_tab.pickup_spoiler_show_all_button, QtCore.Qt.MouseButton.LeftButton)
     assert pickup_details_tab.pickup_spoiler_show_all_button.text() == "Hide All"
+
+
+def test_update_layout_description_prime1_crazy(skip_qtbot, test_files_dir):
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_crazy_seed.rdvgame"))
+
+    # Run
+    window = GameDetailsWindow(None, MagicMock())
+    skip_qtbot.addWidget(window)
+    window.update_layout_description(description)
+
+    # Assert
+    pickup_details_tab = window._game_details_tabs[0]
+    assert isinstance(pickup_details_tab, PickupDetailsTab)
+    assert len(pickup_details_tab.pickup_spoiler_buttons) == 293
 
 
 async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description, empty_patches):
