@@ -324,6 +324,8 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             spoiler_visualizer = list(preset.game.gui.spoiler_visualizer)
             spoiler_visualizer.insert(0, PickupDetailsTab)
             for missing_tab in spoiler_visualizer:
+                if not missing_tab.should_appear_for(preset.configuration, description.all_patches, players_config):
+                    continue
                 new_tab = missing_tab(self.layout_info_tab, preset.game)
                 new_tab.update_content(preset.configuration, description.all_patches, players_config)
                 self.layout_info_tab.addTab(new_tab.widget(), f"Spoiler: {new_tab.tab_title()}")
