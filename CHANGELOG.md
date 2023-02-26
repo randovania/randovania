@@ -78,13 +78,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 - Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
-- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
 
 ### Metroid Dread
 
 - **Major** - Added: Door Lock randomizer has been added. In this mode, the weapons needed to open doors in the game are also changed, with full support of our logic database. 
-- Added: A new cosmetic option for adding an in-game death counter to the HUD.
-- Added: Exporting with a custom path now checks for conflicts with the input path.
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
 - Fixed: Ryujinx no longer hangs when stopping emulation.
