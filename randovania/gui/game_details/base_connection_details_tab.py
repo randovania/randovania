@@ -24,7 +24,7 @@ class BaseConnectionDetailsTab(GameDetailsTab):
         raise NotImplementedError()
 
     def _fill_per_world_connections(self,
-                                    per_world: dict[str, dict[str, str]],
+                                    per_world: dict[str, dict[str, str | dict[str, str]]],
                                     world_list: WorldList,
                                     patches: GamePatches,
                                     ):
@@ -39,7 +39,7 @@ class BaseConnectionDetailsTab(GameDetailsTab):
         world_list = filtered_database.game_description_for_layout(configuration).world_list
         patches = all_patches[players.player_index]
 
-        per_world: dict[str, dict[str, str]] = collections.defaultdict(dict)
+        per_world: dict[str, dict[str, str | dict[str, str]]] = collections.defaultdict(dict)
         self._fill_per_world_connections(per_world, world_list, patches)
 
         for world_name, world_contents in iterate_key_sorted(per_world):
@@ -49,7 +49,15 @@ class BaseConnectionDetailsTab(GameDetailsTab):
             for source_name, destination in iterate_key_sorted(world_contents):
                 area_item = QtWidgets.QTreeWidgetItem(world_item)
                 area_item.setText(0, source_name)
-                area_item.setText(1, destination)
+
+                if isinstance(destination, str):
+                    area_item.setText(1, destination)
+                else:
+                    area_item.setExpanded(True)
+                    for node_name, node_value in destination.items():
+                        node_item = QtWidgets.QTreeWidgetItem(area_item)
+                        node_item.setText(0, node_name)
+                        node_item.setText(1, node_value)
 
         self.tree_widget.resizeColumnToContents(0)
         self.tree_widget.resizeColumnToContents(1)

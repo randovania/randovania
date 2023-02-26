@@ -9,6 +9,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
+from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
@@ -323,6 +324,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             players_config = self.players_configuration
 
             spoiler_visualizer = list(preset.game.gui.spoiler_visualizer)
+            spoiler_visualizer.insert(0, DockLockDetailsTab)
             spoiler_visualizer.insert(0, PickupDetailsTab)
             for missing_tab in spoiler_visualizer:
                 if not missing_tab.should_appear_for(preset.configuration, description.all_patches, players_config):

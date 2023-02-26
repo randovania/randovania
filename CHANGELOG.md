@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.5.0] - 2023-??-??
 
+- Added: Game Details now contains a tab describing all door locks, when Door Lock rando is enabled.
 - Changed: Certain spoiler tabs in Game Details now only show up when relevant, such as Elevators spoiler only when elevators are shuffled.
 - Changed: Generation Order in Game Details is now hidden when there's incompatible settings, such as Door Lock rando.
 - Fixed: Customizing an included preset should properly place the resulting preset nested to that preset.
