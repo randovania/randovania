@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.5.0] - 2023-??-??
 
-- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
+- Fixed: Customizing an included preset should properly place the resulting preset nested to that preset.
+- Fixed: Customizing a preset should no longer reset where it's been placed at.
 - Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.
 - Fixed: Changing trick filters in the Data Visualizer no longer resets the selected connection.
 - Fixed: Using trick filters in the Data Visualizer no longer unnecessarily expands templates or remove comments.
@@ -25,17 +26,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Small Samus spawning in ship instead of on top
 - Added: Ridley shorelines, biotech research 2, and exterior docking hangar actors now scale with boss size
 
+### Metroid Prime 2: Echoes
+
+- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
+- Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
+
 ### Metroid Dread
 
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
 - Fixed: Ryujinx no longer hangs when stopping emulation.
 
-### Metroid Prime 2: Echoes
-
-- Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
-
-## [5.4.1] - 2023-??-??
+## [5.4.1] - 2023-02-16
 
 - Added: Linux releases are now also published to Flathub.
 - Fixed: Canceling the prompt from "View previous versions" no longer causes an error.
