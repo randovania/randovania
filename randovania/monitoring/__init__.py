@@ -1,3 +1,5 @@
+import contextlib
+import json
 import platform
 import re
 import typing
@@ -130,3 +132,14 @@ def server_init():
 
 def bot_init():
     return _init(False, _BOT_DEFAULT_URL, sampling_rate=1.0)
+
+
+@contextlib.contextmanager
+def attach_patcher_data(patcher_data: dict):
+    with sentry_sdk.configure_scope() as scope:
+        scope.add_attachment(
+            json.dumps(patcher_data).encode("utf-8"),
+            filename="patcher.json",
+            content_type="application/json",
+        )
+        yield
