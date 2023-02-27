@@ -19,6 +19,10 @@ from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 
 
+class InvalidLayoutDescription(Exception):
+    pass
+
+
 @lru_cache(maxsize=1)
 def _all_hash_words() -> dict[RandovaniaGame, list[str]]:
     with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
@@ -86,7 +90,7 @@ class LayoutDescription:
         json_dict = description_migration.convert_to_current_version(json_dict)
 
         if "game_modifications" not in json_dict:
-            raise ValueError("Unable to read details of a race game file")
+            raise InvalidLayoutDescription("Unable to read details of a race game file")
 
         generator_parameters = GeneratorParameters(
             seed_number=json_dict["info"]["seed"],

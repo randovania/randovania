@@ -67,6 +67,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     help_window: QtWidgets.QMainWindow | None = None
 
     GameDetailsSignal = Signal(LayoutDescription)
+    RequestOpenLayoutSignal = Signal(Path)
     InitPostShowSignal = Signal()
 
     @property
@@ -110,6 +111,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         # Signals
         self.options_changed_signal.connect(self.on_options_changed)
         self.GameDetailsSignal.connect(self._open_game_details)
+        self.RequestOpenLayoutSignal.connect(self._request_open_layout)
         self.InitPostShowSignal.connect(self.initialize_post_show)
         self.main_tab_widget.currentChanged.connect(self._on_main_tab_changed)
 
@@ -237,11 +239,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 return
 
     def dropEvent(self, event: QtGui.QDropEvent):
-
         for url in event.mimeData().urls():
             path = Path(url.toLocalFile())
             if path.suffix == f".{LayoutDescription.file_extension()}":
-                self.open_game_details(LayoutDescription.from_file(path))
+                self.RequestOpenLayoutSignal.emit(path)
                 return
 
             # FIXME: re-implement importing presets
@@ -357,10 +358,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             permalink = dialog.get_permalink_from_field()
             await self.generate_seed_from_permalink(permalink)
 
-    def _import_spoiler_log(self):
-        json_path = common_qt_lib.prompt_user_for_input_game_log(self)
-        if json_path is not None:
-            layout = LayoutDescription.from_file(json_path)
+    @asyncSlot()
+    async def _import_spoiler_log(self):
+        from randovania.gui.lib import layout_loader
+        layout = await layout_loader.prompt_and_load_layout_description(self)
+        if layout is not None:
             self.open_game_details(layout)
 
     @asyncSlot()
@@ -382,6 +384,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         details_window.update_layout_description(layout)
         details_window.show()
         self.track_window(details_window)
+
+    @asyncSlot(Path)
+    async def _request_open_layout(self, path: Path):
+        from randovania.gui.lib import layout_loader
+        layout = await layout_loader.load_layout_description(self, path)
+        if layout is not None:
+            self.open_game_details(layout)
 
     # Releases info
     async def request_new_data(self):
