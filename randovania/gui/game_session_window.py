@@ -591,6 +591,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         row_index = self.rows.index(row)
         preset = self._game_session.presets[row_index]
 
+        if preset.is_included_preset:
+            # Nothing to do, this is an included preset
+            return
+
         if self._preset_manager.add_new_preset(preset):
             self.refresh_row_import_preset_actions()
 
