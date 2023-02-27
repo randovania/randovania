@@ -73,7 +73,7 @@ def _before_breadcrumb(event, hint):
     return event
 
 
-def _init(include_flask: bool, default_url: str):
+def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25):
     if randovania.is_dirty():
         return
 
@@ -100,7 +100,7 @@ def _init(include_flask: bool, default_url: str):
         else:
             if sampling_context['transaction_context']['op'] == 'message':
                 return _sampling_per_path.get(sampling_context['transaction_context']['name'], 0.5)
-            return 0.25
+            return sampling_rate
 
     sentry_sdk.init(
         dsn=sentry_url,
@@ -129,4 +129,4 @@ def server_init():
 
 
 def bot_init():
-    return _init(False, _BOT_DEFAULT_URL)
+    return _init(False, _BOT_DEFAULT_URL, sampling_rate=1.0)
