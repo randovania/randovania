@@ -55,6 +55,7 @@ def convert_area_loc_id_to_name(game: RandovaniaGame, loc: dict[str, int]) -> di
 def get_teleporter_area_to_node_mapping() -> dict[str, str]:
     return get_raw_data()["teleporter_mapping"]
 
+
 def get_new_start_loc_from_old_start_loc(game: str, old_loc: AreaIdentifier) -> NodeIdentifier:
     world_name = old_loc.world_name
     area_name = old_loc.area_name
