@@ -170,12 +170,14 @@ class GameSessionInventory:
 class User:
     id: int
     name: str
+    discord_id: int | None = None
 
     @classmethod
     def from_json(cls, data) -> "User":
         return cls(
             id=data["id"],
             name=data["name"],
+            discord_id=data.get("discord_id"),
         )
 
     @property
@@ -183,4 +185,5 @@ class User:
         return {
             "id": self.id,
             "name": self.name,
+            "discord_id": self.discord_id,
         }

@@ -12,6 +12,7 @@ import aiofiles
 import aiohttp
 import construct
 import engineio
+import sentry_sdk
 import socketio
 import socketio.exceptions
 
@@ -303,6 +304,14 @@ class NetworkClient:
 
     async def on_user_session_updated(self, new_session: dict):
         self._current_user = User.from_json(new_session["user"])
+
+        if self._current_user.discord_id is not None:
+            sentry_sdk.set_user({
+                "id": self._current_user.discord_id,
+                "username": self._current_user.name,
+                "server_id": self._current_user.id,
+            })
+
         if self.connection_state in (ConnectionState.ConnectedRestoringSession, ConnectionState.ConnectedNotLogged):
             self.connection_state = ConnectionState.Connected
 
@@ -508,6 +517,7 @@ class NetworkClient:
         self.logger.info("Logging out")
         self.session_data_path.unlink()
         self._current_user = None
+        sentry_sdk.set_user(None)
 
         if self.connection_state != ConnectionState.Connected:
             return
