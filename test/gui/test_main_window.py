@@ -57,22 +57,20 @@ def test_dragEnterEvent(default_main_window: MainWindow, url, should_accept):
         event.acceptProposedAction.assert_not_called()
 
 
-def test_drop_event_layout(default_main_window, mocker):
+def test_drop_event_layout(default_main_window):
     mock_url = MagicMock()
     mock_url.toLocalFile.return_value = "/my/path.rdvgame"
 
     event = MagicMock()
     event.mimeData.return_value.urls.return_value = [mock_url]
-    mock_from_file: MagicMock = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
 
-    default_main_window.open_game_details = MagicMock()
+    default_main_window.RequestOpenLayoutSignal = MagicMock()
 
     # Run
     default_main_window.dropEvent(event)
 
     # Assert
-    mock_from_file.assert_called_once_with(Path("/my/path.rdvgame"))
-    default_main_window.open_game_details.assert_called_once_with(mock_from_file.return_value)
+    default_main_window.RequestOpenLayoutSignal.emit(Path("/my/path.rdvgame"))
 
 
 #
