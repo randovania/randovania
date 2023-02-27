@@ -27,6 +27,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
+from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import ImpossibleForSolver
 
@@ -447,7 +448,8 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
 
             except InvalidPreset as e:
-                logging.exception(f"Invalid preset for {preset.name}")
+                if not isinstance(e.original_exception, UnsupportedVersion):
+                    logging.exception(f"Invalid preset for {preset.name}")
                 description = (
                     f"Preset {preset.name} can't be used as it contains the following error:"
                     f"\n{e.original_exception}\n"
