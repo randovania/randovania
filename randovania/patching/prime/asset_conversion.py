@@ -13,8 +13,9 @@ from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
 from retro_data_structures.dependencies import all_converted_dependencies, Dependency
 from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
-from retro_data_structures.formats import PAK, format_for
+from retro_data_structures.formats import format_for
 from retro_data_structures.formats.pak import PakBody, PakFile
+from retro_data_structures.formats.pak_gc import PAK_GC
 from retro_data_structures.game_check import Game
 
 from randovania import get_data_path
@@ -167,7 +168,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
     for pak_i in range(1, 6):
         pak_path = echoes_files_path.joinpath("files", f"Metroid{pak_i}.pak")
 
-        new_pak: PakBody = PAK.parse(
+        new_pak: PakBody = PAK_GC.parse(
             pak_path.read_bytes(),
             target_game=Game.ECHOES,
         )
@@ -185,7 +186,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
         for resource in pak_resources.values():
             new_pak.files.append(resource)
 
-        PAK.build_file(new_pak, pak_path, target_game=Game.ECHOES)
+        PAK_GC.build_file(new_pak, pak_path, target_game=Game.ECHOES)
         updaters[2](f"Wrote new {pak_path.name}", pak_i / 6)
 
 
