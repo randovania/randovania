@@ -21,7 +21,12 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.EchoesCosmeticPatchesDialog,
         export_dialog=gui.EchoesGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(TeleporterDetailsTab, gui.TranslatorGateDetailsTab, gui.EchoesHintDetailsTab),
+        spoiler_visualizer=(
+            TeleporterDetailsTab,
+            gui.TranslatorGateDetailsTab,
+            gui.PortalDetailsTab,
+            gui.EchoesHintDetailsTab,
+        ),
         game_tab=gui.EchoesGameTabWidget,
     )
 
