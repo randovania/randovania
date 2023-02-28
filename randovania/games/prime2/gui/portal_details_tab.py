@@ -35,7 +35,7 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
                         if area.in_dark_aether:
                             # All docks are two-way between light and dark aether right now
                             assert isinstance(destination, DockNode)
-                            assert patches.get_dock_connection_for(destination) is node
+                            assert patches.get_dock_connection_for(destination) == node
                         else:
                             per_area[world.name][area.name].add(node)
 
