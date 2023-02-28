@@ -509,7 +509,7 @@ jobs:
       - name: Publish 📦 to TestPyPI
         if: ${{ startsWith(github.ref, 'refs/heads/stable') }}
         run: |
-          python -m twine upload --repository testpypi packages/Python Package/*
+          python -m twine upload --repository testpypi packages/Python\ Package/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.testpypi_password }}
@@ -517,7 +517,7 @@ jobs:
       - name: Publish 📦 to PyPI
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         run: |
-          python -m twine upload packages/Python Package/*
+          python -m twine upload packages/Python\ Package/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
