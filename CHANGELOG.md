@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.5.0] - 2023-??-??
+## [5.6.0] - 2023-??-??
+
+- Nothing yet.
+
+## [5.5.2] - 2023-??-??
+
+- Nothing.
+
+## [5.5.1] - 2023-02-28
 
 - Added: Game Details now contains a tab describing all door locks, when Door Lock rando is enabled.
 - Changed: Certain spoiler tabs in Game Details now only show up when relevant, such as Elevators spoiler only when elevators are shuffled.
@@ -88,6 +96,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
 - Fixed: Ryujinx no longer hangs when stopping emulation.
+
+## [5.5.0] - Skipped
 
 ## [5.4.1] - 2023-02-16
 
