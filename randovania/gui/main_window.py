@@ -62,6 +62,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
+    all_change_logs: dict[str, str] | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
@@ -408,8 +409,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self.display_new_version(version_to_display)
 
         if all_change_logs:
-            from randovania.gui.widgets.changelog_widget import ChangeLogWidget
-            self.changelog_tab = ChangeLogWidget(all_change_logs)
+            self.all_change_logs = all_change_logs
             self.menu_action_changelog.setVisible(True)
 
         if new_change_logs:
@@ -651,11 +651,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.help_window.show()
 
     def _on_menu_action_changelog(self):
-        if self.changelog_tab is None:
+        if self.all_change_logs is None:
             return
         
         if self.changelog_window is None:
+            from randovania.gui.widgets.changelog_widget import ChangeLogWidget
+            self.changelog_tab = ChangeLogWidget(self.all_change_logs)
             self.changelog_window = self._create_generic_window(self.changelog_tab, "Change Log")
+
         self.changelog_window.show()
 
     def _on_menu_action_about(self):
