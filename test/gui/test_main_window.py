@@ -183,7 +183,7 @@ def test_on_menu_action_changelog(default_main_window, monkeypatch, has_changelo
     mock_show = MagicMock()
     monkeypatch.setattr(QtWidgets.QWidget, "show", mock_show)
     if has_changelog:
-        default_main_window.changelog_tab = QtWidgets.QWidget()
+        default_main_window.all_change_logs = {}
 
     # Run
     default_main_window._on_menu_action_changelog()
@@ -193,7 +193,7 @@ def test_on_menu_action_changelog(default_main_window, monkeypatch, has_changelo
         assert default_main_window.changelog_window is not None
         assert default_main_window.changelog_window.centralWidget() is default_main_window.changelog_tab
         assert default_main_window.changelog_window.windowTitle() == "Change Log"
-        mock_show.assert_called_once_with()
+        default_main_window.changelog_window.show.assert_called_once_with()
     else:
         assert default_main_window.changelog_window is None
         mock_show.assert_not_called()
