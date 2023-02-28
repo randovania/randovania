@@ -14,7 +14,8 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.setupUi(self)
 
         self.include_menu_mod_label.setText(self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
-        for widget in [self.inverted_check, self.inverted_label, self.inverted_line]:
+        for widget in [self.inverted_check, self.inverted_label, self.inverted_line,
+                       self.portal_rando_check, self.portal_rando_label, self.portal_rando_line]:
             widget.setVisible(randovania.is_dev_version())
 
         # Signals

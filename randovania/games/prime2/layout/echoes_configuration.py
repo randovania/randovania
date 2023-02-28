@@ -94,4 +94,7 @@ class EchoesConfiguration(BaseConfiguration):
         if self.inverted_mode:
             result.append("Inverted Aether")
 
+        if self.portal_rando:
+            result.append("Portal Rando")
+
         return result
