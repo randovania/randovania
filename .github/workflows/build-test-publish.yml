@@ -149,14 +149,15 @@ jobs:
             dist/randovania-*.tar.gz
             dist/randovania-*.7z
 
-      - name: Publish distribution 📦 to PyPI
-        if: ${{ !matrix.executable && startsWith(github.ref, 'refs/tags/v') && matrix.os == 'ubuntu-latest' }}
-        run: |
-          python -m pip install twine
-          python -m twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_password }}
+      - name: Upload wheel
+        if: ${{ matrix.name == 'Linux' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Python Package
+          if-no-files-found: error
+          path: |
+            dist/randovania-*.tar.gz
+            dist/randovania-*.whl
 
   installer:
     runs-on: windows-latest
@@ -473,7 +474,7 @@ jobs:
 
       - name: Install Python packages
         run: |
-          python -m pip install aiohttp docker-compose
+          python -m pip install aiohttp docker-compose twine
 
       - name: Decide environment
         id: decide_env
@@ -504,6 +505,22 @@ jobs:
           overwrite: true
           prerelease: true
           body: "Release executable"
+
+      - name: Publish 📦 to TestPyPI
+        if: ${{ startsWith(github.ref, 'refs/heads/stable') }}
+        run: |
+          python -m twine upload --repository testpypi packages/Python Package/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.testpypi_password }}
+
+      - name: Publish 📦 to PyPI
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        run: |
+          python -m twine upload packages/Python Package/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
       - name: Discord Notifications
         run: python tools/post_discord_webhook.py --artifact-dir "packages/Randovania Linux Executable/" 
