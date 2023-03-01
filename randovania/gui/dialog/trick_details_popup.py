@@ -1,5 +1,5 @@
 import re
-from typing import Callable
+from typing import Callable, Iterable
 
 from PySide6.QtWidgets import QDialog, QWidget
 
@@ -28,7 +28,7 @@ def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
 def _area_uses_resource(area: Area,
                         criteria: Callable[[ResourceRequirement], bool],
                         database: ResourceDatabase,
-                        ) -> bool:
+                        ) -> Iterable[str]:
     """
     Checks the area RequirementSet in the given Area uses the given trick at the given level.
     :param area:
@@ -40,19 +40,24 @@ def _area_uses_resource(area: Area,
     def _uses_trick(requirements: Requirement) -> bool:
         return any(criteria(individual) for individual in requirements.as_set(database).all_individual)
 
-    for node in area.nodes:
-        if isinstance(node, DockNode):
-            if _uses_trick(node.default_dock_weakness.requirement):
-                return True
-
-            if node.default_dock_weakness.lock is not None:
-                if _uses_trick(node.default_dock_weakness.lock.requirement):
-                    return True
-
-        if any(_uses_trick(req) for req in area.connections[node].values()):
+    def _dock_uses_trick(dock: DockNode):
+        if _uses_trick(dock.default_dock_weakness.requirement):
             return True
 
-    return False
+        if dock.default_dock_weakness.lock is not None:
+            if _uses_trick(dock.default_dock_weakness.lock.requirement):
+                return True
+
+        return False
+
+    for node in area.nodes:
+        if isinstance(node, DockNode):
+            if _dock_uses_trick(node):
+                yield f"Open {node.name}"
+
+        for target, req in area.connections[node].items():
+            if _uses_trick(req):
+                yield f"{node.name} -> {target.name}"
 
 
 class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
@@ -60,7 +65,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
                  parent: QWidget,
                  window_manager: WindowManager,
                  game_description: GameDescription,
-                 areas_to_show: list[tuple[World, Area]],
+                 areas_to_show: list[tuple[World, Area, list[str]]],
                  ):
         super().__init__(parent)
         self.setupUi(self)
@@ -80,8 +85,11 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         if areas_to_show:
             lines = [
                 (f'<a href="data-editor://{world.correct_name(area.in_dark_aether)}/{area.name}">'
-                 f'{world.correct_name(area.in_dark_aether)} - {area.name}</a>')
-                for (world, area) in areas_to_show
+                 f'{world.correct_name(area.in_dark_aether)} - {area.name}</a>') + "".join(
+                    f"\n<br />{usage}"
+                    for usage in usages
+                ) + "<br />"
+                for (world, area, usages) in areas_to_show
             ]
             self.area_list_label.setText("<br />".join(sorted(lines)))
         else:
@@ -106,10 +114,11 @@ class TrickDetailsPopup(BaseResourceDetailsPopup):
                  level: LayoutTrickLevel,
                  ):
         areas_to_show = [
-            (world, area)
+            (world, area, usages)
             for world in game_description.world_list.worlds
             for area in world.areas
-            if _area_uses_resource(area, _requirement_at_value(trick, level), game_description.resource_database)
+            if (usages := list(_area_uses_resource(area, _requirement_at_value(trick, level),
+                                                   game_description.resource_database)))
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show)
 
@@ -132,10 +141,10 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
             return individual.resource == resource
 
         areas_to_show = [
-            (world, area)
+            (world, area, usages)
             for world in game_description.world_list.worlds
             for area in world.areas
-            if _area_uses_resource(area, is_resource, game_description.resource_database)
+            if (usages := list(_area_uses_resource(area, is_resource, game_description.resource_database)))
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show)
 
