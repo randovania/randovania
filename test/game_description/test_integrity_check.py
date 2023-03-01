@@ -27,7 +27,7 @@ def test_find_database_errors(game_enum: RandovaniaGame):
 
 def test_invalid_db():
     sample_data = {
-        "schema_version": 6,
+        "schema_version": 14,
         "game": "prime2",
         "resource_database": {
             "items": {},
@@ -42,9 +42,13 @@ def test_invalid_db():
             "item_percentage_index": "Power",
             "multiworld_magic_item_index": "Power"
         },
+        "layers": [
+            "default"
+        ],
         "starting_location": {
             "world_name": "World",
-            "area_name": "Area 2"
+            "area_name": "Area 2",
+            "node_name": "Generic Node"
         },
         "initial_states": {
             "Default": []
@@ -62,24 +66,41 @@ def test_invalid_db():
                 "door": {
                     "name": "Door",
                     "extra": {},
-                    "items": {}
+                    "items": {},
+                    "dock_rando": {
+                        "unlocked": None,
+                        "locked": None,
+                        "change_from": [],
+                        "change_to": []
+                    }
                 },
                 "portal": {
                     "name": "Portal",
                     "extra": {},
-                    "items": {}
+                    "items": {},
+                    "dock_rando": {
+                        "unlocked": None,
+                        "locked": None,
+                        "change_from": [],
+                        "change_to": []
+                    }
                 },
                 "morph_ball": {
                     "name": "Morph Ball Door",
                     "extra": {},
-                    "items": {}
+                    "items": {},
+                    "dock_rando": {
+                        "unlocked": None,
+                        "locked": None,
+                        "change_from": [],
+                        "change_to": []
+                    }
                 },
                 "other": {
                     "name": "Other",
                     "extra": {},
                     "items": {
                         "Open Passage": {
-                            "lock_type": 0,
                             "extra": {},
                             "requirement": {
                                 "type": "and",
@@ -87,10 +108,10 @@ def test_invalid_db():
                                     "comment": None,
                                     "items": []
                                 }
-                            }
+                            },
+                            "lock": None
                         },
                         "Not Determined": {
-                            "lock_type": 0,
                             "extra": {},
                             "requirement": {
                                 "type": "or",
@@ -98,14 +119,27 @@ def test_invalid_db():
                                     "comment": None,
                                     "items": []
                                 }
-                            }
+                            },
+                            "lock": None
                         }
+                    },
+                    "dock_rando": {
+                        "unlocked": None,
+                        "locked": None,
+                        "change_from": [],
+                        "change_to": []
                     }
                 }
             },
             "default_weakness": {
                 "type": "other",
                 "name": "Not Determined"
+            },
+            "dock_rando": {
+                "enable_one_way": False,
+                "force_change_two_way": False,
+                "resolver_attempts": 125,
+                "to_shuffle_proportion": 1.0
             }
         },
         "worlds": [
@@ -115,7 +149,6 @@ def test_invalid_db():
                 "areas": {
                     "Area 1": {
                         "default_node": None,
-                        "valid_starting_location": False,
                         "extra": {},
                         "nodes": {
                             "Event - Foo": {
@@ -123,7 +156,11 @@ def test_invalid_db():
                                 "heal": False,
                                 "coordinates": None,
                                 "description": "",
+                                "layers": [
+                                    "default"
+                                ],
                                 "extra": {},
+                                "valid_starting_location": False,
                                 "connections": {
                                     "Event - Foo": {
                                         "type": "and",
@@ -139,14 +176,20 @@ def test_invalid_db():
                                 "heal": False,
                                 "coordinates": None,
                                 "description": "",
+                                "layers": [
+                                    "default"
+                                ],
                                 "extra": {},
-                                "destination": {
+                                "valid_starting_location": False,
+                                "dock_type": "other",
+                                "default_connection": {
                                     "world_name": "World",
                                     "area_name": "Area 2",
                                     "node_name": "Generic Node"
                                 },
-                                "dock_type": "other",
-                                "dock_weakness": "Open Passage",
+                                "default_dock_weakness": "Open Passage",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
                                 "connections": {}
                             },
                             "Door to Area 2 (Dock)": {
@@ -154,21 +197,26 @@ def test_invalid_db():
                                 "heal": False,
                                 "coordinates": None,
                                 "description": "",
+                                "layers": [
+                                    "default"
+                                ],
                                 "extra": {},
-                                "destination": {
+                                "valid_starting_location": False,
+                                "dock_type": "other",
+                                "default_connection": {
                                     "world_name": "World",
                                     "area_name": "Area 2",
                                     "node_name": "Door to Area 1"
                                 },
-                                "dock_type": "other",
-                                "dock_weakness": "Open Passage",
+                                "default_dock_weakness": "Open Passage",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
                                 "connections": {}
                             }
                         }
                     },
                     "Area 2": {
                         "default_node": "Generic Node",
-                        "valid_starting_location": False,
                         "extra": {},
                         "nodes": {
                             "Generic Node": {
@@ -176,7 +224,11 @@ def test_invalid_db():
                                 "heal": False,
                                 "coordinates": None,
                                 "description": "",
+                                "layers": [
+                                    "default"
+                                ],
                                 "extra": {},
+                                "valid_starting_location": True,
                                 "connections": {}
                             },
                             "Door to Area 1": {
@@ -184,14 +236,20 @@ def test_invalid_db():
                                 "heal": False,
                                 "coordinates": None,
                                 "description": "",
+                                "layers": [
+                                    "default"
+                                ],
                                 "extra": {},
-                                "destination": {
+                                "valid_starting_location": True,
+                                "dock_type": "other",
+                                "default_connection": {
                                     "world_name": "World",
                                     "area_name": "Area 1",
                                     "node_name": "Door to Area 2 (Generic)"
                                 },
-                                "dock_type": "other",
-                                "dock_weakness": "Open Passage",
+                                "default_dock_weakness": "Open Passage",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
                                 "connections": {}
                             }
                         }
@@ -218,6 +276,7 @@ def test_invalid_db():
         "World - Area 2 - 'Door to Area 1' should be named 'Other to Area 1'",
         "World - Area 2 - 'Door to Area 1' connects to 'world World/area Area 1/node Door to Area 2 (Generic)',"
         " but that dock connects to 'world World/area Area 2/node Generic Node' instead.",
+        "World - Area 2 has multiple valid start nodes ['Generic Node', 'Door to Area 1'], but is not allowed for Metroid Prime 2: Echoes",
 
         "Unknown strongly connected component detected containing 1 nodes:\n"
         "['World/Area 1/Event - Foo']",

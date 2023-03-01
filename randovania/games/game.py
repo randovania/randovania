@@ -150,6 +150,8 @@ class GameData:
     """(Optional) Name of the preset used as reference to encode permalinks of this game.
     If unset, the first of the list is used."""
 
+    multiple_start_nodes_per_area: bool = False
+    """If this game allows multiple start nodes per area."""
 
 class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME = "prime1"
