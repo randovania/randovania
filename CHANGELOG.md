@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.6.0] - 2023-??-??
 
-- Nothing yet.
+- Added: Trick Details popup now lists the usages in each area.
 
 ## [5.5.2] - 2023-??-??
 
