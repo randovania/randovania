@@ -16,6 +16,7 @@ from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
 def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
@@ -66,6 +67,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
                  window_manager: WindowManager,
                  game_description: GameDescription,
                  areas_to_show: list[tuple[World, Area, list[str]]],
+                 trick_levels: TrickLevelConfiguration | None = None,
                  ):
         super().__init__(parent)
         self.setupUi(self)
@@ -73,6 +75,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
 
         self._window_manager = window_manager
         self._game_description = game_description
+        self._trick_levels = trick_levels
 
         # setup
         self.area_list_label.linkActivated.connect(self._on_click_link_to_data_editor)
@@ -102,7 +105,10 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         info = re.match(r"^data-editor://([^)]+)/([^)]+)$", link)
         if info:
             world_name, area_name = info.group(1, 2)
-            self._window_manager.open_data_visualizer_at(world_name, area_name, game=self._game_description.game)
+            self._window_manager.open_data_visualizer_at(
+                world_name, area_name, game=self._game_description.game,
+                trick_levels=self._trick_levels,
+            )
 
 
 class TrickDetailsPopup(BaseResourceDetailsPopup):
@@ -112,6 +118,7 @@ class TrickDetailsPopup(BaseResourceDetailsPopup):
                  game_description: GameDescription,
                  trick: TrickResourceInfo,
                  level: LayoutTrickLevel,
+                 trick_levels: TrickLevelConfiguration | None = None,
                  ):
         areas_to_show = [
             (world, area, usages)
@@ -120,7 +127,7 @@ class TrickDetailsPopup(BaseResourceDetailsPopup):
             if (usages := list(_area_uses_resource(area, _requirement_at_value(trick, level),
                                                    game_description.resource_database)))
         ]
-        super().__init__(parent, window_manager, game_description, areas_to_show)
+        super().__init__(parent, window_manager, game_description, areas_to_show, trick_levels)
 
         # setup
         self.setWindowTitle(f"Trick Details: {trick.long_name} at {level.long_name}")
