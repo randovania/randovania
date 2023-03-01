@@ -1,10 +1,17 @@
+from __future__ import annotations
+
+import typing
+
 from PySide6.QtWidgets import QMainWindow
 
-from randovania.games.game import RandovaniaGame
-from randovania.gui.lib.close_event_widget import CloseEventWidget
-from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
+
+if typing.TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.close_event_widget import CloseEventWidget
+    from randovania.interface_common.preset_manager import PresetManager
+    from randovania.layout.layout_description import LayoutDescription
+    from randovania.layout.preset import Preset
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
 class WindowManager(QMainWindow):
@@ -21,8 +28,8 @@ class WindowManager(QMainWindow):
     async def open_map_tracker(self, configuration: Preset):
         raise NotImplementedError()
 
-    def open_data_visualizer_at(self, world_name: str | None, area_name: str | None,
-                                game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES):
+    def open_data_visualizer_at(self, world_name: str | None, area_name: str | None, game: RandovaniaGame,
+                                trick_levels: TrickLevelConfiguration | None = None):
         raise NotImplementedError()
 
     def open_game_details(self, layout: LayoutDescription):

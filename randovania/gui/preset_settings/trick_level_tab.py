@@ -184,4 +184,5 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             self.game_description,
             trick,
             self._editor.configuration.trick_level.level_for_trick(trick),
+            self._editor.configuration.trick_level,
         ))

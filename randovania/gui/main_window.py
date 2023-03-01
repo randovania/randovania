@@ -36,6 +36,7 @@ from randovania.resolver import debug
 if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -459,7 +460,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def open_data_visualizer_at(self,
                                 world_name: str | None,
                                 area_name: str | None,
-                                game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                                game: RandovaniaGame,
+                                trick_levels: TrickLevelConfiguration | None = None,
                                 ):
         from randovania.gui.data_editor import DataEditorWindow
         data_visualizer = DataEditorWindow.open_internal_data(game, False)
@@ -470,6 +472,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if area_name is not None:
             data_visualizer.focus_on_area_by_name(area_name)
+
+        if trick_levels is not None:
+            data_visualizer.layers_editor.set_selected_tricks(trick_levels)
 
         self._data_visualizer.show()
 
