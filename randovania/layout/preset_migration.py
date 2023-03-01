@@ -719,16 +719,31 @@ def _migrate_v42(preset: dict) -> dict:
         preset = _update_default_dock_rando(preset)
     return preset
 
+
 def _migrate_v43(preset: dict) -> dict:
     preset["configuration"]["single_set_for_pickups_that_solve"] = False
     preset["configuration"]["staggered_multi_pickup_placement"] = False
     return preset
+
 
 def _migrate_v44(preset: dict) -> dict:
     for start_loc in preset["configuration"]["starting_location"]:
         area_identifier = AreaIdentifier(start_loc["world_name"], start_loc["area_name"])
         node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
         start_loc["node_name"] = node_identifier.node_name
+
+    if "elevators" in preset["configuration"]:
+        for start_loc in preset["configuration"]["elevators"]["excluded_targets"]:
+            area_identifier = AreaIdentifier(start_loc["world_name"], start_loc["area_name"])
+            node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
+            start_loc["node_name"] = node_identifier.node_name
+
+    return preset
+
+
+def _migrate_v45(preset: dict) -> dict:
+    if preset["game"] == "prime2":
+        preset["configuration"]["portal_rando"] = False
     return preset
 
 
@@ -777,6 +792,7 @@ _MIGRATIONS = [
     _migrate_v42,
     _migrate_v43,
     _migrate_v44,
+    _migrate_v45,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

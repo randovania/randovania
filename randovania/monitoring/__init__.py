@@ -1,3 +1,5 @@
+import contextlib
+import json
 import platform
 import re
 import typing
@@ -73,7 +75,7 @@ def _before_breadcrumb(event, hint):
     return event
 
 
-def _init(include_flask: bool, default_url: str):
+def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, exclude_server_name: bool = False):
     if randovania.is_dirty():
         return
 
@@ -90,6 +92,11 @@ def _init(include_flask: bool, default_url: str):
         from sentry_sdk.integrations.flask import FlaskIntegration
         integrations.append(FlaskIntegration())
 
+    server_name = None
+    if exclude_server_name:
+        # hostname for clients contains pii, so exclude them if we're not doing server.
+        server_name = "client"
+
     sentry_url = configuration.get("sentry_url", default_url)
     if sentry_url is None:
         return
@@ -100,7 +107,7 @@ def _init(include_flask: bool, default_url: str):
         else:
             if sampling_context['transaction_context']['op'] == 'message':
                 return _sampling_per_path.get(sampling_context['transaction_context']['name'], 0.5)
-            return 0.25
+            return sampling_rate
 
     sentry_sdk.init(
         dsn=sentry_url,
@@ -108,7 +115,7 @@ def _init(include_flask: bool, default_url: str):
         release=full_git_hash,
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
-        server_name="client",  # hostname for clients contains pii
+        server_name=server_name,
         before_send=_before_send,
         before_breadcrumb=_before_breadcrumb,
         auto_session_tracking=include_flask,
@@ -120,7 +127,8 @@ def _init(include_flask: bool, default_url: str):
 
 
 def client_init():
-    _init(False, _CLIENT_DEFAULT_URL)
+    _init(False, _CLIENT_DEFAULT_URL,
+          exclude_server_name=True)
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
 
 
@@ -129,4 +137,15 @@ def server_init():
 
 
 def bot_init():
-    return _init(False, _BOT_DEFAULT_URL)
+    return _init(False, _BOT_DEFAULT_URL, sampling_rate=1.0)
+
+
+@contextlib.contextmanager
+def attach_patcher_data(patcher_data: dict):
+    with sentry_sdk.configure_scope() as scope:
+        scope.add_attachment(
+            json.dumps(patcher_data).encode("utf-8"),
+            filename="patcher.json",
+            content_type="application/json",
+        )
+        yield

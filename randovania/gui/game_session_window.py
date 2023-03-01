@@ -20,7 +20,7 @@ from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
-from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, file_prompts
+from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
@@ -182,7 +182,6 @@ class ItemTrackerDock(QtWidgets.QDockWidget):
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         self.on_close()
         return super().closeEvent(event)
-
 
 
 _PRESET_COLUMNS = 3
@@ -591,6 +590,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     def _row_save_preset_to_manager(self, row: RowWidget):
         row_index = self.rows.index(row)
         preset = self._game_session.presets[row_index]
+
+        if preset.is_included_preset:
+            # Nothing to do, this is an included preset
+            return
 
         if self._preset_manager.add_new_preset(preset):
             self.refresh_row_import_preset_actions()
@@ -1120,11 +1123,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def import_layout(self):
-        json_path = await file_prompts.prompt_input_layout(self)
-        if json_path is None:
+        layout = await layout_loader.prompt_and_load_layout_description(self)
+        if layout is None:
             return
 
-        layout = LayoutDescription.from_file(json_path)
         if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):
 
             await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, True)

@@ -26,20 +26,23 @@ def test_add_new_preset(tab, preset_manager):
     preset = preset_manager.default_preset
     tab.create_preset_tree.select_preset = MagicMock()
     tab._window_manager.preset_manager = MagicMock()
+    options = tab._options.__enter__.return_value
 
     # Run
-    tab._add_new_preset(preset)
+    tab._add_new_preset(preset, parent=None)
 
     # Assert
     tab._window_manager.preset_manager.add_new_preset.assert_called_once_with(preset)
     tab.create_preset_tree.select_preset.assert_called_once_with(preset)
+    options.set_parent_for_preset.assert_not_called()
+    options.set_selected_preset_uuid_for.assert_called_once_with(tab.game, preset.uuid)
 
 
 @pytest.mark.parametrize("has_existing_window", [False, True])
 async def test_on_customize_button(tab, mocker, has_existing_window):
     mock_settings_window = mocker.patch("randovania.gui.widgets.generate_game_widget.CustomizePresetDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    mock_execute_dialog.return_value = QtWidgets.QDialog.Accepted
+    mock_execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
     tab._add_new_preset = MagicMock()
     tab._logic_settings_window = MagicMock() if has_existing_window else None
     tab.create_preset_tree = MagicMock()

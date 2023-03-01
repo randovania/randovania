@@ -5,9 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.5.0] - 2023-??-??
+## [5.6.0] - 2023-??-??
 
-- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
+- Added: Trick Details popup now lists the usages in each area.
+- Added: Opening the Data Visualizer from the Trick Details while customizing a preset now automatically configured the trick filters based on the preset being edited.
+- Changed: Setting trick filters in the Data Visualizer based on a preset now sets all tricks, even those at disabled.
+
+## [5.5.2] - 2023-??-??
+
+- Nothing.
+
+## [5.5.1] - 2023-02-28
+
+- Added: Game Details now contains a tab describing all door locks, when Door Lock rando is enabled.
+- Changed: Certain spoiler tabs in Game Details now only show up when relevant, such as Elevators spoiler only when elevators are shuffled.
+- Changed: Generation Order in Game Details is now hidden when there's incompatible settings, such as Door Lock rando.
+- Changed: A nicer error message is now given when generating with a preset with configuration errors, such as no starting locations.
+- Changed: A nicer error message is now given when an error occurs when loading a game layout file.
+- Fixed: Customizing an included preset should properly place the resulting preset nested to that preset.
+- Fixed: Customizing a preset should no longer reset where it's been placed at.
 - Fixed: Generated games now keep track of extra starting pickups instead of starting items, fixing some cases you'd start with the middle of a progressive chain.
 - Fixed: Changing trick filters in the Data Visualizer no longer resets the selected connection.
 - Fixed: Using trick filters in the Data Visualizer no longer unnecessarily expands templates or remove comments.
@@ -25,17 +41,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Small Samus spawning in ship instead of on top
 - Added: Ridley shorelines, biotech research 2, and exterior docking hangar actors now scale with boss size
 
+#### Logic Database
+
+- Added: 47 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 168
+
+##### Tallon Overworld
+
+- Fixed: Landing Site - PAL SJF is now only logical if Dock Rando is disabled
+- Added: Life Grove - Alternate method to skip Bombs and SJ (Scan Dash Expert) to reach item *Found by Vertigo* 
+- Added: Life Grove - Trick to skip wallboosts when also skipping SJ and Bombs *Found by Vertigo*
+
+##### Chozo Ruins
+
+- Changed: Main Plaza - Lowered Half-Pipe roll-in to Expert ([See Video](https://youtu.be/ne8ap0xa_UE))
+- Changed: Ruined Shrine - Wave door to half-pipe item is now L-Jump instead of R-Jump
+- Added: Hive Totem - Fight Skip Intermediate Combat Dash
+- Added: Hive Totem - Fight Skip "TAS Walk" Advanced Movement+Knowledge
+- Added: Crossway Access West - Advanced Standable Terrain (Skips Morph) *Found by toasterparty*
+
+##### Magmoor Caverns
+
+- Fixed: Twin Fires Tunnel - Combat dash is now only logical if Dock Rando is disabled
+- Added: Monitor Station - NSJ Heat Run Expert *Found by JustinDM*
+- Added: Twin Fires Tunnel - NSJ Bunny Hop Expert Movement *Found by JustinDM*
+
+##### Phendrana Drifts
+
+- Changed: Quarantine Cave - More detailed Thardus Fight requirements (e.g. Plasma Beam, PBs, Boost)
+- Changed: Labs - More detailed combat requirements
+- Added: Chozo Ice Temple - Expert NSJ Bombless Climb *Found by MeriKatt*
+- Added: Quarantine Cave - Thardus Skip Hypermode Slope Jump *Found by JustinDM*
+- Added: Quarantine Cave - Expert R-Jumps to skip grapple *Found by toasterparty*
+- Added: Control Tower - SJ/DBJ/BSJ/Wallboost tricks(s) to skip fight both ways
+- Added: Transport to Magmoor Caverns South - Alternate NSJ Spider Skip BSJ Advanced *Found by Cyberpod*
+
+##### Phazon Mines
+
+- Fixed: Mine Security Station - Starting Room/Elevator doesn't account for doors locking
+- Fixed: Mine Security Station - Entering from Storage Depot A doesn't check for lowered barrier
+- Fixed: Metroid Quarantine A - Wallboost doesn't require Spider Ball
+- Added: Main Quarry - Intermediate Wallboost to skip Bombs for item
+- Added: Main Quarry - Intermediate Knowledge+Movement to skip Bombs for item *Found by toasterparty*
+- Added: Metroid Quarantine A - Advanced Dashes to skip PBs
+- Added: Metroid Quarantine A - Alternate R-Jump from item to door
+- Added: Metroid Quarantine A - NSJ Expert Dashes from item to door
+- Added: Fungal Hall Access - NSJ Advanced BSJs *Found by JustinDM*
+
+### Metroid Prime 2: Echoes
+
+- Added: Updated A-Kul's scan with the 2022 Echoes Randomizer tournament winner.
+- Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
+
 ### Metroid Dread
 
+- **Major** - Added: Door Lock randomizer has been added. In this mode, the weapons needed to open doors in the game are also changed, with full support of our logic database. 
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
 - Fixed: Ryujinx no longer hangs when stopping emulation.
 
-### Metroid Prime 2: Echoes
+## [5.5.0] - Skipped
 
-- Added: When the experimental patcher is enabled, Dynamo Chamber and Trooper Security Station now start in post-layer change state.
-
-## [5.4.1] - 2023-??-??
+## [5.4.1] - 2023-02-16
 
 - Added: Linux releases are now also published to Flathub.
 - Fixed: Canceling the prompt from "View previous versions" no longer causes an error.

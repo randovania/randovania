@@ -145,7 +145,14 @@ Extra - aabb: [58.95912, -13.365204, -0.8746805, 213.88028, 134.1634, 99.340744]
           Scan Visor and Shoot Wave Beam
           Thermal Visor or Invisible Objects (Beginner)
           Any of the following:
-              Morph Ball Bomb and Morph Ball and Spider Ball
+              All of the following:
+                  Morph Ball and Spider Ball
+                  Any of the following:
+                      Morph Ball Bomb
+                      Boost Ball and Wall Boost (Intermediate)
+                      All of the following:
+                          # https://www.youtube.com/watch?v=TgGo2RyY79w
+                          Knowledge (Intermediate) and Movement (Intermediate)
               All of the following:
                   Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Beginner)
                   Any of the following:
@@ -347,18 +354,12 @@ Mine Security Station
 Extra - asset_id: 2507085138
 Extra - size_index: 0.6
 Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
-> Door to Security Access A; Heals? False; Spawn Point; Default Node
+> Door to Security Access A; Heals? False; Default Node
   * Layers: default
   * Ice Door to Security Access A/Door to Mine Security Station
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Door to Security Access B
-      All of the following:
-          After Mine Security Station Unlock Doors
-          Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 125
-              Shoot Ice Beam and Shoot Wave Beam
-  > Wave Pirate Shootout
+  > Room Center
       Trivial
 
 > Door to Security Access B; Heals? False
@@ -366,17 +367,7 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Wave Door to Security Access B/Door to Mine Security Station
   * Extra - dock_index: 1
   * Extra - nonstandard: False
-  > Door to Security Access A
-      All of the following:
-          After Mine Security Station Unlock Doors
-          Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 125
-              Shoot Ice Beam and Shoot Wave Beam
-  > Door to Storage Depot A
-      After Mine Security Station Barrier
-  > Event - Mine Security Station Barrier Opened
-      Morph Ball and Power Bomb and Scan Visor
-  > Wave Pirate Shootout
+  > Room Center
       Trivial
 
 > Door to Storage Depot A; Heals? False
@@ -384,15 +375,13 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Plasma Door to Storage Depot A/Door to Mine Security Station
   * Extra - dock_index: 2
   * Extra - nonstandard: False
-  > Door to Security Access B
-      After Mine Security Station Barrier and After Mine Security Station Unlock Doors
-  > Wave Pirate Shootout
-      Trivial
+  > Room Center
+      After Mine Security Station Barrier
 
 > Event - Mine Security Station Barrier Opened; Heals? False
   * Layers: default
   * Event Mine Security Station Barrier
-  > Door to Security Access B
+  > Room Center
       Trivial
 
 > Pickup (Items Every Room); Heals? False
@@ -407,9 +396,27 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
       Trivial
   > Door to Security Access B
       Trivial
+  > Room Center
+      Trivial
 
-> Wave Pirate Shootout; Heals? False
+> Room Center; Heals? False; Spawn Point
   * Layers: default
+  > Door to Security Access A
+      All of the following:
+          After Mine Security Station Unlock Doors
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Ice Beam and Shoot Wave Beam
+  > Door to Security Access B
+      All of the following:
+          After Mine Security Station Unlock Doors
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Ice Beam and Shoot Wave Beam
+  > Door to Storage Depot A
+      After Mine Security Station Barrier
+  > Event - Mine Security Station Barrier Opened
+      Morph Ball and Power Bomb and Scan Visor
   > Event - Mine Security Station Doors Unlocked
       All of the following:
           Before Mine Security Station Unlock Doors and Shoot Wave Beam
@@ -494,7 +501,9 @@ Extra - aabb: [40.680916, 162.93446, 9.550913, 70.02207, 207.09828, 75.1311]
           Morph Ball
           Any of the following:
               Spider Ball
-              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Expert) and Shoot Wave Beam
+              All of the following:
+                  # https://www.youtube.com/watch?v=YVwT_qur7lo
+                  Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Expert) and Shoot Wave Beam
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -1516,7 +1525,9 @@ Extra - aabb: [111.66573, 146.28539, -114.17708, 246.21591, 324.61493, -51.89018
               Thermal Visor and Invisible Objects (Beginner)
           Any of the following:
               Space Jump Boots
-              Morph Ball Bomb and Morph Ball and Bomb Jump (Expert) and L-Jump (Advanced)
+              All of the following:
+                  # https://youtu.be/x036CC58IZ8?t=9
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Expert) and L-Jump (Advanced)
 
 > Door to Elevator Access B; Heals? False
   * Layers: default
@@ -1530,6 +1541,8 @@ Extra - aabb: [111.66573, 146.28539, -114.17708, 246.21591, 324.61493, -51.89018
               Space Jump Boots
               Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 200
               Slope Jump (Intermediate) and Phazon Damage ≥ 150
+  > Pickup (Missile)
+      Space Jump Boots and R-Jump (Advanced) and Standable Terrain (Intermediate)
   > Front of Spider Track
       Any of the following:
           Space Jump Boots or Combat/Scan Dash (Advanced)
@@ -1540,7 +1553,13 @@ Extra - aabb: [111.66573, 146.28539, -114.17708, 246.21591, 324.61493, -51.89018
   * Pickup 86; Major Location? False
   * Extra - position_required: False
   > Door to Elevator Access B
-      Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Beginner)
+      Any of the following:
+          All of the following:
+              # https://youtu.be/tQzvoPTimww?t=35
+              Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Beginner)
+          All of the following:
+              # https://www.youtube.com/watch?v=EgTFsy2qGh8&t=28s
+              Scan Visor and Combat/Scan Dash (Expert) and Standable Terrain (Advanced)
   > Front of Spider Track
       Trivial
 
@@ -1568,21 +1587,34 @@ Extra - aabb: [111.66573, 146.28539, -114.17708, 246.21591, 324.61493, -51.89018
       All of the following:
           Morph Ball
           Any of the following:
-              Morph Ball Bomb and Spider Ball
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      Morph Ball Bomb
+                      Boost Ball and Wall Boost (Beginner)
               All of the following:
                   Scan Visor
                   Any of the following:
                       Power Bomb ≥ 2 and Combat/Scan Dash (Hypermode) and Standable Terrain (Expert)
-                      Power Bomb and Space Jump Boots and Combat/Scan Dash (Advanced) and Slope Jump (Advanced) and Standable Terrain (Advanced)
-              Boost Ball and Wall Boost (Beginner)
+                      All of the following:
+                          # https://youtu.be/tQzvoPTimww
+                          Power Bomb and Space Jump Boots and Combat/Scan Dash (Advanced) and Slope Jump (Advanced) and Standable Terrain (Advanced)
   > Pickup (Missile)
-      All of the following:
-          Morph Ball and Power Bomb ≥ 2
-          Any of the following:
-              Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Beginner)
-              All of the following:
-                  Thermal Visor or X-Ray Visor or Invisible Objects (Intermediate)
-                  Spider Ball or Movement (Beginner)
+      Any of the following:
+          All of the following:
+              Morph Ball and Power Bomb ≥ 2
+              Any of the following:
+                  Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Beginner)
+                  All of the following:
+                      Thermal Visor or X-Ray Visor or Invisible Objects (Intermediate)
+                      Any of the following:
+                          Spider Ball
+                          All of the following:
+                              # https://youtu.be/tQzvoPTimww?t=19
+                              Movement (Beginner)
+          All of the following:
+              Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+              Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
 
 ----------------
 Quarantine Access B
@@ -1840,7 +1872,13 @@ Extra - aabb: [132.64903, 328.942, -184.2123, 180.28085, 381.88913, -101.63486]
   > Door to Elevator B
       Any of the following:
           Space Jump Boots
-          Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced) and Standable Terrain (Advanced)
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Standable Terrain (Advanced)
+              Any of the following:
+                  Bomb Jump (Advanced)
+                  All of the following:
+                      # https://www.youtube.com/watch?v=0oZ7WaA8P4I
+                      Bomb Space Jump (Advanced)
   > Pickup (Missile)
       All of the following:
           Morph Ball

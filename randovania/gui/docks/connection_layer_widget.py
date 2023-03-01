@@ -8,6 +8,7 @@ from randovania.gui.lib import file_prompts, async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
 
@@ -114,9 +115,11 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
         for layer_check in self.layer_checks:
             layer_check.setChecked(layer_check.text() in active_layers)
 
-        trick_level = preset.configuration.trick_level
+        self.set_selected_tricks(preset.configuration.trick_level)
+
+    def set_selected_tricks(self, trick_level: TrickLevelConfiguration):
         for (trick, trick_check), combo in self.tricks.items():
-            trick_check.setChecked(trick_level.has_specific_level_for_trick(trick))
+            trick_check.setChecked(True)
             idx = combo.findData(trick_level.level_for_trick(trick).as_number)
             combo.setCurrentIndex(idx)
 

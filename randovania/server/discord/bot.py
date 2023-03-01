@@ -6,6 +6,17 @@ import randovania
 from randovania.server.discord.randovania_cog import RandovaniaCog
 
 
+async def application_command_error(ctx: discord.ApplicationContext, error: discord.DiscordException):
+    logging.exception(
+        "Exception when user %s used %s with args %s",
+        str(ctx.user),
+        ctx.command.qualified_name,
+        str(ctx.selected_options),
+        exc_info=error,
+    )
+    await ctx.respond("Sorry, an error has occurred processing the request.", ephemeral=True)
+
+
 class RandovaniaBot(discord.Bot):
     def __init__(self, configuration: dict):
         debug_guilds = []
@@ -18,6 +29,7 @@ class RandovaniaBot(discord.Bot):
                          intents=intents)
 
         self.configuration = configuration
+        self.add_listener(application_command_error, "on_application_command_error")
         self.load_extension("randovania.server.discord.preset_lookup")
         self.load_extension("randovania.server.discord.database_command")
         self.load_extension("randovania.server.discord.faq_command")

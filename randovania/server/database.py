@@ -69,6 +69,7 @@ class User(BaseModel):
         return {
             "id": self.id,
             "name": self.name,
+            "discord_id": self.discord_id,
         }
 
 

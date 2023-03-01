@@ -6,7 +6,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup, ResourceDetailsPopup
+from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup, ResourceDetailsPopup, BaseResourceDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel
 from randovania.gui.lib import signal_handling
 from randovania.layout.lib import trick_lib
@@ -172,7 +172,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "NoGravity"),
         ))
 
-    def _exec_trick_details(self, popup: TrickDetailsPopup):
+    def _exec_trick_details(self, popup: BaseResourceDetailsPopup):
         self._trick_details_popup = popup
         self._trick_details_popup.setWindowModality(QtCore.Qt.WindowModal)
         self._trick_details_popup.open()
@@ -184,4 +184,5 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             self.game_description,
             trick,
             self._editor.configuration.trick_level.level_for_trick(trick),
+            self._editor.configuration.trick_level,
         ))
