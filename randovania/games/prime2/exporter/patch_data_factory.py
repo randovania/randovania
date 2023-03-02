@@ -571,6 +571,12 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         if self.configuration.use_new_patcher:
             result["new_patcher"] = self.new_patcher_configuration()
 
+            # FIXME HACK: don't change Aerie name as that breaks OPR's API
+            if self.configuration.portal_rando:
+                for elev in result["elevators"]:
+                    if elev["instance_id"] == 4260106:
+                        elev["room_name"] = "Aerie"
+
         return result
 
     def add_dock_connection_changes(self, worlds_patch_data: dict):
