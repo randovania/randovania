@@ -12,6 +12,7 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.generator import elevator_distributor
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
@@ -81,7 +82,7 @@ class BasePatchesFactory:
                                             ) -> NodeIdentifier:
         locations = list(configuration.starting_location.locations)
         if len(locations) == 0:
-            raise ValueError("No available starting locations")
+            raise InvalidConfiguration("No starting locations are selected")
         elif len(locations) == 1:
             location = locations[0]
         else:

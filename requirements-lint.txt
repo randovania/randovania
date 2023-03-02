@@ -19,17 +19,19 @@ packaging==23.0
     # via
     #   -c tools/requirements\../../requirements.txt
     #   build
-pip==23.0.1
-    # via pip-tools
-pip-tools==6.12.1
+pip-tools==6.12.3
     # via -r tools/requirements/requirements-lint.in
 pyproject-hooks==1.0.0
     # via build
 ruff==0.0.252
     # via -r tools/requirements/requirements-lint.in
+wheel==0.38.4
+    # via pip-tools
+
+# The following packages are considered to be unsafe in a requirements file:
+pip==23.0.1
+    # via pip-tools
 setuptools==66.1.1
     # via
     #   -c tools/requirements\../../requirements.txt
     #   pip-tools
-wheel==0.38.4
-    # via pip-tools

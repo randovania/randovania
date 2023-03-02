@@ -63,6 +63,7 @@ class EchoesConfiguration(BaseConfiguration):
     dangerous_energy_tank: bool
     use_new_patcher: bool
     inverted_mode: bool
+    portal_rando: bool
 
     allow_jumping_on_dark_water: bool
     allow_vanilla_dark_beam: bool
@@ -92,5 +93,8 @@ class EchoesConfiguration(BaseConfiguration):
 
         if self.inverted_mode:
             result.append("Inverted Aether")
+
+        if self.portal_rando:
+            result.append("Portal Rando")
 
         return result

@@ -131,11 +131,14 @@ def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame)
     app.data_editor.show()
 
 
-def show_game_details(app: QtWidgets.QApplication, options, game: Path):
-    from randovania.layout.layout_description import LayoutDescription
+async def show_game_details(app: QtWidgets.QApplication, options, file_path: Path):
     from randovania.gui.game_details.game_details_window import GameDetailsWindow
+    from randovania.gui.lib import layout_loader
 
-    layout = LayoutDescription.from_file(game)
+    layout = await layout_loader.load_layout_description(None, file_path)
+    if layout is None:
+        return
+    
     details_window = GameDetailsWindow(None, options)
     details_window.update_layout_description(layout)
     logger.info("Displaying game details")
@@ -180,7 +183,7 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
     elif command == "data_editor":
         show_data_editor(app, options, RandovaniaGame(args.game))
     elif command == "game":
-        show_game_details(app, options, args.rdvgame)
+        await show_game_details(app, options, args.rdvgame)
     elif command == "session":
         await show_game_session(app, options, args.session_id)
     else:

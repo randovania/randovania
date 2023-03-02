@@ -288,6 +288,13 @@ def _migrate_v14(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v15(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        game["dock_connections"] = {}
+
+    return json_dict
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -303,6 +310,7 @@ _MIGRATIONS = [
     _migrate_v12,
     _migrate_v13,
     _migrate_v14,
+    _migrate_v15,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

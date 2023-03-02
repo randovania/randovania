@@ -27,6 +27,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
+from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import ImpossibleForSolver
 
@@ -173,9 +174,10 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self.create_generate_button.setEnabled(value)
         self.create_generate_race_button.setEnabled(value)
 
-    def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None = None):
+    def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None):
         with self._options as options:
-            options.set_parent_for_preset(preset.uuid, parent)
+            if parent is not None:
+                options.set_parent_for_preset(preset.uuid, parent)
             options.set_selected_preset_uuid_for(self.game, preset.uuid)
 
         self._window_manager.preset_manager.add_new_preset(preset)
@@ -190,7 +192,10 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
         old_preset = self._current_preset_data.get_preset()
         if self._current_preset_data.is_included_preset:
+            parent_uuid = old_preset.uuid
             old_preset = old_preset.fork()
+        else:
+            parent_uuid = None
 
         editor = PresetEditor(old_preset)
         self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
@@ -201,7 +206,10 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self._logic_settings_window = None
 
         if result == QtWidgets.QDialog.DialogCode.Accepted:
-            self._add_new_preset(VersionedPreset.with_preset(editor.create_custom_preset_with()))
+            self._add_new_preset(
+                VersionedPreset.with_preset(editor.create_custom_preset_with()),
+                parent=parent_uuid,
+            )
 
     @asyncSlot()
     async def _on_delete_preset(self):
@@ -295,7 +303,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             elif user_response == async_dialog.StandardButton.No:
                 preset = VersionedPreset.with_preset(dataclasses.replace(preset.get_preset(), uuid=uuid.uuid4()))
 
-        self._add_new_preset(preset)
+        self._add_new_preset(preset, parent=None)
 
     def _on_select_preset(self):
         preset_data = self._current_preset_data
@@ -440,7 +448,8 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
 
             except InvalidPreset as e:
-                logging.exception(f"Invalid preset for {preset.name}")
+                if not isinstance(e.original_exception, UnsupportedVersion):
+                    logging.exception(f"Invalid preset for {preset.name}")
                 description = (
                     f"Preset {preset.name} can't be used as it contains the following error:"
                     f"\n{e.original_exception}\n"

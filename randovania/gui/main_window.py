@@ -36,6 +36,7 @@ from randovania.resolver import debug
 if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -62,11 +63,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
+    all_change_logs: dict[str, str] | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
 
     GameDetailsSignal = Signal(LayoutDescription)
+    RequestOpenLayoutSignal = Signal(Path)
     InitPostShowSignal = Signal()
 
     @property
@@ -110,6 +113,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         # Signals
         self.options_changed_signal.connect(self.on_options_changed)
         self.GameDetailsSignal.connect(self._open_game_details)
+        self.RequestOpenLayoutSignal.connect(self._request_open_layout)
         self.InitPostShowSignal.connect(self.initialize_post_show)
         self.main_tab_widget.currentChanged.connect(self._on_main_tab_changed)
 
@@ -237,11 +241,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 return
 
     def dropEvent(self, event: QtGui.QDropEvent):
-
         for url in event.mimeData().urls():
             path = Path(url.toLocalFile())
             if path.suffix == f".{LayoutDescription.file_extension()}":
-                self.open_game_details(LayoutDescription.from_file(path))
+                self.RequestOpenLayoutSignal.emit(path)
                 return
 
             # FIXME: re-implement importing presets
@@ -357,10 +360,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             permalink = dialog.get_permalink_from_field()
             await self.generate_seed_from_permalink(permalink)
 
-    def _import_spoiler_log(self):
-        json_path = common_qt_lib.prompt_user_for_input_game_log(self)
-        if json_path is not None:
-            layout = LayoutDescription.from_file(json_path)
+    @asyncSlot()
+    async def _import_spoiler_log(self):
+        from randovania.gui.lib import layout_loader
+        layout = await layout_loader.prompt_and_load_layout_description(self)
+        if layout is not None:
             self.open_game_details(layout)
 
     @asyncSlot()
@@ -383,6 +387,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         details_window.show()
         self.track_window(details_window)
 
+    @asyncSlot(Path)
+    async def _request_open_layout(self, path: Path):
+        from randovania.gui.lib import layout_loader
+        layout = await layout_loader.load_layout_description(self, path)
+        if layout is not None:
+            self.open_game_details(layout)
+
     # Releases info
     async def request_new_data(self):
         from randovania.interface_common import github_releases_data
@@ -399,8 +410,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self.display_new_version(version_to_display)
 
         if all_change_logs:
-            from randovania.gui.widgets.changelog_widget import ChangeLogWidget
-            self.changelog_tab = ChangeLogWidget(all_change_logs)
+            self.all_change_logs = all_change_logs
             self.menu_action_changelog.setVisible(True)
 
         if new_change_logs:
@@ -450,7 +460,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def open_data_visualizer_at(self,
                                 world_name: str | None,
                                 area_name: str | None,
-                                game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                                game: RandovaniaGame,
+                                trick_levels: TrickLevelConfiguration | None = None,
                                 ):
         from randovania.gui.data_editor import DataEditorWindow
         data_visualizer = DataEditorWindow.open_internal_data(game, False)
@@ -461,6 +472,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if area_name is not None:
             data_visualizer.focus_on_area_by_name(area_name)
+
+        if trick_levels is not None:
+            data_visualizer.layers_editor.set_selected_tricks(trick_levels)
 
         self._data_visualizer.show()
 
@@ -642,11 +656,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.help_window.show()
 
     def _on_menu_action_changelog(self):
-        if self.changelog_tab is None:
+        if self.all_change_logs is None:
             return
         
         if self.changelog_window is None:
+            from randovania.gui.widgets.changelog_widget import ChangeLogWidget
+            self.changelog_tab = ChangeLogWidget(self.all_change_logs)
             self.changelog_window = self._create_generic_window(self.changelog_tab, "Change Log")
+
         self.changelog_window.show()
 
     def _on_menu_action_about(self):

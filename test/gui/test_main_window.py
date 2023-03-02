@@ -57,22 +57,20 @@ def test_dragEnterEvent(default_main_window: MainWindow, url, should_accept):
         event.acceptProposedAction.assert_not_called()
 
 
-def test_drop_event_layout(default_main_window, mocker):
+def test_drop_event_layout(default_main_window):
     mock_url = MagicMock()
     mock_url.toLocalFile.return_value = "/my/path.rdvgame"
 
     event = MagicMock()
     event.mimeData.return_value.urls.return_value = [mock_url]
-    mock_from_file: MagicMock = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
 
-    default_main_window.open_game_details = MagicMock()
+    default_main_window.RequestOpenLayoutSignal = MagicMock()
 
     # Run
     default_main_window.dropEvent(event)
 
     # Assert
-    mock_from_file.assert_called_once_with(Path("/my/path.rdvgame"))
-    default_main_window.open_game_details.assert_called_once_with(mock_from_file.return_value)
+    default_main_window.RequestOpenLayoutSignal.emit(Path("/my/path.rdvgame"))
 
 
 #
@@ -185,7 +183,7 @@ def test_on_menu_action_changelog(default_main_window, monkeypatch, has_changelo
     mock_show = MagicMock()
     monkeypatch.setattr(QtWidgets.QWidget, "show", mock_show)
     if has_changelog:
-        default_main_window.changelog_tab = QtWidgets.QWidget()
+        default_main_window.all_change_logs = {}
 
     # Run
     default_main_window._on_menu_action_changelog()
@@ -195,7 +193,7 @@ def test_on_menu_action_changelog(default_main_window, monkeypatch, has_changelo
         assert default_main_window.changelog_window is not None
         assert default_main_window.changelog_window.centralWidget() is default_main_window.changelog_tab
         assert default_main_window.changelog_window.windowTitle() == "Change Log"
-        mock_show.assert_called_once_with()
+        default_main_window.changelog_window.show.assert_called_once_with()
     else:
         assert default_main_window.changelog_window is None
         mock_show.assert_not_called()
