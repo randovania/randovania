@@ -13483,10 +13483,10 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Teleport to Burenia": {
+                        "Event - Chozo-X Trigger": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Technically the trigger for Chozo X is when falling down. However, putting the event on the way back up makes it possible to create seeds where the pickup in this room is required to fight the Chozo X.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -13503,18 +13503,39 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "template",
                                                     "data": "Simple IBJ"
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fight Chozo-X"
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -13551,7 +13572,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Chozo-X Trigger": {
+                        "Start Point": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -13578,11 +13599,13 @@
                     "valid_starting_location": false,
                     "event_name": "GhavoranChozoXTrigger",
                     "connections": {
-                        "Start Point": {
-                            "type": "and",
+                        "Tunnel to Teleport to Burenia": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

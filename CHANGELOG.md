@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Opening the Data Visualizer from the Trick Details while customizing a preset now automatically configured the trick filters based on the preset being edited.
 - Changed: Setting trick filters in the Data Visualizer based on a preset now sets all tricks, even those at disabled.
 
+### Metroid Dread
+
+#### Logic Database
+
+- Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
+
 ## [5.5.2] - 2023-??-??
 
 - Nothing.

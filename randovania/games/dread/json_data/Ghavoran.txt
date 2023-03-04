@@ -2577,22 +2577,24 @@ Extra - asset_id: collision_camera_030
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Pickup (Spin Boost)
       Trivial
-  > Tunnel to Teleport to Burenia
+  > Event - Chozo-X Trigger
       All of the following:
+          # Technically the trigger for Chozo X is when falling down. However, putting the event on the way back up makes it possible to create seeds where the pickup in this room is required to fight the Chozo X.
           Morph Ball
           Flash Shift or Simple IBJ or Use Spin Boost
+          Enabled Highly Dangerous Logic or Fight Chozo-X
 
 > Tunnel to Teleport to Burenia; Heals? False
   * Layers: default
   * Morph Ball Launcher to Teleport to Burenia/Tunnel to Spin Boost Room
-  > Event - Chozo-X Trigger
+  > Start Point
       Morph Ball
 
 > Event - Chozo-X Trigger; Heals? False
   * Layers: default
   * Event Ghavoran - Chozo-X Trigger
-  > Start Point
-      Trivial
+  > Tunnel to Teleport to Burenia
+      Morph Ball
 
 ----------------
 Energy Recharge Station
