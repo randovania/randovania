@@ -1,4 +1,5 @@
 import asyncio
+import itertools
 from typing import Callable
 
 from randovania.game_description.game_patches import GamePatches
@@ -10,6 +11,7 @@ from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.event_pickup import EventPickupNode
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug
@@ -56,6 +58,23 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
                           if alternative is not None)
 
 
+def _is_action_dangerous(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
+    return any(resource in dangerous_resources
+               for resource in action.resource_gain_on_collect(state.node_context()))
+
+
+def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
+    if isinstance(action, EventPickupNode):
+        pickup_node = action.pickup_node
+    else:
+        pickup_node = action
+
+    if isinstance(pickup_node, PickupNode):
+        target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
+        return target is not None and (target.pickup.item_category.is_major or target.pickup.item_category.is_key)
+    return False
+
+
 def _should_check_if_action_is_safe(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo],
                                     ) -> bool:
     """
@@ -71,17 +90,7 @@ def _should_check_if_action_is_safe(state: State, action: ResourceNode, dangerou
     if isinstance(action, EventNode):
         return True
 
-    if isinstance(action, EventPickupNode):
-        pickup_node = action.pickup_node
-    else:
-        pickup_node = action
-
-    if isinstance(pickup_node, PickupNode):
-        target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        if target is not None and (target.pickup.item_category.is_major or target.pickup.item_category.is_key):
-            return True
-
-    return False
+    return _is_major_or_key_pickup_node(action, state)
 
 
 class ResolverTimeout(Exception):
@@ -137,10 +146,12 @@ async def _inner_advance_depth(state: State,
     debug.log_new_advance(state, reach)
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
-    actions = []
+    major_pickup_actions = []
+    lock_actions = []
+    dangerous_actions = []
+    rest_of_actions = []
 
     for action, energy in reach.possible_actions(state):
-        actions.append((action, energy))
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
@@ -160,8 +171,19 @@ async def _inner_advance_depth(state: State,
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
+        if _is_action_dangerous(state, action, logic.game.dangerous_resources):
+            dangerous_actions.append((action, energy))
+        elif _is_major_or_key_pickup_node(action, state):
+            major_pickup_actions.append((action, energy))
+        elif isinstance(action, DockLockNode):
+            lock_actions.append((action, energy))
+        else:
+            rest_of_actions.append((action, energy))
 
-    actions = list(reach.satisfiable_actions(state, logic.victory_condition, actions))
+    actions = list(reach.satisfiable_actions(state, logic.victory_condition, itertools.chain(major_pickup_actions,
+                                                                                             lock_actions,
+                                                                                             rest_of_actions,
+                                                                                             dangerous_actions)))
     debug.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
