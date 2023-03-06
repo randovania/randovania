@@ -7,11 +7,10 @@ from PySide6 import QtCore
 from PySide6.QtCore import Qt
 
 from randovania.game_description import default_database
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import GenericNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.layout import prime_configuration
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea, PresetStartingArea
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import StartingLocationList
@@ -107,3 +106,66 @@ def test_check_credits(skip_qtbot, preset_manager):
 
     checkbox_list = window._starting_location_for_node
     assert checkbox_list.get(not_expected, None) == None
+
+@pytest.fixture
+def setup_and_teardown_for_multiple_nodes(preset_manager):
+    # TODO: Currently all areas have only one sp that's why the test is artificially constructed.
+    # If we have a real example in the db, the whole setup and teardown can be removed.
+    # We need a teardown because the "new_node" needs to be removed otherwise other test will break and
+    # it is counterintuitive if other tests break just because this test here fails
+    game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
+    world = game_desc.world_list.world_with_name("Artaria")
+    area = world.area_by_name("Intro Room")
+    test_node_identifier = NodeIdentifier.create(world.name, area.name, "Test Start")
+    new_node = GenericNode(test_node_identifier, 0, True, None, "", ("default",), {}, True)
+    game_desc.world_list.add_new_node(area, new_node)
+    area.nodes.append(new_node)
+    yield
+    area.nodes.remove(new_node)
+
+def test_area_with_multiple_nodes(skip_qtbot, preset_manager, setup_and_teardown_for_multiple_nodes):
+    # Setup
+    base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
+    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    editor = PresetEditor(preset)
+
+    game_desc = default_database.game_description_for(preset.game)
+    world = game_desc.world_list.world_with_name("Artaria")
+    area = world.area_by_name("Intro Room")
+                     
+    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
+    skip_qtbot.addWidget(window)
+    window.on_preset_changed(editor.create_custom_preset_with())
+
+    start_point = NodeIdentifier.create("Artaria", "Intro Room", "Start Point")
+    test_node_identifier = NodeIdentifier.create(world.name, area.name, "Test Start")
+    checkbox_node_list = window._starting_location_for_node
+    checkbox_area_list = window._starting_location_for_area
+
+    # check default start location is set
+    assert checkbox_node_list.get(start_point, None) != None
+    assert checkbox_node_list.get(test_node_identifier, None) != None
+    assert len(editor.configuration.starting_location.locations) == 1
+
+    # check intro room is PartiallyChecked
+    intro_room_box = checkbox_area_list.get(start_point.area_identifier)
+    assert intro_room_box != None
+    assert intro_room_box.checkState() == QtCore.Qt.PartiallyChecked
+
+    # click "Test Start" and check states
+    test_node_checkbox = checkbox_node_list[test_node_identifier]
+    skip_qtbot.mouseClick(test_node_checkbox, Qt.LeftButton)
+    window.on_preset_changed(editor.create_custom_preset_with())
+    assert len(editor.configuration.starting_location.locations) == 2
+    assert intro_room_box.checkState() == QtCore.Qt.Checked
+
+    # toggle the area button
+    skip_qtbot.mouseClick(intro_room_box, Qt.LeftButton)
+    window.on_preset_changed(editor.create_custom_preset_with())
+    assert len(editor.configuration.starting_location.locations) == 0
+    assert intro_room_box.checkState() == QtCore.Qt.Unchecked
+
+    skip_qtbot.mouseClick(intro_room_box, Qt.LeftButton)
+    window.on_preset_changed(editor.create_custom_preset_with())
+    assert len(editor.configuration.starting_location.locations) == 2
+    assert intro_room_box.checkState() == QtCore.Qt.Checked
