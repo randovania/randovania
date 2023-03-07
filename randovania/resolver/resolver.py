@@ -59,7 +59,7 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
 
 
 def _is_action_dangerous(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources
+    return any(resource[0] in dangerous_resources
                for resource in action.resource_gain_on_collect(state.node_context()))
 
 
@@ -83,7 +83,7 @@ def _should_check_if_action_is_safe(state: State, action: ResourceNode, dangerou
     :param action:
     :return:
     """
-    if any(resource in dangerous_resources
+    if any(resource[0] in dangerous_resources
            for resource in action.resource_gain_on_collect(state.node_context())):
         return False
 
