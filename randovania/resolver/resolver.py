@@ -175,7 +175,7 @@ async def _inner_advance_depth(state: State,
             dangerous_actions.append((action, energy))
         elif _is_major_or_key_pickup_node(action, state):
             major_pickup_actions.append((action, energy))
-        elif isinstance(action, DockLockNode):
+        elif isinstance(action, DockLockNode) or isinstance(action, EventNode) or isinstance(action, EventPickupNode):
             lock_actions.append((action, energy))
         else:
             rest_of_actions.append((action, energy))
