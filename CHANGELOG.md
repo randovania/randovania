@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Trick Details popup now lists the usages in each area.
 - Added: Opening the Data Visualizer from the Trick Details while customizing a preset now automatically configured the trick filters based on the preset being edited.
 - Changed: Setting trick filters in the Data Visualizer based on a preset now sets all tricks, even those at disabled.
+- Changed: Optimize Solver by choosing actions in a smarter order. Prefer actions of types that are likely to progress th. Postpone dangerous actions. This should make the solver able to validate seeds where it previously timed out. Solving should in general be faster in general.
+- Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
 
 ### Metroid Dread
 
