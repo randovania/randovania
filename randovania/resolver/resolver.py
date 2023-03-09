@@ -75,22 +75,20 @@ def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
     return False
 
 
-def _should_check_if_action_is_safe(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo],
+def _should_check_if_action_is_safe(state: State,
+                                    action: ResourceNode,
+                                    dangerous_resources: frozenset[ResourceInfo]
                                     ) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
     :param action:
+    :param dangerous_resources:
     :return:
     """
-    if any(resource in dangerous_resources
-           for resource, _ in action.resource_gain_on_collect(state.node_context())):
-        return False
-
-    if isinstance(action, EventNode):
-        return True
-
-    return _is_major_or_key_pickup_node(action, state)
+    return not _is_action_dangerous(state, action, dangerous_resources) \
+        and (isinstance(action, EventNode)
+             or _is_major_or_key_pickup_node(action, state))
 
 
 class ResolverTimeout(Exception):
@@ -171,14 +169,15 @@ async def _inner_advance_depth(state: State,
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
+        action_tuple = (action, energy)
         if _is_action_dangerous(state, action, logic.game.dangerous_resources):
-            dangerous_actions.append((action, energy))
+            dangerous_actions.append(action_tuple)
         elif _is_major_or_key_pickup_node(action, state):
-            major_pickup_actions.append((action, energy))
-        elif isinstance(action, DockLockNode) or isinstance(action, EventNode) or isinstance(action, EventPickupNode):
-            lock_actions.append((action, energy))
+            major_pickup_actions.append(action_tuple)
+        elif isinstance(action, (DockLockNode, EventNode, EventPickupNode)):
+            lock_actions.append(action_tuple)
         else:
-            rest_of_actions.append((action, energy))
+            rest_of_actions.append(action_tuple)
 
     actions = list(reach.satisfiable_actions(state, logic.victory_condition, itertools.chain(major_pickup_actions,
                                                                                              lock_actions,
