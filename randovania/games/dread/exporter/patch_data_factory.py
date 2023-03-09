@@ -76,12 +76,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     cosmetic_patches: DreadCosmeticPatches
     configuration: DreadConfiguration
     spawnpoint_name_prefix = "SP_RDV_"
-    spawnpoint_id: int = 0
-    new_spawn_points: dict[Node, dict] = {}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
+        self.new_spawn_points: dict[Node, dict] = {}
 
         tank = self.configuration.energy_per_tank
         self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
@@ -132,7 +131,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             try:
                 area = self.game.world_list.area_by_area_location(node.identifier.area_identifier)
                 collision_camera_name = area.extra["asset_id"]
-                new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{self.spawnpoint_id:03d}"
+                new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
                 self.new_spawn_points[node] = {
                     "new_actor": {
                         "actor": new_spawnpoint_name,
@@ -145,7 +144,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     },
                     "collision_camera_name": collision_camera_name
                 }
-                self.spawnpoint_id += 1
                 return new_spawnpoint_name
             except KeyError:
                 raise self._key_error_for_start_node(node)
@@ -388,10 +386,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ]
 
     def create_data(self) -> dict:
-        # reset spawnpoint variables
-        self.spawnpoint_id = 0
-        self.new_spawn_points.clear()
-
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = [self._starting_inventory_text()]

@@ -107,65 +107,81 @@ def test_check_credits(skip_qtbot, preset_manager):
     checkbox_list = window._starting_location_for_node
     assert checkbox_list.get(not_expected, None) == None
 
-@pytest.fixture
-def setup_and_teardown_for_multiple_nodes(preset_manager):
-    # TODO: Currently all areas have only one sp that's why the test is artificially constructed.
-    # If we have a real example in the db, the whole setup and teardown can be removed.
-    # We need a teardown because the "new_node" needs to be removed otherwise other test will break and
-    # it is counterintuitive if other tests break just because this test here fails
-    game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Intro Room")
-    test_node_identifier = NodeIdentifier.create(world.name, area.name, "Test Start")
-    new_node = GenericNode(test_node_identifier, 0, True, None, "", ("default",), {}, True)
-    game_desc.world_list.add_new_node(area, new_node)
-    area.nodes.append(new_node)
-    yield
-    area.nodes.remove(new_node)
-
-def test_area_with_multiple_nodes(skip_qtbot, preset_manager, setup_and_teardown_for_multiple_nodes):
+def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
     # Setup
-    base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
+    base = preset_manager.default_preset_for_game(RandovaniaGame.BLANK).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
     editor = PresetEditor(preset)
 
-    game_desc = default_database.game_description_for(preset.game)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Intro Room")
-                     
-    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
+    game_desc = default_database.game_description_for(preset.game)                     
+    window = PresetStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
     window.on_preset_changed(editor.create_custom_preset_with())
 
-    start_point = NodeIdentifier.create("Artaria", "Intro Room", "Start Point")
-    test_node_identifier = NodeIdentifier.create(world.name, area.name, "Test Start")
+    world = game_desc.world_list.world_with_name("Intro")
+    starting_area = world.area_by_name("Starting Area")
+    blue_key_room = world.area_by_name("Blue Key Room")
+
+    default_start_point = NodeIdentifier.create(world.name, starting_area.name, "Spawn Point")
+    second_start_point = NodeIdentifier.create(world.name, starting_area.name, "Second Spawn Point")
+    blue_key_start_point = NodeIdentifier.create(world.name, blue_key_room.name, "Spawn Point")
     checkbox_node_list = window._starting_location_for_node
     checkbox_area_list = window._starting_location_for_area
+    checkbox_world_list = window._starting_location_for_world
+    starting_area_box = checkbox_area_list.get(default_start_point.area_identifier)
+    blue_key_room_box = checkbox_area_list.get(blue_key_start_point.area_identifier)
+    intro_world_box = checkbox_world_list.get(world.name)
 
     # check default start location is set
-    assert checkbox_node_list.get(start_point, None) != None
-    assert checkbox_node_list.get(test_node_identifier, None) != None
+    assert checkbox_node_list.get(default_start_point, None) != None
+    assert checkbox_node_list.get(second_start_point, None) != None
+    assert checkbox_node_list.get(blue_key_start_point, None) != None
+    assert intro_world_box != None
+    assert starting_area_box != None
+    assert blue_key_room_box != None
     assert len(editor.configuration.starting_location.locations) == 1
 
-    # check intro room is PartiallyChecked
-    intro_room_box = checkbox_area_list.get(start_point.area_identifier)
-    assert intro_room_box != None
-    assert intro_room_box.checkState() == QtCore.Qt.PartiallyChecked
+    # test checkboxes
+    assert intro_world_box.checkState() == QtCore.Qt.PartiallyChecked
+    assert starting_area_box.checkState() == QtCore.Qt.PartiallyChecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
 
     # click "Test Start" and check states
-    test_node_checkbox = checkbox_node_list[test_node_identifier]
+    test_node_checkbox = checkbox_node_list[second_start_point]
     skip_qtbot.mouseClick(test_node_checkbox, Qt.LeftButton)
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 2
-    assert intro_room_box.checkState() == QtCore.Qt.Checked
+    assert intro_world_box.checkState() == QtCore.Qt.PartiallyChecked
+    assert starting_area_box.checkState() == QtCore.Qt.Checked
+    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
 
     # toggle the area button
-    skip_qtbot.mouseClick(intro_room_box, Qt.LeftButton)
+    skip_qtbot.mouseClick(starting_area_box, Qt.LeftButton)
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 0
-    assert intro_room_box.checkState() == QtCore.Qt.Unchecked
+    assert intro_world_box.checkState() == QtCore.Qt.Unchecked
+    assert starting_area_box.checkState() == QtCore.Qt.Unchecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
 
-    skip_qtbot.mouseClick(intro_room_box, Qt.LeftButton)
+    skip_qtbot.mouseClick(starting_area_box, Qt.LeftButton)
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 2
-    assert intro_room_box.checkState() == QtCore.Qt.Checked
+    assert starting_area_box.checkState() == QtCore.Qt.Checked
+    assert intro_world_box.checkState() == QtCore.Qt.PartiallyChecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
+
+    # toggle world box
+    # don't ask me why qtbot clicks at the wrong position by default on this box
+    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2,intro_world_box.height()/2))
+    window.on_preset_changed(editor.create_custom_preset_with())
+    assert len(editor.configuration.starting_location.locations) == 3
+    assert starting_area_box.checkState() == QtCore.Qt.Checked
+    assert intro_world_box.checkState() == QtCore.Qt.Checked
+    assert blue_key_room_box.checkState() == QtCore.Qt.Checked
+
+    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2,intro_world_box.height()/2))
+    window.on_preset_changed(editor.create_custom_preset_with())
+    assert len(editor.configuration.starting_location.locations) == 0
+    assert starting_area_box.checkState() == QtCore.Qt.Unchecked
+    assert intro_world_box.checkState() == QtCore.Qt.Unchecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
