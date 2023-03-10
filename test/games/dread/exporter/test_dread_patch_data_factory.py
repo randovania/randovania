@@ -8,6 +8,8 @@ from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import GenericNode, NodeLocation
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory, DreadAcquiredMemo, \
     get_resources_for_details
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -167,3 +169,70 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
                                'scenario': 's010_cave'}
         }
     }
+
+@pytest.fixture
+def setup_and_teardown_for_wrong_custom_spawn():
+    # modify the default start to have no collision_camera (asset_id) and no vanilla
+    # actor name for a start point
+    game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
+    world = game_desc.world_list.world_with_name("Artaria")
+    area = world.area_by_name("Intro Room")
+    node = area.node_with_name("Start Point")
+    modified_node = dataclasses.replace(node, extra={})
+    area.nodes.remove(node)
+    area.nodes.append(modified_node)
+    asset_id = area.extra["asset_id"]
+    del area.extra["asset_id"]
+    yield
+    area.nodes.remove(modified_node)
+    area.nodes.append(node)
+    area.extra["asset_id"] = asset_id
+
+def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker, setup_and_teardown_for_wrong_custom_spawn):
+    # test for a not createable spawn point
+    file = test_files_dir.joinpath("log_files", "dread_1.rdvgame")
+    description = LayoutDescription.from_file(file)
+    players_config = PlayersConfiguration(0, {0: "Dread"})
+    cosmetic_patches = DreadCosmeticPatches()
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+                 new_callable=PropertyMock, return_value="Words Hash")
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
+                 new_callable=PropertyMock, return_value="$$$$$")
+
+    patcher = DreadPatchDataFactory(description, players_config, cosmetic_patches)
+    with pytest.raises(KeyError, match="Artaria/Intro Room/Start Point has neither a start_point_actor_name nor the area has a collision_camera_name for a custom start point"):
+        patcher.create_data()
+
+@pytest.fixture
+def setup_and_teardown_for_custom_spawn():
+    # modify a node to be a valid start point without a vanilla spawn
+    game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
+    world = game_desc.world_list.world_with_name("Artaria")
+    area = world.area_by_name("Charge Tutorial")
+    node = area.node_with_name("Start Point")
+    modified_node = dataclasses.replace(node, valid_starting_location=True)
+    area.nodes.remove(node)
+    area.nodes.append(modified_node)
+    yield
+    area.nodes.remove(modified_node)
+    area.nodes.append(node)
+
+def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardown_for_custom_spawn):
+    # test for custom spawn point referenced by starting location and teleporters
+    file = test_files_dir.joinpath("log_files", "dread_2.rdvgame")
+    description = LayoutDescription.from_file(file)
+    players_config = PlayersConfiguration(0, {0: "Dread"})
+    cosmetic_patches = DreadCosmeticPatches()
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+                 new_callable=PropertyMock, return_value="Words Hash")
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
+                 new_callable=PropertyMock, return_value="$$$$$")
+  
+    data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
+    # only one spawn point should be created
+    expected_new_spawn = [{'new_actor': {'actor': 'SP_RDV_000', 'scenario': 's010_cave'},
+                            'location': {'x': 6492.78, 'y': -9500.0, 'z': 0.0},
+                            'collision_camera_name': 'collision_camera_001'}]
+    expected_start = {'scenario': 's010_cave', 'actor': 'SP_RDV_000'}
+    assert data["new_spawn_points"] == expected_new_spawn
+    assert data["starting_location"] == expected_start
