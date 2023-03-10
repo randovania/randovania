@@ -87,7 +87,7 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     return not _is_action_dangerous(state, action, dangerous_resources) \
-        and (isinstance(action, EventNode)
+        and (isinstance(action, (EventNode, EventPickupNode))
              or _is_major_or_key_pickup_node(action, state))
 
 
