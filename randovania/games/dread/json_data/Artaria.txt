@@ -3721,13 +3721,13 @@ Extra - asset_id: collision_camera_062
 > Tunnel to Speed Hallway; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Speed Hallway/Tunnel to Cold Introduction
-  > Tile Group (BOMB)
-      Morph Ball
+  > Tunnel to Charge Beam Access
+      Lay Power Bomb
 
 > Tunnel to Charge Beam Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Charge Beam Access/Tunnel to Cold Introduction
-  > Tile Group (BOMB)
+  > Tunnel to Speed Hallway
       Morph Ball
 
 > Dock to Charge Beam Access; Heals? False
@@ -3735,18 +3735,6 @@ Extra - asset_id: collision_camera_062
   * Open Passage to Charge Beam Access/Dock to Cold Introduction
   > Door to Charge Beam Access (Side Tunnel)
       Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_005
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tunnel to Speed Hallway
-      Morph Ball
-  > Tunnel to Charge Beam Access
-      Morph Ball
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -4827,6 +4815,10 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: PRP_TotalR_Platform_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  > Door to Transport to Burenia
+      All of the following:
+          Before Artaria - Screw Attack Rotatable
+          Simple IBJ or Use Spin Boost
   > Next to Upper Tank
       All of the following:
           After Artaria - Screw Attack Rotatable
