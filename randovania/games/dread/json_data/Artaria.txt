@@ -28,6 +28,8 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Ammo Recharge
+      Can Slide and Shoot Missile
   > Start Point
       Trivial
 
@@ -45,8 +47,8 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: PRP_CV_AmmoStation001_WeightPlate
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
-  > Tile Group (MISSILE) 2
-      Can Slide
+  > Door to Navigation Station South
+      Can Slide and Shoot Missile
   > Above Breakable
       Any of the following:
           Can Slide Underwater
@@ -60,64 +62,6 @@ Extra - asset_id: collision_camera_000
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station South
       Trivial
-  > Tile Group (MISSILE) 1
-      Trivial
-  > Tile Group (POWERBEAM) 1
-      Can Slide
-  > Tile Group (BOMB)
-      Morph Ball
-
-> Tile Group (MISSILE) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_052
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Start Point
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_053
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Start Point
-      Can Slide
-  > Tile Group (MISSILE) 1
-      Trivial
-  > Tile Group (MISSILE) 2
-      Can Slide
-
-> Tile Group (MISSILE) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_056
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Ammo Recharge
-      Trivial
-  > Tile Group (POWERBEAM) 1
-      Can Slide
-  > Tile Group (BOMB)
-      Morph Ball
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_051
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Start Point
-      Can Slide
-  > Tile Group (MISSILE) 1
-      Trivial
-  > Tile Group (MISSILE) 2
-      Can Slide
 
 > Dock to Intro Room; Heals? False
   * Layers: default
@@ -324,8 +268,8 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Early Cloak Room
       Trivial
-  > Tile Group (BOMB)
-      Morph Ball
+  > Near Missile Tank 1
+      Lay Bomb or Lay Power Bomb
 
 > Pickup (Missile Tank 1); Heals? False
   * Layers: default
@@ -374,18 +318,6 @@ Extra - asset_id: collision_camera_003
   > West of Blob
       Morph Ball and After Artaria - Proto EMMI Blob
 
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_048
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Dock to EMMI Zone Entrance Hallway
-      Trivial
-  > Near Missile Tank 1
-      Morph Ball
-
 > Tunnel to Melee Tutorial West; Heals? False
   * Layers: default
   * Slide Tunnel to Melee Tutorial West/Tunnel to Melee Tutorial Room
@@ -427,9 +359,9 @@ Extra - asset_id: collision_camera_003
 
 > Near Missile Tank 1; Heals? False
   * Layers: default
+  > Dock to EMMI Zone Entrance Hallway
+      Lay Bomb or Lay Power Bomb
   > Pickup (Missile Tank 1)
-      Morph Ball
-  > Tile Group (BOMB)
       Morph Ball
   > Tunnel to Melee Tutorial West
       Trivial
@@ -634,7 +566,7 @@ Extra - asset_id: collision_camera_005
       Trivial
   > Door to White EMMI Introduction
       Trivial
-  > Tile Group (POWERBEAM)
+  > Next to Pickup
       Any of the following:
           Spider Magnet or Space Jump or Simple IBJ
           All of the following:
@@ -642,22 +574,10 @@ Extra - asset_id: collision_camera_005
               After Artaria - Central Unit or After Elun - Release X Parasites
           All of the following:
               Walljump (Beginner)
-              Flash Shift or Use Spin Boost
+              Flash Shift or Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
           Speed Booster and Disabled Door Lock Randomizer
           Morph Ball and Single-wall Wall Jump (Intermediate)
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_047
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Start Point
-      Trivial
-  > Next to Pickup
-      Trivial
 
 > Event - Magnet EMMI Door Lock; Heals? False
   * Layers: default
@@ -673,7 +593,7 @@ Extra - asset_id: collision_camera_005
       Trivial
   > Dock to Early Cloak Room (Corpius Path)
       After Artaria - EMMI Magnet Door Lock
-  > Tile Group (POWERBEAM)
+  > Start Point
       Trivial
   > Event - Magnet EMMI Door Lock
       Spider Magnet
@@ -850,8 +770,10 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Arbitrary Enky Room (Lower)
       Trivial
-  > Tile Group (BOMB MISSILE)
-      Trivial
+  > Tunnel to Arbitrary Enky Room
+      All of the following:
+          Shoot Missile
+          Lay Bomb or Lay Power Bomb
 
 > Door to EMMI First Chase End (Top); Heals? False
   * Layers: default
@@ -915,56 +837,11 @@ Extra - asset_id: collision_camera_008
   > Door to EMMI Zone Exit North (Upper)
       Trivial
 
-> Tile Group (BOMB MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_004
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB', 'MISSILE')
-  > Dock to Arbitrary Enky Room (Upper)
-      Trivial
-  > Tile Group (BOMB) 1
-      Morph Ball
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_023
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 2
-      Trivial
-  > Tunnel to Arbitrary Enky Room
-      Morph Ball
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_024
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Dock to Arbitrary Enky Room (Upper)
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_063
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (WEIGHT)
-      Morph Ball
-
 > Tunnel to Arbitrary Enky Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Arbitrary Enky Room/Tunnel to Teleport to Dairon
-  > Tile Group (BOMB) 1
-      Morph Ball
+  > Dock to Arbitrary Enky Room (Upper)
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to EMMI Zone Exit North; Heals? False
   * Layers: default
@@ -1012,7 +889,7 @@ Extra - asset_id: collision_camera_009
   * EMMI Door to Shinespark Tower to Grapple/Dock to EMMI Zone Exit North
   * Extra - actor_name: DoorEmmy05
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (POWERBEAM)
+  > Pickup (Missile Tank)
       Trivial
   > Tunnel to Teleport to Dairon
       Speed Booster
@@ -1022,7 +899,7 @@ Extra - asset_id: collision_camera_009
   * Pickup 17; Major Location? False
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (POWERBEAM)
+  > Dock to Shinespark Tower to Grapple
       Trivial
 
 > Door to Teleport to Dairon (Wide); Heals? False
@@ -1035,18 +912,6 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
   > Door to Teleport to Dairon (Power)
-      Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_038
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Dock to Shinespark Tower to Grapple
-      Trivial
-  > Pickup (Missile Tank)
       Trivial
 
 > Tunnel to Teleport to Dairon; Heals? False
@@ -1282,20 +1147,25 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (BOMB) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Space Jump
-              All of the following:
-                  Gravity Suit
-                  Simple IBJ or Use Spin Boost
-              Movement (Intermediate) and Lay Cross Bomb
-              Speed Booster and Disabled Door Lock Randomizer
-  > Tile Group (BOMB) 3
+  > Teleporter to Cataris - Teleport to Artaria (Red)
       Any of the following:
-          Space Jump or Simple IBJ
-          Speed Booster and Disabled Door Lock Randomizer
+          Movement (Intermediate) and Lay Cross Bomb
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Simple IBJ
+                  Lay Power Bomb and Use Spin Boost
+          All of the following:
+              Space Jump
+              Lay Bomb or Lay Power Bomb
+          Speed Booster and Disabled Door Lock Randomizer and Lay Power Bomb
+  > Tunnel to Chain Reaction Access (Morph Puzzle)
+      Any of the following:
+          Simple IBJ
+          Speed Booster and Disabled Door Lock Randomizer and Lay Power Bomb
+          All of the following:
+              Space Jump
+              Lay Bomb or Lay Power Bomb
   > Under Teleportal
       Trivial
 
@@ -1304,8 +1174,8 @@ Extra - asset_id: collision_camera_011
   * Pickup 8; Major Location? False
   * Extra - actor_name: Item_MissileTank004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (MISSILE)
-      Morph Ball
+  > Under Teleportal
+      Trivial
 
 > Dock to EMMI Zone Exit Northwest; Heals? False
   * Layers: default
@@ -1320,8 +1190,11 @@ Extra - asset_id: collision_camera_011
   * Pickup 20; Major Location? False
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB) 4
-      Morph Ball
+  > Door to Chain Reaction Access
+      All of the following:
+          # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
+          Open Charge Door
+          Lay Bomb or Lay Power Bomb
 
 > Door to Chain Reaction Access; Heals? False
   * Layers: default
@@ -1332,8 +1205,8 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (BOMB) 4
-      Trivial
+  > Pickup (Missile Tank, Supers-locked)
+      Lay Bomb or Lay Power Bomb
 
 > Event - Destroy Post Chain Reaction Debris (Below); Heals? False
   * Layers: default
@@ -1386,8 +1259,10 @@ Extra - asset_id: collision_camera_011
                   After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
   > Teleporter to Cataris - Teleport to Artaria (Red)
       Trivial
-  > Tile Group (BOMB) 1
-      Morph Ball and After Artaria - Early SA Shortcut Blob
+  > Tunnel to EMMI Zone Exit Northwest
+      All of the following:
+          After Artaria - Early SA Shortcut Blob
+          Lay Bomb or Lay Power Bomb
 
 > Teleporter to Cataris - Teleport to Artaria (Red); Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -1398,14 +1273,14 @@ Extra - asset_id: collision_camera_011
   * Extra - target_spawn_point: LE_Platform_Teleport_FromCave
   * Extra - start_point_actor_name: LE_Platform_Teleport_FromMagma
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  > Door to Save Station West
+      All of the following:
+          Lay Bomb or Lay Power Bomb
+          After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
   > Event - Early SA Shortcut Blob
       Pseudo-Wave Beam (Intermediate)
   > Energy Recharge
       Trivial
-  > Tile Group (POWERBEAM)
-      All of the following:
-          Morph Ball
-          After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
   > Under Teleportal
       All of the following:
           Can Slide
@@ -1415,95 +1290,19 @@ Extra - asset_id: collision_camera_011
           After Artaria - Chain Reaction Device
           Pseudo-Wave Beam (Intermediate) or Shoot Diffusion or Wave
 
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_035
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Pickup (Missile Tank, Underwater)
-      Morph Ball
-  > Under Teleportal
-      Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_025
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Event - Early SA Shortcut Blob
-      Morph Ball and Lay Bomb
-  > Energy Recharge
-      Morph Ball and After Artaria - Early SA Shortcut Blob
-  > Tunnel to EMMI Zone Exit Northwest
-      Morph Ball
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Save Station West
-      Trivial
-  > Tile Group (POWERBEAM)
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_030
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Save Station West
-      Trivial
-  > Tunnel to Chain Reaction Access (Morph Puzzle)
-      Trivial
-
-> Tile Group (BOMB) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_065
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank, Supers-locked)
-      Morph Ball
-  > Door to Chain Reaction Access
-      All of the following:
-          # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
-          Open Charge Door
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_059
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Teleporter to Cataris - Teleport to Artaria (Red)
-      All of the following:
-          Morph Ball
-          After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
-  > Tile Group (BOMB) 2
-      Morph Ball
-
 > Tunnel to EMMI Zone Exit Northwest; Heals? False
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Exit Northwest/Tunnel to Teleport to Cataris
-  > Tile Group (BOMB) 1
-      Morph Ball
+  > Event - Early SA Shortcut Blob
+      Lay Bomb
+  > Energy Recharge
+      Morph Ball and After Artaria - Early SA Shortcut Blob
 
 > Tunnel to Chain Reaction Access (Morph Puzzle); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Chain Reaction Access/Tunnel to Teleport to Cataris (Morph Puzzle)
-  > Tile Group (BOMB) 3
-      Trivial
+  > Door to Save Station West
+      Lay Bomb or Lay Power Bomb
   > Tunnel to Chain Reaction Access (Upper Tunnel)
       After Artaria - Thermal Device
 
@@ -1517,6 +1316,8 @@ Extra - asset_id: collision_camera_011
   * Layers: default
   > Door to Save Station West
       Trivial
+  > Pickup (Missile Tank, Underwater)
+      Morph Ball and Shoot Missile
   > Dock to EMMI Zone Exit Northwest
       Any of the following:
           All of the following:
@@ -1534,8 +1335,6 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Morph Ball
           After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
-  > Tile Group (MISSILE)
-      Morph Ball
 
 > Event - Destroy Post Chain Reaction Debris (Above); Heals? False
   * Layers: default
@@ -1617,8 +1416,8 @@ Extra - asset_id: collision_camera_013
       Trivial
   > Door to Cold Introduction (Missile)
       Trivial
-  > Tile Group (POWERBOMB)
-      Trivial
+  > Pickup (Missile Tank)
+      Lay Power Bomb
   > Tunnel to Charge Beam Room
       Trivial
 
@@ -1657,8 +1456,8 @@ Extra - asset_id: collision_camera_013
   * Pickup 29; Major Location? False
   * Extra - actor_name: Item_MissileTank016
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (POWERBOMB)
-      Morph Ball
+  > Door to Intro Room
+      Lay Power Bomb
   > Tunnel to Cold Introduction
       Morph Ball
 
@@ -1669,18 +1468,6 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_def: actordef:actors/props/breakablecave010/charclasses/breakablecave010.bmsad
   > Door to Cold Introduction (Power)
       Trivial
-
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_042
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Door to Intro Room
-      Trivial
-  > Pickup (Missile Tank)
-      Morph Ball
 
 > Tunnel to Charge Beam Room; Heals? False
   * Layers: default
@@ -1920,15 +1707,15 @@ Extra - asset_id: collision_camera_016
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Proto EMMI Battle
-      After Artaria - Proto Central Unit or Can Slide
-  > Tile Group (BOMB)
+  > Pickup (Missile Tank)
       All of the following:
-          Morph Ball
+          Lay Bomb or Lay Power Bomb
           Any of the following:
               Flash Shift or Use Spin Boost
               After Elun - Release X Parasites and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
               Speed Booster and Disabled Door Lock Randomizer
+  > Door to Proto EMMI Battle
+      After Artaria - Proto Central Unit or Can Slide
   > Start Point
       Trivial
 
@@ -1937,8 +1724,10 @@ Extra - asset_id: collision_camera_016
   * Pickup 13; Major Location? False
   * Extra - actor_name: Item_MissileTank009
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB)
-      Morph Ball
+  > Door to Melee Tutorial Room (Upper)
+      Flash Shift or Use Spin Boost
+  > Door to Proto EMMI Battle
+      After Artaria - Proto Central Unit or Can Slide
 
 > Door to Proto EMMI Battle; Heals? False
   * Layers: default
@@ -1963,25 +1752,11 @@ Extra - asset_id: collision_camera_016
                   Speed Booster or Simple IBJ
               Diagonal Bomb Jump (Beginner) and Lay Normal Bomb
               Infinite Bomb Jump (Intermediate) and Lay Cross Bomb
-  > Tile Group (BOMB)
+  > Pickup (Missile Tank)
       Any of the following:
           Diagonal Bomb Jump (Beginner) and Lay Normal Bomb
           Infinite Bomb Jump (Expert) and Lay Cross Bomb
           Bomb and Infinite Bomb Jump (Advanced) and Lay Cross Bomb
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_064
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Melee Tutorial Room (Upper)
-      Flash Shift or Use Spin Boost
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Door to Proto EMMI Battle
-      After Artaria - Proto Central Unit or Can Slide
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -2265,25 +2040,13 @@ Extra - asset_id: collision_camera_021
       Trivial
   > Pickup (Missile Tank)
       Can Slide
-  > Tile Group (POWERBEAM)
-      Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_050
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Start Point
-      Trivial
   > Tunnel to Thermal Door Tutorial
       Trivial
 
 > Tunnel to Thermal Door Tutorial; Heals? False
   * Layers: default
   * Slide Tunnel to Thermal Door Tutorial/Tunnel to David Jaffe Room
-  > Tile Group (POWERBEAM)
+  > Start Point
       Trivial
 
 ----------------
@@ -2742,10 +2505,10 @@ Extra - asset_id: collision_camera_029
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM)
+  > Ledge above lava
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
@@ -2759,38 +2522,22 @@ Extra - asset_id: collision_camera_029
               Gravity Suit
               Heat/Cold Runs (Beginner) and Lava Damage ≥ 200
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_032
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Varia Suit Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
-  > Ledge above lava
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-
 > Ledge above lava; Heals? False; Default Node
   * Layers: default
   > Door to Chain Reaction Room
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+  > Door to Varia Suit Room
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
   > Pickup (Missile+ Tank)
       All of the following:
           Morph Ball
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Beginner) and Lava Damage ≥ 200
-  > Tile Group (POWERBEAM)
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
 
 ----------------
 Shutter Platform Puzzle
@@ -2802,8 +2549,10 @@ Extra - asset_id: collision_camera_030
   * Pickup 14; Major Location? True
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
-  > Tile Group (BOMB)
-      Morph Ball
+  > Door to Varia Suit Room
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
 
 > Door to Varia Suit Room; Heals? False
   * Layers: default
@@ -2814,11 +2563,18 @@ Extra - asset_id: collision_camera_030
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Pickup (Energy Tank)
+      All of the following:
+          After Artaria - Chain Reaction Grapple Block and Ballspark
+          Lay Bomb or Lay Power Bomb
+          Any of the following:
+              Flash Shift
+              All of the following:
+                  Flash Shift Skip (Beginner)
+                  Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
   > Event - Chain Reaction Grapple Block
       Grapple Beam
-  > Tile Group (BOMB)
-      Morph Ball and After Artaria - Chain Reaction Grapple Block
-  > Tile Group (POWERBEAM)
+  > Start Point
       Trivial
 
 > Event - Chain Reaction Grapple Block; Heals? False
@@ -2833,36 +2589,10 @@ Extra - asset_id: collision_camera_030
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Post_ChainReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Tile Group (POWERBEAM)
+  > Door to Varia Suit Room
       Trivial
   > Tunnel to Chain Reaction Room
       Bomb and Morph Ball and Climb Sloped Tunnels (Advanced)
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_003
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Energy Tank)
-      All of the following:
-          Ballspark
-          Flash Shift or Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
-  > Door to Varia Suit Room
-      Morph Ball and After Artaria - Chain Reaction Grapple Block
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_031
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Varia Suit Room
-      Trivial
-  > Start Point
-      Trivial
 
 > Tunnel to Chain Reaction Room; Heals? False
   * Layers: default
@@ -3120,7 +2850,7 @@ Extra - asset_id: collision_camera_048
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 1
+  > Below Slide
       Trivial
 
 > Event - Slide Alternative Blob (Below); Heals? False
@@ -3128,42 +2858,6 @@ Extra - asset_id: collision_camera_048
   * Event Artaria - Slide Alternative Blob
   * Extra - actor_name: PRP_DB_CV_000
   * Extra - actor_def: actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad
-  > Below Slide
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_044
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to EMMI Zone Exit Northwest
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_045
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Tile Group (POWERBEAM) 3
-      Trivial
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_046
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Trivial
   > Below Slide
       Trivial
 
@@ -3177,10 +2871,10 @@ Extra - asset_id: collision_camera_048
 
 > Below Slide; Heals? False
   * Layers: default
+  > Door to EMMI Zone Exit Northwest
+      Trivial
   > Event - Slide Alternative Blob (Below)
       Shoot Beam
-  > Tile Group (POWERBEAM) 3
-      Trivial
   > Tunnel to EMMI Zone Exit North
       Morph Ball and After Artaria - Slide Alternative Blob
   > Event - EMMI Single Use Slide
@@ -4464,8 +4158,8 @@ Extra - asset_id: collision_camera_070
   * Pickup 1; Major Location? False
   * Extra - actor_name: Item_MissileTank011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB)
-      Morph Ball
+  > Tunnel to Teleport to Dairon
+      Lay Bomb or Lay Power Bomb
   > Start Point
       Morph Ball and After Artaria - ArbEnky Blob West
 
@@ -4526,23 +4220,11 @@ Extra - asset_id: collision_camera_070
   > Dock to Teleport to Dairon (DoorEmmy06)
       Before Artaria - Central Unit or Destroy Enky
 
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_022
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tunnel to Teleport to Dairon
-      Morph Ball
-
 > Tunnel to Teleport to Dairon; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Teleport to Dairon/Tunnel to Arbitrary Enky Room
-  > Tile Group (BOMB)
-      Morph Ball
+  > Pickup (Missile Tank)
+      Lay Bomb or Lay Power Bomb
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -5008,8 +4690,8 @@ Extra - asset_id: collision_camera_080
   * Pickup 32; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (SCREWATTACK) 1
-      Trivial
+  > Elevator to Burenia - Transport to Artaria
+      Screw Attack
 
 > Elevator to Burenia - Transport to Artaria; Heals? False; Default Node
   * Layers: default
@@ -5022,44 +4704,8 @@ Extra - asset_id: collision_camera_080
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Screw Attack Room
       Trivial
-  > Tile Group (POWERBEAM)
-      Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_006
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Elevator to Burenia - Transport to Artaria
-      Trivial
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_002
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
   > Pickup (Missile Tank)
-      Trivial
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (POWERBEAM)
-      Trivial
-  > Tile Group (SCREWATTACK) 1
-      Trivial
+      Screw Attack
 
 ----------------
 Screw Attack Room
@@ -5075,8 +4721,8 @@ Extra - asset_id: collision_camera_081
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (BOMB)
-      Trivial
+  > Blob - Right
+      Lay Bomb or Lay Power Bomb
 
 > Pickup (Missile Tank, Top); Heals? False
   * Layers: default
@@ -5095,10 +4741,6 @@ Extra - asset_id: collision_camera_081
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SCREWATTACK) 2
-      After Artaria - Screw Attack Rotatable
-  > Tile Group (WEIGHT) 3
-      Morph Ball and After Artaria - Screw Attack Rotatable
   > Next to Upper Tank
       All of the following:
           Before Artaria - Screw Attack Rotatable
@@ -5107,6 +4749,10 @@ Extra - asset_id: collision_camera_081
               Speed Booster and Shoot Missile
   > Event - Screw Attack Rotatable
       Before Artaria - Screw Attack Rotatable
+  > Under left side blocks
+      All of the following:
+          After Artaria - Screw Attack Rotatable
+          Morph Ball or Screw Attack
 
 > Pickup (Missile Tank, Underwater); Heals? False
   * Layers: default
@@ -5134,11 +4780,13 @@ Extra - asset_id: collision_camera_081
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Shortcut to Screw Attack
+      Screw Attack
+  > Start Point - Screw Attack
+      All of the following:
+          Morph Ball
+          Gravity Suit or Perform WBJ
   > Start Point 2
-      Morph Ball
-  > Tile Group (SCREWATTACK) 1
-      Trivial
-  > Tile Group (WEIGHT) Lower
       Morph Ball
 
 > Door to Shortcut to Screw Attack; Heals? False
@@ -5150,10 +4798,12 @@ Extra - asset_id: collision_camera_081
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Tile Group (SCREWATTACK) 1
-      Trivial
-  > Tile Group (WEIGHT) Upper
+  > Door to Freezer (Power)
+      Screw Attack
+  > Start Point - Screw Attack
       Morph Ball
+  > Next to Upper Tank
+      Morph Ball and Movement (Intermediate)
 
 > Event - Screw Attack Water Blob; Heals? False
   * Layers: default
@@ -5177,12 +4827,6 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: PRP_TotalR_Platform_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  > Tile Group (SCREWATTACK) 2
-      All of the following:
-          Before Artaria - Screw Attack Rotatable
-          Any of the following:
-              Space Jump or Simple IBJ
-              Walljump (Beginner) and Use Spin Boost
   > Next to Upper Tank
       All of the following:
           After Artaria - Screw Attack Rotatable
@@ -5197,13 +4841,13 @@ Extra - asset_id: collision_camera_081
               Walljump (Beginner) and Use Spin Boost
   > Under left side blocks
       Any of the following:
-          Lay Cross Bomb
+          Gravity Suit
+          Infinite Bomb Jump (Beginner) and Lay Cross Bomb
+          Water Bomb Jump (Intermediate) and Perform WBJ
           All of the following:
-              Gravity Suit
-              Walljump (Beginner) or Simple IBJ or Use Spin Boost
-          All of the following:
-              Water Bomb Jump (Intermediate) and Perform WBJ
-              Space Jump or Walljump (Beginner)
+              Before Artaria - Screw Attack Rotatable
+              Simple IBJ or Use Spin Boost
+              Morph Ball or Screw Attack
 
 > Start Point - Screw Attack; Heals? False
   * Layers: default
@@ -5211,8 +4855,10 @@ Extra - asset_id: collision_camera_081
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Pickup (Screw Attack)
       Trivial
-  > Tile Group (SCREWATTACK) 3
-      Walljump (Beginner) or Simple IBJ or Use Spin Boost
+  > Next to Upper Tank
+      All of the following:
+          Screw Attack
+          Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Teleporter to Cataris; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -5239,97 +4885,16 @@ Extra - asset_id: collision_camera_081
   > Blob - Left
       Trivial
 
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_014
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Freezer (Power)
-      Trivial
-  > Door to Shortcut to Screw Attack
-      Trivial
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_015
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Transport to Burenia
-      After Artaria - Screw Attack Rotatable
-  > Tile Group (WEIGHT) 3
-      Morph Ball
-  > Under left side blocks
-      Trivial
-
-> Tile Group (SCREWATTACK) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Start Point - Screw Attack
-      Trivial
-  > Next to Upper Tank
-      Trivial
-
-> Tile Group (WEIGHT) Lower; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_057
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Start Point - Screw Attack
-      All of the following:
-          Morph Ball
-          Gravity Suit or Perform WBJ
-
-> Tile Group (WEIGHT) Upper; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_058
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Start Point - Screw Attack
-      Morph Ball
-  > Tile Group (SCREWATTACK) 3
-      Morph Ball and Movement (Intermediate)
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_026
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Freezer (Grapple)
-      Trivial
-  > Blob - Right
-      Can Slide Underwater
-
-> Tile Group (WEIGHT) 3; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_043
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Under left side blocks
-      Trivial
-
 > Blob - Right; Heals? False
   * Layers: default
+  > Door to Freezer (Grapple)
+      Lay Bomb or Lay Power Bomb
   > Pickup (Missile Tank, Underwater)
       Morph Ball and After Artaria - Screw Attack Water Blob
   > Event - Screw Attack Water Blob
       Any of the following:
           Wave Beam or Shoot Diffusion Beam
           Pseudo-Wave Beam (Advanced) and Shoot Beam
-  > Tile Group (BOMB)
-      Morph Ball
   > Blob - Left
       After Artaria - Screw Attack Water Blob
 
@@ -5366,8 +4931,8 @@ Extra - asset_id: collision_camera_081
           Flash Shift or Movement (Beginner) or Lay Cross Bomb
   > Total Recharge
       After Artaria - Screw Attack Rotatable
-  > Tile Group (SCREWATTACK) 3
-      Trivial
+  > Start Point - Screw Attack
+      Screw Attack
   > Event - Screw Attack Rotatable
       Trivial
 
@@ -5379,10 +4944,13 @@ Extra - asset_id: collision_camera_081
 
 > Under left side blocks; Heals? False
   * Layers: default
+  > Door to Transport to Burenia
+      Screw Attack and After Artaria - Screw Attack Rotatable
   > Total Recharge
-      Gravity Suit or Lay Cross Bomb or Perform WBJ
-  > Tile Group (SCREWATTACK) 2
-      Trivial
+      Any of the following:
+          Gravity Suit or Perform WBJ
+          Infinite Bomb Jump (Beginner) and Lay Cross Bomb
+          Screw Attack and Before Artaria - Screw Attack Rotatable
   > Early SA Platform
       Trivial
 
@@ -5577,10 +5145,10 @@ Extra - asset_id: collision_camera_086
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (MISSILE)
-      Trivial
   > Dock to Speed Booster Bonus Room
-      Can Slide
+      Any of the following:
+          Can Slide
+          Speed Booster and Shoot Missile
 
 > Door to Red Chozo Arena; Heals? False
   * Layers: default
@@ -5596,29 +5164,17 @@ Extra - asset_id: collision_camera_086
   > Dock to Speed Booster Bonus Room
       Trivial
 
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_008
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Door to Cold Introduction
-      Trivial
-  > Dock to Speed Booster Bonus Room
-      Speed Booster or Can Slide
-
 > Dock to Speed Booster Bonus Room; Heals? False
   * Layers: default
   * Open Passage to Speed Booster Bonus Room/Dock to Speed Hallway
   > Pickup (Missile+ Tank)
       Speed Booster and Can Slide
   > Door to Cold Introduction
-      Can Slide
+      Any of the following:
+          Can Slide
+          Speed Booster and Shoot Missile
   > Door to Red Chozo Arena
       Trivial
-  > Tile Group (MISSILE)
-      Speed Booster or Can Slide
   > Tunnel to Cold Introduction
       Speed Booster and Can Slide
 
@@ -5643,7 +5199,7 @@ Extra - asset_id: collision_camera_088
   * EMMI Door to EMMI Zone Exit North/Dock to Shinespark Tower to Grapple
   * Extra - actor_name: DoorEmmy05
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (POWERBEAM) 5
+  > Door to Save Station North
       Trivial
 
 > Door to Save Station North; Heals? False
@@ -5655,67 +5211,7 @@ Extra - asset_id: collision_camera_088
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 1
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Save Station North
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Tile Group (POWERBEAM) 3
-      Trivial
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_019
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Trivial
-  > Tile Group (POWERBEAM) 4
-      Trivial
-
-> Tile Group (POWERBEAM) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_020
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 3
-      Trivial
-  > Tile Group (POWERBEAM) 5
-      Trivial
-
-> Tile Group (POWERBEAM) 5; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_021
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Dock to EMMI Zone Exit North
-      Trivial
-  > Tile Group (POWERBEAM) 4
       Trivial
 
 > Start Point; Heals? False; Default Node
@@ -5853,18 +5349,9 @@ Extra - asset_id: collision_camera_091
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 20
 
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Start Point
-      Trivial
-
 > Dock to Waterfall; Heals? False
   * Layers: default
   * Open Passage to Waterfall/Dock to Red Chozo Arena
-  > Tile Group (WEIGHT)
+  > Start Point
       Trivial
 
