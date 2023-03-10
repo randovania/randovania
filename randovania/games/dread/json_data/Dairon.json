@@ -626,44 +626,6 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 17500.0,
-                        "y": 7100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Wide Beam Block - Adjacent": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Wide Beam Block - Above": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Event - Push Wide Beam Block": {
                     "node_type": "event",
                     "heal": false,
@@ -720,48 +682,6 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Event - Push Wide Beam Block": {
                             "type": "or",
                             "data": {
@@ -794,6 +714,48 @@
                                     }
                                 ]
                             }
+                        },
+                        "Wide Beam Block - Above": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -819,20 +781,11 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
+                        "Wide Beam Block - Adjacent": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Wide Beam Block - Adjacent": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
-                                "amount": 1,
-                                "negate": false
                             }
                         },
                         "Top Floor": {
@@ -1093,11 +1046,27 @@
                                 "negate": false
                             }
                         },
-                        "Above Crumble Blocks": {
+                        "Dock to Big Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Tunnel to Big Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         },
                         "Event - Push Wide Beam Block": {
@@ -1203,79 +1172,6 @@
                         }
                     }
                 },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13200.0,
-                        "y": 1300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_066",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Dock to Big Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 12100.0,
-                        "y": 1400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_068",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel to Big Hub": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Above Crumble Blocks": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Dock to Big Hub": {
                     "node_type": "dock",
                     "heal": false,
@@ -1325,111 +1221,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Above Crumble Blocks": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 12831.082197439075,
-                        "y": 2163.3828996282527,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Save Station East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Magnet",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Bomb"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (WEIGHT)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (BOMB)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -2042,65 +1847,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 11700.0,
-                        "y": 1400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_069",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Dock to Hub Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:grapplepulloff1x2_007",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Hub Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Dock to Hub Access": {
                     "node_type": "dock",
                     "heal": false,
@@ -2175,7 +1921,7 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (BOMB)": {
+                        "Tunnel to Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2183,19 +1929,26 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
+                                            "type": "events",
+                                            "name": "s030_baselab:default:grapplepulloff1x2_007",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:grapplepulloff1x2_007",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2260,13 +2013,37 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB)": {
-                            "type": "resource",
+                        "Dock to Hub Access": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:grapplepulloff1x2_007",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2539,7 +2316,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM) 1": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2634,6 +2411,13 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
+                        "Door to Big Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Wide Beam)": {
                             "type": "and",
                             "data": {
@@ -2665,165 +2449,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 4": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5200.0,
-                        "y": 2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_045",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Big Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5100.0,
-                        "y": 2000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_046",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tile Group (POWERBEAM) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4600.0,
-                        "y": 2000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_047",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 4": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 4": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4300.0,
-                        "y": 2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_048",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -3116,6 +2741,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Power Switch 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s030_baselab:default:powergenerator_001",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Door to Wide Beam Room": {
                             "type": "resource",
                             "data": {
@@ -3125,14 +2759,14 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (POWERBEAM) 1": {
+                        "Tunnel to Power Switch 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tile Group (POWERBEAM) 2": {
+                        "Bottom-Left Corner": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3182,16 +2816,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Wide Beam Room": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_001",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 1": {
+                        "Door to Total Recharge Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3237,15 +2862,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Door to Power Switch 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_001",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -3321,88 +2937,6 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1300.0,
-                        "y": 2100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_049",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Total Recharge Station East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Power Switch 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_001",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to Power Switch 1": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2300.0,
-                        "y": 100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_050",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Total Recharge Station East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Bottom-Left Corner": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Tunnel to Power Switch 1": {
                     "node_type": "dock",
                     "heal": false,
@@ -3427,7 +2961,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM) 1": {
+                        "Door to Total Recharge Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3475,6 +3009,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Total Recharge Station East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Blob, from teleporter": {
@@ -3578,13 +3119,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -3828,7 +3362,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Right Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4030,7 +3564,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
+                        "Right Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4183,7 +3717,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
+                        "Right Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4376,7 +3910,7 @@
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_hdoor_b1_001",
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Right Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4385,26 +3919,19 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
+                "Right Alcove": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5400.0,
-                        "y": -1100.0,
+                        "x": 5561.276419884283,
+                        "y": -1239.9397803754869,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_051",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Early Grapple Room": {
@@ -4844,7 +4371,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
+                        "Right Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4958,8 +4485,8 @@
                     "pickup_index": 61,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (WEIGHT) 1": {
-                            "type": "and",
+                        "Door to Early Grapple Room": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4967,49 +4494,32 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
+                                            "name": "Varia",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 50,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 50,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -5051,7 +4561,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Elevator to Artaria - Transport to Dairon": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5084,7 +4594,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Heat",
-                                                        "amount": 50,
+                                                        "amount": 100,
                                                         "negate": false
                                                     }
                                                 }
@@ -5396,6 +4906,49 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
+                        "Door to Early Grapple Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Event - Grapple Block": {
                             "type": "and",
                             "data": {
@@ -5456,49 +5009,6 @@
                                 ]
                             }
                         },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 50,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Tunnel to Hub Access": {
                             "type": "and",
                             "data": {
@@ -5551,116 +5061,6 @@
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13100.0,
-                        "y": -1500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_053",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Early Grapple Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 50,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Elevator to Artaria - Transport to Dairon": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 50,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -5755,140 +5155,6 @@
                                 ]
                             }
                         },
-                        "Door to Early Grapple Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 50,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13000.0,
-                        "y": -800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_061",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tile Group (WEIGHT) 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 50,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13000.0,
-                        "y": -1200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_062",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Early Grapple Room": {
                             "type": "or",
                             "data": {
@@ -6132,13 +5398,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Ledge before Slide Jump": {
                             "type": "and",
                             "data": {
@@ -6304,6 +5563,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Lava Floor with Gravity Suit": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -6784,46 +6052,6 @@
                         }
                     }
                 },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6500.0,
-                        "y": -1500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_052",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Early Grapple Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Lava Floor with Gravity Suit": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Ledge before Slide Jump": {
                     "node_type": "generic",
                     "heal": false,
@@ -7281,54 +6509,12 @@
                             }
                         },
                         "Door to Early Grapple Access": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Transport to Artaria": {
@@ -7380,15 +6566,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
                             }
                         },
                         "Ledge before Slide Jump": {
@@ -8155,12 +7332,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to EMMI Zone Exit North": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Energy Tank)": {
@@ -8170,13 +7345,6 @@
                                 "name": "Speed",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -8257,6 +7425,13 @@
                                 "items": []
                             }
                         },
+                        "Dock to Energy Recharge Station Middle": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Dock to Storm Missile Gate Room": {
                             "type": "resource",
                             "data": {
@@ -8264,13 +7439,6 @@
                                 "name": "Speed",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -8340,80 +7508,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4600.0,
-                        "y": 200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_036",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Dock to Energy Recharge Station Middle": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to EMMI Zone Exit North": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Magnet",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
                             }
                         }
                     }
@@ -8947,33 +8041,25 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
+                        "Dock to EMMI Zone Exit North": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "DaironYellowSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Speed Blocks Destroyed": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -9010,53 +8096,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Big Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to EMMI Zone Exit North": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Open Charge Door"
-                                    }
-                                ]
-                            }
-                        },
-                        "Lower-Left Area": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9071,20 +8110,166 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Lay Cross Bomb"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "DaironCU",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FlashSkip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Cross Bomb"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Speed",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "events",
+                                                                                            "name": "DaironYellowSpeedBlocks",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "misc",
+                                                                                            "name": "DoorLocks",
+                                                                                            "amount": 1,
+                                                                                            "negate": true
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to EMMI Zone Exit North": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "DaironYellowSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Speed Blocks Destroyed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
+                                            "type": "items",
+                                            "name": "Speed",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -9111,115 +8296,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 63,
                     "major_location": false,
-                    "connections": {
-                        "Tile Group (WEIGHT)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2500.0,
-                        "y": 3800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_043",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Lower-Left Area": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4000.0,
-                        "y": 3800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_044",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Dock to Big Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1400.0,
-                        "y": 5200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_057",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
                     "connections": {
                         "Dock to EMMI Zone Exit North": {
                             "type": "and",
@@ -9254,6 +8330,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to EMMI Zone Exit East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "DaironYellowSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Pickup (Energy Part)": {
                             "type": "and",
                             "data": {
@@ -9287,7 +8372,7 @@
                                 ]
                             }
                         },
-                        "Lower-Left Area": {
+                        "Event - Speed Blocks Destroyed": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9322,7 +8407,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Lower-Left Area": {
+                        "Dock to Big Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9331,12 +8416,12 @@
                         }
                     }
                 },
-                "Lower-Left Area": {
-                    "node_type": "generic",
+                "Event - Speed Blocks Destroyed": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 1459.4594594594596,
-                        "y": 4404.72972972973,
+                        "x": 3317.67,
+                        "y": 4959.83,
                         "z": 0.0
                     },
                     "description": "",
@@ -9345,31 +8430,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
+                    "event_name": "DaironYellowSpeedBlocks",
                     "connections": {
-                        "Door to EMMI Zone Exit East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Dock to EMMI Zone Exit North": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to EMMI Zone Exit North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9724,32 +8787,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Total Recharge Station West": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:grapplepulloff1x2_002",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (WEIGHT) 2": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10016,12 +9053,9 @@
                     "pickup_index": 75,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (WEIGHT) 4": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Door to Total Recharge Station West": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -10077,96 +9111,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5700.0,
-                        "y": 4200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_059",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Total Recharge Station West": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5700.0,
-                        "y": 4400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_060",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tile Group (WEIGHT) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT) 4": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3500.0,
-                        "y": 4300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_073",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Total Recharge Station West": {
-                            "type": "template",
-                            "data": "Can Slide"
                         }
                     }
                 }
@@ -10271,12 +9215,25 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (BOMB) 1": {
-                            "type": "and",
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
+                        },
+                        "Tunnel to Total Recharge Station West": {
+                            "type": "template",
+                            "data": "Lay Bomb"
                         }
                     }
                 },
@@ -10300,14 +9257,42 @@
                     "pickup_index": 62,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "resource",
+                        "Door from Total Recharge Station West": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
+                        },
+                        "Tunnel to Total Recharge Station West": {
+                            "type": "template",
+                            "data": "Lay Bomb"
                         }
                     }
                 },
@@ -10338,126 +9323,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5500.0,
-                        "y": 6800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_040",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door from Total Recharge Station West": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (BOMB) 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4600.0,
-                        "y": 6500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_041",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel to Total Recharge Station West": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5200.0,
-                        "y": 6500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_055",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tile Group (BOMB) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel to Total Recharge Station West": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Tunnel to Total Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
@@ -10481,26 +9346,7 @@
                     "default_dock_weakness": "Morph Ball Launcher",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB) 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
+                    "connections": {}
                 }
             }
         },
@@ -10573,7 +9419,7 @@
                                 "items": []
                             }
                         },
-                        "Center": {
+                        "Total Recharge": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10726,7 +9572,7 @@
                                 ]
                             }
                         },
-                        "Center": {
+                        "Total Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10755,11 +9601,41 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Center": {
+                        "Door to Cross Bomb Puzzle Room": {
+                            "type": "template",
+                            "data": "Can Slide"
+                        },
+                        "Door to Map Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Tunnel to Power Switch 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:db_reg_b1_003",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -10788,13 +9664,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center": {
-                            "type": "resource",
+                        "Total Recharge": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:db_reg_b1_003",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -10823,55 +9697,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Center": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6941.945477075588,
-                        "y": 5038.517141676994,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Cross Bomb Puzzle Room": {
-                            "type": "template",
-                            "data": "Can Slide"
-                        },
-                        "Door to Map Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Total Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Tunnel to Power Switch 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:db_reg_b1_003",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -12049,313 +10879,6 @@
                         }
                     }
                 },
-                "Tile Group (SCREWATTACK)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -13500.0,
-                        "y": 4000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_030",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SCREWATTACK"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tile Group (WEIGHT)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s030_baselab:default:powergenerator_002",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 70,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Bottom-Left Corner": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s030_baselab:default:powergenerator_002",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Freezer Navigation": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:powergenerator_002",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 30,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11400.0,
-                        "y": 3000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_058",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Bottom-Left Corner": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 50,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s030_baselab:default:powergenerator_002",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Bottom-Left Corner": {
                     "node_type": "generic",
                     "heal": false,
@@ -12440,11 +10963,20 @@
                                 ]
                             }
                         },
-                        "Tile Group (SCREWATTACK)": {
+                        "Freezer Navigation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -12496,71 +11028,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "Cold",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (WEIGHT)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Ballspark"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s030_baselab:default:powergenerator_002",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 70,
+                                                                    "amount": 130,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -13202,7 +11670,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tile Group (SCREWATTACK)": {
+                        "Bottom-Left Corner": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13211,10 +11679,14 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Speed",
+                                            "name": "Screw",
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
                                     },
                                     {
                                         "type": "or",
@@ -13258,7 +11730,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "Cold",
-                                                                    "amount": 50,
+                                                                    "amount": 150,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -14917,11 +13389,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM) 1": {
-                            "type": "and",
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Tunnel to Save Station West Tunnels (Bottom)": {
@@ -14964,11 +13438,39 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM) 2": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:grapplepulloff1x2_005",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Hidden Shortcut Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Tunnel to Save Station West Tunnels (Top)": {
@@ -15000,16 +13502,14 @@
                     "pickup_index": 74,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (POWERBEAM) 1": {
-                            "type": "resource",
+                        "Dock to EMMI Zone Exit West": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
-                        "Tile Group (POWERBEAM) 2": {
+                        "Door to Experiment Z-57 Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15056,117 +13556,11 @@
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_005",
                     "connections": {
-                        "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -14200.0,
-                        "y": -800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_033",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Dock to EMMI Zone Exit West": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -13400.0,
-                        "y": -300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_034",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Experiment Z-57 Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:grapplepulloff1x2_005",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Hidden Shortcut Grapple Block": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Grapple",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -15301,13 +13695,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB) 1": {
-                            "type": "resource",
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         },
                         "Tunnel to Hidden Grapple Shortcut Room (Bottom)": {
@@ -15346,97 +13747,20 @@
                     "pickup_index": 69,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -16100.0,
-                        "y": -400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_031",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Save Station West": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -15800.0,
-                        "y": -400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_032",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -16401,29 +14725,6 @@
                             }
                         }
                     }
-                },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6200.0,
-                        "y": -3300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_008",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
                 },
                 "Above Grapple Block": {
                     "node_type": "generic",
@@ -18133,7 +16434,7 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (WEIGHT)": {
+                        "Life Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -18244,37 +16545,6 @@
                         "Dock to Transport to Ghavoran": {
                             "type": "template",
                             "data": "Can Slide"
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -15000.0,
-                        "y": 7000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_063",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Freezer (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -18884,44 +17154,6 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (POWERBEAM)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -16100.0,
-                        "y": 5100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_029",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Elevator to Ghavoran - Transport to Dairon": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Dock to Energy Recharge Station West": {
                             "type": "and",
                             "data": {
@@ -18955,7 +17187,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Elevator to Ghavoran - Transport to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
