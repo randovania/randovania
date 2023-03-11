@@ -1154,7 +1154,9 @@ Extra - asset_id: collision_camera_011
               Gravity Suit
               Any of the following:
                   Simple IBJ
-                  Lay Power Bomb and Use Spin Boost
+                  All of the following:
+                      Use Spin Boost
+                      Lay Bomb or Lay Power Bomb
           All of the following:
               Space Jump
               Lay Bomb or Lay Power Bomb
@@ -1193,7 +1195,7 @@ Extra - asset_id: collision_camera_011
   > Door to Chain Reaction Access
       All of the following:
           # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
-          Open Charge Door
+          Enabled Door Lock Randomizer or Open Charge Door
           Lay Bomb or Lay Power Bomb
 
 > Door to Chain Reaction Access; Heals? False
@@ -1459,7 +1461,7 @@ Extra - asset_id: collision_camera_013
   > Door to Intro Room
       Lay Power Bomb
   > Tunnel to Cold Introduction
-      Morph Ball
+      Lay Bomb or Lay Power Bomb
 
 > Event - Charge Beam Access Blob (Above); Heals? False
   * Layers: default
@@ -3722,7 +3724,7 @@ Extra - asset_id: collision_camera_062
   * Layers: default
   * Morph Ball Tunnel to Speed Hallway/Tunnel to Cold Introduction
   > Tunnel to Charge Beam Access
-      Lay Power Bomb
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to Charge Beam Access; Heals? False
   * Layers: default
@@ -4791,7 +4793,7 @@ Extra - asset_id: collision_camera_081
   > Start Point - Screw Attack
       Morph Ball
   > Next to Upper Tank
-      Morph Ball and Movement (Intermediate)
+      Morph Ball and Screw Attack and Movement (Intermediate)
 
 > Event - Screw Attack Water Blob; Heals? False
   * Layers: default
@@ -4815,10 +4817,6 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: PRP_TotalR_Platform_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  > Door to Transport to Burenia
-      All of the following:
-          Before Artaria - Screw Attack Rotatable
-          Simple IBJ or Use Spin Boost
   > Next to Upper Tank
       All of the following:
           After Artaria - Screw Attack Rotatable
@@ -4827,10 +4825,8 @@ Extra - asset_id: collision_camera_081
               Walljump (Beginner) and Use Spin Boost
   > Event - Screw Attack Rotatable
       All of the following:
-          Before Artaria - Screw Attack Rotatable and Knowledge (Intermediate)
-          Any of the following:
-              Space Jump or Simple IBJ
-              Walljump (Beginner) and Use Spin Boost
+          Knowledge (Intermediate)
+          Simple IBJ or Use Spin Boost
   > Under left side blocks
       Any of the following:
           Gravity Suit
