@@ -87,7 +87,7 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     return not _is_action_dangerous(state, action, dangerous_resources) \
-        and (isinstance(action, EventNode)
+        and (isinstance(action, (EventNode, EventPickupNode))
              or _is_major_or_key_pickup_node(action, state))
 
 
@@ -170,7 +170,7 @@ async def _inner_advance_depth(state: State,
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
         action_tuple = (action, energy)
-        if _is_action_dangerous(state, action, logic.game.dangerous_resources):
+        if _is_action_dangerous(state, action, logic.game.dangerous_resources) and isinstance(action, EventNode):
             dangerous_actions.append(action_tuple)
         elif _is_major_or_key_pickup_node(action, state):
             major_pickup_actions.append(action_tuple)
