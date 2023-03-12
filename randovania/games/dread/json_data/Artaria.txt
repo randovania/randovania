@@ -56,7 +56,7 @@ Extra - asset_id: collision_camera_000
   > Tunnel to First Tutorial Access
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_1B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -161,7 +161,7 @@ Extra - asset_id: collision_camera_001
   > Door to First Tutorial
       Can Slide
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to First Tutorial
       Trivial
@@ -209,7 +209,7 @@ Extra - asset_id: collision_camera_002
   > Door to Charge Tutorial
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Charge Tutorial
       Trivial
@@ -340,7 +340,7 @@ Extra - asset_id: collision_camera_003
   > West of Blob
       Trivial
 
-> West of Blob; Heals? False; Spawn Point; Default Node
+> West of Blob; Heals? False; Default Node
   * Layers: default
   > Door to Proto EMMI Introduction (Lower)
       Trivial
@@ -471,7 +471,7 @@ Extra - asset_id: collision_camera_004
   > Event - Early Cloak Blob
       Lay Bomb or Shoot Beam
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Save Station South
       Trivial
@@ -558,7 +558,7 @@ Extra - asset_id: collision_camera_005
           # If this lock is unmoved, it can cause death if the room has been loaded
           After Artaria - EMMI Magnet Door Lock or Knowledge (Intermediate)
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyCave
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -693,7 +693,7 @@ Extra - asset_id: collision_camera_006
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Teleport to Dairon (Lower)
       After Artaria - First Chase Blob
@@ -772,12 +772,12 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Arbitrary Enky Room (Lower)
       Trivial
-  > Before Slide
-      Trivial
   > Tunnel to Arbitrary Enky Room
       All of the following:
           Shoot Missile
           Lay Bomb or Lay Power Bomb
+  > Before Slide
+      Trivial
 
 > Door to EMMI First Chase End (Top); Heals? False
   * Layers: default
@@ -829,7 +829,7 @@ Extra - asset_id: collision_camera_008
   > Teleporter to Dairon - Teleport to Artaria
       Trivial
 
-> Teleporter to Dairon - Teleport to Artaria; Heals? False; Spawn Point; Default Node
+> Teleporter to Dairon - Teleport to Artaria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Dairon - Teleport to Artaria
   * Extra - actor_name: teleport_baselab_000
@@ -853,12 +853,12 @@ Extra - asset_id: collision_camera_008
   > Dock to Arbitrary Enky Room (Upper)
       Trivial
 
-> Before Slide; Heals? False; Spawn Point
+> Before Slide; Heals? False
   * Layers: default
   > Dock to Arbitrary Enky Room (Upper)
       Trivial
 
-> Lower Room; Heals? False; Spawn Point
+> Lower Room; Heals? False
   * Layers: default
   > Door to White EMMI Introduction (Lower)
       Trivial
@@ -942,7 +942,7 @@ Extra - asset_id: collision_camera_009
   > Door to EMMI Zone Dome
       Morph Ball
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Teleport to Dairon (Power)
       Trivial
@@ -962,6 +962,8 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Door to EMMI Zone Exit Southwest (Upper)
+      Trivial
+  > Top Door
       Trivial
 
 > Door to EMMI Zone Exit Southwest (Upper); Heals? False
@@ -1142,13 +1144,15 @@ Extra - asset_id: collision_camera_010
           Morph Ball
           Slide and After Artaria - EMMI Zone Water Device
 
-> Bottom Section; Heals? False; Spawn Point; Default Node
+> Bottom Section; Heals? False; Default Node
   * Layers: default
   > Door to EMMI Zone Exit Southwest (Lower)
       Trivial
 
-> Top Door; Heals? False; Spawn Point
+> Top Door; Heals? False
   * Layers: default
+  > Door to EMMI Zone Exit Northwest
+      Trivial
 
 ----------------
 Teleport to Cataris
@@ -1283,7 +1287,7 @@ Extra - asset_id: collision_camera_011
           After Artaria - Early SA Shortcut Blob
           Lay Bomb or Lay Power Bomb
 
-> Teleporter to Cataris - Teleport to Artaria (Red); Heals? False; Spawn Point; Default Node
+> Teleporter to Cataris - Teleport to Artaria (Red); Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Teleport to Artaria (Red)
   * Extra - actor_name: LE_Teleport_FromMagma
@@ -1549,7 +1553,7 @@ Extra - asset_id: collision_camera_014
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChargeBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1695,7 +1699,7 @@ Extra - asset_id: collision_camera_015
   > Door to White EMMI Arena (Top)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Wide Beam Block Room
       Trivial
@@ -1777,7 +1781,7 @@ Extra - asset_id: collision_camera_016
           Infinite Bomb Jump (Expert) and Lay Cross Bomb
           Bomb and Infinite Bomb Jump (Advanced) and Lay Cross Bomb
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Melee Tutorial Room (Upper)
       Trivial
@@ -1888,7 +1892,7 @@ Extra - asset_id: collision_camera_017
   > Door to EMMI Zone First Entrance
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_MagnetGlove
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2049,7 +2053,7 @@ Extra - asset_id: collision_camera_021
   > Start Point
       Can Slide
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_2B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2164,12 +2168,12 @@ Extra - asset_id: collision_camera_022
   > Door to David Jaffe Room
       Trivial
 
-> Above Blobs; Heals? False; Spawn Point; Default Node
+> Above Blobs; Heals? False; Default Node
   * Layers: default
   > Door to David Jaffe Room
       Trivial
 
-> Below Blobs; Heals? False; Spawn Point
+> Below Blobs; Heals? False
   * Layers: default
   > Dock to Invisible Corpius Room
       Trivial
@@ -2325,7 +2329,7 @@ Extra - asset_id: collision_camera_024
   > Door to Hot Cataris Shortcut
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Save Station East
       Trivial
@@ -2734,7 +2738,7 @@ Extra - asset_id: collision_camera_032
               Spider Magnet or Grapple Movement (Beginner)
           Speed Booster and Disabled Door Lock Randomizer
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Save Station North
       Trivial
@@ -2775,7 +2779,7 @@ Extra - asset_id: collision_camera_033
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Grapple
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2803,7 +2807,7 @@ Extra - asset_id: collision_camera_034
   > Elevator to Dairon
       Trivial
 
-> Elevator to Dairon; Heals? False; Spawn Point; Default Node
+> Elevator to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Dairon - Transport to Artaria
   * Extra - actor_name: elevator_baselab_000
@@ -2838,7 +2842,7 @@ Extra - asset_id: collision_camera_045
   > Door to Energy Recharge Station South
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Energy Recharge Station South
       Trivial
@@ -2920,7 +2924,7 @@ Extra - asset_id: collision_camera_048
   > Below Slide
       Can Slide
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to EMMI Zone Exit North
       Trivial
@@ -2968,7 +2972,7 @@ Extra - asset_id: collision_camera_049
   > Dock to Central Unit
       After Artaria - Central Unit
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3059,7 +3063,7 @@ Extra - asset_id: collision_camera_050
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_002
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3145,7 +3149,7 @@ Extra - asset_id: collision_camera_051
   > Dock to Teleport to Cataris
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to EMMI Zone Dome
       Trivial
@@ -3223,7 +3227,7 @@ Extra - asset_id: collision_camera_054
   > Energy Recharge
       Trivial
 
-> Energy Recharge; Heals? True; Spawn Point; Default Node
+> Energy Recharge; Heals? True; Default Node
   * Layers: default
   * Extra - actor_name: PRP_CV_EnergyStation001
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
@@ -3413,10 +3417,10 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Event - Waterfall Rotatable
       Shoot Diffusion or Wave
-  > Start Point
+  > Below Rotatable
       After Artaria - Waterfall Rotatable
 
-> Start Point; Heals? False
+> Below Rotatable; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Pre_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3453,7 +3457,7 @@ Extra - asset_id: collision_camera_056
   * Layers: default
   * Open Passage to Red Chozo Arena/Dock to Waterfall
 
-> Tower Middle; Heals? False; Spawn Point; Default Node
+> Tower Middle; Heals? False; Default Node
   * Layers: default
   > Door to Save Station West
       Trivial
@@ -3638,7 +3642,7 @@ Extra - asset_id: collision_camera_060
   > Dock to Water Tunnel under Map
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_WaterValve
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3694,7 +3698,7 @@ Extra - asset_id: collision_camera_061
   > Dock to Energy Recharge Station South
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Dock to Energy Recharge Station South
       Trivial
@@ -4016,7 +4020,7 @@ Extra - asset_id: collision_camera_067
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ThermalDevice
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -4240,7 +4244,7 @@ Extra - asset_id: collision_camera_070
   > Pickup (Missile Tank)
       Lay Bomb or Lay Power Bomb
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Navigation Station North (Upper)
       Morph Ball or Before Artaria - ArbEnky Blob West
@@ -4313,7 +4317,7 @@ Extra - asset_id: collision_camera_071
   > Door to Teleport to Dairon (Middle)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Teleport to Dairon (Middle)
       Trivial
@@ -4347,7 +4351,7 @@ Extra - asset_id: collision_camera_072
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Scorpius
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -4401,7 +4405,7 @@ Extra - asset_id: collision_camera_073
   > Door to Path to Corpius
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Path to Corpius
       Trivial
@@ -4477,7 +4481,7 @@ Extra - asset_id: collision_camera_075
   > Door to EMMI Zone Hub (Upper)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Dock to Water Reservoir
       Trivial
@@ -4551,7 +4555,7 @@ Extra - asset_id: collision_camera_077
   > Elevator to Cataris - Transport to Artaria
       Trivial
 
-> Elevator to Cataris - Transport to Artaria; Heals? False; Spawn Point; Default Node
+> Elevator to Cataris - Transport to Artaria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Transport to Artaria
   * Extra - actor_name: LE_Elevator_FromMagma
@@ -4684,7 +4688,7 @@ Extra - asset_id: collision_camera_079
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Transport to Cataris
       Trivial
@@ -4714,7 +4718,7 @@ Extra - asset_id: collision_camera_080
   > Elevator to Burenia - Transport to Artaria
       Screw Attack
 
-> Elevator to Burenia - Transport to Artaria; Heals? False; Spawn Point; Default Node
+> Elevator to Burenia - Transport to Artaria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Burenia - Transport to Artaria
   * Extra - actor_name: elevator_with_cutscene_aqua_000
@@ -4868,7 +4872,7 @@ Extra - asset_id: collision_camera_081
               Simple IBJ or Use Spin Boost
               Morph Ball or Screw Attack
 
-> Start Point - Screw Attack; Heals? False; Spawn Point
+> Start Point - Screw Attack; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ScrewAttack
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -4879,7 +4883,7 @@ Extra - asset_id: collision_camera_081
           Screw Attack
           Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
-> Teleporter to Cataris; Heals? False; Spawn Point; Default Node
+> Teleporter to Cataris; Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Teleport to Artaria (Blue)
   * Extra - actor_name: teleporter_magma_000
@@ -4979,7 +4983,7 @@ Extra - asset_id: collision_camera_081
   > Teleporter to Cataris
       After Artaria - Screw Attack Grapple Block
 
-> Early SA Platform; Heals? False; Spawn Point
+> Early SA Platform; Heals? False
   * Layers: default
   > Start Point 2
       Space Jump and Water Space Jump (Intermediate)
@@ -5061,7 +5065,7 @@ Extra - asset_id: collision_camera_082
   > Corridor
       Trivial
 
-> Corridor; Heals? False; Spawn Point
+> Corridor; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorCave
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -5070,7 +5074,7 @@ Extra - asset_id: collision_camera_082
   > Door to Waterfall
       Trivial
 
-> Cold Room; Heals? False; Spawn Point; Default Node
+> Cold Room; Heals? False; Default Node
   * Layers: default
   > Door to Screw Attack Room (Grapple)
       Trivial
@@ -5086,7 +5090,7 @@ Extra - asset_id: collision_camera_083
   > Start Point
       Speed Booster
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Dock to Speed Hallway
       Speed Booster
@@ -5130,7 +5134,7 @@ Extra - asset_id: collision_camera_085
   > Door to Screw Attack Room
       After Artaria - Screw Attack Grapple Block
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Screw Attack Room
       Trivial
@@ -5210,7 +5214,7 @@ Extra - asset_id: collision_camera_086
   > Door to Cold Introduction
       Ballspark
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Cold Introduction
       Trivial
@@ -5240,7 +5244,7 @@ Extra - asset_id: collision_camera_088
   > Dock to EMMI Zone Exit North
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Dock to EMMI Zone Exit North
       Trivial
@@ -5362,7 +5366,7 @@ Extra - asset_id: collision_camera_091
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
