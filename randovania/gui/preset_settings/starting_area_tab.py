@@ -109,7 +109,8 @@ class PresetMetroidStartingArea(PresetStartingArea):
 
     def _starting_location_on_select_save_station(self):
         world_list = self.game_description.world_list
-        save_stations = [node.identifier for node in world_list.iterate_nodes() if node.name in ["Save Station", "Navigation Room", "Map Station"]]
+        save_rooms = ["Save Station", "Navigation Room", "Map Station"]
+        save_stations = [node.identifier for node in world_list.iterate_nodes() if node.name in save_rooms]
 
         with self._editor as editor:
             editor.set_configuration_field(
