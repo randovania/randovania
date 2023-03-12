@@ -95,8 +95,8 @@ Extra - asset_id: collision_camera_001
   * Pickup 97; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (MISSILE)
-      Morph Ball
+  > Door to Transport to Burenia
+      Trivial
 
 > Door to Transport to Burenia; Heals? False
   * Layers: default
@@ -107,9 +107,9 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (MISSILE)
+  > Pickup (Missile Tank)
       All of the following:
-          Morph Ball
+          Morph Ball and Shoot Missile
           Any of the following:
               Gravity Suit or Perform WBJ or Use Spin Boost
               Speed Booster and Disabled Door Lock Randomizer
@@ -139,18 +139,6 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoRobotForest
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Robot Fight Arena
-      Trivial
-
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_042
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Door to Transport to Burenia
       Trivial
 
 > Grapple Block Alcove; Heals? False
@@ -262,77 +250,20 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_def: None
   > Dock to Blue EMMI Introduction
       Speed Booster and After Ghavoran - Gold Robot Fight and Disabled Door Lock Randomizer
-  > Tile Group (BOMB)
-      Can Slide
   > Floating Platform
       Grapple Beam or Simple IBJ or Use Spin Boost
+  > Alcove
+      Can Slide
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 108; Major Location? False
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (WEIGHT)
+  > Door to Transport to Burenia
       Trivial
   > Ledge Grab
       Flash Shift
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_020
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Morph Ball
-  > Tile Group (POWERBEAM) 3
-      Can Slide
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_044
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Transport to Burenia
-      Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBEAM) 2
-      Can Slide
-  > Alcove
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_037
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Can Slide
-  > Tile Group (BOMB)
-      Morph Ball
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_039
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Ledge Grab
-      Can Slide
 
 > Ledge Grab; Heals? False
   * Layers: default
@@ -346,8 +277,8 @@ Extra - asset_id: collision_camera_003
               All of the following:
                   # Bomb horizontally to reach the item
                   Bomb and Diagonal Bomb Jump (Expert)
-  > Tile Group (POWERBEAM) 3
-      Morph Ball
+  > Alcove
+      Lay Bomb or Lay Power Bomb
 
 > Floating Platform; Heals? False
   * Layers: default
@@ -355,15 +286,13 @@ Extra - asset_id: collision_camera_003
       Trivial
   > Door to Robot Fight Arena
       Trivial
-  > Tile Group (BOMB)
-      Trivial
 
 > Alcove; Heals? False
   * Layers: default
   > Door to Robot Fight Arena
       Morph Ball
-  > Tile Group (BOMB)
-      Trivial
+  > Ledge Grab
+      Lay Bomb or Lay Power Bomb
   > Floating Platform
       Any of the following:
           Simple IBJ or Use Spin Boost
@@ -685,8 +614,8 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_def: None
   > Door to Super Missile Room (Super Lock)
       Trivial
-  > Tile Group (BOMB)
-      Trivial
+  > Door to Super Missile Room (Missile Lock)
+      Lay Bomb or Lay Power Bomb
 
 > Door to Super Missile Room (Missile Lock); Heals? False
   * Layers: default
@@ -697,14 +626,17 @@ Extra - asset_id: collision_camera_009
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Bomb Ledge
-      Any of the following:
-          Simple IBJ or Use Spin Boost
-          Grapple Beam and Grapple Movement (Beginner)
-          Morph Ball and Single-wall Wall Jump (Intermediate)
-          All of the following:
-              Flash Shift
-              Spider Magnet or Walljump (Beginner)
+  > Door to Dairon Transport Access
+      All of the following:
+          Lay Bomb or Lay Power Bomb
+          Any of the following:
+              Single-wall Wall Jump (Intermediate) or Simple IBJ or Use Spin Boost
+              All of the following:
+                  Grapple Beam
+                  Spider Magnet or Grapple Movement (Beginner)
+              All of the following:
+                  Flash Shift
+                  Spider Magnet or Walljump (Beginner)
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
@@ -713,18 +645,6 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Tunnel to Super Missile Room
       Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_019
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Dairon Transport Access
-      Trivial
-  > Bomb Ledge
-      Can Slide
 
 > Tunnel to Super Missile Room; Heals? False
   * Layers: default
@@ -743,13 +663,6 @@ Extra - asset_id: collision_camera_009
   * Slide Tunnel to Dairon Transport Access/Tunnel to Super Missile Room Access
   > Tunnel to Spider Magnet Elevator
       Trivial
-
-> Bomb Ledge; Heals? False
-  * Layers: default
-  > Door to Super Missile Room (Missile Lock)
-      Trivial
-  > Tile Group (BOMB)
-      Morph Ball
 
 ----------------
 Super Missile Room
@@ -914,26 +827,28 @@ Extra - asset_id: collision_camera_012
   * EMMI Door to EMMI Zone Exit Southeast/Dock to Map Station Access (Lower)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Ledge Grab
-      Any of the following:
-          Space Jump
-          All of the following:
-              Grapple Beam
-              Flash Shift or Spider Magnet or Grapple Movement (Beginner) or Use Spin Boost
+  > Door to Map Station
+      All of the following:
+          Lay Bomb or Lay Power Bomb
           Any of the following:
-              # This room allows for a bomb jump out of the water without a WBJ
-              Gravity Suit or Lay Bomb
-          Flash Shift and Walljump (Beginner)
+              Space Jump
+              Flash Shift and Walljump (Beginner)
+              All of the following:
+                  Grapple Beam
+                  Flash Shift or Spider Magnet or Grapple Movement (Beginner) or Use Spin Boost
+              Any of the following:
+                  # This room allows for a bomb jump out of the water without a WBJ
+                  Gravity Suit or Lay Bomb
+  > Tunnel to Map Station Access Secret
+      Lay Bomb or Lay Power Bomb
 
 > Dock to EMMI Zone Exit Southeast (Upper); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit Southeast/Dock to Map Station Access (Upper)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (BOMB) 3
-      Morph Ball
+  > Door to Map Station
+      Lay Bomb or Lay Power Bomb
 
 > Door to Map Station; Heals? False
   * Layers: default
@@ -945,70 +860,16 @@ Extra - asset_id: collision_camera_012
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Tile Group (BOMB) 3
-      Can Slide
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_023
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
   > Dock to EMMI Zone Exit Southeast (Lower)
-      Morph Ball
-  > Tunnel to Map Station Access Secret
-      Morph Ball
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_040
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Dock to EMMI Zone Exit Southeast (Lower)
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_041
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Map Station
-      Morph Ball
-  > Ledge Grab
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_052
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
+      Lay Bomb or Lay Power Bomb
   > Dock to EMMI Zone Exit Southeast (Upper)
-      Can Slide
-  > Door to Map Station
-      Morph Ball
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to Map Station Access Secret; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Map Station Access Secret/Tunnel to Map Station Access
-  > Tile Group (BOMB) 1
-      Morph Ball
-
-> Ledge Grab; Heals? False
-  * Layers: default
   > Dock to EMMI Zone Exit Southeast (Lower)
-      Trivial
-  > Tile Group (WEIGHT)
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
+      Lay Bomb or Lay Power Bomb
 
 ----------------
 Map Station
@@ -1167,7 +1028,7 @@ Extra - asset_id: collision_camera_016
   * EMMI Door to Early Ice Room/Dock to EMMI Zone Exit Northwest
   * Extra - actor_name: dooremmy_006
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (WEIGHT)
+  > Door to Central Unit Access
       Can Slide
 
 > Door to Central Unit Access; Heals? False
@@ -1193,15 +1054,6 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_def: None
   > Door to Central Unit Access
       Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tunnel to Central Unit Access
-      Can Slide
 
 ----------------
 Central Unit
@@ -1401,10 +1253,12 @@ Extra - asset_id: collision_camera_020
   * Extra - right_shield_def: None
   > Dock to Spin Boost Tower (Lower)
       Trivial
-  > Tile Group (WEIGHT)
+  > Dock to Spin Boost Tower (Upper)
       All of the following:
-          Morph Ball and After Ghavoran - Central Unit
-          Space Jump or Simple IBJ
+          After Ghavoran - Central Unit
+          Any of the following:
+              Simple IBJ
+              Morph Ball and Space Jump
 
 > Dock to Spin Boost Tower (Lower); Heals? False
   * Layers: default
@@ -1448,15 +1302,6 @@ Extra - asset_id: collision_camera_020
   > Door to Central Unit Access (Upper)
       Trivial
 
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_004
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Dock to Spin Boost Tower (Upper)
-      Morph Ball
-
 ----------------
 Spin Boost Tower
 Extra - total_boundings: {'x1': -1000.0, 'x2': 2100.0, 'y1': -1800.0, 'y2': 8300.0}
@@ -1483,6 +1328,16 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Pickup (Energy Part)
+      All of the following:
+          Morph Ball and After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
+          Any of the following:
+              Flash Shift or Spider Magnet or Simple IBJ or Use Spin Boost
+              All of the following:
+                  Speed Booster
+                  Any of the following:
+                      After Ghavoran - Super Missile Rotatable Enky
+                      Disabled Door Lock Randomizer and Shoot Plasma Beam
   > Event - Grapple Block
       Any of the following:
           All of the following:
@@ -1505,16 +1360,6 @@ Extra - asset_id: collision_camera_021
                           Disabled Door Lock Randomizer and Shoot Plasma Beam
                   Flash Shift and Spider Magnet
                   Spider Magnet and Slide and Slide Jump (Beginner) and Walljump (Beginner)
-  > Tile Group (MISSILE)
-      All of the following:
-          After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
-          Any of the following:
-              Flash Shift or Spider Magnet or Simple IBJ or Use Spin Boost
-              All of the following:
-                  Speed Booster
-                  Any of the following:
-                      After Ghavoran - Super Missile Rotatable Enky
-                      Disabled Door Lock Randomizer and Shoot Plasma Beam
   > Dock to Flipper Room
       Trivial
   > Upper Center Platform
@@ -1563,8 +1408,8 @@ Extra - asset_id: collision_camera_021
   * Pickup 105; Major Location? False
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (MISSILE)
-      Morph Ball
+  > Door to Save Station Center
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -1591,18 +1436,6 @@ Extra - asset_id: collision_camera_021
   > Dock to EMMI Zone Exit Northeast (Upper)
       Trivial
 
-> Tile Group (MISSILE); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_043
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Door to Save Station Center
-      After Ghavoran - Spin Boost Tower Grapple Block
-  > Pickup (Energy Part)
-      Morph Ball
-
 > Dock to Flipper Room; Heals? False
   * Layers: default
   * Open Passage to Flipper Room/Dock to Spin Boost Tower
@@ -1619,12 +1452,12 @@ Extra - asset_id: collision_camera_021
           Slide and Slide Jump (Intermediate)
   > Dock to EMMI Zone Exit Northeast (Upper)
       After Ghavoran - Ammo Recharge Enky Below
+  > Pickup (Energy Part)
+      Morph Ball and After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
   > Event - Grapple Block
       All of the following:
           Grapple Beam
           Movement (Intermediate) or Shoot Ice Missile
-  > Tile Group (MISSILE)
-      After Ghavoran - Spin Boost Tower Grapple Block and Shoot Missile
   > Event - Ammo Recharge Enky (Below)
       Destroy Enky
 
@@ -1868,103 +1701,6 @@ Extra - asset_id: collision_camera_024
       Any of the following:
           After Ghavoran - Pulse Radar Enky and Speedbooster Conservation (Beginner) and Ballspark
           Bomb and Climb Sloped Tunnels (Expert)
-  > Tile Group (WEIGHT) 3
-      Morph Ball
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_005
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Any of the following:
-          Lay Cross Bomb
-          After Ghavoran - Pulse Radar Enky and Speedbooster Conservation (Beginner) and Ballspark
-          Cross Bomb Skip (Intermediate) and Use Spin Boost
-  > Tile Group (BOMB) 3
-      Morph Ball
-  > Tile Group (POWERBEAM) 3
-      Can Slide
-  > Tile Group (WEIGHT) 3
-      Morph Ball
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_028
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Can Slide
-  > Tunnel to Above Pulse Radar
-      Morph Ball
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_008
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Can Slide
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_010
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBEAM) 2
-      Morph Ball
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_048
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Dock to Energy Recharge Station
-      Trivial
-
-> Tile Group (WEIGHT) 3; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_049
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
   > Dock to Energy Recharge Station
       Trivial
 
@@ -1981,38 +1717,38 @@ Extra - asset_id: collision_camera_024
                   Any of the following:
                       # The pseudo for this is a melee pseudo next to the tunnel
                       Wave Beam or Pseudo-Wave Beam (Beginner)
-  > Tile Group (POWERBEAM) 1
-      Can Slide
+  > Dock to Energy Recharge Station
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
 
 > Tunnel to Pulse Radar Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Pulse Radar Room/Tunnel to Golzuna Tower
-  > Tile Group (WEIGHT) 2
-      Morph Ball
+  > Tunnel to Above Pulse Radar
+      Trivial
 
 > Dock to Energy Recharge Station; Heals? False
   * Layers: default
   * Open Passage to Energy Recharge Station/Dock to Golzuna Tower
-  > Tile Group (POWERBEAM) 3
-      Trivial
+  > Pickup (Missile Tank)
+      Any of the following:
+          Lay Cross Bomb
+          All of the following:
+              Lay Normal Bomb or Lay Power Bomb
+              Any of the following:
+                  After Ghavoran - Pulse Radar Enky and Speedbooster Conservation (Beginner) and Ballspark
+                  Cross Bomb Skip (Intermediate) and Use Spin Boost
+  > Tunnel to Above Pulse Radar
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
 
 ----------------
 Teleport to Burenia
 Extra - total_boundings: {'x1': 4000.0, 'x2': 7100.0, 'y1': 870.0, 'y2': 3190.0}
 Extra - polygon: [[7100.0, 3190.0], [4000.0, 3190.0], [4000.0, 870.0], [6400.0, 870.0], [6400.0, 2000.0], [7100.0, 2000.0]]
 Extra - asset_id: collision_camera_024
-> Tile Group (POWERBOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Teleporter to Burenia - Teleport to Ghavoran
-      Trivial
-  > Door from Total Recharge Station North
-      Trivial
-
 > Teleporter to Burenia - Teleport to Ghavoran; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Burenia - Teleport to Ghavoran
@@ -2022,33 +1758,12 @@ Extra - asset_id: collision_camera_024
   * Extra - target_spawn_point: teleporter_forest_000_platform
   * Extra - start_point_actor_name: teleporter_aqua_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Tile Group (POWERBOMB)
-      Trivial
-  > Tile Group (SCREWATTACK)
-      Trivial
+  > Door from Total Recharge Station North
+      Lay Power Bomb
+  > Dock to Energy Recharge Station
+      Screw Attack
   > Dock to Total Recharge Station North
       After Ghavoran - Storm Missile Gate
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_002
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Teleporter to Burenia - Teleport to Ghavoran
-      Trivial
-
-> Tile Group (SCREWATTACK); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_013
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Teleporter to Burenia - Teleport to Ghavoran
-      Trivial
-  > Dock to Energy Recharge Station
-      Morph Ball
 
 > Door to Total Recharge Station North; Heals? False
   * Layers: default
@@ -2071,8 +1786,8 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBOMB)
-      Trivial
+  > Teleporter to Burenia - Teleport to Ghavoran
+      Lay Power Bomb
   > Dock to Chozo Warrior Arena
       Trivial
 
@@ -2095,7 +1810,7 @@ Extra - asset_id: collision_camera_024
 > Dock to Energy Recharge Station; Heals? False
   * Layers: default
   * Open Passage to Energy Recharge Station/Dock to Teleport to Burenia
-  > Tile Group (WEIGHT) 1
+  > Teleporter to Burenia - Teleport to Ghavoran
       Morph Ball
   > Pickup (Missile Tank)
       Any of the following:
@@ -2115,13 +1830,13 @@ Extra - asset_id: collision_camera_024
   * Pickup 103; Major Location? False
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (WEIGHT) 1
-      Morph Ball
+  > Teleporter to Burenia - Teleport to Ghavoran
+      Trivial
   > Dock to Energy Recharge Station
       Any of the following:
           Lay Cross Bomb
           All of the following:
-              Morph Ball and Movement (Intermediate)
+              Morph Ball and Cross Bomb Skip (Intermediate)
               Flash Shift or Use Spin Boost
 
 > Dock to Total Recharge Station North; Heals? False
@@ -2195,14 +1910,12 @@ Extra - asset_id: collision_camera_025_B
   * Extra - right_shield_def: None
   > Door from Chozo Warrior Arena
       Trivial
-  > Tile Group (SCREWATTACK)
-      Any of the following:
-          Space Jump
-          All of the following:
-              Walljump (Beginner)
-              Any of the following:
-                  Use Spin Boost
-                  Slide and Slide Jump (Beginner)
+  > Total Recharge
+      All of the following:
+          Morph Ball and Screw Attack
+          Any of the following:
+              Use Spin Boost
+              Slide and Slide Jump (Beginner)
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
 
@@ -2221,18 +1934,6 @@ Extra - asset_id: collision_camera_025_B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Teleport to Burenia (Power Beam)
       Trivial
-
-> Tile Group (SCREWATTACK); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_045
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door from Chozo Warrior Arena
-      Trivial
-  > Door to Teleport to Burenia (Missile)
-      Morph Ball
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -2369,8 +2070,8 @@ Extra - asset_id: collision_camera_026
 > Tunnel to Above Golzuna; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Above Golzuna/Tunnel to Golzuna Arena
-  > Tile Group (WEIGHT)
-      Trivial
+  > Before Golzuna
+      After Elun - Release X Parasites
 
 > Event - Golzuna; Heals? False
   * Layers: default
@@ -2389,15 +2090,6 @@ Extra - asset_id: collision_camera_026
   * Extra - boss_hint_name: Golzuna
   > Door to Cross Bomb Tutorial
       Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_011
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Before Golzuna
-      After Elun - Release X Parasites
 
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -2448,62 +2140,22 @@ Extra - asset_id: collision_camera_028
   * Pickup 101; Major Location? False
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (WEIGHT)
-      Morph Ball
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_022
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tunnel to Map Station Access
-      Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_030
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Any of the following:
-          Lay Cross Bomb
-          All of the following:
-              Gravity Suit and Cross Bomb Skip (Advanced)
-              Flash Shift or Use Spin Boost
-  > Tile Group (WEIGHT)
-      Trivial
-  > Bomb Ledge
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_050
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
   > Tunnel to Map Station Access
       Trivial
 
 > Tunnel to Map Station Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Map Station Access/Tunnel to Map Station Access Secret
-  > Bomb Ledge
-      Any of the following:
-          Gravity Suit
-          Space Jump and Water Space Jump (Beginner)
-
-> Bomb Ledge; Heals? False
-  * Layers: default
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Trivial
-  > Tunnel to Map Station Access
-      Trivial
+  > Pickup (Missile Tank)
+      All of the following:
+          Any of the following:
+              Gravity Suit
+              Space Jump and Water Space Jump (Beginner)
+          Any of the following:
+              Lay Cross Bomb
+              All of the following:
+                  Cross Bomb Skip (Advanced)
+                  Flash Shift or Use Spin Boost
 
 ----------------
 Elun Transport Access
@@ -2610,106 +2262,21 @@ Extra - asset_id: collision_camera_031
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SCREWATTACK) 2
-      Trivial
-  > Tile Group (SCREWATTACK) 3
-      Trivial
-
-> Life Recharge; Heals? True; Default Node
-  * Layers: default
-  * Extra - actor_name: energyrecharge_002
-  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
-  * Extra - start_point_actor_name: energyrecharge_002_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
-  > Top Room
-      Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_014
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBEAM)
-      Morph Ball
-  > Left Water Ledge
-      Morph Ball
-
-> Tile Group (SCREWATTACK) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_015
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
   > Dock to Teleport to Burenia
-      No Gravity Suit or Movement (Beginner)
-  > Left Water Ledge
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_035
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBEAM)
-      Morph Ball
+      Screw Attack
   > Tunnel to Teleport to Burenia (Top)
-      Morph Ball
-
-> Tile Group (SCREWATTACK) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_033
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Golzuna Tower
-      Trivial
+      All of the following:
+          Screw Attack
+          Lay Bomb or Lay Power Bomb
   > Left Water Ledge
-      Trivial
-  > Top Room
-      Morph Ball
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_053
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (SCREWATTACK) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_054
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Golzuna Tower
-      Trivial
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (SCREWATTACK) 1
-      Trivial
-  > Tile Group (BOMB) 2
-      Morph Ball
+      Screw Attack
+  > Life Recharge
+      Morph Ball and Screw Attack
 
 > Dock to Golzuna Tower; Heals? False
   * Layers: default
   * Open Passage to Golzuna Tower/Dock to Energy Recharge Station
-  > Top Room
+  > Life Recharge
       After Ghavoran - Pulse Radar Enky
   > Event - Pulse Radar Enky
       Destroy Enky
@@ -2718,9 +2285,11 @@ Extra - asset_id: collision_camera_031
   * Layers: default
   * Morph Ball Tunnel to Teleport to Burenia/Tunnel to Energy Recharge Station (Bottom)
   > Dock to Teleport to Burenia
-      All of the following:
-          # https://www.youtube.com/watch?v=3CYTkKutYFo
-          Spin Boost and Water Space Jump (Advanced) and Perform WBJ
+      Any of the following:
+          Gravity Suit
+          All of the following:
+              # https://www.youtube.com/watch?v=3CYTkKutYFo
+              Spin Boost and Water Space Jump (Advanced) and Perform WBJ
   > Left Water Ledge
       Gravity Suit or Perform WBJ or Use Spin Boost
 
@@ -2733,45 +2302,48 @@ Extra - asset_id: collision_camera_031
 > Tunnel to Teleport to Burenia (Top); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Teleport to Burenia/Tunnel to Energy Recharge Station (Top)
-  > Tile Group (BOMB) 2
-      Morph Ball
+  > Left Water Ledge
+      Lay Bomb or Lay Power Bomb
 
 > Left Water Ledge; Heals? False
   * Layers: default
-  > Tile Group (BOMB) 1
+  > Door to Golzuna Tower
       All of the following:
-          Morph Ball
+          Screw Attack
           Any of the following:
               Gravity Suit or Spider Magnet
               Grapple Beam and Grapple Movement (Beginner)
-  > Tile Group (SCREWATTACK) 2
-      Any of the following:
-          Gravity Suit or Spider Magnet
-          Grapple Beam and Grapple Movement (Beginner)
   > Tunnel to Teleport to Burenia (Bottom)
       Trivial
   > Dock to Teleport to Burenia
-      Any of the following:
-          Space Jump
-          All of the following:
-              Gravity Suit
-              Flash Shift or Simple IBJ or Use Spin Boost
-          After Ghavoran - Pulse Radar Enky and Ballspark
-  > Top Room
+      Space Jump
+  > Tunnel to Teleport to Burenia (Top)
+      All of the following:
+          Lay Bomb or Lay Power Bomb
+          Any of the following:
+              Gravity Suit or Spider Magnet
+              Spider Magnet and Grapple Movement (Beginner)
+  > Life Recharge
       All of the following:
           Morph Ball
           Any of the following:
               Gravity Suit or Spider Magnet
               Grapple Beam and Grapple Movement (Beginner)
 
-> Top Room; Heals? False
+> Life Recharge; Heals? True; Default Node
   * Layers: default
-  > Life Recharge
-      Trivial
-  > Tile Group (SCREWATTACK) 2
-      Morph Ball
+  * Extra - actor_name: energyrecharge_002
+  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
+  * Extra - start_point_actor_name: energyrecharge_002_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
+  > Door to Golzuna Tower
+      Morph Ball and Screw Attack
   > Dock to Golzuna Tower
       After Ghavoran - Pulse Radar Enky
+  > Dock to Teleport to Burenia
+      After Ghavoran - Pulse Radar Enky and Ballspark
+  > Tunnel to Teleport to Burenia (Top)
+      Lay Bomb or Lay Power Bomb
   > Left Water Ledge
       Morph Ball
   > Event - Pulse Radar Enky
@@ -2780,7 +2352,7 @@ Extra - asset_id: collision_camera_031
 > Event - Pulse Radar Enky; Heals? False
   * Layers: default
   * Event Ghavoran - Pulse Radar Enky
-  > Top Room
+  > Life Recharge
       Trivial
 
 ----------------
@@ -2802,62 +2374,18 @@ Extra - asset_id: collision_camera_032
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Pickup (Pulse Radar)
       Trivial
-  > Tile Group (POWERBEAM) 1
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_012
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Start Point
-      Morph Ball
-  > Tile Group (WEIGHT) 2
-      Morph Ball
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (WEIGHT) 2
-      Trivial
   > Tunnel to Golzuna Tower
-      Morph Ball
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_031
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Start Point
-      Trivial
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_034
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (POWERBEAM) 2
       Morph Ball
 
 > Dock to Above Pulse Radar; Heals? False
   * Layers: default
   * Open Passage to Above Pulse Radar/Dock to Pulse Radar Room
-  > Tile Group (WEIGHT) 1
+  > Start Point
       Trivial
 
 > Tunnel to Golzuna Tower; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Golzuna Tower/Tunnel to Pulse Radar Room
-  > Tile Group (POWERBEAM) 2
-      Morph Ball
 
 ----------------
 Cross Bomb Tutorial
@@ -2869,7 +2397,7 @@ Extra - asset_id: collision_camera_033
   * Pickup 98; Major Location? False
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB) 1
+  > Right Alcove
       Trivial
 
 > Door from Golzuna Arena; Heals? False
@@ -2882,8 +2410,8 @@ Extra - asset_id: collision_camera_033
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
-  > Tile Group (BOMB) 1
-      Morph Ball
+  > Right Alcove
+      Lay Bomb or Lay Power Bomb
 
 > Door to Above Golzuna; Heals? False
   * Layers: default
@@ -2908,110 +2436,28 @@ Extra - asset_id: collision_camera_033
   * Extra - right_shield_def: None
   > Door to Above Golzuna
       Trivial
-  > Tile Group (BOMB) 2
-      Trivial
-  > Tile Group (SCREWATTACK)
-      Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_006
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Trivial
-  > Door from Golzuna Arena
-      Morph Ball
-  > Alcove 1
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Transport to Hanubia
-      Trivial
-  > Tile Group (WEIGHT) 2
-      Can Slide
-  > Alcove 2
-      Any of the following:
-          Lay Cross Bomb
-          All of the following:
-              Morph Ball and Movement (Expert)
-              Flash Shift or Use Spin Boost
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_009
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door from Golzuna Arena
-      Trivial
-
-> Tile Group (SCREWATTACK); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_051
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Transport to Hanubia
-      Trivial
   > Tunnel to Transport to Hanubia
-      Morph Ball
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_032
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Alcove 1
-      Trivial
+      Morph Ball and Screw Attack
+  > Right Alcove
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to Transport to Hanubia; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Transport to Hanubia/Tunnel to Cross Bomb Tutorial
-  > Tile Group (SCREWATTACK)
-      Morph Ball
 
-> Alcove 1; Heals? False
+> Right Alcove; Heals? False
   * Layers: default
-  > Tile Group (BOMB) 1
+  > Pickup (Missile Tank)
+      Lay Bomb or Lay Power Bomb
+  > Door from Golzuna Arena
       Morph Ball
-  > Tile Group (WEIGHT) 1
-      Morph Ball
-  > Alcove 2
+  > Door to Transport to Hanubia
       Any of the following:
           Lay Cross Bomb
           All of the following:
-              Morph Ball and Cross Bomb Skip (Expert)
+              Cross Bomb Skip (Expert)
               Flash Shift or Use Spin Boost
-
-> Alcove 2; Heals? False
-  * Layers: default
-  > Tile Group (BOMB) 2
-      Any of the following:
-          Lay Cross Bomb
-          All of the following:
-              Morph Ball and Cross Bomb Skip (Expert)
-              Flash Shift or Use Spin Boost
-  > Tile Group (WEIGHT) 1
-      Can Slide
-  > Tile Group (WEIGHT) 2
-      Morph Ball
-  > Alcove 1
-      Any of the following:
-          Lay Cross Bomb
-          All of the following:
-              Morph Ball and Cross Bomb Skip (Expert)
-              Flash Shift or Use Spin Boost
+              Lay Normal Bomb or Lay Power Bomb
 
 ----------------
 Transport to Hanubia
@@ -3238,7 +2684,7 @@ Extra - asset_id: collision_camera_039
           Any of the following:
               # Movement is for shooting the block while on the ledge, pseudo is performed in the little alcove under the block with a melee pseudo
               Movement (Beginner) or Pseudo-Wave Beam (Beginner) or Lay Bomb or Lay Power Bomb or Shoot Diffusion or Wave
-  > Tile Group (WEIGHT)
+  > Start Point
       Morph Ball
   > Tunnel to Golzuna Tower
       Morph Ball
@@ -3253,7 +2699,7 @@ Extra - asset_id: collision_camera_039
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
-      Morph Ball
+      Can Slide
 
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -3263,15 +2709,6 @@ Extra - asset_id: collision_camera_039
       Trivial
   > Dock to Pulse Radar Room
       Can Slide
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_003
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Start Point
-      Trivial
 
 > Dock to Pulse Radar Room; Heals? False
   * Layers: default
