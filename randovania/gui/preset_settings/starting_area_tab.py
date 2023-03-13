@@ -135,7 +135,3 @@ class PresetMetroidDreadStartingArea(PresetMetroidStartingArea):
             for node in self.game_description.world_list.iterate_nodes()
             if node.name in ["Save Station", "Navigation Room", "Map Station"]
         ]
-        
-    @classmethod
-    def tab_title(cls) -> str:
-        return "Starting Area"
