@@ -107,12 +107,15 @@ class PresetMetroidStartingArea(PresetStartingArea):
         self.starting_area_quick_fill_save_station = self._quick_fill_button("Save Station",
                                                                              self._starting_location_on_select_save_station)
 
-    def _starting_location_on_select_save_station(self):
-        world_list = self.game_description.world_list
-        save_stations = [
-            node.identifier for node in world_list.iterate_nodes()
-            if node.name in ["Save Station", "Navigation Room", "Map Station"]
+    def _save_station_nodes(self):
+        return [
+            node.identifier
+            for node in self.game_description.world_list.iterate_nodes()
+            if node.name == "Save Station"
         ]
+        
+    def _starting_location_on_select_save_station(self):
+        save_stations = self._save_station_nodes()
 
         with self._editor as editor:
             editor.set_configuration_field(
@@ -126,6 +129,13 @@ class PresetMetroidStartingArea(PresetStartingArea):
 
 
 class PresetMetroidDreadStartingArea(PresetMetroidStartingArea):
+    def _save_station_nodes(self):
+        return [
+            node.identifier
+            for node in self.game_description.world_list.iterate_nodes()
+            if node.name in ["Save Station", "Navigation Room", "Map Station"]
+        ]
+        
     @classmethod
     def tab_title(cls) -> str:
         return "Starting Area"
