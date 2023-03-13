@@ -16,9 +16,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel,
-        *([
-              PresetMetroidDreadStartingArea,
-          ] if window_manager.is_preview_mode and randovania.is_dev_version() else []),
+        PresetMetroidDreadStartingArea,
         PresetDockRando,
         PresetDreadGeneration,
         PresetLocationPool,
