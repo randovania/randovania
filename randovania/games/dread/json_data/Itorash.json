@@ -70,7 +70,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Elevator to Raven Beak": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -110,7 +110,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Hanubia": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -137,8 +137,23 @@
                         "start_point_actor_name": "savestation_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": true,
-                    "connections": {}
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport to Hanubia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Elevator to Raven Beak": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -474,7 +489,7 @@
                         "start_point_actor_name": "elevator_shipyard_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "Transport to Itorash"

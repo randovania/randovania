@@ -128,4 +128,4 @@ class PresetMetroidStartingArea(PresetStartingArea):
 class PresetMetroidDreadStartingArea(PresetMetroidStartingArea):
     @classmethod
     def tab_title(cls) -> str:
-        return "Starting Area [Unsupported]"
+        return "Starting Area"
