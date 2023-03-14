@@ -87,7 +87,12 @@ def test_quick_fill_save_station(skip_qtbot, preset_manager, game_enum: Randovan
     skip_qtbot.mouseClick(window.starting_area_quick_fill_save_station, QtCore.Qt.LeftButton)
 
     # Assert
-    save_stations = self.PresetMetroidStartingArea._save_station_nodes
+    save_stations = [
+        NodeIdentifier.as_string("Save Station"),
+        NodeIdentifier.as_string("Save Point"),
+        NodeIdentifier.as_string("Navigation Room"),
+        NodeIdentifier.as_string("Map Station")
+    ]
     assert editor.configuration.starting_location.locations == save_stations
 
 
