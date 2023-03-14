@@ -87,7 +87,7 @@ def test_quick_fill_save_station(skip_qtbot, preset_manager, game_enum: Randovan
     skip_qtbot.mouseClick(window.starting_area_quick_fill_save_station, QtCore.Qt.LeftButton)
 
     # Assert
-    assert editor.configuration.starting_location.locations == (window.save_stations,)
+    assert editor.configuration.starting_location.locations == (window._save_station_nodes,)
 
 
 def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
