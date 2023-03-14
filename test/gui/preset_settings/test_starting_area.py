@@ -75,6 +75,21 @@ def test_quick_fill_default(skip_qtbot, preset_manager, game_enum: RandovaniaGam
     assert editor.configuration.starting_location.locations == (window.game_description.starting_location,)
 
 
+def test_quick_fill_save_station(skip_qtbot, preset_manager, game_enum: RandovaniaGame):
+    # Setup
+    base = preset_manager.default_preset_for_game(game_enum).get_preset()
+    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    editor = PresetEditor(preset)
+    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
+    skip_qtbot.addWidget(window)
+
+    # Run
+    skip_qtbot.mouseClick(window.starting_area_quick_fill_save_station, QtCore.Qt.LeftButton)
+
+    # Assert
+    assert editor.configuration.starting_location.locations == (window.game_description.starting_location,)
+
+
 def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
     # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()

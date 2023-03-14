@@ -102,6 +102,8 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 
 
 class PresetMetroidStartingArea(PresetStartingArea):
+    starting_area_quick_fill_save_station: QtWidgets.QPushButton
+
     def create_quick_fill_buttons(self):
         super().create_quick_fill_buttons()
         self.starting_area_quick_fill_save_station = self._quick_fill_button("Save Station",
