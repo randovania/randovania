@@ -346,10 +346,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Bridge Gate": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Tunnel to Ammo Recharge Station": {
@@ -431,7 +433,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Bridge Gate": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
