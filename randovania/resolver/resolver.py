@@ -169,6 +169,9 @@ async def _inner_advance_depth(state: State,
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
+            else:
+                dangerous_actions.append((action, energy))
+                continue
         action_tuple = (action, energy)
         if _is_action_dangerous(state, action, logic.game.dangerous_resources) and isinstance(action, EventNode):
             dangerous_actions.append(action_tuple)
