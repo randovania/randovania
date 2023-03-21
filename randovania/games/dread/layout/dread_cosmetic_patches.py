@@ -11,6 +11,7 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     show_enemy_damage: bool = False
     show_player_damage: bool = False
     show_death_counter: bool = False
+    show_room_names: bool = False
 
     @classmethod
     def default(cls) -> "DreadCosmeticPatches":

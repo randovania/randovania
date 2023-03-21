@@ -316,7 +316,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             },
             "lua": {
                 "custom_init": {
-                    "enable_death_counter": c.show_death_counter
+                    "enable_death_counter": c.show_death_counter,
+                    "enable_room_ids": c.show_room_names
                 },
             },
         }
