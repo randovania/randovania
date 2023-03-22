@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Optimize Solver by choosing actions in a smarter order. Prefer actions of types that are likely to progress th. Postpone dangerous actions. This should make the solver able to validate seeds where it previously timed out. Solving should in general be faster in general.
 - Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: Shoot Super Missile template
+
+##### Agon Wastes
+
+- Change: Removed SJ and Bomb Jump (beginner) requirements from Amorbis fight
+- Change: Add combat requirements to Amorbis fight
+- Change: Amorbis to Dark Suit now trivial
+
 ### Metroid Dread
 
 #### Logic Database
