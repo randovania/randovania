@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Setting trick filters in the Data Visualizer based on a preset now sets all tricks, even those at disabled.
 - Changed: Optimize Solver by choosing actions in a smarter order. Prefer actions of types that are likely to progress th. Postpone dangerous actions. This should make the solver able to validate seeds where it previously timed out. Solving should in general be faster in general.
 - Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
+- Fixed: Searching for Multiworld sessions by name is no longer case sensitive.
 
 ### Metroid Dread
 
@@ -19,6 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
+- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
+- Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
+- Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
+- Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
+- Fixed: Add missing requirement to release the X before leaving Elun.
 
 ## [5.5.2] - 2023-??-??
 
