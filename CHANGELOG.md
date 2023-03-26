@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
+- Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
 
 #### Logic Database
 
