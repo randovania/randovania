@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
 - Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
 - Fixed: Add missing requirement to release the X before leaving Elun.
+- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
 
 ## [5.5.2] - 2023-??-??
 
