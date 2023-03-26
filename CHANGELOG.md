@@ -23,7 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
+- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
 - Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
+- Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
+- Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
+- Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
+- Fixed: Add missing requirement to release the X before leaving Elun.
 
 ## [5.5.2] - 2023-??-??
 
