@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: Use Speedbooster to skip breaking the blob submerged in water in Artaria Early Cloak room.
+- Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
 
