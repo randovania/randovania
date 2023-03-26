@@ -3269,16 +3269,11 @@
                                                         "comment": "101 Missiles are required, 1.5x leeway for trickless",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "MissileAmmo",
-                                                                    "amount": 153,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Shoot Missile"
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "or",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
@@ -3287,33 +3282,7 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "MissileAmmo",
-                                                                                "amount": 101,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": "Counter the robots for more ammo",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 5,
+                                                                                "amount": 153,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -3327,7 +3296,7 @@
                                                                                         "data": {
                                                                                             "type": "items",
                                                                                             "name": "MissileAmmo",
-                                                                                            "amount": 30,
+                                                                                            "amount": 101,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -3336,8 +3305,51 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "Combat",
-                                                                                            "amount": 4,
+                                                                                            "amount": 2,
                                                                                             "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "Counter the robots for more ammo",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "MissileAmmo",
+                                                                                                        "amount": 30,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Combat",
+                                                                                                        "amount": 4,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
