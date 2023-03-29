@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: Use Flash Shift and Spin Boost with Walljump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
 - Added: Use Speedbooster to skip breaking the blob submerged in water in Artaria Early Cloak room, requires SpeedBooster Conservation (Beginner).
 - Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
 - Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
