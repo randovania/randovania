@@ -1,4 +1,5 @@
 import dataclasses
+from datetime import date
 from enum import Enum
 
 from randovania.exporter.hints.hint_formatters import LocationFormatter, TemplatedFormatter, RelativeAreaFormatter
@@ -57,14 +58,21 @@ class DreadHintNamer(HintNamer):
     def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
         patches = all_patches[players_config.player_index]
 
+        today = date.today()
+        # is_april_fools = today.month == 4 and today.day == 1
+        is_april_fools = True
+        location_hint_template = (
+            "Can you guess where {determiner}{pickup} goes?|That's right! The {node} hole!"
+            if is_april_fools
+            else "{determiner.title}{pickup} can be found in {node}."
+        )
+
         self.location_formatters = {
             HintLocationPrecision.DETAILED: TemplatedFormatter(
-                "{determiner.title}{pickup} can be found in {node}.",
-                self,
+                location_hint_template, self,
             ),
             HintLocationPrecision.WORLD_ONLY: TemplatedFormatter(
-                "{determiner.title}{pickup} can be found in {node}.",
-                self,
+                location_hint_template, self,
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
                 patches, lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
@@ -105,7 +113,7 @@ class DreadHintNamer(HintNamer):
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         if resource.short_name.startswith("Artifact"):
             return ""
-        
+
         return "{} has no need to be located.".format(
             colorize_text(self.color_item, resource.long_name, with_color)
         )
@@ -115,7 +123,7 @@ class DreadHintNamer(HintNamer):
         determiner = ""
         if player_name is not None:
             determiner = self.format_player(player_name, with_color=with_color) + "'s "
-        
+
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_world=True, with_area=not hide_area, with_color=with_color)
 
