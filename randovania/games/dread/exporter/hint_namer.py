@@ -59,10 +59,9 @@ class DreadHintNamer(HintNamer):
         patches = all_patches[players_config.player_index]
 
         today = date.today()
-        # is_april_fools = today.month == 4 and today.day == 1
-        is_april_fools = True
+        is_april_fools = today.month == 4 and today.day == 1
         location_hint_template = (
-            "Can you guess where {determiner}{pickup} goes?|That's right! The {node} hole!"
+            "Can you guess where {determiner}{pickup} goes?|That's right! It goes in the {node} hole!"
             if is_april_fools
             else "{determiner.title}{pickup} can be found in {node}."
         )
