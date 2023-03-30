@@ -57,7 +57,7 @@ class AmmoState(BitPackValue):
                 decoder,
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
             )
-            if bitpacking.decode_bool(): # Negative?
+            if bitpacking.decode_bool(decoder): # Negative?
                 count *= -1
             ammo_count.append(count)
 
