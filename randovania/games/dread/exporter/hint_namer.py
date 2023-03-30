@@ -12,6 +12,7 @@ from randovania.game_description.hint import Hint, HintLocationPrecision
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
@@ -57,14 +58,10 @@ class DreadHintNamer(HintNamer):
 
     def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
         patches = all_patches[players_config.player_index]
+        location_hint_template = "{determiner.title}{pickup} can be found in {node}."
 
-        today = date.today()
-        is_april_fools = today.month == 4 and today.day == 1
-        location_hint_template = (
-            "Can you guess where {determiner}{pickup} goes?|That's right! It goes in the {node} hole!"
-            if is_april_fools
-            else "{determiner.title}{pickup} can be found in {node}."
-        )
+        if isinstance(patches.configuration, DreadConfiguration) and patches.configuration.april_fools_hints:
+            location_hint_template = "Can you guess where {determiner}{pickup} goes?|That's right! It goes in the {node} hole!"
 
         self.location_formatters = {
             HintLocationPrecision.DETAILED: TemplatedFormatter(

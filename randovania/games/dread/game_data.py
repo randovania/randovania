@@ -57,7 +57,10 @@ game_data: game.GameData = game.GameData(
     presets=[
         {
             "path": "starter_preset.rdvpreset"
-        }
+        },
+        {
+            "path": "april_fools_2023.rdvpreset"
+        },
     ],
 
     faq=[

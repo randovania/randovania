@@ -1,0 +1,204 @@
+{
+    "schema_version": 47,
+    "base_preset_uuid": null,
+    "name": "April Fools 2023",
+    "uuid": "188c652e-9d76-4ce9-91e7-a40f3272feff",
+    "description": "Preset for April Fools Day 2023.",
+    "game": "dread",
+    "configuration": {
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {}
+        },
+        "starting_location": [
+            {
+                "world_name": "Artaria",
+                "area_name": "Intro Room",
+                "node_name": "Start Point"
+            }
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "major_items_configuration": {
+            "items_state": {
+                "Wide Beam": {},
+                "Plasma Beam": {},
+                "Wave Beam": {},
+                "Progressive Beam": {
+                    "num_shuffled_pickups": 3
+                },
+                "Charge Beam": {},
+                "Diffusion Beam": {},
+                "Progressive Charge Beam": {
+                    "num_shuffled_pickups": 2
+                },
+                "Grapple Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Missiles": {
+                    "num_included_in_starting_items": 1,
+                    "included_ammo": [
+                        15
+                    ]
+                },
+                "Super Missile": {},
+                "Ice Missile": {},
+                "Progressive Missile": {
+                    "num_shuffled_pickups": 2
+                },
+                "Storm Missile": {
+                    "num_shuffled_pickups": 1
+                },
+                "Phantom Cloak": {
+                    "num_shuffled_pickups": 1
+                },
+                "Flash Shift": {
+                    "num_shuffled_pickups": 1
+                },
+                "Pulse Radar": {
+                    "num_included_in_starting_items": 1
+                },
+                "Varia Suit": {},
+                "Gravity Suit": {},
+                "Progressive Suit": {
+                    "num_shuffled_pickups": 2
+                },
+                "Morph Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Bomb": {},
+                "Cross Bomb": {},
+                "Progressive Bomb": {
+                    "num_shuffled_pickups": 2
+                },
+                "Power Bomb": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        2
+                    ]
+                },
+                "Slide": {
+                    "num_included_in_starting_items": 1
+                },
+                "Spider Magnet": {
+                    "num_shuffled_pickups": 1
+                },
+                "Speed Booster": {
+                    "num_shuffled_pickups": 1
+                },
+                "Spin Boost": {},
+                "Space Jump": {},
+                "Progressive Spin": {
+                    "num_shuffled_pickups": 2
+                },
+                "Screw Attack": {
+                    "num_shuffled_pickups": 1
+                },
+                "Energy Tank": {
+                    "num_shuffled_pickups": 8
+                },
+                "Energy Part": {
+                    "num_shuffled_pickups": 16
+                }
+            },
+            "default_items": {},
+            "minimum_random_starting_items": 0,
+            "maximum_random_starting_items": 0
+        },
+        "ammo_configuration": {
+            "items_state": {
+                "Missile Tank": {
+                    "ammo_count": [
+                        2
+                    ],
+                    "pickup_count": 75,
+                    "requires_major_item": true
+                },
+                "Missile+ Tank": {
+                    "ammo_count": [
+                        10
+                    ],
+                    "pickup_count": 11,
+                    "requires_major_item": true
+                },
+                "Power Bomb Tank": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 13,
+                    "requires_major_item": true
+                }
+            }
+        },
+        "damage_strictness": 1.5,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm",
+        "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
+        "minimum_available_locations_for_hint_placement": 5,
+        "minimum_location_weight_for_hint_placement": 0.1,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "door": {
+                    "can_change_from": [
+                        "Access Open",
+                        "Charge Beam Door",
+                        "Grapple Beam Door",
+                        "Missile Door",
+                        "Plasma Beam Door",
+                        "Power Beam Door",
+                        "Sensor Lock Door",
+                        "Super Missile Door",
+                        "Wave Beam Door",
+                        "Wide Beam Door"
+                    ],
+                    "can_change_to": [
+                        "Charge Beam Door",
+                        "Grapple Beam Door",
+                        "Missile Door",
+                        "Plasma Beam Door",
+                        "Power Beam Door",
+                        "Super Missile Door",
+                        "Wave Beam Door",
+                        "Wide Beam Door"
+                    ]
+                },
+                "tunnel": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "other": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                }
+            }
+        },
+        "single_set_for_pickups_that_solve": false,
+        "staggered_multi_pickup_placement": false,
+        "elevators": {
+            "mode": "vanilla",
+            "excluded_teleporters": [],
+            "excluded_targets": [],
+            "skip_final_bosses": false,
+            "allow_unvisited_room_names": true
+        },
+        "energy_per_tank": 100,
+        "immediate_energy_parts": true,
+        "hanubia_shortcut_no_grapple": true,
+        "hanubia_easier_path_to_itorash": true,
+        "x_starts_released": false,
+        "allow_highly_dangerous_logic": false,
+        "april_fools_hints": true,
+        "artifacts": {
+            "prefer_emmi": true,
+            "prefer_major_bosses": true,
+            "required_artifacts": 4
+        },
+        "constant_heat_damage": 20,
+        "constant_cold_damage": 20,
+        "constant_lava_damage": 20
+    }
+}

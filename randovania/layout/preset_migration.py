@@ -746,6 +746,11 @@ def _migrate_v45(preset: dict) -> dict:
         preset["configuration"]["portal_rando"] = False
     return preset
 
+def _migrate_v46(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["april_fools_hints"] = False
+    return preset
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -793,6 +798,7 @@ _MIGRATIONS = [
     _migrate_v43,
     _migrate_v44,
     _migrate_v45,
+    _migrate_v46,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
