@@ -21,7 +21,7 @@ class AmmoState(BitPackValue):
 
         for count, ammo_index in zip(self.ammo_count, ammo.items):
             ammo_item = db.get_item(ammo_index)
-            if not (0 <= count <= ammo_item.max_capacity):
+            if not (-ammo_item.max_capacity <= count <= ammo_item.max_capacity):
                 raise ValueError(f"Ammo count for item {ammo_index} of value {count} is not "
                                  f"in range [0, {ammo_item.max_capacity}].")
 
@@ -35,9 +35,10 @@ class AmmoState(BitPackValue):
         for count, ammo_index in zip(self.ammo_count, ammo.items):
             ammo_item = db.get_item(ammo_index)
             yield from bitpacking.encode_int_with_limits(
-                count,
+                abs(count),
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
             )
+            yield from bitpacking.encode_bool(count < 0) # Negative?
 
         yield from bitpacking.encode_big_int(self.pickup_count)
         if ammo.unlocked_by is not None:
@@ -52,12 +53,13 @@ class AmmoState(BitPackValue):
         ammo_count = []
         for ammo_index in ammo.items:
             ammo_item = db.get_item(ammo_index)
-            ammo_count.append(
-                bitpacking.decode_int_with_limits(
-                    decoder,
-                    (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
-                )
+            count = bitpacking.decode_int_with_limits(
+                decoder,
+                (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
             )
+            if bitpacking.decode_bool(): # Negative?
+                count *= -1
+            ammo_count.append(count)
 
         # Pickup Count
         pickup_count = bitpacking.decode_big_int(decoder)

@@ -26,10 +26,10 @@ Extra - asset_id: collision_camera_000
   * Extra - right_shield_def: None
   > Door to Upper Burenia Hub
       Trivial
-  > Map Station
+  > Save Station
       Trivial
 
-> Map Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: maproom
   * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
@@ -91,7 +91,7 @@ Extra - asset_id: collision_camera_001
   > Tunnel to Transport to Ghavoran
       Morph Ball
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_DoorProfessor
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -349,7 +349,7 @@ Extra - asset_id: collision_camera_003
   > Tram to Dairon - Upper Transport to Burenia
       Trivial
 
-> Tram to Dairon - Upper Transport to Burenia; Heals? False; Spawn Point; Default Node
+> Tram to Dairon - Upper Transport to Burenia; Heals? False; Default Node
   * Layers: default
   * Teleporter to Dairon - Upper Transport to Burenia
   * Extra - actor_name: wagontrain_baselab_000
@@ -420,7 +420,7 @@ Extra - asset_id: collision_camera_005
   > Tunnel to Underneath Drogyga (Lower)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Hydrogiga
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -791,7 +791,7 @@ Extra - asset_id: collision_camera_008
   > Ammo Recharge Alcove
       Trivial
 
-> Teleporter to Ferenia - Teleport to Burenia (Cyan); Heals? False; Spawn Point; Default Node
+> Teleporter to Ferenia - Teleport to Burenia (Cyan); Heals? False; Default Node
   * Layers: default
   * Teleporter to Ferenia - Teleport to Burenia (Cyan)
   * Extra - actor_name: LE_Teleport_Secret
@@ -871,10 +871,10 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_def: None
   > Door to Upper Burenia Hub
       Trivial
-  > Navigation Room
+  > Save Station
       Trivial
 
-> Navigation Room; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: accesspoint_000
@@ -929,8 +929,9 @@ Extra - asset_id: collision_camera_010
       All of the following:
           Morph Ball
           Any of the following:
-              Flash Shift or Grapple Beam or Spider Magnet or Use Spin Boost
+              Flash Shift or Spider Magnet or Use Spin Boost
               Speed Booster and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer
+              Grapple Beam and Grapple Movement (Beginner)
   > Upper Left Magnet Wall
       Morph Ball
 
@@ -991,7 +992,7 @@ Extra - asset_id: collision_camera_010
   > Door to Teleport to Ferenia
       Morph Ball
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_GhostDash
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1137,15 +1138,11 @@ Extra - asset_id: collision_camera_010
 > Mid-Left Spider Magnet Pit; Heals? False
   * Layers: default
   > Left of Central Grapple Block
-      Gravity Suit or Spider Magnet or Perform WBJ
+      Any of the following:
+          Gravity Suit or Spider Magnet or Perform WBJ
+          Grapple Beam and Grapple Movement (Beginner)
   > Upper Water Ledge - Left
       Grapple Beam or Gravity Suit or Spider Magnet or Perform WBJ or Use Spin Boost
-  > Dock to Main Hub Tower Top (Left)
-      All of the following:
-          Gravity Suit or Spider Magnet
-          Any of the following:
-              Simple IBJ or Use Spin Boost
-              Flash Shift and Walljump (Beginner)
 
 > Left of Central Grapple Block; Heals? False
   * Layers: default
@@ -1155,6 +1152,12 @@ Extra - asset_id: collision_camera_010
       Grapple Beam
   > Mid-Left Spider Magnet Pit
       Trivial
+  > Dock to Main Hub Tower Top (Left)
+      All of the following:
+          Any of the following:
+              Gravity Suit or Spider Magnet or Movement (Intermediate)
+              Water Bomb Jump (Intermediate) and Lay Bomb
+          Flash Shift or Simple IBJ or Use Spin Boost
 
 > Missile Tank Plus Platform; Heals? False
   * Layers: default
@@ -1376,7 +1379,9 @@ Extra - asset_id: collision_camera_010
   > Inside Tunnel
       All of the following:
           Gravity Suit and Morph Ball
-          Space Jump or Speed Booster or Simple IBJ
+          Any of the following:
+              Space Jump or Speed Booster or Simple IBJ
+              Flash Shift and Spin Boost and Walljump (Beginner)
 
 > Tunnel to Storm Missile Gate Room; Heals? False
   * Layers: default
@@ -1496,7 +1501,7 @@ Extra - asset_id: collision_camera_011
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_000
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -1626,7 +1631,7 @@ Extra - asset_id: collision_camera_014
   > Door from Main Hub Tower Top
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_GhostDashObtained
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1730,7 +1735,7 @@ Extra - asset_id: collision_camera_015
   > Upper Water Platform
       Trivial
 
-> Teleporter to Ghavoran - Teleport to Burenia; Heals? False; Spawn Point; Default Node
+> Teleporter to Ghavoran - Teleport to Burenia; Heals? False; Default Node
   * Layers: default
   * Teleporter to Ghavoran - Teleport to Burenia
   * Extra - actor_name: teleporter_forest_000
@@ -1824,10 +1829,10 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_def: None
   > Door to Gravity Suit Tower
       Trivial
-  > Navigation Room
+  > Save Station
       Trivial
 
-> Navigation Room; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: accesspoint_001
@@ -1866,7 +1871,7 @@ Extra - asset_id: collision_camera_017
   > Door to Navigation Station South
       Screw Attack
 
-> Elevator to Artaria - Transport to Burenia; Heals? False; Spawn Point; Default Node
+> Elevator to Artaria - Transport to Burenia; Heals? False; Default Node
   * Layers: default
   * Teleporter to Artaria - Transport to Burenia
   * Extra - actor_name: elevator_cave_000
@@ -2245,7 +2250,7 @@ Extra - asset_id: collision_camera_021
   > Event - Twin Robot Fight
       Fight Twin Robots
 
-> Start Point 4; Heals? False; Spawn Point; Default Node
+> Start Point 4; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_AccessPoint_9
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2475,7 +2480,7 @@ the blast shield issue.
   > Door to Gravity Suit Tower (Upper)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_GravitySuit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2645,7 +2650,7 @@ Extra - asset_id: collision_camera_027
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_001
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -2659,7 +2664,7 @@ Drogyga Arena
 Extra - total_boundings: {'x1': -1900.0, 'x2': 1000.0, 'y1': 10300.0, 'y2': 11550.0}
 Extra - polygon: [[1000.0, 11500.0], [-1400.0, 11500.0], [-1500.0, 11550.0], [-1800.0, 11550.0], [-1900.0, 11500.0], [-1900.0, 10300.0], [1000.0, 10300.0]]
 Extra - asset_id: collision_camera_028
-> Before Fight; Heals? False; Spawn Point; Default Node
+> Before Fight; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Hydrogiga_Dead
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2756,7 +2761,7 @@ Extra - asset_id: collision_camera_030
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_002
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad

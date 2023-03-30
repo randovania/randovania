@@ -327,6 +327,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 item_count_label.setText(item.long_name if len(ammo.items) > 1 else "Contains")
 
                 item_count_spinbox = ScrollProtectedSpinBox(pickup_box)
+                item_count_spinbox.setMinimum(-item.max_capacity)
                 item_count_spinbox.setMaximum(item.max_capacity)
                 item_count_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_item_count_spinbox,
                                                                 ammo, ammo_index))
