@@ -1,5 +1,4 @@
 import dataclasses
-from datetime import date
 from enum import Enum
 
 from randovania.exporter.hints.hint_formatters import LocationFormatter, TemplatedFormatter, RelativeAreaFormatter
@@ -61,7 +60,10 @@ class DreadHintNamer(HintNamer):
         location_hint_template = "{determiner.title}{pickup} can be found in {node}."
 
         if isinstance(patches.configuration, DreadConfiguration) and patches.configuration.april_fools_hints:
-            location_hint_template = "Can you guess where {determiner}{pickup} goes?|That's right! It goes in the {node} hole!"
+            location_hint_template = "|".join([
+                "Can you guess where {determiner}{pickup} goes?",
+                "That's right! It goes in the {node} hole!"
+            ])
 
         self.location_formatters = {
             HintLocationPrecision.DETAILED: TemplatedFormatter(
