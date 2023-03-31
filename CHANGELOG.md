@@ -32,7 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Flash Shift and Spin Boost with Walljump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
-- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
+- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging.
+- Changed: Exclude doors that get a Sabororu enemy on them from the pool of doors that can have their locks randomized.
 - Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
 - Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
 - Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
