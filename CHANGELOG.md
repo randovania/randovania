@@ -21,9 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Agon Wastes
 
-- Change: Removed SJ and Bomb Jump (beginner) requirements from Amorbis fight
-- Change: Add combat requirements to Amorbis fight
-- Change: Amorbis to Dark Suit now trivial
+- Added: Proper combat requirements for the Amorbis fight.
+- Removed: Incorrect and improper connections to and from the Amorbis fight.
 
 ### Metroid Dread
 

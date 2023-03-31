@@ -15300,8 +15300,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Activate Safe Zone"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "DarkWorld1",
+                                                        "amount": 30,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Activate Safe Zone"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -15316,17 +15333,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Charge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "damage",
-                                                                    "name": "DarkWorld1",
+                                                                    "name": "Damage",
                                                                     "amount": 100,
                                                                     "negate": false
                                                                 }
@@ -15337,10 +15345,23 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Supers"
+                                                                        },
+                                                                        {
                                                                             "type": "and",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Charge",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
@@ -15361,10 +15382,6 @@
                                                                                     }
                                                                                 ]
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Supers"
                                                                         }
                                                                     ]
                                                                 }
