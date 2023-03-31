@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
 - Fixed: Searching for Multiworld sessions by name is no longer case sensitive.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: Shoot Super Missile template
+
+##### Agon Wastes
+
+- Added: Proper combat requirements for the Amorbis fight.
+- Removed: Incorrect and improper connections to and from the Amorbis fight.
+
 ### Metroid Dread
 
 #### Logic Database
