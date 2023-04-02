@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Setting trick filters in the Data Visualizer based on a preset now sets all tricks, even those at disabled.
 - Changed: Optimize Solver by choosing actions in a smarter order. Prefer actions of types that are likely to progress th. Postpone dangerous actions. This should make the solver able to validate seeds where it previously timed out. Solving should in general be faster in general.
 - Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
+- Fixed: Searching for Multiworld sessions by name is no longer case sensitive.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: Shoot Super Missile template
+
+##### Agon Wastes
+
+- Added: Proper combat requirements for the Amorbis fight.
+- Removed: Incorrect and improper connections to and from the Amorbis fight.
 
 ### Metroid Dread
 
@@ -22,9 +34,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
 - Added: Movement (Intermediate) and Water Bomb Jump (Intermediate) for getting out of the water at the same spot.
 - Added: Grapple Movement (Beginner) for the Grapple only method of reaching the Missile Tank in Main Hub Tower Top.
+- Added: Use Flash Shift and Spin Boost with Walljump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
-- Removed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle; it is now trickless.
+- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
+- Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
+- Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
+- Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
+- Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
+- Fixed: Add missing requirement to release the X before leaving Elun.
 
 ## [5.5.2] - 2023-??-??
 

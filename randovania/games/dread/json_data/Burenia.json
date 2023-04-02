@@ -5189,7 +5189,8 @@
                         -900.0,
                         -2115.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_010"
             },
             "nodes": {
                 "Dock to Main Hub Tower Middle (Left)": {
@@ -7668,7 +7669,8 @@
                         -900.0,
                         -11800.0
                     ]
-                ]
+                ],
+                "asset_id": "collision_camera_010"
             },
             "nodes": {
                 "Door to Energy Recharge South": {
@@ -8414,6 +8416,41 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spin",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
