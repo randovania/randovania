@@ -5,24 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.6.0] - 2023-??-??
+## [5.7.0] - 2023-05-??
+
+- Nothing yet.
+
+## [5.6.1] - 2023-04-??
+
+- Nothing.
+
+## [5.6.0] - 2023-04-02
 
 - Added: Trick Details popup now lists the usages in each area.
 - Added: Opening the Data Visualizer from the Trick Details while customizing a preset now automatically configured the trick filters based on the preset being edited.
 - Changed: Setting trick filters in the Data Visualizer based on a preset now sets all tricks, even those at disabled.
 - Changed: Optimize Solver by choosing actions in a smarter order. Prefer actions of types that are likely to progress th. Postpone dangerous actions. This should make the solver able to validate seeds where it previously timed out. Solving should in general be faster in general.
 - Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
+- Fixed: Searching for Multiworld sessions by name is no longer case sensitive.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: Proper combat requirements for the Amorbis fight.
+- Removed: Incorrect and improper connections to and from the Amorbis fight.
 
 ### Metroid Dread
 
 #### Logic Database
 
+- Added: Use Flash Shift and Spin Boost with Walljump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
-
-## [5.5.2] - 2023-??-??
-
-- Nothing.
+- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
+- Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
+- Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
+- Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
+- Fixed: Add missing requirement to release the X before leaving Elun.
 
 ## [5.5.1] - 2023-02-28
 
