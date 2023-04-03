@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet.
 
+### Metroid Dread
+
+- **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
+
+#### Logic Database
+
+- Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
+- Added: Movement (Intermediate) and Water Bomb Jump (Intermediate) for getting out of the water at the same spot.
+- Added: Grapple Movement (Beginner) for the Grapple only method of reaching the Missile Tank in Main Hub Tower Top.
+- Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
+
 ## [5.6.1] - 2023-04-??
 
 - Nothing.
@@ -31,18 +42,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
-
 #### Logic Database
 
-- Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
-- Added: Movement (Intermediate) and Water Bomb Jump (Intermediate) for getting out of the water at the same spot.
-- Added: Grapple Movement (Beginner) for the Grapple only method of reaching the Missile Tank in Main Hub Tower Top.
 - Added: Use Flash Shift and Spin Boost with Walljump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
 - Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
-- Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
 - Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
 - Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
