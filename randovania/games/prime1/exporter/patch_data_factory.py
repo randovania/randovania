@@ -1,5 +1,4 @@
 from random import Random
-from typing import Generator
 
 import randovania
 from randovania.exporter import pickup_exporter, item_names
