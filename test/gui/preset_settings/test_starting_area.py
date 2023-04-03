@@ -74,7 +74,6 @@ def test_quick_fill_default(skip_qtbot, preset_manager, game_enum: RandovaniaGam
     # Assert
     assert editor.configuration.starting_location.locations == (window.game_description.starting_location,)
 
-
 def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
     # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()

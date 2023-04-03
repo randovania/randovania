@@ -10,7 +10,7 @@
     },
     "areas": {
         "Map Station": {
-            "default_node": "Map Station",
+            "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -117,7 +117,7 @@
                                 "items": []
                             }
                         },
-                        "Map Station": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -126,7 +126,7 @@
                         }
                     }
                 },
-                "Map Station": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -144,7 +144,7 @@
                         "start_point_actor_name": "maproom_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Teleport to Ferenia": {
                             "type": "and",
@@ -422,7 +422,7 @@
                         "start_point_actor_name": "SP_Checkpoint_DoorProfessor",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Burenia Hub to Dairon": {
                             "type": "template",
@@ -2154,7 +2154,7 @@
                         "start_point_actor_name": "wagontrain_baselab_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Upper Transport to Burenia"
@@ -2409,7 +2409,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Hydrogiga",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Drogyga Access": {
                             "type": "and",
@@ -4666,7 +4666,7 @@
                         "start_point_actor_name": "LE_Platform_Teleport_Secret",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "Teleport to Burenia (Cyan)"
@@ -5006,7 +5006,7 @@
             }
         },
         "Navigation Station North": {
-            "default_node": "Navigation Room",
+            "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -5113,7 +5113,7 @@
                                 "items": []
                             }
                         },
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5122,7 +5122,7 @@
                         }
                     }
                 },
-                "Navigation Room": {
+                "Save Station": {
                     "node_type": "hint",
                     "heal": false,
                     "coordinates": {
@@ -5142,7 +5142,7 @@
                         "hint_id": "AQUA_1",
                         "string_asset_id": 7
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -5363,15 +5363,6 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
                                                         "name": "Magnet",
                                                         "amount": 1,
                                                         "negate": false
@@ -5411,6 +5402,32 @@
                                                                     "name": "DoorLocks",
                                                                     "amount": 1,
                                                                     "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -5646,7 +5663,7 @@
                         "start_point_actor_name": "SP_Checkpoint_GhostDash",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Flash Shift Room (Lower)": {
                             "type": "and",
@@ -6710,6 +6727,32 @@
                                     {
                                         "type": "template",
                                         "data": "Perform WBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -6752,82 +6795,6 @@
                                             "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to Main Hub Tower Top (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -6890,6 +6857,95 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Dock to Main Hub Tower Top (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9273,7 +9329,7 @@
                         "start_point_actor_name": "savestation_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Main Hub Tower Top": {
                             "type": "and",
@@ -9779,7 +9835,7 @@
                         "start_point_actor_name": "SP_Checkpoint_GhostDashObtained",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door from Main Hub Tower Top": {
                             "type": "and",
@@ -10269,7 +10325,7 @@
                         "start_point_actor_name": "teleporter_forest_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia"
@@ -10658,7 +10714,7 @@
             }
         },
         "Navigation Station South": {
-            "default_node": "Navigation Room",
+            "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
                     "x1": 9000.0,
@@ -10765,7 +10821,7 @@
                                 "items": []
                             }
                         },
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10774,7 +10830,7 @@
                         }
                     }
                 },
-                "Navigation Room": {
+                "Save Station": {
                     "node_type": "hint",
                     "heal": false,
                     "coordinates": {
@@ -10794,7 +10850,7 @@
                         "hint_id": "AQUA_2",
                         "string_asset_id": 8
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -10949,7 +11005,7 @@
                         "start_point_actor_name": "elevator_cave_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Transport to Burenia"
@@ -12933,7 +12989,7 @@
                         "start_point_actor_name": "SP_AccessPoint_9",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Navigation Station South": {
                             "type": "and",
@@ -14308,7 +14364,7 @@
                         "start_point_actor_name": "SP_Checkpoint_GravitySuit",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Gravity Suit Tower (Upper)": {
                             "type": "and",
@@ -15166,7 +15222,7 @@
                         "start_point_actor_name": "savestation_001_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Save Station South Access": {
                             "type": "and",
@@ -15237,7 +15293,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Hydrogiga_Dead",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Drogyga": {
                             "type": "and",
@@ -15735,7 +15791,7 @@
                         "start_point_actor_name": "savestation_002_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Transport to Ghavoran": {
                             "type": "and",

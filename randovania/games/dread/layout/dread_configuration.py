@@ -48,9 +48,6 @@ class DreadConfiguration(BaseConfiguration):
             if trick.hide_from_ui and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
                 result.append(f"Enabled {trick.long_name}")
 
-        if self.starting_location.locations != (gd.starting_location,):
-            result.append("Custom Starting Location")
-
         if not self.elevators.is_vanilla:
             result.append("Random Elevators")
 
