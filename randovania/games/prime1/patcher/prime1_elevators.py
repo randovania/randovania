@@ -1,6 +1,6 @@
 # These are hard-coded into the Randomprime API
 # Used by the prime1 patcher
-RANDOM_PRIME_CUSTOM_NAMES = {
+RANDOMPRIME_CUSTOM_NAMES = {
     ("Impact Crater", "Crater Entry Point"): 'Crater Entry Point',  # 2818083
     ("Impact Crater", "Metroid Prime Lair"): 'Essence Dead Cutscene',
 
