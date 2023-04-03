@@ -33,8 +33,8 @@ def _echoes_powerup_offset(item_index: int) -> int:
 
 
 class EchoesRemoteConnector(PrimeRemoteConnector):
-    def __init__(self, version: EchoesDolVersion):
-        super().__init__(version)
+    def __init__(self, version: EchoesDolVersion, executor: MemoryOperationExecutor):
+        super().__init__(version, executor)
 
     def _asset_id_format(self):
         return ">I"

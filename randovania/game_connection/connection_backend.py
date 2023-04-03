@@ -1,27 +1,18 @@
 import logging
 
+from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2
+from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.connection_base import ConnectionBase, GameConnectionStatus, Inventory
-from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
-from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
-from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
-from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperationExecutor
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.patcher import prime1_dol_versions
-from randovania.games.prime2.patcher import echoes_dol_versions
-from randovania.games.prime3.patcher import corruption_dol_versions
 
 PermanentPickups = tuple[tuple[str, PickupEntry], ...]
 
-
 class ConnectionBackend(ConnectionBase):
-    executor: MemoryOperationExecutor
-    connector: RemoteConnector | None = None
+    connector: RemoteConnectorV2 | None = None
+    connector_builder: ConnectorBuilder | None = None
 
     _checking_for_collected_index: bool = False
     _inventory: Inventory
@@ -31,17 +22,14 @@ class ConnectionBackend(ConnectionBase):
     _world: World | None = None
     _last_world: World | None = None
 
-    # Messages
-    message_cooldown: float = 0.0
-
     # Multiworld
     _expected_game: RandovaniaGame | None
     _permanent_pickups: PermanentPickups
 
-    def __init__(self, executor: MemoryOperationExecutor):
+    def __init__(self, connector_builder: ConnectorBuilder):
         super().__init__()
         self.logger = logging.getLogger(type(self).__name__)
-        self.executor = executor
+        self.connector_builder = connector_builder
 
         self._inventory = {}
         self._expected_game = None
@@ -49,11 +37,11 @@ class ConnectionBackend(ConnectionBase):
 
     @property
     def current_status(self) -> GameConnectionStatus:
-        if not self.executor.is_connected():
-            return GameConnectionStatus.Disconnected
-
-        if self.connector is None:
+        if self.connector_builder is None or self.connector is None:
             return GameConnectionStatus.UnknownGame
+
+        if not self.connector.executor.is_connected():
+            return GameConnectionStatus.Disconnected
 
         if self._expected_game is not None and self._expected_game != self.connector.game_enum:
             return GameConnectionStatus.WrongGame
@@ -67,9 +55,12 @@ class ConnectionBackend(ConnectionBase):
         else:
             return GameConnectionStatus.InGame
 
+    def _notify_status(self):
+        raise NotImplementedError()
+
     @property
-    def backend_choice(self) -> MemoryExecutorChoice:
-        return self.executor.backend_choice
+    def connector_builder_choice(self) -> ConnectionBuilderChoice:
+        return self.connector_builder.connector_builder_choice
 
     @property
     def name(self) -> str:
@@ -77,14 +68,14 @@ class ConnectionBackend(ConnectionBase):
 
     @property
     def lock_identifier(self) -> str | None:
-        return self.executor.lock_identifier
+        return self.connector.executor.lock_identifier if self.connector is not None else None
 
     @property
     def checking_for_collected_index(self):
         return self._checking_for_collected_index
 
     @checking_for_collected_index.setter
-    def checking_for_collected_index(self, value):
+    def checking_for_collected_index(self, value: bool):
         self._checking_for_collected_index = value
 
     def set_connection_enabled(self, value: bool):
@@ -92,48 +83,16 @@ class ConnectionBackend(ConnectionBase):
         if not value:
             self.connector = None
 
-    async def _identify_game(self) -> RemoteConnector | None:
-        all_connectors: list[PrimeRemoteConnector] = [
-            Prime1RemoteConnector(version)
-            for version in prime1_dol_versions.ALL_VERSIONS
-        ]
-        all_connectors.extend([
-            EchoesRemoteConnector(version)
-            for version in echoes_dol_versions.ALL_VERSIONS
-        ])
-        all_connectors.extend([
-            CorruptionRemoteConnector(version)
-            for version in corruption_dol_versions.ALL_VERSIONS
-        ])
-        read_first_ops = [
-            MemoryOperation(connectors.version.build_string_address,
-                            read_byte_count=min(len(connectors.version.build_string), 4))
-            for connectors in all_connectors
-        ]
-        try:
-            first_ops_result = await self.executor.perform_memory_operations(read_first_ops)
-        except (RuntimeError, MemoryOperationException) as e:
-            self.logger.debug(f"Unable to probe for game version: {e}")
-            return None
-
-        possible_connectors: list[RemoteConnector] = [
-            connectors
-            for connectors, read_op in zip(all_connectors, read_first_ops)
-            if first_ops_result.get(read_op) == connectors.version.build_string[:4]
-        ]
-
-        for connector in possible_connectors:
-            try:
-                is_version = await connector.is_this_version(self.executor)
-            except (RuntimeError, MemoryOperationException):
-                return None
-
-            if is_version:
-                self.logger.info(f"identified game as {connector.description()}")
-                return connector
 
     def get_current_inventory(self) -> Inventory:
         return self._inventory
+
+    async def set_connector_builder(self, connector_builder: ConnectorBuilder):
+        if self.connector is not None:
+            await self.connector.executor.disconnect()
+        self.connector_builder = connector_builder
+        self.connector = await connector_builder.build_connector()
+        self._notify_status()
 
     @property
     def expected_game(self):
@@ -147,34 +106,27 @@ class ConnectionBackend(ConnectionBase):
         self._permanent_pickups = pickups
 
     async def update_current_inventory(self):
-        self._inventory = await self.connector.get_inventory(self.executor)
+        self._inventory = await self.connector.get_inventory()
 
     async def _multiworld_interaction(self):
         if self._expected_game is None:
             return
 
-        locations, patches = await self.connector.known_collected_locations(self.executor)
-        for location in locations:
-            await self._emit_location_collected(self.connector.game_enum, location)
-
-        if patches:
-            await self.connector.execute_remote_patches(self.executor, patches)
+        locations = await self.connector.known_collected_locations()
+        if len(locations) != 0:
+            for location in locations:
+                await self._emit_location_collected(self.connector.game_enum, location)
         else:
-            patches, has_message = await self.connector.find_missing_remote_pickups(
-                self.executor, self._inventory, self._permanent_pickups, self.message_cooldown > 0.0,
+            await self.connector.receive_remote_pickups(
+                self._inventory, self._permanent_pickups
             )
-            if patches and (self.message_cooldown <= 0.0 or not has_message):
-                await self.connector.execute_remote_patches(self.executor, patches)
-                if has_message:
-                    self.message_cooldown = 4.0
 
-    async def _interact_with_game(self, dt):
-        has_pending_op, world = await self.connector.current_game_status(self.executor)
+    async def _interact_with_game(self, dt: float):
+        has_pending_op, world = await self.connector.current_game_status()
         self._world = world
         if world is not None:
             await self.update_current_inventory()
             if not has_pending_op:
-                self.message_cooldown = max(self.message_cooldown - dt, 0.0)
                 await self._multiworld_interaction()
 
     def _is_unexpected_game(self):
@@ -191,16 +143,27 @@ class ConnectionBackend(ConnectionBase):
         if not self._enabled:
             return
 
-        if not await self.executor.connect():
+        # check if we have a connector_builder and a connector
+        if self.connector_builder is None:
+            return
+        elif self.connector is None:
+            self.connector = await self.connector_builder.build_connector()
+
+        # connector can still be none e.g. dolphin can not hook
+        if self.connector is None:
             return
 
-        if self.connector is None or self._is_unexpected_game() or self._world is None:
-            self.connector = await self._identify_game()
+        if not await self.connector_builder.executor.connect():
+            return
 
         try:
             if self.connector is not None and not self._is_unexpected_game():
                 await self._interact_with_game(dt)
 
-        except MemoryOperationException as e:
-            self.logger.warning(f"Unable to perform memory operations: {e}")
+        # could be a little more precise but other games could return network related errors
+        except Exception as e:
+            self.logger.warning(f"Exception: {e}")
             self._world = None
+            if self.connector is not None:
+                await self.connector.executor.disconnect()
+

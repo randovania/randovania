@@ -35,8 +35,8 @@ def _prime1_powerup_offset(item_index: int) -> int:
 class Prime1RemoteConnector(PrimeRemoteConnector):
     version: Prime1DolVersion
 
-    def __init__(self, version: Prime1DolVersion):
-        super().__init__(version)
+    def __init__(self, version: Prime1DolVersion, executor: MemoryOperationExecutor):
+        super().__init__(version, executor)
 
     def _asset_id_format(self):
         return ">I"

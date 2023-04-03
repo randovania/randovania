@@ -3,13 +3,14 @@ from unittest.mock import AsyncMock
 import pytest
 
 from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.executor.memory_operation import MemoryOperation
 
 
 @pytest.fixture(name="connector")
 def corruption_remote_connector():
     from randovania.games.prime3.patcher import corruption_dol_versions
-    connector = CorruptionRemoteConnector(corruption_dol_versions.ALL_VERSIONS[0])
+    connector = CorruptionRemoteConnector(corruption_dol_versions.ALL_VERSIONS[0], DolphinExecutor())
     return connector
 
 

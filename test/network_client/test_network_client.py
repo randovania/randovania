@@ -5,7 +5,7 @@ import pytest
 import socketio.exceptions
 
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
@@ -244,7 +244,7 @@ async def test_session_self_update(client: NetworkClient):
     inventory: Inventory = {ItemResourceInfo(33, "None", "None", 1): InventoryItem(1, 1)}
 
     await client.session_self_update(RandovaniaGame.METROID_PRIME_ECHOES, inventory,
-                                     GameConnectionStatus.InGame, MemoryExecutorChoice.DOLPHIN)
+                                     GameConnectionStatus.InGame, ConnectionBuilderChoice.DOLPHIN)
 
     client._emit_with_result.assert_awaited_once_with(
         "game_session_self_update",

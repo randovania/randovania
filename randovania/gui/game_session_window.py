@@ -1360,7 +1360,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                     self.game_connection.expected_game,
                     self.game_connection.get_current_inventory(),
                     self.game_connection.current_status,
-                    self.game_connection.backend_choice,
+                    self.game_connection.connector_builder_choice,
                 )
         except UnableToConnect:
             logger.info("Unable to connect to server to update status")

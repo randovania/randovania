@@ -3,8 +3,8 @@ from unittest.mock import MagicMock, AsyncMock
 
 import pytest
 from PySide6 import QtWidgets
+from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 
-from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.game_connection import GameConnection
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 
@@ -16,7 +16,7 @@ def _setup(skip_qtbot):
     tool = QtWidgets.QToolButton(parent)
     label = QtWidgets.QLabel(parent)
 
-    result = GameConnectionSetup(parent, label, GameConnection(DolphinExecutor()), MagicMock())
+    result = GameConnectionSetup(parent, label, GameConnection(NintendontConnectorBuilder("")), MagicMock())
     result.setup_tool_button_menu(tool)
 
     return result
@@ -27,7 +27,7 @@ async def test_on_use_nintendont_backend_accept(setup, mocker, nintendont_ip):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
     setup.options.nintendont_ip = nintendont_ip
-    old_executor = setup.game_connection.executor
+    old_connector_builder = setup.game_connection.connector_builder
 
     # Run
     await setup.on_use_nintendont_backend()
@@ -37,13 +37,13 @@ async def test_on_use_nintendont_backend_accept(setup, mocker, nintendont_ip):
     dialog: QtWidgets.QInputDialog = mock_execute_dialog.mock_calls[0].args[0]
     if nintendont_ip is not None:
         assert dialog.textValue() == nintendont_ip
-        assert setup.game_connection.executor is not old_executor
+        assert setup.game_connection.connector_builder is not old_connector_builder
         assert setup.use_nintendont_backend.isChecked()
         assert setup.use_nintendont_backend.text() == f"Nintendont: {nintendont_ip}"
 
     else:
         assert dialog.textValue() == ""
-        assert setup.game_connection.executor is old_executor
+        assert setup.game_connection.connector_builder is old_connector_builder
 
 
 async def test_on_upload_nintendont_action_no_dol(setup, mocker, tmpdir):

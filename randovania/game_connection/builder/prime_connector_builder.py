@@ -20,16 +20,19 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         self.logger = logging.getLogger(type(self).__name__)
 
     async def build_connector(self) -> RemoteConnectorV2 | None:
+        if not await self.executor.connect():
+            return
+        
         all_connectors: list[PrimeRemoteConnector] = [
-            Prime1RemoteConnector(version)
+            Prime1RemoteConnector(version, self.executor)
             for version in prime1_dol_versions.ALL_VERSIONS
         ]
         all_connectors.extend([
-            EchoesRemoteConnector(version)
+            EchoesRemoteConnector(version, self.executor)
             for version in echoes_dol_versions.ALL_VERSIONS
         ])
         all_connectors.extend([
-            CorruptionRemoteConnector(version)
+            CorruptionRemoteConnector(version, self.executor)
             for version in corruption_dol_versions.ALL_VERSIONS
         ])
         read_first_ops = [
@@ -51,8 +54,9 @@ class PrimeConnectorBuilder(ConnectorBuilder):
 
         for connector in possible_connectors:
             try:
-                is_version = await connector.is_this_version(self.executor)
+                is_version = await connector.is_this_version()
             except (RuntimeError, MemoryOperationException) as e:
+                self.logger.debug(e)
                 return None
 
             if is_version:

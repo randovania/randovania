@@ -33,8 +33,9 @@ def _corruption_powerup_offset(item_index: int) -> int:
 class CorruptionRemoteConnector(PrimeRemoteConnector):
     version: CorruptionDolVersion
 
-    def __init__(self, version: CorruptionDolVersion):
-        super().__init__(version)
+    def __init__(self, version: CorruptionDolVersion, executor: MemoryOperationExecutor):
+        super().__init__(version, executor)
+
 
     def _asset_id_format(self):
         return ">Q"
@@ -104,12 +105,10 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def _dol_patch_for_hud_message(self, message: str) -> DolRemotePatch:
         raise RuntimeError("Unable to prepare dol patches for hud display in Corruption")
 
-    async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: tuple[tuple[str, PickupEntry], ...],
-                                          in_cooldown: bool,
-                                          ) -> tuple[list[DolRemotePatch], bool]:
+    async def receive_remote_pickups(self, inventory: Inventory, remote_pickups: tuple[tuple[str, PickupEntry], ...]) \
+          -> None:
         # Not yet implemented
-        return [], False
+        return
 
     async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[DolRemotePatch]) -> None:
         raise RuntimeError("Unable to execute remote patches in Corruption")

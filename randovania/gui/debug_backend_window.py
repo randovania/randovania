@@ -21,12 +21,6 @@ from randovania.network_common.admin_actions import SessionAdminUserAction
 from randovania.patching.prime import all_prime_dol_patches
 
 
-class DebugGameBackendChoice:
-    @property
-    def pretty_text(self):
-        return "Debug"
-
-
 def _echoes_powerup_address(item_index: int) -> int:
     powerups_offset = 0x58
     vector_data_offset = 0x4
@@ -62,7 +56,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self._timer.setInterval(10000)
 
         self._used_version = echoes_dol_versions.ALL_VERSIONS[0]
-        self._connector = EchoesRemoteConnector(self._used_version)
+        self._connector = EchoesRemoteConnector(self._used_version, self)
         self.game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
         self._game_memory = bytearray(24 * (2 ** 20))
@@ -116,7 +110,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self.logger.info(f"Wrote {data.hex()} to {hex(address)}")
 
     async def _update_inventory_label(self):
-        inventory = await self._connector.get_inventory(self)
+        inventory = await self._connector.get_inventory()
 
         s = "<br />".join(
             f"{name} x {quantity.amount}/{quantity.capacity}" for name, quantity in inventory.items()
@@ -357,10 +351,6 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
     @property
     def lock_identifier(self) -> str | None:
         return None
-
-    @property
-    def backend_choice(self):
-        return DebugGameBackendChoice()
 
     async def connect(self) -> bool:
         await self._ensure_initialized_game_memory()
