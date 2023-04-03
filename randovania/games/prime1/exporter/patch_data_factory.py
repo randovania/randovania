@@ -496,7 +496,10 @@ def _serialize_dock_modifications(world_data, worlds: list[World], room_rando_mo
                             continue
 
                         for dock_num in room["doors"]:
-                            if "destination" not in room["doors"][dock_num] or len(room["doors"][dock_num]["destination"]) == 0:
+                            if "destination" not in room["doors"][dock_num]:
+                                continue
+
+                            if len(room["doors"][dock_num]["destination"]) == 0:
                                 continue
 
                             if (room_name, int(dock_num)) in disabled_doors:
