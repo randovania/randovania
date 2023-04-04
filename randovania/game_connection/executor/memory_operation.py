@@ -52,7 +52,7 @@ class OperationExecutor:
     async def connect(self) -> bool:
         raise NotImplementedError()
 
-    async def disconnect(self):
+    def disconnect(self):
         raise NotImplementedError()
 
     def is_connected(self) -> bool:

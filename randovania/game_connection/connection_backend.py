@@ -89,7 +89,7 @@ class ConnectionBackend(ConnectionBase):
 
     async def set_connector_builder(self, connector_builder: ConnectorBuilder):
         if self.connector is not None:
-            await self.connector.executor.disconnect()
+            self.connector.executor.disconnect()
         self.connector_builder = connector_builder
         self.connector = await connector_builder.build_connector()
         self._notify_status()
@@ -127,6 +127,7 @@ class ConnectionBackend(ConnectionBase):
         if world is not None:
             await self.update_current_inventory()
             if not has_pending_op:
+                self.connector.message_cooldown = max(self.connector.message_cooldown - dt, 0.0)
                 await self._multiworld_interaction()
 
     def _is_unexpected_game(self):
@@ -165,5 +166,5 @@ class ConnectionBackend(ConnectionBase):
             self.logger.warning(f"Exception: {e}")
             self._world = None
             if self.connector is not None:
-                await self.connector.executor.disconnect()
+                self.connector.executor.disconnect()
 

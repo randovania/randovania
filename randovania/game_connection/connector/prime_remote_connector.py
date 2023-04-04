@@ -95,7 +95,7 @@ class PrimeRemoteConnector(RemoteConnectorV2):
     async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
 
-        memory_ops = await self._memory_op_for_items(self.executor, [
+        memory_ops = await self._memory_op_for_items([
             item
             for item in self.game.resource_database.item
             if item.extra["item_id"] < 1000
@@ -121,7 +121,7 @@ class PrimeRemoteConnector(RemoteConnectorV2):
         if multiworld_magic_item is None:
             return set()
 
-        memory_ops = await self._memory_op_for_items(self.executor, [multiworld_magic_item])
+        memory_ops = await self._memory_op_for_items([multiworld_magic_item])
         op_result = await self.executor.perform_single_memory_operation(*memory_ops)
 
         magic_inv = InventoryItem(*struct.unpack(">II", op_result))

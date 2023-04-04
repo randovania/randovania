@@ -15,6 +15,7 @@ class RemoteConnectorV2:
     def __init__(self, executor: OperationExecutor):
         super().__init__()
         self.executor = executor
+        self.message_cooldown = 0.0
 
     @property
     def game_enum(self) -> RandovaniaGame:
