@@ -37,8 +37,8 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
         model_list = list(set(assets_meta["items"]) - bad_models)
 
     for level in patch_data["levelData"].values():
-        for room in level["rooms"].values():
-            for pickup in room["pickups"]:
+        for room in level.get("rooms", {}).values():
+            for pickup in room.get("pickups", []):
                 model = PickupModel.from_json(pickup.pop("model"))
                 if model.game == RandovaniaGame.METROID_PRIME:
                     converted_model_name = model.name
