@@ -322,12 +322,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             for ammo_index, ammo_item in enumerate(ammo.items):
                 item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
+                minimum_count = -item.max_capacity if ammo.allows_negative else 0
 
                 item_count_label = QtWidgets.QLabel(pickup_box)
                 item_count_label.setText(item.long_name if len(ammo.items) > 1 else "Contains")
 
                 item_count_spinbox = ScrollProtectedSpinBox(pickup_box)
-                item_count_spinbox.setMinimum(-item.max_capacity)
+                item_count_spinbox.setMinimum(minimum_count)
                 item_count_spinbox.setMaximum(item.max_capacity)
                 item_count_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_item_count_spinbox,
                                                                 ammo, ammo_index))

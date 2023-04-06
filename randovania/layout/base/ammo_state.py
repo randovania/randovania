@@ -21,7 +21,8 @@ class AmmoState(BitPackValue):
 
         for count, ammo_index in zip(self.ammo_count, ammo.items):
             ammo_item = db.get_item(ammo_index)
-            if not (-ammo_item.max_capacity <= count <= ammo_item.max_capacity):
+            minimum_count = -ammo_item.max_capacity if ammo.allows_negative else 0
+            if not (minimum_count <= count <= ammo_item.max_capacity):
                 raise ValueError(f"Ammo count for item {ammo_index} of value {count} is not "
                                  f"in range [0, {ammo_item.max_capacity}].")
 
