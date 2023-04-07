@@ -97,6 +97,7 @@ _LOCATIONS_GROUPED_TOGETHER = [
     ({52, 53}, None),  # Research Lab Aether
 ]
 
+
 def _remove_empty(d):
     """recursively remove empty lists, empty dicts, or None elements from a dictionary"""
 
@@ -768,6 +769,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
         # strip extraneous info
         world_data = _remove_empty(world_data)
+        for world_item in world_data.values():
+            if "rooms" not in world_item:
+                world_item["rooms"] = {}
 
         starting_memo = None
         extra_starting = item_names.additional_starting_equipment(self.configuration, db, self.patches)
