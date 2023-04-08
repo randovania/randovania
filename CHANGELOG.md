@@ -5,7 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.6.0] - 2023-??-??
+## [5.7.0] - 2023-05-??
+
+- Nothing yet.
+
+### Metroid Dread
+
+- **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
+
+#### Logic Database
+
+- Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
+- Added: Movement (Intermediate) and Water Bomb Jump (Intermediate) for getting out of the water at the same spot.
+- Added: Grapple Movement (Beginner) for the Grapple only method of reaching the Missile Tank in Main Hub Tower Top.
+- Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
+
+## [5.6.1] - 2023-04-??
+
+- Nothing.
+
+## [5.6.0] - 2023-04-02
 
 - Added: Trick Details popup now lists the usages in each area.
 - Added: Opening the Data Visualizer from the Trick Details while customizing a preset now automatically configured the trick filters based on the preset being edited.
@@ -13,6 +32,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Optimize Solver by choosing actions in a smarter order. Prefer actions of types that are likely to progress th. Postpone dangerous actions. This should make the solver able to validate seeds where it previously timed out. Solving should in general be faster in general.
 - Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
 - Fixed: Searching for Multiworld sessions by name is no longer case sensitive.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: Proper combat requirements for the Amorbis fight.
+- Removed: Incorrect and improper connections to and from the Amorbis fight.
 
 ### Metroid Dread
 
@@ -31,10 +57,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
 - Fixed: Add missing requirement to release the X before leaving Elun.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
-
-## [5.5.2] - 2023-??-??
-
-- Nothing.
 
 ## [5.5.1] - 2023-02-28
 

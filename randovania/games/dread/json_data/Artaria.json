@@ -319,7 +319,7 @@
                         "start_point_actor_name": "SP_Checkpoint_AccessPoint_1B",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Navigation Station South": {
                             "type": "and",
@@ -1714,7 +1714,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Proto EMMI Introduction (Lower)": {
                             "type": "and",
@@ -2944,7 +2944,7 @@
                         "start_point_actor_name": "SP_Checkpoint_EmmyCave",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to White EMMI Arena": {
                             "type": "and",
@@ -3947,6 +3947,13 @@
                         "Door to EMMI First Chase End (Bottom)": {
                             "type": "template",
                             "data": "Can Slide"
+                        },
+                        "Lower Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4123,6 +4130,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Before Slide": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4311,7 +4325,7 @@
                         "start_point_actor_name": "teleport_baselab_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Teleport to Artaria"
@@ -4395,6 +4409,54 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Arbitrary Enky Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Slide": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8450.0,
+                        "y": 3300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Arbitrary Enky Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Lower Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6250.0,
+                        "y": 500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to White EMMI Introduction (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4733,8 +4795,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5472.096743195677,
-                        "y": 2260.3309619449965,
+                        "x": 3350.0,
+                        "y": 2600.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -4756,7 +4818,7 @@
             }
         },
         "EMMI Zone Hub": {
-            "default_node": "Start Point",
+            "default_node": "Bottom Section",
             "extra": {
                 "total_boundings": {
                     "x1": -5200.0,
@@ -4825,6 +4887,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to EMMI Zone Exit Southwest (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Top Door": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6067,12 +6136,12 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Bottom Section": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -4883.215130023641,
-                        "y": -2386.2152425982213,
+                        "x": -4883.22,
+                        "y": -2386.22,
                         "z": 0.0
                     },
                     "description": "",
@@ -6083,6 +6152,30 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to EMMI Zone Exit Southwest (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Top Door": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4750.0,
+                        "y": 1900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to EMMI Zone Exit Northwest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6941,7 +7034,7 @@
                         "start_point_actor_name": "LE_Platform_Teleport_FromMagma",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "Teleport to Artaria (Red)"
@@ -7670,7 +7763,7 @@
                         "start_point_actor_name": "PRP_CV_SaveStation003_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Waterfall": {
                             "type": "and",
@@ -8298,7 +8391,7 @@
                         "start_point_actor_name": "SP_Checkpoint_ChargeBeam",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Charge Beam Access": {
                             "type": "and",
@@ -10193,7 +10286,7 @@
                         "start_point_actor_name": "SP_Checkpoint_MagnetGlove",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Central Unit Access (Charge)": {
                             "type": "and",
@@ -10589,7 +10682,7 @@
                         "start_point_actor_name": "SP_Checkpoint_OpticalCamo",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Phantom Cloak Tutorial": {
                             "type": "resource",
@@ -11007,7 +11100,7 @@
                         "start_point_actor_name": "SP_Checkpoint_AccessPoint_2B",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Navigation Station North": {
                             "type": "and",
@@ -11072,7 +11165,7 @@
             }
         },
         "Thermal Door Tutorial": {
-            "default_node": "Start Point",
+            "default_node": "Above Blobs",
             "extra": {
                 "total_boundings": {
                     "x1": 15800.0,
@@ -11382,6 +11475,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Below Blobs": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -11514,12 +11614,12 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Above Blobs": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 16146.859169199595,
-                        "y": 3176.190476190476,
+                        "x": 16146.86,
+                        "y": 3176.19,
                         "z": 0.0
                     },
                     "description": "",
@@ -11530,6 +11630,30 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to David Jaffe Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Below Blobs": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16400.0,
+                        "y": 2400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Invisible Corpius Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12491,7 +12615,7 @@
                         "start_point_actor_name": "PRP_CV_SaveStation002_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Path to Thermal Device": {
                             "type": "and",
@@ -12847,7 +12971,7 @@
                         "start_point_actor_name": "SP_Checkpoint_ChainReaction",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Varia Suit Tutorial North": {
                             "type": "and",
@@ -13999,7 +14123,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Post_ChainReaction",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Varia Suit Room": {
                             "type": "and",
@@ -14245,7 +14369,7 @@
                         "start_point_actor_name": "SP_Checkpoint_VariaSuit",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Varia Suit)": {
                             "type": "and",
@@ -14835,7 +14959,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Grapple",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Grapple Beam Tutorial": {
                             "type": "resource",
@@ -15831,7 +15955,7 @@
                         "start_point_actor_name": "SP_Checkpoint_CentralUnit",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to White EMMI Arena (Top)": {
                             "type": "and",
@@ -16198,7 +16322,7 @@
                         "start_point_actor_name": "SP_Checkpoint_AccessPoint_002",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Navigation Station North": {
                             "type": "and",
@@ -17464,7 +17588,7 @@
             }
         },
         "Waterfall": {
-            "default_node": "Start Point",
+            "default_node": "Tower Middle",
             "extra": {
                 "total_boundings": {
                     "x1": -17100.0,
@@ -17841,7 +17965,7 @@
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
-                        "Start Point": {
+                        "Below Rotatable": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -17852,7 +17976,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Below Rotatable": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -17868,7 +17992,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Pre_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Freezer": {
                             "type": "resource",
@@ -17880,10 +18004,12 @@
                             }
                         },
                         "Dock to Red Chozo Arena": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "s010_cave:default:db_dif_cv_002",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -18147,8 +18273,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -15734.265445846737,
-                        "y": 306.91990431411386,
+                        "x": -15734.27,
+                        "y": 850.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -18561,7 +18687,7 @@
             }
         },
         "Map Station": {
-            "default_node": "Map Station",
+            "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
                     "x1": -14200.0,
@@ -18668,7 +18794,7 @@
                                 "items": []
                             }
                         },
-                        "Map Station": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -18677,7 +18803,7 @@
                         }
                     }
                 },
-                "Map Station": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -18695,7 +18821,7 @@
                         "start_point_actor_name": "PRP_CV_MapStation001_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Water Reservoir": {
                             "type": "and",
@@ -18832,8 +18958,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -12415.051395007342,
-                        "y": -452.60442855319604,
+                        "x": -12515.05,
+                        "y": -452.6,
                         "z": 0.0
                     },
                     "description": "",
@@ -19044,7 +19170,7 @@
                         "start_point_actor_name": "SP_Checkpoint_WaterValve",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Map Station": {
                             "type": "and",
@@ -19876,7 +20002,7 @@
                         "start_point_actor_name": "PRP_CV_SaveStation001_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Melee Tutorial Room": {
                             "type": "and",
@@ -20035,7 +20161,7 @@
             }
         },
         "Navigation Station North": {
-            "default_node": "Navigation Room",
+            "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
                     "x1": 10800.0,
@@ -20095,7 +20221,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20135,7 +20261,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20175,7 +20301,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20215,7 +20341,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20224,7 +20350,7 @@
                         }
                     }
                 },
-                "Navigation Room": {
+                "Save Station": {
                     "node_type": "hint",
                     "heal": false,
                     "coordinates": {
@@ -20244,7 +20370,7 @@
                         "hint_id": "CAVE_2",
                         "string_asset_id": 1
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -20710,7 +20836,7 @@
                         "start_point_actor_name": "SP_Checkpoint_ThermalDevice",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Path to Thermal Device (Lower)": {
                             "type": "and",
@@ -20805,7 +20931,7 @@
             }
         },
         "Navigation Station South": {
-            "default_node": "Navigation Room",
+            "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
                     "x1": 6800.0,
@@ -20865,7 +20991,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20905,7 +21031,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Navigation Room": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20914,7 +21040,7 @@
                         }
                     }
                 },
-                "Navigation Room": {
+                "Save Station": {
                     "node_type": "hint",
                     "heal": false,
                     "coordinates": {
@@ -20934,7 +21060,7 @@
                         "hint_id": "CAVE_1",
                         "string_asset_id": 2
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -22356,7 +22482,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Scorpius",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Dock to Phantom Cloak Tutorial": {
                             "type": "template",
@@ -22632,7 +22758,7 @@
                         "start_point_actor_name": "SP_Checkpoint_CURoom",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Proto Central Unit": {
                             "type": "and",
@@ -23050,7 +23176,7 @@
                         "start_point_actor_name": "PRP_CV_SaveStation004_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Shinespark Tower to Grapple": {
                             "type": "and",
@@ -23825,7 +23951,7 @@
             }
         },
         "Lower Path to Cataris": {
-            "default_node": null,
+            "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
                     "x1": 26800.0,
@@ -24138,6 +24264,37 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 31350.0,
+                        "y": 2400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport to Cataris": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -25184,7 +25341,7 @@
                         "start_point_actor_name": "teleporter_magma_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "Teleport to Artaria (Blue)"
@@ -25927,7 +26084,7 @@
             }
         },
         "Freezer": {
-            "default_node": "Start Point",
+            "default_node": "Cold Room",
             "extra": {
                 "total_boundings": {
                     "x1": -19200.0,
@@ -26080,6 +26237,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Cold Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -26114,7 +26278,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -26295,7 +26459,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -26304,7 +26468,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Corridor": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -26320,7 +26484,7 @@
                         "start_point_actor_name": "SP_Checkpoint_ChozoWarriorCave",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Screw Attack Room (Power)": {
                             "type": "and",
@@ -26330,6 +26494,30 @@
                             }
                         },
                         "Door to Waterfall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Cold Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18750.0,
+                        "y": -4300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Screw Attack Room (Grapple)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -27442,7 +27630,7 @@
                         "start_point_actor_name": "SP_Checkpoint_EmmyCavePhase2",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Artaria Central Unit": {
                             "type": "template",
@@ -27727,7 +27915,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Freezer": {
                             "type": "or",

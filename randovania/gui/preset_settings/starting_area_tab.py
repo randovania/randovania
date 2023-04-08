@@ -106,7 +106,7 @@ class PresetMetroidStartingArea(PresetStartingArea):
         super().create_quick_fill_buttons()
         self.starting_area_quick_fill_save_station = self._quick_fill_button("Save Station",
                                                                              self._starting_location_on_select_save_station)
-
+        
     def _starting_location_on_select_save_station(self):
         world_list = self.game_description.world_list
         save_stations = [node.identifier for node in world_list.iterate_nodes() if node.name == "Save Station"]
@@ -120,9 +120,3 @@ class PresetMetroidStartingArea(PresetStartingArea):
     @property
     def quick_fill_description(self) -> str:
         return super().quick_fill_description + "<br/>Save Stations: All areas with Save Stations."
-
-
-class PresetMetroidDreadStartingArea(PresetMetroidStartingArea):
-    @classmethod
-    def tab_title(cls) -> str:
-        return "Starting Area [Unsupported]"
