@@ -303,6 +303,25 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             DreadHintNamer(self.description.all_patches, self.players_config),
         )
 
+    def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
+        # generate a 2D dictionary of (scenario, collision camera) => room name
+        all_dict: dict = {}
+        for world in self.game.world_list.worlds:
+            scenario = world.extra.get("scenario_id")
+            world_dict: dict = {}
+
+            for area in world.areas:
+                world_dict[area.extra.get("asset_id")] = area.name
+            
+            all_dict[scenario] = world_dict
+        
+        # fix Burenia Main Tower and Golzuna Tower
+        all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
+        all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
+
+        return all_dict
+
+
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
         return {
@@ -317,8 +336,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "lua": {
                 "custom_init": {
                     "enable_death_counter": c.show_death_counter,
-                    "enable_room_ids": c.show_room_names
+                    "room_ids": c.show_room_names.value[1],
                 },
+                "room_dict": self._build_area_name_dict()
             },
         }
 
