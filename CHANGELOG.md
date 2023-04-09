@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.7.0] - 2023-05-??
 
-- Nothing yet.
+- Changed: The resolver now allows dangerous resources in additional resources.
 
 ### Metroid Dread
 

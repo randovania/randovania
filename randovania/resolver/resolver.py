@@ -21,7 +21,6 @@ from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,
-                               dangerous_resources: frozenset[ResourceInfo],
                                ) -> RequirementList | None:
     items = []
     for item in self.values():
@@ -36,9 +35,7 @@ def _simplify_requirement_list(self: RequirementList, state: State,
         if item.resource.resource_type == ResourceType.NODE_IDENTIFIER:
             continue
 
-        if item.resource not in dangerous_resources:
-            # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
-            items.append(item)
+        items.append(item)
 
     return RequirementList(items)
 
@@ -48,7 +45,7 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
                                          dangerous_resources: frozenset[ResourceInfo],
                                          ) -> RequirementSet:
     new_alternatives = [
-        _simplify_requirement_list(alternative, state, dangerous_resources)
+        _simplify_requirement_list(alternative, state)
         for alternative in requirements.alternatives
     ]
     return RequirementSet(alternative
