@@ -16,7 +16,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self._cosmetic_patches = current
 
         for room_gui_type in DreadRoomGuiType:
-            self.room_names_dropdown.addItem(room_gui_type.value[0], room_gui_type)
+            self.room_names_dropdown.addItem(room_gui_type.value, room_gui_type)
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
