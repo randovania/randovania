@@ -8,9 +8,9 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 # Types of Room Name GUI to display. 
 # the first value is the string displayed in the ui, and the second is the string sent to the patcher
 class DreadRoomGuiType(Enum):
-    NONE = ("Never", "NONE")
-    ALWAYS = ("Always", "ALWAYS")
-    WITH_FADE = ("After entering a room", "WITH_FADE")
+    NONE = ("Never", "never")
+    ALWAYS = ("Always", "always")
+    WITH_FADE = ("After entering a room", "with_fade")
 
 @dataclasses.dataclass(frozen=True)
 class DreadCosmeticPatches(BaseCosmeticPatches):
