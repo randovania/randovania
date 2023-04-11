@@ -93,6 +93,9 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Easier Path to Itorash in Hanubia": configuration.hanubia_easier_path_to_itorash
                 },
                 {
+                    "Consistent Raven Beak Damage": configuration.consistent_raven_beak_damage_table,
+                },
+                {
                     "X Starts Released": configuration.x_starts_released,
                 },
             ],

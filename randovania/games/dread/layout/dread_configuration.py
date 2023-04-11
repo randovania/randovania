@@ -30,6 +30,7 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_shortcut_no_grapple: bool
     hanubia_easier_path_to_itorash: bool
     x_starts_released: bool
+    consistent_raven_beak_damage_table: bool
     allow_highly_dangerous_logic: bool
     april_fools_hints: bool
     artifacts: DreadArtifactConfig

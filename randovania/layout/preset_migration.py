@@ -761,6 +761,12 @@ def _migrate_v47(preset: dict) -> dict:
         preset["configuration"]["legacy_mode"] = False
     return preset
 
+def _migrate_v48(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["consistent_raven_beak_damage_table"] = True
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -809,6 +815,7 @@ _MIGRATIONS = [
     _migrate_v45,
     _migrate_v46,
     _migrate_v47,
+    _migrate_v48,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

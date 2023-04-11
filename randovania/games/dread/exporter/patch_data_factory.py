@@ -119,11 +119,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has no extra {err}")
-    
+
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " + 
+        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " +
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
-    
+
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
@@ -457,7 +457,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "lava": self.configuration.constant_lava_damage,
             },
             "game_patches": {
-                "consistent_raven_beak_damage_table": True,
+                "consistent_raven_beak_damage_table": self.configuration.consistent_raven_beak_damage_table,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,

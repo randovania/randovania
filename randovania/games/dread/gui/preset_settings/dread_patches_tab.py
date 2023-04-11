@@ -13,6 +13,7 @@ from randovania.layout.preset import Preset
 _FIELDS = [
     "hanubia_shortcut_no_grapple",
     "hanubia_easier_path_to_itorash",
+    "consistent_raven_beak_damage_table",
     "x_starts_released",
 ]
 
