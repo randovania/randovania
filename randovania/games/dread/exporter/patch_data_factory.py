@@ -307,11 +307,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         # generate a 2D dictionary of (scenario, collision camera) => room name
         all_dict: dict = {}
         for world in self.game.world_list.worlds:
-            scenario = world.extra.get("scenario_id")
+            scenario = world.extra["scenario_id"]
             world_dict: dict = {}
 
             for area in world.areas:
-                world_dict[area.extra.get("asset_id")] = area.name
+                world_dict[area.extra["asset_id"]] = area.name
             
             all_dict[scenario] = world_dict
         
