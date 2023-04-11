@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
 - Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
+- Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
 
 #### Logic Database
 
