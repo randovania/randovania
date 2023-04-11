@@ -7,7 +7,6 @@ from PySide6 import QtCore
 from PySide6.QtCore import Qt
 
 from randovania.game_description import default_database
-from randovania.game_description.world.node import GenericNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
 from randovania.games.game import RandovaniaGame
@@ -69,10 +68,32 @@ def test_quick_fill_default(skip_qtbot, preset_manager, game_enum: RandovaniaGam
     skip_qtbot.addWidget(window)
 
     # Run
-    skip_qtbot.mouseClick(window.starting_area_quick_fill_default, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.starting_area_quick_fill_default, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     assert editor.configuration.starting_location.locations == (window.game_description.starting_location,)
+
+
+@pytest.mark.parametrize("game_enum", [
+    RandovaniaGame.METROID_PRIME,
+    RandovaniaGame.METROID_PRIME_ECHOES,
+    RandovaniaGame.METROID_DREAD,
+])
+def test_quick_fill_save_station(skip_qtbot, preset_manager, game_enum: RandovaniaGame):
+    # Setup
+    base = preset_manager.default_preset_for_game(game_enum).get_preset()
+    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    editor = PresetEditor(preset)
+    window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
+    skip_qtbot.addWidget(window)
+
+    # Run
+    skip_qtbot.mouseClick(window.starting_area_quick_fill_save_station, QtCore.Qt.MouseButton.LeftButton)
+
+    # Assert
+    save_stations = tuple(sorted(window._save_station_nodes()))
+    assert editor.configuration.starting_location.locations == save_stations
+
 
 def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
     # Setup
@@ -83,7 +104,7 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
     skip_qtbot.addWidget(window)
 
     # Run
-    skip_qtbot.mouseClick(window.starting_area_quick_fill_classic, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.starting_area_quick_fill_classic, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     expected = {
@@ -92,6 +113,7 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
         NodeIdentifier.create("Labyrinth", "Camp", "Room Spawn")
     }
     assert set(editor.configuration.starting_location.locations) == expected
+
 
 def test_check_credits(skip_qtbot, preset_manager):
     # Setup
@@ -106,13 +128,14 @@ def test_check_credits(skip_qtbot, preset_manager):
     checkbox_list = window._starting_location_for_node
     assert checkbox_list.get(not_expected, None) == None
 
+
 def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
     # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.BLANK).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
     editor = PresetEditor(preset)
 
-    game_desc = default_database.game_description_for(preset.game)                     
+    game_desc = default_database.game_description_for(preset.game)
     window = PresetStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
     window.on_preset_changed(editor.create_custom_preset_with())
@@ -171,14 +194,14 @@ def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
 
     # toggle world box
     # don't ask me why qtbot clicks at the wrong position by default on this box
-    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2,intro_world_box.height()/2))
+    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2, intro_world_box.height() / 2))
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 3
     assert starting_area_box.checkState() == QtCore.Qt.Checked
     assert intro_world_box.checkState() == QtCore.Qt.Checked
     assert blue_key_room_box.checkState() == QtCore.Qt.Checked
 
-    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2,intro_world_box.height()/2))
+    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2, intro_world_box.height() / 2))
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 0
     assert starting_area_box.checkState() == QtCore.Qt.Unchecked
