@@ -39,7 +39,8 @@ class AmmoState(BitPackValue):
                 abs(count),
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
             )
-            yield from bitpacking.encode_bool(count < 0) # Negative?
+            if ammo.allows_negative:
+                yield from bitpacking.encode_bool(count < 0) # Negative?
 
         yield from bitpacking.encode_big_int(self.pickup_count)
         if ammo.unlocked_by is not None:
@@ -58,7 +59,7 @@ class AmmoState(BitPackValue):
                 decoder,
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
             )
-            if bitpacking.decode_bool(decoder): # Negative?
+            if ammo.allows_negative and bitpacking.decode_bool(decoder): # Negative?
                 count *= -1
             ammo_count.append(count)
 
