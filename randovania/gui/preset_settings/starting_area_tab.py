@@ -102,14 +102,24 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 
 
 class PresetMetroidStartingArea(PresetStartingArea):
+    starting_area_quick_fill_save_station: QtWidgets.QPushButton
+
     def create_quick_fill_buttons(self):
         super().create_quick_fill_buttons()
-        self.starting_area_quick_fill_save_station = self._quick_fill_button("Save Station",
-                                                                             self._starting_location_on_select_save_station)
-        
+        self.starting_area_quick_fill_save_station = self._quick_fill_button(
+            "Save Station",
+            self._starting_location_on_select_save_station,
+        )
+
+    def _save_station_nodes(self):
+        return [
+            node.identifier
+            for node in self.game_description.world_list.iterate_nodes()
+            if node.name == "Save Station" and node.valid_starting_location
+        ]
+
     def _starting_location_on_select_save_station(self):
-        world_list = self.game_description.world_list
-        save_stations = [node.identifier for node in world_list.iterate_nodes() if node.name == "Save Station"]
+        save_stations = self._save_station_nodes()
 
         with self._editor as editor:
             editor.set_configuration_field(
