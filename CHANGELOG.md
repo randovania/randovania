@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
 - Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
 
+#### Patcher Changes
+
+- Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+
 #### Logic Database
 
 - Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
@@ -28,6 +33,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
 - Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
+
+### Metroid Prime
+
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+
+### Metroid Prime 2: Echoes
+
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 
 ## [5.6.1] - 2023-04-??
 

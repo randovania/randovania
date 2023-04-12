@@ -294,7 +294,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ])
 
         return text
-    
+
     def _credits_spoiler(self) -> dict[str, str]:
         return credits_spoiler.generic_credits(
             self.configuration.major_items_configuration,
@@ -356,7 +356,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             if "actor_name" not in node.extra:
                 print(f"Invalid door (no actor): {node}")
                 continue
-            
+
             result.append({
                 "actor": (actor := self._teleporter_ref_for(node)),
                 "door_type": (door_type := weakness.extra["type"]),
@@ -477,8 +477,8 @@ class DreadAcquiredMemo(dict):
     @classmethod
     def with_expansion_text(cls):
         result = cls()
-        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missiles}."
-        result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity increased by {Missiles}."
+        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."
+        result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bombs}."
         result["Energy Part"] = "Energy Part acquired.\nCollect 4 to increase energy capacity."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
