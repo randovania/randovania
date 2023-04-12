@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
+- Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
+- Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
+- Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
 
 #### Patcher Changes
 
@@ -23,8 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
 - Added: Movement (Intermediate) and Water Bomb Jump (Intermediate) for getting out of the water at the same spot.
 - Added: Grapple Movement (Beginner) for the Grapple only method of reaching the Missile Tank in Main Hub Tower Top.
+- Added: Use Speedbooster to skip breaking the blob submerged in water in Artaria Early Cloak room, requires SpeedBooster Conservation (Beginner).
+- Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
+- Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
 - Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
+- Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
+- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
 
 ### Metroid Prime
 
