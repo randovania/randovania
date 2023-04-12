@@ -24,7 +24,7 @@ class AmmoState(BitPackValue):
             minimum_count = -ammo_item.max_capacity if ammo.allows_negative else 0
             if not (minimum_count <= count <= ammo_item.max_capacity):
                 raise ValueError(f"Ammo count for item {ammo_index} of value {count} is not "
-                                 f"in range [0, {ammo_item.max_capacity}].")
+                                 f"in range [{minimum_count}, {ammo_item.max_capacity}].")
 
         if self.pickup_count < 0:
             raise ValueError(f"Pickup count must be at least 0, got {self.pickup_count}")
