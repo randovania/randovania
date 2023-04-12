@@ -7,6 +7,11 @@ from randovania.gui.dialog.game_export_dialog import is_file_validator
 
 
 def discover_game(iso_path: Path) -> tuple[str, str] | None:
+    """Identifies which GameCube/Wii game belongs to the target ISO file.
+    Returns:
+        - None, if incompatible file
+        - game id, game title tuple
+    """
     if not iso_path.is_file():
         return None
 
@@ -22,10 +27,15 @@ def discover_game(iso_path: Path) -> tuple[str, str] | None:
 
 
 def is_prime1_iso_validator(file: Path | None) -> bool:
-    """Returns False when the given path exists and is either not an ISO or a Prime 1 ISO, True otherwise"""
+    """Validates if the given path is a proper input for Metroid Prime.
+    - If input doesn't exist, returns True
+    - If input is ISO, return False if it's Metroid Prime otherwise True
+    - If input is not ISO, returns False.
+    """
     if is_file_validator(file):
         return True
 
+    # Check if correct game, but only for ISO files (as we can't for them).
     if file.suffix.lower() == ".iso":
         iso_details = discover_game(file)
         if iso_details is None:
@@ -40,6 +50,7 @@ def is_prime2_iso_validator(file: Path | None) -> bool:
     if is_file_validator(file):
         return True
 
+    # Echoes only support ISO, so we can always identify the game
     iso_details = discover_game(file)
     if iso_details is None:
         return True
