@@ -295,6 +295,22 @@ def _migrate_v15(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v16(json_dict: dict) -> dict:
+    def _fix_node(name: str):
+        return name.replace(
+            "Navigation Room", "Save Station",
+        )
+
+    for game in json_dict["game_modifications"]:
+        if game["game"] == "dread":
+            game["hints"] = {
+                _fix_node(node): hint
+                for node, hint in game["hints"].items()
+            }
+
+    return json_dict
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -311,6 +327,7 @@ _MIGRATIONS = [
     _migrate_v13,
     _migrate_v14,
     _migrate_v15,
+    _migrate_v16,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
