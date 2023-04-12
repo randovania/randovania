@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Speedbooster to skip breaking the blob submerged in water in Artaria Early Cloak room, requires SpeedBooster Conservation (Beginner).
 - Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
 - Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
+- Added: Use a Shinespark to climb up from Above Screw Attack Blocks in Burenia Main Hub Tower Bottom with only Gravity Suit.
 - Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
 - Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
