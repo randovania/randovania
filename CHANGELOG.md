@@ -35,12 +35,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
 - Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
 - Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
+- Added: New option under "Game Modifications" to choose whether to use the vanilla Raven Beak damage table or the normalized damage table Randovania provides.
+- Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
 - Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
 
 #### Patcher Changes
 
-- Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 
 #### Logic Database
