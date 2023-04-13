@@ -166,6 +166,7 @@ class Options:
     _advanced_timeout_during_generation: bool | None = None
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
+    _experimental_settings: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
@@ -372,6 +373,14 @@ class Options:
     @dark_mode.setter
     def dark_mode(self, value: bool):
         self._edit_field("dark_mode", value)
+
+    @property
+    def experimental_settings(self) -> bool:
+        return _return_with_default(self._experimental_settings, lambda: False)
+
+    @experimental_settings.setter
+    def experimental_settings(self, value: bool):
+        self._edit_field("experimental_settings", value)
 
     @property
     def game_backend(self) -> MemoryExecutorChoice:
