@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.7.0] - 2023-05-??
 
+- Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
 - Changed: The resolver now allows dangerous resources in additional resources.
 
 ### Metroid Prime
