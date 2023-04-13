@@ -16,6 +16,7 @@ _DET_AN = [
     "Amber Translator",
     "Echo Visor",
     "Emerald Translator",
+    "Energy Part",
     "Energy Transfer Module",
     "Energy Tank",
     "Ice Beam",

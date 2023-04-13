@@ -12,6 +12,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
+import randovania
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -578,10 +579,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await self._do_import_preset(row_index, preset)
 
     async def _do_import_preset(self, row_index: int, preset: VersionedPreset):
-        if incompatible := preset.get_preset().settings_incompatible_with_multiworld():
+        message = "The following settings are incompatible with multiworld:\n"
+        incompatible = preset.get_preset().settings_incompatible_with_multiworld()
+        if not incompatible and not randovania.is_dev_version():
+            incompatible = preset.get_preset().configuration.unsupported_features()
+            message = "The following settings are unsupported:\n"
+
+        if incompatible:
             return await async_dialog.warning(
                 self, "Incompatible preset",
-                "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible),
+                message + "\n".join(incompatible),
                 async_dialog.StandardButton.Ok, async_dialog.StandardButton.Ok
             )
 

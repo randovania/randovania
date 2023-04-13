@@ -2041,15 +2041,6 @@
                             }
                         },
                         {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5075,6 +5066,44 @@
                             }
                         },
                         "lock": null
+                    },
+                    "Ice Missile Door": {
+                        "extra": {
+                            "type": "ice_missile"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Ice Missile"
+                            }
+                        }
+                    },
+                    "Diffusion Beam Door": {
+                        "extra": {
+                            "type": "diffusion_beam"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Diffusion Beam"
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
@@ -5094,7 +5123,9 @@
                     ],
                     "change_to": [
                         "Charge Beam Door",
+                        "Diffusion Beam Door",
                         "Grapple Beam Door",
+                        "Ice Missile Door",
                         "Missile Door",
                         "Plasma Beam Door",
                         "Power Beam Door",

@@ -20,6 +20,7 @@ class Ammo:
     unlocked_by: str | None = None
     temporary: str | None = None
     is_major: bool | None = None
+    allows_negative: bool | None = None
     extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
@@ -45,6 +46,7 @@ class Ammo:
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
             is_major=value.get("is_major"),
+            allows_negative=value.get("allows_negative"),
             extra=frozen_lib.wrap(value.get("extra", {}))
         )
 
@@ -61,6 +63,8 @@ class Ammo:
             result["unlocked_by"] = self.unlocked_by
         if self.is_major is not None:
             result["is_major"] = self.is_major
+        if self.allows_negative is not None:
+            result["allows_negative"] = self.allows_negative
         return result
 
     @property
