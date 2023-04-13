@@ -211,11 +211,11 @@ def create_connector_builder(debug_game_backend: bool, options):
             )
             raise SystemExit(1)
 
-        from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
+        from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
         from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 
         logger.info("Loaded all game backends...")
-        if options.game_backend == ConnectionBuilderChoice.NINTENDONT and options.nintendont_ip is not None:
+        if options.game_backend == ConnectorBuilderChoice.NINTENDONT and options.nintendont_ip is not None:
             backend = NintendontConnectorBuilder(options.nintendont_ip)
         else:
             backend = DolphinConnectorBuilder()

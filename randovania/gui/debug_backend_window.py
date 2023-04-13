@@ -20,7 +20,7 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
 from randovania.patching.prime import all_prime_dol_patches
 from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2
-from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 
 
 def _echoes_powerup_address(item_index: int) -> int:
@@ -66,8 +66,8 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self._game_memory_initialized = False
 
     @property
-    def connector_builder_choice(self) -> ConnectionBuilderChoice:
-        return ConnectionBuilderChoice.DOLPHIN
+    def connector_builder_choice(self) -> ConnectorBuilderChoice:
+        return ConnectorBuilderChoice.DOLPHIN
 
     def _on_collect_randomly_toggle(self, value: int):
         if bool(value):

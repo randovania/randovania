@@ -175,7 +175,6 @@ async def test_update(backend: ConnectionBackend, depth: int):
 
     backend.connector_builder.executor = executor
 
-    # backend.connector_builder.executor.connect = AsyncMock(return_value=depth > 2)
     backend._interact_with_game = AsyncMock()
 
     # Run

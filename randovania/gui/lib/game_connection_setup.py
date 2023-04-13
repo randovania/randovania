@@ -6,7 +6,7 @@ from randovania import get_data_path
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 from randovania.gui.lib import async_dialog
 from randovania.interface_common.options import Options, InfoAlert
 
@@ -87,7 +87,7 @@ class GameConnectionSetup:
     async def on_use_dolphin_backend(self):
         await self.game_connection.set_connector_builder(DolphinConnectorBuilder())
         with self.options as options:
-            options.game_backend = ConnectionBuilderChoice.DOLPHIN
+            options.game_backend = ConnectorBuilderChoice.DOLPHIN
         self.refresh_backend()
 
     @asyncSlot()
@@ -111,7 +111,7 @@ class GameConnectionSetup:
 
                 with self.options as options:
                     options.nintendont_ip = new_ip
-                    options.game_backend = ConnectionBuilderChoice.NINTENDONT
+                    options.game_backend = ConnectorBuilderChoice.NINTENDONT
                 await self.game_connection.set_connector_builder(NintendontConnectorBuilder(new_ip))
         self.refresh_backend()
 

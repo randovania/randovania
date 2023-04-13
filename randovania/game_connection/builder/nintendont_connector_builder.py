@@ -1,7 +1,7 @@
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
 from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2
 from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
-from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 
 
 class NintendontConnectorBuilder(PrimeConnectorBuilder):
@@ -15,5 +15,5 @@ class NintendontConnectorBuilder(PrimeConnectorBuilder):
         return await super().build_connector()
 
     @property
-    def connector_builder_choice(self) -> ConnectionBuilderChoice:
-        return ConnectionBuilderChoice.NINTENDONT
+    def connector_builder_choice(self) -> ConnectorBuilderChoice:
+        return ConnectorBuilderChoice.NINTENDONT

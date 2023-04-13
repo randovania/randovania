@@ -3,7 +3,7 @@ import logging
 from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.connection_base import ConnectionBase, GameConnectionStatus, Inventory
-from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
@@ -59,7 +59,7 @@ class ConnectionBackend(ConnectionBase):
         raise NotImplementedError()
 
     @property
-    def connector_builder_choice(self) -> ConnectionBuilderChoice:
+    def connector_builder_choice(self) -> ConnectorBuilderChoice:
         return self.connector_builder.connector_builder_choice
 
     @property

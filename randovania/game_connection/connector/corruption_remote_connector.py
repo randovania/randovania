@@ -31,8 +31,6 @@ def _corruption_powerup_offset(item_index: int) -> int:
 
 
 class CorruptionRemoteConnector(PrimeRemoteConnector):
-    version: CorruptionDolVersion
-
     def __init__(self, version: CorruptionDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 

@@ -1,6 +1,6 @@
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
-from randovania.game_connection.memory_executor_choice import ConnectionBuilderChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 
 
 class DolphinConnectorBuilder(PrimeConnectorBuilder):
@@ -9,5 +9,5 @@ class DolphinConnectorBuilder(PrimeConnectorBuilder):
         self.executor = DolphinExecutor()
 
     @property
-    def connector_builder_choice(self) -> ConnectionBuilderChoice:
-        return ConnectionBuilderChoice.DOLPHIN
+    def connector_builder_choice(self) -> ConnectorBuilderChoice:
+        return ConnectorBuilderChoice.DOLPHIN
