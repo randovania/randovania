@@ -10,7 +10,7 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 @pytest.fixture(name="connector")
 def corruption_remote_connector():
     from randovania.games.prime3.patcher import corruption_dol_versions
-    connector = CorruptionRemoteConnector(corruption_dol_versions.ALL_VERSIONS[0], DolphinExecutor())
+    connector = CorruptionRemoteConnector(corruption_dol_versions.ALL_VERSIONS[0], None)
     return connector
 
 
@@ -37,9 +37,10 @@ async def test_fetch_game_status(connector: CorruptionRemoteConnector, has_world
     else:
         vtable_memory_return = b"CAFE"
     executor.perform_single_memory_operation.return_value = vtable_memory_return
+    connector.executor = executor
 
     # Run
-    actual_has_op, actual_world = await connector.current_game_status(executor)
+    actual_has_op, actual_world = await connector.current_game_status()
 
     # Assert
     if has_world and has_cplayer and correct_vtable:

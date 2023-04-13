@@ -292,9 +292,10 @@ async def test_fetch_game_status(connector: EchoesRemoteConnector, version: Echo
         ops[1]: b"\x01" if has_pending_op else b"\x00",
         ops[2]: version.cplayer_vtable.to_bytes(4, "big") if correct_vtable else b"CAFE",
     }
+    connector.executor = executor
 
     # Run
-    actual_has_op, actual_world = await connector.current_game_status(executor)
+    actual_has_op, actual_world = await connector.current_game_status()
 
     # Assert
     if has_world and correct_vtable:

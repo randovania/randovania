@@ -27,6 +27,7 @@ def dolphin_backend():
 async def test_interact_with_game(backend: ConnectionBackend, depth: int, failure_at: int | None):
     # Setup
     backend.connector = AsyncMock()
+    backend.connector.message_cooldown = 0.0
 
     backend.connector.current_game_status.return_value = (
         depth <= 1,  # has pending op
@@ -163,7 +164,7 @@ async def test_update(backend: ConnectionBackend, depth: int):
     # depth 3: connected
     executor = AsyncMock()
     executor.connect = AsyncMock(return_value=depth == 3)
-    executor.disconnect = AsyncMock()
+    executor.disconnect = MagicMock()
 
     backend._enabled = depth > 0
     if depth == 1:
@@ -204,7 +205,7 @@ async def test_update_calls_interact_with_game(backend: ConnectionBackend, inter
     # Setup
     executor = AsyncMock()
     executor.connect = AsyncMock(True)
-    executor.disconnect = AsyncMock()
+    executor.disconnect = MagicMock()
     backend._world = True
     backend.set_expected_game(expected_game)
     backend.connector.game_enum = connected_game
