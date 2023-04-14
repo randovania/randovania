@@ -7,7 +7,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.hint_node import HintNode
@@ -123,7 +123,7 @@ def test_add_hints_precision(empty_patches):
     }
 
 
-def _make_pickup(item_category: ItemCategory):
+def _make_pickup(item_category: ItemCategory, generator_params: PickupGeneratorParams):
     return PickupEntry(
         name="Pickup",
         model=PickupModel(
@@ -133,6 +133,7 @@ def _make_pickup(item_category: ItemCategory):
         item_category=item_category,
         broad_category=item_category,
         progression=tuple(),
+        generator_params=generator_params,
     )
 
 
@@ -140,13 +141,14 @@ def _make_pickup(item_category: ItemCategory):
 @pytest.mark.parametrize("location_precision", [HintLocationPrecision.RELATIVE_TO_AREA,
                                                 HintLocationPrecision.RELATIVE_TO_INDEX])
 def test_add_relative_hint(echoes_game_description, echoes_game_patches, precise_distance, location_precision,
-                           echoes_item_database):
+                           echoes_item_database, default_generator_params):
     # Setup
     rng = Random(5000)
     target_precision = MagicMock(spec=HintItemPrecision)
     precision = MagicMock(spec=HintItemPrecision)
     patches = echoes_game_patches.assign_new_pickups([
-        (PickupIndex(8), PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"]), 0)),
+        (PickupIndex(8), PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"],
+                                                   default_generator_params), 0)),
     ])
     hint_distributor = EchoesHintDistributor()
 
