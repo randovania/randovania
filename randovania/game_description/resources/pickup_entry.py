@@ -4,6 +4,7 @@ from typing import Iterator
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_info import (
     ResourceGainTuple, ResourceGain, ResourceQuantity,
     ResourceCollection,
@@ -51,10 +52,10 @@ class PickupModel(JsonDataclass):
 
 @dataclass(frozen=True)
 class PickupGeneratorParams:
+    preferred_location_category: LocationCategory
     probability_offset: float = 0
     probability_multiplier: float = 1
     required_progression: int = 0
-    is_major_override: bool | None = None
 
 
 @dataclass(frozen=True)
@@ -160,9 +161,3 @@ class PickupEntry:
     def all_resources(self) -> Iterator[ResourceQuantity]:
         yield from self.progression
         yield from self.extra_resources
-
-    @property
-    def is_expansion(self) -> bool:
-        if self.generator_params.is_major_override is not None:
-            return self.generator_params.is_major_override
-        return self.item_category.is_expansion

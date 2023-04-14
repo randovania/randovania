@@ -12,6 +12,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
@@ -202,6 +203,7 @@ def generic_item_category() -> ItemCategory:
 @pytest.fixture()
 def default_generator_params() -> PickupGeneratorParams:
     return PickupGeneratorParams(
+        preferred_location_category=LocationCategory.MAJOR,
     )
 
 
