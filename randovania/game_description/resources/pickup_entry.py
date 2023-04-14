@@ -50,20 +50,25 @@ class PickupModel(JsonDataclass):
 
 
 @dataclass(frozen=True)
+class PickupGeneratorParams:
+    probability_offset: float = 0
+    probability_multiplier: float = 1
+    required_progression: int = 0
+    is_major_override: bool | None = None
+
+
+@dataclass(frozen=True)
 class PickupEntry:
     name: str
     model: PickupModel
     item_category: ItemCategory
     broad_category: ItemCategory
     progression: ResourceGainTuple
+    generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = tuple()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
-    probability_offset: float = 0
-    probability_multiplier: float = 1
-    required_progression: int = 0
-    is_major_override: bool | None = None
 
     def __post_init__(self):
         if not isinstance(self.progression, tuple):
@@ -158,6 +163,6 @@ class PickupEntry:
 
     @property
     def is_expansion(self) -> bool:
-        if self.is_major_override is not None:
-            return self.is_major_override
+        if self.generator_params.is_major_override is not None:
+            return self.generator_params.is_major_override
         return self.item_category.is_expansion

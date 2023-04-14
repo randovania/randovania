@@ -173,7 +173,8 @@ def test_decode(patches_with_data, default_echoes_configuration):
 
 
 @pytest.mark.parametrize("has_convert", [False, True])
-def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_item_category):
+def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_item_category,
+                               default_generator_params):
     # Setup
     name = "Some Random Name"
     if has_convert:
@@ -197,10 +198,11 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, gene
             (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
             (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),
         ),
+        generator_params=default_generator_params,
         extra_resources=(
             (find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"), 5),
         ),
-        resource_lock=resource_lock
+        resource_lock=resource_lock,
     )
 
     # Run

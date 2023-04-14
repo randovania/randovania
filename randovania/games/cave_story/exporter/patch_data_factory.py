@@ -9,7 +9,7 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -45,7 +45,8 @@ class CSPatchDataFactory(BasePatchDataFactory):
             PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
             USELESS_ITEM_CATEGORY,
             USELESS_ITEM_CATEGORY,
-            tuple()
+            tuple(),
+            generator_params=PickupGeneratorParams(),
         ), self.players_config.player_index)
         nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
