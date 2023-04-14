@@ -217,6 +217,7 @@ def setup_and_teardown_for_custom_spawn():
     area.nodes.remove(modified_node)
     area.nodes.append(node)
 
+
 def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardown_for_custom_spawn):
     # test for custom spawn point referenced by starting location and teleporters
     file = test_files_dir.joinpath("log_files", "dread_2.rdvgame")

@@ -6,7 +6,7 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import (
     PickupEntry,
     ResourceLock,
-    PickupModel,
+    PickupModel, PickupGeneratorParams,
 )
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.item_pool import pickup_creator
@@ -79,8 +79,10 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
         extra_resources=extra_resources,
         item_category=less_generic_item_category,
         broad_category=generic_item_category,
-        probability_offset=5,
         respects_lock=False,
+        generator_params=PickupGeneratorParams(
+            probability_offset=5,
+        ),
     )
 
 
@@ -89,7 +91,8 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
     (10,),
     (15,),
 ])
-def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoes_resource_database):
+def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoes_resource_database,
+                                 default_generator_params):
     # Setup
     missile = echoes_resource_database.get_item("Missile")
     missile_launcher = echoes_resource_database.get_item("MissileLauncher")
@@ -125,6 +128,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
         model=PickupModel(echoes_resource_database.game_enum, "MissileLauncher"),
         item_category=echoes_item_database.item_categories["missile"],
         broad_category=echoes_item_database.item_categories["missile_related"],
+        generator_params=default_generator_params,
         resource_lock=ResourceLock(
             locked_by=missile_launcher,
             temporary_item=temporary,
@@ -140,6 +144,7 @@ def test_create_seeker_launcher(ammo_quantity: int,
                                 ammo_requires_major_item: bool,
                                 echoes_item_database,
                                 echoes_resource_database,
+                                default_generator_params,
                                 ):
     # Setup
     missile = echoes_resource_database.get_item("Missile")
@@ -184,6 +189,7 @@ def test_create_seeker_launcher(ammo_quantity: int,
             temporary_item=temporary,
             item_to_lock=missile,
         ),
+        generator_params=default_generator_params,
     )
 
 
@@ -220,14 +226,16 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
         ),
         item_category=AMMO_ITEM_CATEGORY,
         broad_category=USELESS_ITEM_CATEGORY,
-        probability_offset=0,
         respects_lock=requires_major_item,
         resource_lock=ResourceLock(
             locked_by=primary_a,
             temporary_item=temporary_a,
             item_to_lock=ammo_a,
         ),
-        probability_multiplier=2,
+        generator_params=PickupGeneratorParams(
+            probability_offset=0,
+            probability_multiplier=2,
+        ),
     )
 
 

@@ -22,7 +22,8 @@ def remote_connector(version: Prime1DolVersion):
 
 
 @pytest.mark.parametrize("artifact", [False, True])
-async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, artifact: bool, generic_item_category):
+async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, artifact: bool, generic_item_category,
+                                  default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
@@ -38,6 +39,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
         extra = (db.energy_tank, db.energy_tank.max_capacity)
 
     pickup = PickupEntry("Pickup", 0, generic_item_category, generic_item_category, progression=tuple(),
+                         generator_params=default_generator_params,
                          extra_resources=(
                              extra,
                          ))
