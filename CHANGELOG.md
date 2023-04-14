@@ -11,7 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
 - Fixed: TODO (PR #4228)
+
+### Metroid Prime 2: Echoes
+
+- Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
 
 ## [5.6.1] - 2023-04-??
 
