@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The resolver now allows dangerous resources in additional resources.
 
+### Metroid Prime
+
+- Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
+
+### Metroid Prime 2: Echoes
+
+- Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
+
 ### Metroid Dread
 
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
