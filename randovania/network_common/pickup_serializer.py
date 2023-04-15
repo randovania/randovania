@@ -4,6 +4,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
     PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -111,6 +112,7 @@ class BitPackPickupEntry:
         if self.value.resource_lock is not None:
             yield from helper.encode_resource_lock(self.value.resource_lock)
         yield from bitpacking.encode_bool(self.value.respects_lock)
+        yield from self.value.generator_params.preferred_location_category.bit_pack_encode({})
         yield from BitPackFloat(self.value.generator_params.probability_offset).bit_pack_encode(
             _PROBABILITY_OFFSET_META
         )
@@ -137,6 +139,8 @@ class BitPackPickupEntry:
         if bitpacking.decode_bool(decoder):
             resource_lock = helper.decode_resource_lock(decoder)
         respects_lock = bitpacking.decode_bool(decoder)
+
+        location_category = LocationCategory.bit_pack_unpack(decoder, {})
         probability_offset = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_OFFSET_META)
         probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
         required_progression = bitpacking.decode_big_int(decoder)
@@ -152,6 +156,7 @@ class BitPackPickupEntry:
             resource_lock=resource_lock,
             respects_lock=respects_lock,
             generator_params=PickupGeneratorParams(
+                preferred_location_category=location_category,
                 probability_offset=probability_offset,
                 probability_multiplier=probability_multiplier,
                 required_progression=required_progression,
