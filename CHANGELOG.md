@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
 
 ### Metroid Prime 2: Echoes
 
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
 - Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
 - Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
 
 #### Patcher Changes
 
