@@ -282,7 +282,7 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "pickup"
         data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
-        data["major_location"] = node.major_location
+        data["location_category"] = node.location_category.value
 
     elif isinstance(node, TeleporterNode):
         data["node_type"] = "teleporter"
