@@ -19,6 +19,7 @@ def dolphin_backend():
     backend = ConnectionBackend(prime_con_builder)
     backend.connector = MagicMock(PrimeRemoteConnector)
     backend.connector.executor = MagicMock(DolphinExecutor)
+    backend.connector.executor.lock_identifier = "randovania-dolphin-backend"
     return backend
 
 
@@ -104,6 +105,9 @@ def test_current_status_in_game(backend: ConnectionBackend):
     backend.checking_for_collected_index = True
     assert backend.current_status == GameConnectionStatus.InGame
 
+def test_lock_identifier(backend: ConnectionBackend):
+    assert backend.lock_identifier == "randovania-dolphin-backend"
+
 
 @pytest.mark.parametrize("depth", [0, 1, 2])
 async def test_multiworld_interaction(backend: ConnectionBackend, depth: int):
@@ -159,15 +163,16 @@ async def test_multiworld_interaction(backend: ConnectionBackend, depth: int):
 async def test_update(backend: ConnectionBackend, depth: int):
     # Setup
     # depth 0: not enabled
-    # depth 1: build_connector fails
-    # depth 2: build_connector works but not connected
-    # depth 3: connected
+    # depth 1: connector_builder is none
+    # depth 2: build_connector fails
+    # depth 3: build_connector works but not connected
+    # depth 4: connected
     executor = AsyncMock()
-    executor.connect = AsyncMock(return_value=depth == 3)
+    executor.connect = AsyncMock(return_value=depth == 4)
     executor.disconnect = MagicMock()
 
     backend._enabled = depth > 0
-    if depth == 1:
+    if depth == 2:
         backend.connector = None
         backend.connector_builder.build_connector = AsyncMock(return_value=None)
     else:
@@ -177,6 +182,9 @@ async def test_update(backend: ConnectionBackend, depth: int):
 
     backend._interact_with_game = AsyncMock()
 
+    if depth == 1:
+        backend.connector_builder = None
+
     # Run
     await backend.update(1)
 
@@ -184,13 +192,16 @@ async def test_update(backend: ConnectionBackend, depth: int):
         backend.connector_builder.build_connector.assert_not_awaited()
         backend.connector_builder.executor.connect.assert_not_awaited()
     elif depth == 1:
+        # it should just return without an error
+        pass
+    elif depth == 2:
         backend.connector_builder.build_connector.assert_awaited_once_with()
         backend.connector_builder.executor.connect.assert_not_awaited()
-    elif depth == 2:
+    elif depth == 3:
         backend.connector_builder.build_connector.assert_not_awaited()
         backend.connector_builder.executor.connect.assert_awaited_once_with()
         backend._interact_with_game.assert_not_awaited()
-    elif depth == 3:
+    elif depth == 4:
         backend.connector_builder.build_connector.assert_not_awaited()
         backend.connector_builder.executor.connect.assert_awaited_once_with()
         backend._interact_with_game.assert_awaited_once_with(1)

@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, AsyncMock
 
 import pytest
 from PySide6 import QtWidgets
+from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 
 from randovania.game_connection.game_connection import GameConnection
@@ -75,3 +76,13 @@ async def test_on_upload_nintendont_action_with_dol(setup, mocker, tmpdir):
     mock_upload.assert_awaited_once_with(nintendont_path, [], setup.options.nintendont_ip)
     mock_message_box.assert_called_once()
     mock_message_box.return_value.show.assert_called_once_with()
+
+async def test_change_of_backend(setup: GameConnectionSetup):
+    # start
+    assert isinstance(setup.game_connection.connector_builder, NintendontConnectorBuilder)
+
+    # Run
+    await setup.on_use_dolphin_backend()
+
+    # Assert
+    assert isinstance(setup.game_connection.connector_builder, DolphinConnectorBuilder)
