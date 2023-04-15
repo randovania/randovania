@@ -5,13 +5,14 @@ from pathlib import Path
 from PySide6.QtWidgets import QLineEdit, QPushButton
 
 from randovania.exporter.game_exporter import GameExportParams
+from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    add_field_validation, output_file_validator, spoiler_path_for, is_file_validator, update_validation
+    add_field_validation, output_file_validator, spoiler_path_for, update_validation
 )
 from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir
@@ -50,7 +51,7 @@ def check_extracted_game(input_file_edit: QLineEdit, input_file_button: QPushBut
 
 def echoes_input_validator(input_file: Path | None, prompt_input_file: bool, input_file_edit: QLineEdit) -> bool:
     if prompt_input_file:
-        return is_file_validator(input_file)
+        return is_prime2_iso_validator(input_file)
     else:
         return input_file_edit.text() != _VALID_GAME_TEXT
 
@@ -113,7 +114,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
                 self.input_file_edit: lambda: echoes_input_validator(self.input_file, self._prompt_input_file,
                                                                      self.input_file_edit),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-                self.prime_file_edit: lambda: self._use_prime_models and is_file_validator(self.prime_file),
+                self.prime_file_edit: lambda: self._use_prime_models and is_prime1_iso_validator(self.prime_file),
             }
         )
 

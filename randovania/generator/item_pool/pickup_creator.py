@@ -3,7 +3,7 @@ from typing import Sequence
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.item.major_item import MajorItem
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.games.game import RandovaniaGame
@@ -57,12 +57,14 @@ def create_major_item(item: MajorItem,
         ),
         item_category=item.item_category,
         broad_category=item.broad_category,
-        probability_offset=item.probability_offset,
-        probability_multiplier=item.probability_multiplier * state.priority,
         unlocks_resource=item.unlocks_ammo,
         respects_lock=ammo_requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database) if ammo is not None else None,
-        is_major_override=item.is_major
+        generator_params=PickupGeneratorParams(
+            probability_offset=item.probability_offset,
+            probability_multiplier=item.probability_multiplier * state.priority,
+            is_major_override=item.is_major,
+        ),
     )
 
 
@@ -97,8 +99,10 @@ def create_ammo_expansion(ammo: Ammo,
         broad_category=ammo.broad_category,
         respects_lock=requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database),
-        probability_multiplier=2,
-        is_major_override=ammo.is_major
+        generator_params=PickupGeneratorParams(
+            probability_multiplier=2,
+            is_major_override=ammo.is_major,
+        ),
     )
 
 
@@ -130,7 +134,9 @@ def create_dark_temple_key(key_number: int,
         ),
         item_category=TEMPLE_KEY_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
-        probability_offset=3,
+        generator_params=PickupGeneratorParams(
+            probability_offset=3,
+        ),
     )
 
 
@@ -160,7 +166,9 @@ def create_sky_temple_key(key_number: int,
         ),
         item_category=SKY_TEMPLE_KEY_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
-        probability_offset=3,
+        generator_params=PickupGeneratorParams(
+            probability_offset=3,
+        ),
     )
 
 
@@ -177,14 +185,16 @@ def create_dread_artifact(artifact_number: int,
 
     return PickupEntry(
         name=f"Metroid DNA {artifact_number + 1}",
-        progression=((resource_database.get_item(f"Artifact{artifact_number+1}"), 1),),
+        progression=((resource_database.get_item(f"Artifact{artifact_number + 1}"), 1),),
         model=PickupModel(
             game=resource_database.game_enum,
             name=f"DNA_{artifact_number + 1}"
         ),
         item_category=DREAD_ARTIFACT_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
-        probability_offset=0.25,
+        generator_params=PickupGeneratorParams(
+            probability_offset=0.25,
+        ),
     )
 
 
@@ -214,7 +224,9 @@ def create_energy_cell(cell_index: int,
         ),
         item_category=ENERGY_CELL_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
-        probability_offset=0.25,
+        generator_params=PickupGeneratorParams(
+            probability_offset=0.25,
+        ),
     )
 
 
@@ -241,8 +253,10 @@ def create_artifact(artifact_index: int,
         ),
         item_category=ARTIFACT_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
-        probability_offset=0.25,
-        required_progression=minimum_progression,
+        generator_params=PickupGeneratorParams(
+            probability_offset=0.25,
+            required_progression=minimum_progression,
+        ),
     )
 
 
@@ -263,6 +277,7 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
         ),
         item_category=USELESS_ITEM_CATEGORY,
         broad_category=USELESS_ITEM_CATEGORY,
+        generator_params=PickupGeneratorParams(),
     )
 
 
@@ -283,6 +298,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
         ),
         item_category=USELESS_ITEM_CATEGORY,
         broad_category=USELESS_ITEM_CATEGORY,
+        generator_params=PickupGeneratorParams(),
     )
 
 
@@ -300,4 +316,5 @@ def create_visual_etm() -> PickupEntry:
         ),
         item_category=USELESS_ITEM_CATEGORY,
         broad_category=USELESS_ITEM_CATEGORY,
+        generator_params=PickupGeneratorParams(),
     )
