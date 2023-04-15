@@ -222,7 +222,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
             "pickups": [{
                 'provider_name': 'Other Name',
                 'pickup': ('C?+ZkYioLIdm}4kHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhL'
-                           'E{v_DHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhLE{v_A0uBH')
+                           'E{v_DHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhLE{v_A0t)~')
             }]
         },
         room=f"game-session-1-1234"

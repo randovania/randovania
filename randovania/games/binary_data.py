@@ -198,7 +198,7 @@ ConstructNode = NodeAdapter(Struct(
             "pickup": Struct(
                 **NodeBaseFields,
                 pickup_index=VarInt,
-                major_location=Flag,
+                location_category=construct.Enum(Byte, major=0, minor=1),
             ),
             "teleporter": Struct(
                 **NodeBaseFields,

@@ -10,9 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
 - Fixed: Unsupported features are now disallowed from use in Multiworld sessions.
 
+### Metroid Dread
+
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
+
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
 - Fixed: TODO (PR #4228)
 
 ### Metroid Prime 2: Echoes

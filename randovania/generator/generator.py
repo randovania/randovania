@@ -7,6 +7,7 @@ import tenacity
 
 from randovania.game_description.assignment import (PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator import dock_weakness_distributor
@@ -121,14 +122,15 @@ def _distribute_remaining_items(rng: Random,
     for player, filler_result in filler_results.player_results.items():
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
                                                           filler_result.patches.pickup_assignment):
-            if modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT and pickup_node.major_location:
+            if (modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
+                    and pickup_node.location_category == LocationCategory.MAJOR):
                 priority_major_pickup_nodes.append((player, pickup_node))
             else:
                 unassigned_pickup_nodes.append((player, pickup_node))
 
         for pickup in filler_result.unassigned_pickups:
             target = PickupTarget(pickup, player)
-            if pickup.is_expansion:
+            if pickup.generator_params.preferred_location_category == LocationCategory.MINOR:
                 all_remaining_pickups.append(target)
             else:
                 remaining_major_pickups.append(target)

@@ -41,11 +41,6 @@ class World:
         for area in self.areas:
             yield from area.pickup_indices
 
-    @property
-    def major_pickup_indices(self) -> Iterator[PickupIndex]:
-        for area in self.areas:
-            yield from area.major_pickup_indices
-
     def area_by_name(self, area_name: str, is_dark_aether: bool | None = None) -> Area:
         for area in self.areas:
             if is_dark_aether is not None and area.in_dark_aether != is_dark_aether:

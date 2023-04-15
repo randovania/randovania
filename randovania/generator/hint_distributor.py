@@ -155,7 +155,7 @@ class HintDistributor(ABC):
         raise NotImplementedError()
 
     def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        return pickup.item_category.is_major
+        return pickup.item_category.hinted_as_major
 
     def fill_unassigned_hints(self, patches: GamePatches,
                               world_list: WorldList,
@@ -310,7 +310,7 @@ class HintDistributor(ABC):
                 # FIXME: None should be ok, but this must be called after junk has been filled
                 if t is not None:
                     cat = t.pickup.item_category
-                    if cat.is_major or (not cat.is_expansion and target_precision == HintItemPrecision.DETAILED):
+                    if cat.hinted_as_major or (not cat.is_expansion and target_precision == HintItemPrecision.DETAILED):
                         yield index
 
         area_choices = {
