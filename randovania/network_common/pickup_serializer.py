@@ -73,7 +73,7 @@ def _encode_item_category(category: ItemCategory):
     yield from bitpacking.encode_string(category.long_name)
     yield from bitpacking.encode_string(category.hint_details[0])
     yield from bitpacking.encode_string(category.hint_details[1])
-    yield from bitpacking.encode_bool(category.is_major)
+    yield from bitpacking.encode_bool(category.hinted_as_major)
     yield from bitpacking.encode_bool(category.is_key)
 
 
@@ -82,7 +82,7 @@ def _decode_item_category(decoder: BitPackDecoder) -> ItemCategory:
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
-        is_major=bitpacking.decode_bool(decoder),
+        hinted_as_major=bitpacking.decode_bool(decoder),
         is_key=bitpacking.decode_bool(decoder)
     )
 

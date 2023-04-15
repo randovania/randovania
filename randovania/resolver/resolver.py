@@ -67,7 +67,7 @@ def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
 
     if isinstance(pickup_node, PickupNode):
         target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        return target is not None and (target.pickup.item_category.is_major or target.pickup.item_category.is_key)
+        return target is not None and (target.pickup.item_category.hinted_as_major or target.pickup.item_category.is_key)
     return False
 
 

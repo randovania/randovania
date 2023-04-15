@@ -19,6 +19,9 @@ def _migrate_v3(data: dict) -> dict:
     for item in data["ammo"].values():
         item["preferred_location_category"] = "minor"
 
+    for item in data["item_categories"].values():
+        item["hinted_as_major"] = item.pop("is_major")
+
     return data
 
 

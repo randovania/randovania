@@ -122,7 +122,7 @@ def create_dark_temple_key(key_number: int,
         name="temple_key",
         long_name="Dark Temple Key",
         hint_details=("a ", "red Temple Key"),
-        is_major=False,
+        hinted_as_major=False,
         is_key=True
     )
 
@@ -155,7 +155,7 @@ def create_sky_temple_key(key_number: int,
         name="sky_temple_key",
         long_name="Sky Temple Key",
         hint_details=("a ", "Sky Temple Key"),
-        is_major=False,
+        hinted_as_major=False,
         is_key=True
     )
 
@@ -182,7 +182,7 @@ def create_dread_artifact(artifact_number: int,
         name="dna",
         long_name="Metroid DNA",
         hint_details=("some ", "Metroid DNA"),
-        is_major=False,
+        hinted_as_major=False,
         is_key=True
     )
 
@@ -209,7 +209,7 @@ def create_energy_cell(cell_index: int,
         name="energy_cell",
         long_name="Energy Cell",
         hint_details=("an ", "energy cell"),
-        is_major=True,
+        hinted_as_major=True,
         is_key=True
     )
 
@@ -243,7 +243,7 @@ def create_artifact(artifact_index: int,
         name="artifact",
         long_name="Artifact",
         hint_details=("an ", "artifact"),
-        is_major=False,
+        hinted_as_major=False,
         is_key=True
     )
 

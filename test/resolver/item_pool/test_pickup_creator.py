@@ -26,7 +26,7 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
         name="the_category",
         long_name="The Category",
         hint_details=("a ", " wonderful item"),
-        is_major=True
+        hinted_as_major=True
     )
 
     major_item = MajorItem(

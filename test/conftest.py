@@ -196,7 +196,7 @@ def generic_item_category() -> ItemCategory:
         name="generic",
         long_name="Generic Item Category",
         hint_details=("an ", "unspecified item"),
-        is_major=False
+        hinted_as_major=False
     )
 
 

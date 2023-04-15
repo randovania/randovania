@@ -231,7 +231,7 @@ class PlayerState:
     def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
                          all_locations_weighted: WeightedLocations) -> bool:
 
-        if not pickup.item_category.is_major:
+        if not pickup.item_category.hinted_as_major:
             return False
 
         config = self.configuration
