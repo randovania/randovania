@@ -1,6 +1,7 @@
 import dataclasses
 import datetime
 import json
+import uuid
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_connection.connection_base import InventoryItem
@@ -134,6 +135,7 @@ class GameSessionActions:
 
 @dataclasses.dataclass(frozen=True)
 class GameSessionPickups:
+    id: uuid.UUID
     game: RandovaniaGame
     pickups: tuple[tuple[str, PickupEntry], ...]
 

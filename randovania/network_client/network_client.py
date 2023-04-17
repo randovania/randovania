@@ -5,6 +5,7 @@ import hashlib
 import logging
 import ssl
 import time
+import uuid
 from enum import Enum
 from pathlib import Path
 
@@ -18,7 +19,7 @@ import socketio.exceptions
 
 from randovania.bitpacking import bitpacking
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
-from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import (GameSessionListEntry, GameSessionEntry, User, GameSessionActions,
@@ -352,6 +353,7 @@ class NetworkClient:
         resource_database = default_database.resource_database_for(game)
 
         await self.on_game_session_pickups_update(GameSessionPickups(
+            id=uuid.UUID("00000000-0000-1111-0000-000000000000"),  # TODO: should come from server
             game=game,
             pickups=tuple(
                 (item["provider_name"], _decode_pickup(item["pickup"], resource_database))

@@ -19,8 +19,8 @@ from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
 from randovania.patching.prime import all_prime_dol_patches
-from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2
-from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
+from randovania.game_connection.connector.remote_connector import RemoteConnector
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 
 
 def _echoes_powerup_address(item_index: int) -> int:
@@ -357,7 +357,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
 
         self._write_memory(has_message_address, b"\x00")
 
-    async def build_connector(self) -> RemoteConnectorV2 | None:
+    async def build_connector(self) -> RemoteConnector | None:
         return self.connector
 
     # MemoryOperationExecutor

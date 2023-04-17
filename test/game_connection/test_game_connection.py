@@ -1,4 +1,4 @@
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, call, ANY
 from unittest.mock import MagicMock
 
 import pytest
@@ -12,32 +12,60 @@ def _connection(skip_qtbot):
     return GameConnection(MagicMock())
 
 
-async def test_auto_update(skip_qtbot, qapp):
-    # Setup
-    update_mock = AsyncMock()
-    backend = MagicMock()
-
-    game_connection = GameConnection(backend)
-    game_connection._notify_status = MagicMock()
-    game_connection.update = update_mock
-
+async def test_auto_update_empty(connection, qapp):
     # Run
-    await game_connection._auto_update()
+    await connection._auto_update()
 
     # Assert
-    update_mock.assert_awaited_once_with(game_connection._dt)
-    game_connection._notify_status.assert_called_once_with()
+    assert connection.remote_connectors == {}
 
 
-def test_pretty_current_status(skip_qtbot):
+async def test_auto_update_fail_build(connection, qapp):
     # Setup
-    connection = GameConnection(DolphinConnectorBuilder())
-    connection.connector = MagicMock()
-    connection.connector.executor = MagicMock()
-    connection.connector.executor.is_connected = MagicMock(return_value=False)
+    builder = MagicMock()
+    builder.build_connector = AsyncMock(return_value=None)
+    connection.connection_builders.append(builder)
 
     # Run
-    result = connection.pretty_current_status
+    await connection._auto_update()
 
     # Assert
-    assert result == f"Dolphin: Disconnected"
+    builder.build_connector.assert_awaited_once_with()
+    assert connection.remote_connectors == {}
+
+
+async def test_auto_update_do_build(connection, qapp):
+    # Setup
+    connector = MagicMock()
+    builder = MagicMock()
+    builder.build_connector = AsyncMock(return_value=connector)
+    connection.connection_builders.append(builder)
+
+    # Run
+    await connection._auto_update()
+
+    # Assert
+    builder.build_connector.assert_awaited_once_with()
+    assert connection.remote_connectors == {
+        builder: connector,
+    }
+    connector.PlayerLocationChanged.connect.assert_called_once_with(ANY)
+
+
+async def test_auto_update_remove_connector(connection, qapp):
+    # Setup
+    builder = MagicMock()
+    builder.build_connector = AsyncMock(return_value=None)
+    connector = MagicMock()
+    connector.force_finish = AsyncMock()
+    connector.is_disconnected.return_value = True
+    connection.remote_connectors[builder] = connector
+
+    # Run
+    await connection._auto_update()
+
+    # Assert
+    connector.force_finish.assert_has_awaits([
+        call(), call(),
+    ])
+    assert connection.remote_connectors == {}

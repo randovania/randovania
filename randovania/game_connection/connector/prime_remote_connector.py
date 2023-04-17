@@ -2,9 +2,14 @@ import dataclasses
 import logging
 import struct
 
+import shiboken6
+from PySide6 import QtCore
+from qasync import asyncSlot
+
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
-from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2, RemotePatch
+from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
+    PlayerLocationEvent
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException, MemoryOperation, MemoryOperationExecutor
 )
@@ -18,28 +23,37 @@ from randovania.game_description.resources.resource_info import (
 )
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
+from randovania.lib.infinite_timer import InfiniteTimer
 from randovania.patching.prime import (all_prime_dol_patches)
 
 
 @dataclasses.dataclass(frozen=True)
-class DolRemotePatch(RemotePatch):
+class DolRemotePatch:
+    memory_operations: list[MemoryOperation]
     instructions: list[assembler.BaseInstruction]
 
 
-class PrimeRemoteConnector(RemoteConnectorV2):
+class PrimeRemoteConnector(RemoteConnector):
     version: all_prime_dol_patches.BasePrimeDolVersion
     game: GameDescription
     _last_message_size: int = 0
+    _world: World | None = None
     executor: MemoryOperationExecutor
-    # Messages
+    remote_pickups: tuple[PickupEntryWithOwner, ...]
     message_cooldown: float = 0.0
+    last_inventory: Inventory = {}
+    _dt: float = 2.5
 
     def __init__(self, version: all_prime_dol_patches.BasePrimeDolVersion, executor: MemoryOperationExecutor):
-        super().__init__(executor)
+        super().__init__()
         self.logger = logging.getLogger(type(self).__name__)
 
+        self.executor = executor
         self.version = version
         self.game = default_database.game_description_for(version.game)
+        self.remote_pickups = tuple()
+
+        self._timer = InfiniteTimer(self.update, self._dt)
 
     @property
     def game_enum(self) -> RandovaniaGame:
@@ -138,10 +152,10 @@ class PrimeRemoteConnector(RemoteConnectorV2):
             return locations
         else:
             return set()
-    
-    async def receive_remote_pickups(self, inventory: Inventory,
-                                          remote_pickups: tuple[tuple[str, PickupEntry], ...]
-                                          ) -> None:
+
+    async def receive_remote_pickups(
+            self, inventory: Inventory, remote_pickups: tuple[PickupEntryWithOwner, ...],
+    ) -> None:
         in_cooldown = self.message_cooldown > 0.0
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
         magic_inv = inventory.get(multiworld_magic_item)
@@ -251,3 +265,63 @@ class PrimeRemoteConnector(RemoteConnectorV2):
             [self._write_string_to_game_buffer(message)],
             all_prime_dol_patches.call_display_hud_patch(self.version.string_display),
         )
+
+    async def update(self):
+        try:
+            self.logger.debug("Start update")
+            has_pending_op, world = await self.current_game_status()
+            if world != self._world:
+                self.PlayerLocationChanged.emit(PlayerLocationEvent(world, None))
+            self._world = world
+            if world is not None:
+                await self.update_current_inventory()
+                if not has_pending_op:
+                    self.message_cooldown = max(self.message_cooldown - self._dt, 0.0)
+                    await self._multiworld_interaction()
+
+        except MemoryOperationException:
+            # A memory operation failing is expected only when the socket is lost or dolphin is closed
+            # It should automatically disconnect the executor, so fail loudly if that's not the case
+            if self.executor.is_connected():
+                self.executor.disconnect()
+                raise
+
+        finally:
+            if self.is_disconnected():
+                self.logger.info("Finishing connector")
+                self._timer.stop()
+                self.Finished.emit()
+
+    async def update_current_inventory(self):
+        new_inventory = await self.get_inventory()
+        if new_inventory != self.last_inventory:
+            self.InventoryUpdated.emit(new_inventory)
+            self.last_inventory = new_inventory
+
+    async def _multiworld_interaction(self):
+        locations = await self.known_collected_locations()
+        if len(locations) != 0:
+            for location in locations:
+                self.PickupIndexCollected.emit(location)
+        else:
+            await self.receive_remote_pickups(
+                self.last_inventory, self.remote_pickups
+            )
+
+    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
+        """
+        Sets the list of remote pickups that must be sent to the game.
+        :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
+        """
+        self.remote_pickups = remote_pickups
+
+    async def force_finish(self):
+        self._timer.stop()
+        self.executor.disconnect()
+
+    def is_disconnected(self) -> bool:
+        return not self.executor.is_connected()
+
+    def start_updates(self):
+        self._timer.start()
+

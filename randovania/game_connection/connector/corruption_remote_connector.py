@@ -34,7 +34,6 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: CorruptionDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 
-
     def _asset_id_format(self):
         return ">Q"
 
@@ -107,5 +106,5 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         # Not yet implemented
         return
 
-    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[DolRemotePatch]) -> None:
+    async def execute_remote_patches(self, patches: list[DolRemotePatch]) -> None:
         raise RuntimeError("Unable to execute remote patches in Corruption")

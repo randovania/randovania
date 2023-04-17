@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
 ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo, NodeResourceInfo]
 ResourceQuantity = tuple[ResourceInfo, int]
 ResourceGainTuple = tuple[ResourceQuantity, ...]
-ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
+ResourceGain = Union[typing.Iterable[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
 
 
 class ResourceCollection:

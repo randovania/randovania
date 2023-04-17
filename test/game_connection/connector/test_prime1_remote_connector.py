@@ -1,13 +1,15 @@
-from unittest.mock import MagicMock
-from mock import AsyncMock
+import contextlib
+from unittest.mock import MagicMock, call
 
 import pytest
+from mock import AsyncMock
 
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
+from randovania.game_connection.executor.memory_operation import MemoryOperationException
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher.prime1_dol_patches import Prime1DolVersion
 from randovania.games.prime1.patcher.prime1_dol_versions import ALL_VERSIONS
@@ -21,7 +23,7 @@ def prime1_version():
 
 @pytest.fixture(name="connector")
 def remote_connector(version: Prime1DolVersion):
-    connector = Prime1RemoteConnector(version, DolphinExecutor())
+    connector = Prime1RemoteConnector(version, AsyncMock())
     return connector
 
 
@@ -76,6 +78,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
     assert patches == expected_patches
     assert message == "Received Pickup from Someone."
 
+
 @pytest.mark.parametrize("has_cooldown", [False, True])
 @pytest.mark.parametrize("has_patches", [False, True])
 async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool):
@@ -107,3 +110,91 @@ async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool,
         assert connector.message_cooldown == 4.0
     else:
         assert connector.message_cooldown == initial_cooldown
+
+
+@pytest.mark.parametrize("depth", [0, 1])
+async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: int):
+    # Setup
+    # depth 0: non-empty known_collected_locations with patch
+    # depth 1: empty known_collected_locations and empty receive_remote_pickups
+
+    game_enum = RandovaniaGame.METROID_PRIME
+
+    location_collected = MagicMock()
+    connector.PickupIndexCollected.connect(location_collected)
+
+    connector.receive_remote_pickups = AsyncMock(return_value=([], False))
+    connector.known_collected_locations = AsyncMock(
+        return_value=[PickupIndex(2), PickupIndex(5)] if depth == 0 else []
+    )
+
+    # Run
+    await connector._multiworld_interaction()
+
+    # Assert
+    connector.known_collected_locations.assert_awaited_once_with()
+
+    if depth == 0:
+        location_collected.assert_has_calls([
+            call(PickupIndex(2)),
+            call(PickupIndex(5)),
+        ])
+    else:
+        location_collected.assert_not_called()
+
+    if depth == 1:
+        connector.receive_remote_pickups.assert_awaited_once_with(
+            connector.last_inventory, connector.remote_pickups
+        )
+    else:
+        connector.receive_remote_pickups.assert_not_awaited()
+
+
+@pytest.mark.parametrize("failure_at", [None, 1, 2])
+@pytest.mark.parametrize("depth", [0, 1, 2])
+async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, failure_at: int | None):
+    # Setup
+    connector.message_cooldown = 0.0
+    connector.executor.is_connected.return_value = True
+
+    connector.get_inventory = AsyncMock()
+    connector.current_game_status = AsyncMock(return_value=(
+        depth <= 1,  # has pending op
+        MagicMock() if depth > 0 else None,  # world
+    ))
+
+    expectation = contextlib.nullcontext()
+    if failure_at == 1:
+        connector.get_inventory.side_effect = MemoryOperationException("error at _get_inventory")
+        expectation = pytest.raises(MemoryOperationException, match="error at _get_inventory")
+
+    connector._multiworld_interaction = AsyncMock()
+    if failure_at == 2:
+        connector._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
+        expectation = pytest.raises(MemoryOperationException, match="error at _check_for_collected_index")
+
+    expected_depth = min(depth, failure_at) if failure_at is not None else depth
+    if (failure_at or 999) > depth:
+        expectation = contextlib.nullcontext()
+
+    # Run
+    with expectation:
+        await connector.update()
+
+    # Assert
+    connector.current_game_status.assert_awaited_once_with()
+
+    if expected_depth > 0:
+        connector.get_inventory.assert_awaited_once_with()
+    else:
+        connector.get_inventory.assert_not_awaited()
+
+    if expected_depth > 1:
+        connector._multiworld_interaction.assert_awaited_once_with()
+    else:
+        connector._multiworld_interaction.assert_not_awaited()
+
+    if 0 < depth:
+        assert connector._world is not None
+    else:
+        assert connector._world is None

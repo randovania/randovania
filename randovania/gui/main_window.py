@@ -37,6 +37,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+    from randovania.gui.widgets.game_connection_window import GameConnectionWindow
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -67,6 +68,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
+    game_connection_window: GameConnectionWindow | None = None
 
     GameDetailsSignal = Signal(LayoutDescription)
     RequestOpenLayoutSignal = Signal(Path)
@@ -315,6 +317,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         logging.info("Creating OnlineInteractions...")
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
+        self.game_connection_button.clicked.connect(self.open_game_connection_window)
 
         logging.info("Will update for modified options")
         with self._options:
@@ -443,6 +446,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             raise RuntimeError("Called open_version_link, but _current_version_url is None")
 
         QtGui.QDesktopServices.openUrl(QUrl(self._current_version_url))
+
+    def open_game_connection_window(self):
+        from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+        if self.game_connection_window is None:
+            self.game_connection_window = GameConnectionWindow(common_qt_lib.get_game_connection())
+
+        self.game_connection_window.show()
+        self.game_connection_window.raise_()
 
     # Options
     def on_options_changed(self):
@@ -604,7 +615,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
-        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
+        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self, self._options)
         self.auto_tracker_window.show()
 
     def _on_menu_action_previously_generated_games(self):

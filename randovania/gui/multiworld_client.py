@@ -1,14 +1,15 @@
 import asyncio
 import json
 import logging
+import uuid
 from pathlib import Path
-from typing import AsyncContextManager
+from typing import AsyncContextManager, Self
 
-import pid
 from PySide6.QtCore import QObject, Signal
 from qasync import asyncSlot
 
-from randovania.game_connection.game_connection import GameConnection
+from randovania.game_connection.connector.remote_connector import RemoteConnector
+from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -42,7 +43,7 @@ class Data(AsyncContextManager):
             self.uploaded_locations = set()
             self.latest_message_displayed = 0
 
-    async def __aenter__(self) -> "Data":
+    async def __aenter__(self) -> Self:
         await self._lock.acquire()
         return self
 
@@ -57,10 +58,10 @@ class Data(AsyncContextManager):
 
 
 class MultiworldClient(QObject):
-    _data: Data | None = None
-    _expected_game: RandovaniaGame = None
+    _all_data: dict[uuid.UUID, Data] | None = None
+    _persist_path: Path
     _notify_task: asyncio.Task | None = None
-    _pid: pid.PidFile | None = None
+    _remote_games: dict[uuid.UUID, GameSessionPickups]
     PendingUploadCount = Signal(int)
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection):
@@ -69,29 +70,20 @@ class MultiworldClient(QObject):
 
         self.network_client = network_client
         self.game_connection = game_connection
+        self._remote_games = {}
         self._pickups_lock = asyncio.Lock()
-
-        pid_name = game_connection.lock_identifier
-        if pid_name is not None:
-            self._pid = pid.PidFile(pid_name)
-            try:
-                self._pid.create()
-            except pid.PidFileError as e:
-                raise BackendInUse(Path(self._pid.filename)) from e
-            self.logger.debug(f"Creating pid file at {self._pid.filename}")
 
     @property
     def is_active(self) -> bool:
-        return self._data is not None
+        return self._all_data is not None
 
     async def start(self, persist_path: Path):
         self.logger.debug("start")
 
-        if self._pid is not None and self._pid.fh is None:
-            self._pid.create()
-
-        self._data = Data(persist_path)
-        self.game_connection.set_location_collected_listener(self.on_location_collected)
+        persist_path.mkdir(parents=True, exist_ok=True)
+        self._persist_path = persist_path
+        self._all_data = {}
+        self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
         self.network_client.GameSessionPickupsUpdated.connect(self.on_network_game_updated)
 
         self.start_notify_collect_locations_task()
@@ -104,40 +96,44 @@ class MultiworldClient(QObject):
             self._notify_task.cancel()
             self._notify_task = None
 
-        self.game_connection.set_location_collected_listener(None)
+        try:
+            self.game_connection.GameStateUpdated.disconnect(self.on_game_state_updated)
+        except RuntimeError:
+            pass
+
         try:
             self.network_client.GameSessionPickupsUpdated.disconnect(self.on_network_game_updated)
         except RuntimeError:
             pass
 
-        async with self._pickups_lock:
-            self.game_connection.set_expected_game(None)
-            self.game_connection.set_permanent_pickups(tuple())
-
-        self._data = None
-        if self._pid is not None:
-            self._pid.close()
+        self._remote_games = {}
+        self._all_data = None
 
     async def _notify_collect_locations(self):
-        while True:
-            locations_to_upload = tuple(self._data.collected_locations - self._data.uploaded_locations)
-            if not locations_to_upload:
-                break
+        keep_alive = True
+        while keep_alive:
+            keep_alive = False
+            for data in self._all_data.values():
+                locations_to_upload = tuple(data.collected_locations - data.uploaded_locations)
+                if not locations_to_upload:
+                    continue
 
-            try:
-                await self.network_client.game_session_collect_locations(locations_to_upload)
-            except (Exception, UnableToConnect) as e:
-                message = f"Exception {type(e)} when attempting to upload {len(locations_to_upload)} locations."
-                if isinstance(e, (UnableToConnect, error.NotLoggedIn, error.InvalidSession, error.RequestTimeout)):
-                    self.logger.warning(message)
-                else:
-                    self.logger.exception(message)
-                await asyncio.sleep(5)
-                continue
+                keep_alive = True
 
-            async with self._data as data:
-                data.uploaded_locations.update(locations_to_upload)
-            self.emit_pending_upload_count()
+                try:
+                    await self.network_client.game_session_collect_locations(locations_to_upload)
+                except (Exception, UnableToConnect) as e:
+                    message = f"Exception {type(e)} when attempting to upload {len(locations_to_upload)} locations."
+                    if isinstance(e, (UnableToConnect, error.NotLoggedIn, error.InvalidSession, error.RequestTimeout)):
+                        self.logger.warning(message)
+                    else:
+                        self.logger.exception(message)
+                    await asyncio.sleep(5)
+                    continue
+
+                async with data as data_mod:
+                    data_mod.uploaded_locations.update(locations_to_upload)
+                self.emit_pending_upload_count()
 
     def start_notify_collect_locations_task(self):
         if self._notify_task is not None and not self._notify_task.done():
@@ -145,32 +141,48 @@ class MultiworldClient(QObject):
 
         self._notify_task = asyncio.create_task(self._notify_collect_locations())
 
-    async def on_location_collected(self, game: RandovaniaGame, location: PickupIndex):
-        if game != self._expected_game:
+    async def _on_new_state(self):
+        if self._all_data is None:
             return
 
-        if location.index in self._data.collected_locations:
-            self.logger.info(f"{location}, but location was already collected")
-            return
+        connector_by_uid: dict[uuid.UUID, RemoteConnector] = {
+            state.id: connector
+            for connector, state in self.game_connection.connected_states.items()
+        }
 
-        self.logger.info(f"{location}, a new location")
-        async with self._data as data:
-            data.collected_locations.add(location.index)
+        for uid, remote_game in self._remote_games.items():
+            if uid not in self._all_data:
+                self._all_data[uid] = Data(self._persist_path.joinpath(f"{uid}.json"))
 
-        self.emit_pending_upload_count()
-        self.start_notify_collect_locations_task()
+            data = self._all_data[uid]
+            connector = connector_by_uid.get(uid)
+            state = self.game_connection.connected_states.get(connector)
+
+            if state is not None:
+                await connector.set_remote_pickups(remote_game.pickups)
+
+                our_indices: set[int] = {i.index for i in state.collected_indices}
+                new_indices = our_indices - data.collected_locations
+                if new_indices:
+                    async with data as data_edit:
+                        data_edit.collected_locations.update(new_indices)
+                    self.emit_pending_upload_count()
+                    self.start_notify_collect_locations_task()
+
+    @asyncSlot(ConnectedGameState)
+    async def on_game_state_updated(self, state: ConnectedGameState):
+        await self._on_new_state()
 
     @asyncSlot(GameSessionPickups)
     async def on_network_game_updated(self, pickups: GameSessionPickups):
         async with self._pickups_lock:
-            self._expected_game = pickups.game
-            self.game_connection.set_expected_game(pickups.game)
-            self.game_connection.set_permanent_pickups(pickups.pickups)
+            self._remote_games[pickups.id] = pickups
+        await self._on_new_state()
 
     def num_locations_to_upload(self) -> int:
-        if self._data is None:
-            return 0
-        return len(self._data.collected_locations - self._data.uploaded_locations)
+        for data in (self._all_data or {}).values():
+            return len(data.collected_locations - data.uploaded_locations)
+        return 0
 
     def emit_pending_upload_count(self):
         self.PendingUploadCount.emit(self.num_locations_to_upload())
