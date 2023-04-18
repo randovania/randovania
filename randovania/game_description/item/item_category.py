@@ -8,7 +8,7 @@ class ItemCategory:
     name: str
     long_name: str
     hint_details: tuple[str, str]
-    is_major: bool
+    hinted_as_major: bool
     is_key: bool = False
 
     def __post_init__(self):
@@ -22,7 +22,7 @@ class ItemCategory:
             name=name,
             long_name=value["long_name"],
             hint_details=frozen_lib.wrap(value["hint_details"]),
-            is_major=value["is_major"],
+            hinted_as_major=value["hinted_as_major"],
             is_key=value["is_key"] if "is_key" in value else False
         )
 
@@ -31,7 +31,7 @@ class ItemCategory:
         result = {
             "long_name": self.long_name,
             "hint_details": frozen_lib.unwrap(self.hint_details),
-            "is_major": self.is_major,
+            "hinted_as_major": self.hinted_as_major,
         }
         if self.is_key:
             result["is_key"] = self.is_key
@@ -39,7 +39,7 @@ class ItemCategory:
 
     @property
     def general_details(self) -> tuple[str, str]:
-        if self.is_major:
+        if self.hinted_as_major:
             return "a ", "major upgrade"
         elif self.is_key:
             return "a ", "key"
@@ -55,12 +55,12 @@ USELESS_ITEM_CATEGORY = ItemCategory(
     name="useless",
     long_name="Useless",
     hint_details=("an ", "Energy Transfer Module"),
-    is_major=False
+    hinted_as_major=False
 )
 
 GENERIC_KEY_CATEGORY = ItemCategory(
     name="key",
     long_name="Key",
     hint_details=("a ", "key"),
-    is_major=False
+    hinted_as_major=False
 )

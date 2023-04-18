@@ -215,7 +215,7 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
 
 @pytest.mark.parametrize("has_item_percentage", [False, True])
 async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker,
-                                  generic_item_category, has_item_percentage):
+                                  generic_item_category, has_item_percentage, default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
@@ -229,6 +229,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
         ]
 
     pickup = PickupEntry("Pickup", 0, generic_item_category, generic_item_category, progression=tuple(),
+                         generator_params=default_generator_params,
                          extra_resources=(
                              (db.energy_tank, db.energy_tank.max_capacity),
                              *item_percentage_resource,

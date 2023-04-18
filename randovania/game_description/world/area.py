@@ -64,12 +64,6 @@ class Area:
             if isinstance(node, PickupNode):
                 yield node.pickup_index
 
-    @property
-    def major_pickup_indices(self) -> Iterator[PickupIndex]:
-        for node in self.nodes:
-            if isinstance(node, PickupNode) and node.major_location:
-                yield node.pickup_index
-
     def clear_dock_cache(self):
         pass
 
