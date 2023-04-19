@@ -66,7 +66,7 @@ def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
         cutscene_check = [
             lwz(r3, 0x870, r31),
             cmpwi(r3, 0),
-            beq(-0x8, True),
+            beq(-0x8 - return_code_byte_count, True),
             lwz(r0, 0x8, r3),
         ]
     elif game == RandovaniaGame.METROID_PRIME_ECHOES:
@@ -91,22 +91,20 @@ def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
 
         # clean return if flag is not set
         *return_code,
-    ]
-
-    num_bytes_to_invalidate = _remote_execution_max_byte_count - (assembler.byte_count(cutscene_check) + 8 +
-                                                                  return_code_byte_count) - assembler.byte_count(intro)
-    # Our loop end condition depends on this value being a multiple of 32, greater than 0
-    num_bytes_to_invalidate = ((num_bytes_to_invalidate // 32) + 1) * 32
-
-    return [
-        *intro,
 
         # if camera count > 0 then we're in a cutscene so we return as we don't want
         # to handle receiving items during a cutscene
         *cutscene_check,
         cmpwi(r0, 0),
-        bgt(-assembler.byte_count(cutscene_check) - 4, True),
-        *return_code,
+        bgt(-assembler.byte_count(cutscene_check) - 4 - return_code_byte_count, True),
+    ]
+
+    num_bytes_to_invalidate = _remote_execution_max_byte_count - assembler.byte_count(intro)
+    # Our loop end condition depends on this value being a multiple of 32, greater than 0
+    num_bytes_to_invalidate = ((num_bytes_to_invalidate // 32) + 1) * 32
+
+    return [
+        *intro,
 
         # fetch the instructions again, since they're being overwritten externally
         # this clears Dolphin's JIT cache
