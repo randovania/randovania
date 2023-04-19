@@ -66,7 +66,7 @@ def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
         cutscene_check = [
             lwz(r3, 0x870, r31),
             cmpwi(r3, 0),
-            beq(0x10, True),
+            beq(-0x8, True),
             lwz(r0, 0x8, r3),
         ]
     elif game == RandovaniaGame.METROID_PRIME_ECHOES:
@@ -105,7 +105,7 @@ def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
         # to handle receiving items during a cutscene
         *cutscene_check,
         cmpwi(r0, 0),
-        ble(return_code_byte_count + 4, True),
+        bgt(-assembler.byte_count(cutscene_check) - 4, True),
         *return_code,
 
         # fetch the instructions again, since they're being overwritten externally

@@ -396,6 +396,15 @@ def beq(address_or_symbol: JumpTarget, relative: bool = False):
     return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
 
 
+def bgt(address_or_symbol: JumpTarget, relative: bool = False):
+    """
+    jumps to the given address, if last comparison was a successful equality
+    """
+    bo = 12  # Branch if condition false (BO=4)
+    bi = 1  # condition: less than
+    return _conditional_branch(bo, bi, address_or_symbol, relative=relative)
+
+
 def bge(address_or_symbol: JumpTarget, relative: bool = False):
     """
     jumps to the given address, if last comparison was a successful equality
