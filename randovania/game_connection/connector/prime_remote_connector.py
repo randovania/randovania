@@ -4,7 +4,7 @@ import struct
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
-from randovania.game_connection.connector.remote_connector import RemoteConnector, RemotePatch
+from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2, RemotePatch
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException, MemoryOperation, MemoryOperationExecutor
 )
@@ -26,13 +26,16 @@ class DolRemotePatch(RemotePatch):
     instructions: list[assembler.BaseInstruction]
 
 
-class PrimeRemoteConnector(RemoteConnector):
+class PrimeRemoteConnector(RemoteConnectorV2):
     version: all_prime_dol_patches.BasePrimeDolVersion
     game: GameDescription
     _last_message_size: int = 0
+    executor: MemoryOperationExecutor
+    # Messages
+    message_cooldown: float = 0.0
 
-    def __init__(self, version: all_prime_dol_patches.BasePrimeDolVersion):
-        super().__init__()
+    def __init__(self, version: all_prime_dol_patches.BasePrimeDolVersion, executor: MemoryOperationExecutor):
+        super().__init__(executor)
         self.logger = logging.getLogger(type(self).__name__)
 
         self.version = version
@@ -45,10 +48,10 @@ class PrimeRemoteConnector(RemoteConnector):
     def description(self):
         return f"{self.game_enum.long_name}: {self.version.description}"
 
-    async def is_this_version(self, executor: MemoryOperationExecutor) -> bool:
+    async def is_this_version(self) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
-        build_string = await executor.perform_single_memory_operation(operation)
+        build_string = await self.executor.perform_single_memory_operation(operation)
         return build_string == self.version.build_string
 
     def _asset_id_format(self):
@@ -82,22 +85,22 @@ class PrimeRemoteConnector(RemoteConnector):
         asset_id = struct.unpack(self._asset_id_format(), world_asset_id)[0]
         return self.world_by_asset_id(asset_id)
 
-    async def current_game_status(self, executor: MemoryOperationExecutor):
+    async def current_game_status(self) -> tuple[bool, World | None]:
         raise NotImplementedError()
 
-    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: list[ItemResourceInfo],
+    async def _memory_op_for_items(self, items: list[ItemResourceInfo],
                                    ) -> list[MemoryOperation]:
         raise NotImplementedError()
 
-    async def get_inventory(self, executor: MemoryOperationExecutor) -> Inventory:
+    async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
 
-        memory_ops = await self._memory_op_for_items(executor, [
+        memory_ops = await self._memory_op_for_items([
             item
             for item in self.game.resource_database.item
             if item.extra["item_id"] < 1000
         ])
-        ops_result = await executor.perform_memory_operations(memory_ops)
+        ops_result = await self.executor.perform_memory_operations(memory_ops)
 
         inventory = {}
         for item, memory_op in zip(self.game.resource_database.item, memory_ops):
@@ -109,18 +112,17 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return inventory
 
-    async def known_collected_locations(self, executor: MemoryOperationExecutor,
-                                        ) -> tuple[set[PickupIndex], list[DolRemotePatch]]:
+    async def known_collected_locations(self) -> set[PickupIndex]:
         """Fetches pickup indices that have been collected.
         The list may return less than all collected locations, depending on implementation details.
         This function also returns a list of remote patches that must be performed via `execute_remote_patches`.
         """
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
         if multiworld_magic_item is None:
-            return set(), []
+            return set()
 
-        memory_ops = await self._memory_op_for_items(executor, [multiworld_magic_item])
-        op_result = await executor.perform_single_memory_operation(*memory_ops)
+        memory_ops = await self._memory_op_for_items([multiworld_magic_item])
+        op_result = await self.executor.perform_single_memory_operation(*memory_ops)
 
         magic_inv = InventoryItem(*struct.unpack(">II", op_result))
         if magic_inv.amount > 0:
@@ -132,26 +134,19 @@ class PrimeRemoteConnector(RemoteConnector):
                 multiworld_magic_item.extra["item_id"],
                 -magic_inv.amount,
             ))]
-            return locations, patches
+            await self.execute_remote_patches(patches)
+            return locations
         else:
-            return set(), []
-
-    async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: tuple[tuple[str, PickupEntry], ...],
-                                          in_cooldown: bool,
-                                          ) -> tuple[list[DolRemotePatch], bool]:
-        """
-        Determines if any of the remote_pickups needs to be written to executor.
-        :param executor:
-        :param inventory: The player's inventory, as given by `get_inventory`.
-        :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
-        :param in_cooldown: If sending new pickups is on cooldown.
-        :return: List of patches to give one missing pickup. A bool indicating that a message will be displayed.
-        """
+            return set()
+    
+    async def receive_remote_pickups(self, inventory: Inventory,
+                                          remote_pickups: tuple[tuple[str, PickupEntry], ...]
+                                          ) -> None:
+        in_cooldown = self.message_cooldown > 0.0
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
         magic_inv = inventory.get(multiworld_magic_item)
         if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
-            return [], False
+            return
 
         provider_name, pickup = remote_pickups[magic_inv.capacity]
         item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
@@ -166,13 +161,14 @@ class PrimeRemoteConnector(RemoteConnector):
         )))
         patches.append(self._dol_patch_for_hud_message(message))
 
-        return patches, True
+        if patches:
+            await self.execute_remote_patches(patches)
+            self.message_cooldown = 4.0
 
-    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[DolRemotePatch]) -> None:
+    async def execute_remote_patches(self, patches: list[DolRemotePatch]) -> None:
         """
         Executes a given set of patches on the given memory operator. Should only be called if the bool returned by
         `current_game_status` is False, but validation of this fact is implementation-dependant.
-        :param executor:
         :param patches: List of patches to execute
         :return:
         """
@@ -191,7 +187,7 @@ class PrimeRemoteConnector(RemoteConnector):
             MemoryOperation(self.version.cstate_manager_global + 0x2, write_bytes=b"\x01"),
         ])
         self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
-        await executor.perform_memory_operations(memory_operations)
+        await self.executor.perform_memory_operations(memory_operations)
 
     def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory,
                                       ) -> tuple[str, ResourceCollection]:

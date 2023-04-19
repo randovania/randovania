@@ -101,7 +101,7 @@ class PlayerState:
         uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
 
         usable_pickups = [pickup for pickup in self.pickups_left
-                          if self.num_actions >= pickup.required_progression]
+                          if self.num_actions >= pickup.generator_params.required_progression]
         pickups = get_pickups_that_solves_unreachable(usable_pickups, self.reach, uncollected_resource_nodes,
                                                       self.configuration.single_set_for_pickups_that_solve)
         filler_logging.print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
@@ -222,7 +222,8 @@ class PlayerState:
             weighted = {
                 loc: weight
                 for loc, weight in weighted.items()
-                if loc[0].game.world_list.node_from_pickup_index(loc[1]).major_location != action.is_expansion
+                if (loc[0].game.world_list.node_from_pickup_index(loc[1]).location_category !=
+                    action.generator_params.prefered_location_category)
             }
 
         return weighted
@@ -230,7 +231,7 @@ class PlayerState:
     def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
                          all_locations_weighted: WeightedLocations) -> bool:
 
-        if not pickup.item_category.is_major:
+        if not pickup.item_category.hinted_as_major:
             return False
 
         config = self.configuration
