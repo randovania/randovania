@@ -761,6 +761,21 @@ def _migrate_v47(preset: dict) -> dict:
         preset["configuration"]["legacy_mode"] = False
     return preset
 
+def _migrate_v48(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        itemconfig: dict = preset["configuration"]["major_items_configuration"]["items_state"]
+
+        if itemconfig.get("Flash Shift Upgrade") is not None:
+            # handles presets which were hand-migrated before this func was written
+            return preset
+
+        itemconfig["Flash Shift Upgrade"] = {
+            "num_included_in_starting_items": 2,
+        }
+        preset["configuration"]["major_items_configuration"]["items_state"] = itemconfig
+
+    return preset
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -809,6 +824,7 @@ _MIGRATIONS = [
     _migrate_v45,
     _migrate_v46,
     _migrate_v47,
+    _migrate_v48,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
