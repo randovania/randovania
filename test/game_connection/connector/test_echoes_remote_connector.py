@@ -275,7 +275,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     await connector.execute_remote_patches(patches)
 
     # Assert
-    mock_remote_execute.assert_called_once_with(version.string_display, instructions)
+    mock_remote_execute.assert_called_once_with(RandovaniaGame.METROID_PRIME_ECHOES, version.string_display, instructions)
     connector.executor.perform_memory_operations.assert_awaited_once_with(memory_operations)
 
 

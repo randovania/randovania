@@ -253,7 +253,11 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
             self._used_version.string_display.display_hud_memo: self._display_hud_memo,
         }
 
-        patch_address, _ = all_prime_dol_patches.create_remote_execution_body(self._used_version.string_display, [])
+        patch_address, _ = all_prime_dol_patches.create_remote_execution_body(
+            self.game.game,
+            self._used_version.string_display,
+            [],
+        )
         current_address = patch_address
         while current_address - patch_address < 0x2000:
             instruction = self._read_memory(current_address, 4)

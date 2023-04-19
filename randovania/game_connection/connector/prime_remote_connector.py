@@ -177,6 +177,7 @@ class PrimeRemoteConnector(RemoteConnectorV2):
             memory_operations.extend(patch.memory_operations)
 
         patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(
+            self.game.game,
             self.version.string_display,
             [instruction
              for patch in patches
