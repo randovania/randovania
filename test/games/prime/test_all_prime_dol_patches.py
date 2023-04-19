@@ -28,7 +28,8 @@ def _powerup_address():
 
 
 @pytest.mark.parametrize('game', [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES])
-def test_apply_remote_execution_patch(game: RandovaniaGame, dol_file, string_display: all_prime_dol_patches.StringDisplayPatchAddresses):
+def test_apply_remote_execution_patch(game: RandovaniaGame, dol_file,
+                                      string_display: all_prime_dol_patches.StringDisplayPatchAddresses):
     dol_file.header = dataclasses.replace(
         dol_file.header,
         sections=tuple([dataclasses.replace(dol_file.header.sections[0],

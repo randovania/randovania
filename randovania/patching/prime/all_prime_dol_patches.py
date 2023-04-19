@@ -68,16 +68,10 @@ def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
             cmpwi(r3, 0),
             beq(0x10, True),
             lwz(r0, 0x8, r3),
-            cmpwi(r0, 0),
-            ble(return_code_byte_count + 4, True),
-            *return_code,
         ]
     elif game == RandovaniaGame.METROID_PRIME_ECHOES:
         cutscene_check = [
             lwz(r0, 0x16fc, r31),
-            cmpwi(r0, 0),
-            ble(return_code_byte_count + 4, True),
-            *return_code,
         ]
     else:
         raise ValueError(f"Unsupported game: {game}")
@@ -99,14 +93,20 @@ def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
         *return_code,
     ]
 
-    num_bytes_to_invalidate = _remote_execution_max_byte_count - assembler.byte_count(cutscene_check) \
-                                                               - assembler.byte_count(intro)
+    num_bytes_to_invalidate = _remote_execution_max_byte_count - (assembler.byte_count(cutscene_check) + 8 +
+                                                                  return_code_byte_count) - assembler.byte_count(intro)
     # Our loop end condition depends on this value being a multiple of 32, greater than 0
     num_bytes_to_invalidate = ((num_bytes_to_invalidate // 32) + 1) * 32
 
     return [
         *intro,
+
+        # if camera count > 0 then we're in a cutscene so we return as we don't want
+        # to handle receiving items during a cutscene
         *cutscene_check,
+        cmpwi(r0, 0),
+        ble(return_code_byte_count + 4, True),
+        *return_code,
 
         # fetch the instructions again, since they're being overwritten externally
         # this clears Dolphin's JIT cache
