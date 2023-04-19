@@ -4,7 +4,7 @@ import struct
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.dol_patching import assembler
 from randovania.dol_patching.assembler import custom_ppc
-from randovania.dol_patching.assembler.ppc import *   # noqa: F403
+from randovania.dol_patching.assembler.ppc import *  # noqa: F403
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import DolVersion
 from randovania.games.game import RandovaniaGame
@@ -58,8 +58,29 @@ _remote_execution_stack_size = 0x30 + (_registers_to_save * 4)
 _remote_execution_max_byte_count = 420  # Prime 1 0-00 is 444, Echoes NTSC is 464
 
 
-def remote_execution_patch_start() -> list[BaseInstruction]:
+def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
     return_code = remote_execution_cleanup_and_return()
+    return_code_byte_count = assembler.byte_count(return_code)
+
+    if game == RandovaniaGame.METROID_PRIME:
+        cutscene_check = [
+            lwz(r3, 0x870, r31),
+            cmpwi(r3, 0),
+            beq(0x10, True),
+            lwz(r0, 0x8, r3),
+            cmpwi(r0, 0),
+            ble(return_code_byte_count + 4, True),
+            *return_code,
+        ]
+    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
+        cutscene_check = [
+            lwz(r0, 0x16fc, r31),
+            cmpwi(r0, 0),
+            ble(return_code_byte_count + 4, True),
+            *return_code,
+        ]
+    else:
+        raise ValueError(f"Unsupported game: {game}")
 
     intro = [
         # setup stack
@@ -78,12 +99,14 @@ def remote_execution_patch_start() -> list[BaseInstruction]:
         *return_code,
     ]
 
-    num_bytes_to_invalidate = _remote_execution_max_byte_count - assembler.byte_count(intro)
+    num_bytes_to_invalidate = _remote_execution_max_byte_count - assembler.byte_count(cutscene_check) \
+                                                               - assembler.byte_count(intro)
     # Our loop end condition depends on this value being a multiple of 32, greater than 0
     num_bytes_to_invalidate = ((num_bytes_to_invalidate // 32) + 1) * 32
 
     return [
         *intro,
+        *cutscene_check,
 
         # fetch the instructions again, since they're being overwritten externally
         # this clears Dolphin's JIT cache
@@ -199,26 +222,27 @@ def adjust_item_amount_patch(
     ]
 
 
-def remote_execution_patch():
+def remote_execution_patch(game: RandovaniaGame):
     return [
-        *remote_execution_patch_start(),
+        *remote_execution_patch_start(game),
         *remote_execution_clear_pending_op(),
         *remote_execution_cleanup_and_return(),
     ]
 
 
-def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
-    dol_file.write_instructions(patch_addresses.update_hint_state, remote_execution_patch())
+def apply_remote_execution_patch(game: RandovaniaGame, patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
+    dol_file.write_instructions(patch_addresses.update_hint_state, remote_execution_patch(game))
 
 
-def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
+def create_remote_execution_body(game: RandovaniaGame,
+                                 patch_addresses: StringDisplayPatchAddresses,
                                  instructions: list[BaseInstruction]) -> tuple[int, bytes]:
     """
     Return the address and the bytes for executing the given instructions via remote code execution.
     """
     update_hint_state = patch_addresses.update_hint_state
 
-    remote_start_instructions = remote_execution_patch_start()
+    remote_start_instructions = remote_execution_patch_start(game)
     remote_start_byte_count = assembler.byte_count(remote_start_instructions)
 
     body_address = update_hint_state + remote_start_byte_count
