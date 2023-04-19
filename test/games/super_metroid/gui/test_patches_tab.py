@@ -10,11 +10,12 @@ from randovania.layout.versioned_preset import VersionedPreset
 def test_elements_init(skip_qtbot, test_files_dir):
     preset_path = test_files_dir.joinpath("presets/super_test_preset.rdvpreset")
     preset = VersionedPreset.from_file_sync(preset_path).get_preset()
+    options = MagicMock()
     assert isinstance(preset.configuration, SuperMetroidConfiguration)
 
     game = default_database.game_description_for(preset.game)
 
-    editor = PresetEditor(preset)
+    editor = PresetEditor(preset, options)
     super_patches_tab = PresetSuperPatchConfiguration(editor, game, MagicMock())
     skip_qtbot.addWidget(super_patches_tab)
 

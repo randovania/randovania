@@ -27,6 +27,10 @@ class PresetTab(QtWidgets.QMainWindow):
     def uses_patches_tab(cls) -> bool:
         raise NotImplementedError()
 
+    @property
+    def experimental_settings(self) -> bool:
+        return self._editor._options._experimental_settings
+
     def on_preset_changed(self, preset: Preset):
         raise NotImplementedError()
 

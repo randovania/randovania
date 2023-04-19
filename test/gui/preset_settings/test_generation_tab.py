@@ -23,10 +23,10 @@ from randovania.interface_common.preset_editor import PresetEditor
 def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
     # Setup
     game, has_specific_settings, has_min_logic, tab = game_data
-
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
     window: PresetGeneration = tab(editor, default_database.game_description_for(game), MagicMock())
     parent = QtWidgets.QWidget()
     window.setParent(parent)
