@@ -1,6 +1,7 @@
 import dataclasses
+from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackDataclass
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -22,6 +23,25 @@ class DreadArtifactConfig(BitPackDataclass, JsonDataclass):
         return []
 
 
+class DreadRavenBeakDamageMode(BitPackEnum, Enum):
+    DISABLED = "disabled"
+    NERF_ALL = "nerf_all"
+    BUFF_FINAL = "buff_final"
+
+    @property
+    def long_name(self) -> str:
+        if self == DreadRavenBeakDamageMode.DISABLED:
+            return "Vanilla damage values"
+        elif self == DreadRavenBeakDamageMode.NERF_ALL:
+            return "Nerf all weapons uniformly"
+        elif self == DreadRavenBeakDamageMode.BUFF_FINAL:
+            return "Buff Wave/Ice to match Plasma/Supers"
+
+    @property
+    def is_default(self) -> bool:
+        return self == DreadRavenBeakDamageMode.NERF_ALL
+
+
 @dataclasses.dataclass(frozen=True)
 class DreadConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
@@ -30,7 +50,7 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_shortcut_no_grapple: bool
     hanubia_easier_path_to_itorash: bool
     x_starts_released: bool
-    consistent_raven_beak_damage_table: bool
+    consistent_raven_beak_damage_table: DreadRavenBeakDamageMode
     allow_highly_dangerous_logic: bool
     april_fools_hints: bool
     artifacts: DreadArtifactConfig

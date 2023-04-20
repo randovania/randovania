@@ -1,5 +1,5 @@
 from randovania.game_description.item.major_item import MajorItem
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig, DreadRavenBeakDamageMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -93,7 +93,8 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Easier Path to Itorash in Hanubia": configuration.hanubia_easier_path_to_itorash
                 },
                 {
-                    "Consistent Raven Beak Damage": configuration.consistent_raven_beak_damage_table,
+                    f"Raven Beak Damage: {configuration.consistent_raven_beak_damage_table.long_name}":
+                        not configuration.consistent_raven_beak_damage_table.is_default,
                 },
                 {
                     "X Starts Released": configuration.x_starts_released,

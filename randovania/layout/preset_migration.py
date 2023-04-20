@@ -3,6 +3,7 @@ import uuid
 
 from randovania.game_description import migration_data, default_database
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.games.dread.layout.dread_configuration import DreadRavenBeakDamageMode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
@@ -763,7 +764,7 @@ def _migrate_v47(preset: dict) -> dict:
 
 def _migrate_v48(preset: dict) -> dict:
     if preset["game"] == "dread":
-        preset["configuration"]["consistent_raven_beak_damage_table"] = True
+        preset["configuration"]["consistent_raven_beak_damage_table"] = DreadRavenBeakDamageMode.NERF_ALL
     return preset
 
 

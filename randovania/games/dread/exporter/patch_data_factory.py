@@ -312,9 +312,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
             for area in world.areas:
                 world_dict[area.extra["asset_id"]] = area.name
-            
+
             all_dict[scenario] = world_dict
-        
+
         # fix Burenia Main Tower and Golzuna Tower
         all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
         all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
@@ -457,7 +457,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "lava": self.configuration.constant_lava_damage,
             },
             "game_patches": {
-                "consistent_raven_beak_damage_table": self.configuration.consistent_raven_beak_damage_table,
+                "consistent_raven_beak_damage_table": self.configuration.consistent_raven_beak_damage_table.value,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
