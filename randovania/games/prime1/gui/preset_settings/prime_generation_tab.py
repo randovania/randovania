@@ -31,6 +31,9 @@ class PresetPrimeGeneration(PresetGeneration):
         yield self.min_progression_label
         yield self.min_progression_spin
 
+    @property
+    def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
+        yield from super().experimental_settings
         yield self.min_progression_label
         yield self.min_progression_spin
 

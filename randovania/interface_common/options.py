@@ -112,6 +112,7 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
+    "experimental_settings": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
     "game_backend": Serializer(lambda it: it.value, ConnectorBuilderChoice),

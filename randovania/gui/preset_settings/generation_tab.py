@@ -50,7 +50,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
                 )
             )
 
-        # Experimental
+        # Development
         signal_handling.on_checked(self.single_set_for_pickups_that_solve_check,
                                    self._persist_bool_layout_field("single_set_for_pickups_that_solve"))
         signal_handling.on_checked(self.staggered_multi_pickup_placement_check,
@@ -61,6 +61,11 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         self.damage_strictness_combo.setItemData(1, LayoutDamageStrictness.MEDIUM)
         self.damage_strictness_combo.setItemData(2, LayoutDamageStrictness.LENIENT)
         self.damage_strictness_combo.currentIndexChanged.connect(self._on_update_damage_strictness)
+
+    def update_experimental_visibility(self):
+        super().update_experimental_visibility()
+        any_visible = any(w.isVisibleTo(self.game_specific_group) for w in self.game_specific_widgets)
+        self.game_specific_group.setVisible(any_visible)
 
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration
@@ -93,6 +98,16 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget]:
         yield from []
 
+    @property
+    def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
+        yield self.single_set_for_pickups_that_solve_check
+        yield self.staggered_multi_pickup_placement_check
+        yield self.local_first_progression_check
+        yield self.local_first_progression_label
+        yield self.dangerous_combo
+        yield self.dangerous_label
+        yield self.line_2
+        yield self.experimental_generator_line
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL
