@@ -22,12 +22,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         self.setupUi(self)
 
         # Game-specific Settings
-        game_settings = self.game_specific_widgets
-        if game_settings is not None:
-            for w in game_settings:
-                self.game_specific_layout.addWidget(w)
-        else:
-            self.game_specific_group.setVisible(False)
+        for w in self.game_specific_widgets:
+            self.game_specific_layout.addWidget(w)
 
         # Item Placement
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
@@ -94,8 +90,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         return self._editor._game
 
     @property
-    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget] | None:
-        return None
+    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget]:
+        yield from []
+
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL

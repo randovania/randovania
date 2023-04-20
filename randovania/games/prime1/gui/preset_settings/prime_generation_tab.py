@@ -27,7 +27,10 @@ class PresetPrimeGeneration(PresetGeneration):
         self.min_progression_spin = QtWidgets.QSpinBox()
 
     @property
-    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget] | None:
+    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget]:
+        yield self.min_progression_label
+        yield self.min_progression_spin
+
         yield self.min_progression_label
         yield self.min_progression_spin
 
