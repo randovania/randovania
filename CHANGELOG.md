@@ -14,11 +14,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
 
+#### Logic Database
+
+- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
+
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
 - Fixed: TODO (PR #4228)
+
+#### Logic Database
+
+- Fixed: The Artifact of Truth pickup is now a major location for Major/Minor split.
 
 ### Metroid Prime 2: Echoes
 
