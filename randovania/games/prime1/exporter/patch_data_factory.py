@@ -866,7 +866,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         seed = self.description.get_seed_for_player(self.players_config.player_index)
 
         if self.configuration.legacy_mode:
-            qol_cutscenes = LayoutCutsceneMode.ORIGINAL
+            qol_cutscenes = LayoutCutsceneMode.ORIGINAL.value
         else:
             qol_cutscenes = self.configuration.qol_cutscenes.value
 
