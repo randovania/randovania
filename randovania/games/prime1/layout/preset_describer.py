@@ -107,10 +107,6 @@ class PrimePresetDescriber(GamePresetDescriber):
             ],
             "Quality of Life": [
                 {
-                    "Fixes to game breaking bugs": configuration.qol_game_breaking,
-                    "Pickup scans": configuration.qol_pickup_scans,
-                },
-                {
                     f"Phazon suit hint: {phazon_hint}": phazon_hint is not None
                 }
             ],
@@ -156,10 +152,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                     "Spring Ball": configuration.spring_ball,
                 },
                 {
-                    "Deterministic I. Drone RNG": configuration.deterministic_idrone,
-                    "Deterministic Maze RNG": configuration.deterministic_maze,
-                },
-                {
                     cutscene_removal: cutscene_removal is not None,
                 },
                 {
@@ -191,6 +183,9 @@ class PrimePresetDescriber(GamePresetDescriber):
         ]
         if backwards:
             template_strings["Game Changes"].append("Allowed backwards: {}".format(", ".join(backwards)))
+
+        if configuration.legacy_mode:
+            template_strings["Game Changes"].append("Legacy Mode")
 
         # Artifacts
         template_strings["Item Pool"].append(f"{configuration.artifact_target.num_artifacts} Artifacts, "

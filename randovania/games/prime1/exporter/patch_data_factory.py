@@ -18,7 +18,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode, LayoutCutsceneMode
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
@@ -839,7 +839,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
-        if self.configuration.deterministic_idrone:
+        if not self.configuration.legacy_mode:
             idrone_config = {
                 "eyeWaitInitialRandomTime": 0.0,
                 "eyeWaitRandomTime": 0.0,
@@ -864,6 +864,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             maze_seeds = None
 
         seed = self.description.get_seed_for_player(self.players_config.player_index)
+
+        if self.configuration.legacy_mode:
+            qol_cutscenes = LayoutCutsceneMode.ORIGINAL
+        else:
+            qol_cutscenes = self.configuration.qol_cutscenes.value
 
         boss_sizes = None
         random_enemy_sizes = False
@@ -904,10 +909,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "seed": seed,
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
-                "qolGameBreaking": self.configuration.qol_game_breaking,
-                "qolCosmetic": self.cosmetic_patches.qol_cosmetic,
-                "qolPickupScans": self.configuration.qol_pickup_scans,
-                "qolCutscenes": self.configuration.qol_cutscenes.value,
+                "qolGameBreaking": not self.configuration.legacy_mode,
+                "qolCosmetic": not self.configuration.legacy_mode,
+                "qolPickupScans": not self.configuration.legacy_mode,
+                "qolCutscenes": qol_cutscenes,
                 "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
                 "automaticCrashScreen": True,
