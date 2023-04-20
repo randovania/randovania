@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Fixed: The Artifact of Truth pickup location is now a major location for Major/Minor split.
+- Fixed: The Artifact of Truth pickup is now a major location for Major/Minor split.
 
 ### Metroid Prime 2: Echoes
 
