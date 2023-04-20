@@ -9,11 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
 - Changed: The resolver now allows dangerous resources in additional resources.
+- Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please selected `Advanced > Show Experimental Settings`.
 
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
+- Changed: Divided the "Other" tab into "Quality of Life" and "Chaos".
+- Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement.
 
 ### Metroid Prime 2: Echoes
 
