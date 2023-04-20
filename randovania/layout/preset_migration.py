@@ -757,6 +757,7 @@ def _migrate_v47(preset: dict) -> dict:
         preset["configuration"].pop("deterministic_maze")
         preset["configuration"].pop("qol_game_breaking")
         preset["configuration"].pop("qol_pickup_scans")
+        preset["configuration"].pop("heat_protection_only_varia")
         preset["configuration"]["legacy_mode"] = False
     return preset
 

@@ -934,7 +934,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "springBall": self.configuration.spring_ball,
                 "incineratorDroneConfig": idrone_config,
                 "mazeSeeds": maze_seeds,
-                "nonvariaHeatDamage": self.configuration.heat_protection_only_varia,
+                "nonvariaHeatDamage": not self.configuration.legacy_mode,
                 "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
                 "heatDamagePerSec": self.configuration.heat_damage,
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),

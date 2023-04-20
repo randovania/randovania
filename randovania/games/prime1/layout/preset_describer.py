@@ -119,7 +119,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                     }
                 ),
                 {
-                    "Varia-only heat protection": configuration.heat_protection_only_varia,
                     "Progressive suit damage reduction": configuration.progressive_damage_reduction,
                 },
                 {
