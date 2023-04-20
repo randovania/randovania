@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1146</width>
-         <height>1074</height>
+         <width>487</width>
+         <height>1190</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -81,6 +81,9 @@
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This page contains experimental settings which do not yet have (or will never have) logic support. This means that games generated with anything other than this tab's default settings may result in incompletable seeds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -114,7 +117,7 @@
            <item>
             <widget class="QLabel" name="legacy_mode_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. This includes:&lt;/p&gt;&lt;p&gt;- Fixed crashes&lt;/p&gt;&lt;p&gt;- Fixed softlocks&lt;/p&gt;&lt;p&gt;- Fast item acquisition&lt;/p&gt;&lt;p&gt;- Better pickup scans&lt;/p&gt;&lt;p&gt;- Remove sequence break patches (e.g. PAL scan dash)&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. This includes:&lt;/p&gt;&lt;p&gt;Fixed crashes, Fixed softlocks, Fast item acquisition, Better pickup scans, Undo non-NTSC sequence break patches, Varia-only heat protection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -196,6 +199,9 @@
             <widget class="QLabel" name="large_samus_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Like above, but makes the player 175% of the original size. Morph ball stays the same to avoid frequent soft-locks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
