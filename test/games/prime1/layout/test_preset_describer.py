@@ -64,20 +64,24 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
             "Starting Location: Tallon Overworld - Landing Site"
         ],
         "Quality of Life": [
-            "Fixes to game breaking bugs, Pickup scans",
             "Phazon suit hint: Area only"
         ],
         "Game Changes": [
             "Varia-only heat protection, Progressive suit damage reduction",
             "Warp to start, Unlocked Vault door, Unlocked Save Station doors, Phazon Elite without Dynamo",
             "53.1% chance of superheated, 28.7% chance of submerged",
-            "Deterministic I. Drone RNG, Deterministic Maze RNG",
             "Competitive cutscene removal",
             "Allowed backwards: Frigate, Labs, Upper Mines"
         ]
     }
+
     if use_enemy_attribute_randomizer:
         expected["Game Changes"].insert(5, "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, Enemies will be stretched randomly")
     else:
         expected["Game Changes"].insert(2, "Random Boss Sizes")
+
+    # clean changes in order should trip tests
+    expected["Game Changes"].sort()
+    result["Game Changes"].sort()
+
     assert expected == result

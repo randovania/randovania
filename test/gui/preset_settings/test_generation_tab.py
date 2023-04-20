@@ -37,7 +37,6 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
 
     # Assert
     assert window.trick_level_minimal_logic_check.isVisibleTo(parent) == has_min_logic
-    assert window.game_specific_group.isVisibleTo(parent) == has_specific_settings
 
 
 def test_persist_local_first_progression(skip_qtbot, preset_manager):

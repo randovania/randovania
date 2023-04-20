@@ -858,7 +858,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         else:
             idrone_config = None
 
-        if self.configuration.deterministic_maze:
+        if not self.configuration.legacy_mode:
             maze_seeds = [self.rng.choice(VANILLA_MAZE_SEEDS)]
         else:
             maze_seeds = None
