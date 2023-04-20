@@ -106,8 +106,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         yield self.local_first_progression_label
         yield self.dangerous_combo
         yield self.dangerous_label
+        yield self.dangerous_description
         yield self.line_2
         yield self.experimental_generator_line
+        yield self.minimal_logic_line
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL
