@@ -63,8 +63,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self._tabs = {}
         self._current_tab = None
 
-        for i in range(len(self._tab_types)):
-            extra_tab = self._tab_types[i]
+        for extra_tab in self._tab_types:
             if extra_tab.uses_patches_tab():
                 parent_tab = self.patches_tab_widget
             else:
@@ -83,9 +82,9 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self.button_box.rejected.connect(self.reject)
 
     def update_experimental_visibility(self):
-        for (parent, tabs) in [ \
-            (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]), \
-            (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]) \
+        for (parent, tabs) in [
+            (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]),
+            (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]),
         ]:
             for i in range(0, parent.count()):
                 tab = tabs[i]
