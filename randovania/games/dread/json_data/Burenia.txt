@@ -1089,14 +1089,14 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Tunnel to Teleport to Ghavoran (Upper Tunnel)
-      Trivial
   > Left of Central Grapple Block
       Morph Ball and After Burenia - Main Hub Middle Grapple Block
   > Dock to Main Hub Tower Top (Right)
       Trivial
   > Event - Main Hub Middle Graple Block (Back)
       Gravity Suit and Break/Move Grapple Block from Behind
+  > Outside Upper Tunnel
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -1118,14 +1118,9 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Morph Ball Tunnel to Teleport to Ghavoran/Tunnel to Main Hub Tower Middle (Upper)
   > Door to Teleport to Ghavoran (Plasma)
-      Any of the following:
-          Gravity Suit or Spider Magnet or Perform WBJ
-          Grapple Beam and Grapple Movement (Beginner)
-          Morph Ball and Movement (Beginner)
-  > Upper Water Ledge - Right
-      Any of the following:
-          Gravity Suit or Perform WBJ or Use Spin Boost
-          Grapple Beam and Grapple Movement (Beginner)
+      Morph Ball and Movement (Beginner)
+  > Outside Upper Tunnel
+      Can Slide Underwater
 
 > Tunnel to Teleport to Ghavoran (Lower Tunnel); Heals? False
   * Layers: default
@@ -1240,8 +1235,6 @@ Extra - asset_id: collision_camera_010
 
 > Upper Water Ledge - Right; Heals? False
   * Layers: default
-  > Tunnel to Teleport to Ghavoran (Upper Tunnel)
-      Trivial
   > Upper Water Ledge - Left
       Any of the following:
           Horizontal Water Movement
@@ -1258,6 +1251,8 @@ Extra - asset_id: collision_camera_010
                       # https://youtu.be/wlCOhr95pAY
                       Walljump (Intermediate)
   > Falling from above
+      Trivial
+  > Outside Upper Tunnel
       Trivial
 
 > Falling from above; Heals? False
@@ -1292,6 +1287,19 @@ Extra - asset_id: collision_camera_010
   * Event Burenia - Main Hub Middle Grapple Block
   > Door to Teleport to Ghavoran (Plasma)
       Trivial
+
+> Outside Upper Tunnel; Heals? False
+  * Layers: default
+  > Door to Teleport to Ghavoran (Plasma)
+      Any of the following:
+          Gravity Suit or Spider Magnet or Perform WBJ
+          Grapple Beam and Grapple Movement (Beginner)
+  > Tunnel to Teleport to Ghavoran (Upper Tunnel)
+      Morph Ball and After Burenia - Ghavoran Teleport Blob
+  > Upper Water Ledge - Right
+      Any of the following:
+          Gravity Suit or Perform WBJ or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
 
 ----------------
 Main Hub Tower Bottom
