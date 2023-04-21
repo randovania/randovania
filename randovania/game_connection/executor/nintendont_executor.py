@@ -5,7 +5,6 @@ from asyncio import StreamReader, StreamWriter
 
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
 
 @dataclasses.dataclass(frozen=True)
@@ -105,10 +104,6 @@ class NintendontExecutor(MemoryOperationExecutor):
     @property
     def lock_identifier(self) -> str | None:
         return None
-
-    @property
-    def backend_choice(self) -> MemoryExecutorChoice:
-        return MemoryExecutorChoice.NINTENDONT
 
     async def connect(self) -> bool:
         if self._socket is not None:

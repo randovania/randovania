@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.7.0] - 2023-05-??
 
+- Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
 - Changed: The resolver now allows dangerous resources in additional resources.
+
+### Metroid Prime
+
+- Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
+
+#### Logic Database
+
+- Fixed: The Artifact of Truth pickup is now a major location for Major/Minor split.
+
+### Metroid Prime 2: Echoes
+
+- Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
+
+#### Logic Database
+
+- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
 
 ### Metroid Dread
 
@@ -15,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
 - Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
 - Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
 
 #### Patcher Changes
 
@@ -35,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Reduced the difficulty of the walljump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
 - Changed: Using Walljump Advanded to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
+- Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
 
 ### Metroid Prime
 

@@ -1,6 +1,7 @@
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_dol_patcher, echoes_dol_versions
 
 
@@ -43,7 +44,7 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
     mock_find_version_for_dol.assert_called_once_with(dol_file, echoes_dol_versions.ALL_VERSIONS)
     mock_get_dol_path.assert_called_once_with(game_root)
     mock_dol_file_constructor.assert_called_once_with(mock_get_dol_path.return_value)
-    mock_apply_string.assert_called_once_with(version_patches.string_display, dol_file)
+    mock_apply_string.assert_called_once_with(RandovaniaGame.METROID_PRIME_ECHOES, version_patches.string_display, dol_file)
     mock_apply_game_options.assert_called_once_with(
         version_patches.game_options_constructor_address,
         patches_data.user_preferences, dol_file

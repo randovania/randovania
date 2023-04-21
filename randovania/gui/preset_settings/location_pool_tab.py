@@ -6,6 +6,7 @@ from PySide6 import QtWidgets
 from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
@@ -112,7 +113,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
             mode = RandomizationMode.MAJOR_MINOR_SPLIT if self._major_minor else RandomizationMode.FULL
             editor.available_locations = dataclasses.replace(editor.available_locations, randomization_mode=mode)
             for node, row_widget in self._row_widget_for_node.items():
-                if mode == RandomizationMode.MAJOR_MINOR_SPLIT and not node.major_location:
+                if mode == RandomizationMode.MAJOR_MINOR_SPLIT and node.location_category == LocationCategory.MINOR:
                     row_widget.set_can_have_progression(False)
                     row_widget.setEnabled(False)
                 else:

@@ -2,8 +2,8 @@ from unittest.mock import AsyncMock
 from unittest.mock import MagicMock
 
 import pytest
+from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 
-from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.game_connection import GameConnection
 
 
@@ -31,7 +31,10 @@ async def test_auto_update(skip_qtbot, qapp):
 
 def test_pretty_current_status(skip_qtbot):
     # Setup
-    connection = GameConnection(DolphinExecutor())
+    connection = GameConnection(DolphinConnectorBuilder())
+    connection.connector = MagicMock()
+    connection.connector.executor = MagicMock()
+    connection.connector.executor.is_connected = MagicMock(return_value=False)
 
     # Run
     result = connection.pretty_current_status

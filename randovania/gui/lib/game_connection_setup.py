@@ -3,10 +3,10 @@ from PySide6 import QtWidgets, QtGui
 from qasync import asyncSlot
 
 from randovania import get_data_path
-from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
-from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
+from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
+from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 from randovania.gui.lib import async_dialog
 from randovania.interface_common.options import Options, InfoAlert
 
@@ -71,22 +71,23 @@ class GameConnectionSetup:
         self.label.setText(s)
 
     def refresh_backend(self):
-        executor = self.game_connection.executor
+        connector_builder = self.game_connection.connector_builder
 
-        self.use_dolphin_backend.setChecked(isinstance(executor, DolphinExecutor))
-        if isinstance(executor, NintendontExecutor):
+        self.use_dolphin_backend.setChecked(isinstance(connector_builder, DolphinConnectorBuilder))
+        if isinstance(connector_builder, NintendontConnectorBuilder):
             self.use_nintendont_backend.setChecked(True)
-            self.use_nintendont_backend.setText(f"Nintendont: {executor.ip}")
+            self.use_nintendont_backend.setText(f"Nintendont: {connector_builder.executor.ip}")
             self.upload_nintendont_action.setEnabled(True)
         else:
             self.use_nintendont_backend.setChecked(False)
             self.use_nintendont_backend.setText("Nintendont")
             self.upload_nintendont_action.setEnabled(False)
 
-    def on_use_dolphin_backend(self):
-        self.game_connection.set_executor(DolphinExecutor())
+    @asyncSlot()
+    async def on_use_dolphin_backend(self):
+        await self.game_connection.set_connector_builder(DolphinConnectorBuilder())
         with self.options as options:
-            options.game_backend = MemoryExecutorChoice.DOLPHIN
+            options.game_backend = ConnectorBuilderChoice.DOLPHIN
         self.refresh_backend()
 
     @asyncSlot()
@@ -110,8 +111,8 @@ class GameConnectionSetup:
 
                 with self.options as options:
                     options.nintendont_ip = new_ip
-                    options.game_backend = MemoryExecutorChoice.NINTENDONT
-                self.game_connection.set_executor(NintendontExecutor(new_ip))
+                    options.game_backend = ConnectorBuilderChoice.NINTENDONT
+                await self.game_connection.set_connector_builder(NintendontConnectorBuilder(new_ip))
         self.refresh_backend()
 
     @asyncSlot()
