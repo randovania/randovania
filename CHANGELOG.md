@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
-
+- Added: Trick to reach the top of the bridge in Forgotten Bridge from below with Jump Off Enemy(Advanced)
+- Added: Trick to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash(Intermediate)
 ### Metroid Dread
 
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
@@ -26,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
 - Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
-
+- Added: Trick to getting the top item in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump(Advanced)
 #### Patcher Changes
 
 - Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
