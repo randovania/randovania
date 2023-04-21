@@ -161,7 +161,7 @@ class PrimeGameExporter(GameExporter):
         new_config["gameConfig"]["updateHintStateReplacement"] = list(
             assembler.assemble_instructions(
                 symbols["UpdateHintState__13CStateManagerFf"],
-                all_prime_dol_patches.remote_execution_patch(),
+                all_prime_dol_patches.remote_execution_patch(RandovaniaGame.METROID_PRIME),
                 symbols=symbols)
         )
         new_config["preferences"]["cacheDir"] = cache_dir

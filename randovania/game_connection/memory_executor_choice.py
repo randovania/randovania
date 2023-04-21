@@ -1,7 +1,8 @@
+# TODO: Rename the file. We don't select a MemoryExecutor anymore but a ConnectionBuilder
 from enum import Enum
 
 
-class MemoryExecutorChoice(Enum):
+class ConnectorBuilderChoice(Enum):
     DOLPHIN = "dolphin"
     NINTENDONT = "nintendont"
 
@@ -11,6 +12,6 @@ class MemoryExecutorChoice(Enum):
 
 
 _pretty_backend_name = {
-    MemoryExecutorChoice.DOLPHIN: "Dolphin",
-    MemoryExecutorChoice.NINTENDONT: "Nintendont",
+    ConnectorBuilderChoice.DOLPHIN: "Dolphin",
+    ConnectorBuilderChoice.NINTENDONT: "Nintendont",
 }

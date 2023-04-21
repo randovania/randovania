@@ -222,7 +222,8 @@ class PlayerState:
             weighted = {
                 loc: weight
                 for loc, weight in weighted.items()
-                if loc[0].game.world_list.node_from_pickup_index(loc[1]).major_location != action.is_expansion
+                if (loc[0].game.world_list.node_from_pickup_index(loc[1]).location_category !=
+                    action.generator_params.prefered_location_category)
             }
 
         return weighted
@@ -230,7 +231,7 @@ class PlayerState:
     def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
                          all_locations_weighted: WeightedLocations) -> bool:
 
-        if not pickup.item_category.is_major:
+        if not pickup.item_category.hinted_as_major:
             return False
 
         config = self.configuration

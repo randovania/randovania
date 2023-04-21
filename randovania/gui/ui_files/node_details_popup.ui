@@ -286,7 +286,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -439,10 +439,10 @@
        <property name="bottomMargin">
         <number>2</number>
        </property>
-       <item row="1" column="0" colspan="2">
-        <widget class="QCheckBox" name="major_location_check">
+       <item row="1" column="0">
+        <widget class="QLabel" name="location_category_label">
          <property name="text">
-          <string>Is major location</string>
+          <string>Location Category:</string>
          </property>
         </widget>
        </item>
@@ -452,6 +452,9 @@
           <number>999</number>
          </property>
         </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="location_category_combo"/>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="pickup_index_label">
