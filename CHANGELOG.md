@@ -15,11 +15,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
 
+#### Logic Database
+
+- Fixed: The Artifact of Truth pickup is now a major location for Major/Minor split.
+
 ### Metroid Prime 2: Echoes
 
 - Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
-- Added: Trick to reach the top of the bridge in Forgotten Bridge from below with Jump Off Enemy(Advanced)
-- Added: Trick to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash(Intermediate)
+
+#### Logic Database
+
+- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
+- Added: Trick to reach the top of the bridge in Forgotten Bridge from below with Jump Off Enemy (Advanced)
+- Added: Trick to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
+
 ### Metroid Dread
 
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
@@ -27,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
 - Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
-- Added: Trick to getting the top item in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump(Advanced)
+
 #### Patcher Changes
 
 - Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
@@ -41,10 +50,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Speedbooster to skip breaking the blob submerged in water in Artaria Early Cloak room, requires SpeedBooster Conservation (Beginner).
 - Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
 - Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
+- Added: Trick to getting the top item in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump (Advanced)
 - Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
 - Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
+- Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
 
 ### Metroid Prime
 
