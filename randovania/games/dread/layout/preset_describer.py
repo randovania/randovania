@@ -1,5 +1,5 @@
 from randovania.game_description.item.major_item import MajorItem
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig, DreadRavenBeakDamageMode
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,

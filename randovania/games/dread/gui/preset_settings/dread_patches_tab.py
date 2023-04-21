@@ -56,4 +56,5 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
         config = typing.cast(DreadConfiguration, preset.configuration)
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
-        self.consistent_raven_beak_damage_table_check.setChecked(not config.consistent_raven_beak_damage_table.is_default)
+        self.consistent_raven_beak_damage_table_check.setChecked(
+            not config.consistent_raven_beak_damage_table.is_default)

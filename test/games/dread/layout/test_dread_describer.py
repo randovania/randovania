@@ -32,7 +32,6 @@ def test_dread_format_params(has_artifacts):
         ],
         "Game Changes": [
             "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
-            "Consistent Raven Beak Damage",
         ],
         "Environmental Damage": [
             "Heat: Constant 20 dmg/s",
