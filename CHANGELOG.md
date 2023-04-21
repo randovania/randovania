@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
 - Changed: The resolver now allows dangerous resources in additional resources.
 
+### Cave Story
+
+- Changed: Rest Area in Plantation is now internally called "Lounge" instead of "lounge" to prevent crahses occurring when exporting on Linux.
+
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
