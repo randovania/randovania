@@ -11,23 +11,26 @@ from randovania.layout.base.dock_rando_configuration import DockRandoConfigurati
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 from randovania.layout.preset import Preset
+from randovania.interface_common.options import Options
 
 
 class PresetEditor:
     _on_changed: Callable[[], None] | None = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
+    _options: Options
 
     _name: str
     _uuid: uuid.UUID
     _game: RandovaniaGame
     _configuration: BaseConfiguration
 
-    def __init__(self, initial_preset: Preset):
+    def __init__(self, initial_preset: Preset, options: Options):
         self._name = initial_preset.name
         self._uuid = initial_preset.uuid
         self._game = initial_preset.game
         self._configuration = initial_preset.configuration
+        self._options = options
 
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)

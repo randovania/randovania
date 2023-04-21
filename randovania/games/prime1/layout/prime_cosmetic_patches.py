@@ -9,7 +9,6 @@ DEFAULT_HUD_COLOR = (102, 174, 225)
 
 @dataclasses.dataclass(frozen=True)
 class PrimeCosmeticPatches(BaseCosmeticPatches):
-    qol_cosmetic: bool = True
     open_map: bool = True
     pickup_markers: bool = True
     force_fusion: bool = False
