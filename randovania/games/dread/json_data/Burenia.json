@@ -12999,24 +12999,12 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "and",
+                                                                                                    "type": "resource",
                                                                                                     "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "events",
-                                                                                                                    "name": "BureniaGravitySuitRoomStoreSpeed",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "template",
-                                                                                                                "data": "Lay Power Bomb"
-                                                                                                            }
-                                                                                                        ]
+                                                                                                        "type": "events",
+                                                                                                        "name": "BureniaGravitySuitRoomStoreSpeed",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -13607,19 +13595,31 @@
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "misc",
-                                                                                "name": "DoorLocks",
-                                                                                "amount": 1,
-                                                                                "negate": true
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
                                                                                 "type": "events",
                                                                                 "name": "BureniaGravitySuitRoomStoreSpeed",
                                                                                 "amount": 1,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "misc",
+                                                                                            "name": "DoorLocks",
+                                                                                            "amount": 1,
+                                                                                            "negate": true
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Lay Power Bomb"
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
