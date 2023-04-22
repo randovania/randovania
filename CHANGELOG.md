@@ -62,9 +62,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Reduced the difficulty of the walljump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
 - Changed: Using Walljump Advanded to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morhph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
+- Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
-- Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
 
 ### Metroid Prime
 
