@@ -108,6 +108,7 @@ def _convert_v19(options: dict) -> dict:
 
 def _convert_v20(options: dict) -> dict:
     # added experimental settings
+    options.get("game_prime1", {}).get("cosmetic_patches", {}).pop("qol_cosmetic", None)
     return options
 
 
