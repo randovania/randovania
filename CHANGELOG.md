@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Root Cave - R-Jump method (video added)
 
 
+##### Phendrana Drifts
+- Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
+- Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
+- Added: Hunter Cave - Various videos
+
 ### Metroid Dread
 
 #### Logic Database
