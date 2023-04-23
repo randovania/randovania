@@ -27,10 +27,14 @@ def convert_to_raw_python(value) -> Any:
     return value
 
 
+def is_path_not_equals_to(path, value):
+    return path != value
+
+
 def OptionalValue(subcon):
     return construct.FocusedSeq(
         "value",
-        present=Rebuild(Flag, construct.this.value != None),
+        present=Rebuild(Flag, is_path_not_equals_to(construct.this.value, None)),
         value=If(construct.this.present, subcon),
     )
 

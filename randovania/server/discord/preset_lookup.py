@@ -22,6 +22,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog
@@ -204,7 +205,7 @@ class RequestPresetsView(discord.ui.View):
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
-        except (IndexError, ValueError, UnsupportedPermalink) as e:
+        except (IndexError, ValueError, UnsupportedPermalink):
             logging.exception("Unable to find permalink on message that sent attach_presets_of_permalink")
             permalink = None
 
@@ -233,10 +234,12 @@ async def _try_get(message: discord.Message, attachment: discord.Attachment, dec
         data = await attachment.read()
         return decoder(json.loads(data.decode("utf-8")))
     except Exception as e:
-        logging.exception(f"Unable to process {attachment.filename} from {message}")
+        if not isinstance(e, UnsupportedVersion):
+            logging.exception(f"Unable to process {attachment.filename} from {message}")
+
         await message.reply(
             embed=discord.Embed(
-                title=f"Unable to process {attachment.filename}",
+                title=f"Unable to process `{attachment.filename}`",
                 description=str(e),
             ),
             mention_author=False

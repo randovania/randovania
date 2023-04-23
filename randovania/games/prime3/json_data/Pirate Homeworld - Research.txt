@@ -1,6 +1,5 @@
 ----------------
 Landing Site Alpha
-(Valid Starting Location)
 Extra - asset_id: 13146584938063573409
 > Door to Scrapvault Lift; Heals? False
   * Layers: default
@@ -20,7 +19,7 @@ Extra - asset_id: 13146584938063573409
   > Event - Barrier
       Use Grapple Voltage (Lasso and Voltage)
 
-> Samus Ship; Heals? True; Spawn Point
+> Samus Ship; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by Trivial)
   > Door to Scrapvault Lift
@@ -50,9 +49,8 @@ Extra - asset_id: 13146584938063573409
 
 ----------------
 Scrapvault Lift
-(Valid Starting Location)
 Extra - asset_id: 13906902545873588315
-> Door to Landing Site Alpha; Heals? False; Spawn Point
+> Door to Landing Site Alpha; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Landing Site Alpha/Door to Scrapvault Lift
   * Extra - dock_index: 0
@@ -82,9 +80,8 @@ Extra - asset_id: 13906902545873588315
 
 ----------------
 Craneyard
-(Valid Starting Location)
 Extra - asset_id: 7063455547734255887
-> Door to Airshaft; Heals? False; Spawn Point
+> Door to Airshaft; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Airshaft/Door to Craneyard
   * Extra - dock_index: 0
@@ -102,13 +99,13 @@ Extra - asset_id: 7063455547734255887
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 75; Major Location? False
+  * Pickup 75; Category? Minor
   > Spinner Section
       Trivial
 
 > Pickup (Hazard Shield); Heals? False
   * Layers: default
-  * Pickup 76; Major Location? True
+  * Pickup 76; Category? Major
   > Door to Airshaft
       All of the following:
           Hazard Shield
@@ -123,7 +120,6 @@ Extra - asset_id: 7063455547734255887
 
 ----------------
 Creche Transit
-(Valid Starting Location)
 Extra - asset_id: 1760181228684086770
 > Door to Metroid Creche; Heals? False
   * Layers: default
@@ -142,7 +138,7 @@ Extra - asset_id: 1760181228684086770
           # https://youtu.be/cCXJJnIbI6M
           Hyper Missile and Missile ≥ 2 and Open Barriers from Behind (Beginner) and Enter Hypermode
 
-> Door to Metroid Processing; Heals? False; Spawn Point
+> Door to Metroid Processing; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Metroid Processing/Door to Creche Transit
   * Extra - dock_index: 1
@@ -155,7 +151,7 @@ Extra - asset_id: 1760181228684086770
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 77; Major Location? False
+  * Pickup 77; Category? Minor
   > Door to Metroid Processing
       Trivial
 
@@ -184,7 +180,6 @@ Extra - asset_id: 1760181228684086770
 
 ----------------
 Proving Grounds
-(Valid Starting Location)
 Extra - asset_id: 3594029436312475339
 > Door to Transit Station 1-B; Heals? False
   * Layers: default
@@ -204,7 +199,7 @@ Extra - asset_id: 3594029436312475339
 
 > Pickup (Grapple Voltage); Heals? False
   * Layers: default
-  * Pickup 78; Major Location? True
+  * Pickup 78; Category? Major
   > Room Center
       Trivial
 
@@ -220,7 +215,7 @@ Extra - asset_id: 3594029436312475339
   > Room Center
       Trivial
 
-> Room Center; Heals? False; Spawn Point
+> Room Center; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Door to Transit Station 1-B
       After Proving Grounds Barrier Removed
@@ -237,15 +232,16 @@ Extra - asset_id: 3594029436312475339
               Any of the following:
                   Morph Ball Bomb or Boost Ball
                   Hyper Ball and Knowledge (Beginner) and Enter Hypermode
-          Combat (Advanced) and Use Screw Attack (Space Jump)
+          All of the following:
+              Combat (Advanced)
+              Boost Ball or Use Screw Attack (Space Jump)
   > Event - Barrier
       Use Grapple Voltage (Lasso and Voltage)
 
 ----------------
 Metroid Processing
-(Valid Starting Location)
 Extra - asset_id: 16389095850931092901
-> Door to Processing Access; Heals? False; Spawn Point
+> Door to Processing Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Processing Access/Door to Metroid Processing
   * Extra - dock_index: 0
@@ -277,13 +273,13 @@ Extra - asset_id: 16389095850931092901
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 80; Major Location? False
+  * Pickup 80; Category? Minor
   > Door to Processing Access
       Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Layers: default
-  * Pickup 79; Major Location? True
+  * Pickup 79; Category? Major
   > Basement
       Trivial
 
@@ -319,9 +315,8 @@ Extra - asset_id: 16389095850931092901
 
 ----------------
 Airshaft
-(Valid Starting Location)
 Extra - asset_id: 8007962190215742654
-> Door to Metroid Processing; Heals? False; Spawn Point
+> Door to Metroid Processing; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Plasma Door to Metroid Processing/Door to Airshaft
   * Extra - dock_index: 0
@@ -343,9 +338,8 @@ Extra - asset_id: 8007962190215742654
 
 ----------------
 Processing Access
-(Valid Starting Location)
 Extra - asset_id: 11685491285383767107
-> Door to Scrapvault; Heals? False; Spawn Point
+> Door to Scrapvault; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Plasma Door to Scrapvault/Door to Processing Access
   * Extra - dock_index: 0
@@ -358,7 +352,7 @@ Extra - asset_id: 11685491285383767107
               All of the following:
                   Missile ≥ 3 and Nova Beam
                   X-Ray Visor or Invisible Objects (Beginner)
-              Charge Beam and Knowledge (Beginner) and Enter Hypermode
+              Charge Beam and Knowledge (Intermediate) and Enter Hypermode
 
 > Door to Metroid Processing; Heals? False
   * Layers: default
@@ -369,15 +363,14 @@ Extra - asset_id: 11685491285383767107
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 81; Major Location? False
+  * Pickup 81; Category? Minor
   > Door to Scrapvault
       Trivial
 
 ----------------
 Proving Grounds Lift
-(Valid Starting Location)
 Extra - asset_id: 17474188290326019383
-> Door to Craneyard; Heals? False; Spawn Point
+> Door to Craneyard; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Craneyard/Door to Proving Grounds Lift
   * Extra - dock_index: 0
@@ -393,7 +386,6 @@ Extra - asset_id: 17474188290326019383
 
 ----------------
 Transit Station 1-A
-(Valid Starting Location)
 Extra - asset_id: 14633273468387956199
 > Door to Landing Site Alpha; Heals? False
   * Layers: default
@@ -402,7 +394,7 @@ Extra - asset_id: 14633273468387956199
   > Train to Research Facility - Transit Station 1-B
       Scan Visor
 
-> Train to Research Facility - Transit Station 1-B; Heals? False; Spawn Point
+> Train to Research Facility - Transit Station 1-B; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Pirate Homeworld - Research - Transit Station 1-B
   * Extra - scan_asset_id: 5661123094437393302
@@ -412,7 +404,6 @@ Extra - asset_id: 14633273468387956199
 
 ----------------
 Transit Station 1-B
-(Valid Starting Location)
 Extra - asset_id: 2640383633522526
 > Door to Proving Grounds; Heals? False
   * Layers: default
@@ -421,7 +412,7 @@ Extra - asset_id: 2640383633522526
   > Train to Research Facility - Transit Station 1-A
       Scan Visor
 
-> Train to Research Facility - Transit Station 1-A; Heals? False; Spawn Point
+> Train to Research Facility - Transit Station 1-A; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Pirate Homeworld - Research - Transit Station 1-A
   * Extra - scan_asset_id: 8972164031291810221
@@ -431,9 +422,8 @@ Extra - asset_id: 2640383633522526
 
 ----------------
 Scrapvault
-(Valid Starting Location)
 Extra - asset_id: 11846340785047609812
-> Door to Scrapvault Lift; Heals? False; Spawn Point
+> Door to Scrapvault Lift; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Scrapvault Lift/Door to Scrapvault
   * Extra - dock_index: 0
@@ -472,7 +462,7 @@ Extra - asset_id: 11846340785047609812
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 82; Major Location? False
+  * Pickup 82; Category? Minor
   > Room Center
       Trivial
 
@@ -503,9 +493,8 @@ Extra - asset_id: 11846340785047609812
 
 ----------------
 Metroid Creche
-(Valid Starting Location)
 Extra - asset_id: 17400901133416718911
-> Door to Creche Transit; Heals? False; Spawn Point
+> Door to Creche Transit; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Creche Transit/Door to Metroid Creche
   * Extra - dock_index: 0
@@ -544,7 +533,7 @@ Leads to Command Center/Door to Metroid Creche
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 83; Major Location? True
+  * Pickup 83; Category? Major
   > Door to Creche Transit
       Trivial
 
@@ -556,7 +545,6 @@ Leads to Command Center/Door to Metroid Creche
 
 ----------------
 Scrapworks
-(Valid Starting Location)
 Extra - asset_id: 15178552083233342671
 > Morph Ball Door to Scrapvault (X-Ray Terminal); Heals? False
   * Layers: default
@@ -565,7 +553,7 @@ Extra - asset_id: 15178552083233342671
   > Morph Ball Door to Scrapvault (Exit)
       Morph Ball Bomb and Boost Ball and Morph Ball
 
-> Morph Ball Door to Scrapvault (Entrance); Heals? False; Spawn Point
+> Morph Ball Door to Scrapvault (Entrance); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks (Entrance)
   * Extra - dock_index: 1
@@ -593,20 +581,19 @@ Extra - asset_id: 15178552083233342671
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 84; Major Location? True
+  * Pickup 84; Category? Major
   > Morph Ball Door to Scrapvault (Entrance)
       Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 85; Major Location? False
+  * Pickup 85; Category? Minor
   > Morph Ball Door to Scrapvault (Exit)
       Trivial
 
 ----------------
 Transit Station 3-A
 Leads to Command Center
-(Valid Starting Location)
 Extra - asset_id: 11544788909190121627
 > Door to Metroid Creche; Heals? False
   * Layers: default
@@ -626,7 +613,7 @@ Leads to Command Center
   > Train to Command Center - Transit Station 3-B
       Scan Visor
 
-> Train to Command Center - Transit Station 3-B; Heals? False; Spawn Point
+> Train to Command Center - Transit Station 3-B; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Pirate Homeworld - Command - Transit Station 3-B
 Leads to Research Facility
@@ -637,7 +624,6 @@ Leads to Research Facility
 
 ----------------
 Save Station
-(Valid Starting Location)
 Extra - asset_id: 9471059356885924197
 > Door to Transit Station 3-A
 Leads to Command Center; Heals? False
@@ -648,7 +634,7 @@ Leads to Command Center/Door to Save Station
   > Save Station
       Trivial
 
-> Save Station; Heals? True; Spawn Point
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   > Door to Transit Station 3-A
 Leads to Command Center

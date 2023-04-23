@@ -17,10 +17,11 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain, ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
@@ -101,10 +102,11 @@ def _area_identifier_to_json(world_list: WorldList, identifier: AreaIdentifier) 
 def _create_spawn_point_field(patches: GamePatches,
                               game: GameDescription,
                               ) -> dict:
+    starting_resources = patches.starting_resources()
     capacities = [
         {
             "index": item_id_for_item_resource(item),
-            "amount": patches.starting_items[item],
+            "amount": starting_resources[item],
         }
         for item in game.resource_database.item
     ]
@@ -305,6 +307,10 @@ def _akul_testament_string_patch(namer: HintNamer):
     # update after each tournament! ordered from newest to oldest
     champs = [
         {
+            "title": "2022 Champion",
+            "name": "Cestrion"
+        },
+        {
             "title": "CGC 2022 Champions",
             "name": "Cosmonawt and Cestrion"
         },
@@ -380,10 +386,8 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
-def _create_starting_popup(layout_configuration: EchoesConfiguration,
-                           game_description: GameDescription,
-                           starting_items: ResourceCollection) -> list:
-    extra_items = item_names.additional_starting_items(layout_configuration, game_description, starting_items)
+def _create_starting_popup(patches: GamePatches) -> list:
+    extra_items = item_names.additional_starting_equipment(patches.configuration, patches.game, patches)
     if extra_items:
         return [
             "Extra starting items:",
@@ -529,8 +533,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         # Add Spawn Point
         result["spawn_point"] = _create_spawn_point_field(self.patches, self.game)
 
-        result["starting_popup"] = _create_starting_popup(self.configuration, self.game,
-                                                          self.patches.starting_items)
+        result["starting_popup"] = _create_starting_popup(self.patches)
 
         # Add the pickups
         result["pickups"] = _create_pickup_list(self.cosmetic_patches, self.configuration, self.game, self.patches,
@@ -568,10 +571,72 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         if self.configuration.use_new_patcher:
             result["new_patcher"] = self.new_patcher_configuration()
 
+            # FIXME HACK: don't change Aerie name as that breaks OPR's API
+            if self.configuration.portal_rando:
+                for elev in result["elevators"]:
+                    if elev["instance_id"] == 4260106:
+                        elev["room_name"] = "Aerie"
+
         return result
 
+    def add_dock_connection_changes(self, worlds_patch_data: dict):
+        portal_changes: dict[DockNode, Node] = {
+            source: target
+            for source, target in self.patches.all_dock_connections()
+            if source.dock_type.short_name == "portal" and source.default_connection != target.identifier
+        }
+
+        for source, target in list(portal_changes.items()):
+            if source not in portal_changes:
+                continue
+
+            assert portal_changes.pop(target) is source
+            assert isinstance(source, DockNode)
+            assert isinstance(target, DockNode)
+
+            world = self.game.world_list.nodes_to_world(source)
+            if world.name not in worlds_patch_data:
+                worlds_patch_data[world.name] = {"areas": {}}
+
+            source_area = self.game.world_list.nodes_to_area(source)
+            if source_area.name not in worlds_patch_data[world.name]["areas"]:
+                worlds_patch_data[world.name]["areas"][source_area.name] = {}
+
+            area_patch_data = worlds_patch_data[world.name]["areas"][source_area.name]
+            area_patch_data["docks"] = area_patch_data.get("docks", {})
+            area_patch_data["docks"][source.extra["dock_name"]] = {
+                "connect_to": {
+                    "area": self.game.world_list.nodes_to_area(target).name,
+                    "dock": target.extra["dock_name"],
+                }
+            }
+
     def new_patcher_configuration(self):
+        worlds_patch_data = {
+            "Temple Grounds": {
+                "areas": {
+                    "Dynamo Chamber": {
+                        "layers": {
+                            "1st Pass Scripting": False,
+                            "2nd Pass Scripting": True,
+                        }
+                    },
+                    "Trooper Security Station": {
+                        "layers": {
+                            "1st Pass": False,
+                            "2nd Pass": True,
+                        }
+                    },
+                }
+            }
+        }
+        self.add_dock_connection_changes(worlds_patch_data)
+
         return {
+            "worlds": worlds_patch_data,
+            # "area_patches": {
+            #     "torvus_temple": True
+            # },
             "small_randomizations": {
                 "seed": self.description.get_seed_for_player(self.players_config.player_index),
                 "echo_locks": True,

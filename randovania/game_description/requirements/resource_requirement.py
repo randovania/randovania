@@ -6,6 +6,7 @@ from math import ceil
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -91,8 +92,10 @@ class ResourceRequirement(Requirement):
         if static_resources.is_resource_set(self.resource):
             if self.satisfied(static_resources, 0, database):
                 return Requirement.trivial()
-            else:
+            elif not isinstance(self.resource, ItemResourceInfo) or self.resource.max_capacity <= 1:
                 return Requirement.impossible()
+            else:
+                return self
         else:
             return self.multiply_amount(damage_multiplier)
 
@@ -105,6 +108,9 @@ class ResourceRequirement(Requirement):
 
     def iterate_resource_requirements(self, database: ResourceDatabase):
         yield self
+
+    def is_obsoleted_by(self, other: ResourceRequirement):
+        return self.resource == other.resource and self.negate == other.negate and self.amount <= other.amount
 
 
 class DamageResourceRequirement(ResourceRequirement):

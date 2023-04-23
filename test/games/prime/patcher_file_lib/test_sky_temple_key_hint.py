@@ -114,8 +114,8 @@ def test_create_hints_all_starting(hide_area: bool, multiworld: bool, empty_patc
     # Setup
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
-    patches = empty_patches.assign_extra_initial_items([
-        (echoes_game_description.resource_database.get_item(echoes_items.SKY_TEMPLE_KEY_ITEMS[key]), 1)
+    patches = empty_patches.assign_extra_starting_pickups([
+        (pickup_creator.create_sky_temple_key(key, echoes_game_description.resource_database))
         for key in range(9)
     ])
     patches = dataclasses.replace(patches, configuration=default_echoes_configuration)

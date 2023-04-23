@@ -28,16 +28,17 @@ def pool_creator(results: PoolResults,
         return [p for p in indices if p not in results.assignment.keys()]
 
     def get_valid_pickups(pickups):
-        pickup_iter = lambda w: (p for p in results.pickups if p.name == w)
+        def pickup_iter(w):
+            return (p for p in results.to_place if p.name == w)
         return [next(pickup_iter(w)) for w in pickups if next(pickup_iter(w), None) is not None]
 
     # puppies
     if not configuration.puppies_anywhere:
         puppy_indices = get_valid_indices(PUPPY_INDICES)
         rng.shuffle(puppy_indices)
-        puppies: list[PickupEntry] = list(filter(lambda p: p.item_category.name == "puppies", results.pickups))
+        puppies: list[PickupEntry] = list(filter(lambda p: p.item_category.name == "puppies", results.to_place))
         for p in puppies:
-            results.pickups.remove(p)
+            results.to_place.remove(p)
             results.assignment[puppy_indices.pop()] = p
 
     # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
@@ -59,7 +60,7 @@ def pool_creator(results: PoolResults,
             index = rng.choice(first_cave_indices)
             weapon = rng.choice(sn_weapons)
 
-            results.pickups.remove(weapon)
+            results.to_place.remove(weapon)
             results.assignment[index] = weapon
 
     # strong weapon and life capsule in camp

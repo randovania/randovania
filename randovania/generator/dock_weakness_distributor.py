@@ -100,7 +100,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
             ctx = NodeContext(
                 patches,
-                patches.starting_items,
+                patches.starting_resources(),
                 game.resource_database,
                 game.world_list
             )
@@ -148,7 +148,9 @@ async def _run_dock_resolver(dock: DockNode,
 
     debug.debug_print(f"{dock.identifier}")
     try:
-        new_state = await _run_resolver(state, logic, state.patches.game.dock_weakness_database.dock_rando_config.resolver_attempts)
+        new_state = await _run_resolver(
+            state, logic, state.patches.game.dock_weakness_database.dock_rando_config.resolver_attempts,
+        )
     except resolver.ResolverTimeout:
         new_state = None
         result = f"Timeout ({resolver.get_attempts()} attempts)"
@@ -231,7 +233,9 @@ async def distribute_post_fill_weaknesses(rng: Random,
         state, logic = resolver.setup_resolver(patches.configuration, patches)
 
         try:
-            new_state = await _run_resolver(state, logic, patches.game.dock_weakness_database.dock_rando_config.resolver_attempts * 2)
+            new_state = await _run_resolver(
+                state, logic, patches.game.dock_weakness_database.dock_rando_config.resolver_attempts * 2,
+            )
         except resolver.ResolverTimeout:
             new_state = None
 
@@ -251,7 +255,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
         target = dock.get_target_identifier(NodeContext(
             patches,
-            patches.starting_items,
+            patches.starting_resources(),
             game.resource_database,
             game.world_list,
         ))

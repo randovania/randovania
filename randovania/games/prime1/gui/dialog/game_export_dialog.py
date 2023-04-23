@@ -2,13 +2,14 @@ import dataclasses
 from pathlib import Path
 
 from randovania.exporter.game_exporter import GameExportParams
+from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    spoiler_path_for, add_field_validation, output_file_validator, is_file_validator, update_validation,
+    spoiler_path_for, add_field_validation, output_file_validator, update_validation,
 )
 from randovania.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
@@ -76,9 +77,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.input_file_edit: lambda: is_file_validator(self.input_file),
+                self.input_file_edit: lambda: is_prime1_iso_validator(self.input_file),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-                self.echoes_file_edit: lambda: self._use_echoes_models and is_file_validator(self.echoes_file),
+                self.echoes_file_edit: lambda: self._use_echoes_models and is_prime2_iso_validator(self.echoes_file),
             }
         )
 

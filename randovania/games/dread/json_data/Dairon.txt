@@ -29,7 +29,7 @@ Extra - asset_id: collision_camera_000
   > Door to Teleport to Artaria
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_000
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -40,7 +40,6 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Teleport to Artaria
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 16000.0, 'x2': 20500.0, 'y1': 4600.0, 'y2': 8100.0}
 Extra - polygon: [[20500.0, 8100.0], [16000.0, 8100.0], [16000.0, 4600.0], [20500.0, 4600.0]]
 Extra - asset_id: collision_camera_001
@@ -85,7 +84,7 @@ Extra - asset_id: collision_camera_001
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 60; Major Location? False
+  * Pickup 60; Category? Minor
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Top Floor
@@ -100,7 +99,7 @@ Extra - asset_id: collision_camera_001
   > Door to Save Station East
       Trivial
 
-> Teleporter to Artaria - Teleport to Dairon; Heals? False; Spawn Point
+> Teleporter to Artaria - Teleport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Artaria - Teleport to Dairon
   * Extra - actor_name: teleport_cave_000
@@ -111,22 +110,10 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Top Floor
       Any of the following:
-          Space Jump or Walljump (Advanced) or Simple IBJ
+          Space Jump or Walljump (Intermediate) or Simple IBJ
           All of the following:
               Walljump (Beginner)
               Flash Shift or Use Spin Boost
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Wide Beam Block - Adjacent
-      Trivial
-  > Wide Beam Block - Above
-      Trivial
 
 > Event - Push Wide Beam Block; Heals? False
   * Layers: default
@@ -140,23 +127,21 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Door to Transport to Cataris
       After Dairon - Wide Beam Block Cataris Transport
-  > Tile Group (POWERBEAM)
-      Any of the following:
-          Space Jump or Simple IBJ
-          Walljump (Beginner) and Use Spin Boost
   > Event - Push Wide Beam Block
       Any of the following:
           Push Wide Beam Block
           Diffusion Abuse (Intermediate) and Shoot Diffusion Beam
+  > Wide Beam Block - Above
+      Any of the following:
+          Space Jump or Simple IBJ
+          Walljump (Beginner) and Use Spin Boost
 
 > Wide Beam Block - Above; Heals? False
   * Layers: default
   > Door to Transport to Cataris
       Trivial
-  > Tile Group (POWERBEAM)
-      Trivial
   > Wide Beam Block - Adjacent
-      After Dairon - Teleport To Artaria Speed Blocks Destroyed
+      Trivial
   > Top Floor
       After Dairon - Teleport To Artaria Speed Blocks Destroyed
   > Event - Speed Booster blocks Destroyed
@@ -199,8 +184,10 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Exit East
       After Dairon - Wide Beam Block by Save Room
-  > Above Crumble Blocks
+  > Dock to Big Hub
       Trivial
+  > Tunnel to Big Hub
+      Lay Bomb or Lay Power Bomb
   > Event - Push Wide Beam Block
       Wave Beam and Movement (Beginner) and Push Wide Beam Block
 
@@ -216,27 +203,6 @@ Extra - asset_id: collision_camera_002
           Push Wide Beam Block
           Diffusion Abuse (Intermediate) and Shoot Diffusion Beam
 
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_066
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Dock to Big Hub
-      Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_068
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tunnel to Big Hub
-      Morph Ball
-  > Above Crumble Blocks
-      Morph Ball
-
 > Dock to Big Hub; Heals? False
   * Layers: default
   * Open Passage to Big Hub/Dock to Hub Access
@@ -244,19 +210,8 @@ Extra - asset_id: collision_camera_002
 > Tunnel to Big Hub; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Big Hub/Tunnel to Hub Access
-  > Tile Group (BOMB)
-      Morph Ball
-
-> Above Crumble Blocks; Heals? False
-  * Layers: default
   > Door to Save Station East
-      Any of the following:
-          Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
-          Grapple Beam and Movement (Beginner)
-  > Tile Group (WEIGHT)
-      Trivial
-  > Tile Group (BOMB)
-      Morph Ball
+      Lay Bomb or Lay Power Bomb
 
 > Event - Push Wide Beam Block; Heals? False
   * Layers: default
@@ -285,7 +240,7 @@ Extra - asset_id: collision_camera_003
   > Event - Grapple Block
       Grapple Beam
 
-> Elevator to Ferenia - East Transport to Darion; Heals? False; Spawn Point
+> Elevator to Ferenia - East Transport to Darion; Heals? False; Default Node
   * Layers: default
   * Teleporter to Ferenia - East Transport to Darion
   * Extra - actor_name: elevator_sanctuary_000
@@ -307,7 +262,6 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Big Hub
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 6000.0, 'x2': 12100.0, 'y1': 600.0, 'y2': 4700.0}
 Extra - polygon: [[12100.0, 4700.0], [6000.0, 4700.0], [6000.0, 600.0], [12100.0, 600.0]]
 Extra - asset_id: collision_camera_004
@@ -362,7 +316,7 @@ Extra - asset_id: collision_camera_004
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 59; Major Location? False
+  * Pickup 59; Category? Minor
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Dock to Yellow EMMI Introduction
@@ -384,24 +338,12 @@ Extra - asset_id: collision_camera_004
   > Dock to Hub Access
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyBaseLab
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Yellow EMMI Introduction
       Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_069
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Dock to Hub Access
-      Morph Ball and After Dairon - Big Hub Grapple Block
-  > Tunnel to Hub Access
-      Morph Ball
 
 > Dock to Hub Access; Heals? False
   * Layers: default
@@ -412,8 +354,10 @@ Extra - asset_id: collision_camera_004
       Trivial
   > Event - Grapple Block
       Grapple Beam
-  > Tile Group (BOMB)
-      Morph Ball and After Dairon - Big Hub Grapple Block
+  > Tunnel to Hub Access
+      All of the following:
+          After Dairon - Big Hub Grapple Block
+          Lay Bomb or Lay Power Bomb
   > Event - Push Wide Beam Block
       Any of the following:
           Push Wide Beam Block
@@ -422,8 +366,10 @@ Extra - asset_id: collision_camera_004
 > Tunnel to Hub Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Hub Access/Tunnel to Big Hub
-  > Tile Group (BOMB)
-      Morph Ball
+  > Dock to Hub Access
+      All of the following:
+          After Dairon - Big Hub Grapple Block
+          Lay Bomb or Lay Power Bomb
 
 > Event - Push Wide Beam Block; Heals? False
   * Layers: default
@@ -474,7 +420,6 @@ Extra - asset_id: collision_camera_005
 
 ----------------
 Wide Beam Room
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 4000.0, 'x2': 6100.0, 'y1': 1800.0, 'y2': 3600.0}
 Extra - polygon: [[6100.0, 3600.0], [4000.0, 3600.0], [4000.0, 1800.0], [6100.0, 1800.0]]
 Extra - asset_id: collision_camera_006
@@ -487,12 +432,12 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_002
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
-  > Tile Group (POWERBEAM) 1
+  > Start Point
       Trivial
 
 > Pickup (Wide Beam); Heals? False
   * Layers: default
-  * Pickup 57; Major Location? True
+  * Pickup 57; Category? Major
   * Extra - actor_name: itemsphere_widebeam
   * Extra - actor_def: actordef:actors/items/itemsphere_widebeam/charclasses/itemsphere_widebeam.bmsad
   * Extra - map_icon_actor: powerup_widebeam
@@ -512,64 +457,16 @@ Extra - asset_id: collision_camera_006
   > Start Point
       Can Slide
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_WideBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Big Hub
+      Trivial
   > Pickup (Wide Beam)
       Trivial
   > Door to Teleport to Cataris
       Morph Ball and After Dairon - Power Switch 1
-  > Tile Group (POWERBEAM) 4
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_045
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Big Hub
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_046
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Tile Group (POWERBEAM) 3
-      Trivial
-
-> Tile Group (POWERBEAM) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_047
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Trivial
-  > Tile Group (POWERBEAM) 4
-      Trivial
-
-> Tile Group (POWERBEAM) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_048
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Start Point
-      Trivial
-  > Tile Group (POWERBEAM) 3
-      Trivial
 
 ----------------
 Power Switch 1
@@ -589,7 +486,7 @@ Extra - asset_id: collision_camera_007
   > Start Point
       Trivial
 
-> Event - Electric Generator; Heals? False; Spawn Point
+> Event - Electric Generator; Heals? False; Default Node
   * Layers: default
   * Event Dairon - Power Switch 1
   * Extra - actor_name: powergenerator_001
@@ -618,7 +515,6 @@ Extra - asset_id: collision_camera_007
 
 ----------------
 Teleport to Cataris
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 1000.0, 'x2': 4100.0, 'y1': -300.0, 'y2': 3600.0}
 Extra - polygon: [[4100.0, 3600.0], [1000.0, 3600.0], [1000.0, -300.0], [4100.0, -300.0]]
 Extra - asset_id: collision_camera_008
@@ -645,11 +541,13 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
+  > Door to Power Switch 1
+      After Dairon - Power Switch 1
   > Door to Wide Beam Room
       After Dairon - Power Switch 1
-  > Tile Group (POWERBEAM) 1
+  > Tunnel to Power Switch 1
       Trivial
-  > Tile Group (POWERBEAM) 2
+  > Bottom-Left Corner
       Trivial
   > Event - Blob, through wall
       Wave Beam
@@ -664,9 +562,7 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
-  > Door to Wide Beam Room
-      After Dairon - Power Switch 1
-  > Tile Group (POWERBEAM) 1
+  > Door to Total Recharge Station East
       Trivial
 
 > Door to Wide Beam Room; Heals? False
@@ -681,8 +577,6 @@ Extra - asset_id: collision_camera_008
   * Extra - exclude_from_dock_rando: True
   > Door to Total Recharge Station East
       Trivial
-  > Door to Power Switch 1
-      After Dairon - Power Switch 1
 
 > Event - Blob, from teleporter; Heals? False
   * Layers: default
@@ -692,7 +586,7 @@ Extra - asset_id: collision_camera_008
   > Bottom-Left Corner
       Trivial
 
-> Teleporter to Cataris - Teleport to Dairon; Heals? False; Spawn Point
+> Teleporter to Cataris - Teleport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Teleport to Dairon
   * Extra - actor_name: teleport_magma_000
@@ -706,42 +600,18 @@ Extra - asset_id: collision_camera_008
   > Bottom-Left Corner
       After Dairon - Teleport to Cataris Blob
 
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_049
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Total Recharge Station East
-      Trivial
-  > Door to Power Switch 1
-      After Dairon - Power Switch 1
-  > Tunnel to Power Switch 1
-      Can Slide
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_050
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Total Recharge Station East
-      Trivial
-  > Bottom-Left Corner
-      Trivial
-
 > Tunnel to Power Switch 1; Heals? False
   * Layers: default
   * Slide Tunnel to Power Switch 1/Tunnel to Teleport to Cataris
-  > Tile Group (POWERBEAM) 1
+  > Door to Total Recharge Station East
       Trivial
 
 > Bottom-Left Corner; Heals? False
   * Layers: default
   > Door to Early Grapple Access
       Morph Ball and After Dairon - Power Switch 1
+  > Door to Total Recharge Station East
+      Trivial
   > Event - Blob, from teleporter
       Shoot Diffusion or Wave
   > Teleporter to Cataris - Teleport to Dairon
@@ -752,8 +622,6 @@ Extra - asset_id: collision_camera_008
               All of the following:
                   Grapple Beam
                   Flash Shift or Movement (Beginner)
-  > Tile Group (POWERBEAM) 2
-      Trivial
 
 > Event - Blob, through wall; Heals? False
   * Layers: default
@@ -794,7 +662,7 @@ Extra - asset_id: collision_camera_009
   > Total Recharge
       Trivial
 
-> Total Recharge; Heals? True; Spawn Point
+> Total Recharge; Heals? True; Default Node
   * Layers: default
   * Extra - actor_name: totalrechargestation_001
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
@@ -818,7 +686,7 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
-  > Tile Group (POWERBEAM)
+  > Right Alcove
       Varia Suit and After Dairon - Early Grapple Blob
 
 > Door to Teleport to Cataris; Heals? False
@@ -840,7 +708,7 @@ Extra - asset_id: collision_camera_010
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 64; Major Location? True
+  * Pickup 64; Category? Minor
   * Extra - actor_name: item_energyfragment_001
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to Heated Room West
@@ -849,7 +717,7 @@ Extra - asset_id: collision_camera_010
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Tile Group (POWERBEAM)
+  > Right Alcove
       All of the following:
           Morph Ball
           Any of the following:
@@ -871,7 +739,7 @@ Extra - asset_id: collision_camera_010
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Tile Group (POWERBEAM)
+  > Right Alcove
       All of the following:
           Morph Ball
           Any of the following:
@@ -892,16 +760,11 @@ Extra - asset_id: collision_camera_010
   * Event Dairon - Early Grapple Blob
   * Extra - actor_name: db_hdoor_b1_001
   * Extra - actor_def: actordef:actors/props/db_hdoor_b1_001/charclasses/db_hdoor_b1_001.bmsad
-  > Tile Group (POWERBEAM)
+  > Right Alcove
       Trivial
 
-> Tile Group (POWERBEAM); Heals? False
+> Right Alcove; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_051
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Door to Early Grapple Room
       Varia Suit and After Dairon - Early Grapple Blob
   > Pickup (Energy Part)
@@ -944,7 +807,7 @@ Extra - asset_id: collision_camera_010
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Tile Group (POWERBEAM)
+  > Right Alcove
       All of the following:
           Morph Ball
           Any of the following:
@@ -958,15 +821,13 @@ Extra - polygon: [[15300.0, 500.0], [12000.0, 500.0], [12000.0, -1600.0], [15300
 Extra - asset_id: collision_camera_011
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 61; Major Location? False
+  * Pickup 61; Category? Minor
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
-  > Tile Group (WEIGHT) 1
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
+  > Door to Early Grapple Room
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
 
 > Door to Early Grapple Room; Heals? False
   * Layers: default
@@ -977,10 +838,10 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM)
+  > Elevator to Artaria - Transport to Dairon
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
   > Ceiling
       All of the following:
           Any of the following:
@@ -1015,7 +876,7 @@ Extra - asset_id: collision_camera_011
           Varia Suit
           Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
 
-> Elevator to Artaria - Transport to Dairon; Heals? False; Spawn Point
+> Elevator to Artaria - Transport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Artaria - Transport to Dairon
   * Extra - actor_name: elevator_cave_000
@@ -1024,38 +885,22 @@ Extra - asset_id: collision_camera_011
   * Extra - target_spawn_point: elevator_baselab_000_platform
   * Extra - start_point_actor_name: elevator_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to Early Grapple Room
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
   > Event - Grapple Block
       All of the following:
           Grapple Beam
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
-  > Tile Group (POWERBEAM)
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
   > Tunnel to Hub Access
       All of the following:
           After Dairon - Transport to Artaria Grapple Block
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_053
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Early Grapple Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-  > Elevator to Artaria - Transport to Dairon
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
 
 > Ceiling; Heals? False
   * Layers: default
@@ -1065,28 +910,6 @@ Extra - asset_id: collision_camera_011
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
-  > Door to Early Grapple Room
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_061
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (WEIGHT) 2
-      Any of the following:
-          Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_062
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
   > Door to Early Grapple Room
       Any of the following:
           Varia Suit
@@ -1109,7 +932,7 @@ Extra - polygon: [[12100.0, -100.0], [6000.0, -100.0], [6000.0, -2300.0], [12100
 Extra - asset_id: collision_camera_012
 > Pickup (Missile Tank Speedboost); Heals? False
   * Layers: default
-  * Pickup 55; Major Location? False
+  * Pickup 55; Category? Minor
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Lava Floor with Gravity Suit
@@ -1125,8 +948,6 @@ Extra - asset_id: collision_camera_012
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
-  > Tile Group (POWERBEAM)
-      Trivial
   > Ledge before Slide Jump
       All of the following:
           Morph Ball
@@ -1142,10 +963,12 @@ Extra - asset_id: collision_camera_012
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+  > Lava Floor with Gravity Suit
+      Gravity Suit
 
 > Pickup (Missile Tank Tunnel); Heals? False
   * Layers: default
-  * Pickup 56; Major Location? False
+  * Pickup 56; Category? Minor
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Transport to Artaria
@@ -1208,18 +1031,6 @@ Extra - asset_id: collision_camera_012
   > Door to Transport to Artaria
       Trivial
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_052
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Early Grapple Access
-      Trivial
-  > Lava Floor with Gravity Suit
-      Gravity Suit
-
 > Ledge before Slide Jump; Heals? False
   * Layers: default
   > Door to Early Grapple Access
@@ -1265,15 +1076,11 @@ Extra - asset_id: collision_camera_012
   > Pickup (Missile Tank Speedboost)
       Gravity Suit and Ballspark
   > Door to Early Grapple Access
-      All of the following:
-          Gravity Suit and Morph Ball
-          Speed Booster or Simple IBJ or Use Spin Boost
+      Gravity Suit
   > Door to Transport to Artaria
       All of the following:
           Gravity Suit and Morph Ball
           Speed Booster or Simple IBJ or Use Spin Boost
-  > Tile Group (POWERBEAM)
-      Gravity Suit
   > Ledge before Slide Jump
       All of the following:
           Gravity Suit
@@ -1281,7 +1088,6 @@ Extra - asset_id: collision_camera_012
 
 ----------------
 Heated Room West
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 1000.0, 'x2': 4100.0, 'y1': -2200.0, 'y2': -300.0}
 Extra - polygon: [[4100.0, -300.0], [1000.0, -300.0], [1000.0, -2200.0], [4100.0, -2200.0]]
 Extra - asset_id: collision_camera_013
@@ -1313,7 +1119,7 @@ Extra - asset_id: collision_camera_013
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_AccessPoint_4
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1350,10 +1156,10 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Door to Energy Recharge Station Middle
       Trivial
-  > Navigation Room
+  > Save Station
       Trivial
 
-> Navigation Room; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: accesspoint_000
@@ -1394,7 +1200,7 @@ Extra - asset_id: collision_camera_015
           Morph Ball
           Flash Shift or Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
 
-> Life Recharge; Heals? True; Spawn Point
+> Life Recharge; Heals? True; Default Node
   * Layers: default
   * Extra - actor_name: energyrecharge_000
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
@@ -1424,11 +1230,9 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: dooremmy_006
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Exit North
-      Speed Booster
+      Trivial
   > Pickup (Energy Tank)
       Speed Booster
-  > Tile Group (POWERBEAM) 2
-      Trivial
 
 > Dock to Storm Missile Gate Room; Heals? False
   * Layers: default
@@ -1449,14 +1253,14 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_def: None
   > Dock to Test Chamber Access
       Trivial
+  > Dock to Energy Recharge Station Middle
+      Trivial
   > Dock to Storm Missile Gate Room
       Speed Booster
-  > Tile Group (POWERBEAM) 2
-      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 71; Major Location? False
+  * Pickup 71; Category? Major
   * Extra - actor_name: item_energytank
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Dock to Energy Recharge Station Middle
@@ -1473,18 +1277,6 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_def: None
   > Dock to Test Chamber Access
       Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_036
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Dock to Energy Recharge Station Middle
-      Trivial
-  > Door to EMMI Zone Exit North
-      Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 ----------------
 EMMI Zone Exit North
@@ -1539,7 +1331,7 @@ Extra - asset_id: collision_camera_017
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 73; Major Location? False
+  * Pickup 73; Category? Minor
   * Extra - actor_name: item_powerbombtank_002
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Dock to Cross Bomb Puzzle Room
@@ -1589,9 +1381,9 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Exit East
-      Morph Ball and After Dairon - Central Unit
-  > Tile Group (POWERBEAM) 2
       Trivial
+  > Event - Speed Blocks Destroyed
+      Speed Booster
 
 > Door to EMMI Zone Exit East; Heals? False
   * Layers: default
@@ -1603,83 +1395,53 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Big Hub
-      Morph Ball and After Dairon - Central Unit
+      Any of the following:
+          Flash Shift
+          Morph Ball and After Dairon - Central Unit
+          All of the following:
+              Flash Shift Skip (Beginner)
+              Any of the following:
+                  Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+                  All of the following:
+                      Speed Booster
+                      After Dairon - Yellow Introduction Speed Blocks Destroyed or Disabled Door Lock Randomizer
   > Dock to EMMI Zone Exit North
-      Speed Booster and Open Charge Door
-  > Lower-Left Area
-      Flash Shift or Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+      After Dairon - Yellow Introduction Speed Blocks Destroyed
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 63; Major Location? True
+  * Pickup 63; Category? Minor
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (WEIGHT)
-      Morph Ball
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_043
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 2
-      Trivial
-  > Lower-Left Area
-      Trivial
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_044
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Dock to Big Hub
-      Trivial
-  > Tile Group (POWERBEAM) 1
-      Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_057
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
   > Dock to EMMI Zone Exit North
       Trivial
 
 > Dock to EMMI Zone Exit North; Heals? False
   * Layers: default
   * Open Passage to EMMI Zone Exit North/Dock to Yellow EMMI Introduction
+  > Door to EMMI Zone Exit East
+      After Dairon - Yellow Introduction Speed Blocks Destroyed
   > Pickup (Energy Part)
       All of the following:
           Missiles
           Lay Bomb or Lay Power Bomb
-  > Lower-Left Area
+  > Event - Speed Blocks Destroyed
       Speed Booster
 
 > Tunnel to EMMI Zone Exit North; Heals? False
   * Layers: default
   * Dairon EMMI Tunnel to EMMI Zone Exit North/Tunnel to Yellow EMMI Introduction
-  > Lower-Left Area
+  > Dock to Big Hub
       Trivial
 
-> Lower-Left Area; Heals? False
+> Event - Speed Blocks Destroyed; Heals? False
   * Layers: default
-  > Door to EMMI Zone Exit East
-      Trivial
-  > Tile Group (POWERBEAM) 1
-      Trivial
+  * Event Dairon - Yellow Introduction Speed Blocks Destroyed
   > Dock to EMMI Zone Exit North
-      Speed Booster
-  > Tunnel to EMMI Zone Exit North
       Trivial
 
 ----------------
 West Transport to Ferenia
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 1000.0, 'x2': 3100.0, 'y1': 5600.0, 'y2': 8000.0}
 Extra - polygon: [[3100.0, 8000.0], [1000.0, 8000.0], [1000.0, 5600.0], [3100.0, 5600.0]]
 Extra - asset_id: collision_camera_019
@@ -1721,7 +1483,7 @@ Extra - asset_id: collision_camera_019
   > Elevator to Ferenia - Transport to Dairon
       Trivial
 
-> Elevator to Ferenia - Transport to Dairon; Heals? False; Spawn Point
+> Elevator to Ferenia - Transport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Ferenia - Transport to Dairon
   * Extra - actor_name: elevator_sanctuary_001
@@ -1741,7 +1503,6 @@ Extra - asset_id: collision_camera_019
 
 ----------------
 Cross Bomb Puzzle Room
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -6000.0, 'x2': -2900.0, 'y1': 3700.0, 'y2': 5400.0}
 Extra - polygon: [[-2900.0, 5400.0], [-6000.0, 5400.0], [-6000.0, 3700.0], [-2900.0, 3700.0]]
 Extra - asset_id: collision_camera_020
@@ -1751,8 +1512,6 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Total Recharge Station West
-      Morph Ball and After Dairon - Cross Bomb Puzzle Grapple Block
-  > Tile Group (WEIGHT) 2
       Morph Ball
 
 > Door to Total Recharge Station West; Heals? False
@@ -1788,11 +1547,11 @@ Extra - asset_id: collision_camera_020
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 75; Major Location? False
+  * Pickup 75; Category? Minor
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (WEIGHT) 4
-      Trivial
+  > Door to Total Recharge Station West
+      Can Slide
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -1802,49 +1561,21 @@ Extra - asset_id: collision_camera_020
   > Door to Total Recharge Station West
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Blackout2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to EMMI Zone Exit North
       Trivial
 
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_059
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Total Recharge Station West
-      Trivial
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_060
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (WEIGHT) 1
-      Trivial
-
-> Tile Group (WEIGHT) 4; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_073
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Total Recharge Station West
-      Can Slide
-
 ----------------
 Bomb Room
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -6000.0, 'x2': -3900.0, 'y1': 5600.0, 'y2': 7700.0}
 Extra - polygon: [[-3900.0, 7700.0], [-6000.0, 7700.0], [-6000.0, 5600.0], [-3900.0, 5600.0]]
 Extra - asset_id: collision_camera_021
 > Pickup (Bomb); Heals? False
   * Layers: default
-  * Pickup 58; Major Location? True
+  * Pickup 58; Category? Major
   * Extra - actor_name: itemsphere_bomb
   * Extra - actor_def: actordef:actors/items/itemsphere_bomb/charclasses/itemsphere_bomb.bmsad
   * Extra - map_icon_actor: powerup_bomb
@@ -1863,67 +1594,33 @@ Extra - asset_id: collision_camera_021
   * Extra - exclude_from_dock_rando: True
   > Pickup (Bomb)
       Trivial
-  > Tile Group (BOMB) 1
-      Trivial
+  > Pickup (Missile Tank)
+      Lay Bomb or Lay Power Bomb
+  > Tunnel to Total Recharge Station West
+      Lay Bomb
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 62; Major Location? False
+  * Pickup 62; Category? Minor
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB) 2
-      Morph Ball
+  > Door from Total Recharge Station West
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
+  > Tunnel to Total Recharge Station West
+      Lay Bomb
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Bomb
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door from Total Recharge Station West
       Trivial
 
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_040
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door from Total Recharge Station West
-      Trivial
-  > Tile Group (BOMB) 3
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_041
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tunnel to Total Recharge Station West
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_055
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 1
-      Trivial
-  > Tunnel to Total Recharge Station West
-      Morph Ball
-
 > Tunnel to Total Recharge Station West; Heals? False
   * Layers: default
   * Morph Ball Launcher to Total Recharge Station West/Dock from Bomb Room
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Tile Group (BOMB) 3
-      Morph Ball
 
 ----------------
 Total Recharge Station West
@@ -1942,7 +1639,7 @@ Extra - asset_id: collision_camera_022
   * Extra - exclude_from_dock_rando: True
   > Door to Test Chamber Access
       Trivial
-  > Center
+  > Total Recharge
       Morph Ball
 
 > Door to Test Chamber Access; Heals? False
@@ -1983,40 +1680,33 @@ Extra - asset_id: collision_camera_022
   * Extra - exclude_from_dock_rando: True
   > Door to Bomb Room
       Morph Ball and After Dairon - Power Switch 2
-  > Center
+  > Total Recharge
       Trivial
 
-> Total Recharge; Heals? True; Spawn Point
+> Total Recharge; Heals? True; Default Node
   * Layers: default
   * Extra - actor_name: totalrechargestation_000
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  > Center
-      Trivial
-
-> Tunnel to Power Switch 2; Heals? False
-  * Layers: default
-  * Morph Ball Tunnel to Power Switch 2/Tunnel to Total Recharge Station West
-  > Center
-      After Dairon - Power Switch 2 Blob
-
-> Dock from Bomb Room; Heals? False
-  * Layers: default
-  * Blocked Passage to Bomb Room/Tunnel to Total Recharge Station West
-  > Center
-      Trivial
-
-> Center; Heals? False
-  * Layers: default
   > Door to Cross Bomb Puzzle Room
       Can Slide
   > Door to Map Station
       Trivial
+  > Tunnel to Power Switch 2
+      Morph Ball and After Dairon - Power Switch 2 Blob
+
+> Tunnel to Power Switch 2; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Power Switch 2/Tunnel to Total Recharge Station West
   > Total Recharge
       Trivial
-  > Tunnel to Power Switch 2
-      After Dairon - Power Switch 2 Blob
+
+> Dock from Bomb Room; Heals? False
+  * Layers: default
+  * Blocked Passage to Bomb Room/Tunnel to Total Recharge Station West
+  > Total Recharge
+      Trivial
 
 ----------------
 Map Station
@@ -2035,7 +1725,7 @@ Extra - asset_id: collision_camera_023
   * Extra - exclude_from_dock_rando: True
   > Door to Freezer
       Trivial
-  > Map Station
+  > Save Station
       After Dairon - Power Switch 2
 
 > Door to Freezer; Heals? False
@@ -2051,7 +1741,7 @@ Extra - asset_id: collision_camera_023
   > Door to Total Recharge Station West
       Trivial
 
-> Map Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: maproom_000
   * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
@@ -2090,7 +1780,7 @@ Extra - asset_id: collision_camera_024
   > Door to Freezer
       Trivial
 
-> Event - Electric Generator; Heals? False; Spawn Point
+> Event - Electric Generator; Heals? False; Default Node
   * Layers: default
   * Event Dairon - Power Switch 2
   * Extra - actor_name: powergenerator_002
@@ -2194,7 +1884,7 @@ Extra - asset_id: collision_camera_025
 
 > Pickup (Missile Tank - Lower); Heals? False
   * Layers: default
-  * Pickup 67; Major Location? False
+  * Pickup 67; Category? Minor
   * Extra - actor_name: item_missiletank_008
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Bottom-Left Corner
@@ -2206,7 +1896,7 @@ Extra - asset_id: collision_camera_025
 
 > Pickup (Missile Tank - Upper); Heals? False
   * Layers: default
-  * Pickup 76; Major Location? False
+  * Pickup 76; Category? Minor
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Left Blob Alcove
@@ -2232,43 +1922,6 @@ Extra - asset_id: collision_camera_025
   > Beside the Blob
       Trivial
 
-> Tile Group (SCREWATTACK); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_030
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (WEIGHT)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 70
-  > Bottom-Left Corner
-      All of the following:
-          Speed Booster
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-  > Freezer Navigation
-      Any of the following:
-          Gravity Suit or Before Dairon - Power Switch 2
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_058
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Bottom-Left Corner
-      All of the following:
-          Speed Booster
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-
 > Bottom-Left Corner; Heals? False
   * Layers: default
   > Pickup (Missile Tank - Lower)
@@ -2277,18 +1930,12 @@ Extra - asset_id: collision_camera_025
           Any of the following:
               Gravity Suit or Before Dairon - Power Switch 2
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Tile Group (SCREWATTACK)
+  > Freezer Navigation
       All of the following:
-          Speed Booster
+          Screw Attack and Speed Booster
           Any of the following:
               Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-  > Tile Group (WEIGHT)
-      All of the following:
-          Ballspark
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 70
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 130
 
 > Event - Hidden Blob, Outside; Heals? False
   * Layers: default
@@ -2355,12 +2002,12 @@ Extra - asset_id: collision_camera_025
 while disabled
 
 
-  > Tile Group (SCREWATTACK)
+  > Bottom-Left Corner
       All of the following:
-          Speed Booster
+          Screw Attack and Ballspark
           Any of the following:
               Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 150
   > Event - Hidden Blob, Outside
       Wave Beam and Knowledge (Intermediate)
   > Freezer Center
@@ -2508,7 +2155,7 @@ Extra - asset_id: collision_camera_027
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 66; Major Location? False
+  * Pickup 66; Category? Minor
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Dock to EMMI Zone Exit West
@@ -2630,8 +2277,8 @@ Extra - asset_id: collision_camera_030
   * EMMI Door to EMMI Zone Exit West/Dock to Hidden Grapple Shortcut Room
   * Extra - actor_name: dooremmy_009
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Tile Group (POWERBEAM) 1
-      Trivial
+  > Pickup (Missile Tank)
+      Morph Ball
   > Tunnel to Save Station West Tunnels (Bottom)
       Trivial
 
@@ -2644,19 +2291,21 @@ Extra - asset_id: collision_camera_030
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM) 2
-      Trivial
+  > Pickup (Missile Tank)
+      Morph Ball and After Dairon - Hidden Shortcut Grapple Block
+  > Event - Hidden Shortcut Grapple Block
+      Grapple Beam
   > Tunnel to Save Station West Tunnels (Top)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 74; Major Location? False
+  * Pickup 74; Category? Minor
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-  > Tile Group (POWERBEAM) 2
+  > Dock to EMMI Zone Exit West
+      Trivial
+  > Door to Experiment Z-57 Test Chamber
       Morph Ball and After Dairon - Hidden Shortcut Grapple Block
 
 > Event - Hidden Shortcut Grapple Block; Heals? False
@@ -2664,34 +2313,8 @@ Extra - asset_id: collision_camera_030
   * Event Dairon - Hidden Shortcut Grapple Block
   * Extra - actor_name: grapplepulloff1x2_005
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_033
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Dock to EMMI Zone Exit West
-      Trivial
-  > Pickup (Missile Tank)
-      Morph Ball
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_034
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Door to Experiment Z-57 Test Chamber
       Trivial
-  > Pickup (Missile Tank)
-      Morph Ball and After Dairon - Hidden Shortcut Grapple Block
-  > Event - Hidden Shortcut Grapple Block
-      Grapple Beam
 
 > Tunnel to Save Station West Tunnels (Bottom); Heals? False
   * Layers: default
@@ -2720,8 +2343,8 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
-  > Tile Group (BOMB) 1
-      Morph Ball
+  > Pickup (Missile Tank)
+      Lay Bomb or Lay Power Bomb
   > Tunnel to Hidden Grapple Shortcut Room (Bottom)
       Trivial
   > Tunnel to Hidden Grapple Shortcut Room (Top)
@@ -2729,35 +2352,11 @@ Extra - asset_id: collision_camera_031
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 69; Major Location? False
+  * Pickup 69; Category? Minor
   * Extra - actor_name: item_missiletank_010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_031
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
   > Door to Save Station West
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_032
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tile Group (BOMB) 1
-      Morph Ball
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to Hidden Grapple Shortcut Room (Bottom); Heals? False
   * Layers: default
@@ -2789,7 +2388,7 @@ Extra - asset_id: collision_camera_032
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_001
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -2827,7 +2426,7 @@ Extra - asset_id: collision_camera_033
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 68; Major Location? False
+  * Pickup 68; Category? Major
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Room Center
@@ -2915,7 +2514,7 @@ Extra - asset_id: collision_camera_034
   > Tunnel to Storm Missile Gate Room
       Speed Booster and Can Slide
 
-> Ammo Recharge; Heals? False; Spawn Point
+> Ammo Recharge; Heals? False; Default Node
   * Layers: default
   * Extra - actor_name: ammorecharge_001
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
@@ -2937,7 +2536,7 @@ Extra - polygon: [[-4000.0, -2400.0], [-8000.0, -2400.0], [-8000.0, -4300.0], [-
 Extra - asset_id: collision_camera_035
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 65; Major Location? False
+  * Pickup 65; Category? Minor
   * Extra - actor_name: item_powerbombtank_001
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Above Grapple Block
@@ -2950,14 +2549,6 @@ Extra - asset_id: collision_camera_035
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Ledge
       Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_008
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
 
 > Above Grapple Block; Heals? False
   * Layers: default
@@ -3105,11 +2696,10 @@ Extra - asset_id: collision_camera_037
 
 ----------------
 Central Unit
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -12900.0, 'x2': -10800.0, 'y1': -5400.0, 'y2': -4258.0}
 Extra - polygon: [[-10800.0, -4258.0], [-12900.0, -4258.0], [-12900.0, -5400.0], [-10800.0, -5400.0]]
 Extra - asset_id: collision_camera_038
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyLabPhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3155,7 +2745,6 @@ Extra - asset_id: collision_camera_039
 
 ----------------
 Central Unit Access
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -18100.0, 'x2': -12850.0, 'y1': -8300.0, 'y2': -4300.0}
 Extra - polygon: [[-12850.0, -4300.0], [-18100.0, -4300.0], [-18100.0, -8300.0], [-12850.0, -8300.0]]
 Extra - asset_id: collision_camera_040
@@ -3175,7 +2764,7 @@ Extra - asset_id: collision_camera_040
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 72; Major Location? True
+  * Pickup 72; Category? Minor
   * Extra - actor_name: item_energyfragment_003
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to EMMI Zone Exit South (Open)
@@ -3207,7 +2796,7 @@ Extra - asset_id: collision_camera_040
   > Door to Central Unit
       Morph Ball or Speed Booster or Use Spin Boost
 
-> Start Point 2; Heals? False; Spawn Point
+> Start Point 2; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3226,7 +2815,7 @@ Extra - asset_id: collision_camera_040
 
 > Pickup (Speed Booster); Heals? False
   * Layers: default
-  * Pickup 147; Major Location? True
+  * Pickup 147; Category? Major
   * Extra - pickup_type: emmi
   * Extra - actor_def: actors/characters/emmylab/charclasses/emmylab.bmsad
   * Extra - string_key: GUI_ITEM_ACQUIRED_SPEED_BOOSTER
@@ -3289,7 +2878,7 @@ Extra - asset_id: collision_camera_042
   * Extra - exclude_from_dock_rando: True
   > Pickup (Energy Part)
       Trivial
-  > Tile Group (WEIGHT)
+  > Life Recharge
       Trivial
 
 > Door to Freezer (Lower); Heals? False
@@ -3307,13 +2896,13 @@ Extra - asset_id: collision_camera_042
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 70; Major Location? True
+  * Pickup 70; Category? Minor
   * Extra - actor_name: item_energyfragment_002
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to Freezer (Upper)
       Trivial
 
-> Life Recharge; Heals? True; Spawn Point
+> Life Recharge; Heals? True; Default Node
   * Layers: default
   * Extra - actor_name: energyrecharge_001
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
@@ -3323,15 +2912,6 @@ Extra - asset_id: collision_camera_042
       After Dairon - Power Switch 2
   > Dock to Transport to Ghavoran
       Can Slide
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_063
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Door to Freezer (Lower)
-      Trivial
 
 > Dock to Transport to Ghavoran; Heals? False
   * Layers: default
@@ -3343,7 +2923,6 @@ Extra - asset_id: collision_camera_042
 
 ----------------
 Transport to Cataris
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 20400.0, 'x2': 28300.0, 'y1': 4600.0, 'y2': 8100.0}
 Extra - polygon: [[28300.0, 8100.0], [20400.0, 8100.0], [20400.0, 4600.0], [28300.0, 4600.0]]
 Extra - asset_id: collision_camera_043
@@ -3359,7 +2938,7 @@ Extra - asset_id: collision_camera_043
   > Elevator to Cataris - Transport to Dairon
       Trivial
 
-> Elevator to Cataris - Transport to Dairon; Heals? False; Spawn Point
+> Elevator to Cataris - Transport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Transport to Dairon
   * Extra - actor_name: wagontrain_magma_000
@@ -3387,7 +2966,7 @@ Extra - asset_id: collision_camera_044
   * Extra - right_shield_def: None
   > Door to West Transport to Ferenia (Upper)
       Trivial
-  > Navigation Room
+  > Save Station
       Trivial
 
 > Door to West Transport to Ferenia (Upper); Heals? False
@@ -3402,7 +2981,7 @@ Extra - asset_id: collision_camera_044
   > Door to West Transport to Ferenia (Lower)
       Trivial
 
-> Navigation Room; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: accesspoint_001
@@ -3416,7 +2995,6 @@ Extra - asset_id: collision_camera_044
 
 ----------------
 Lower Transport to Burenia
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -25100.0, 'x2': -18400.0, 'y1': -9300.0, 'y2': -8158.0}
 Extra - polygon: [[-18400.0, -8158.0], [-25100.0, -8158.0], [-25100.0, -9300.0], [-18400.0, -9300.0]]
 Extra - asset_id: collision_camera_045
@@ -3432,7 +3010,7 @@ Extra - asset_id: collision_camera_045
   > Tram to Burenia - Lower Transport to Dairon
       Trivial
 
-> Tram to Burenia - Lower Transport to Dairon; Heals? False; Spawn Point
+> Tram to Burenia - Lower Transport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Burenia - Lower Transport to Dairon
   * Extra - actor_name: wagontrain_with_portal_aqua_001
@@ -3461,7 +3039,7 @@ Extra - asset_id: collision_camera_046
   > Tram to Burenia - Upper Transport to Dairon
       Trivial
 
-> Tram to Burenia - Upper Transport to Dairon; Heals? False; Spawn Point
+> Tram to Burenia - Upper Transport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Burenia - Upper Transport to Dairon
   * Extra - actor_name: wagontrain_aqua_000
@@ -3478,7 +3056,7 @@ Transport to Ghavoran
 Extra - total_boundings: {'x1': -18100.0, 'x2': -16000.0, 'y1': 5026.7099609375, 'y2': 6168.7099609375}
 Extra - polygon: [[-16000.0, 6168.7099609375], [-18100.0, 6168.7099609375], [-18100.0, 5026.7099609375], [-16000.0, 5026.7099609375]]
 Extra - asset_id: collision_camera_047
-> Elevator to Ghavoran - Transport to Dairon; Heals? False; Spawn Point
+> Elevator to Ghavoran - Transport to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Ghavoran - Transport to Dairon
   * Extra - actor_name: elevator_forest_000
@@ -3487,24 +3065,12 @@ Extra - asset_id: collision_camera_047
   * Extra - target_spawn_point: elevator_baselab_000_platform
   * Extra - start_point_actor_name: elevator_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  > Tile Group (POWERBEAM)
-      Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_029
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Elevator to Ghavoran - Transport to Dairon
-      Trivial
   > Dock to Energy Recharge Station West
       Trivial
 
 > Dock to Energy Recharge Station West; Heals? False
   * Layers: default
   * Open Passage to Energy Recharge Station West/Dock to Transport to Ghavoran
-  > Tile Group (POWERBEAM)
+  > Elevator to Ghavoran - Transport to Dairon
       Trivial
 

@@ -1,4 +1,3 @@
-from randovania.game_description import default_database
 
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.preset_editor import PresetEditor
@@ -12,7 +11,8 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
     from randovania.games.prime1.gui.preset_settings.prime_hints_tab import PresetPrimeHints
-    from randovania.games.prime1.gui.preset_settings.prime_patches_tab import PresetPrimePatches
+    from randovania.games.prime1.gui.preset_settings.prime_patches_qol import PresetPrimeQol
+    from randovania.games.prime1.gui.preset_settings.prime_patches_chaos import PresetPrimeChaos
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
@@ -27,8 +27,9 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPrimeGoal,
         PresetPrimeHints,
         PresetDockRando,
+        PresetPrimeQol,
         PresetEnemyAttributeRandomizer,
-        PresetPrimePatches,
+        PresetPrimeChaos,
         PresetLocationPool,
         MetroidPresetItemPool,
     ]

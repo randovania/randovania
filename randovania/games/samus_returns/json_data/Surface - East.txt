@@ -1,6 +1,5 @@
 ----------------
 Landing Site
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
 Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
 Extra - asset_id: collision_camera_000
@@ -30,7 +29,7 @@ Extra - asset_id: collision_camera_000
   > Ship
       Trivial
 
-> Ship; Heals? True; Spawn Point
+> Ship; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: StartPoint0
   * Extra - actor_type: weightactivatedplatform
@@ -66,7 +65,7 @@ Extra - polygon: [[0.0, 1700.0], [0.0, -800.0], [5300.0, -800.0], [6300.0, -1400
 Extra - asset_id: collision_camera_002
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 5; Major Location? False
+  * Pickup 5; Category? Minor
   * Extra - actor_name: LE_Item_006
   * Extra - actor_type: item_missiletank
   > Door to Morph Ball Room
@@ -98,22 +97,29 @@ Extra - asset_id: collision_camera_002
       Morph Ball
   > Ammo Recharge Station
       Trivial
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Morphball
+  > Door to Morph Ball Room
+      Trivial
 
 ----------------
 Morph Ball Room
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 9300.0, 'x2': 12600.0, 'y1': -5400.0, 'y2': -2900.0}
 Extra - polygon: [[9300.0, -2900.0], [9300.0, -4400.0], [10200.0, -4610.0], [10200.0, -5400.0], [12600.0, -5400.0], [12600.0, -3800.0], [11250.0, -3800.0], [11250.0, -2900.0]]
 Extra - asset_id: collision_camera_003
 > Pickup (Morph Ball); Heals? False
   * Layers: default
-  * Pickup 12; Major Location? True
+  * Pickup 12; Category? Major
   * Extra - actor_name: LE_PowerUP_Morphball
   * Extra - actor_type: itemsphere_morphball
   > Door to Melee Tutorial Pathway
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
@@ -137,6 +143,8 @@ Extra - asset_id: collision_camera_003
       Trivial
   > Save Station
       Morph Ball
+  > Start Point
+      Trivial
 
 > Door to Chozo Seal; Heals? False
   * Layers: default
@@ -146,6 +154,12 @@ Extra - asset_id: collision_camera_003
   > Save Station
       Trivial
 
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_004
+  > Door to Melee Tutorial Pathway
+      Trivial
+
 ----------------
 Chozo Seal
 Extra - total_boundings: {'x1': 4550.0, 'x2': 10300.0, 'y1': -8700.0, 'y2': -4000.0}
@@ -153,16 +167,17 @@ Extra - polygon: [[4550.0, -4000.0], [4550.0, -8700.0], [6500.0, -8700.0], [6500
 Extra - asset_id: collision_camera_004
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 4; Major Location? False
+  * Pickup 4; Category? Minor
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
   > Tunnel to Transport to Area 1
       Destroy Bomb Block
 
-> Chozo Seal; Heals? False
+> Chozo Seal; Heals? False; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Door to Morph Ball Room
       Trivial
   > Door to Scan Pulse Room
@@ -220,19 +235,18 @@ Extra - asset_id: collision_camera_004
 
 ----------------
 Transport to Area 1
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 6400.0, 'x2': 10700.0, 'y1': -10700.0, 'y2': -6800.0}
 Extra - polygon: [[6400.0, -6800.0], [6400.0, -10700.0], [10700.0, -10700.0], [10700.0, -6800.0]]
 Extra - asset_id: collision_camera_006
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 3; Major Location? False
+  * Pickup 3; Category? Minor
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
   > Next to Teleporter
       Trivial
 
-> Elevator to Area 1 - Chozo Seal; Heals? False; Spawn Point
+> Elevator to Area 1 - Chozo Seal; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Area 1 - Chozo Seal
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
@@ -302,7 +316,7 @@ Extra - polygon: [[1400.0, -7897.68017578125], [1400.0, -8656.4697265625], [2700
 Extra - asset_id: collision_camera_007
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 6; Major Location? False
+  * Pickup 6; Category? Minor
   * Extra - actor_name: LE_Item_007
   * Extra - actor_type: item_missiletank
   > Tunnel to Charge Beam Shaft
@@ -321,13 +335,9 @@ Extra - polygon: [[1400.0, -9000.0], [1400.0, -10300.0], [3000.0, -10300.0], [30
 Extra - asset_id: collision_camera_008
 > Pickup (Charge Beam); Heals? False
   * Layers: default
-  * Pickup 11; Major Location? True
+  * Pickup 11; Category? Major
   * Extra - actor_name: LE_PowerUP_ChargeBeam
   * Extra - actor_type: itemsphere_chargebeam
-  > Door to Charge Beam Shaft (Upper)
-      Any of the following:
-          Climb Rooms Vertically (High Jump)
-          Morph Ball and Unmorph Extend (Intermediate)
   > Door to Charge Beam Shaft (Lower)
       Trivial
 
@@ -336,7 +346,7 @@ Extra - asset_id: collision_camera_008
   * Missile Door to Charge Beam Shaft/Door to Charge Beam Room (Upper)
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Pickup (Charge Beam)
+  > Door to Charge Beam Shaft (Lower)
       Trivial
 
 > Door to Charge Beam Shaft (Lower); Heals? False
@@ -346,22 +356,33 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_type: doorchargecharge
   > Pickup (Charge Beam)
       Trivial
+  > Door to Charge Beam Shaft (Upper)
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_003
+  > Door to Charge Beam Shaft (Lower)
+      Trivial
 
 ----------------
 Alpha Arena
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -5900.0, 'x2': -1000.0, 'y1': -10400.0, 'y2': -5900.0}
 Extra - polygon: [[-1000.0, -5900.0], [-3400.0, -5900.0], [-3400.0, -6700.0], [-3500.0, -7000.0], [-5900.0, -7000.0], [-5900.0, -10400.0], [-1300.0, -10400.0], [-1300.0, -8900.0], [-1000.0, -8800.0]]
 Extra - asset_id: collision_camera_010
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 0; Major Location? False
+  * Pickup 0; Category? Minor
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_missiletank
   > Tunnel to Side Path
       Morph Ball
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_002
   * Extra - actor_type: weightactivatedplatform
@@ -411,6 +432,7 @@ Extra - asset_id: collision_camera_010
 
 > Inside Arena; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Save Station
       Morph Ball and Destroy Missile Block
   > Door to Ammo Recharge Station
@@ -431,7 +453,7 @@ Extra - polygon: [[-1700.0, -4500.0], [-1700.0, -5258.77978515625], [-400.0, -52
 Extra - asset_id: collision_camera_011
 > Pickup (Scan Pulse); Heals? False
   * Layers: default
-  * Pickup 13; Major Location? True
+  * Pickup 13; Category? Major
   * Extra - actor_name: LE_SpecialAbility_ScanningPulse
   * Extra - actor_type: powerup_scanningpulse
   > Door to Chozo Seal
@@ -448,6 +470,8 @@ Extra - asset_id: collision_camera_011
       Morph Ball
   > Door to Charge Beam Shaft
       Morph Ball
+  > Right of Statue
+      Trivial
 
 > Door to Charge Beam Shaft; Heals? False
   * Layers: default
@@ -462,12 +486,26 @@ Extra - asset_id: collision_camera_011
   * Open Passage to One-Way Drop/Dock to Scan Pulse Room
   > Pickup (Scan Pulse)
       Morph Ball
+  > Left of Statue
+      Trivial
 
 > Tunnel to Chozo Seal; Heals? False
   * Layers: default
   * Tunnel to Chozo Seal/Tunnel to Scan Pulse Room
   > Door to Chozo Seal
       Morph Ball
+
+> Left of Statue; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_001
+  > Dock to One-Way Drop
+      Trivial
+
+> Right of Statue; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  > Door to Chozo Seal
+      Trivial
 
 ----------------
 Alpha Storage
@@ -476,7 +514,7 @@ Extra - polygon: [[-4600.0, -5900.1201171875], [-4600.0, -6658.85009765625], [-3
 Extra - asset_id: collision_camera_012
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
-  * Pickup 7; Major Location? False
+  * Pickup 7; Category? Minor
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_supermissiletank
   > Door to Alpha Arena
@@ -519,6 +557,8 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_type: doorpowerpower
   > Tunnel to Upper Storage
       Morph Ball
+  > Start Point
+      Trivial
 
 > Dock to Scan Pulse Room; Heals? False
   * Layers: default
@@ -532,6 +572,12 @@ Extra - asset_id: collision_camera_014
   > Door to Alpha Arena Access
       Morph Ball
 
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_IntroLarva
+  > Door to Alpha Arena Access
+      Trivial
+
 ----------------
 Charge Beam Shaft
 Extra - total_boundings: {'x1': -200.0, 'x2': 1500.0, 'y1': -10300.0, 'y2': -5500.0}
@@ -539,7 +585,7 @@ Extra - polygon: [[-200.0, -5500.0], [-200.0, -10300.0], [1500.0, -10300.0], [15
 Extra - asset_id: collision_camera_015
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 8; Major Location? True
+  * Pickup 8; Category? Major
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_energytank
   > Door to Charge Beam Room (Lower)
@@ -605,12 +651,20 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: doorpowerpower
   > Dock to Landing Site
       Trivial
+  > Start Point
+      Trivial
 
 > Dock to Landing Site; Heals? False
   * Layers: default
   * Open Passage to Landing Site/Dock to Entrance Pathway
   > Door to Melee Tutorial Pathway
       Missile ≥ 3
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_MeleeTutoCutscene
+  > Door to Melee Tutorial Pathway
+      Trivial
 
 ----------------
 Landing Site Storage
@@ -619,7 +673,7 @@ Extra - polygon: [[-19000.0, 6900.0], [-19000.0, 4500.0], [-16300.0, 4500.0], [-
 Extra - asset_id: collision_camera_018
 > Pickup (Aeion Tank); Heals? False
   * Layers: default
-  * Pickup 1; Major Location? False
+  * Pickup 1; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_senergytank
   > Below Right Crumble Blocks
@@ -680,7 +734,7 @@ Extra - polygon: [[-24800.0, 11100.0], [-24800.0, 7200.0], [-23000.0, 7200.0], [
 Extra - asset_id: collision_camera_019
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
-  * Pickup 2; Major Location? False
+  * Pickup 2; Category? Minor
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_supermissiletank
   > Dock to Landing Site (Bottom)
@@ -703,7 +757,7 @@ Extra - polygon: [[5200.0, -8700.169921875], [5200.0, -9458.5498046875], [6500.0
 Extra - asset_id: collision_camera_020
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 10; Major Location? False
+  * Pickup 10; Category? Minor
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_powerbombtank
   > Dock to Transport to Area 1
@@ -722,7 +776,7 @@ Extra - polygon: [[-2400.0, -3699.97998046875], [-2400.0, -4458.56005859375], [-
 Extra - asset_id: collision_camera_021
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 9; Major Location? False
+  * Pickup 9; Category? Minor
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_missiletank
   > Tunnel to One-Way Drop
@@ -757,10 +811,12 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Morph Ball
+  > Start Point
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 14; Major Location? False
+  * Pickup 14; Category? Minor
   * Extra - actor_name: HiddenPowerup001
   * Extra - actor_type: item_missiletank
   > Energy Recharge Station
@@ -773,6 +829,12 @@ Extra - asset_id: collision_camera_023
   * Tunnel to Alpha Arena/Tunnel to Alpha Arena Access
   > Energy Recharge Station
       Morph Ball
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoint_AmiiboUnlocked
+  > Door to One-Way Drop
+      Trivial
 
 ----------------
 Ammo Recharge Station

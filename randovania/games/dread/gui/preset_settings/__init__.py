@@ -1,4 +1,3 @@
-import randovania
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.preset_editor import PresetEditor
 
@@ -16,12 +15,8 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel,
-        *([
-              PresetMetroidStartingArea,
-          ] if window_manager.is_preview_mode else []),
-        *([
-              PresetDockRando,
-          ] if randovania.is_dev_version() else []),
+        PresetMetroidStartingArea,
+        PresetDockRando,
         PresetDreadGeneration,
         PresetLocationPool,
         PresetDreadGoal,

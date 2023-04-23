@@ -2,7 +2,6 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_major_item
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
@@ -34,7 +33,7 @@ def add_major_items(resource_database: ResourceDatabase,
 
     item_pool: list[PickupEntry] = []
     new_assignment: dict[PickupIndex, PickupEntry] = {}
-    initial_resources = ResourceCollection.with_database(resource_database)
+    starting = []
 
     for item, state in major_items_configuration.items_state.items():
         if len(item.ammo_index) != len(state.included_ammo):
@@ -56,8 +55,6 @@ def add_major_items(resource_database: ResourceDatabase,
             item_pool.append(create_major_item(item, state, True, resource_database, ammo, locked_ammo))
 
         for _ in range(state.num_included_in_starting_items):
-            initial_resources.add_resource_gain(
-                create_major_item(item, state, False, resource_database, ammo, locked_ammo).all_resources,
-            )
+            starting.append(create_major_item(item, state, False, resource_database, ammo, locked_ammo))
 
-    return PoolResults(item_pool, new_assignment, initial_resources)
+    return PoolResults(item_pool, new_assignment, starting)

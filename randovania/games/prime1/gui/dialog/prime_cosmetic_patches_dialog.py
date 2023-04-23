@@ -90,7 +90,6 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
     def connect_signals(self):
         super().connect_signals()
 
-        self.qol_cosmetic_check.stateChanged.connect(self._persist_option_then_notify("qol_cosmetic"))
         self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
         self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
         self.force_fusion_check.stateChanged.connect(self._persist_option_then_notify("force_fusion"))
@@ -109,7 +108,6 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
             check.stateChanged.connect(partial(self._on_check_update, check, field_name))
 
     def on_new_cosmetic_patches(self, patches: PrimeCosmeticPatches):
-        self.qol_cosmetic_check.setChecked(patches.qol_cosmetic)
         self.open_map_check.setChecked(patches.open_map)
         self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.force_fusion_check.setChecked(patches.force_fusion)

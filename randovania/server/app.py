@@ -56,6 +56,9 @@ def create_app():
 
     @app.route("/")
     def index():
+        app.logger.info("Version checked by %s (%s)",
+                        flask.request.environ["REMOTE_ADDR"],
+                        flask.request.environ.get("HTTP_X_FORWARDED_FOR"))
         return randovania.VERSION
 
     server_version = randovania.VERSION
@@ -71,12 +74,15 @@ def create_app():
             if error_message is None and not randovania.is_dev_version():
                 error_message = client_check.check_client_headers(sio.expected_headers, environ)
 
+            forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
+
             if error_message is not None:
+                app.logger.info(f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
+                                f"version {client_app_version} tried to connect, but refused with {error_message}.")
                 raise ConnectionRefusedError(error_message)
 
             connected_clients.inc()
 
-            forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
             app.logger.info(f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
                             f"version {client_app_version} connected.")
 

@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Iterable
 
-from PySide6.QtWidgets import *
+from PySide6 import QtWidgets
 
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
@@ -22,12 +22,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         self.setupUi(self)
 
         # Game-specific Settings
-        game_settings = self.game_specific_widgets
-        if game_settings is not None:
-            for w in game_settings:
-                self.game_specific_layout.addWidget(w)
-        else:
-            self.game_specific_group.setVisible(False)
+        for w in self.game_specific_widgets:
+            self.game_specific_layout.addWidget(w)
 
         # Item Placement
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
@@ -40,7 +36,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
 
-        #Minimal Logic
+        # Minimal Logic
         for w in [
             self.trick_level_minimal_logic_check,
             self.trick_level_minimal_logic_label,
@@ -54,11 +50,22 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
                 )
             )
 
+        # Development
+        signal_handling.on_checked(self.single_set_for_pickups_that_solve_check,
+                                   self._persist_bool_layout_field("single_set_for_pickups_that_solve"))
+        signal_handling.on_checked(self.staggered_multi_pickup_placement_check,
+                                   self._persist_bool_layout_field("staggered_multi_pickup_placement"))
+
         # Damage strictness
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
         self.damage_strictness_combo.setItemData(1, LayoutDamageStrictness.MEDIUM)
         self.damage_strictness_combo.setItemData(2, LayoutDamageStrictness.LENIENT)
         self.damage_strictness_combo.currentIndexChanged.connect(self._on_update_damage_strictness)
+
+    def update_experimental_visibility(self):
+        super().update_experimental_visibility()
+        any_visible = any(w.isVisibleTo(self.game_specific_group) for w in self.game_specific_widgets)
+        self.game_specific_group.setVisible(any_visible)
 
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration
@@ -69,6 +76,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         common_qt_lib.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
+
+        self.single_set_for_pickups_that_solve_check.setChecked(layout.single_set_for_pickups_that_solve)
+        self.staggered_multi_pickup_placement_check.setChecked(layout.staggered_multi_pickup_placement)
 
         common_qt_lib.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
 
@@ -85,8 +95,21 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         return self._editor._game
 
     @property
-    def game_specific_widgets(self) -> Iterable[QWidget] | None:
-        return None
+    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget]:
+        yield from []
+
+    @property
+    def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
+        yield self.single_set_for_pickups_that_solve_check
+        yield self.staggered_multi_pickup_placement_check
+        yield self.local_first_progression_check
+        yield self.local_first_progression_label
+        yield self.dangerous_combo
+        yield self.dangerous_label
+        yield self.dangerous_description
+        yield self.line_2
+        yield self.experimental_generator_line
+        yield self.minimal_logic_line
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL

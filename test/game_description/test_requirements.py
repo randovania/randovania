@@ -114,6 +114,20 @@ def test_prevent_redundant(blank_game_description):
     assert the_set.alternatives == frozenset([RequirementList([id_req_a])])
 
 
+def test_prevent_redundant_quantity(blank_game_description):
+    db = blank_game_description.resource_database
+    res_a, id_req_a = make_req_a(db)
+    res_b, id_req_b = make_req_b(db)
+
+    the_set = RequirementSet([
+        RequirementList([id_req_a]),
+        RequirementList([id_req_a, id_req_b]),
+        RequirementList([ResourceRequirement.create(res_a, 5, False)]),
+    ])
+
+    assert the_set.alternatives == frozenset([RequirementList([id_req_a])])
+
+
 def test_trivial_merge(blank_game_description):
     db = blank_game_description.resource_database
     res_a, id_req_a = make_req_a(db)

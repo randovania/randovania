@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 15,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -1792,6 +1792,50 @@
                         }
                     ]
                 }
+            },
+            "Shoot Supers": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Charge",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Power",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missile",
+                                "amount": 5,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Supers",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -1849,7 +1893,8 @@
     ],
     "starting_location": {
         "world_name": "Temple Grounds",
-        "area_name": "Landing Site"
+        "area_name": "Landing Site",
+        "node_name": "Save Station"
     },
     "initial_states": {
         "Default": [

@@ -1,9 +1,8 @@
 ----------------
 Landing Site
-(Valid Starting Location)
 Extra - asset_id: 1655756413
 Extra - in_dark_aether: False
-> Save Station; Heals? True; Spawn Point
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   > Door to Service Access
       Any of the following:
@@ -31,14 +30,14 @@ Extra - in_dark_aether: False
 > Door to Service Access; Heals? False
   * Layers: default
   * Normal Door to Service Access/Door to Landing Site
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Save Station
       Trivial
 
 > Door to Hive Access Tunnel; Heals? False
   * Layers: default
   * Normal Door to Hive Access Tunnel/Door to Landing Site
-  * Extra - dock_index: 1
+  * Extra - dock_name: East1
   > Save Station
       After Landing Site Webs
   > Event - Landing Site Webs
@@ -66,13 +65,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Service Access
-(Valid Starting Location)
 Extra - asset_id: 2679590972
 Extra - in_dark_aether: False
-> Door to Landing Site; Heals? False; Spawn Point
+> Door to Landing Site; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Landing Site/Door to Service Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Door to Path of Honor
       Trivial
   > Door to Meeting Grounds
@@ -85,14 +83,14 @@ Extra - in_dark_aether: False
 > Door to Path of Honor; Heals? False
   * Layers: default
   * Normal Door to Path of Honor/Door to Service Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: East
   > Door to Landing Site
       Trivial
 
 > Morph Ball Door to Meeting Grounds; Heals? False
   * Layers: default
   * Morph Ball Door to Meeting Grounds/Morph Ball Door to Service Access
-  * Extra - dock_index: 4
+  * Extra - dock_name: West11
   > Door to Landing Site
       All of the following:
           Morph Ball
@@ -119,7 +117,7 @@ Extra - in_dark_aether: False
 > Morph Ball Door to Path of Honor; Heals? False
   * Layers: default
   * Morph Ball Door to Path of Honor/Morph Ball Door to Service Access
-  * Extra - dock_index: 3
+  * Extra - dock_name: East1
   > Door to Landing Site
       All of the following:
           Morph Ball
@@ -140,7 +138,7 @@ Extra - in_dark_aether: False
 > Door to Meeting Grounds; Heals? False
   * Layers: default
   * Super Missile Blast Shield to Meeting Grounds/Door to Service Access
-  * Extra - dock_index: 2
+  * Extra - dock_name: West
   > Door to Landing Site
       All of the following:
           Morph Ball
@@ -150,13 +148,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Hive Access Tunnel
-(Valid Starting Location)
 Extra - asset_id: 2970881060
 Extra - in_dark_aether: False
-> Door to Landing Site; Heals? False; Spawn Point
+> Door to Landing Site; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Landing Site/Door to Hive Access Tunnel
-  * Extra - dock_index: 1
+  * Extra - dock_name: West
   > Dock to Hive Chamber A
       Trivial
   > Translator Gate
@@ -165,14 +162,14 @@ Extra - in_dark_aether: False
 > Door to Hive Transport Area; Heals? False
   * Layers: default
   * Normal Door to Hive Transport Area/Door to Hive Access Tunnel
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Translator Gate
       Trivial
 
 > Dock to Hive Chamber A; Heals? False
   * Layers: default
   * Open Passage to Hive Chamber A/Dock to Hive Access Tunnel
-  * Extra - dock_index: 2
+  * Extra - dock_name: Floor
 
 > Translator Gate; Heals? False
   * Layers: default
@@ -187,20 +184,19 @@ Extra - in_dark_aether: False
 
 ----------------
 Path of Honor
-(Valid Starting Location)
 Extra - asset_id: 2068656603
 Extra - in_dark_aether: False
 > Morph Ball Door to Hall of Honored Dead; Heals? False
   * Layers: default
   * Morph Ball Door to Hall of Honored Dead/Morph Ball Door to Path of Honor
-  * Extra - dock_index: 2
+  * Extra - dock_name: NorthUpper
   > Morph Ball Door to Service Access
       Morph Ball
 
-> Door to Service Access; Heals? False; Spawn Point
+> Door to Service Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Service Access/Door to Path of Honor
-  * Extra - dock_index: 0
+  * Extra - dock_name: West
   > Door to Hall of Honored Dead
       Any of the following:
           Space Jump Boots
@@ -209,47 +205,46 @@ Extra - in_dark_aether: False
 > Door to Hall of Honored Dead; Heals? False
   * Layers: default
   * Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced) to Hall of Honored Dead/Door to Path of Honor
-  * Extra - dock_index: 3
+  * Extra - dock_name: North
   > Door to Service Access
       Trivial
 
 > Morph Ball Door to Service Access; Heals? False
   * Layers: default
   * Morph Ball Door to Service Access/Morph Ball Door to Path of Honor
-  * Extra - dock_index: 1
+  * Extra - dock_name: WestUpper
   > Morph Ball Door to Hall of Honored Dead
       Morph Ball
 
 ----------------
 Meeting Grounds
-(Valid Starting Location)
 Extra - asset_id: 2606692981
 Extra - in_dark_aether: False
 > Morph Ball Door to Service Access; Heals? False
   * Layers: default
   * Morph Ball Door to Service Access/Morph Ball Door to Meeting Grounds
-  * Extra - dock_index: 2
+  * Extra - dock_name: EastTop
   > Bottom of Halfpipe
       Morph Ball
 
 > Door to Hall of Eyes; Heals? False
   * Layers: default
   * Normal Door to Hall of Eyes/Door to Meeting Grounds
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Bottom of Halfpipe
       Trivial
 
-> Door to Service Access; Heals? False; Spawn Point
+> Door to Service Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Super Missile Blast Shield to Service Access/Door to Meeting Grounds
-  * Extra - dock_index: 3
+  * Extra - dock_name: EastBottom
   > Bottom of Halfpipe
       Trivial
 
 > Door to Temple Transport C; Heals? False
   * Layers: default
   * Normal Door to Temple Transport C/Door to Meeting Grounds
-  * Extra - dock_index: 1
+  * Extra - dock_name: East1
   > Translator Gate
       Trivial
 
@@ -296,27 +291,26 @@ Extra - in_dark_aether: False
 
 ----------------
 Hive Transport Area
-(Valid Starting Location)
 Extra - asset_id: 2485094202
 Extra - in_dark_aether: False
 > Door to Industrial Site; Heals? False
   * Layers: default
   * Normal Door to Industrial Site/Door to Hive Transport Area
-  * Extra - dock_index: 0
+  * Extra - dock_name: East_Upper
   > Top of Elevator
       Trivial
 
 > Door to Hive Access Tunnel; Heals? False
   * Layers: default
   * Normal Door to Hive Access Tunnel/Door to Hive Transport Area
-  * Extra - dock_index: 2
+  * Extra - dock_name: West
   > Translator Gate
       Trivial
 
-> Door to Hive Chamber C; Heals? False; Spawn Point
+> Door to Hive Chamber C; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Hive Chamber C/Door to Hive Transport Area
-  * Extra - dock_index: 1
+  * Extra - dock_name: group35_blue_01_Temple_Hive_1_4_East_BigDoor
   > Top of Elevator
       Scan Visor
 
@@ -342,13 +336,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Hive Chamber A
-(Valid Starting Location)
 Extra - asset_id: 1353937573
 Extra - in_dark_aether: False
-> Dock to Hive Access Tunnel; Heals? False; Spawn Point
+> Dock to Hive Access Tunnel; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Open Passage to Hive Access Tunnel/Dock to Hive Chamber A
-  * Extra - dock_index: 0
+  * Extra - dock_name: Ceiling
   > Door to Hive Tunnel
       After Hive Chamber A Gates
   > Pickup (Missile)
@@ -359,13 +352,13 @@ Extra - in_dark_aether: False
 > Door to Hive Tunnel; Heals? False
   * Layers: default
   * Normal Door to Hive Tunnel/Door to Hive Chamber A
-  * Extra - dock_index: 1
+  * Extra - dock_name: East
   > Pickup (Missile)
       After Bomb Guardian and After Hive Chamber A Gates
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 0; Major Location? False
+  * Pickup 0; Category? Minor
   > Door to Hive Tunnel
       After Hive Chamber A Gates
   > Event - Hive Chamber A Gates
@@ -381,13 +374,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Hall of Honored Dead
-(Valid Starting Location)
 Extra - asset_id: 3098756660
 Extra - in_dark_aether: False
-> Door to Path of Honor; Heals? False; Spawn Point
+> Door to Path of Honor; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced) to Path of Honor/Door to Hall of Honored Dead
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Morph Ball Door to Path of Honor
       Any of the following:
           Screw Attack into Tunnels/Openings (Intermediate) and Use Screw Attack (Space Jump)
@@ -409,32 +401,31 @@ Extra - in_dark_aether: False
 > Morph Ball Door to Path of Honor; Heals? False
   * Layers: default
   * Morph Ball Door to Path of Honor/Morph Ball Door to Hall of Honored Dead
-  * Extra - dock_index: 0
+  * Extra - dock_name: South_Morphball
   > Door to Path of Honor
       Trivial
 
 > Pickup (Seeker Launcher); Heals? False
   * Layers: default
-  * Pickup 1; Major Location? True
+  * Pickup 1; Category? Major
   > Door to Path of Honor
       Trivial
 
 ----------------
 Hall of Eyes
-(Valid Starting Location)
 Extra - asset_id: 1198237772
 Extra - in_dark_aether: False
 > Door to Path of Eyes; Heals? False
   * Layers: default
   * Super Missile Blast Shield to Path of Eyes/Door to Hall of Eyes
-  * Extra - dock_index: 2
+  * Extra - dock_name: West
   > Portal to Base Access
       Trivial
 
-> Door to Meeting Grounds; Heals? False; Spawn Point
+> Door to Meeting Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Meeting Grounds/Door to Hall of Eyes
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Portal to Base Access
       Any of the following:
           Space Jump Boots
@@ -443,7 +434,7 @@ Extra - in_dark_aether: False
 > Portal to Base Access; Heals? False
   * Layers: default
   * Dark Portal to Base Access/Portal to Hall of Eyes
-  * Extra - dock_index: 0
+  * Extra - dock_name: Docks_VirtualNorth
   > Door to Path of Eyes
       Trivial
   > Door to Meeting Grounds
@@ -451,17 +442,16 @@ Extra - in_dark_aether: False
 
 ----------------
 Temple Transport C
-(Valid Starting Location)
 Extra - asset_id: 2918020398
 Extra - in_dark_aether: False
 > Door to Meeting Grounds; Heals? False
   * Layers: default
   * Normal Door to Meeting Grounds/Door to Temple Transport C
-  * Extra - dock_index: 0
+  * Extra - dock_name: blue_0M_Temple_hall_West
   > Elevator to Great Temple - Temple Transport C
       Scan Visor
 
-> Elevator to Great Temple - Temple Transport C; Heals? False; Spawn Point
+> Elevator to Great Temple - Temple Transport C; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Great Temple - Temple Transport C
   * Extra - scan_asset_id: 1116828519
@@ -471,13 +461,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Industrial Site
-(Valid Starting Location)
 Extra - asset_id: 1655474884
 Extra - in_dark_aether: False
 > Door to Agon Transport Access; Heals? False
   * Layers: default
   * Normal Door to Agon Transport Access/Door to Industrial Site
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Translator Gate
       Trivial
   > Keybearer Corpse (J-Fme)
@@ -486,16 +475,16 @@ Extra - in_dark_aether: False
 > Door to Collapsed Tunnel; Heals? False
   * Layers: default
   * Normal Door to Collapsed Tunnel/Door to Industrial Site
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Front of Crate Terminal
       Trivial
   > Front of Translator Gate
       After Industrial Site Bridge
 
-> Door to Hive Transport Area; Heals? False; Spawn Point
+> Door to Hive Transport Area; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Hive Transport Area/Door to Industrial Site
-  * Extra - dock_index: 2
+  * Extra - dock_name: West
   > Event - Gate
       All of the following:
           Scan Visor
@@ -610,13 +599,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Hive Chamber C
-(Valid Starting Location)
 Extra - asset_id: 4219746340
 Extra - in_dark_aether: False
 > Door to Hive Save Station; Heals? False
   * Layers: default
   * Normal Door to Hive Save Station/Door to Hive Chamber C
-  * Extra - dock_index: 2
+  * Extra - dock_name: North1
   > Door to Hive Transport Area
       Trivial
   > Morph Ball Door to Hive Chamber B
@@ -625,16 +613,16 @@ Extra - in_dark_aether: False
 > Door to Hive Transport Area; Heals? False
   * Layers: default
   * Normal Door to Hive Transport Area/Door to Hive Chamber C
-  * Extra - dock_index: 0
+  * Extra - dock_name: blue_01_Temple_Hive_1_4_West_BigDoor
   > Door to Hive Save Station
       Trivial
   > Morph Ball Door to Hive Chamber B
       Morph Ball
 
-> Morph Ball Door to Hive Chamber B; Heals? False; Spawn Point
+> Morph Ball Door to Hive Chamber B; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Morph Ball Door to Hive Chamber B/Morph Ball Door to Hive Chamber C
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to Hive Save Station
       Morph Ball
   > Door to Hive Transport Area
@@ -642,13 +630,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Hive Tunnel
-(Valid Starting Location)
 Extra - asset_id: 360901706
 Extra - in_dark_aether: False
 > Door to Command Chamber; Heals? False
   * Layers: default
   * Normal Door to Command Chamber/Door to Hive Tunnel
-  * Extra - dock_index: 1
+  * Extra - dock_name: East1
   > Door to Hive Chamber A
       After Hive Tunnel Web
   > Event - Hive Tunnel Web
@@ -656,10 +643,10 @@ Extra - in_dark_aether: False
           Open Gates from Behind (Beginner)
           Shoot Darkburst or Shoot Sonic Boom
 
-> Door to Hive Chamber A; Heals? False; Spawn Point
+> Door to Hive Chamber A; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Hive Chamber A/Door to Hive Tunnel
-  * Extra - dock_index: 0
+  * Extra - dock_name: West
   > Door to Command Chamber
       After Hive Tunnel Web
   > Event - Hive Tunnel Web
@@ -675,13 +662,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Base Access
-(Valid Starting Location)
 Extra - asset_id: 1752128027
 Extra - in_dark_aether: True
-> Door to War Ritual Grounds; Heals? False; Spawn Point
+> Door to War Ritual Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Super Missile Blast Shield to War Ritual Grounds/Door to Base Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Portal to Hall of Eyes
       All of the following:
           Dark World Damage ≥ 20 or Activate Safe Zone
@@ -693,14 +679,14 @@ Extra - in_dark_aether: True
 > Door to Abandoned Base; Heals? False
   * Layers: default
   * Normal Door to Abandoned Base/Door to Base Access
-  * Extra - dock_index: 2
+  * Extra - dock_name: West
   > Portal to Hall of Eyes
       Dark World Damage ≥ 20
 
 > Portal to Hall of Eyes; Heals? True
   * Layers: default
   * Light Portal to Hall of Eyes/Portal to Base Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: Docks_VirtualNorth
   > Door to War Ritual Grounds
       Any of the following:
           Dark World Damage ≥ 35
@@ -710,27 +696,26 @@ Extra - in_dark_aether: True
 
 ----------------
 Path of Eyes
-(Valid Starting Location)
 Extra - asset_id: 3997643454
 Extra - in_dark_aether: False
 > Door to Windchamber Gateway; Heals? False
   * Layers: default
   * Super Missile Blast Shield to Windchamber Gateway/Door to Path of Eyes
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Front of Center Door
       After Path of Eyes Light Block to Windchamber Gateway
 
-> Portal from Abandoned Base; Heals? False; Spawn Point
+> Portal from Abandoned Base; Heals? False; Spawn Point; Default Node
   * Layers: default
   * No Return Portal to Abandoned Base/Portal to Path of Eyes
-  * Extra - dock_index: 3
+  * Extra - dock_name: VirtualNorth
   > Door to Hall of Eyes
       Trivial
 
 > Door to Hall of Eyes; Heals? False
   * Layers: default
   * Super Missile Blast Shield to Hall of Eyes/Door to Path of Eyes
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Front of Translator Gate
       All of the following:
           Morph Ball
@@ -749,7 +734,7 @@ Extra - in_dark_aether: False
 > Door to Torvus Transport Access; Heals? False
   * Layers: default
   * Normal Door to Torvus Transport Access/Door to Path of Eyes
-  * Extra - dock_index: 2
+  * Extra - dock_name: South
   > Translator Gate
       Trivial
 
@@ -826,51 +811,48 @@ Extra - in_dark_aether: False
 
 ----------------
 Agon Transport Access
-(Valid Starting Location)
 Extra - asset_id: 2744240555
 Extra - in_dark_aether: False
 > Door to Transport to Agon Wastes; Heals? False
   * Layers: default
   * Normal Door to Transport to Agon Wastes/Door to Agon Transport Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to Industrial Site
       Trivial
 
-> Door to Industrial Site; Heals? False; Spawn Point
+> Door to Industrial Site; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Industrial Site/Door to Agon Transport Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: West
   > Door to Transport to Agon Wastes
       Trivial
 
 ----------------
 Collapsed Tunnel
-(Valid Starting Location)
 Extra - asset_id: 1536348486
 Extra - in_dark_aether: False
 > Door to Temple Assembly Site; Heals? False
   * Layers: default
   * Normal Door to Temple Assembly Site/Door to Collapsed Tunnel
-  * Extra - dock_index: 1
+  * Extra - dock_name: A__North1
   > Door to Industrial Site
       Morph Ball
 
-> Door to Industrial Site; Heals? False; Spawn Point
+> Door to Industrial Site; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Industrial Site/Door to Collapsed Tunnel
-  * Extra - dock_index: 0
+  * Extra - dock_name: A__South
   > Door to Temple Assembly Site
       Morph Ball
 
 ----------------
 Hive Chamber B
-(Valid Starting Location)
 Extra - asset_id: 494654382
 Extra - in_dark_aether: False
 > Morph Ball Door to Hive Chamber C; Heals? False
   * Layers: default
   * Morph Ball Door to Hive Chamber C/Morph Ball Door to Hive Chamber B
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Door to Hive Storage
       Morph Ball
   > Pickup (Missile)
@@ -878,25 +860,24 @@ Extra - in_dark_aether: False
           Morph Ball
           Morph Ball Bomb or Power Bomb
 
-> Door to Hive Storage; Heals? False; Spawn Point
+> Door to Hive Storage; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Hive Storage/Door to Hive Chamber B
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Morph Ball Door to Hive Chamber C
       Morph Ball
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 2; Major Location? False
+  * Pickup 2; Category? Minor
   > Morph Ball Door to Hive Chamber C
       Morph Ball
 
 ----------------
 Hive Save Station
-(Valid Starting Location)
 Extra - asset_id: 341957679
 Extra - in_dark_aether: False
-> Save Station; Heals? True; Spawn Point
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   > Door to Hive Chamber C
       Trivial
@@ -904,26 +885,25 @@ Extra - in_dark_aether: False
 > Door to Hive Chamber C; Heals? False
   * Layers: default
   * Normal Door to Hive Chamber C/Door to Hive Save Station
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Save Station
       Trivial
 
 ----------------
 Command Chamber
-(Valid Starting Location)
 Extra - asset_id: 3592880139
 Extra - in_dark_aether: False
 > Door to Hive Storage; Heals? False
   * Layers: default
   * Normal Door to Hive Storage/Door to Command Chamber
-  * Extra - dock_index: 1
+  * Extra - dock_name: East
   > Door to Hive Tunnel
       After Command Chamber Gate
 
-> Door to Hive Tunnel; Heals? False; Spawn Point
+> Door to Hive Tunnel; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Hive Tunnel/Door to Command Chamber
-  * Extra - dock_index: 0
+  * Extra - dock_name: West2
   > Door to Hive Storage
       After Command Chamber Gate
   > Event - Command Chamber Gate
@@ -939,13 +919,12 @@ Extra - in_dark_aether: False
 
 ----------------
 War Ritual Grounds
-(Valid Starting Location)
 Extra - asset_id: 2859985581
 Extra - in_dark_aether: True
-> Door to Shrine Access; Heals? False; Spawn Point
+> Door to Shrine Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Shrine Access/Door to War Ritual Grounds
-  * Extra - dock_index: 2
+  * Extra - dock_name: EastBottom
   > Central Safe Zone
       Any of the following:
           Dark World Damage ≥ 20
@@ -954,7 +933,7 @@ Extra - in_dark_aether: True
 > Door to Base Access; Heals? False
   * Layers: default
   * Super Missile Blast Shield to Base Access/Door to War Ritual Grounds
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Central Safe Zone
       Any of the following:
           Dark World Damage ≥ 80
@@ -962,7 +941,7 @@ Extra - in_dark_aether: True
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 3; Major Location? False
+  * Pickup 3; Category? Minor
   > Central Safe Zone
       Any of the following:
           Dark World Damage ≥ 35
@@ -989,20 +968,19 @@ Extra - in_dark_aether: True
 
 ----------------
 Abandoned Base
-(Valid Starting Location)
 Extra - asset_id: 3337937090
 Extra - in_dark_aether: True
 > Portal to Path of Eyes; Heals? False
   * Layers: default
   * Light Portal to Path of Eyes/Portal from Abandoned Base
-  * Extra - dock_index: 3
+  * Extra - dock_name: VirtualNorth
   > Door to Base Access
       Dark World Damage ≥ 40
 
-> Door to Base Access; Heals? False; Spawn Point
+> Door to Base Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Base Access/Door to Abandoned Base
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Portal to Path of Eyes
       Any of the following:
           All of the following:
@@ -1028,20 +1006,19 @@ Extra - in_dark_aether: True
 
 ----------------
 Windchamber Gateway
-(Valid Starting Location)
 Extra - asset_id: 1966181726
 Extra - in_dark_aether: False
-> Door to Path of Eyes; Heals? False; Spawn Point
+> Door to Path of Eyes; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Super Missile Blast Shield to Path of Eyes/Door to Windchamber Gateway
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to Grand Windchamber
       Morph Ball or Use Screw Attack (Space Jump)
 
 > Door to Grand Windchamber; Heals? False
   * Layers: default
   * Power Bomb Blast Shield to Grand Windchamber/Door to Windchamber Gateway
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Door to Path of Eyes
       Any of the following:
           Morph Ball or Use Screw Attack (Space Jump)
@@ -1060,7 +1037,7 @@ Extra - in_dark_aether: False
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 4; Major Location? True
+  * Pickup 4; Category? Major
   > Door to Grand Windchamber
       Any of the following:
           Grapple Beam or Use Screw Attack (Space Jump)
@@ -1073,32 +1050,30 @@ Extra - in_dark_aether: False
 
 ----------------
 Torvus Transport Access
-(Valid Starting Location)
 Extra - asset_id: 2822315693
 Extra - in_dark_aether: False
-> Door to Path of Eyes; Heals? False; Spawn Point
+> Door to Path of Eyes; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Path of Eyes/Door to Torvus Transport Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Door to Transport to Torvus Bog
       Trivial
 
 > Door to Transport to Torvus Bog; Heals? False
   * Layers: default
   * Missile Blast Shield to Transport to Torvus Bog/Door to Torvus Transport Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to Path of Eyes
       Trivial
 
 ----------------
 Transport to Agon Wastes
-(Valid Starting Location)
 Extra - asset_id: 1660916974
 Extra - in_dark_aether: False
 > Door to Agon Transport Access; Heals? False
   * Layers: default
   * Normal Door to Agon Transport Access/Door to Transport to Agon Wastes
-  * Extra - dock_index: 0
+  * Extra - dock_name: Dock - North
   > Pickup (Missile)
       Power Beam
   > Elevator to Agon Wastes - Transport to Temple Grounds
@@ -1108,11 +1083,11 @@ Extra - in_dark_aether: False
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 5; Major Location? False
+  * Pickup 5; Category? Minor
   > Door to Agon Transport Access
       Trivial
 
-> Elevator to Agon Wastes - Transport to Temple Grounds; Heals? False; Spawn Point
+> Elevator to Agon Wastes - Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Agon Wastes - Transport to Temple Grounds
   * Extra - scan_asset_id: 1177189496
@@ -1130,20 +1105,19 @@ Extra - in_dark_aether: False
 
 ----------------
 Temple Assembly Site
-(Valid Starting Location)
 Extra - asset_id: 1263425809
 Extra - in_dark_aether: False
 > Door to Storage Cavern B; Heals? False
   * Layers: default
   * Missile Blast Shield to Storage Cavern B/Door to Temple Assembly Site
-  * Extra - dock_index: 3
+  * Extra - dock_name: South1
   > Room Center
       Trivial
 
 > Portal to Plain of Dark Worship; Heals? False
   * Layers: default
   * Dark Portal to Plain of Dark Worship/Portal to Temple Assembly Site
-  * Extra - dock_index: 4
+  * Extra - dock_name: VirtualNorth
   > Room Center
       Any of the following:
           After Temple Assembly Site Light Block
@@ -1152,27 +1126,27 @@ Extra - in_dark_aether: False
 > Door to Temple Transport B; Heals? False
   * Layers: default
   * Normal Door to Temple Transport B/Door to Temple Assembly Site
-  * Extra - dock_index: 2
+  * Extra - dock_name: West
   > Translator Gate
       Trivial
 
 > Door to Dynamo Chamber; Heals? False
   * Layers: default
   * Normal Door to Dynamo Chamber/Door to Temple Assembly Site
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Room Center
       Trivial
 
-> Door to Collapsed Tunnel; Heals? False; Spawn Point
+> Door to Collapsed Tunnel; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Collapsed Tunnel/Door to Temple Assembly Site
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Room Center
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 6; Major Location? False
+  * Pickup 6; Category? Minor
   > Room Center
       Morph Ball
 
@@ -1232,32 +1206,30 @@ Extra - in_dark_aether: False
 
 ----------------
 Hive Storage
-(Valid Starting Location)
 Extra - asset_id: 1667749239
 Extra - in_dark_aether: False
 > Door to Hive Chamber B; Heals? False
   * Layers: default
   * Normal Door to Hive Chamber B/Door to Hive Storage
-  * Extra - dock_index: 1
+  * Extra - dock_name: North1
   > Door to Command Chamber
       Trivial
 
-> Door to Command Chamber; Heals? False; Spawn Point
+> Door to Command Chamber; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Command Chamber/Door to Hive Storage
-  * Extra - dock_index: 0
+  * Extra - dock_name: West
   > Door to Hive Chamber B
       Trivial
 
 ----------------
 Shrine Access
-(Valid Starting Location)
 Extra - asset_id: 521996255
 Extra - in_dark_aether: True
 > Door to War Ritual Grounds; Heals? False
   * Layers: default
   * Normal Door to War Ritual Grounds/Door to Shrine Access
-  * Extra - dock_index: 2
+  * Extra - dock_name: West
   > Safe Zone
       All of the following:
           Morph Ball
@@ -1265,17 +1237,17 @@ Extra - in_dark_aether: True
               Boost Ball and Wall Boost (Expert) and Dark World Damage ≥ 95
               Morph Ball Bomb and Dark World Damage ≥ 70
 
-> Door to Defiled Shrine; Heals? True; Spawn Point
+> Door to Defiled Shrine; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Super Missile Blast Shield to Defiled Shrine/Door to Shrine Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Safe Zone
       Dark World Damage ≥ 15
 
 > Door to Gateway Access; Heals? True
   * Layers: default
   * Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode) to Gateway Access/Door to Shrine Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: East
   > Safe Zone
       Dark World Damage ≥ 15
 
@@ -1303,13 +1275,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Grand Windchamber
-(Valid Starting Location)
 Extra - asset_id: 2909835645
 Extra - in_dark_aether: False
 > Door to Windchamber Tunnel; Heals? False
   * Layers: default
   * Normal Door to Windchamber Tunnel/Door to Grand Windchamber
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Door to Windchamber Gateway
       Any of the following:
           Use Screw Attack (Space Jump)
@@ -1332,14 +1303,14 @@ Extra - in_dark_aether: False
 > Portal to Ing Windchamber; Heals? False
   * Layers: default
   * Dark Portal to Ing Windchamber/Portal to Grand Windchamber
-  * Extra - dock_index: 2
+  * Extra - dock_name: VirtualNorth1
   > Door to Windchamber Gateway
       Trivial
 
-> Door to Windchamber Gateway; Heals? False; Spawn Point
+> Door to Windchamber Gateway; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Power Bomb Blast Shield to Windchamber Gateway/Door to Grand Windchamber
-  * Extra - dock_index: 1
+  * Extra - dock_name: West
   > Door to Windchamber Tunnel
       Any of the following:
           Use Screw Attack (Space Jump)
@@ -1361,7 +1332,7 @@ Extra - in_dark_aether: False
 
 > Pickup (Sunburst); Heals? False
   * Layers: default
-  * Pickup 7; Major Location? True
+  * Pickup 7; Category? Major
   > Door to Windchamber Tunnel
       Any of the following:
           Space Jump Boots
@@ -1371,17 +1342,16 @@ Extra - in_dark_aether: False
 
 ----------------
 Transport to Torvus Bog
-(Valid Starting Location)
 Extra - asset_id: 2889020216
 Extra - in_dark_aether: False
 > Door to Torvus Transport Access; Heals? False
   * Layers: default
   * Missile Blast Shield to Torvus Transport Access/Door to Transport to Torvus Bog
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Elevator to Torvus Bog - Transport to Temple Grounds
       Scan Visor
 
-> Elevator to Torvus Bog - Transport to Temple Grounds; Heals? False; Spawn Point
+> Elevator to Torvus Bog - Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Torvus Bog - Transport to Temple Grounds
   * Extra - scan_asset_id: 3917689266
@@ -1391,13 +1361,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Dynamo Chamber
-(Valid Starting Location)
 Extra - asset_id: 3032508327
 Extra - in_dark_aether: False
 > Door to Communication Area; Heals? False
   * Layers: default
   * Normal Door to Communication Area/Door to Dynamo Chamber
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Door to Temple Assembly Site
       All of the following:
           After Dynamo Chamber Gates
@@ -1411,10 +1380,10 @@ Extra - in_dark_aether: False
   > Event - Dynamo Chamber Gates
       Scan Visor and Before Dynamo Chamber Gates and Open Gates from Behind (Beginner)
 
-> Door to Temple Assembly Site; Heals? False; Spawn Point
+> Door to Temple Assembly Site; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Temple Assembly Site/Door to Dynamo Chamber
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to Communication Area
       All of the following:
           After Dynamo Chamber Gates
@@ -1432,7 +1401,7 @@ Extra - in_dark_aether: False
 
 > Pickup (Power Bomb); Heals? False
   * Layers: default
-  * Pickup 8; Major Location? False
+  * Pickup 8; Category? Minor
   > Door to Temple Assembly Site
       Morph Ball and Power Bomb
 
@@ -1454,17 +1423,16 @@ Extra - in_dark_aether: False
 
 ----------------
 Temple Transport B
-(Valid Starting Location)
 Extra - asset_id: 1287880522
 Extra - in_dark_aether: False
 > Door to Temple Assembly Site; Heals? False
   * Layers: default
   * Normal Door to Temple Assembly Site/Door to Temple Transport B
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Elevator to Great Temple - Temple Transport B
       Scan Visor
 
-> Elevator to Great Temple - Temple Transport B; Heals? False; Spawn Point
+> Elevator to Great Temple - Temple Transport B; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Great Temple - Temple Transport B
   * Extra - scan_asset_id: 2420389345
@@ -1474,38 +1442,36 @@ Extra - in_dark_aether: False
 
 ----------------
 Storage Cavern B
-(Valid Starting Location)
 Extra - asset_id: 3197418796
 Extra - in_dark_aether: False
-> Door to Temple Assembly Site; Heals? False; Spawn Point
+> Door to Temple Assembly Site; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Missile Blast Shield to Temple Assembly Site/Door to Storage Cavern B
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Pickup (Energy Tank)
       Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 9; Major Location? True
+  * Pickup 9; Category? Major
   > Door to Temple Assembly Site
       Trivial
 
 ----------------
 Plain of Dark Worship
-(Valid Starting Location)
 Extra - asset_id: 67496868
 Extra - in_dark_aether: True
-> Door to Lake Access; Heals? False; Spawn Point
+> Door to Lake Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert) to Lake Access/Door to Plain of Dark Worship
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Portal to Temple Assembly Site
       Dark World Damage ≥ 10
 
 > Portal to Temple Assembly Site; Heals? True
   * Layers: default
   * Light Portal to Temple Assembly Site/Portal to Plain of Dark Worship
-  * Extra - dock_index: 3
+  * Extra - dock_name: VirtualNorth
   > Door to Lake Access
       Any of the following:
           Dark World Damage ≥ 10
@@ -1526,7 +1492,7 @@ Extra - in_dark_aether: True
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 10; Major Location? False
+  * Pickup 10; Category? Minor
   > Portal to Temple Assembly Site
       Any of the following:
           Dark World Damage ≥ 20 and Has Suit
@@ -1543,13 +1509,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Defiled Shrine
-(Valid Starting Location)
 Extra - asset_id: 383850164
 Extra - in_dark_aether: True
-> Door to Shrine Access; Heals? True; Spawn Point
+> Door to Shrine Access; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Super Missile Blast Shield to Shrine Access/Door to Defiled Shrine
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Safe Zone (Ship Location)
       Any of the following:
           Dark World Damage ≥ 40
@@ -1557,7 +1522,7 @@ Extra - in_dark_aether: True
 
 > Pickup (Sky Temple Key 8); Heals? False
   * Layers: default
-  * Pickup 11; Major Location? True
+  * Pickup 11; Category? Major
   > Safe Zone (Ship Location)
       Dark World Damage ≥ 15
 
@@ -1584,20 +1549,19 @@ Extra - in_dark_aether: True
 
 ----------------
 Gateway Access
-(Valid Starting Location)
 Extra - asset_id: 2217888920
 Extra - in_dark_aether: True
 > Door to Sky Temple Gateway; Heals? False
   * Layers: default
   * Normal Door to Sky Temple Gateway/Door to Gateway Access
-  * Extra - dock_index: 3
+  * Extra - dock_name: North
   > Central Safe Zone
       Dark World Damage ≥ 30
 
-> Door to Shrine Access; Heals? False; Spawn Point
+> Door to Shrine Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Shrine Access/Door to Gateway Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: West
   > Central Safe Zone
       Dark World Damage ≥ 40
 
@@ -1622,32 +1586,30 @@ Extra - in_dark_aether: True
 
 ----------------
 Windchamber Tunnel
-(Valid Starting Location)
 Extra - asset_id: 2590194623
 Extra - in_dark_aether: False
-> Door to GFMC Compound; Heals? False; Spawn Point
+> Door to GFMC Compound; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Power Bomb Blast Shield to GFMC Compound/Door to Windchamber Tunnel
-  * Extra - dock_index: 1
+  * Extra - dock_name: East
   > Door to Grand Windchamber
       Morph Ball
 
 > Door to Grand Windchamber; Heals? False
   * Layers: default
   * Normal Door to Grand Windchamber/Door to Windchamber Tunnel
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Door to GFMC Compound
       Morph Ball
 
 ----------------
 Ing Windchamber
-(Valid Starting Location)
 Extra - asset_id: 3455003633
 Extra - in_dark_aether: True
-> Portal to Grand Windchamber; Heals? True; Spawn Point
+> Portal to Grand Windchamber; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Light Portal to Grand Windchamber/Portal to Ing Windchamber
-  * Extra - dock_index: 2
+  * Extra - dock_name: VirtualNorth1
   > Event - Ing Windchamber Blue Seeker Lock
       All of the following:
           Boost Ball and Missile ≥ 4 and Morph Ball and Seeker Launcher
@@ -1675,13 +1637,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Communication Area
-(Valid Starting Location)
 Extra - asset_id: 1667141025
 Extra - in_dark_aether: False
-> Door to Dynamo Chamber; Heals? False; Spawn Point
+> Door to Dynamo Chamber; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Dynamo Chamber/Door to Communication Area
-  * Extra - dock_index: 2
+  * Extra - dock_name: South11
   > Door to Trooper Security Station
       Trivial
   > Next to Pickup
@@ -1699,20 +1660,20 @@ Extra - in_dark_aether: False
 > Door to Storage Cavern A; Heals? False
   * Layers: default
   * Normal Door to Storage Cavern A/Door to Communication Area
-  * Extra - dock_index: 0
+  * Extra - dock_name: South1
   > Next to Pickup
       Trivial
 
 > Door to Trooper Security Station; Heals? False
   * Layers: default
   * Normal Door to Trooper Security Station/Door to Communication Area
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Door to Dynamo Chamber
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 12; Major Location? False
+  * Pickup 12; Category? Minor
   > Next to Pickup
       Trivial
 
@@ -1735,32 +1696,30 @@ Extra - in_dark_aether: False
 
 ----------------
 Lake Access
-(Valid Starting Location)
 Extra - asset_id: 1753921710
 Extra - in_dark_aether: True
-> Door to Accursed Lake; Heals? False; Spawn Point
+> Door to Accursed Lake; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Accursed Lake/Door to Lake Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: A__South
   > Door to Plain of Dark Worship
       Dark World Damage ≥ 100
 
 > Door to Plain of Dark Worship; Heals? False
   * Layers: default
   * Super Missile Blast Shield to Plain of Dark Worship/Door to Lake Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: A__North1
   > Door to Accursed Lake
       Dark World Damage ≥ 100
 
 ----------------
 Sky Temple Gateway
-(Valid Starting Location)
 Extra - asset_id: 2278776548
 Extra - in_dark_aether: True
 > Door to Gateway Access; Heals? False
   * Layers: default
   * Normal Door to Gateway Access/Door to Sky Temple Gateway
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Spawn Point/Front of Teleporter
       Any of the following:
           Dark World Damage ≥ 35
@@ -1794,20 +1753,19 @@ Extra - in_dark_aether: True
                       Combat (Intermediate) and Invisible Objects (Intermediate) and Dark World Damage ≥ 800
               Missile ≥ 5 and Combat (Advanced) and Invisible Objects (Advanced) and Normal Damage ≥ 80 and Dark World Damage ≥ 300 and Use Screw Attack (Space Jump)
 
-> Spawn Point/Front of Teleporter; Heals? False; Spawn Point
+> Spawn Point/Front of Teleporter; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Teleport to Great Temple - Sky Temple Energy Controller
       Sky Temple Key 1 and Sky Temple Key 2 and Sky Temple Key 3 and Sky Temple Key 4 and Sky Temple Key 5 and Sky Temple Key 6 and Sky Temple Key 7 and Sky Temple Key 8 and Sky Temple Key 9 and Dark World Damage ≥ 10
 
 ----------------
 GFMC Compound
-(Valid Starting Location)
 Extra - asset_id: 1467316949
 Extra - in_dark_aether: False
 > Door to Windchamber Tunnel; Heals? False
   * Layers: default
   * Power Bomb Blast Shield to Windchamber Tunnel/Door to GFMC Compound
-  * Extra - dock_index: 3
+  * Extra - dock_name: West
   > Door to Sacred Bridge
       Morph Ball
   > Room Center
@@ -1816,7 +1774,7 @@ Extra - in_dark_aether: False
 > Door to Sacred Bridge; Heals? False
   * Layers: default
   * Missile Blast Shield to Sacred Bridge/Door to GFMC Compound
-  * Extra - dock_index: 2
+  * Extra - dock_name: WestTop
   > Door to Windchamber Tunnel
       Morph Ball
   > Pickup 2 (Missile On Ship)
@@ -1824,10 +1782,10 @@ Extra - in_dark_aether: False
   > Room Center
       Trivial
 
-> Door to Trooper Security Station; Heals? False; Spawn Point
+> Door to Trooper Security Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Trooper Security Station/Door to GFMC Compound
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Event - GFMC Compound Trooper Cutscene
       Trivial
   > Room Center
@@ -1836,7 +1794,7 @@ Extra - in_dark_aether: False
 > Door to Fortress Transport Access; Heals? False
   * Layers: default
   * Normal Door to Fortress Transport Access/Door to GFMC Compound
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Room Center
       Before GFMC Compound Trooper Cutscene and Enabled Vanilla GFMC Compound Translator Gate
   > Translator Gate
@@ -1844,13 +1802,13 @@ Extra - in_dark_aether: False
 
 > Pickup (Missile Launcher); Heals? False
   * Layers: default
-  * Pickup 13; Major Location? True
+  * Pickup 13; Category? Major
   > Room Center
       Trivial
 
 > Pickup 2 (Missile On Ship); Heals? False
   * Layers: default
-  * Pickup 14; Major Location? False
+  * Pickup 14; Category? Minor
   > Room Center
       Trivial
 
@@ -1910,13 +1868,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Storage Cavern A
-(Valid Starting Location)
 Extra - asset_id: 939577218
 Extra - in_dark_aether: False
-> Door to Communication Area; Heals? False; Spawn Point
+> Door to Communication Area; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Communication Area/Door to Storage Cavern A
-  * Extra - dock_index: 0
+  * Extra - dock_name: North_Top
   > Keybearer Corpse (D-Isl)
       Trivial
 
@@ -1930,13 +1887,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Trooper Security Station
-(Valid Starting Location)
 Extra - asset_id: 1441689027
 Extra - in_dark_aether: False
 > Door to GFMC Compound; Heals? False
   * Layers: default
   * Normal Door to GFMC Compound/Door to Trooper Security Station
-  * Extra - dock_index: 1
+  * Extra - dock_name: blue_0D_Temple_hall_West
   > Door to Communication Area
       All of the following:
           After Trooper Security Station Gate
@@ -1946,10 +1902,10 @@ Extra - in_dark_aether: False
   > Event - Trooper Security Station Gate
       Trivial
 
-> Door to Communication Area; Heals? False; Spawn Point
+> Door to Communication Area; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Communication Area/Door to Trooper Security Station
-  * Extra - dock_index: 0
+  * Extra - dock_name: blue_0D_Temple_hall_South
   > Door to GFMC Compound
       All of the following:
           After Trooper Security Station Gate
@@ -1971,19 +1927,18 @@ Extra - in_dark_aether: False
 
 ----------------
 Accursed Lake
-(Valid Starting Location)
 Extra - asset_id: 2681312991
 Extra - in_dark_aether: True
 > Door to Lake Access; Heals? False
   * Layers: default
   * Normal Door to Lake Access/Door to Accursed Lake
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Spawn Point
       Dark World Damage ≥ 15
 
 > Pickup (Sky Temple Key 9); Heals? False
   * Layers: default
-  * Pickup 15; Major Location? True
+  * Pickup 15; Category? Major
   > Door to Lake Access
       Any of the following:
           All of the following:
@@ -2003,7 +1958,7 @@ Extra - in_dark_aether: True
                       Dark World Damage ≥ 45 or Activate Safe Zone
                   Gravity Boost and Light Suit and Air Underwater (Advanced)
 
-> Spawn Point; Heals? False; Spawn Point
+> Spawn Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Door to Lake Access
       Dark World Damage ≥ 30
@@ -2033,22 +1988,21 @@ Extra - in_dark_aether: True
 
 ----------------
 Fortress Transport Access
-(Valid Starting Location)
 Extra - asset_id: 1894115037
 Extra - in_dark_aether: False
 > Door to Transport to Sanctuary Fortress; Heals? False
   * Layers: default
   * Normal Door to Transport to Sanctuary Fortress/Door to Fortress Transport Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: West
   > Door to GFMC Compound
       Trivial
   > Lore Scan
       Trivial
 
-> Door to GFMC Compound; Heals? False; Spawn Point
+> Door to GFMC Compound; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to GFMC Compound/Door to Fortress Transport Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to Transport to Sanctuary Fortress
       Trivial
   > Pickup (Energy Tank)
@@ -2056,7 +2010,7 @@ Extra - in_dark_aether: False
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 16; Major Location? True
+  * Pickup 16; Category? Major
   > Door to GFMC Compound
       Trivial
 
@@ -2070,13 +2024,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Sacred Bridge
-(Valid Starting Location)
 Extra - asset_id: 3132939042
 Extra - in_dark_aether: False
-> Door to GFMC Compound; Heals? False; Spawn Point
+> Door to GFMC Compound; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Missile Blast Shield to GFMC Compound/Door to Sacred Bridge
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Door to Sacred Path
       Any of the following:
           After Sacred Bridge Gate
@@ -2090,7 +2043,7 @@ Extra - in_dark_aether: False
 > Door to Sacred Path; Heals? False
   * Layers: default
   * Normal Door to Sacred Path/Door to Sacred Bridge
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to GFMC Compound
       After Sacred Bridge Gate
   > Event - Gate Unlocked
@@ -2104,17 +2057,16 @@ Extra - in_dark_aether: False
 
 ----------------
 Transport to Sanctuary Fortress
-(Valid Starting Location)
 Extra - asset_id: 3455543403
 Extra - in_dark_aether: False
 > Door to Fortress Transport Access; Heals? False
   * Layers: default
   * Normal Door to Fortress Transport Access/Door to Transport to Sanctuary Fortress
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Elevator to Sanctuary Fortress - Transport to Temple Grounds
       Scan Visor
 
-> Elevator to Sanctuary Fortress - Transport to Temple Grounds; Heals? False; Spawn Point
+> Elevator to Sanctuary Fortress - Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Sanctuary Fortress - Transport to Temple Grounds
   * Extra - scan_asset_id: 2363755252
@@ -2124,22 +2076,21 @@ Extra - in_dark_aether: False
 
 ----------------
 Sacred Path
-(Valid Starting Location)
 Extra - asset_id: 3258777533
 Extra - in_dark_aether: False
 > Portal to Profane Path; Heals? False
   * Layers: default
   * Dark Portal to Profane Path/Portal to Sacred Path
-  * Extra - dock_index: 2
+  * Extra - dock_name: VirtualNorth1
   > Door to Sacred Bridge
       Trivial
   > Door to Temple Transport A
       Trivial
 
-> Door to Sacred Bridge; Heals? False; Spawn Point
+> Door to Sacred Bridge; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Sacred Bridge/Door to Sacred Path
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Door to Temple Transport A
       Any of the following:
           Space Jump Boots
@@ -2156,7 +2107,7 @@ Extra - in_dark_aether: False
 > Door to Temple Transport A; Heals? False
   * Layers: default
   * Normal Door to Temple Transport A/Door to Sacred Path
-  * Extra - dock_index: 0
+  * Extra - dock_name: South1
   > Portal to Profane Path
       Any of the following:
           Space Jump Boots
@@ -2176,17 +2127,16 @@ Extra - in_dark_aether: False
 
 ----------------
 Temple Transport A
-(Valid Starting Location)
 Extra - asset_id: 1345979968
 Extra - in_dark_aether: False
 > Door to Sacred Path; Heals? False
   * Layers: default
   * Normal Door to Sacred Path/Door to Temple Transport A
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Elevator to Great Temple - Temple Transport A
       Scan Visor
 
-> Elevator to Great Temple - Temple Transport A; Heals? False; Spawn Point
+> Elevator to Great Temple - Temple Transport A; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Great Temple - Temple Transport A
   * Extra - scan_asset_id: 2155694422
@@ -2196,13 +2146,12 @@ Extra - in_dark_aether: False
 
 ----------------
 Profane Path
-(Valid Starting Location)
 Extra - asset_id: 1692811478
 Extra - in_dark_aether: True
-> Door to Phazon Pit; Heals? False; Spawn Point
+> Door to Phazon Pit; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Phazon Pit/Door to Profane Path
-  * Extra - dock_index: 0
+  * Extra - dock_name: North
   > Portal to Sacred Path
       Any of the following:
           Space Jump Boots and Dark World Damage ≥ 35
@@ -2220,7 +2169,7 @@ Extra - in_dark_aether: True
 > Portal to Sacred Path; Heals? True
   * Layers: default
   * Light Portal to Sacred Path/Portal to Profane Path
-  * Extra - dock_index: 1
+  * Extra - dock_name: VirtualNorth1
   > Door to Phazon Pit
       Dark World Damage ≥ 15
   > Safe Zone (Front of Echo Gate)
@@ -2228,7 +2177,7 @@ Extra - in_dark_aether: True
 
 > Pickup (Dark Ammo); Heals? False
   * Layers: default
-  * Pickup 17; Major Location? False
+  * Pickup 17; Category? Minor
   > Safe Zone (Front of Echo Gate)
       Dark World Damage ≥ 10
 
@@ -2258,13 +2207,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Phazon Pit
-(Valid Starting Location)
 Extra - asset_id: 506667008
 Extra - in_dark_aether: True
 > Door to Profane Path; Heals? False
   * Layers: default
   * Normal Door to Profane Path/Door to Phazon Pit
-  * Extra - dock_index: 1
+  * Extra - dock_name: South
   > Door to Phazon Grounds
       Any of the following:
           Grapple Beam and Dark World Damage ≥ 50
@@ -2279,10 +2227,10 @@ Extra - in_dark_aether: True
                           Morph Ball Bomb and Bomb Space Jump (Intermediate) and Normal Damage ≥ 15 and Dark World Damage ≥ 75
                   Boost Ball and Boost Jump (Expert) and Dark World Damage ≥ 60
 
-> Door to Phazon Grounds; Heals? False; Spawn Point
+> Door to Phazon Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Phazon Grounds/Door to Phazon Pit
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Door to Profane Path
       Any of the following:
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 100
@@ -2292,13 +2240,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Phazon Grounds
-(Valid Starting Location)
 Extra - asset_id: 1683944003
 Extra - in_dark_aether: True
 > Door to Phazon Pit; Heals? False
   * Layers: default
   * Normal Door to Phazon Pit/Door to Phazon Grounds
-  * Extra - dock_index: 2
+  * Extra - dock_name: WestTop
   > Door to Reliquary Access
       Any of the following:
           Dark World Damage ≥ 60
@@ -2318,10 +2265,10 @@ Extra - in_dark_aether: True
                   Invisible Objects (Hypermode)
                   Dark Visor and Movement (Expert)
 
-> Door to Reliquary Access; Heals? False; Spawn Point
+> Door to Reliquary Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles) to Reliquary Access/Door to Phazon Grounds
-  * Extra - dock_index: 0
+  * Extra - dock_name: East
   > Door to Phazon Pit
       Any of the following:
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 55
@@ -2330,7 +2277,7 @@ Extra - in_dark_aether: True
 
 > Pickup (Missile); Heals? False
   * Layers: default
-  * Pickup 18; Major Location? False
+  * Pickup 18; Category? Minor
   > Door to Phazon Pit
       Any of the following:
           Dark World Damage ≥ 50 and Use Screw Attack (Space Jump)
@@ -2348,13 +2295,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Reliquary Access
-(Valid Starting Location)
 Extra - asset_id: 2235615956
 Extra - in_dark_aether: True
-> Door to Phazon Grounds; Heals? False; Spawn Point
+> Door to Phazon Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert) to Phazon Grounds/Door to Reliquary Access
-  * Extra - dock_index: 1
+  * Extra - dock_name: West
   > Door to Reliquary Grounds
       Any of the following:
           Light Suit
@@ -2372,7 +2318,7 @@ Extra - in_dark_aether: True
 > Door to Reliquary Grounds; Heals? False
   * Layers: default
   * Light Door to Reliquary Grounds/Door to Reliquary Access
-  * Extra - dock_index: 0
+  * Extra - dock_name: South
   > Door to Phazon Grounds
       Any of the following:
           Light Suit
@@ -2392,13 +2338,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Reliquary Grounds
-(Valid Starting Location)
 Extra - asset_id: 4237279396
 Extra - in_dark_aether: True
-> Door to Reliquary Access; Heals? False; Spawn Point
+> Door to Reliquary Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Light Door to Reliquary Access/Door to Reliquary Grounds
-  * Extra - dock_index: 1
+  * Extra - dock_name: North
   > Door to Ing Reliquary
       Any of the following:
           All of the following:
@@ -2418,7 +2363,7 @@ Extra - in_dark_aether: True
 > Door to Ing Reliquary; Heals? False
   * Layers: default
   * Normal Door to Ing Reliquary/Door to Reliquary Grounds
-  * Extra - dock_index: 0
+  * Extra - dock_name: South_Top
   > Door to Reliquary Access
       Any of the following:
           Light Suit
@@ -2434,13 +2379,12 @@ Extra - in_dark_aether: True
 
 ----------------
 Ing Reliquary
-(Valid Starting Location)
 Extra - asset_id: 1956545251
 Extra - in_dark_aether: True
-> Door to Reliquary Grounds; Heals? False; Spawn Point
+> Door to Reliquary Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Reliquary Grounds/Door to Ing Reliquary
-  * Extra - dock_index: 0
+  * Extra - dock_name: North_Top
   > Pickup (Sky Temple Key 7)
       All of the following:
           Dark Visor
@@ -2459,7 +2403,7 @@ Extra - in_dark_aether: True
 
 > Pickup (Sky Temple Key 7); Heals? False
   * Layers: default
-  * Pickup 19; Major Location? True
+  * Pickup 19; Category? Major
   > Door to Reliquary Grounds
       Any of the following:
           Light Suit
@@ -2473,7 +2417,7 @@ Extra - in_dark_aether: True
 Credits
 Extra - asset_id: 1393588666
 Extra - in_dark_aether: False
-> Event - Dark Samus 3 and 4; Heals? False; Spawn Point
+> Event - Dark Samus 3 and 4; Heals? False; Default Node
   * Layers: default
   * Event Dark Samus 3 and 4
   * Extra - different_strongly_connected_component: True

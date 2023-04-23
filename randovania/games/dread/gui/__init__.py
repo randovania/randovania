@@ -3,3 +3,11 @@ from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExport
 from randovania.games.dread.gui.dread_game_tab import DreadGameTabWidget
 from randovania.games.dread.gui.hint_details_tab import DreadHintDetailsTab
 from randovania.games.dread.gui.preset_settings import dread_preset_tabs
+
+__all__ = [
+    DreadCosmeticPatchesDialog,
+    DreadGameExportDialog,
+    DreadGameTabWidget,
+    DreadHintDetailsTab,
+    dread_preset_tabs,
+]

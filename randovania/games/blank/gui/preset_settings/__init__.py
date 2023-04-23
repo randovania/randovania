@@ -1,7 +1,7 @@
-from randovania.game_description import default_database
 
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.preset_editor import PresetEditor
+from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
@@ -17,4 +17,5 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetItemPool,
         PresetBlankPatches,
         PresetDockRando,
+        PresetStartingArea
     ]

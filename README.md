@@ -106,6 +106,8 @@ Website created by [Hugoshido](https://twitch.tv/hugoshido).
 
 Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/), which has graciously provided us with an open source license.
 
+Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
+
 ## Games
 
 ### Metroid Prime 1
@@ -142,13 +144,16 @@ Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/)
   * [ScorelessPine](https://github.com/ScorelessPine)
   * [Arcanox](https://twitter.com/ArcanoxDragon)
   * [Migs](https://www.twitch.tv/migslive)
+  * [hyperbola0](https://github.com/steven11sjf)
+  * [Thanatos](https://github.com/ThanatosGit)
 
 * Logic Database by:
   * [KirbymastaH](https://www.twitch.tv/kirbymastah)
   * [Dyceron](https://www.twitch.tv/dyceron)
   * [XenoWars](https://www.twitch.tv/xenowars1)
-  * [Izzychu](https://github.com/Isachu)
+  * [Mayberry](https://github.com/Isachu)
   * [Hugoshido](https://twitch.tv/hugoshido)
+  * [Tyranisaur](https://github.com/Tyranisaur)
 
 * Assets by:
   * Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ).
@@ -157,6 +162,7 @@ Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/)
 
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
+* Pixel theme assets were provided by [Uncle Reggie](https://www.twitch.tv/unclereggie).
 
 ## Multiworld
 Server and logic written by Henrique, including Dolphin and Nintendont integrations. These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).

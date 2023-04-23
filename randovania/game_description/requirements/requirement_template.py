@@ -22,7 +22,12 @@ class RequirementTemplate(Requirement):
 
     def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
-        return self.template_requirement(database).patch_requirements(static_resources, damage_multiplier, database)
+        template = self.template_requirement(database)
+        result = template.patch_requirements(static_resources, damage_multiplier, database)
+        if result != template:
+            return result
+        else:
+            return self
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self

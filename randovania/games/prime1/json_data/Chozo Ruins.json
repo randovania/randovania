@@ -6,7 +6,6 @@
     "areas": {
         "Transport to Tallon Overworld North": {
             "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins West",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1047210935,
                 "size_index": 0.3,
@@ -36,6 +35,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -67,6 +67,7 @@
                         "scan_asset_id": 1013969958,
                         "teleporter_instance_id": 125
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Tallon Overworld",
                         "area_name": "Transport to Chozo Ruins West"
@@ -94,15 +95,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 100,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Ruins Entrance": {
             "default_node": "Door to Transport to Tallon Overworld North",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3086062890,
                 "size_index": 0.3,
@@ -132,6 +133,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -167,6 +169,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -197,15 +200,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 101,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Main Plaza": {
             "default_node": "Door to Ruins Entrance",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3587029001,
                 "size_index": 0.8,
@@ -235,6 +238,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -484,6 +488,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -575,12 +580,20 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 5,
-                                                                    "negate": false
+                                                                    "comment": "https://youtu.be/ne8ap0xa_UE",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -592,7 +605,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=wN2_EBHi-Fw",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -621,7 +634,7 @@
                         "Locked Door Ledge": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://youtu.be/G4PZlf7AYMU",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -662,6 +675,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -697,6 +711,7 @@
                         "dock_index": 3,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -733,6 +748,7 @@
                         "nonstandard": false,
                         "exclude_dock_rando": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -768,6 +784,7 @@
                         "dock_index": 5,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -930,8 +947,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 3,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Locked Door Ledge": {
                             "type": "and",
@@ -951,8 +969,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 0,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Ruins Entrance": {
                             "type": "and",
@@ -972,8 +991,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 2,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Ruins Entrance": {
                             "type": "and",
@@ -993,8 +1013,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 1,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Grapple Ledge": {
                             "type": "and",
@@ -1014,6 +1035,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Ruins Entrance": {
                             "type": "and",
@@ -1049,6 +1071,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Ruins Entrance": {
                             "type": "and",
@@ -1290,7 +1313,6 @@
         },
         "Ruined Fountain Access": {
             "default_node": "Door to Ruined Fountain",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1443741240,
                 "size_index": 0.1,
@@ -1320,6 +1342,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1365,6 +1388,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1405,15 +1429,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 102,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Ruined Shrine Access": {
             "default_node": "Door to Ruined Shrine",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3748948704,
                 "size_index": 0.1,
@@ -1443,6 +1467,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1478,6 +1503,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1508,15 +1534,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 103,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Nursery Access": {
             "default_node": "Door to Eyon Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 153979389,
                 "size_index": 0.1,
@@ -1546,6 +1572,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1581,6 +1608,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1611,15 +1639,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 104,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Plaza Access": {
             "default_node": "Door to Vault",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1396020311,
                 "size_index": 0.3,
@@ -1650,6 +1678,7 @@
                         "nonstandard": false,
                         "exclude_dock_rando": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1685,6 +1714,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1715,15 +1745,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 105,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Piston Tunnel": {
             "default_node": "Morph Ball Door to Training Chamber",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 725556462,
                 "size_index": 0.3,
@@ -1753,6 +1783,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1798,6 +1829,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1838,15 +1870,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 106,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Ruined Fountain": {
             "default_node": "Door to Ruined Fountain Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 375016937,
                 "size_index": 0.6,
@@ -1876,6 +1908,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1911,6 +1944,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -1946,6 +1980,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -2010,7 +2045,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/OcHxU-t-WYk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2036,7 +2071,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/SbmRjJ04Lfk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2078,8 +2113,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 4,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Meditation Fountain": {
                             "type": "and",
@@ -2094,7 +2130,6 @@
         },
         "Ruined Shrine": {
             "default_node": "Door to Ruined Shrine Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1014518864,
                 "size_index": 0.6,
@@ -2124,6 +2159,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -2189,7 +2225,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/mmOJBhUouY4",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2204,7 +2240,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "RJump",
+                                                                    "name": "LJump",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -2269,6 +2305,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -2322,7 +2359,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/93RLiYdob9Q",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2412,7 +2449,7 @@
                         "Pickup (Morph Ball)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://youtu.be/3lkjUSO9tN4",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2466,7 +2503,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/93RLiYdob9Q",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2567,8 +2604,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 5,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Event - Ruined Shrine Item (Morph Ball)": {
                             "type": "and",
@@ -2588,8 +2626,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 6,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Ruined Shrine Access": {
                             "type": "and",
@@ -2609,8 +2648,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 7,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Pit": {
                             "type": "and",
@@ -2630,6 +2670,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Ruined Shrine Access": {
                             "type": "or",
@@ -2648,7 +2689,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=nJVx6BVzXNc",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3042,6 +3083,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event52",
                     "connections": {
                         "Pit": {
@@ -3062,6 +3104,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event53",
                     "connections": {
                         "Pit": {
@@ -3077,7 +3120,6 @@
         },
         "Eyon Tunnel": {
             "default_node": "Door to Nursery Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3407776267,
                 "size_index": 0.1,
@@ -3107,6 +3149,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3142,6 +3185,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3172,15 +3216,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 107,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Vault": {
             "default_node": "Door to Plaza Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 4010184729,
                 "size_index": 0.3,
@@ -3210,6 +3254,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3331,6 +3376,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3361,8 +3407,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 8,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Vault Access": {
                             "type": "and",
@@ -3377,7 +3424,6 @@
         },
         "Training Chamber": {
             "default_node": "Door to Training Chamber Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1057288964,
                 "size_index": 0.6,
@@ -3407,6 +3453,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3545,6 +3592,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3577,8 +3625,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 9,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Training Chamber Access": {
                             "type": "or",
@@ -3625,6 +3674,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event11",
                     "connections": {
                         "Door to Training Chamber Access": {
@@ -3645,6 +3695,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event12",
                     "connections": {
                         "Door to Training Chamber Access": {
@@ -3660,7 +3711,6 @@
         },
         "Arboretum Access": {
             "default_node": "Door to Ruined Fountain",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2265646373,
                 "size_index": 0.3,
@@ -3690,6 +3740,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3725,6 +3776,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3755,15 +3807,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 108,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Meditation Fountain": {
             "default_node": "Door to Ruined Fountain",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 673912500,
                 "size_index": 0.1,
@@ -3793,6 +3845,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3828,6 +3881,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3858,15 +3912,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 109,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Tower of Light Access": {
             "default_node": "Door to Ruined Shrine",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1507858510,
                 "size_index": 0.1,
@@ -3896,6 +3950,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3931,6 +3986,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -3961,15 +4017,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 110,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Ruined Nursery": {
             "default_node": "Door to Eyon Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3260509773,
                 "size_index": 0.6,
@@ -3999,6 +4055,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4034,6 +4091,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4076,6 +4134,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4200,8 +4259,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 10,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Eyon Tunnel": {
                             "type": "and",
@@ -4216,7 +4276,6 @@
         },
         "Vault Access": {
             "default_node": "Door to Vault",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2768802193,
                 "size_index": 0.1,
@@ -4246,6 +4305,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4291,6 +4351,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4331,15 +4392,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 111,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Training Chamber Access": {
             "default_node": "Door to Magma Pool",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 416384699,
                 "size_index": 0.1,
@@ -4369,6 +4430,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4404,6 +4466,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4443,8 +4506,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 11,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Training Chamber": {
                             "type": "and",
@@ -4459,7 +4523,6 @@
         },
         "Arboretum": {
             "default_node": "Door to Arboretum Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 413884678,
                 "size_index": 0.6,
@@ -4489,6 +4552,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4595,6 +4659,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4630,6 +4695,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -4701,6 +4767,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Sunchamber Lobby": {
                             "type": "and",
@@ -4850,6 +4917,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event9",
                     "connections": {
                         "Front of Gate": {
@@ -4872,15 +4940,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 112,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Magma Pool": {
             "default_node": "Door to Meditation Fountain",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1226570426,
                 "size_index": 0.6,
@@ -4910,6 +4978,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -5158,6 +5227,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -5211,7 +5281,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://youtu.be/3JG613NSYcQ",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -5246,7 +5316,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=2ezw9IFPJlY",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -5272,7 +5342,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://youtu.be/fVdrtd-aB0U",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -5373,8 +5443,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 12,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Training Chamber Access": {
                             "type": "or",
@@ -5420,7 +5491,6 @@
         },
         "Tower of Light": {
             "default_node": "Door to Tower of Light Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 225636855,
                 "size_index": 0.6,
@@ -5450,6 +5520,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -5579,7 +5650,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/B56Q854PHwc",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5614,7 +5685,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=YMk1EDV95h0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5912,6 +5983,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -5942,8 +6014,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 13,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Tower of Light Access": {
                             "type": "and",
@@ -5958,7 +6031,6 @@
         },
         "Save Station 1": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 492718124,
                 "size_index": 0.1,
@@ -5988,6 +6060,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6016,6 +6089,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Ruined Nursery": {
                             "type": "and",
@@ -6037,15 +6111,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 113,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "North Atrium": {
             "default_node": "Door to Ruined Nursery",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1177115808,
                 "size_index": 0.1,
@@ -6075,6 +6149,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6110,6 +6185,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6140,15 +6216,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 114,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport to Magmoor Caverns North": {
             "default_node": "Elevator to Magmoor Caverns - Transport to Chozo Ruins North",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2199318005,
                 "size_index": 0.3,
@@ -6178,6 +6254,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6213,6 +6290,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6248,6 +6326,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6293,6 +6372,7 @@
                         "scan_asset_id": 3322994662,
                         "teleporter_instance_id": 1572903
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Magmoor Caverns",
                         "area_name": "Transport to Chozo Ruins North"
@@ -6320,15 +6400,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 115,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Sunchamber Lobby": {
             "default_node": "Door to Sunchamber Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1025740749,
                 "size_index": 0.1,
@@ -6358,6 +6438,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6393,6 +6474,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6423,15 +6505,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 116,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Gathering Hall Access": {
             "default_node": "Door to Arboretum",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2515665310,
                 "size_index": 0.1,
@@ -6461,6 +6543,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6496,6 +6579,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6526,15 +6610,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 117,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Tower Chamber": {
             "default_node": "Door to Tower of Light",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 297624503,
                 "size_index": 0.1,
@@ -6564,6 +6648,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6594,8 +6679,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 14,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Tower of Light": {
                             "type": "and",
@@ -6610,7 +6696,6 @@
         },
         "Ruined Gallery": {
             "default_node": "Door to Totem Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3813660971,
                 "size_index": 0.6,
@@ -6640,6 +6725,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6763,6 +6849,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6798,6 +6885,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6828,8 +6916,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 15,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to North Atrium": {
                             "type": "and",
@@ -6849,8 +6938,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 16,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to North Atrium": {
                             "type": "and",
@@ -6865,7 +6955,6 @@
         },
         "Sun Tower": {
             "default_node": "Door to Sun Tower Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3725988722,
                 "size_index": 0.6,
@@ -6895,6 +6984,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -6940,6 +7030,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7088,6 +7179,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event5",
                     "connections": {
                         "Door to Transport to Magmoor Caverns North": {
@@ -7108,6 +7200,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event6",
                     "connections": {
                         "Door to Sun Tower Access": {
@@ -7214,6 +7307,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event6",
                     "connections": {
                         "Door to Sun Tower Access": {
@@ -7271,15 +7365,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 118,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport Access North": {
             "default_node": "Door to Hive Totem",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 986845711,
                 "size_index": 0.3,
@@ -7309,6 +7403,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7353,6 +7448,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7402,8 +7498,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 17,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Hive Totem": {
                             "type": "and",
@@ -7418,7 +7515,6 @@
         },
         "Sunchamber Access": {
             "default_node": "Door to Sunchamber Lobby",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1422133653,
                 "size_index": 0.1,
@@ -7448,6 +7544,7 @@
                         "dock_index": 0,
                         "nonstandard": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7483,6 +7580,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7549,15 +7647,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 119,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Gathering Hall": {
             "default_node": "Door to Save Station 2",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1206336453,
                 "size_index": 0.6,
@@ -7587,6 +7685,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7622,6 +7721,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7725,6 +7825,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7760,6 +7861,7 @@
                         "dock_index": 3,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -7945,8 +8047,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 18,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to East Atrium": {
                             "type": "and",
@@ -7961,7 +8064,6 @@
         },
         "Totem Access": {
             "default_node": "Door to Ruined Gallery",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3934929011,
                 "size_index": 0.3,
@@ -7991,6 +8093,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8026,6 +8129,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8056,15 +8160,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 120,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Map Station": {
             "default_node": "Door to Ruined Gallery",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 442183190,
                 "size_index": 0.1,
@@ -8094,6 +8198,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8122,6 +8227,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Ruined Gallery": {
                             "type": "and",
@@ -8143,15 +8249,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 121,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Sun Tower Access": {
             "default_node": "Door to Sun Tower",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1103925484,
                 "size_index": 0.1,
@@ -8181,6 +8287,7 @@
                         "dock_index": 0,
                         "nonstandard": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8216,6 +8323,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8246,15 +8354,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 122,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Hive Totem": {
             "default_node": "Door to Totem Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3358629366,
                 "size_index": 0.6,
@@ -8284,6 +8392,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8337,7 +8446,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/3li4ZI5Vjn8",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -8411,6 +8520,58 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "dock_rando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dash",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/jVDIATzTDHA",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8437,6 +8598,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8561,8 +8723,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 19,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Transport Access North": {
                             "type": "and",
@@ -8582,6 +8745,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event16",
                     "connections": {
                         "Door to Transport Access North": {
@@ -8602,6 +8766,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event54",
                     "connections": {
                         "Pickup (Missile Launcher)": {
@@ -8617,7 +8782,6 @@
         },
         "Sunchamber": {
             "default_node": "Before Fight (Front)",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2584347627,
                 "size_index": 0.8,
@@ -8647,6 +8811,7 @@
                         "dock_index": 0,
                         "nonstandard": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8689,6 +8854,7 @@
                         "dock_index": 1,
                         "nonstandard": true
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -8719,8 +8885,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 20,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Before Fight (Front)": {
                             "type": "and",
@@ -8740,8 +8907,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 21,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Before Fight (Front)": {
                             "type": "and",
@@ -8761,6 +8929,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event7",
                     "connections": {
                         "Pickup (Varia Suit)": {
@@ -8781,6 +8950,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event8",
                     "connections": {
                         "Pickup (Artifact of Wild)": {
@@ -8801,6 +8971,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Sun Tower Access": {
                             "type": "or",
@@ -9180,6 +9351,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Flaahgra": {
                             "type": "and",
@@ -9282,7 +9454,6 @@
         },
         "Watery Hall Access": {
             "default_node": "Door to Gathering Hall",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 4008477565,
                 "size_index": 0.1,
@@ -9312,6 +9483,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -9406,6 +9578,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -9436,8 +9609,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 22,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Gathering Hall": {
                             "type": "and",
@@ -9452,7 +9626,6 @@
         },
         "Save Station 2": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 4158166350,
                 "size_index": 0.1,
@@ -9482,6 +9655,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -9510,6 +9684,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Gathering Hall": {
                             "type": "and",
@@ -9531,15 +9706,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 123,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "East Atrium": {
             "default_node": "Door to Gathering Hall",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1899364579,
                 "size_index": 0.1,
@@ -9569,6 +9744,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -9604,6 +9780,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -9634,15 +9811,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 124,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Watery Hall": {
             "default_node": "Door to Watery Hall Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1227669322,
                 "size_index": 0.6,
@@ -9672,6 +9849,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -9760,6 +9938,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -9888,7 +10067,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/Jla-gYSErGc",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -10130,8 +10309,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 23,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Behind Gate": {
                             "type": "and",
@@ -10151,8 +10331,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 24,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Watery Hall Access": {
                             "type": "or",
@@ -10217,6 +10398,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event10",
                     "connections": {
                         "Door to Watery Hall Access": {
@@ -10237,6 +10419,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Dynamo Access": {
                             "type": "and",
@@ -10441,7 +10624,6 @@
         },
         "Energy Core Access": {
             "default_node": "Door to Energy Core",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1178406190,
                 "size_index": 0.1,
@@ -10471,6 +10653,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10506,6 +10689,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10536,15 +10720,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 125,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Dynamo Access": {
             "default_node": "Door to Dynamo",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 255867655,
                 "size_index": 0.1,
@@ -10574,6 +10758,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10609,6 +10794,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10639,15 +10825,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 126,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Energy Core": {
             "default_node": "Door to Energy Core Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3386190780,
                 "size_index": 0.6,
@@ -10677,6 +10863,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10714,6 +10901,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10749,6 +10937,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10814,6 +11003,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event3",
                     "connections": {
                         "Door to Energy Core Access": {
@@ -10836,15 +11026,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 127,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Dynamo": {
             "default_node": "Door to Dynamo Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 81183365,
                 "size_index": 0.3,
@@ -10874,6 +11064,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -10996,8 +11187,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 25,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Dynamo Access": {
                             "type": "and",
@@ -11017,8 +11209,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 26,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Dynamo Access": {
                             "type": "and",
@@ -11033,7 +11226,6 @@
         },
         "Burn Dome Access": {
             "default_node": "Spawn Point",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 4018058640,
                 "size_index": 0.1,
@@ -11063,6 +11255,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11151,6 +11344,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11181,6 +11375,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Burn Dome": {
                             "type": "resource",
@@ -11204,15 +11399,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 128,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "West Furnace Access": {
             "default_node": "Door to Furnace",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3262208600,
                 "size_index": 0.1,
@@ -11242,6 +11437,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11277,6 +11473,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11307,15 +11504,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 129,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Burn Dome": {
             "default_node": "Door to Burn Dome Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1095301040,
                 "size_index": 0.6,
@@ -11345,6 +11542,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11415,6 +11613,102 @@
                                 ]
                             }
                         },
+                        "Before Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Morph Ball Bombs)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "position_required": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 28,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Burn Dome Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 27,
+                    "location_category": "minor",
+                    "connections": {
+                        "Door to Burn Dome Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event39",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Before Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Incinerator Drone": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event39",
+                    "connections": {
+                        "Pickup (Morph Ball Bombs)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Fight": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Event - Incinerator Drone": {
                             "type": "or",
                             "data": {
@@ -11436,78 +11730,11 @@
                             }
                         }
                     }
-                },
-                "Pickup (Morph Ball Bombs)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "position_required": false
-                    },
-                    "pickup_index": 28,
-                    "major_location": true,
-                    "connections": {
-                        "Door to Burn Dome Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Missile Expansion)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "pickup_index": 27,
-                    "major_location": false,
-                    "connections": {
-                        "Door to Burn Dome Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event39",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Incinerator Drone": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "Event39",
-                    "connections": {
-                        "Pickup (Morph Ball Bombs)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
         "Furnace": {
             "default_node": "Under Spider Track",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 774997107,
                 "size_index": 0.6,
@@ -11537,6 +11764,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11572,6 +11800,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11746,6 +11975,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -11776,8 +12006,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 29,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Under Spider Track": {
                             "type": "and",
@@ -11797,8 +12028,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 30,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to West Furnace Access": {
                             "type": "and",
@@ -11837,6 +12069,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to East Furnace Access": {
                             "type": "or",
@@ -12093,7 +12326,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/PBLQI6B9CMo",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -12205,7 +12438,6 @@
         },
         "East Furnace Access": {
             "default_node": "Door to Hall of the Elders",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1155868918,
                 "size_index": 0.1,
@@ -12235,6 +12467,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12270,6 +12503,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12300,15 +12534,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 130,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Crossway Access West": {
             "default_node": "Door to Crossway",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3655831216,
                 "size_index": 0.1,
@@ -12338,6 +12572,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12349,7 +12584,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Morph Ball Door to Furnace": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -12360,6 +12595,32 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -12383,6 +12644,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12394,7 +12656,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Crossway": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -12405,6 +12667,32 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -12423,15 +12711,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 131,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Hall of the Elders": {
             "default_node": "Door to Elder Hall Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 4216627403,
                 "size_index": 0.8,
@@ -12461,6 +12749,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12496,6 +12785,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12531,6 +12821,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12566,6 +12857,7 @@
                         "dock_index": 3,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12609,6 +12901,7 @@
                             "Flamethrower Blast Shield"
                         ]
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -12684,8 +12977,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 31,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -12724,6 +13018,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event14",
                     "connections": {
                         "Room Center": {
@@ -12744,6 +13039,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event15",
                     "connections": {
                         "Behind Barrier": {
@@ -12764,6 +13060,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Elder Hall Access": {
                             "type": "and",
@@ -12889,6 +13186,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event44",
                     "connections": {
                         "Front of Beam Bomb Slots": {
@@ -12909,6 +13207,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event48",
                     "connections": {
                         "Room Center": {
@@ -12929,6 +13228,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Elder Hall Access": {
                             "type": "and",
@@ -13111,7 +13411,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/rbZwkpF8UIo",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -13484,6 +13784,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Reflecting Pool Access": {
                             "type": "and",
@@ -13697,7 +13998,6 @@
         },
         "Crossway": {
             "default_node": "Door to Crossway Access West",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 335540505,
                 "size_index": 0.6,
@@ -13727,6 +14027,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -13762,6 +14063,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -13815,7 +14117,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=ykuj3JfVb_4",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -13891,6 +14193,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -13991,7 +14294,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/_l8o8V3lkaY",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -14211,8 +14514,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 32,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Crossway Access West": {
                             "type": "and",
@@ -14232,6 +14536,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event13",
                     "connections": {
                         "Door to Elder Hall Access": {
@@ -14247,7 +14552,6 @@
         },
         "Reflecting Pool Access": {
             "default_node": "Door to Reflecting Pool",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2639359389,
                 "size_index": 0.1,
@@ -14277,6 +14581,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14312,6 +14617,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14342,15 +14648,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 132,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Elder Hall Access": {
             "default_node": "Door to Hall of the Elders",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3788397521,
                 "size_index": 0.1,
@@ -14380,6 +14686,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14415,6 +14722,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14445,15 +14753,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 133,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Crossway Access South": {
             "default_node": "Door to Crossway",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1733962111,
                 "size_index": 0.1,
@@ -14483,6 +14791,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14528,6 +14837,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14568,15 +14878,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 134,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Elder Chamber": {
             "default_node": "Door to Hall of the Elders",
-            "valid_starting_location": false,
             "extra": {
                 "asset_id": 3784843004,
                 "size_index": 0.1,
@@ -14606,6 +14916,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14636,8 +14947,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 33,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Hall of the Elders": {
                             "type": "and",
@@ -14652,7 +14964,6 @@
         },
         "Reflecting Pool": {
             "default_node": "Door to Reflecting Pool Access",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 907987628,
                 "size_index": 0.3,
@@ -14682,6 +14993,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14724,6 +15036,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14759,6 +15072,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -14810,7 +15124,7 @@
                                                                         {
                                                                             "type": "or",
                                                                             "data": {
-                                                                                "comment": "Movement method: https://discord.com/channels/458432177223368704/464585290585997343/943702226621321236",
+                                                                                "comment": "https://youtu.be/rPgTD35efHo",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -14897,7 +15211,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/NRtv6aOpssk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -15010,6 +15324,7 @@
                         "dock_index": 3,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15045,6 +15360,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event4",
                     "connections": {
                         "Door to Reflecting Pool Access": {
@@ -15067,15 +15383,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 135,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Save Station 3": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 411706287,
                 "size_index": 0.3,
@@ -15105,6 +15421,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15140,6 +15457,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15221,6 +15539,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Reflecting Pool": {
                             "type": "and",
@@ -15337,15 +15656,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 136,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport Access South": {
             "default_node": "Door to Reflecting Pool",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2734230611,
                 "size_index": 0.3,
@@ -15375,6 +15694,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15410,6 +15730,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15440,15 +15761,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 137,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Antechamber": {
             "default_node": "Door to Reflecting Pool",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2951734903,
                 "size_index": 0.1,
@@ -15478,6 +15799,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15508,8 +15830,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 34,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Reflecting Pool": {
                             "type": "and",
@@ -15524,7 +15847,6 @@
         },
         "Transport to Tallon Overworld East": {
             "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins East",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2784651681,
                 "size_index": 0.3,
@@ -15554,6 +15876,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15585,6 +15908,7 @@
                         "scan_asset_id": 4241923760,
                         "teleporter_instance_id": 4063276
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Tallon Overworld",
                         "area_name": "Transport to Chozo Ruins East"
@@ -15612,15 +15936,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 138,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport to Tallon Overworld South": {
             "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins South",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 594418447,
                 "size_index": 0.3,
@@ -15650,6 +15974,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
@@ -15681,6 +16006,7 @@
                         "scan_asset_id": 1092416126,
                         "teleporter_instance_id": 4128808
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Tallon Overworld",
                         "area_name": "Transport to Chozo Ruins South"
@@ -15708,8 +16034,9 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 139,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }

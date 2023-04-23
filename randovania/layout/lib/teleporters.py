@@ -6,6 +6,7 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
@@ -49,17 +50,17 @@ def _has_editable_teleporter(area: Area) -> bool:
 
 class TeleporterList(location_list.LocationList):
     @classmethod
-    def areas_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
+    def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         world_list = default_database.game_description_for(game).world_list
-        areas = [
+        nodes = [
             world_list.identifier_for_node(node)
             for world in world_list.worlds
             for area in world.areas
             for node in area.nodes
             if isinstance(node, TeleporterNode) and node.editable
         ]
-        areas.sort()
-        return areas
+        nodes.sort()
+        return nodes
 
     @classmethod
     def element_type(cls):
@@ -72,18 +73,23 @@ class TeleporterList(location_list.LocationList):
         return super().ensure_has_locations(area_locations, enabled)
 
 
-def _valid_teleporter_target(area: Area, game: RandovaniaGame):
-    if game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and area.name == "Credits":
+def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
+    if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and 
+            area.name == "Credits" and node.name == area.default_node):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return area.valid_starting_location and area.default_node is not None and not has_save_station
+    return (area.has_start_node() and area.default_node is not None and 
+        area.default_node == node.name and not has_save_station)
 
 
 class TeleporterTargetList(location_list.LocationList):
     @classmethod
-    def areas_list(cls, game: RandovaniaGame):
-        return location_list.area_locations_with_filter(game, lambda area: _valid_teleporter_target(area, game))
+    def nodes_list(cls, game: RandovaniaGame):
+        return location_list.node_and_area_with_filter(
+            game,
+            lambda area, node: _valid_teleporter_target(area, node, game)
+        )
 
 
 @dataclasses.dataclass(frozen=True)
@@ -112,7 +118,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
 
     @property
     def editable_teleporters(self) -> list[NodeIdentifier]:
-        return [teleporter for teleporter in self.excluded_teleporters.areas_list(self.game)
+        return [teleporter for teleporter in self.excluded_teleporters.nodes_list(self.game)
                 if teleporter not in self.excluded_teleporters.locations]
 
     @property
@@ -135,7 +141,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     @property
     def valid_targets(self) -> list[AreaIdentifier]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return [location for location in self.excluded_targets.areas_list(self.game)
+            return [location.area_identifier for location in self.excluded_targets.nodes_list(self.game)
                     if location not in self.excluded_targets.locations]
 
         elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
@@ -146,9 +152,10 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                 if isinstance(node, TeleporterNode) and node.editable:
                     # Valid destinations must be valid starting areas
                     area = world_list.nodes_to_area(node)
-                    if area.valid_starting_location:
+                    if area.has_start_node():
                         result.append(identifier.area_identifier)
-                    # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent on the previous room
+                    # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
+                    # on the previous room
                     elif area.name == "Metroid Prime Lair":
                         result.append(AreaIdentifier.from_string("Impact Crater/Subchamber Five"))
             return result

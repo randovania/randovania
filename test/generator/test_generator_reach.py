@@ -106,6 +106,7 @@ _ignore_pickups_for_game = {
 }
 
 
+@pytest.mark.skip_resolver_tests
 @pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups"), [
     pytest.param(
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
@@ -120,8 +121,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.iterate_nodes()))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 
-    initial_state.resources.add_resource_gain(pool_results.initial_resources.as_resource_gain())
-    for pickup in pool_results.pickups:
+    for pickup in pool_results.starting + pool_results.to_place:
         add_pickup_to_state(initial_state, pickup)
     for pickup in pool_results.assignment.values():
         add_pickup_to_state(initial_state, pickup)
@@ -165,15 +165,15 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     scan_visor = echoes_resource_database.get_item("DarkVisor")
     nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
 
-    node_a = GenericNode(nc("Node A"), 0, True, None, "", ("default",), {})
-    node_b = GenericNode(nc("Node B"), 1, True, None, "", ("default",), {})
-    node_c = GenericNode(nc("Node C"), 2, True, None, "", ("default",), {})
+    node_a = GenericNode(nc("Node A"), 0, True, None, "", ("default",), {}, False)
+    node_b = GenericNode(nc("Node B"), 1, True, None, "", ("default",), {}, False)
+    node_c = GenericNode(nc("Node C"), 2, True, None, "", ("default",), {}, False)
     translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
-                                       3, True, None, "", ("default",), {})
+                                       3, True, None, "", ("default",), {}, False)
 
     world_list = WorldList([
         World("Test World", [
-            Area("Test Area A", None, True, [node_a, node_b, node_c, translator_node],
+            Area("Test Area A", None, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: Requirement.trivial(),

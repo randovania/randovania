@@ -8,7 +8,8 @@ from qasync import asyncSlot
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.gui.lib import async_dialog, common_qt_lib, error_message_box
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
-from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
+from randovania.layout.exceptions import InvalidConfiguration
+from randovania.resolver.exceptions import GenerationFailure
 
 
 class GenerationFailureHandler(QtWidgets.QWidget):
@@ -28,6 +29,8 @@ class GenerationFailureHandler(QtWidgets.QWidget):
         if isinstance(exception, GenerationFailure):
             message = "Generation Failure"
             self.handle_failure(exception)
+        elif isinstance(exception, InvalidConfiguration):
+            await self.handle_invalid_configuration(exception)
         else:
             logging.exception("Unable to generate")
             box = error_message_box.create_box_for_exception(exception)
@@ -58,3 +61,11 @@ class GenerationFailureHandler(QtWidgets.QWidget):
                                      "so there's a timeout. Please try generating again.")
 
         await async_dialog.execute_dialog(box)
+
+    async def handle_invalid_configuration(self, exception: InvalidConfiguration):
+        logging.warning("Invalid Preset: %s", str(exception))
+        await async_dialog.warning(
+            self.parent,
+            "Invalid Preset",
+            f"{exception}.",
+        )

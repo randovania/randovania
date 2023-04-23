@@ -11,7 +11,6 @@
     "areas": {
         "Save Station": {
             "default_node": "Save Station",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 1400.0,
@@ -60,6 +59,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Itorash",
@@ -70,7 +70,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Elevator to Raven Beak": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -99,6 +99,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Itorash",
@@ -109,7 +110,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Hanubia": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -136,13 +137,28 @@
                         "start_point_actor_name": "savestation_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "connections": {}
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport to Hanubia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Elevator to Raven Beak": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Transport to Hanubia": {
             "default_node": "Elevator to Hanubia",
-            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -5900.0,
@@ -191,6 +207,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Itorash",
@@ -226,6 +243,7 @@
                         "start_point_actor_name": "StartPoint0",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Hanubia": {
                             "type": "and",
@@ -254,6 +272,7 @@
                         "start_point_actor_name": "weightactivatedplatform_total_000",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Save Station": {
                             "type": "and",
@@ -418,6 +437,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -444,6 +489,7 @@
                         "start_point_actor_name": "elevator_shipyard_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "Transport to Itorash"
@@ -505,6 +551,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -524,6 +596,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Total Recharge": {
                             "type": "and",
@@ -545,7 +618,6 @@
         },
         "Elevator to Raven Beak": {
             "default_node": "Start Point",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 3400.0,
@@ -594,6 +666,7 @@
                         "right_shield_entity": "{EMPTY}",
                         "right_shield_def": null
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Itorash",
@@ -694,7 +767,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Walljump",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -725,6 +798,7 @@
                         "actor_name": "block_pbcolumn_000",
                         "actor_def": "actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad"
                     },
+                    "valid_starting_location": false,
                     "event_name": "s090_skybase:default:block_pbcolumn_000",
                     "connections": {
                         "Door to Save Station": {
@@ -752,15 +826,9 @@
                         "start_point_actor_name": "SP_Checkpoint_Commander",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "valid_starting_location": false,
                     "connections": {
                         "Elevator to Raven Beak Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (WEIGHT)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -787,6 +855,7 @@
                         "start_point_actor_name": "weightactivatedplatform_commanderelevator_000",
                         "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad"
                     },
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Itorash",
                         "area_name": "Raven Beak Arena"
@@ -794,37 +863,14 @@
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
-                        "Start Point": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3700.0,
-                        "y": -3200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Save Station": {
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -837,7 +883,6 @@
         },
         "Elevator Cutscene": {
             "default_node": null,
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 3400.0,
@@ -875,13 +920,13 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {}
                 }
             }
         },
         "Raven Beak Arena": {
             "default_node": "Before Fight",
-            "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
                     "x1": 3000.0,
@@ -923,6 +968,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Boss - Raven Beak": {
                             "type": "and",
@@ -1262,6 +1308,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Escape Sequence": {
                             "type": "and",
@@ -1285,6 +1332,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "Raven Beak X Arena"

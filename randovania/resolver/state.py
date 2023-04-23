@@ -182,7 +182,7 @@ class State:
 
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(pickup_resources.as_resource_gain())
-        new_patches = self.patches.assign_extra_initial_items(pickup_resources.as_resource_gain())
+        new_patches = self.patches.assign_extra_starting_pickups([pickup])
 
         tank_delta = _energy_tank_difference(new_resources, self.resources, self.resource_database)
 

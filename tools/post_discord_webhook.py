@@ -1,15 +1,35 @@
+import argparse
 import asyncio
 import datetime
 import os
 import pprint
 import subprocess
+from pathlib import Path
 
 import aiohttp
 
-from randovania import VERSION
-
 
 async def post_to_discord():
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--artifact-dir", type=Path)
+    group.add_argument("--version")
+    args = parser.parse_args()
+
+    if args.version is None:
+        artifact_dir: Path = args.artifact_dir
+        versions = {
+            file.name.split("-")[1]
+            for file in artifact_dir.glob("randovania-*")
+        }
+        if len(versions) != 1:
+            raise ValueError(f"Found versions {sorted(versions)} in {artifact_dir}, expected just one")
+        version = list(versions)[0]
+    else:
+        version = args.version
+
+    print(version)
+
     try:
         current_branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
                                         check=True, stdout=subprocess.PIPE, text=True).stdout.strip()
@@ -31,23 +51,6 @@ async def post_to_discord():
     org_name = "randovania"
     repo_name = "randovania"
 
-    # # TODO: querying for artifacts during the same id gets nothing downloaded
-    # async with aiohttp.ClientSession() as session:
-    #     session.headers['Authorization'] = f"Bearer {os.environ['GITHUB_TOKEN']}"
-    #
-    #     run_details_url = f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}"
-    #     print(f"> Get run details: {run_details_url}")
-    #     async with session.get(run_details_url, raise_for_status=True) as response:
-    #         run_details = await response.json()
-    #         pprint.pprint(run_details)
-    #         check_suite_id = run_details["check_suite_id"]
-    #
-    #     artifacts_url = f"https://api.github.com/repos/{org_name}/{repo_name}/actions/runs/{run_id}/artifacts"
-    #     print(f"> Get artifact details: {artifacts_url}")
-    #     async with session.get(artifacts_url, raise_for_status=True) as response:
-    #         artifacts = await response.json()
-    #         pprint.pprint(artifacts)
-
     fields = [
         {
             "name": artifact.replace("Executable", "").replace("Randovania", "").strip(),
@@ -61,7 +64,7 @@ async def post_to_discord():
     webhook_data = {
         "embeds": [{
             "color": 0x2ecc71,
-            "title": f"{current_branch} - Randovania {VERSION}",
+            "title": f"{current_branch} - Randovania {version}",
             "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
             "description": message.strip(),
             "fields": fields,

@@ -6,7 +6,6 @@
     "areas": {
         "Transport to Chozo Ruins North": {
             "default_node": "Elevator to Chozo Ruins - Transport to Magmoor Caverns North",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1005235657,
                 "size_index": 0.3,
@@ -36,6 +35,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -67,6 +67,7 @@
                         "scan_asset_id": 222218204,
                         "teleporter_instance_id": 31
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Chozo Ruins",
                         "area_name": "Transport to Magmoor Caverns North"
@@ -94,15 +95,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 180,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Burning Trail": {
             "default_node": "Door to Transport to Chozo Ruins North",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1833127758,
                 "size_index": 0.3,
@@ -132,6 +133,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -167,6 +169,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -202,6 +205,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -239,15 +243,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 181,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Lake Tunnel": {
             "default_node": "Door to Burning Trail",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2037927229,
                 "size_index": 0.1,
@@ -277,6 +281,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -378,6 +383,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -474,15 +480,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 182,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Save Station Magmoor A": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 162783260,
                 "size_index": 0.1,
@@ -512,6 +518,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -540,6 +547,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Burning Trail": {
                             "type": "and",
@@ -561,15 +569,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 183,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Lava Lake": {
             "default_node": "Door to Lake Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2758909034,
                 "size_index": 0.6,
@@ -599,6 +607,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -962,6 +971,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -1279,8 +1289,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 90,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Lake Tunnel": {
                             "type": "or",
@@ -1497,6 +1508,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Lake Tunnel": {
                             "type": "or",
@@ -2271,7 +2283,6 @@
         },
         "Pit Tunnel": {
             "default_node": "Door to Lava Lake",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3660499860,
                 "size_index": 0.3,
@@ -2301,6 +2312,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -2447,6 +2459,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -2588,15 +2601,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 184,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Triclops Pit": {
             "default_node": "Door to Monitor Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3134844351,
                 "size_index": 0.6,
@@ -2626,6 +2639,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -3297,6 +3311,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -3414,6 +3429,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -4062,8 +4078,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 91,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Monitor Tunnel": {
                             "type": "or",
@@ -4343,6 +4360,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Monitor Tunnel": {
                             "type": "or",
@@ -4574,7 +4592,6 @@
         },
         "Monitor Tunnel": {
             "default_node": "Door to Monitor Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 231492556,
                 "size_index": 0.1,
@@ -4604,6 +4621,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -4696,6 +4714,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -4783,15 +4802,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 185,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Storage Cavern": {
             "default_node": "Door to Triclops Pit",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2918155326,
                 "size_index": 0.1,
@@ -4821,6 +4840,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -4851,8 +4871,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 92,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Triclops Pit": {
                             "type": "and",
@@ -4867,7 +4888,6 @@
         },
         "Monitor Station": {
             "default_node": "Door to Monitor Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 207070785,
                 "size_index": 0.8,
@@ -4897,6 +4917,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -4908,97 +4929,167 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport Tunnel A": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": "https://youtu.be/8Xzak1I7Fx8",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Standable",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SJump",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/8Xzak1I7Fx8",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "HeatRun",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "HeatRun",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "HeatDamage1",
+                                                                                "amount": 235,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "damage",
-                                                                    "name": "HeatDamage1",
-                                                                    "amount": 235,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "HeatRun",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "HeatDamage1",
+                                                                                "amount": 135,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Heat-Resisting Suit"
                                                             }
                                                         ]
                                                     }
-                                                },
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/KuvfXDG6Wt8",
+                                            "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "HeatRun",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "HeatDamage1",
-                                                                    "amount": 135,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Scan",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Heat-Resisting Suit"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "HeatDamage1",
+                                                        "amount": 135,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 15,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dash",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "HeatRun",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -5429,6 +5520,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -5856,6 +5948,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -6280,6 +6373,7 @@
                         "dock_index": 3,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -6686,6 +6780,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Monitor Tunnel": {
                             "type": "or",
@@ -7330,15 +7425,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 186,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport Tunnel A": {
             "default_node": "Door to Transport to Phendrana Drifts North",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1207091335,
                 "size_index": 0.1,
@@ -7368,6 +7463,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -7630,6 +7726,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -7887,8 +7984,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 93,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Transport to Phendrana Drifts North": {
                             "type": "and",
@@ -8024,7 +8122,6 @@
         },
         "Warrior Shrine": {
             "default_node": "Door to Monitor Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2309409677,
                 "size_index": 0.3,
@@ -8054,6 +8151,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -8120,6 +8218,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -8142,8 +8241,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 94,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Above Exit Tunnel": {
                             "type": "or",
@@ -8194,6 +8294,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Monitor Station": {
                             "type": "or",
@@ -8341,7 +8442,6 @@
         },
         "Shore Tunnel": {
             "default_node": "Door to Monitor Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2416984287,
                 "size_index": 0.3,
@@ -8371,6 +8471,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -8505,6 +8606,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -8634,8 +8736,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 95,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -8781,6 +8884,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Monitor Station": {
                             "type": "or",
@@ -8928,7 +9032,6 @@
         },
         "Transport to Phendrana Drifts North": {
             "default_node": "Elevator - Transport to Magmoor Caverns West",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3702104715,
                 "size_index": 0.3,
@@ -8958,6 +9061,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -8989,6 +9093,7 @@
                         "scan_asset_id": 3500678745,
                         "teleporter_instance_id": 852002
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Phendrana Drifts",
                         "area_name": "Transport to Magmoor Caverns West"
@@ -9016,15 +9121,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 187,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Fiery Shores": {
             "default_node": "Door to Shore Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 4126087266,
                 "size_index": 0.6,
@@ -9054,6 +9159,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -9120,6 +9226,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -9694,6 +9801,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -9755,8 +9863,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 97,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Below Upper Item Exit Tunnel": {
                             "type": "and",
@@ -9939,8 +10048,9 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "pickup_index": 96,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Shore Tunnel": {
                             "type": "and",
@@ -10242,6 +10352,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Shore Tunnel": {
                             "type": "or",
@@ -11272,7 +11383,6 @@
         },
         "Transport Tunnel B": {
             "default_node": "Door to Fiery Shores",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 860276342,
                 "size_index": 0.1,
@@ -11302,6 +11412,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -11607,6 +11718,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -11907,15 +12019,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 188,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport to Tallon Overworld West": {
             "default_node": "Elevator to Tallon Overworld - Transport to Magmoor Caverns East",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1279075404,
                 "size_index": 0.3,
@@ -11945,6 +12057,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -11980,6 +12093,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -12018,6 +12132,7 @@
                         "scan_asset_id": 1273603276,
                         "teleporter_instance_id": 1048608
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Tallon Overworld",
                         "area_name": "Transport to Magmoor Caverns East"
@@ -12045,15 +12160,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 189,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Twin Fires Tunnel": {
             "default_node": "Door to Twin Fires",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3835971118,
                 "size_index": 0.3,
@@ -12083,6 +12198,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -12438,6 +12554,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "dock_rando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -12531,6 +12656,79 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/9jk5s2W6yhY",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "HeatDamage2",
+                                                        "amount": 10,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Heat-Resisting Suit"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "HeatRun",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "HeatDamage1",
+                                                                                "amount": 110,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -12553,6 +12751,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -13191,15 +13390,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 190,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Twin Fires": {
             "default_node": "Door to Twin Fires Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1282952170,
                 "size_index": 0.3,
@@ -13229,6 +13428,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -13547,6 +13747,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -13790,15 +13991,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 191,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "North Core Tunnel": {
             "default_node": "Door to Twin Fires",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2805715168,
                 "size_index": 0.1,
@@ -13828,6 +14029,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -14000,6 +14202,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -14167,15 +14370,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 192,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Geothermal Core": {
             "default_node": "Door to South Core Tunnel",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3226044022,
                 "size_index": 0.8,
@@ -14205,6 +14408,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -14552,6 +14756,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -14606,6 +14811,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -14976,6 +15182,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event22",
                     "connections": {
                         "Door to Plasma Processing": {
@@ -15021,7 +15228,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/CJgHVJEOXJo",
+                                            "comment": "https://youtu.be/OwsVX5HEGVQ?t=7",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -15067,6 +15274,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Geothermal Core Opened": {
                             "type": "and",
@@ -15239,12 +15447,20 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "resource",
+                                                                                                    "type": "and",
                                                                                                     "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "SJump",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
+                                                                                                        "comment": "https://www.youtube.com/watch?v=OwsVX5HEGVQ",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "SJump",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -15331,15 +15547,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 193,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Plasma Processing": {
             "default_node": "Door to Geothermal Core",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1287753306,
                 "size_index": 0.3,
@@ -15369,6 +15585,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -15399,8 +15616,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 98,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Geothermal Core": {
                             "type": "and",
@@ -15420,6 +15638,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": false,
                     "event_name": "Event56",
                     "connections": {
                         "Pickup (Plasma Beam)": {
@@ -15435,7 +15654,6 @@
         },
         "South Core Tunnel": {
             "default_node": "Door to Geothermal Core",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1893290168,
                 "size_index": 0.1,
@@ -15465,6 +15683,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -15619,6 +15838,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -15768,15 +15988,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 194,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Magmoor Workstation": {
             "default_node": "Door to Transport Tunnel C",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2327753667,
                 "size_index": 0.8,
@@ -15806,6 +16026,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16239,6 +16460,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16326,6 +16548,7 @@
                         "dock_index": 2,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16408,8 +16631,9 @@
                     "extra": {
                         "position_required": false
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 99,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to South Core Tunnel": {
                             "type": "and",
@@ -16424,7 +16648,6 @@
         },
         "Workstation Tunnel": {
             "default_node": "Door to Magmoor Workstation",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 74274377,
                 "size_index": 0.1,
@@ -16454,6 +16677,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16508,6 +16732,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16557,15 +16782,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 195,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport Tunnel C": {
             "default_node": "Door to Magmoor Workstation",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3549419025,
                 "size_index": 0.1,
@@ -16595,6 +16820,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16630,6 +16856,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": true,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16660,15 +16887,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 196,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport to Phazon Mines West": {
             "default_node": "Elevator - Transport to Magmoor Caverns South",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 4012840000,
                 "size_index": 0.3,
@@ -16698,6 +16925,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16729,6 +16957,7 @@
                         "scan_asset_id": 800030426,
                         "teleporter_instance_id": 1703972
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Phazon Mines",
                         "area_name": "Transport to Magmoor Caverns South"
@@ -16756,15 +16985,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 197,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Transport to Phendrana Drifts South": {
             "default_node": "Elevator - Transport to Magmoor Caverns South",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3249312307,
                 "size_index": 0.6,
@@ -16794,6 +17023,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16836,6 +17066,7 @@
                         "dock_index": 1,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16867,6 +17098,7 @@
                         "scan_asset_id": 1865475028,
                         "teleporter_instance_id": 1769512
                     },
+                    "valid_starting_location": true,
                     "destination": {
                         "world_name": "Phendrana Drifts",
                         "area_name": "Transport to Magmoor Caverns South"
@@ -16894,15 +17126,15 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 198,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }
         },
         "Save Station Magmoor B": {
             "default_node": "Save Station",
-            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2136398113,
                 "size_index": 0.1,
@@ -16932,6 +17164,7 @@
                         "dock_index": 0,
                         "nonstandard": false
                     },
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Magmoor Caverns",
@@ -16960,6 +17193,7 @@
                         "default"
                     ],
                     "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Transport to Phendrana Drifts South": {
                             "type": "and",
@@ -16981,8 +17215,9 @@
                     "extra": {
                         "position_required": true
                     },
+                    "valid_starting_location": false,
                     "pickup_index": 199,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {}
                 }
             }

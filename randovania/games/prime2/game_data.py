@@ -12,7 +12,7 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.common.prime_family.gui.teleporter_details_tab import TeleporterDetailsTab
     from randovania.games.prime2 import gui
     from randovania.games.prime2.item_database import progressive_items
 
@@ -21,7 +21,12 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.EchoesCosmeticPatchesDialog,
         export_dialog=gui.EchoesGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(TeleporterDetailsTab, gui.TranslatorGateDetailsTab, gui.EchoesHintDetailsTab),
+        spoiler_visualizer=(
+            TeleporterDetailsTab,
+            gui.TranslatorGateDetailsTab,
+            gui.PortalDetailsTab,
+            gui.EchoesHintDetailsTab,
+        ),
         game_tab=gui.EchoesGameTabWidget,
     )
 
@@ -49,6 +54,8 @@ def _exporter():
     from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter
     return EchoesGameExporter()
 
+
+# ruff: noqa: E501
 
 game_data: game.GameData = game.GameData(
     short_name="Echoes",

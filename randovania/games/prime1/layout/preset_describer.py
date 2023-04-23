@@ -59,11 +59,31 @@ class PrimePresetDescriber(GamePresetDescriber):
                 return "Enemies will be stretched randomly"
 
         if configuration.enemy_attributes is not None:
-            enemy_rando_range_scale = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_scale_low, configuration.enemy_attributes.enemy_rando_range_scale_high], "Size")
-            enemy_rando_range_health = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_health_low, configuration.enemy_attributes.enemy_rando_range_health_high], "Health")
-            enemy_rando_range_speed = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_speed_low, configuration.enemy_attributes.enemy_rando_range_speed_high], "Speed")
-            enemy_rando_range_damage = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_damage_low, configuration.enemy_attributes.enemy_rando_range_damage_high], "Damage")
-            enemy_rando_range_knockback = attribute_in_range([configuration.enemy_attributes.enemy_rando_range_knockback_low, configuration.enemy_attributes.enemy_rando_range_knockback_high], "Knockback")
+            enemy_rando_range_scale = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_scale_low,
+                 configuration.enemy_attributes.enemy_rando_range_scale_high],
+                "Size",
+            )
+            enemy_rando_range_health = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_health_low,
+                 configuration.enemy_attributes.enemy_rando_range_health_high],
+                "Health",
+            )
+            enemy_rando_range_speed = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_speed_low,
+                 configuration.enemy_attributes.enemy_rando_range_speed_high],
+                "Speed",
+            )
+            enemy_rando_range_damage = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_damage_low,
+                 configuration.enemy_attributes.enemy_rando_range_damage_high],
+                "Damage",
+            )
+            enemy_rando_range_knockback = attribute_in_range(
+                [configuration.enemy_attributes.enemy_rando_range_knockback_low,
+                 configuration.enemy_attributes.enemy_rando_range_knockback_high],
+                "Knockback",
+            )
             enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_attributes.enemy_rando_diff_xyz)
         else:
             enemy_rando_range_scale = None
@@ -87,10 +107,6 @@ class PrimePresetDescriber(GamePresetDescriber):
             ],
             "Quality of Life": [
                 {
-                    "Fixes to game breaking bugs": configuration.qol_game_breaking,
-                    "Pickup scans": configuration.qol_pickup_scans,
-                },
-                {
                     f"Phazon suit hint: {phazon_hint}": phazon_hint is not None
                 }
             ],
@@ -103,7 +119,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                     }
                 ),
                 {
-                    "Varia-only heat protection": configuration.heat_protection_only_varia,
                     "Progressive suit damage reduction": configuration.progressive_damage_reduction,
                 },
                 {
@@ -134,10 +149,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     "Spring Ball": configuration.spring_ball,
-                },
-                {
-                    "Deterministic I. Drone RNG": configuration.deterministic_idrone,
-                    "Deterministic Maze RNG": configuration.deterministic_maze,
                 },
                 {
                     cutscene_removal: cutscene_removal is not None,
@@ -171,6 +182,9 @@ class PrimePresetDescriber(GamePresetDescriber):
         ]
         if backwards:
             template_strings["Game Changes"].append("Allowed backwards: {}".format(", ".join(backwards)))
+
+        if configuration.legacy_mode:
+            template_strings["Game Changes"].append("Legacy Mode")
 
         # Artifacts
         template_strings["Item Pool"].append(f"{configuration.artifact_target.num_artifacts} Artifacts, "

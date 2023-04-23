@@ -111,10 +111,23 @@ class RequirementList:
     def union(self, other: RequirementList) -> RequirementList:
         return RequirementList(itertools.chain(self.values(), other.values()))
 
-    def is_subset_of(self, requirement: RequirementList) -> bool:
-        if len(self._items) >= len(requirement._items):
+    def is_proper_subset_of(self, other: RequirementList) -> bool:
+        """
+        Returns True when every requirement in self is also present in other, either directly or with a bigger amount.
+        However, returns False if equal.
+
+        """
+        if len(self._items) > len(other._items):
             return False
-        return all(key in requirement._items for key in self._items.keys())
+
+        if self._items == other._items:
+            return False
+
+        return all(
+            key in other._items
+            or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())
+            for key, req in self._items.items()
+        )
 
 
 SatisfiableRequirements = frozenset[RequirementList]

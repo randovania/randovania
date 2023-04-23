@@ -3,6 +3,7 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_item_state import MajorItemState
 
@@ -48,6 +49,7 @@ def _major_item_state(request, echoes_item_database, generic_item_category):
         must_be_starting=True,
         original_index=None,
         probability_offset=0,
+        preferred_location_category=LocationCategory.MAJOR,
     )
     included_ammo = tuple(0 for _ in request.param["json"].get("included_ammo", []))
     reference = MajorItemState(included_ammo=included_ammo)

@@ -1,12 +1,20 @@
+import dataclasses
+from random import Random
 from unittest.mock import MagicMock
+
+import pytest
 
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.item_pool import pickup_creator
+from randovania.layout.base.base_configuration import StartingLocationList
+from randovania.layout.base.major_item_state import MajorItemState
 from randovania.resolver.state import State, StateGameData
 
 
@@ -115,7 +123,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     }
 
     # Run
-    result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes)
+    result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes, False)
 
     # Assert
     mock_req_lists.assert_called_once_with(
@@ -152,3 +160,62 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_dat
 
     # Assert
     assert result == [missile_expansion]
+
+
+@pytest.mark.parametrize("has_light_beam", [False, True])
+async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_description, echoes_item_database,
+                                                        default_echoes_preset, mocker, has_light_beam):
+    # Setup
+    mocker.patch("randovania.game_description.default_database.game_description_for",
+                 return_value=small_echoes_game_description)
+
+    config = default_echoes_preset.configuration
+    config = dataclasses.replace(
+        config,
+        starting_location=StartingLocationList.with_elements([
+            NodeIdentifier.create("Temple Grounds", "Fake Quad Arena", "Before Quadraxis")
+        ], small_echoes_game_description.game),
+        major_items_configuration=config.major_items_configuration.replace_state_for_item(
+            config.major_items_configuration.get_item_with_name("Missile Launcher"),
+            MajorItemState(
+                num_included_in_starting_items=1,
+                included_ammo=(5,),
+            ),
+        ),
+    )
+    pool = await generator.create_player_pool(Random(0), config, 0, 1)
+    new_game, state = pool.game_generator.bootstrap.logic_bootstrap(
+        config, pool.game,
+        pool.patches,
+    )
+    pickups_to_add = []
+    if has_light_beam:
+        pickups_to_add.append(next(p for p in pool.pickups if p.name == "Light Beam"))
+    state = state.assign_pickups_resources(pickups_to_add)
+
+    reach = reach_lib.advance_reach_with_possible_unsafe_resources(
+        reach_lib.reach_with_all_safe_resources(new_game, state))
+
+    # Run
+    result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [], False)
+    r2 = sorted(
+        sorted(a.name for a in it)
+        for it in result
+    )
+    base = ['Boost Ball', 'Echo Visor']
+    bomb = 'Morph Ball Bomb'
+    tanks = ['Energy Tank'] * 8
+    missiles = ['Missile Expansion'] * 12
+
+    if has_light_beam:
+        assert r2 == [
+            [*base, *tanks, bomb, 'Progressive Suit', 'Progressive Suit', 'Spider Ball'],
+            [*base, *tanks, bomb, 'Progressive Suit', 'Spider Ball'],
+        ]
+    else:
+        assert r2 == [
+            [*base, *tanks, 'Light Beam', bomb, 'Progressive Suit', 'Progressive Suit', 'Spider Ball'],
+            [*base, *tanks, 'Light Beam', bomb, 'Progressive Suit', 'Spider Ball'],
+            [*base, *tanks, *missiles, bomb, 'Progressive Suit', 'Progressive Suit', 'Spider Ball', 'Super Missile'],
+            [*base, *tanks, *missiles, bomb, 'Progressive Suit', 'Spider Ball', 'Super Missile'],
+        ]

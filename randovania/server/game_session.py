@@ -10,6 +10,7 @@ import flask_socketio
 import peewee
 from playhouse import flask_utils
 
+import randovania
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
@@ -29,7 +30,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
 from randovania.server.database import (GameSession, GameSessionMembership, GameSessionTeamAction, GameSessionPreset,
-                                        GameSessionAudit)
+                                        GameSessionAudit, is_boolean)
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
@@ -115,7 +116,9 @@ def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None
 
     if not (current_membership.admin or (admin_user_id is not None and current_user.id == admin_user_id)):
         if allow_when_no_admins and GameSessionMembership.select().where(
-                GameSessionMembership.session == session_id, GameSessionMembership.admin == True).count() == 0:
+                GameSessionMembership.session == session_id,
+                is_boolean(GameSessionMembership.admin, True)
+        ).count() == 0:
             return
         raise NotAuthorizedForAction()
 
@@ -144,12 +147,14 @@ def _emit_inventory_update(membership: GameSessionMembership):
         return
 
     session_id = membership.session.id
-    flask_socketio.emit("game_session_binary_inventory", (session_id, membership.row, membership.inventory),
+    flask_socketio.emit("game_session_binary_inventory",
+                        (session_id, membership.row, membership.inventory),
                         room=f"game-session-{session_id}-binary-inventory",
                         namespace="/")
     try:
-        flask_socketio.emit("game_session_json_inventory", (session_id, membership.row,
-                                                            convert_to_raw_python(BinaryInventory.parse(membership.inventory))),
+        flask_socketio.emit("game_session_json_inventory",
+                            (session_id, membership.row,
+                             convert_to_raw_python(BinaryInventory.parse(membership.inventory))),
                             room=f"game-session-{session_id}-json-inventory",
                             namespace="/")
     except construct.ConstructError as e:
@@ -189,7 +194,7 @@ def game_session_request_update(sio: ServerApp, session_id: int):
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
     _emit_session_meta_update(session)
-    if session.layout_description is not None:
+    if session.layout_description_json is not None:
         _emit_session_actions_update(session)
 
     if not membership.is_observer and session.state != GameSessionState.SETUP:
@@ -223,6 +228,9 @@ def _change_row(sio: ServerApp, session: GameSession, arg: tuple[int, dict]):
     if preset.game not in session.allowed_games:
         raise InvalidAction(f"Only {preset.game} preset not allowed.")
 
+    if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
+        raise InvalidAction("Preset uses unsupported features.")
+
     try:
         with database.db.atomic():
             preset_row = GameSessionPreset.get(GameSessionPreset.session == session,
@@ -244,7 +252,7 @@ def _delete_row(sio: ServerApp, session: GameSession, row_id: int):
         raise InvalidAction("Can't delete row when there's only one")
 
     if row_id != session.num_rows - 1:
-        raise InvalidAction(f"Can only delete the last row")
+        raise InvalidAction("Can only delete the last row")
 
     with database.db.atomic():
         logger().info(f"{_describe_session(session)}: Deleting {row_id}.")
@@ -282,7 +290,7 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
     else:
         if session.generation_in_progress != sio.get_current_user():
             if session.generation_in_progress is None:
-                raise InvalidAction(f"Not waiting for a layout.")
+                raise InvalidAction("Not waiting for a layout.")
             else:
                 raise InvalidAction(f"Waiting for a layout from {session.generation_in_progress.name}.")
 
@@ -298,6 +306,8 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
                 preset = VersionedPreset.with_preset(permalink_preset)
                 if preset.game not in session.allowed_games:
                     raise InvalidAction(f"{preset.game} preset not allowed.")
+                if not randovania.is_dev_version() and permalink_preset.configuration.unsupported_features():
+                    raise InvalidAction(f"Preset {permalink_preset.name} uses unsupported features.")
                 preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 
@@ -326,7 +336,7 @@ def _download_layout_description(sio: ServerApp, session: GameSession):
     if not session.layout_description.has_spoiler:
         raise InvalidAction("Session does not contain a spoiler")
 
-    _add_audit_entry(sio, session, f"Requested the spoiler log")
+    _add_audit_entry(sio, session, "Requested the spoiler log")
     return session.layout_description_json
 
 
@@ -337,7 +347,7 @@ def _start_session(sio: ServerApp, session: GameSession):
         raise InvalidAction("Unable to start session, no game is available.")
 
     num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                       GameSessionMembership.row != None).count()
+                                                       GameSessionMembership.row.is_null(False)).count()
     expected_players = session.num_rows
     if num_players != expected_players:
         raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
@@ -346,7 +356,7 @@ def _start_session(sio: ServerApp, session: GameSession):
     session.state = GameSessionState.IN_PROGRESS
     logger().info(f"{_describe_session(session)}: Starting session.")
     session.save()
-    _add_audit_entry(sio, session, f"Started session")
+    _add_audit_entry(sio, session, "Started session")
 
 
 def _finish_session(sio: ServerApp, session: GameSession):
@@ -357,7 +367,7 @@ def _finish_session(sio: ServerApp, session: GameSession):
     session.state = GameSessionState.FINISHED
     logger().info(f"{_describe_session(session)}: Finishing session.")
     session.save()
-    _add_audit_entry(sio, session, f"Finished session")
+    _add_audit_entry(sio, session, "Finished session")
 
 
 def _reset_session(sio: ServerApp, session: GameSession):
@@ -374,7 +384,7 @@ def _change_password(sio: ServerApp, session: GameSession, password: str):
     session.password = _hash_password(password)
     logger().info(f"{_describe_session(session)}: Changing password.")
     session.save()
-    _add_audit_entry(sio, session, f"Changed password")
+    _add_audit_entry(sio, session, "Changed password")
 
 
 def _change_title(sio: ServerApp, session: GameSession, title: str):
@@ -549,7 +559,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         # Must be admin for this
         _verify_has_admin(sio, session_id, None, allow_when_no_admins=True)
         num_admins = GameSessionMembership.select().where(GameSessionMembership.session == session_id,
-                                                          GameSessionMembership.admin == True).count()
+                                                          is_boolean(GameSessionMembership.admin, True)).count()
 
         if membership.admin and num_admins <= 1:
             raise InvalidAction("can't demote the only admin")
@@ -621,7 +631,7 @@ def _collect_location(session: GameSession, membership: GameSessionMembership,
         logger().info(f"{_describe_session(session, membership)} found item at {pickup_location}. {msg}")
 
     if pickup_target is None:
-        log(f"It's an ETM.")
+        log("It's an ETM.")
         return None
 
     if pickup_target.player == membership.row:
@@ -733,7 +743,7 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes |
     session = membership.session
 
     old_state = membership.connection_state
-    # old_inventory = membership.inventory
+    old_inventory = membership.inventory
 
     membership.connection_state = f"Online, {game_connection_state}"
     if session.state == GameSessionState.IN_PROGRESS and not membership.is_observer and inventory is not None:
@@ -741,10 +751,14 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes |
 
     membership.save()
 
-    if session.state == GameSessionState.IN_PROGRESS:
+    if old_inventory != membership.inventory and session.state == GameSessionState.IN_PROGRESS:
         _emit_inventory_update(membership)
 
     if old_state != membership.connection_state:
+        logger().info(
+            "%s has new connection state: %s",
+            _describe_session(session, membership), membership.connection_state,
+        )
         _emit_session_meta_update(session)
 
 
@@ -767,16 +781,17 @@ def game_session_watch_row_inventory(sio: ServerApp, session_id: int, row: int, 
 
 def report_user_disconnected(sio: ServerApp, user_id: int, log):
     memberships: list[GameSessionMembership] = list(GameSessionMembership.select().where(
-        GameSessionMembership.user == user_id))
+        GameSessionMembership.user == user_id,
+        GameSessionMembership.connection_state != "Offline",
+    ))
 
     log.info(f"User {user_id} is disconnected, disconnecting from sessions: {memberships}")
     sessions_to_update = []
 
     for membership in memberships:
-        if membership.connection_state != "Offline":
-            membership.connection_state = "Offline"
-            sessions_to_update.append(membership.session)
-            membership.save()
+        membership.connection_state = "Offline"
+        sessions_to_update.append(membership.session)
+        membership.save()
 
     for session in sessions_to_update:
         _emit_session_meta_update(session)
@@ -850,6 +865,7 @@ def setup_app(sio: ServerApp):
             if player.is_observer:
                 rows.append([
                     player.effective_name,
+                    player.connection_state,
                     "Observer",
                     "",
                 ])
@@ -878,11 +894,12 @@ def setup_app(sio: ServerApp):
 
                 rows.append([
                     player.effective_name,
+                    player.connection_state,
                     preset.name,
                     ", ".join(inventory),
                 ])
 
-        header = ["Name", "Preset", "Inventory"]
+        header = ["Name", "Connection State", "Preset", "Inventory"]
 
         return "<table border='1'><tr>{}</tr>{}</table>".format(
             "".join(f"<th>{h}</th>" for h in header),

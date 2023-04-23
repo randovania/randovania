@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import collections
 import re
-from typing import DefaultDict, Iterator
+from typing import DefaultDict
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
@@ -12,7 +12,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -102,8 +101,9 @@ class PlayerState:
         uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
 
         usable_pickups = [pickup for pickup in self.pickups_left
-                          if self.num_actions >= pickup.required_progression]
-        pickups = get_pickups_that_solves_unreachable(usable_pickups, self.reach, uncollected_resource_nodes)
+                          if self.num_actions >= pickup.generator_params.required_progression]
+        pickups = get_pickups_that_solves_unreachable(usable_pickups, self.reach, uncollected_resource_nodes,
+                                                      self.configuration.single_set_for_pickups_that_solve)
         filler_logging.print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
@@ -207,20 +207,31 @@ class PlayerState:
             "\n".join(teleporters) or "None",
         )
 
-    def filter_usable_locations(self, locations_weighted: WeightedLocations) -> WeightedLocations:
+    def filter_usable_locations(self, locations_weighted: WeightedLocations,
+                                action: PickupEntry | None = None) -> WeightedLocations:
+        weighted = locations_weighted
+
         if self.configuration.first_progression_must_be_local and self.num_assigned_pickups == 0:
-            return {
+            weighted = {
                 loc: weight
-                for loc, weight in locations_weighted.items()
+                for loc, weight in weighted.items()
                 if loc[0] is self
             }
 
-        return locations_weighted
+        if action is not None and self.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+            weighted = {
+                loc: weight
+                for loc, weight in weighted.items()
+                if (loc[0].game.world_list.node_from_pickup_index(loc[1]).location_category !=
+                    action.generator_params.prefered_location_category)
+            }
+
+        return weighted
 
     def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
                          all_locations_weighted: WeightedLocations) -> bool:
 
-        if not pickup.item_category.is_major:
+        if not pickup.item_category.hinted_as_major:
             return False
 
         config = self.configuration
@@ -238,22 +249,13 @@ class PlayerState:
         return can_hint
 
 
-def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) -> Iterator[PickupIndex]:
-    if randomization_mode is RandomizationMode.FULL:
-        yield from world.pickup_indices
-    elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-        yield from world.major_pickup_indices
-    else:
-        raise RuntimeError(f"Unknown randomization_mode: {randomization_mode}")
-
-
 def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,
                             ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
     indices_groups = [
-        set(world_indices_for_mode(world, configuration.randomization_mode)) - configuration.indices_to_exclude
+        set(world.pickup_indices) - configuration.indices_to_exclude
         for world in world_list.worlds
     ]
     all_indices = set().union(*indices_groups)

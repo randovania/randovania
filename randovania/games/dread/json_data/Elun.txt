@@ -17,7 +17,6 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Transport to Ghavoran
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -17300.0, 'x2': -11600.0, 'y1': 500.0, 'y2': 1642.0}
 Extra - polygon: [[-11600.0, 1642.0], [-17300.0, 1642.0], [-17300.0, 500.0], [-11600.0, 500.0]]
 Extra - asset_id: collision_camera_001
@@ -44,7 +43,7 @@ Extra - asset_id: collision_camera_001
   > Door to Save Station
       Trivial
 
-> Tram to Ghavoran - Transport to Elun; Heals? False; Spawn Point
+> Tram to Ghavoran - Transport to Elun; Heals? False; Default Node
   * Layers: default
   * Teleporter to Ghavoran - Transport to Elun
   * Extra - actor_name: wagontrain_forest_000
@@ -77,34 +76,10 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Tile Group (BOMB) 2
-      Trivial
   > Dock to Bridge Gate
-      Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 2
-      Trivial
+      After Elun - Release X Parasites
   > Tunnel to Ammo Recharge Station
-      Trivial
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Ammo Recharge Station
-      Trivial
-  > Tile Group (BOMB) 1
-      Trivial
+      Lay Bomb
 
 > Dock to Bridge Gate; Heals? False
   * Layers: default
@@ -115,17 +90,14 @@ Extra - asset_id: collision_camera_002
 > Tunnel to Ammo Recharge Station; Heals? False
   * Layers: default
   * Morph Ball Launcher to Ammo Recharge Station/Dock from Purple Drapes
-  > Tile Group (BOMB) 1
-      Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
-  > Dock to Bridge Gate
+  > Door to Ammo Recharge Station
       Trivial
 
 ----------------
 Ammo Recharge Station
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 1300.0, 'x2': 3400.0, 'y1': -2700.0, 'y2': 4000.0}
 Extra - polygon: [[3400.0, 4000.0], [1300.0, 4000.0], [1300.0, -2700.0], [3400.0, -2700.0]]
 Extra - asset_id: collision_camera_003
@@ -152,12 +124,10 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_def: None
   > Door to Purple Drapes
       Trivial
-  > Tile Group (POWERBEAM)
-      Trivial
-  > Tile Group (BOMB) 1
-      All of the following:
-          Morph Ball
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
+  > Pickup (Energy Tank)
+      Lay Bomb or Lay Power Bomb
+  > Tunnel to Horizontal Bomb Maze
+      Lay Bomb or Lay Power Bomb
 
 > Door to Gyroscope Room; Heals? False
   * Layers: default
@@ -173,11 +143,11 @@ Extra - asset_id: collision_camera_003
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 114; Major Location? False
+  * Pickup 114; Category? Major
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
-  > Tile Group (BOMB) 3
-      Morph Ball
+  > Door to Chozo Soldier Arena
+      Trivial
 
 > Door to Plasma Beam Room (Upper); Heals? False
   * Layers: default
@@ -226,60 +196,12 @@ Extra - asset_id: collision_camera_003
   > Door to Plasma Beam Room (Upper)
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_PlasmaBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Plasma Beam Room (Lower)
       Trivial
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_006
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Chozo Soldier Arena
-      Trivial
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_008
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Door to Chozo Soldier Arena
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_009
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tunnel to Horizontal Bomb Maze
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Energy Tank)
-      Morph Ball
-  > Tile Group (POWERBEAM)
-      Morph Ball
 
 > Dock from Purple Drapes; Heals? False
   * Layers: default
@@ -296,8 +218,8 @@ Extra - asset_id: collision_camera_003
 > Tunnel to Horizontal Bomb Maze; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Horizontal Bomb Maze/Tunnel to Ammo Recharge Station
-  > Tile Group (BOMB) 2
-      Morph Ball
+  > Door to Chozo Soldier Arena
+      Lay Bomb or Lay Power Bomb
 
 > Alcove; Heals? False
   * Layers: default
@@ -319,7 +241,6 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Chozo Soldier Arena
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 3300.0, 'x2': 5700.0, 'y1': 1569.0, 'y2': 2711.0}
 Extra - polygon: [[5700.0, 2711.0], [3300.0, 2711.0], [3300.0, 1569.0], [5700.0, 1569.0]]
 Extra - asset_id: collision_camera_004
@@ -335,7 +256,7 @@ Extra - asset_id: collision_camera_004
   > Door to Spider Magnet Room
       After Elun - Chozo Soldier Fight
   > Event - Chozo Soldier Fight
-      Trivial
+      Fight Chozo-X
 
 > Door to Spider Magnet Room; Heals? False
   * Layers: default
@@ -346,12 +267,13 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Door to Ammo Recharge Station
       After Elun - Chozo Soldier Fight
   > Event - Chozo Soldier Fight
       Fight Chozo-X
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -383,7 +305,7 @@ Extra - asset_id: collision_camera_005
 
 > Door to Spider Magnet Room; Heals? False
   * Layers: default
-  * Plasma Beam Door to Spider Magnet Room/Dock to Gyroscope Room
+  * Plasma Beam Door to Spider Magnet Room/Door to Gyroscope Room
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
@@ -392,8 +314,8 @@ Extra - asset_id: collision_camera_005
   * Extra - right_shield_def: None
   > Door to Ammo Recharge Station
       Trivial
-  > Tile Group (BOMB)
-      Trivial
+  > Door to Fan Room
+      Lay Bomb or Lay Power Bomb
 
 > Door to Fan Room; Heals? False
   * Layers: default
@@ -404,35 +326,22 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (BOMB)
-      Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_005
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
   > Door to Spider Magnet Room
-      Trivial
-  > Door to Fan Room
-      Trivial
+      Lay Bomb or Lay Power Bomb
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Ammo Recharge Station
       Trivial
 
 ----------------
 Plasma Beam Room
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 3400.0, 'x2': 5500.0, 'y1': -2700.0, 'y2': -500.0}
 Extra - polygon: [[5500.0, -500.0], [3400.0, -500.0], [3400.0, -2700.0], [5500.0, -2700.0]]
 Extra - asset_id: collision_camera_006
 > Pickup (Plasma Beam); Heals? False
   * Layers: default
-  * Pickup 115; Major Location? True
+  * Pickup 115; Category? Major
   * Extra - actor_name: itemsphere_plasmabeam_000
   * Extra - actor_def: actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad
   * Extra - map_icon_actor: powerup_plasmabeam
@@ -450,9 +359,9 @@ Extra - asset_id: collision_camera_006
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Pickup (Plasma Beam)
       Trivial
-  > Start Point
+  > Door from Ammo Recharge Station
       Trivial
-  > Tile Group (POWERBEAM)
+  > Start Point
       Trivial
 
 > Door from Ammo Recharge Station; Heals? False
@@ -464,31 +373,18 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (POWERBEAM)
+  > Door to Ammo Recharge Station
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_PlasmaBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Ammo Recharge Station
       Trivial
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Door to Ammo Recharge Station
-      Trivial
-  > Door from Ammo Recharge Station
-      Trivial
-
 ----------------
 Spider Magnet Room
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 5600.0, 'x2': 7700.0, 'y1': 400.0, 'y2': 2900.0}
 Extra - polygon: [[7700.0, 2900.0], [5600.0, 2900.0], [5600.0, 400.0], [7700.0, 400.0]]
 Extra - asset_id: collision_camera_007
@@ -501,13 +397,13 @@ Extra - asset_id: collision_camera_007
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - excluded_dock_weaknesses: ('Wide Beam Door',)
-  > Dock to Gyroscope Room
+  * Extra - exclude_from_dock_rando: True
+  > Door to Gyroscope Room
       Morph Ball
 
-> Dock to Gyroscope Room; Heals? False
+> Door to Gyroscope Room; Heals? False
   * Layers: default
-  * Not Determined to Gyroscope Room/Door to Spider Magnet Room
+  * Plasma Beam Door to Gyroscope Room/Door to Spider Magnet Room
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
@@ -516,33 +412,25 @@ Extra - asset_id: collision_camera_007
   * Extra - right_shield_def: None
   > Door to Chozo Soldier Arena
       Can Slide
-  > Tile Group (BOMB)
-      Morph Ball
+  > Tunnel to Vertical Bomb Maze
+      All of the following:
+          After Elun - Vertical Bomb Maze Grapple Block
+          Lay Bomb or Lay Power Bomb
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Chozo Soldier Arena
       Trivial
 
-> Tile Group (BOMB); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_003
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Dock to Gyroscope Room
-      Morph Ball
-  > Tunnel to Vertical Bomb Maze
-      Morph Ball and After Elun - Vertical Bomb Maze Grapple Block
-
 > Tunnel to Vertical Bomb Maze; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Vertical Bomb Maze/Tunnel to Spider Magnet Room
-  > Tile Group (BOMB)
-      Morph Ball and After Elun - Vertical Bomb Maze Grapple Block
+  > Door to Gyroscope Room
+      All of the following:
+          After Elun - Vertical Bomb Maze Grapple Block
+          Lay Bomb or Lay Power Bomb
 
 ----------------
 Fan Room
@@ -560,26 +448,21 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
       Speed Booster and Can Slide
-  > Tile Group (POWERBEAM)
+  > Room Bottom
       Can Slide
   > Tunnel to Vertical Bomb Maze
       Morph Ball
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 117; Major Location? False
+  * Pickup 117; Category? Minor
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (POWERBEAM)
+  > Room Bottom
       Trivial
 
-> Tile Group (POWERBEAM); Heals? False
+> Room Bottom; Heals? False
   * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_002
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
   > Door to Gyroscope Room
       Any of the following:
           Ballspark
@@ -596,10 +479,10 @@ Extra - asset_id: collision_camera_008
 > Tunnel to Bottom Morph Launcher; Heals? False
   * Layers: default
   * Morph Ball Launcher to Bottom Morph Launcher/Tunnel to Fan Room
-  > Tile Group (POWERBEAM)
+  > Room Bottom
       Morph Ball
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Gyroscope Room
       Trivial
@@ -611,7 +494,7 @@ Extra - polygon: [[9700.0, 4000.0], [7600.0, 4000.0], [7600.0, -300.0], [9700.0,
 Extra - asset_id: collision_camera_009
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 116; Major Location? False
+  * Pickup 116; Category? Minor
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Grapple Block Alcove
@@ -627,7 +510,7 @@ Extra - asset_id: collision_camera_009
   > Grapple Block Alcove
       Trivial
 
-> Life Recharge; Heals? True; Spawn Point
+> Life Recharge; Heals? True; Default Node
   * Layers: default
   * Extra - actor_name: energyrecharge_000
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
@@ -636,125 +519,17 @@ Extra - asset_id: collision_camera_009
   > Tunnel to Fan Room
       Morph Ball
 
-> Tile Group (BOMB WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB', 'WEIGHT')
-  > Tile Group (BOMB) 1
-      Morph Ball
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tunnel to Horizontal Bomb Maze (Lower)
-      Morph Ball
-
-> Tile Group (POWERBOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_019
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (POWERBOMB) 2
-      Morph Ball
-  > Tunnel to Horizontal Bomb Maze (Upper)
-      Morph Ball
-
-> Tile Group (POWERBOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_020
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBOMB',)
-  > Tile Group (WEIGHT)
-      Morph Ball
-  > Tile Group (POWERBOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (POWERBEAM)
-      Morph Ball
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_021
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBOMB) 2
-      Morph Ball
-  > Tile Group (POWERBEAM)
-      Morph Ball
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_022
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBOMB) 2
-      Morph Ball
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_023
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (POWERBEAM)
-      Morph Ball
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_024
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Tile Group (BOMB) 4
-      Morph Ball
-
-> Tile Group (BOMB) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_025
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-  > Grapple Block Alcove
-      Morph Ball
-
 > Tunnel to Horizontal Bomb Maze (Upper); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Horizontal Bomb Maze/Tunnel to Vertical Bomb Maze (Upper)
-  > Tile Group (POWERBOMB) 1
-      Morph Ball
+  > Above Beam Blocks
+      Lay Power Bomb
 
 > Tunnel to Horizontal Bomb Maze (Lower); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Horizontal Bomb Maze/Tunnel to Vertical Bomb Maze (Lower)
-  > Tile Group (BOMB WEIGHT)
-      Lay Bomb
+  > Above Beam Blocks
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to Spider Magnet Room; Heals? False
   * Layers: default
@@ -774,10 +549,25 @@ Extra - asset_id: collision_camera_009
       Morph Ball
   > Event - Grapple Block
       Grapple Beam
-  > Tile Group (BOMB) 4
-      Morph Ball
   > Tunnel to Spider Magnet Room
       Morph Ball and After Elun - Vertical Bomb Maze Grapple Block
+  > Above Beam Blocks
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
+
+> Above Beam Blocks; Heals? False
+  * Layers: default
+  > Tunnel to Horizontal Bomb Maze (Upper)
+      All of the following:
+          Power Bombs ≥ 2 and Lay Power Bomb
+          Movement (Intermediate) or Simple IBJ or Use Spin Boost
+  > Tunnel to Horizontal Bomb Maze (Lower)
+      Morph Ball
+  > Grapple Block Alcove
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
 
 ----------------
 Horizontal Bomb Maze
@@ -786,100 +576,27 @@ Extra - polygon: [[7700.0, 4000.0], [3300.0, 4000.0], [3300.0, 2858.0], [7700.0,
 Extra - asset_id: collision_camera_010
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 118; Major Location? False
+  * Pickup 118; Category? Minor
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (WEIGHT) 3
-      Morph Ball
+  > Tunnel to Vertical Bomb Maze (Lower)
+      Lay Bomb or Lay Power Bomb
   > Tunnel to Vertical Bomb Maze (Upper)
       Trivial
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_010
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (WEIGHT) 2
-      Morph Ball
-  > Tunnel to Ammo Recharge Station
-      Morph Ball
-
-> Tile Group (WEIGHT) 1; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_011
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tunnel to Ammo Recharge Station
-      Morph Ball
-
-> Tile Group (WEIGHT) 2; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_012
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_013
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (WEIGHT) 1
-      Morph Ball
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_014
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Tile Group (BOMB) 4
-      Morph Ball
-
-> Tile Group (WEIGHT) 3; Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_015
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-
-> Tile Group (BOMB) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 3
-      Morph Ball
-  > Tunnel to Vertical Bomb Maze (Lower)
-      Morph Ball
 
 > Tunnel to Ammo Recharge Station; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Ammo Recharge Station/Tunnel to Horizontal Bomb Maze
-  > Tile Group (BOMB) 1
-      Morph Ball
+  > Tunnel to Vertical Bomb Maze (Lower)
+      Any of the following:
+          Lay Bomb
+          Power Bombs ≥ 2 and Lay Power Bomb
 
 > Tunnel to Vertical Bomb Maze (Lower); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Vertical Bomb Maze/Tunnel to Horizontal Bomb Maze (Lower)
-  > Tile Group (BOMB) 4
-      Morph Ball
+  > Tunnel to Ammo Recharge Station
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to Vertical Bomb Maze (Upper); Heals? False
   * Layers: default
@@ -887,7 +604,7 @@ Extra - asset_id: collision_camera_010
   > Pickup (Missile Tank)
       Morph Ball
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Tunnel to Ammo Recharge Station
       Morph Ball
@@ -946,7 +663,7 @@ Extra - asset_id: collision_camera_012
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Default Node
   * Layers: default
   * Extra - actor_name: savestation
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad

@@ -27,6 +27,7 @@ class DockLockNode(ResourceNode):
             layers=dock.layers,
             extra={},
             dock=dock,
+            valid_starting_location=dock.valid_starting_location
         )
         object.__setattr__(dock, "lock_node", result)
         return result

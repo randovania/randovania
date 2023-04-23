@@ -4,11 +4,11 @@ import json
 
 import cryptography.fernet
 import flask
+import flask_discord.models
 import flask_socketio
 import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 from requests_oauthlib import OAuth2Session
-import flask_discord.models
 
 from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
 from randovania.server.database import User, UserAccessToken, GameSessionMembership
@@ -32,6 +32,7 @@ def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
         ],
     }
 
+
 def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
     """
 
@@ -42,7 +43,7 @@ def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
     if user is None:
         user = User.get_by_id(session["user-id"])
     elif user.id != session["user-id"]:
-        raise RuntimeError(f"Provided user does not match the session's user")
+        raise RuntimeError("Provided user does not match the session's user")
 
     result = _create_client_side_session_raw(sio, user)
     result["encoded_session_b85"] = _encrypt_session_for_user(sio, session)
@@ -206,7 +207,7 @@ def setup_app(sio: ServerApp):
         sio.discord.callback()
         discord_user = sio.discord.fetch_user()
 
-        user = _create_user_from_discord(discord_user)
+        _create_user_from_discord(discord_user)
 
         return flask.redirect(flask.url_for("browser_me"))
 
@@ -216,7 +217,8 @@ def setup_app(sio: ServerApp):
 
         for token in user.access_tokens:
             delete = f' <a href="{flask.url_for("delete_token", token=token.name)}">Delete</a>'
-            result += f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
+            result += (f"<li>{token.name} created at {token.creation_date}."
+                       f" Last used at {token.last_used}. {delete}</li>")
 
         result += f'<li><form class="form-inline" method="POST" action="{flask.url_for("create_token")}">'
         result += '<input id="name" placeholder="Access token name" name="name">'

@@ -3,14 +3,25 @@ import dataclasses
 
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 
 class EchoesBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[
-        str]:
+    def event_resources_for_configuration(self, configuration: BaseConfiguration,
+                                          resource_database: ResourceDatabase,
+                                          ) -> ResourceGain:
+        assert isinstance(configuration, EchoesConfiguration)
+        if configuration.use_new_patcher:
+            yield resource_database.get_event("Event73"), 1  # Dynamo Chamber Gates
+            yield resource_database.get_event("Event75"), 1  # Trooper Security Station Gate
+
+    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
+                                    resource_database: ResourceDatabase) -> set[str]:
+        assert isinstance(configuration, EchoesConfiguration)
         enabled_resources = set()
         allow_vanilla = {
             "allow_jumping_on_dark_water": "DarkWaterJump",
@@ -39,6 +50,8 @@ class EchoesBootstrap(MetroidBootstrap):
         return enabled_resources
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
+        assert isinstance(configuration, EchoesConfiguration)
+
         damage_reductions = copy.copy(db.damage_reductions)
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1")] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),

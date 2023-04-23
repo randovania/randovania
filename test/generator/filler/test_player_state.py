@@ -21,6 +21,8 @@ def _default_filler_config() -> FillerConfiguration:
         first_progression_must_be_local=False,
         minimum_available_locations_for_hint_placement=0,
         minimum_location_weight_for_hint_placement=0,
+        single_set_for_pickups_that_solve=False,
+        staggered_multi_pickup_placement=False,
     )
 
 
@@ -46,7 +48,7 @@ def test_current_state_report(state_for_blank):
     result = state_for_blank.current_state_report()
     assert result == (
         "At Intro/Hint Room/Hint no Translator after 0 actions and 0 pickups, "
-        "with 3 collected locations, 16 safe nodes.\n\n"
+        "with 3 collected locations, 17 safe nodes.\n\n"
         "Pickups still available: \n\n"
         "Resources to progress: Blue Key, Missile, Weapon\n\n"
         "Paths to be opened:\n"
@@ -57,7 +59,7 @@ def test_current_state_report(state_for_blank):
         "None\n"
         "\n"
         "Reachable nodes:\n"
-        "22 nodes total"
+        "23 nodes total"
     )
 
 
@@ -81,3 +83,4 @@ def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pi
         assert filtered == {(state_for_blank, PickupIndex(0)): 1}
     else:
         assert filtered == locations_weighted
+

@@ -31,7 +31,7 @@ class RequirementSet:
         self.alternatives = frozenset(
             requirement
             for requirement in input_set
-            if not any(other.is_subset_of(requirement) for other in input_set)
+            if not any(other.is_proper_subset_of(requirement) for other in input_set)
         )
 
     def __deepcopy__(self, memodict):
@@ -65,12 +65,12 @@ class RequirementSet:
 
     @property
     def as_str(self):
-        l = []
-        self.pretty_print(print_function=l.append)
-        if len(l) > 1:
-            return " or ".join(f"({it})" for it in l)
+        buffer = []
+        self.pretty_print(print_function=buffer.append)
+        if len(buffer) > 1:
+            return " or ".join(f"({it})" for it in buffer)
         else:
-            return l[0]
+            return buffer[0]
 
     @classmethod
     @lru_cache

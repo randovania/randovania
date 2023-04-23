@@ -2,6 +2,7 @@ import re
 import typing
 
 from randovania.game_description import migration_data
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
@@ -150,7 +151,8 @@ def _migrate_v6(json_dict: dict) -> dict:
                 if identify_game == "prime1":
                     game["locations"]["Frigate Orpheon"] = dict()
                     game["teleporters"][
-                        "Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"] = "Tallon Overworld/Landing Site"
+                        "Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"
+                    ] = "Tallon Overworld/Landing Site"
                     game["teleporters"][
                         "Impact Crater/Metroid Prime Lair/Teleporter to Credits"] = "End of Game/Credits"
                 game["game"] = identify_game
@@ -270,6 +272,45 @@ def _migrate_v12(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v13(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        area_identifier = AreaIdentifier.from_string(game["starting_location"])
+        node_identifier = migration_data.get_new_start_loc_from_old_start_loc(game["game"], area_identifier)
+        game["starting_location"] = node_identifier.as_string
+
+    return json_dict
+
+
+def _migrate_v14(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        game["starting_equipment"] = {"items": game.pop("starting_items")}
+
+    return json_dict
+
+
+def _migrate_v15(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        game["dock_connections"] = {}
+
+    return json_dict
+
+
+def _migrate_v16(json_dict: dict) -> dict:
+    def _fix_node(name: str):
+        return name.replace(
+            "Navigation Room", "Save Station",
+        )
+
+    for game in json_dict["game_modifications"]:
+        if game["game"] == "dread":
+            game["hints"] = {
+                _fix_node(node): hint
+                for node, hint in game["hints"].items()
+            }
+
+    return json_dict
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -283,6 +324,10 @@ _MIGRATIONS = [
     _migrate_v10,
     _migrate_v11,
     _migrate_v12,
+    _migrate_v13,
+    _migrate_v14,
+    _migrate_v15,
+    _migrate_v16,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

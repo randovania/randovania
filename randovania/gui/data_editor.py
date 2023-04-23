@@ -12,7 +12,9 @@ from randovania.game_description import data_reader, data_writer, pretty_print, 
     derived_nodes, default_database
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
@@ -36,6 +38,25 @@ from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
 SHOW_WORLD_MIN_MAX_SPINNER = False
+
+
+def _simplify_trivial_and_impossible(requirement: Requirement) -> Requirement:
+    if isinstance(requirement, RequirementArrayBase):
+        items = list(requirement.items)
+        if isinstance(requirement, RequirementOr):
+            remove = Requirement.impossible()
+            solve = Requirement.trivial()
+        else:
+            remove = Requirement.trivial()
+            solve = Requirement.impossible()
+
+        items = [_simplify_trivial_and_impossible(it) for it in items]
+        if solve in items:
+            return solve
+        items = [it for it in items if it != remove]
+        return type(requirement)(items, comment=requirement.comment)
+    else:
+        return requirement
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
@@ -98,6 +119,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
+        self.default_node_check.stateChanged.connect(self.on_default_node_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_swap_button.clicked.connect(self._swap_selected_connection)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
@@ -159,6 +181,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_world = self.current_world
         current_area = self.current_area
         current_node = self.current_node
+        current_connection = self.current_connection_node
 
         self.game_description = game
         self.editor = Editor(self.game_description)
@@ -176,6 +199,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.focus_on_area_by_name(current_area.name)
         if current_node:
             self.focus_on_node(current_node)
+        if current_connection:
+            self.focus_on_connection(current_connection)
 
     @classmethod
     def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
@@ -333,12 +358,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.replace_node_with(self.current_area, old_node, new_node)
 
     def on_area_spawn_check(self, state: int):
+        old_node = self.current_node
+        assert old_node is not None
+        new_node = dataclasses.replace(old_node, valid_starting_location=bool(state))
+        self.replace_node_with(self.current_area, old_node, new_node)
+
+    def on_default_node_check(self, state: int):
         state = bool(state)
         if not state:
             return
 
         object.__setattr__(self.current_area, "default_node", self.current_node.name)
-        self.area_spawn_check.setEnabled(False)
+        self.default_node_check.setEnabled(False)
 
     def replace_node_with(self, area: Area, old_node: Node, new_node: Node):
         if old_node == new_node:
@@ -403,9 +434,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         self.node_heals_check.setChecked(node.heal)
-        is_default_spawn = self.current_area.default_node == node.name
-        self.area_spawn_check.setChecked(is_default_spawn)
-        self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
+
+        is_area_spawn = self.current_node.valid_starting_location
+        self.area_spawn_check.setChecked(is_area_spawn)
+
+        is_default_node = self.current_area.default_node == node.name
+        self.default_node_check.setChecked(is_default_node)
+        self.default_node_check.setEnabled(self.edit_mode and not is_default_node)
+
         self.area_view_canvas.highlight_node(node)
 
         try:
@@ -510,11 +546,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         requirement = self.current_area.connections[current_node].get(self.current_connection_node,
                                                                       Requirement.impossible())
         if self._collection_for_filtering is not None:
-            requirement = requirement.patch_requirements(
+            requirement = _simplify_trivial_and_impossible(requirement.patch_requirements(
                 self._collection_for_filtering,
                 1.0,
                 self.game_description.resource_database,
-            )
+            ))
 
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,
@@ -645,7 +681,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _do_create_node(self, node_name: str, location: NodeLocation | None):
         new_node = GenericNode(self._create_identifier(node_name), self.editor.new_node_index(),
-                               False, location, "", ("default",), {})
+                               False, location, "", ("default",), {}, False)
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
@@ -676,7 +712,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         new_node_this_area = DockNode(
             identifier=new_node_this_area_identifier,
             node_index=self.editor.new_node_index(),
-            heal=False, location=location, description="", layers=("default",), extra={},
+            heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
             dock_type=dock_weakness[0],
             default_connection=new_node_other_area_identifier,
             default_dock_weakness=dock_weakness[1],
@@ -686,7 +722,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         new_node_other_area = DockNode(
             identifier=new_node_other_area_identifier,
             node_index=self.editor.new_node_index(),
-            heal=False, location=location, description="", layers=("default",), extra={},
+            heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
             dock_type=dock_weakness[0],
             default_connection=new_node_this_area_identifier,
             default_dock_weakness=dock_weakness[1],
@@ -786,7 +822,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.save_database_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode)
-        self.area_spawn_check.setEnabled(self.edit_mode and self.area_spawn_check.isEnabled())
+        self.area_spawn_check.setEnabled(self.edit_mode)
+        self.default_node_check.setEnabled(self.edit_mode and self.default_node_check.isEnabled())
         self.node_edit_button.setVisible(self.edit_mode)
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)

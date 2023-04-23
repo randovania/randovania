@@ -34,7 +34,7 @@ Templates
       Shoot Charge Beam and Shoot Wide Beam
 
 * Activate Storm Missile Locks:
-      Missiles ≥ 15 and Storm Missile
+      Missiles ≥ 15 and Storm Missile and Shoot Missile
 
 * Lay Bomb:
       All of the following:
@@ -104,7 +104,7 @@ Templates
 * Perform WBJ:
       All of the following:
           # Gain a little extra height in water without Gravity Suit by using a Bomb or Cross Bomb
-          No Gravity Suit and Morph Ball
+          Morph Ball
           Any of the following:
               Bomb and Water Bomb Jump (Beginner)
               Cross Bomb and Water Bomb Jump (Intermediate)
@@ -234,12 +234,14 @@ Templates
                   Combat (Intermediate) and Shoot Charge Beam
                   All of the following:
                       # 101 Missiles are required, 1.5x leeway for trickless
-                      Missiles ≥ 153
-                      Missiles ≥ 101 and Combat (Intermediate)
+                      Shoot Missile
                       Any of the following:
-                          # Counter the robots for more ammo
-                          Combat (Hypermode)
-                          Missiles ≥ 30 and Combat (Expert)
+                          Missiles ≥ 153
+                          Missiles ≥ 101 and Combat (Intermediate)
+                          Any of the following:
+                              # Counter the robots for more ammo
+                              Combat (Hypermode)
+                              Missiles ≥ 30 and Combat (Expert)
                   All of the following:
                       # 62 Super Missiles are required, 1.5x leeway for trickless
                       Shoot Super Missile
@@ -279,7 +281,7 @@ Templates
           All of the following:
               Any of the following:
                   # Methods of dodging
-                  Flash Shift or Combat (Beginner)
+                  Flash Shift or Combat (Beginner) or Use Spin Boost
               Any of the following:
                   # Methods of fighting
                   Shoot Plasma Beam
@@ -293,8 +295,8 @@ Templates
                       # 14 Storm Missile targets required, 1.5x leeway for trickless
                       Storm Missile and Shoot Missile
                       Any of the following:
-                          Missiles ≥ 60
-                          Missiles ≥ 140 and Combat (Intermediate)
+                          Missiles ≥ 63
+                          Missiles ≥ 42 and Combat (Intermediate)
                   Combat (Advanced) and Shoot Beam
                   Combat (Intermediate) and Shoot Wide Beam
 
@@ -304,7 +306,7 @@ Templates
           All of the following:
               Any of the following:
                   # Methods of dodging
-                  Flash Shift or Combat (Beginner)
+                  Flash Shift or Combat (Beginner) or Use Spin Boost
               Any of the following:
                   # Methods of fighting
                   Shoot Plasma Beam
@@ -324,8 +326,8 @@ Templates
                       # 17 Storm Missile targets required, 1.5x leeway for trickless
                       Storm Missile and Shoot Missile
                       Any of the following:
-                          Missiles ≥ 75
-                          Missiles ≥ 50 and Combat (Intermediate)
+                          Missiles ≥ 78
+                          Missiles ≥ 51 and Combat (Intermediate)
                   Combat (Intermediate) and Shoot Wide Beam
                   Combat (Advanced) and Shoot Beam
 
@@ -333,7 +335,7 @@ Templates
       All of the following:
           Any of the following:
               # Methods of dodging
-              Flash Shift or Combat (Beginner)
+              Flash Shift or Combat (Beginner) or Use Spin Boost
           Any of the following:
               # Break Shield
               Grapple Beam or Combat (Beginner)
@@ -356,7 +358,7 @@ Templates
                   # 25 Storm Missile targets required, 1.5x leeway for trickless
                   Storm Missile and Shoot Missile
                   Any of the following:
-                      Missiles ≥ 113
+                      Missiles ≥ 114
                       Missiles ≥ 75 and Combat (Intermediate)
               Combat (Intermediate) and Shoot Wide Beam
               Combat (Advanced) and Shoot Beam
@@ -364,6 +366,9 @@ Templates
 
 * Can Short Boost:
       Flash Shift and Speed Booster
+
+* Lay Normal Bomb:
+      Bomb and Morph Ball
 
 ====================
 Dock Weaknesses
@@ -472,7 +477,8 @@ Dock Weaknesses
       Open:
           Any of the following:
               Flash Shift
-              Knowledge (Beginner) and Lay Cross Bomb
+              Flash Shift Skip (Beginner) and Lay Cross Bomb
+              Flash Shift Skip (Intermediate) and Lay Bomb
       No lock
 
 
@@ -486,6 +492,22 @@ Dock Weaknesses
       Open:
           After Cataris - Final Thermal Device
       No lock
+
+
+  * Ice Missile Door
+      Extra - type: ice_missile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Ice Missile
+
+
+  * Diffusion Beam Door
+      Extra - type: diffusion_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Diffusion Beam
 
   > Dock Rando:
       Unlocked: Power Beam Door
@@ -503,7 +525,9 @@ Dock Weaknesses
           Wide Beam Door
       Change to:
           Charge Beam Door
+          Diffusion Beam Door
           Grapple Beam Door
+          Ice Missile Door
           Missile Door
           Plasma Beam Door
           Power Beam Door

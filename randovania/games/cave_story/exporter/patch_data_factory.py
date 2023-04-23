@@ -9,7 +9,8 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.hint_node import HintNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -45,7 +46,10 @@ class CSPatchDataFactory(BasePatchDataFactory):
             PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
             USELESS_ITEM_CATEGORY,
             USELESS_ITEM_CATEGORY,
-            tuple()
+            tuple(),
+            generator_params=PickupGeneratorParams(
+                preferred_location_category=LocationCategory.MAJOR,  # TODO
+            ),
         ), self.players_config.player_index)
         nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
@@ -133,20 +137,22 @@ class CSPatchDataFactory(BasePatchDataFactory):
         }
         life = 0
 
+        starting_items = self.patches.starting_resources()
+
         starting_msg = ""
-        missile = next((res for res, _ in self.patches.starting_items.as_resource_gain()
+        missile = next((res for res, _ in starting_items.as_resource_gain()
                         if res.short_name in {"missile", "tempMissile"}),
                        None)
-        for item, _ in self.patches.starting_items.as_resource_gain():
+        for item, _ in starting_items.as_resource_gain():
             if item.resource_type != ResourceType.ITEM or item == missile:
                 continue
 
             if item.short_name == "lifeCapsule":
-                life = self.patches.starting_items[item]
+                life = starting_items[item]
                 continue
 
             if item.short_name == "puppies":
-                num_puppies = self.patches.starting_items[item]
+                num_puppies = starting_items[item]
 
                 flags = "".join([f"<FL+{num_to_tsc_value(5001 + i).decode('utf-8')}" for i in range(num_puppies)])
                 flags += "<FL+0274"
@@ -183,8 +189,11 @@ class CSPatchDataFactory(BasePatchDataFactory):
             git = num_to_tsc_value(arms_num or item_num + 1000).decode('utf-8')
             ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode('utf-8')
             if item.short_name in {"missiles", "supers"}:
-                ammo = num_to_tsc_value(self.patches.starting_items[missile]).decode('utf-8')
-            plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}" if item_num else f"<AM+{num_to_tsc_value(arms_num).decode('utf-8')}:{ammo}"
+                ammo = num_to_tsc_value(starting_items[missile]).decode('utf-8')
+            if item_num:
+                plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}"
+            else:
+                plus = f"<AM+{num_to_tsc_value(arms_num).decode('utf-8')}:{ammo}"
             flag = num_to_tsc_value(item.extra["flag"]).decode('utf-8')
             text = item.extra["text"]
 
@@ -205,7 +214,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 if trade == "mushrooms":
                     starting_msg += "<IT-0033<IT-0034"
 
-        if self.patches.starting_items.num_resources > 0:
+        if starting_items.num_resources > 0:
             starting_msg += items_extra
 
             if life > 0:
@@ -261,7 +270,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
             # flags set during first cave in normal gameplay
             starting_script += "<FL+0301<FL+0302<FL+1641<FL+1642<FL+0320<FL+0321"
             waterway = {"Waterway", "Waterway Cabin", "Main Artery"}
-            world_name, area_name = self.patches.starting_location.as_tuple
+            world_name, area_name = self.patches.starting_location.area_identifier.as_tuple
             if world_name == "Labyrinth" and area_name not in waterway:
                 # started near camp; disable camp collision
                 starting_script += "<FL+6202"
@@ -291,7 +300,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
         ammo_state = self.configuration.ammo_configuration.items_state
         small_missile = ammo_state[small_missile_ammo].ammo_count[0]
         hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
-        base_missiles = self.patches.starting_items[missile]
+        base_missiles = starting_items[missile]
         missile_id = "0005"
         supers_id = "0010"
         missile_events = {
@@ -306,7 +315,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
         head = {}
         for event, m_ammo in missile_events.items():
             head[event] = {
-                "needle": f"<AM%+....:....",
+                "needle": "<AM%+....:....",
                 "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}"
             }
 
@@ -317,7 +326,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 self.configuration.major_items_configuration.items_state[self.item_db.major_items[name]].included_ammo[
                     0]
             head[event] = {
-                "needle": f".!<ML%+....",
+                "needle": ".!<ML%+....",
                 "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
             }
 

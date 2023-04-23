@@ -12,13 +12,13 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import (
-    MissingResource, find_resource_info_with_id,
-    find_resource_info_with_long_name
+    MissingResource, find_resource_info_with_id
 )
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -305,6 +305,7 @@ class WorldReader:
                 "description": data["description"],
                 "layers": tuple(data["layers"]),
                 "extra": frozen_lib.wrap(data["extra"]),
+                "valid_starting_location": data["valid_starting_location"]
             }
             self.next_node_index += 1
             node_type: int = data["node_type"]
@@ -333,7 +334,7 @@ class WorldReader:
                 return PickupNode(
                     **generic_args,
                     pickup_index=PickupIndex(data["pickup_index"]),
-                    major_location=data["major_location"],
+                    location_category=LocationCategory(data["location_category"]),
                 )
 
             elif node_type == "teleporter":
@@ -417,7 +418,6 @@ class WorldReader:
 
         try:
             return Area(area_name, data["default_node"],
-                        data["valid_starting_location"],
                         nodes, connections, data["extra"])
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
@@ -508,7 +508,7 @@ def decode_data_with_world_reader(data: dict) -> tuple[WorldReader, GameDescript
     world_list = world_reader.read_world_list(data["worlds"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
-    starting_location = AreaIdentifier.from_json(data["starting_location"])
+    starting_location = NodeIdentifier.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
 

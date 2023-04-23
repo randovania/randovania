@@ -1,13 +1,10 @@
 import dataclasses
 
-import randovania
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description import default_database
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 
@@ -34,6 +31,7 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_easier_path_to_itorash: bool
     x_starts_released: bool
     allow_highly_dangerous_logic: bool
+    april_fools_hints: bool
     artifacts: DreadArtifactConfig
     constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
     constant_cold_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
@@ -48,16 +46,10 @@ class DreadConfiguration(BaseConfiguration):
 
         gd = default_database.game_description_for(self.game)
         for trick in gd.resource_database.trick:
-            if trick.extra.get("hide_from_ui") and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
+            if trick.hide_from_ui and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
                 result.append(f"Enabled {trick.long_name}")
-
-        if self.starting_location.locations != (gd.starting_location,):
-            result.append(f"Custom Starting Location")
 
         if not self.elevators.is_vanilla:
             result.append("Random Elevators")
-
-        if self.dock_rando.mode != DockRandoMode.VANILLA and not randovania.is_dev_version():
-            result.append("Random Door Lock")
 
         return result

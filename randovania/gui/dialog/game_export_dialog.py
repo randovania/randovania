@@ -1,3 +1,4 @@
+import os.path
 from pathlib import Path
 from typing import TypeVar, Callable
 
@@ -176,6 +177,23 @@ def output_file_validator(output_file: Path) -> bool:
 
 def is_directory_validator(line: QtWidgets.QLineEdit) -> bool:
     return not line.text() or not Path(line.text()).is_dir()
+
+
+def output_input_intersection_validator(output_edit: QtWidgets.QLineEdit, input_edit: QtWidgets.QLineEdit) -> bool:
+    output_path = path_in_edit(output_edit)
+    input_path = path_in_edit(input_edit)
+    if output_path is None or input_path is None:
+        return False
+
+    output_path = output_path.absolute()
+    input_path = input_path.absolute()
+    try:
+        shared_root = Path(os.path.commonpath(([output_path, input_path])))
+    except ValueError:
+        # Not in same drive
+        return False
+
+    return shared_root in [output_path, input_path]
 
 
 def is_file_validator(file: Path | None) -> bool:

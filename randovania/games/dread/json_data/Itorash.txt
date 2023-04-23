@@ -12,7 +12,7 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Elevator to Raven Beak
+  > Save Station
       Trivial
 
 > Door to Elevator to Raven Beak; Heals? False
@@ -24,19 +24,22 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Transport to Hanubia
+  > Save Station
       Trivial
 
-> Save Station; Heals? False; Spawn Point
+> Save Station; Heals? False; Default Node
   * Layers: default
   * Extra - actor_name: savestation_000
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
   * Extra - start_point_actor_name: savestation_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  > Door to Transport to Hanubia
+      Trivial
+  > Door to Elevator to Raven Beak
+      Trivial
 
 ----------------
 Transport to Hanubia
-(Valid Starting Location)
 Extra - total_boundings: {'x1': -5900.0, 'x2': 1500.0, 'y1': -4800.0, 'y2': -1100.0}
 Extra - polygon: [[1500.0, -1100.0], [-5900.0, -1100.0], [-5900.0, -4800.0], [1500.0, -4800.0]]
 Extra - asset_id: collision_camera_001
@@ -71,8 +74,9 @@ Extra - asset_id: collision_camera_001
       Any of the following:
           Speed Booster or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
 
-> Elevator to Hanubia; Heals? False; Spawn Point
+> Elevator to Hanubia; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Hanubia - Transport to Itorash
   * Extra - actor_name: capsuleelevatorskybase_000
@@ -87,6 +91,7 @@ Extra - asset_id: collision_camera_001
       Any of the following:
           Speed Booster or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Artifact Gate; Heals? False
   * Layers: default
@@ -117,7 +122,7 @@ Extra - asset_id: collision_camera_002
           Any of the following:
               Space Jump or Speed Booster or Simple IBJ
               Spin Boost and Walljump (Beginner)
-              Flash Shift and Walljump (Intermediate)
+              Flash Shift and Walljump (Advanced)
 
 > Event - Destroy Generator; Heals? False
   * Layers: default
@@ -127,13 +132,11 @@ Extra - asset_id: collision_camera_002
   > Door to Save Station
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Commander
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Elevator to Raven Beak Arena
-      Trivial
-  > Tile Group (WEIGHT)
       Trivial
 
 > Elevator to Raven Beak Arena; Heals? False
@@ -143,16 +146,9 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_commanderelevator_000
   * Extra - start_point_actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
-  > Start Point
-      Trivial
-
-> Tile Group (WEIGHT); Heals? False
-  * Layers: default
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('WEIGHT',)
   > Door to Save Station
+      Trivial
+  > Start Point
       Trivial
 
 ----------------
@@ -168,7 +164,7 @@ Raven Beak Arena
 Extra - total_boundings: {'x1': 3000.0, 'x2': 7100.0, 'y1': 1800.0, 'y2': 4000.0}
 Extra - polygon: [[7100.0, 4000.0], [3000.0, 4000.0], [3000.0, 1800.0], [7100.0, 1800.0]]
 Extra - asset_id: collision_camera_004
-> Before Fight; Heals? False; Spawn Point
+> Before Fight; Heals? False; Default Node
   * Layers: default
   > Boss - Raven Beak
       All of the following:

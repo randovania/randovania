@@ -8,8 +8,8 @@ from qasync import asyncSlot
 from randovania.game_description import integrity_check
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.configurable_node import ConfigurableNode
@@ -88,6 +88,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for dock_type in enum_lib.iterate_enum(HintNodeKind):
             self.hint_kind_combo.addItem(dock_type.long_name, dock_type)
 
+        # Pickup
+        for category in enum_lib.iterate_enum(LocationCategory):
+            self.location_category_combo.addItem(category.long_name, category)
+
+        # Teleporter
         self.set_teleporter_network_unlocked_by(Requirement.trivial())
 
         # Signals
@@ -182,7 +187,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def fill_for_pickup(self, node: PickupNode):
         self.pickup_index_spin.setValue(node.pickup_index.index)
-        self.major_location_check.setChecked(node.major_location)
+        signal_handling.combo_set_to_value(self.location_category_combo, node.location_category)
 
     def fill_for_teleporter(self, node: TeleporterNode):
         world = self.game.world_list.world_by_area_location(node.default_connection)
@@ -344,6 +349,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         identifier = self.node.identifier.renamed(self.name_edit.text())
         node_index = self.node.node_index
         heal = self.heals_check.isChecked()
+        valid_starting_location = self.node.valid_starting_location
         location = None
         if self.location_group.isChecked():
             location = NodeLocation(self.location_x_spin.value(),
@@ -354,13 +360,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         layers = (self.layers_combo.currentText(),)
 
         if node_type == GenericNode:
-            return GenericNode(identifier, node_index, heal, location, description, layers, extra)
+            return GenericNode(
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+            )
 
         elif node_type == DockNode:
             connection_node: Node = self.dock_connection_node_combo.currentData()
 
             return DockNode(
-                identifier, node_index, heal, location, description, layers, extra,
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 self.dock_type_combo.currentData(),
                 self.game.world_list.identifier_for_node(connection_node),
                 self.dock_weakness_combo.currentData(),
@@ -369,9 +377,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == PickupNode:
             return PickupNode(
-                identifier, node_index, heal, location, description, layers, extra,
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 PickupIndex(self.pickup_index_spin.value()),
-                self.major_location_check.isChecked(),
+                location_category=self.location_category_combo.currentData(),
             )
 
         elif node_type == TeleporterNode:
@@ -379,7 +387,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             dest_area: Area = self.teleporter_destination_area_combo.currentData()
 
             return TeleporterNode(
-                identifier, node_index, heal, location, description, layers, extra,
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 AreaIdentifier(
                     world_name=dest_world.name,
                     area_name=dest_area.name,
@@ -393,25 +401,25 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             if event is None:
                 raise ValueError("There are no events in the database, unable to create EventNode.")
             return EventNode(
-                identifier, node_index, heal, location, description, layers, extra,
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 event,
             )
 
         elif node_type == ConfigurableNode:
             return ConfigurableNode(
-                identifier, node_index, heal, location, description, layers, extra,
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
             )
 
         elif node_type == HintNode:
             return HintNode(
-                identifier, node_index, heal, location, description, layers, extra,
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 self.hint_kind_combo.currentData(),
                 self._hint_requirement_to_collect
             )
 
         elif node_type == TeleporterNetworkNode:
             return TeleporterNetworkNode(
-                identifier, node_index, heal, location, description, layers, extra,
+                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 self._unlocked_by_requirement,
                 self.teleporter_network_edit.text(),
                 self._activated_by_requirement,

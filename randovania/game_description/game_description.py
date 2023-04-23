@@ -59,7 +59,7 @@ class GameDescription:
     resource_database: ResourceDatabase
     layers: tuple[str, ...]
     victory_condition: Requirement
-    starting_location: AreaIdentifier
+    starting_location: NodeIdentifier
     initial_states: dict[str, ResourceGainTuple]
     minimal_logic: MinimalLogicData | None
     _dangerous_resources: frozenset[ResourceInfo] | None = None

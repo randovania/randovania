@@ -129,8 +129,8 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
         if pickups:
             state = state.assign_pickups_resources(pickups)
-            multiplier *= sum(pickup.probability_multiplier for pickup in pickups) / len(pickups)
-            offset += sum(pickup.probability_offset for pickup in pickups) / len(pickups)
+            multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
+            offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
 
         base_weight = _calculate_weights_for(reach_lib.advance_to_with_reach_copy(player_state.reach, state),
                                              current_uncollected)
@@ -241,6 +241,9 @@ def retcon_playthrough_filler(rng: Random,
             current_player.reach.act_on(new_resource)
 
         if new_pickups:
+            if current_player.configuration.staggered_multi_pickup_placement:
+                new_pickups = [new_pickups[0]]
+
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
@@ -291,7 +294,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
     """
     assert action in current_player.pickups_left
 
-    locations_weighted = current_player.filter_usable_locations(all_locations_weighted)
+    locations_weighted = current_player.filter_usable_locations(all_locations_weighted, action)
 
     if locations_weighted and (current_player.num_random_starting_items_placed
                                >= current_player.configuration.minimum_random_starting_items):

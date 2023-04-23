@@ -5,26 +5,36 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 
 
-def _sorted_area_identifiers(elements: Iterable[AreaIdentifier]) -> list[AreaIdentifier]:
+def _sorted_node_identifiers(elements: Iterable[NodeIdentifier]) -> list[NodeIdentifier]:
     return sorted(elements)
 
 
-def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Area], bool]) -> list[AreaIdentifier]:
+def node_and_area_with_filter(game: RandovaniaGame, condition: Callable[[Area, Node], bool]) -> list[NodeIdentifier]:
     world_list = default_database.game_description_for(game).world_list
-    identifiers = [
-        AreaIdentifier(
-            world_name=world.name,
-            area_name=area.name,
-        )
+    identifiers = {
+        NodeIdentifier.create(world.name, area.name, node.name)
         for world in world_list.worlds
         for area in world.areas
-        if condition(area)
+        for node in area.actual_nodes
+        if condition(area, node)
+    }
+    return _sorted_node_identifiers(identifiers)
+
+def node_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node], bool]) -> list[NodeIdentifier]:
+    world_list = default_database.game_description_for(game).world_list
+    identifiers = [
+        NodeIdentifier.create(world.name, area.name, node.name)
+        for world in world_list.worlds
+        for area in world.areas
+        for node in area.actual_nodes
+        if condition(node)
     ]
-    return _sorted_area_identifiers(identifiers)
+    return _sorted_node_identifiers(identifiers)
 
 
 T = TypeVar("T")
@@ -33,7 +43,7 @@ SelfType = TypeVar("SelfType")
 
 @dataclass(frozen=True)
 class LocationList(BitPackValue):
-    locations: tuple[AreaIdentifier, ...]
+    locations: tuple[NodeIdentifier, ...]
     game: RandovaniaGame
 
     def __post_init__(self):
@@ -44,27 +54,27 @@ class LocationList(BitPackValue):
             raise ValueError(f"locations aren't sorted: {self.locations}")
 
     @classmethod
-    def areas_list(cls, game: RandovaniaGame) -> list[AreaIdentifier]:
-        return area_locations_with_filter(game, lambda area: True)
+    def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
+        return node_locations_with_filter(game, lambda node: True)
 
     @classmethod
-    def element_type(cls) -> type[AreaIdentifier]:
-        return AreaIdentifier
+    def element_type(cls) -> type[NodeIdentifier]:
+        return NodeIdentifier
 
     @classmethod
-    def with_elements(cls: type[SelfType], elements: Iterable[AreaIdentifier], game: RandovaniaGame) -> SelfType:
+    def with_elements(cls: type[SelfType], elements: Iterable[NodeIdentifier], game: RandovaniaGame) -> SelfType:
         elements_set = frozenset(elements)
-        all_locations = frozenset(cls.areas_list(game))
-        return cls(tuple(_sorted_area_identifiers(elements_set & all_locations)), game)
+        all_locations = frozenset(cls.nodes_list(game))
+        return cls(tuple(sorted(elements_set & all_locations)), game)
 
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
-        areas = self.areas_list(self.game)
-        yield from bitpacking.pack_sorted_array_elements(list(self.locations), areas)
+        nodes = self.nodes_list(self.game)
+        yield from bitpacking.pack_sorted_array_elements(list(self.locations), nodes)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "LocationList":
         game = metadata["reference"].game
-        return cls.with_elements(bitpacking.decode_sorted_array_elements(decoder, cls.areas_list(game)), game)
+        return cls.with_elements(bitpacking.decode_sorted_array_elements(decoder, cls.nodes_list(game)), game)
 
     @property
     def as_json(self) -> list[dict]:
@@ -74,27 +84,26 @@ class LocationList(BitPackValue):
     def from_json(cls, value: list[dict], game: RandovaniaGame) -> "LocationList":
         if not isinstance(value, list):
             raise ValueError(f"StartingLocation from_json must receive a list, got {type(value)}")
-
         elements = [cls.element_type().from_json(location) for location in value]
         return cls.with_elements(elements, game)
 
-    def ensure_has_location(self: SelfType, area_location: AreaIdentifier, enabled: bool) -> SelfType:
+    def ensure_has_location(self: SelfType, node_location: NodeIdentifier, enabled: bool) -> SelfType:
         new_locations = set(self.locations)
 
         if enabled:
-            new_locations.add(area_location)
-        elif area_location in new_locations:
-            new_locations.remove(area_location)
+            new_locations.add(node_location)
+        elif node_location in new_locations:
+            new_locations.remove(node_location)
 
         return self.with_elements(iter(new_locations), self.game)
 
-    def ensure_has_locations(self: SelfType, area_locations: list[AreaIdentifier], enabled: bool) -> SelfType:
+    def ensure_has_locations(self: SelfType, node_locations: list[NodeIdentifier], enabled: bool) -> SelfType:
         new_locations = set(self.locations)
 
-        for area_location in area_locations:
+        for node_location in node_locations:
             if enabled:
-                new_locations.add(area_location)
-            elif area_location in new_locations:
-                new_locations.remove(area_location)
+                new_locations.add(node_location)
+            elif node_location in new_locations:
+                new_locations.remove(node_location)
 
         return self.with_elements(new_locations, self.game)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import base64
 import functools
 import json
@@ -34,6 +35,8 @@ from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
+    from randovania.layout.preset import Preset
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -60,11 +63,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
+    all_change_logs: dict[str, str] | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
 
     GameDetailsSignal = Signal(LayoutDescription)
+    RequestOpenLayoutSignal = Signal(Path)
     InitPostShowSignal = Signal()
 
     @property
@@ -108,6 +113,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         # Signals
         self.options_changed_signal.connect(self.on_options_changed)
         self.GameDetailsSignal.connect(self._open_game_details)
+        self.RequestOpenLayoutSignal.connect(self._request_open_layout)
         self.InitPostShowSignal.connect(self.initialize_post_show)
         self.main_tab_widget.currentChanged.connect(self._on_main_tab_changed)
 
@@ -150,13 +156,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.clicked.connect(partial(self._select_game, game))
             logo.setVisible(game.data.development_state.can_view())
 
-            def highlight_logo(l: ClickableLabel, active: bool):
+            def highlight_logo(label: ClickableLabel, active: bool):
                 if active:
-                    l.new_effect = QtWidgets.QGraphicsColorizeEffect()
-                    l.new_effect.setStrength(0.5)
-                    l.setGraphicsEffect(l.new_effect)
+                    label.new_effect = QtWidgets.QGraphicsColorizeEffect()
+                    label.new_effect.setStrength(0.5)
+                    label.setGraphicsEffect(label.new_effect)
                 else:
-                    l.setGraphicsEffect(None)
+                    label.setGraphicsEffect(None)
                 
             logo.entered.connect(partial(highlight_logo, logo, True))
             logo.left.connect(partial(highlight_logo, logo, False))
@@ -194,6 +200,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
+        self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
@@ -235,11 +242,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 return
 
     def dropEvent(self, event: QtGui.QDropEvent):
-
         for url in event.mimeData().urls():
             path = Path(url.toLocalFile())
             if path.suffix == f".{LayoutDescription.file_extension()}":
-                self.open_game_details(LayoutDescription.from_file(path))
+                self.RequestOpenLayoutSignal.emit(path)
                 return
 
             # FIXME: re-implement importing presets
@@ -327,7 +333,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
             return layout
 
-        new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+        try:
+            new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+        except asyncio.exceptions.CancelledError:
+            return
 
         if permalink.seed_hash is not None and permalink.seed_hash != new_layout.shareable_hash_bytes:
             response = await async_dialog.warning(
@@ -336,9 +345,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                     base64.b32encode(permalink.seed_hash).decode(),
                     new_layout.shareable_hash,
                 ),
-                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             )
-            if response != QtWidgets.QMessageBox.Yes:
+            if response != QtWidgets.QMessageBox.StandardButton.Yes:
                 return
 
         self.open_game_details(new_layout)
@@ -348,14 +357,15 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         from randovania.gui.dialog.permalink_dialog import PermalinkDialog
         dialog = PermalinkDialog()
         result = await async_dialog.execute_dialog(dialog)
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             permalink = dialog.get_permalink_from_field()
             await self.generate_seed_from_permalink(permalink)
 
-    def _import_spoiler_log(self):
-        json_path = common_qt_lib.prompt_user_for_input_game_log(self)
-        if json_path is not None:
-            layout = LayoutDescription.from_file(json_path)
+    @asyncSlot()
+    async def _import_spoiler_log(self):
+        from randovania.gui.lib import layout_loader
+        layout = await layout_loader.prompt_and_load_layout_description(self)
+        if layout is not None:
             self.open_game_details(layout)
 
     @asyncSlot()
@@ -365,7 +375,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if not await dialog.refresh():
             return
         result = await async_dialog.execute_dialog(dialog)
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             await self.generate_seed_from_permalink(dialog.permalink)
 
     def open_game_details(self, layout: LayoutDescription):
@@ -377,6 +387,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         details_window.update_layout_description(layout)
         details_window.show()
         self.track_window(details_window)
+
+    @asyncSlot(Path)
+    async def _request_open_layout(self, path: Path):
+        from randovania.gui.lib import layout_loader
+        layout = await layout_loader.load_layout_description(self, path)
+        if layout is not None:
+            self.open_game_details(layout)
 
     # Releases info
     async def request_new_data(self):
@@ -394,17 +411,16 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self.display_new_version(version_to_display)
 
         if all_change_logs:
-            from randovania.gui.widgets.changelog_widget import ChangeLogWidget
-            self.changelog_tab = ChangeLogWidget(all_change_logs)
+            self.all_change_logs = all_change_logs
             self.menu_action_changelog.setVisible(True)
 
         if new_change_logs:
             from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
             message_box = ScrollMessageBox.create_new(
-                self, QtWidgets.QMessageBox.Information,
+                self, QtWidgets.QMessageBox.Icon.Information,
                 "What's new", "\n".join(new_change_logs),
-                QtWidgets.QMessageBox.Ok,
+                QtWidgets.QMessageBox.StandardButton.Ok,
             )
             message_box.label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
             message_box.scroll_area.setMinimumSize(500, 300)
@@ -434,6 +450,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
+        self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
 
         self.tab_game_details.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
@@ -445,7 +462,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def open_data_visualizer_at(self,
                                 world_name: str | None,
                                 area_name: str | None,
-                                game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                                game: RandovaniaGame,
+                                trick_levels: TrickLevelConfiguration | None = None,
                                 ):
         from randovania.gui.data_editor import DataEditorWindow
         data_visualizer = DataEditorWindow.open_internal_data(game, False)
@@ -456,6 +474,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if area_name is not None:
             data_visualizer.focus_on_area_by_name(area_name)
+
+        if trick_levels is not None:
+            data_visualizer.layers_editor.set_selected_tricks(trick_levels)
 
         self._data_visualizer.show()
 
@@ -475,7 +496,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
-    async def open_map_tracker(self, configuration: "Preset"):
+    async def open_map_tracker(self, configuration: Preset):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 
         try:
@@ -492,7 +513,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     # Difficulties stuff
 
-    def _exec_trick_details(self, popup: TrickDetailsPopup):
+    def _exec_trick_details(self, popup: QtWidgets.QDialog):
         self._trick_details_popup = popup
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()
@@ -557,11 +578,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             box = QtWidgets.QMessageBox(self)
             box.setWindowTitle("Disable validation?")
             box.setText(_DISABLE_VALIDATION_WARNING)
-            box.setIcon(QtWidgets.QMessageBox.Warning)
-            box.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
-            box.setDefaultButton(QtWidgets.QMessageBox.No)
+            box.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
+            box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.No)
             user_response = await async_dialog.execute_dialog(box)
-            if user_response != QtWidgets.QMessageBox.Yes:
+            if user_response != QtWidgets.QMessageBox.StandardButton.Yes:
                 self.menu_action_validate_seed_after.setChecked(True)
                 return
 
@@ -577,6 +598,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         with self._options as options:
             options.dark_mode = self.menu_action_dark_mode.isChecked()
 
+    def _on_menu_action_experimental_settings(self):
+        with self._options as options:
+            options.experimental_settings = self.menu_action_experimental_settings.isChecked()
+
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
         self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
@@ -588,9 +613,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             open_directory_in_explorer(path)
 
         except OSError:
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Game History",
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Game History",
                                         f"Previously generated games can be found at:\n{path}",
-                                        QtWidgets.QMessageBox.Ok, self)
+                                        QtWidgets.QMessageBox.StandardButton.Ok, self)
             box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             box.show()
 
@@ -600,9 +625,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             open_directory_in_explorer(path)
 
         except OSError:
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Logs",
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Logs",
                                         f"Randovania logs can be found at:\n{path}",
-                                        QtWidgets.QMessageBox.Ok, self)
+                                        QtWidgets.QMessageBox.StandardButton.Ok, self)
             box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             box.show()
 
@@ -637,11 +662,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.help_window.show()
 
     def _on_menu_action_changelog(self):
-        if self.changelog_tab is None:
+        if self.all_change_logs is None:
             return
         
         if self.changelog_window is None:
+            from randovania.gui.widgets.changelog_widget import ChangeLogWidget
+            self.changelog_tab = ChangeLogWidget(self.all_change_logs)
             self.changelog_window = self._create_generic_window(self.changelog_tab, "Change Log")
+
         self.changelog_window.show()
 
     def _on_menu_action_about(self):
@@ -656,7 +684,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.dependencies_window is None:
             self.dependencies_window = self._create_generic_window(DependenciesWidget(), "Dependencies")
         self.dependencies_window.show()
-
 
     def _on_click_help_link(self, link: str):
         tab_name = re.match(r"^help://(.+)$", link).group(1)

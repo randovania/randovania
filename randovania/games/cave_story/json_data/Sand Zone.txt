@@ -1,6 +1,5 @@
 ----------------
 Sand Zone
-(Valid Starting Location)
 Extra - map_name: Sand
 Extra - starting_script: <TRA0010:0099:0036:0033
 > Door to Jenka's House; Heals? False
@@ -9,7 +8,7 @@ Extra - starting_script: <TRA0010:0099:0036:0033
   > Outside Jenka's House
       Trivial
 
-> Teleporter to Arthur's House; Heals? False; Spawn Point
+> Teleporter to Arthur's House; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Teleporter to Arthur's House/Teleporter to Sand Zone
   > Outside Sand Zone Residence
@@ -54,7 +53,7 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 
 > Pickup (Polish Spot); Heals? False
   * Layers: default
-  * Pickup 57; Major Location? False
+  * Pickup 57; Category? Minor
   * Extra - event: 0502
   > Above Sunstones
       Trivial
@@ -80,14 +79,14 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 
 > Pickup (Pawprint Spot); Heals? False
   * Layers: default
-  * Pickup 58; Major Location? False
+  * Pickup 58; Category? Minor
   * Extra - event: 0503
   > Pawprint Spot
       Trivial
 
 > Pickup (Puppy (Chest)); Heals? False
   * Layers: default
-  * Pickup 59; Major Location? False
+  * Pickup 59; Category? Minor
   * Extra - event: 0423
   > Pawprint Spot
       Trivial
@@ -100,14 +99,14 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 
 > Pickup (Puppy (Run)); Heals? False
   * Layers: default
-  * Pickup 60; Major Location? False
+  * Pickup 60; Category? Minor
   * Extra - event: 0422
   > Lower Side
       Trivial
 
 > Pickup (Puppy (Sleep)); Heals? False
   * Layers: default
-  * Pickup 61; Major Location? False
+  * Pickup 61; Category? Minor
   * Extra - event: 0421
   > Outside Sand Zone Storehouse
       Trivial
@@ -287,10 +286,9 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 
 ----------------
 Sand Zone Residence
-(Valid Starting Location)
 Extra - map_name: Curly
 Extra - starting_script: <TRA0029:0090:0018:0009
-> Door to Sand Zone; Heals? False; Spawn Point
+> Door to Sand Zone; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Sand Zone/Door to Sand Zone Residence
   > Pickup (Curly Boss)
@@ -310,7 +308,7 @@ Extra - starting_script: <TRA0029:0090:0018:0009
 
 > Pickup (Curly Boss); Heals? False
   * Layers: default
-  * Pickup 62; Major Location? False
+  * Pickup 62; Category? Minor
   * Extra - event: 0518
   > Door to Sand Zone
       Trivial
@@ -332,7 +330,6 @@ Extra - starting_script: <TRA0029:0090:0018:0009
 
 ----------------
 Small Room
-(Valid Starting Location)
 Extra - map_name: CurlyS
 Extra - starting_script: <TRA0032:0094:0004:0009
 Extra - softlock_warp: 0501
@@ -348,14 +345,14 @@ Extra - softlock_warp: 0501
 
 > Pickup (Puppy (Curly)); Heals? False
   * Layers: default
-  * Pickup 63; Major Location? False
+  * Pickup 63; Category? Minor
   * Extra - event: 0401
   > Door to Sand Zone Residence
       Trivial
 
 > Pickup (Curly's Closet); Heals? False
   * Layers: default
-  * Pickup 64; Major Location? False
+  * Pickup 64; Category? Minor
   * Extra - event: 0421
   > Door to Sand Zone Residence
       Trivial
@@ -367,19 +364,18 @@ Extra - softlock_warp: 0501
   > Save Point
       Trivial
 
-> Save Point; Heals? False; Spawn Point
+> Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Refill
       Trivial
 
 ----------------
 Jenka's House
-(Valid Starting Location)
 Extra - map_name: Jenka2
 Extra - starting_script: <EVE0+10
 Extra - softlock_maps: ['Jenka1', 'Jenka2']
 Extra - softlock_warp: 0501
-> Door to Sand Zone; Heals? False; Spawn Point
+> Door to Sand Zone; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Sand Zone/Door to Jenka's House
   > Pickup (Jenka)
@@ -393,7 +389,7 @@ Extra - softlock_warp: 0501
 
 > Pickup (Jenka); Heals? False
   * Layers: default
-  * Pickup 65; Major Location? False
+  * Pickup 65; Category? Minor
   * Extra - event: 0221
   > Door to Sand Zone
       Trivial
@@ -433,7 +429,6 @@ Extra - softlock_warp: 0501
 
 ----------------
 Deserted House
-(Valid Starting Location)
 Extra - map_name: Dark
 Extra - starting_script: <TRA0034:0094:0012:0011
 > Door to Sand Zone; Heals? False
@@ -446,12 +441,12 @@ Extra - starting_script: <TRA0034:0094:0012:0011
 
 > Pickup (Puppy (Dark)); Heals? False
   * Layers: default
-  * Pickup 66; Major Location? False
+  * Pickup 66; Category? Minor
   * Extra - event: 0401
   > Door to Sand Zone
       Trivial
 
-> Save Point; Heals? False; Spawn Point
+> Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Door to Sand Zone
       Trivial
@@ -459,7 +454,7 @@ Extra - starting_script: <TRA0034:0094:0012:0011
 ----------------
 Sand Zone Storehouse
 Extra - map_name: Gard
-> Entrance from Sand Zone; Heals? False; Spawn Point
+> Entrance from Sand Zone; Heals? False; Default Node
   * Layers: default
   * Entrance to Sand Zone/Exit to Sand Zone Storehouse
   > Before Toroko+
@@ -483,7 +478,7 @@ Extra - map_name: Gard
 
 > Pickup (King); Heals? False
   * Layers: default
-  * Pickup 67; Major Location? False
+  * Pickup 67; Category? Minor
   * Extra - event: 0602
   > Exit to Labyrinth I
       Trivial

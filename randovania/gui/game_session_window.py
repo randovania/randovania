@@ -12,6 +12,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
+import randovania
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -20,7 +21,7 @@ from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
-from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, file_prompts
+from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
@@ -182,7 +183,6 @@ class ItemTrackerDock(QtWidgets.QDockWidget):
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         self.on_close()
         return super().closeEvent(event)
-
 
 
 _PRESET_COLUMNS = 3
@@ -532,7 +532,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if self._preset_manager.is_included_preset_uuid(old_preset.uuid):
             old_preset = old_preset.fork()
 
-        editor = PresetEditor(old_preset)
+        editor = PresetEditor(old_preset, self._options)
         self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
@@ -579,10 +579,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await self._do_import_preset(row_index, preset)
 
     async def _do_import_preset(self, row_index: int, preset: VersionedPreset):
-        if incompatible := preset.get_preset().settings_incompatible_with_multiworld():
+        message = "The following settings are incompatible with multiworld:\n"
+        incompatible = preset.get_preset().settings_incompatible_with_multiworld()
+        if not incompatible and not randovania.is_dev_version():
+            incompatible = preset.get_preset().configuration.unsupported_features()
+            message = "The following settings are unsupported:\n"
+
+        if incompatible:
             return await async_dialog.warning(
                 self, "Incompatible preset",
-                "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible),
+                message + "\n".join(incompatible),
                 async_dialog.StandardButton.Ok, async_dialog.StandardButton.Ok
             )
 
@@ -591,6 +597,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     def _row_save_preset_to_manager(self, row: RowWidget):
         row_index = self.rows.index(row)
         preset = self._game_session.presets[row_index]
+
+        if preset.is_included_preset:
+            # Nothing to do, this is an included preset
+            return
 
         if self._preset_manager.add_new_preset(preset):
             self.refresh_row_import_preset_actions()
@@ -1038,17 +1048,20 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self._generating_game = True
         try:
             layout = await self.run_in_background_async(generate_layout, "Creating a game...")
-            self.update_progress(f"Finished generating, uploading...", 100)
+            self.update_progress("Finished generating, uploading...", 100)
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 
+        except asyncio.exceptions.CancelledError:
+            pass
+
         except Exception as e:
-            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
             await self.failure_handler.handle_exception(
                 e, self.update_progress,
             )
 
         finally:
+            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
             self._generating_game = False
 
     async def clear_generated_game(self):
@@ -1117,11 +1130,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def import_layout(self):
-        json_path = await file_prompts.prompt_input_layout(self)
-        if json_path is None:
+        layout = await layout_loader.prompt_and_load_layout_description(self)
+        if layout is None:
             return
 
-        layout = LayoutDescription.from_file(json_path)
         if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):
 
             await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, True)
@@ -1355,7 +1367,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                     self.game_connection.expected_game,
                     self.game_connection.get_current_inventory(),
                     self.game_connection.current_status,
-                    self.game_connection.backend_choice,
+                    self.game_connection.connector_builder_choice,
                 )
         except UnableToConnect:
             logger.info("Unable to connect to server to update status")

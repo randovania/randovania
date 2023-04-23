@@ -128,7 +128,7 @@ class MultiworldClient(QObject):
                 await self.network_client.game_session_collect_locations(locations_to_upload)
             except (Exception, UnableToConnect) as e:
                 message = f"Exception {type(e)} when attempting to upload {len(locations_to_upload)} locations."
-                if isinstance(e, (UnableToConnect, error.NotLoggedIn, error.InvalidSession)):
+                if isinstance(e, (UnableToConnect, error.NotLoggedIn, error.InvalidSession, error.RequestTimeout)):
                     self.logger.warning(message)
                 else:
                     self.logger.exception(message)

@@ -1,7 +1,6 @@
 ----------------
 Starting Area
-(Valid Starting Location)
-> Spawn Point; Heals? False; Spawn Point
+> Spawn Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Pickup (Weapon)
       Trivial
@@ -17,10 +16,12 @@ Starting Area
       Trivial
   > Door to Blue Key Room (Entrance)
       Trivial
+  > Second Spawn Point
+      Trivial
 
 > Pickup (Weapon); Heals? False
   * Layers: default
-  * Pickup 0; Major Location? True
+  * Pickup 0; Category? Major
   > Spawn Point
       Trivial
 
@@ -32,7 +33,7 @@ Starting Area
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
-  * Pickup 1; Major Location? False
+  * Pickup 1; Category? Minor
   > Spawn Point
       Trivial
 
@@ -60,6 +61,11 @@ Starting Area
   > Spawn Point
       Trivial
 
+> Second Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Spawn Point
+      Trivial
+
 ----------------
 Boss Arena
 Extra - map_name: Square
@@ -83,7 +89,7 @@ Extra - map_name: Square
 
 > Pickup (Free Loot); Heals? False
   * Layers: extra_pickups
-  * Pickup 5; Major Location? False
+  * Pickup 5; Category? Minor
   > Door to Starting Area
       Trivial
 
@@ -100,7 +106,7 @@ Extra - map_name: Square
 
 > Pickup (Explosive); Heals? False
   * Layers: default
-  * Pickup 2; Major Location? True
+  * Pickup 2; Category? Major
   > Door to Starting Area
       Trivial
 
@@ -127,7 +133,7 @@ Extra - map_name: Square
 
 > Pickup (Extra Key); Heals? False
   * Layers: default
-  * Pickup 6; Major Location? True
+  * Pickup 6; Category? Major
   > Door to Starting Area
       Missile and Blue Key and Explosive and Weapon
 
@@ -162,11 +168,11 @@ Extra - map_name: Square
 
 > Pickup (Blue Key); Heals? False
   * Layers: default
-  * Pickup 4; Major Location? True
+  * Pickup 4; Category? Major
   > Spawn Point
       Trivial
 
-> Spawn Point; Heals? False; Spawn Point
+> Spawn Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   > Door to Starting Area (Exit)
       Trivial

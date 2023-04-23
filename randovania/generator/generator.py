@@ -5,11 +5,11 @@ from typing import Callable
 
 import tenacity
 
-from randovania.game_description.assignment import (PickupAssignment,
-                                                    PickupTarget, PickupTargetAssociation)
+from randovania.game_description.assignment import (PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, filter_unassigned_pickup_nodes)
@@ -72,64 +72,15 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
         (index, PickupTarget(pickup, player_index))
         for index, pickup in pool_results.assignment.items()
     ]
-    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_initial_items(
-        pool_results.initial_resources.as_resource_gain()
-    )
+    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_starting_pickups(pool_results.starting)
 
     return PlayerPool(
         game=game,
         game_generator=game_generator,
         configuration=configuration,
         patches=patches,
-        pickups=pool_results.pickups,
+        pickups=pool_results.to_place,
     )
-
-
-def _assign_remaining_items(rng: Random,
-                            world_list: WorldList,
-                            pickup_assignment: PickupAssignment,
-                            remaining_items: list[PickupEntry],
-                            randomization_mode: RandomizationMode,
-                            ) -> PickupAssignment:
-    """
-
-    :param rng:
-    :param world_list:
-    :param pickup_assignment:
-    :param remaining_items:
-    :return:
-    """
-
-    unassigned_pickup_nodes = list(filter_unassigned_pickup_nodes(world_list.iterate_nodes(), pickup_assignment))
-
-    num_etm = len(unassigned_pickup_nodes) - len(remaining_items)
-    if num_etm < 0:
-        raise InvalidConfiguration(
-            "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
-                                                                                         len(unassigned_pickup_nodes)))
-
-    # Shuffle the items to add and the spots to choose from
-    rng.shuffle(remaining_items)
-    rng.shuffle(unassigned_pickup_nodes)
-
-    assignment = {}
-
-    if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-        remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_etm)
-        unassigned_major_locations = [pickup_node for pickup_node in unassigned_pickup_nodes if
-                                      pickup_node.major_location]
-
-        for pickup_node, item in zip(unassigned_major_locations, remaining_majors):
-            if item is not None:
-                assignment[pickup_node.pickup_index] = item
-                remaining_items.remove(item)
-            unassigned_pickup_nodes.remove(pickup_node)
-
-    assignment.update({
-        pickup_node.pickup_index: item
-        for pickup_node, item in zip(unassigned_pickup_nodes, remaining_items)
-    })
-    return assignment
 
 
 async def _create_pools_and_fill(rng: Random,
@@ -157,20 +108,51 @@ async def _create_pools_and_fill(rng: Random,
 
 def _distribute_remaining_items(rng: Random,
                                 filler_results: FillerResults,
+                                presets: list[Preset]
                                 ) -> FillerResults:
-    unassigned_pickup_nodes = []
-    all_remaining_pickups = []
+    priority_major_pickup_nodes: list[tuple[int, PickupNode]] = []
+    unassigned_pickup_nodes: list[tuple[int, PickupNode]] = []
+    all_remaining_pickups: list[PickupTarget] = []
+    remaining_major_pickups: list[PickupTarget] = []
+
     assignments: dict[int, list[PickupTargetAssociation]] = {}
+    
+    modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
     for player, filler_result in filler_results.player_results.items():
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
                                                           filler_result.patches.pickup_assignment):
-            unassigned_pickup_nodes.append((player, pickup_node))
+            if (modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
+                    and pickup_node.location_category == LocationCategory.MAJOR):
+                priority_major_pickup_nodes.append((player, pickup_node))
+            else:
+                unassigned_pickup_nodes.append((player, pickup_node))
 
-        all_remaining_pickups.extend(zip([player] * len(filler_result.unassigned_pickups),
-                                         filler_result.unassigned_pickups))
+        for pickup in filler_result.unassigned_pickups:
+            target = PickupTarget(pickup, player)
+            if pickup.generator_params.preferred_location_category == LocationCategory.MINOR:
+                all_remaining_pickups.append(target)
+            else:
+                remaining_major_pickups.append(target)
+
         assignments[player] = []
 
+    def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget):
+        assignments[node_player].append((node.pickup_index, pickup_target))
+
+    # minor/major split
+    rng.shuffle(priority_major_pickup_nodes)
+    rng.shuffle(remaining_major_pickups)
+
+    while priority_major_pickup_nodes and remaining_major_pickups:
+        node_player, node = priority_major_pickup_nodes.pop()
+        pickup = remaining_major_pickups.pop()
+        assign_pickup(node_player, node, pickup)
+
+    unassigned_pickup_nodes.extend(priority_major_pickup_nodes)
+    all_remaining_pickups.extend(remaining_major_pickups)
+
+    # full randomization and excess majors
     rng.shuffle(unassigned_pickup_nodes)
     rng.shuffle(all_remaining_pickups)
 
@@ -181,8 +163,8 @@ def _distribute_remaining_items(rng: Random,
                 len(unassigned_pickup_nodes)
             ))
 
-    for (node_player, node), (pickup_player, pickup) in zip(unassigned_pickup_nodes, all_remaining_pickups):
-        assignments[node_player].append((node.pickup_index, PickupTarget(pickup, pickup_player)))
+    for (node_player, node), pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
+        assign_pickup(node_player, node, pickup)
 
     return dataclasses.replace(
         filler_results,
@@ -193,16 +175,6 @@ def _distribute_remaining_items(rng: Random,
             ) for player, result in filler_results.player_results.items()
         }
     )
-
-    # FIXME: ignoring major-minor randomization
-
-    # return {
-    #     index: patches.assign_pickup_assignment(
-    #         _assign_remaining_items(rng, game.world_list, patches.pickup_assignment, remaining_items,
-    #                                 configuration.randomization_mode)
-    #     )
-    #     for index, (patches, remaining_items) in _retryable_create_patches(rng, game, presets, status_update).items()
-    # }
 
 
 async def _create_description(generator_params: GeneratorParameters,
@@ -229,7 +201,7 @@ async def _create_description(generator_params: GeneratorParameters,
 
     filler_results = await retrying(_create_pools_and_fill, rng, presets, status_update)
 
-    filler_results = _distribute_remaining_items(rng, filler_results)
+    filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
 
     return LayoutDescription.create_new(

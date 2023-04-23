@@ -124,6 +124,12 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         if node in area.connections.get(node, {}):
             yield f"{area.name} - Node '{node.name}' has a connection to itself"
 
+    # make sure only one start node exists per area like before refacor. this can be removed later if a game supports it
+    start_nodes = area.get_start_nodes()
+    if len(start_nodes) > 1 and not game.game.data.multiple_start_nodes_per_area:
+        names = list(node.name for node in start_nodes)
+        yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
+
     if area.default_node is not None and area.node_with_name(area.default_node) is None:
         yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
 
@@ -193,7 +199,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         if len(components) == 1:
             node = next(iter(components))
 
-            # If the component is a single node which is the default node of it's area, allow it
+            # If the component is a single node which is the default node of its area, allow it
             area = game.world_list.nodes_to_area(node)
             if area.default_node == node.name:
                 continue

@@ -84,8 +84,14 @@ def _get_single_hud_text(pickup_name: str,
                          resources: ResourceGainTuple,
                          ) -> str:
     return memo_data[pickup_name].format(**{
-        item_names.resource_user_friendly_name(resource): quantity
-        for resource, quantity in resources
+        **{
+            item_names.resource_user_friendly_name(resource): abs(quantity)
+            for resource, quantity in resources
+        },
+        **{
+            item_names.resource_user_friendly_delta(resource): "increased" if quantity >= 0 else "decreased"
+            for resource, quantity in resources
+        }
     })
 
 
@@ -223,7 +229,7 @@ class PickupExporterMulti(PickupExporter):
                 index=original_index,
                 name=f"{other_name}'s {name}",
                 description=description,
-                collection_text=[f"Sent {pickup_target.pickup.name} to {other_name}!"],
+                collection_text=[f"Sent {name} to {other_name}!"],
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,

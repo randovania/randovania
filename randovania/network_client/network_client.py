@@ -12,12 +12,13 @@ import aiofiles
 import aiohttp
 import construct
 import engineio
+import sentry_sdk
 import socketio
 import socketio.exceptions
 
 from randovania.bitpacking import bitpacking
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import (GameSessionListEntry, GameSessionEntry, User, GameSessionActions,
@@ -200,7 +201,7 @@ class NetworkClient:
                 headers=connection_headers(),
             )
             await waiting_for_on_connect
-            self.logger.info(f"connected")
+            self.logger.info("connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
             self.logger.info(f"failed with {e} - {type(e)}")
@@ -230,9 +231,9 @@ class NetworkClient:
         return self._connect_task
 
     async def disconnect_from_server(self):
-        self.logger.debug(f"will disconnect")
+        self.logger.debug("will disconnect")
         await self.sio.disconnect()
-        self.logger.debug(f"disconnected")
+        self.logger.debug("disconnected")
 
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
@@ -251,7 +252,7 @@ class NetworkClient:
                 if self._current_game_session_meta is not None:
                     await self.game_session_request_update()
 
-                self.logger.info(f"session restored successful")
+                self.logger.info("session restored successful")
                 self.connection_state = ConnectionState.Connected
 
             except (error.InvalidSession, error.UserNotAuthorized) as e:
@@ -263,7 +264,7 @@ class NetworkClient:
                 self.connection_state = ConnectionState.ConnectedNotLogged
                 self.session_data_path.unlink()
         else:
-            self.logger.info(f"no session to restore")
+            self.logger.info("no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
@@ -296,13 +297,21 @@ class NetworkClient:
             self.notify_on_connect(socketio.exceptions.ConnectionError(error_message))
 
     async def on_disconnect(self):
-        self.logger.info(f"on_disconnect")
+        self.logger.info("on_disconnect")
         self.connection_state = ConnectionState.Disconnected
         if self._restore_session_task is not None:
             self._restore_session_task.cancel()
 
     async def on_user_session_updated(self, new_session: dict):
         self._current_user = User.from_json(new_session["user"])
+
+        if self._current_user.discord_id is not None:
+            sentry_sdk.set_user({
+                "id": self._current_user.discord_id,
+                "username": self._current_user.name,
+                "server_id": self._current_user.id,
+            })
+
         if self.connection_state in (ConnectionState.ConnectedRestoringSession, ConnectionState.ConnectedNotLogged):
             self.connection_state = ConnectionState.Connected
 
@@ -479,7 +488,7 @@ class NetworkClient:
                                             (self._current_game_session_meta.id, user_id, action.value, arg))
 
     async def session_self_update(self, game: RandovaniaGame | None, inventory: Inventory, state: GameConnectionStatus,
-                                  backend: MemoryExecutorChoice):
+                                  backend: ConnectorBuilderChoice):
 
         if game is None or state not in (GameConnectionStatus.TrackerOnly, GameConnectionStatus.InGame):
             inventory_binary = None
@@ -508,6 +517,7 @@ class NetworkClient:
         self.logger.info("Logging out")
         self.session_data_path.unlink()
         self._current_user = None
+        sentry_sdk.set_user(None)
 
         if self.connection_state != ConnectionState.Connected:
             return

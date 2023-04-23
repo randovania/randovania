@@ -5,7 +5,6 @@ from asyncio import StreamReader, StreamWriter
 
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
 
 @dataclasses.dataclass(frozen=True)
@@ -106,10 +105,6 @@ class NintendontExecutor(MemoryOperationExecutor):
     def lock_identifier(self) -> str | None:
         return None
 
-    @property
-    def backend_choice(self) -> MemoryExecutorChoice:
-        return MemoryExecutorChoice.NINTENDONT
-
     async def connect(self) -> bool:
         if self._socket is not None:
             return True
@@ -120,12 +115,12 @@ class NintendontExecutor(MemoryOperationExecutor):
             reader, writer = await asyncio.open_connection(self._ip, self._port)
 
             # Send API details request
-            self.logger.info(f"Connection open, requesting API details.")
+            self.logger.info("Connection open, requesting API details.")
 
-            writer.write(struct.pack(f">BBBB", 1, 0, 0, 1))
+            writer.write(struct.pack(">BBBB", 1, 0, 0, 1))
             await asyncio.wait_for(writer.drain(), timeout=30)
 
-            self.logger.debug(f"Waiting for API details response.")
+            self.logger.debug("Waiting for API details response.")
             response = await asyncio.wait_for(reader.read(1024), timeout=15)
             api_version, max_input, max_output, max_addresses = struct.unpack_from(">IIII", response, 0)
 
@@ -216,7 +211,7 @@ class NintendontExecutor(MemoryOperationExecutor):
         except (OSError, asyncio.TimeoutError) as e:
             if isinstance(e, asyncio.TimeoutError):
                 self.logger.warning(f"Timeout when reading response from {self._ip}")
-                self._socket_error = MemoryOperationException(f"Timeout when reading response")
+                self._socket_error = MemoryOperationException("Timeout when reading response")
             else:
                 self.logger.warning(f"Unable to send {len(requests)} requests to {self._ip}:{self._port}: {e}")
                 self._socket_error = MemoryOperationException(f"Unable to send {len(requests)} requests: {e}")

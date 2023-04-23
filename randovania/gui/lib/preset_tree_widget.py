@@ -1,4 +1,3 @@
-import dataclasses
 import uuid
 
 from PySide6 import QtWidgets, QtGui
@@ -7,7 +6,7 @@ from PySide6.QtCore import Qt
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.options import Options
-from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):

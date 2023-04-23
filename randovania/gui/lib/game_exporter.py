@@ -1,16 +1,15 @@
+import asyncio
 import logging
-import traceback
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 
 from randovania.exporter.game_exporter import GameExporter
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
-from randovania.gui.lib import common_qt_lib, async_dialog, error_message_box
+from randovania.gui.lib import async_dialog, error_message_box
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-from randovania.patching.patchers.exceptions import ExportFailure
 
 
 async def export_game(
@@ -38,10 +37,14 @@ async def export_game(
             export_params.spoiler_output.parent.mkdir(parents=True, exist_ok=True)
             layout_for_spoiler.save_to_file(export_params.spoiler_output)
 
-        progress_update(f"Finished!", 1)
+        progress_update("Finished!", 1)
 
     try:
         await background.run_in_background_async(work, "Exporting...")
+
+    except asyncio.exceptions.CancelledError:
+        pass
+
     except Exception as e:
         logging.exception("Unable to export game")
 

@@ -1,7 +1,7 @@
-import contextlib
 import dataclasses
 from pathlib import Path
 
+from randovania import monitoring
 from randovania.lib import status_update_lib
 
 
@@ -39,6 +39,7 @@ class GameExporter:
                     progress_update: status_update_lib.ProgressUpdateCallable):
         self._before_export()
         try:
-            self._do_export_game(patch_data, export_params, progress_update)
+            with monitoring.attach_patcher_data(patch_data):
+                self._do_export_game(patch_data, export_params, progress_update)
         finally:
             self._after_export()

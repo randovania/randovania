@@ -2,8 +2,8 @@ from random import Random
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
@@ -13,9 +13,9 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
-    base_results.pickups.extend(extension.pickups)
+    base_results.to_place.extend(extension.to_place)
     base_results.assignment.update(extension.assignment)
-    base_results.initial_resources.add_resource_gain(extension.initial_resources.as_resource_gain())
+    base_results.starting.extend(extension.starting)
 
 
 def calculate_pool_results(layout_configuration: BaseConfiguration,
@@ -34,7 +34,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     :param rng_required
     :return:
     """
-    base_results = PoolResults([], {}, ResourceCollection.with_database(game.resource_database))
+    base_results = PoolResults([], {}, [])
 
     # Adding major items to the pool
     _extend_pool_results(base_results, add_major_items(game.resource_database,
@@ -42,8 +42,8 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
                                                        layout_configuration.ammo_configuration))
 
     # Adding ammo to the pool
-    base_results.pickups.extend(add_ammo(game.resource_database,
-                                         layout_configuration.ammo_configuration))
+    base_results.to_place.extend(add_ammo(game.resource_database,
+                                          layout_configuration.ammo_configuration))
     try:
         layout_configuration.game.generator.item_pool_creator(
             base_results, layout_configuration, game, base_patches, rng,
@@ -68,7 +68,30 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> tuple[int, int]:
                                           rng_required=False)
     min_starting_items = layout.major_items_configuration.minimum_random_starting_items
 
-    pool_count = len(pool_results.pickups) + len(pool_results.assignment)
+    pool_count = len(pool_results.to_place) + len(pool_results.assignment)
     maximum_size = num_pickup_nodes + min_starting_items
 
     return pool_count, maximum_size
+
+
+def calculate_split_pool_item_count(layout: BaseConfiguration) -> tuple[tuple[int, int], tuple[int, int]]:
+    """
+    Calculate how many pickups are needed for given layout, with how many spots are there. Split by major/minor.
+    :param layout:
+    :return:
+    """
+    game_description = filtered_database.game_description_for_layout(layout)
+
+    pickup_nodes = [node for node in game_description.world_list.iterate_nodes()
+                    if isinstance(node, PickupNode)]
+    num_major_nodes = sum(1 for node in pickup_nodes if node.location_category == LocationCategory.MAJOR)
+    num_minor_nodes = len(pickup_nodes) - num_major_nodes
+
+    pool_results = calculate_pool_results(layout, game_description,
+                                          rng_required=False)
+    all_pickups = pool_results.to_place + list(pool_results.assignment.values())
+    minor_count = sum(1 for pickup in all_pickups
+                      if pickup.generator_params.preferred_location_category == LocationCategory.MINOR)
+    major_count = len(all_pickups) - minor_count
+
+    return (major_count, num_major_nodes), (minor_count, num_minor_nodes)

@@ -76,17 +76,33 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         for weakness in weaknesses.values():
             dock_weakness_to_type[weakness] = dock_type
 
+    if isinstance(patches.starting_equipment, ResourceCollection):
+        equipment_name = "items"
+        equipment_value = {
+            resource_info.long_name: quantity
+            for resource_info, quantity in patches.starting_equipment.as_resource_gain()
+        }
+    else:
+        equipment_name = "pickups"
+        equipment_value = [
+            pickup.name
+            for pickup in patches.starting_equipment
+        ]
+
     result = {
         # This field helps schema migrations, if nothing else
         "game": patches.configuration.game.value,
-        "starting_location": patches.starting_location.as_string,
-        "starting_items": {
-            resource_info.long_name: quantity
-            for resource_info, quantity in patches.starting_items.as_resource_gain()
+        "starting_equipment": {
+            equipment_name: equipment_value,
         },
+        "starting_location": patches.starting_location.as_string,
         "teleporters": {
             source.identifier.as_string: connection.as_string
             for source, connection in patches.all_elevator_connections()
+        },
+        "dock_connections": {
+            dock.identifier.as_string: target.identifier.as_string
+            for dock, target in patches.all_dock_connections()
         },
         "dock_weakness": {
             dock.identifier.as_string: {
@@ -131,6 +147,12 @@ def _find_pickup_with_name(item_pool: list[PickupEntry], pickup_name: str) -> Pi
     raise ValueError(f"Unable to find a pickup with name {pickup_name}. Possible values: {sorted(names)}")
 
 
+def _get_pickup_from_pool(pickup_list: list[PickupEntry], name: str) -> PickupEntry:
+    pickup = _find_pickup_with_name(pickup_list, name)
+    pickup_list.remove(pickup)
+    return pickup
+
+
 def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: GameDescription,
                   game_modifications: dict, configuration: BaseConfiguration) -> GamePatches:
     """
@@ -151,13 +173,23 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     initial_pickup_assignment = all_pools[player_index].assignment
 
     # Starting Location
-    starting_location = AreaIdentifier.from_string(game_modifications["starting_location"])
+    starting_location = NodeIdentifier.from_string(game_modifications["starting_location"])
 
-    # Initial items
-    starting_items = ResourceCollection.from_dict(game.resource_database, {
-        find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
-        for resource_name, quantity in game_modifications["starting_items"].items()
-    })
+    # Starting Equipment
+    if "items" in game_modifications["starting_equipment"]:
+        starting_equipment = ResourceCollection.from_dict(game.resource_database, {
+            find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
+            for resource_name, quantity in game_modifications["starting_equipment"]["items"].items()
+        })
+    else:
+        player_pool = all_pools[player_index]
+        starting_equipment = []
+        for starting in game_modifications["starting_equipment"]["pickups"]:
+            try:
+                pickup = _get_pickup_from_pool(player_pool.starting, starting)
+            except ValueError:
+                pickup = _get_pickup_from_pool(player_pool.to_place, starting)
+            starting_equipment.append(pickup)
 
     # Elevators
     elevator_connection = [
@@ -166,11 +198,19 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
         for source_name, target_name in game_modifications["teleporters"].items()
     ]
 
-    # Dock Weakness
+    # Dock Connection
     def get_dock(ni: NodeIdentifier):
         result = game.world_list.node_by_identifier(ni)
         assert isinstance(result, DockNode)
         return result
+
+    dock_connections = [
+        (get_dock(NodeIdentifier.from_string(source_name)),
+         get_dock(NodeIdentifier.from_string(target_name)))
+        for source_name, target_name in game_modifications["dock_connections"].items()
+    ]
+
+    # Dock Weakness
 
     dock_weakness = [
         (get_dock(NodeIdentifier.from_string(source_name)),
@@ -213,9 +253,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
                     raise ValueError(f"{area_node_name} should be vanilla based on configuration")
 
             elif pickup_name != _ETM_NAME:
-                configuration_item_pool = all_pools[target_player].pickups
-                pickup = _find_pickup_with_name(configuration_item_pool, pickup_name)
-                configuration_item_pool.remove(pickup)
+                pickup = _get_pickup_from_pool(all_pools[target_player].to_place, pickup_name)
             else:
                 pickup = None
 
@@ -228,14 +266,15 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
         hints[NodeIdentifier.from_string(identifier_str)] = Hint.from_json(hint)
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
+    patches = patches.assign_dock_connections(dock_connections)
     patches = patches.assign_dock_weakness(dock_weakness)
     patches = patches.assign_elevators(elevator_connection)
     return dataclasses.replace(
         patches,
         pickup_assignment=pickup_assignment,  # PickupAssignment
         configurable_nodes=configurable_nodes,
-        starting_items=starting_items,  # ResourceGainTuple
-        starting_location=starting_location,  # AreaIdentifier
+        starting_equipment=starting_equipment,
+        starting_location=starting_location,  # NodeIdentifier
         hints=hints,
     )
 

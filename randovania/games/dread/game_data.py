@@ -57,7 +57,10 @@ game_data: game.GameData = game.GameData(
     presets=[
         {
             "path": "starter_preset.rdvpreset"
-        }
+        },
+        {
+            "path": "april_fools_2023.rdvpreset"
+        },
     ],
 
     faq=[
@@ -92,7 +95,8 @@ game_data: game.GameData = game.GameData(
         ( 	
             "I picked up the Speed Booster / Phantom Cloak / Storm Missile but can't use them!",
             "Press ZL + ZR + D-Pad Up to fix the issue." 
-            " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab for important rules of when to use this button combination.\n\n"
+            " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab"
+            " for important rules of when to use this button combination.\n\n"
             "You can also save and reload your game."
         ),
         ( 	
@@ -122,4 +126,6 @@ game_data: game.GameData = game.GameData(
     patch_data_factory=_patch_data_factory,
 
     exporter=_exporter,
+
+    multiple_start_nodes_per_area=True,
 )
