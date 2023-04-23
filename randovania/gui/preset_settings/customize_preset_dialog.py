@@ -36,6 +36,8 @@ class PresetTabRoot(QtWidgets.QWidget):
             self.root_layout.addWidget(self.current_tab)
             self.current_tab.on_preset_changed(editor.create_custom_preset_with())
             self.owner.set_visible_tab(self)
+            self.current_tab.update_experimental_visibility()
+            self.owner.update_experimental_visibility()
 
         return super().showEvent(arg)
 
@@ -78,6 +80,16 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self.name_edit.textEdited.connect(self._edit_name)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
+
+    def update_experimental_visibility(self):
+        for (parent, tabs) in [
+            (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]),
+            (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]),
+        ]:
+            for i in range(0, parent.count()):
+                tab = tabs[i]
+                visible = (self.editor._options.experimental_settings or not tab.is_experimental())
+                parent.setTabVisible(i, visible)
 
     def set_visible_tab(self, tab: PresetTabRoot):
         if tab != self._current_tab:

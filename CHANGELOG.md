@@ -9,11 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
 - Changed: The resolver now allows dangerous resources in additional resources.
+- Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please selected `Advanced > Show Experimental Settings`.
 
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
+- Changed: Divided the "Other" tab into "Quality of Life" and "Chaos".
+- Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement.
 
 #### Logic Database
 
@@ -54,6 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
 - Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
+- Changed: Reduced the difficulty of the walljump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
+- Changed: Using Walljump Advanded to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
 - Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
 
