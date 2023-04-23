@@ -24,22 +24,22 @@ class DreadArtifactConfig(BitPackDataclass, JsonDataclass):
 
 
 class DreadRavenBeakDamageMode(BitPackEnum, Enum):
-    DISABLED = "disabled"
-    NERF_ALL = "nerf_all"
-    BUFF_FINAL = "buff_final"
+    UNMODIFIED = "unmodified"
+    CONSISTENT_LOW = "consistent_low"
+    CONSISTENT_HIGH = "consistent_high"
 
     @property
     def long_name(self) -> str:
-        if self == DreadRavenBeakDamageMode.DISABLED:
-            return "Vanilla damage values"
-        elif self == DreadRavenBeakDamageMode.NERF_ALL:
-            return "Nerf all weapons uniformly"
-        elif self == DreadRavenBeakDamageMode.BUFF_FINAL:
-            return "Buff Wave/Ice to match Plasma/Supers"
+        if self == DreadRavenBeakDamageMode.UNMODIFIED:
+            return "Unmodified"
+        elif self == DreadRavenBeakDamageMode.CONSISTENT_LOW:
+            return "Consistent, with damage reduction"
+        elif self == DreadRavenBeakDamageMode.CONSISTENT_HIGH:
+            return "Consistent, without damage reduction"
 
     @property
     def is_default(self) -> bool:
-        return self == DreadRavenBeakDamageMode.NERF_ALL
+        return self == DreadRavenBeakDamageMode.CONSISTENT_LOW
 
 
 @dataclasses.dataclass(frozen=True)
@@ -50,7 +50,7 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_shortcut_no_grapple: bool
     hanubia_easier_path_to_itorash: bool
     x_starts_released: bool
-    consistent_raven_beak_damage_table: DreadRavenBeakDamageMode
+    raven_beak_damage_table_handling: DreadRavenBeakDamageMode
     allow_highly_dangerous_logic: bool
     april_fools_hints: bool
     artifacts: DreadArtifactConfig

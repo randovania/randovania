@@ -22,7 +22,7 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         config = typing.cast(DreadConfiguration, editor.configuration)
-        self._orig_rb_damage_mode: DreadRavenBeakDamageMode = config.consistent_raven_beak_damage_table
+        self._orig_rb_damage_mode: DreadRavenBeakDamageMode = config.raven_beak_damage_table_handling
         self.setupUi(self)
 
         # Signals
@@ -30,8 +30,8 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
             self._add_persist_option(getattr(self, f"{f}_check"), f)
 
         signal_handling.on_checked(
-            self.consistent_raven_beak_damage_table_check,
-            self._on_consistent_raven_beak_damage_table_changed)
+            self.raven_beak_damage_table_handling_check,
+            self._on_raven_beak_damage_table_handling_changed)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -48,17 +48,17 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
 
         signal_handling.on_checked(check, persist)
 
-    def _on_consistent_raven_beak_damage_table_changed(self, value: bool):
+    def _on_raven_beak_damage_table_handling_changed(self, value: bool):
         checked_value = (
-            DreadRavenBeakDamageMode.DISABLED
-            if self._orig_rb_damage_mode == DreadRavenBeakDamageMode.DISABLED
-            else DreadRavenBeakDamageMode.BUFF_FINAL
+            DreadRavenBeakDamageMode.UNMODIFIED
+            if self._orig_rb_damage_mode == DreadRavenBeakDamageMode.UNMODIFIED
+            else DreadRavenBeakDamageMode.CONSISTENT_HIGH
         )
 
         with self._editor as editor:
             editor.set_configuration_field(
-                "consistent_raven_beak_damage_table",
-                checked_value if value else DreadRavenBeakDamageMode.NERF_ALL)
+                "raven_beak_damage_table_handling",
+                checked_value if value else DreadRavenBeakDamageMode.CONSISTENT_LOW)
 
     def on_preset_changed(self, preset: Preset):
         config = typing.cast(DreadConfiguration, preset.configuration)
@@ -66,6 +66,6 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
 
-        self._orig_rb_damage_mode = config.consistent_raven_beak_damage_table
-        self.consistent_raven_beak_damage_table_check.setChecked(
-            not config.consistent_raven_beak_damage_table.is_default)
+        self._orig_rb_damage_mode = config.raven_beak_damage_table_handling
+        self.raven_beak_damage_table_handling_check.setChecked(
+            not config.raven_beak_damage_table_handling.is_default)
