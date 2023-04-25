@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The resolver now allows dangerous resources in additional resources.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please selected `Advanced > Show Experimental Settings`.
 
+### Cave Story
+
+- Changed: Rest Area in Plantation is now internally called "Lounge" instead of "lounge" to prevent crahses occurring when exporting on Linux.
+
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
