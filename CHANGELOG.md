@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Energy Tanks are now considered major items in Major/Minor split. 
 
+### Cave Story
+
+- Changed: Rest Area in Plantation is now internally called "Lounge" instead of "lounge" to prevent crahses occurring when exporting on Linux.
+
 ### Metroid Prime
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
