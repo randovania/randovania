@@ -119,7 +119,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
                     self.game_connection_setup.on_game_connection_updated()
                 else:
                     self.connection_status_label.setText("{}: Wrong Game ({})".format(
-                        self.game_connection.backend_choice.pretty_text,
+                        self.game_connection.connector_builder_choice.pretty_text,
                         self.game_connection.current_game_name,
                     ))
         finally:

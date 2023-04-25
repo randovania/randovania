@@ -41,7 +41,7 @@ def item_database_for_game(game: RandovaniaGame):
                                        game)
 
 
-def write_item_database_for_game(item_db: item_database, game: RandovaniaGame):
+def write_item_database_for_game(item_db: item_database.ItemDatabase, game: RandovaniaGame):
     _write_item_database_in_path(item_db, game.data_path.joinpath("item_database"))
 
 

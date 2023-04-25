@@ -21,7 +21,6 @@ from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,
-                               dangerous_resources: frozenset[ResourceInfo],
                                ) -> RequirementList | None:
     items = []
     for item in self.values():
@@ -36,19 +35,16 @@ def _simplify_requirement_list(self: RequirementList, state: State,
         if item.resource.resource_type == ResourceType.NODE_IDENTIFIER:
             continue
 
-        if item.resource not in dangerous_resources:
-            # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
-            items.append(item)
+        items.append(item)
 
     return RequirementList(items)
 
 
 def _simplify_additional_requirement_set(requirements: RequirementSet,
                                          state: State,
-                                         dangerous_resources: frozenset[ResourceInfo],
                                          ) -> RequirementSet:
     new_alternatives = [
-        _simplify_requirement_list(alternative, state, dangerous_resources)
+        _simplify_requirement_list(alternative, state)
         for alternative in requirements.alternatives
     ]
     return RequirementSet(alternative
@@ -71,7 +67,8 @@ def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
 
     if isinstance(pickup_node, PickupNode):
         target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        return target is not None and (target.pickup.item_category.is_major or target.pickup.item_category.is_key)
+        return target is not None and (target.pickup.item_category.hinted_as_major or
+                                       target.pickup.item_category.is_key)
     return False
 
 
@@ -213,9 +210,7 @@ async def _inner_advance_depth(state: State,
 
     logic.set_additional_requirements(
         state.node,
-        _simplify_additional_requirement_set(additional_requirements,
-                                             state,
-                                             logic.game.dangerous_resources)
+        _simplify_additional_requirement_set(additional_requirements, state)
     )
     debug.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
 

@@ -145,13 +145,15 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [Arcanox](https://twitter.com/ArcanoxDragon)
   * [Migs](https://www.twitch.tv/migslive)
   * [hyperbola0](https://github.com/steven11sjf)
+  * [Thanatos](https://github.com/ThanatosGit)
 
 * Logic Database by:
   * [KirbymastaH](https://www.twitch.tv/kirbymastah)
   * [Dyceron](https://www.twitch.tv/dyceron)
   * [XenoWars](https://www.twitch.tv/xenowars1)
-  * [Izzychu](https://github.com/Isachu)
+  * [Mayberry](https://github.com/Isachu)
   * [Hugoshido](https://twitch.tv/hugoshido)
+  * [Tyranisaur](https://github.com/Tyranisaur)
 
 * Assets by:
   * Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ).

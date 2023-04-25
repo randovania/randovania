@@ -9,7 +9,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 
 @pytest.fixture(name="editor")
 def _editor() -> PresetEditor:
-    return PresetEditor(MagicMock())
+    return PresetEditor(MagicMock(), MagicMock())
 
 
 _sample_layout_configurations = [

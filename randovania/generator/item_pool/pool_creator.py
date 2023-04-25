@@ -2,6 +2,8 @@ from random import Random
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
@@ -70,3 +72,26 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> tuple[int, int]:
     maximum_size = num_pickup_nodes + min_starting_items
 
     return pool_count, maximum_size
+
+
+def calculate_split_pool_item_count(layout: BaseConfiguration) -> tuple[tuple[int, int], tuple[int, int]]:
+    """
+    Calculate how many pickups are needed for given layout, with how many spots are there. Split by major/minor.
+    :param layout:
+    :return:
+    """
+    game_description = filtered_database.game_description_for_layout(layout)
+
+    pickup_nodes = [node for node in game_description.world_list.iterate_nodes()
+                    if isinstance(node, PickupNode)]
+    num_major_nodes = sum(1 for node in pickup_nodes if node.location_category == LocationCategory.MAJOR)
+    num_minor_nodes = len(pickup_nodes) - num_major_nodes
+
+    pool_results = calculate_pool_results(layout, game_description,
+                                          rng_required=False)
+    all_pickups = pool_results.to_place + list(pool_results.assignment.values())
+    minor_count = sum(1 for pickup in all_pickups
+                      if pickup.generator_params.preferred_location_category == LocationCategory.MINOR)
+    major_count = len(all_pickups) - minor_count
+
+    return (major_count, num_major_nodes), (minor_count, num_minor_nodes)

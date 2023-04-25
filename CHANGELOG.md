@@ -7,7 +7,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.7.0] - 2023-05-??
 
-- Nothing yet.
+- Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
+- Changed: The resolver now allows dangerous resources in additional resources.
+- Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please selected `Advanced > Show Experimental Settings`.
+
+### Cave Story
+
+- Changed: Rest Area in Plantation is now internally called "Lounge" instead of "lounge" to prevent crahses occurring when exporting on Linux.
+
+### Metroid Prime
+
+- Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
+- Changed: Divided the "Other" tab into "Quality of Life" and "Chaos".
+- Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement.
+
+#### Logic Database
+
+- Fixed: The Artifact of Truth pickup is now a major location for Major/Minor split.
+
+### Metroid Prime 2: Echoes
+
+- Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
+
+#### Logic Database
+
+- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
+
+### Metroid Dread
+
+- **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
+- Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
+- Added: Ice Missile Cover and Diffusion Beam Cover can now be added to door lock randomizer
+- Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
+
+#### Patcher Changes
+
+- Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+
+#### Logic Database
+
+- Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
+- Added: Movement (Intermediate) and Water Bomb Jump (Intermediate) for getting out of the water at the same spot.
+- Added: Grapple Movement (Beginner) for the Grapple only method of reaching the Missile Tank in Main Hub Tower Top.
+- Added: Use Speedbooster to skip breaking the blob submerged in water in Artaria Early Cloak room, requires SpeedBooster Conservation (Beginner).
+- Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
+- Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
+- Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
+- Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
+- Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
+- Changed: Reduced the difficulty of the walljump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
+- Changed: Using Walljump Advanded to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
+- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
+- Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
+
+### Metroid Prime
+
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+
+### Metroid Prime 2: Echoes
+
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 
 ## [5.6.1] - 2023-04-??
 

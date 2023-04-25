@@ -294,7 +294,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ])
 
         return text
-    
+
     def _credits_spoiler(self) -> dict[str, str]:
         return credits_spoiler.generic_credits(
             self.configuration.major_items_configuration,
@@ -302,6 +302,25 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             self.players_config,
             DreadHintNamer(self.description.all_patches, self.players_config),
         )
+
+    def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
+        # generate a 2D dictionary of (scenario, collision camera) => room name
+        all_dict: dict = {}
+        for world in self.game.world_list.worlds:
+            scenario = world.extra["scenario_id"]
+            world_dict: dict = {}
+
+            for area in world.areas:
+                world_dict[area.extra["asset_id"]] = area.name
+            
+            all_dict[scenario] = world_dict
+        
+        # fix Burenia Main Tower and Golzuna Tower
+        all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
+        all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
+
+        return all_dict
+
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
@@ -316,8 +335,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             },
             "lua": {
                 "custom_init": {
-                    "enable_death_counter": c.show_death_counter
+                    "enable_death_counter": c.show_death_counter,
+                    "enable_room_name_display": c.show_room_names.value,
                 },
+                "camera_names_dict": self._build_area_name_dict()
             },
         }
 
@@ -335,7 +356,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             if "actor_name" not in node.extra:
                 print(f"Invalid door (no actor): {node}")
                 continue
-            
+
             result.append({
                 "actor": (actor := self._teleporter_ref_for(node)),
                 "door_type": (door_type := weakness.extra["type"]),
@@ -456,8 +477,8 @@ class DreadAcquiredMemo(dict):
     @classmethod
     def with_expansion_text(cls):
         result = cls()
-        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missiles}."
-        result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity increased by {Missiles}."
+        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."
+        result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bombs}."
         result["Energy Part"] = "Energy Part acquired.\nCollect 4 to increase energy capacity."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."

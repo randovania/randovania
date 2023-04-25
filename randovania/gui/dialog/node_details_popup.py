@@ -8,6 +8,7 @@ from qasync import asyncSlot
 from randovania.game_description import integrity_check
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -87,6 +88,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for dock_type in enum_lib.iterate_enum(HintNodeKind):
             self.hint_kind_combo.addItem(dock_type.long_name, dock_type)
 
+        # Pickup
+        for category in enum_lib.iterate_enum(LocationCategory):
+            self.location_category_combo.addItem(category.long_name, category)
+
+        # Teleporter
         self.set_teleporter_network_unlocked_by(Requirement.trivial())
 
         # Signals
@@ -181,7 +187,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def fill_for_pickup(self, node: PickupNode):
         self.pickup_index_spin.setValue(node.pickup_index.index)
-        self.major_location_check.setChecked(node.major_location)
+        signal_handling.combo_set_to_value(self.location_category_combo, node.location_category)
 
     def fill_for_teleporter(self, node: TeleporterNode):
         world = self.game.world_list.world_by_area_location(node.default_connection)
@@ -373,7 +379,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return PickupNode(
                 identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 PickupIndex(self.pickup_index_spin.value()),
-                self.major_location_check.isChecked(),
+                location_category=self.location_category_combo.currentData(),
             )
 
         elif node_type == TeleporterNode:

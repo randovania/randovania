@@ -29,7 +29,7 @@ Extra - asset_id: collision_camera_000
   > Elevator to Burenia - Transport to Ghavoran
       Trivial
 
-> Elevator to Burenia - Transport to Ghavoran; Heals? False; Spawn Point; Default Node
+> Elevator to Burenia - Transport to Ghavoran; Heals? False; Default Node
   * Layers: default
   * Teleporter to Burenia - Transport to Ghavoran
   * Extra - actor_name: elevator_aqua_000
@@ -92,7 +92,7 @@ Extra - asset_id: collision_camera_001
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 97; Major Location? False
+  * Pickup 97; Category? Minor
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Transport to Burenia
@@ -134,7 +134,7 @@ Extra - asset_id: collision_camera_001
   > Door to Super Missile Room
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoRobotForest
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -195,7 +195,7 @@ Extra - asset_id: collision_camera_002
           After Elun - Release X Parasites
           Before Elun - Release X Parasites and Fight Gold Robot
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoRobotSoldier
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -257,7 +257,7 @@ Extra - asset_id: collision_camera_003
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 108; Major Location? False
+  * Pickup 108; Category? Minor
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Transport to Burenia
@@ -395,7 +395,7 @@ Extra - asset_id: collision_camera_005
   > Dock to Blue EMMI Introduction
       Trivial
 
-> Start Point 2; Heals? False; Spawn Point; Default Node
+> Start Point 2; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_AccessPoint_7
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -418,7 +418,7 @@ Extra - asset_id: collision_camera_006
   * Extra - right_shield_def: None
   > Door to Flipper Room
       Trivial
-  > Navigation Room
+  > Save Station
       Trivial
 
 > Door to Flipper Room; Heals? False
@@ -433,7 +433,7 @@ Extra - asset_id: collision_camera_006
   > Door to Navigation Station Access
       Trivial
 
-> Navigation Room; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: accesspoint_000
@@ -486,7 +486,7 @@ Extra - asset_id: collision_camera_007
   > Tunnel to Spider Magnet Elevator
       Before Ghavoran - Super Missile Rotatable
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_AccessPoint_7B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -566,7 +566,7 @@ Extra - asset_id: collision_camera_008
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 99; Major Location? False
+  * Pickup 99; Category? Minor
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Super Missile Room Access
@@ -640,7 +640,7 @@ Extra - asset_id: collision_camera_009
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 102; Major Location? True
+  * Pickup 102; Category? Major
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Tunnel to Super Missile Room
@@ -716,14 +716,14 @@ Extra - asset_id: collision_camera_010
 
 > Pickup (Super Missile); Heals? False
   * Layers: default
-  * Pickup 100; Major Location? True
+  * Pickup 100; Category? Major
   * Extra - actor_name: itemsphere_supermissile
   * Extra - actor_def: actordef:actors/items/itemsphere_supermissile/charclasses/itemsphere_supermissile.bmsad
   * Extra - map_icon_actor: powerup_supermissile
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_SuperMissiles
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -886,10 +886,10 @@ Extra - asset_id: collision_camera_013
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
-  > Map Station
+  > Save Station
       Trivial
 
-> Map Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: maproom
   * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
@@ -1060,7 +1060,7 @@ Central Unit
 Extra - total_boundings: {'x1': -9100.0, 'x2': -7000.0, 'y1': 4100.0, 'y2': 5242.0}
 Extra - polygon: [[-7000.0, 5242.0], [-9100.0, 5242.0], [-9100.0, 4100.0], [-7000.0, 4100.0]]
 Extra - asset_id: collision_camera_017
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyForestPhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1191,7 +1191,7 @@ Extra - asset_id: collision_camera_019
   > Dock to Central Unit
       Trivial
 
-> Room Center; Heals? False; Spawn Point; Default Node
+> Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_IceMissiles
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1228,7 +1228,7 @@ Extra - asset_id: collision_camera_019
 
 > Pickup (Ice Missile); Heals? False
   * Layers: default
-  * Pickup 146; Major Location? True
+  * Pickup 146; Category? Major
   * Extra - pickup_type: emmi
   * Extra - actor_def: actors/characters/emmyforest/charclasses/emmyforest.bmsad
   * Extra - string_key: GUI_ITEM_ACQUIRED_ICE_MISSILE
@@ -1373,7 +1373,7 @@ Extra - asset_id: collision_camera_021
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 96; Major Location? False
+  * Pickup 96; Category? Minor
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Ledge Below PB Tank
@@ -1405,7 +1405,7 @@ Extra - asset_id: collision_camera_021
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 105; Major Location? False
+  * Pickup 105; Category? Minor
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to Save Station Center
@@ -1413,7 +1413,7 @@ Extra - asset_id: collision_camera_021
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 109; Major Location? True
+  * Pickup 109; Category? Major
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > E-Tank Alcove
@@ -1531,7 +1531,7 @@ Extra - asset_id: collision_camera_022
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_000
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -1574,7 +1574,7 @@ Extra - asset_id: collision_camera_023
   > Event - Chozo-X
       After Ghavoran - Chozo-X Trigger and Fight Chozo-X
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1672,7 +1672,7 @@ Extra - asset_id: collision_camera_024
   > Teleporter to Cataris
       Trivial
 
-> Teleporter to Cataris; Heals? False; Spawn Point; Default Node
+> Teleporter to Cataris; Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Teleport to Ghavoran
   * Extra - actor_name: teleporter_magma_000
@@ -1686,7 +1686,7 @@ Extra - asset_id: collision_camera_024
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 112; Major Location? False
+  * Pickup 112; Category? Minor
   * Extra - actor_name: item_energyfragment
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to Energy Recharge Station
@@ -1694,7 +1694,7 @@ Extra - asset_id: collision_camera_024
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 113; Major Location? False
+  * Pickup 113; Category? Minor
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Save Station East
@@ -1749,7 +1749,7 @@ Teleport to Burenia
 Extra - total_boundings: {'x1': 4000.0, 'x2': 7100.0, 'y1': 870.0, 'y2': 3190.0}
 Extra - polygon: [[7100.0, 3190.0], [4000.0, 3190.0], [4000.0, 870.0], [6400.0, 870.0], [6400.0, 2000.0], [7100.0, 2000.0]]
 Extra - asset_id: collision_camera_024
-> Teleporter to Burenia - Teleport to Ghavoran; Heals? False; Spawn Point; Default Node
+> Teleporter to Burenia - Teleport to Ghavoran; Heals? False; Default Node
   * Layers: default
   * Teleporter to Burenia - Teleport to Ghavoran
   * Extra - actor_name: teleporter_aqua_000
@@ -1827,7 +1827,7 @@ Extra - asset_id: collision_camera_024
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 103; Major Location? False
+  * Pickup 103; Category? Minor
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Teleporter to Burenia - Teleport to Ghavoran
@@ -1928,7 +1928,7 @@ Extra - asset_id: collision_camera_025_B
   > Door to Teleport to Burenia (Missile)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorForest
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1937,7 +1937,7 @@ Extra - asset_id: collision_camera_025_B
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 107; Major Location? False
+  * Pickup 107; Category? Minor
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Dock to Teleport to Burenia
@@ -2081,7 +2081,7 @@ Extra - asset_id: collision_camera_026
 
 > Pickup (Cross Bomb); Heals? False
   * Layers: default
-  * Pickup 145; Major Location? True
+  * Pickup 145; Category? Major
   * Extra - pickup_type: corex
   * Extra - actor_def: actors/characters/core_x/charclasses/core_x.bmsad
   * Extra - string_key: GUI_ITEM_ACQUIRED_LINE_BOMB
@@ -2091,7 +2091,7 @@ Extra - asset_id: collision_camera_026
   > Door to Cross Bomb Tutorial
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Cross Bomb Tutorial
       Trivial
@@ -2137,7 +2137,7 @@ Extra - polygon: [[-900.0, 42.0], [-3000.0, 42.0], [-3000.0, -1100.0], [-900.0, 
 Extra - asset_id: collision_camera_028
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 101; Major Location? False
+  * Pickup 101; Category? Minor
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to Map Station Access
@@ -2192,7 +2192,7 @@ blast shields
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 111; Major Location? False
+  * Pickup 111; Category? Minor
   * Extra - actor_name: item_missiletank_009
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Flipper Room
@@ -2216,14 +2216,14 @@ Extra - polygon: [[4100.0, 1800.0], [2000.0, 1800.0], [2000.0, 658.0], [4100.0, 
 Extra - asset_id: collision_camera_030
 > Pickup (Spin Boost); Heals? False
   * Layers: default
-  * Pickup 104; Major Location? True
+  * Pickup 104; Category? Major
   * Extra - actor_name: itemsphere_doublejump
   * Extra - actor_def: actordef:actors/items/itemsphere_doublejump/charclasses/itemsphere_doublejump.bmsad
   * Extra - map_icon_actor: powerup_doublejump
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_DoubleJump
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2362,13 +2362,13 @@ Extra - polygon: [[4100.0, 6342.0], [2000.0, 6342.0], [2000.0, 5200.0], [4100.0,
 Extra - asset_id: collision_camera_032
 > Pickup (Pulse Radar); Heals? False
   * Layers: default
-  * Pickup 110; Major Location? True
+  * Pickup 110; Category? Major
   * Extra - actor_name: powerup_sonar
   * Extra - actor_def: actordef:actors/items/powerup_sonar/charclasses/powerup_sonar.bmsad
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_SonarObtained
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2394,7 +2394,7 @@ Extra - polygon: [[12100.0, 7300.0], [10000.0, 7300.0], [10000.0, 5200.0], [1210
 Extra - asset_id: collision_camera_033
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 98; Major Location? False
+  * Pickup 98; Category? Minor
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Right Alcove
@@ -2675,7 +2675,7 @@ Extra - asset_id: collision_camera_039
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 106; Major Location? False
+  * Pickup 106; Category? Minor
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Golzuna Tower
@@ -2701,7 +2701,7 @@ Extra - asset_id: collision_camera_039
   > Pickup (Missile Tank)
       Can Slide
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Sonar
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2738,7 +2738,7 @@ Extra - asset_id: collision_camera_040
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad

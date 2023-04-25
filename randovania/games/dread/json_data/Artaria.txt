@@ -56,7 +56,7 @@ Extra - asset_id: collision_camera_000
   > Tunnel to First Tutorial Access
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_1B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -155,7 +155,7 @@ Extra - asset_id: collision_camera_001
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 3; Major Location? True
+  * Pickup 3; Category? Major
   * Extra - actor_name: Item_EnergyTank001
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Door to First Tutorial
@@ -273,7 +273,7 @@ Extra - asset_id: collision_camera_003
 
 > Pickup (Missile Tank 1); Heals? False
   * Layers: default
-  * Pickup 12; Major Location? False
+  * Pickup 12; Category? Minor
   * Extra - actor_name: Item_MissileTank003_1
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Near Missile Tank 1
@@ -293,7 +293,7 @@ Extra - asset_id: collision_camera_003
 
 > Pickup (Missile Tank 2); Heals? False
   * Layers: default
-  * Pickup 31; Major Location? False
+  * Pickup 31; Category? Minor
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Proto EMMI Introduction (Upper)
@@ -340,7 +340,7 @@ Extra - asset_id: collision_camera_003
   > West of Blob
       Trivial
 
-> West of Blob; Heals? False; Spawn Point; Default Node
+> West of Blob; Heals? False; Default Node
   * Layers: default
   > Door to Proto EMMI Introduction (Lower)
       Trivial
@@ -456,7 +456,9 @@ Extra - asset_id: collision_camera_004
           Can Slide Underwater
           Before Artaria - Water Introduction Blob and Can Slide
   > Dock to EMMI Zone First Entrance (Lower)
-      Gravity Suit or After Artaria - Water Introduction Blob or Lay Cross Bomb or Use Spin Boost
+      Any of the following:
+          Gravity Suit or After Artaria - Water Introduction Blob or Use Spin Boost
+          Slide and Speed Booster and Before Artaria - Water Introduction Blob and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer
   > Event - Water Introduction Blob
       Lay Bomb or Shoot Beam
 
@@ -530,7 +532,7 @@ Extra - asset_id: collision_camera_005
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 4; Major Location? False
+  * Pickup 4; Category? Minor
   * Extra - actor_name: Item_MissileTank001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Next to Pickup
@@ -558,7 +560,7 @@ Extra - asset_id: collision_camera_005
           # If this lock is unmoved, it can cause death if the room has been loaded
           After Artaria - EMMI Magnet Door Lock or Knowledge (Intermediate)
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyCave
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -736,6 +738,8 @@ Extra - asset_id: collision_camera_008
       Trivial
   > Door to EMMI First Chase End (Bottom)
       Can Slide
+  > Lower Room
+      Trivial
 
 > Door to White EMMI Introduction (Thermal); Heals? False
   * Layers: default
@@ -774,6 +778,8 @@ Extra - asset_id: collision_camera_008
       All of the following:
           Shoot Missile
           Lay Bomb or Lay Power Bomb
+  > Before Slide
+      Trivial
 
 > Door to EMMI First Chase End (Top); Heals? False
   * Layers: default
@@ -825,7 +831,7 @@ Extra - asset_id: collision_camera_008
   > Teleporter to Dairon - Teleport to Artaria
       Trivial
 
-> Teleporter to Dairon - Teleport to Artaria; Heals? False; Spawn Point; Default Node
+> Teleporter to Dairon - Teleport to Artaria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Dairon - Teleport to Artaria
   * Extra - actor_name: teleport_baselab_000
@@ -847,6 +853,16 @@ Extra - asset_id: collision_camera_008
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Exit North/Tunnel to Teleport to Dairon
   > Dock to Arbitrary Enky Room (Upper)
+      Trivial
+
+> Before Slide; Heals? False
+  * Layers: default
+  > Dock to Arbitrary Enky Room (Upper)
+      Trivial
+
+> Lower Room; Heals? False
+  * Layers: default
+  > Door to White EMMI Introduction (Lower)
       Trivial
 
 ----------------
@@ -896,7 +912,7 @@ Extra - asset_id: collision_camera_009
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 17; Major Location? False
+  * Pickup 17; Category? Minor
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Dock to Shinespark Tower to Grapple
@@ -948,6 +964,8 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Door to EMMI Zone Exit Southwest (Upper)
+      Trivial
+  > Top Door
       Trivial
 
 > Door to EMMI Zone Exit Southwest (Upper); Heals? False
@@ -1037,7 +1055,7 @@ Extra - asset_id: collision_camera_010
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 19; Major Location? False
+  * Pickup 19; Category? Minor
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Door to EMMI Zone Exit Northwest
@@ -1128,9 +1146,14 @@ Extra - asset_id: collision_camera_010
           Morph Ball
           Slide and After Artaria - EMMI Zone Water Device
 
-> Start Point; Heals? False; Default Node
+> Bottom Section; Heals? False; Default Node
   * Layers: default
   > Door to EMMI Zone Exit Southwest (Lower)
+      Trivial
+
+> Top Door; Heals? False
+  * Layers: default
+  > Door to EMMI Zone Exit Northwest
       Trivial
 
 ----------------
@@ -1173,7 +1196,7 @@ Extra - asset_id: collision_camera_011
 
 > Pickup (Missile Tank, Underwater); Heals? False
   * Layers: default
-  * Pickup 8; Major Location? False
+  * Pickup 8; Category? Minor
   * Extra - actor_name: Item_MissileTank004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Under Teleportal
@@ -1189,7 +1212,7 @@ Extra - asset_id: collision_camera_011
 
 > Pickup (Missile Tank, Supers-locked); Heals? False
   * Layers: default
-  * Pickup 20; Major Location? False
+  * Pickup 20; Category? Minor
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Chain Reaction Access
@@ -1266,7 +1289,7 @@ Extra - asset_id: collision_camera_011
           After Artaria - Early SA Shortcut Blob
           Lay Bomb or Lay Power Bomb
 
-> Teleporter to Cataris - Teleport to Artaria (Red); Heals? False; Spawn Point; Default Node
+> Teleporter to Cataris - Teleport to Artaria (Red); Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Teleport to Artaria (Red)
   * Extra - actor_name: LE_Teleport_FromMagma
@@ -1377,7 +1400,7 @@ Extra - asset_id: collision_camera_012
   > Door to Waterfall
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: PRP_CV_SaveStation003
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -1455,7 +1478,7 @@ Extra - asset_id: collision_camera_013
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 29; Major Location? False
+  * Pickup 29; Category? Minor
   * Extra - actor_name: Item_MissileTank016
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Intro Room
@@ -1525,14 +1548,14 @@ Extra - asset_id: collision_camera_014
 
 > Pickup (Charge Beam); Heals? False
   * Layers: default
-  * Pickup 0; Major Location? True
+  * Pickup 0; Category? Major
   * Extra - actor_name: ItemSphere_ChargeBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_chargebeam/charclasses/itemsphere_chargebeam.bmsad
   * Extra - map_icon_actor: powerup_chargebeam
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChargeBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1576,14 +1599,14 @@ Extra - asset_id: collision_camera_015
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 5; Major Location? False
+  * Pickup 5; Category? Minor
   * Extra - actor_name: Item_MissileTank002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to White EMMI Arena (Power)
       Trivial
   > Door to White EMMI Arena (Top)
       Any of the following:
-          Lay Cross Bomb or Use Spin Boost
+          Flash Shift or Lay Cross Bomb or Use Spin Boost
           Slide and Slide Jump (Beginner)
 
 > Door to White EMMI Arena (Bottom); Heals? False
@@ -1723,7 +1746,7 @@ Extra - asset_id: collision_camera_016
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 13; Major Location? False
+  * Pickup 13; Category? Minor
   * Extra - actor_name: Item_MissileTank009
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Melee Tutorial Room (Upper)
@@ -1816,7 +1839,11 @@ Extra - asset_id: collision_camera_017
   > Door to EMMI Zone Spinner (Top)
       Any of the following:
           Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Intermediate)
+          All of the following:
+              Flash Shift
+              Any of the following:
+                  Walljump (Intermediate)
+                  Slide and Slide Jump (Beginner)
           Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Door to Central Unit Access (Power); Heals? False
@@ -1871,7 +1898,7 @@ Extra - asset_id: collision_camera_017
   > Door to EMMI Zone First Entrance
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_MagnetGlove
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1944,7 +1971,7 @@ Extra - asset_id: collision_camera_020
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_OpticalCamo
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1980,7 +2007,7 @@ Extra - asset_id: collision_camera_020
 
 > Pickup (Phantom Cloak); Heals? False
   * Layers: default
-  * Pickup 138; Major Location? True
+  * Pickup 138; Category? Major
   * Extra - pickup_type: corpius
   * Extra - actor_def: actors/characters/scorpius/charclasses/scorpius.bmsad
   * Extra - string_key: GUI_ITEM_ACQUIRED_OPTICAL_CAMO
@@ -2026,13 +2053,13 @@ Extra - asset_id: collision_camera_021
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 9; Major Location? False
+  * Pickup 9; Category? Minor
   * Extra - actor_name: Item_MissileTank005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Start Point
       Can Slide
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_2B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2110,6 +2137,8 @@ Extra - asset_id: collision_camera_022
       After Artaria - Thermal Device West Blob
   > Event - Thermal Device West Blob
       Lay Bomb or Shoot Beam
+  > Below Blobs
+      Trivial
 
 > Event - Thermal Device East Blob; Heals? False
   * Layers: default
@@ -2145,9 +2174,14 @@ Extra - asset_id: collision_camera_022
   > Door to David Jaffe Room
       Trivial
 
-> Start Point; Heals? False; Default Node
+> Above Blobs; Heals? False; Default Node
   * Layers: default
   > Door to David Jaffe Room
+      Trivial
+
+> Below Blobs; Heals? False
+  * Layers: default
+  > Dock to Invisible Corpius Room
       Trivial
 
 ----------------
@@ -2212,7 +2246,7 @@ Extra - asset_id: collision_camera_023_B
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 11; Major Location? False
+  * Pickup 11; Category? Minor
   * Extra - actor_name: Item_MissileTank007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Hot Room Hub
@@ -2335,7 +2369,7 @@ Extra - asset_id: collision_camera_025
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: PRP_CV_SaveStation002
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -2410,7 +2444,7 @@ Extra - asset_id: collision_camera_026
           Morph Ball
           Lay Bomb or Lay Power Bomb or Shoot Beam
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChainReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2514,7 +2548,7 @@ Extra - asset_id: collision_camera_029
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 30; Major Location? True
+  * Pickup 30; Category? Major
   * Extra - actor_name: item_missiletankplus_001
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Ledge above lava
@@ -2548,7 +2582,7 @@ Extra - polygon: [[-12100.0, 10142.0], [-17100.0, 10142.0], [-17100.0, 9000.0], 
 Extra - asset_id: collision_camera_030
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 14; Major Location? True
+  * Pickup 14; Category? Major
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Door to Varia Suit Room
@@ -2587,7 +2621,7 @@ Extra - asset_id: collision_camera_030
   > Door to Varia Suit Room
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Post_ChainReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2609,7 +2643,7 @@ Extra - polygon: [[-8100.0, 11100.0], [-12200.0, 11100.0], [-12200.0, 9200.0], [
 Extra - asset_id: collision_camera_031
 > Pickup (Varia Suit); Heals? False
   * Layers: default
-  * Pickup 23; Major Location? True
+  * Pickup 23; Category? Major
   * Extra - actor_name: IT_VARIA_GEN_001
   * Extra - actor_def: actordef:actors/items/itemsphere_variasuit/charclasses/itemsphere_variasuit.bmsad
   * Extra - map_icon_actor: powerup_variasuit
@@ -2645,7 +2679,7 @@ Extra - asset_id: collision_camera_031
   > Door to Varia Suit Tutorial North
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_VariaSuit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2744,14 +2778,14 @@ Extra - asset_id: collision_camera_033
 
 > Pickup (Grapple Beam); Heals? False
   * Layers: default
-  * Pickup 25; Major Location? True
+  * Pickup 25; Category? Major
   * Extra - actor_name: ItemSphere_GrappleBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_grapplebeam/charclasses/itemsphere_grapplebeam.bmsad
   * Extra - map_icon_actor: powerup_grapplebeam
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Grapple
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2944,7 +2978,7 @@ Extra - asset_id: collision_camera_049
   > Dock to Central Unit
       After Artaria - Central Unit
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2965,7 +2999,7 @@ Extra - asset_id: collision_camera_049
 
 > Pickup (Spider Magnet); Heals? False
   * Layers: default
-  * Pickup 139; Major Location? True
+  * Pickup 139; Category? Major
   * Extra - actor_def: actors/characters/emmycave/charclasses/emmycave.bmsad
   * Extra - pickup_type: emmi
   * Extra - string_key: GUI_ITEM_ACQUIRED_SPIDER_MAGNET
@@ -3007,7 +3041,7 @@ Extra - asset_id: collision_camera_050
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 6; Major Location? False
+  * Pickup 6; Category? Minor
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Thermal Door Tutorial
@@ -3035,7 +3069,7 @@ Extra - asset_id: collision_camera_050
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_002
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3097,7 +3131,7 @@ Extra - asset_id: collision_camera_051
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 21; Major Location? False
+  * Pickup 21; Category? Minor
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to EMMI Zone Hub
@@ -3191,7 +3225,7 @@ Extra - asset_id: collision_camera_054
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 22; Major Location? False
+  * Pickup 22; Category? Minor
   * Extra - actor_name: Item_MissileTank010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Dock to EMMI Zone Exit South
@@ -3325,7 +3359,7 @@ Extra - asset_id: collision_camera_056
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 7; Major Location? False
+  * Pickup 7; Category? Minor
   * Extra - actor_name: Item_MissileTank003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Behind Waterfall
@@ -3333,7 +3367,7 @@ Extra - asset_id: collision_camera_056
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 16; Major Location? False
+  * Pickup 16; Category? Minor
   * Extra - actor_name: item_energyfragment_001
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to Save Station West
@@ -3389,17 +3423,17 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Event - Waterfall Rotatable
       Shoot Diffusion or Wave
-  > Start Point
+  > Below Rotatable
       After Artaria - Waterfall Rotatable
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Below Rotatable; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Pre_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Freezer
       After Artaria - Waterfall Rotatable
   > Dock to Red Chozo Arena
-      Trivial
+      After Artaria - Waterfall Rotatable
 
 > Tunnel to Chain Reaction Access; Heals? False
   * Layers: default
@@ -3429,7 +3463,7 @@ Extra - asset_id: collision_camera_056
   * Layers: default
   * Open Passage to Red Chozo Arena/Dock to Waterfall
 
-> Tower Middle; Heals? False
+> Tower Middle; Heals? False; Default Node
   * Layers: default
   > Door to Save Station West
       Trivial
@@ -3520,10 +3554,10 @@ Extra - asset_id: collision_camera_058
   * Extra - right_shield_def: None
   > Door to Water Reservoir
       Trivial
-  > Map Station
+  > Save Station
       Trivial
 
-> Map Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: PRP_CV_MapStation001
   * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
@@ -3614,7 +3648,7 @@ Extra - asset_id: collision_camera_060
   > Dock to Water Tunnel under Map
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_WaterValve
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -3772,7 +3806,7 @@ Extra - asset_id: collision_camera_063
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: PRP_CV_SaveStation001
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -3826,7 +3860,7 @@ Extra - asset_id: collision_camera_065
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Navigation Room
+  > Save Station
       Trivial
 
 > Door to Invisible Corpius Room; Heals? False
@@ -3838,7 +3872,7 @@ Extra - asset_id: collision_camera_065
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Navigation Room
+  > Save Station
       Trivial
 
 > Door to Arbitrary Enky Room (Upper); Heals? False
@@ -3850,7 +3884,7 @@ Extra - asset_id: collision_camera_065
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Navigation Room
+  > Save Station
       Trivial
 
 > Door to Arbitrary Enky Room (Thermal); Heals? False
@@ -3862,10 +3896,10 @@ Extra - asset_id: collision_camera_065
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Navigation Room
+  > Save Station
       Trivial
 
-> Navigation Room; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: PRP_CV_AccessPoint002
@@ -3976,7 +4010,7 @@ Extra - asset_id: collision_camera_067
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 10; Major Location? False
+  * Pickup 10; Category? Minor
   * Extra - actor_name: Item_MissileTank006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Path to Thermal Device (Upper)
@@ -3992,7 +4026,7 @@ Extra - asset_id: collision_camera_067
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ThermalDevice
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -4025,7 +4059,7 @@ Extra - asset_id: collision_camera_068
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Navigation Room
+  > Save Station
       Trivial
 
 > Door to First Tutorial; Heals? False
@@ -4037,10 +4071,10 @@ Extra - asset_id: collision_camera_068
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Navigation Room
+  > Save Station
       Trivial
 
-> Navigation Room; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: PRP_CV_AccessPoint001
@@ -4145,7 +4179,7 @@ Extra - asset_id: collision_camera_070
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 1; Major Location? False
+  * Pickup 1; Category? Minor
   * Extra - actor_name: Item_MissileTank011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to Teleport to Dairon
@@ -4323,7 +4357,7 @@ Extra - asset_id: collision_camera_072
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Scorpius
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -4395,7 +4429,7 @@ Extra - asset_id: collision_camera_074
   > Dock to Proto EMMI Battle
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_CURoom
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -4487,7 +4521,7 @@ Extra - asset_id: collision_camera_076
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: PRP_CV_SaveStation004
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -4548,7 +4582,7 @@ Extra - polygon: [[31800.0, 4600.0], [26800.0, 4600.0], [26800.0, 3000.0], [3180
 Extra - asset_id: collision_camera_078
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 2; Major Location? False
+  * Pickup 2; Category? Minor
   * Extra - actor_name: Item_MissileTank012
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Hot Room Hub
@@ -4630,8 +4664,7 @@ Extra - asset_id: collision_camera_079
   * Extra - right_shield_def: None
   > Door to Transport to Cataris
       Any of the following:
-          Spider Magnet or Simple IBJ or Use Spin Boost
-          Morph Ball and Damage Boost (Beginner)
+          Spider Magnet or Damage Boost (Beginner) or Simple IBJ or Use Spin Boost
           Missiles ≥ 2 and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
           All of the following:
               Speed Booster
@@ -4657,6 +4690,13 @@ Extra - asset_id: collision_camera_079
       Any of the following:
           Flash Shift or Speed Booster or Can Slide or Use Spin Boost
           Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  > Door to Transport to Cataris
+      Trivial
 
 ----------------
 Transport to Burenia
@@ -4677,7 +4717,7 @@ Extra - asset_id: collision_camera_080
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 32; Major Location? False
+  * Pickup 32; Category? Minor
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Elevator to Burenia - Transport to Artaria
@@ -4716,7 +4756,7 @@ Extra - asset_id: collision_camera_081
 
 > Pickup (Missile Tank, Top); Heals? False
   * Layers: default
-  * Pickup 24; Major Location? False
+  * Pickup 24; Category? Minor
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Next to Upper Tank
@@ -4746,7 +4786,7 @@ Extra - asset_id: collision_camera_081
 
 > Pickup (Missile Tank, Underwater); Heals? False
   * Layers: default
-  * Pickup 26; Major Location? False
+  * Pickup 26; Category? Minor
   * Extra - actor_name: Item_MissileTank014
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Blob - Right
@@ -4754,7 +4794,7 @@ Extra - asset_id: collision_camera_081
 
 > Pickup (Screw Attack); Heals? False
   * Layers: default
-  * Pickup 27; Major Location? True
+  * Pickup 27; Category? Major
   * Extra - actor_name: ItemSphere_ScrewAttack
   * Extra - actor_def: actordef:actors/items/itemsphere_screwattack/charclasses/itemsphere_screwattack.bmsad
   * Extra - map_icon_actor: powerup_screwattack
@@ -4848,7 +4888,7 @@ Extra - asset_id: collision_camera_081
           Screw Attack
           Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
-> Teleporter to Cataris; Heals? False; Spawn Point; Default Node
+> Teleporter to Cataris; Heals? False; Default Node
   * Layers: default
   * Teleporter to Cataris - Teleport to Artaria (Blue)
   * Extra - actor_name: teleporter_magma_000
@@ -4979,6 +5019,8 @@ Extra - asset_id: collision_camera_082
       Any of the following:
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+  > Cold Room
+      Trivial
 
 > Door to Screw Attack Room (Power); Heals? False
   * Layers: default
@@ -4989,12 +5031,12 @@ Extra - asset_id: collision_camera_082
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Corridor
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 28; Major Location? False
+  * Pickup 28; Category? Minor
   * Extra - actor_name: Item_MissileTank015
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Screw Attack Room (Grapple)
@@ -5025,16 +5067,21 @@ Extra - asset_id: collision_camera_082
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Start Point
+  > Corridor
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Corridor; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorCave
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Screw Attack Room (Power)
       Trivial
   > Door to Waterfall
+      Trivial
+
+> Cold Room; Heals? False; Default Node
+  * Layers: default
+  > Door to Screw Attack Room (Grapple)
       Trivial
 
 ----------------
@@ -5110,7 +5157,7 @@ Extra - polygon: [[-9100.0, -5700.0], [-14900.0, -5700.0], [-14900.0, -7800.0], 
 Extra - asset_id: collision_camera_086
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 15; Major Location? True
+  * Pickup 15; Category? Major
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Dock to Speed Booster Bonus Room
@@ -5118,7 +5165,7 @@ Extra - asset_id: collision_camera_086
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 18; Major Location? False
+  * Pickup 18; Category? Minor
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to Red Chozo Arena
@@ -5270,7 +5317,7 @@ Extra - asset_id: collision_camera_090
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyCavePhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -5324,7 +5371,7 @@ Extra - asset_id: collision_camera_091
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
