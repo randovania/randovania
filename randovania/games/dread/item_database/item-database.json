@@ -366,8 +366,10 @@
             ],
             "default_shuffled_count": 1,
             "default_starting_count": 0,
-            "ammo": [],
-            "unlocks_ammo": false,
+            "ammo": [
+                "FlashUpgrade"
+            ],
+            "unlocks_ammo": true,
             "hide_from_gui": false,
             "must_be_starting": false,
             "probability_offset": 0,
@@ -710,24 +712,6 @@
             "preferred_location_category": "minor",
             "extra": {}
         },
-        "Flash Shift Upgrade": {
-            "item_category": "aeion",
-            "broad_category": "aeion",
-            "model_name": "item_flashshiftupgrade",
-            "progression": [
-                "FlashUpgrade"
-            ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 2,
-            "ammo": [],
-            "unlocks_ammo": false,
-            "hide_from_gui": false,
-            "must_be_starting": false,
-            "probability_offset": 0,
-            "probability_multiplier": 1,
-            "preferred_location_category": "major",
-            "extra": {}
-        },
         "Speed Booster Upgrade": {
             "item_category": "misc",
             "broad_category": "misc",
@@ -780,6 +764,18 @@
             "temporary": "PBAmmo",
             "unlocked_by": "MainPB",
             "allows_negative": true
+        },
+        "Flash Shift Upgrade": {
+            "model_name": "item_flashshiftupgrade",
+            "items": [
+                "FlashUpgrade"
+            ],
+            "preferred_location_category": "major",
+            "broad_category": "aeion",
+            "extra": {},
+            "temporary": "FlashUpgrade",
+            "unlocked_by": "Flash",
+            "allows_negative": false
         }
     },
     "default_items": {}

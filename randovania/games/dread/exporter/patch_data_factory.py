@@ -35,6 +35,10 @@ _ALTERNATIVE_MODELS = {
     "PROGRESSIVE_SPIN": ["powerup_doublejump", "powerup_spacejump"],
 }
 
+_MAIN_GRANTED_BY_AMMO = {
+    "ITEM_WEAPON_POWER_BOMB_MAX": "ITEM_WEAPON_POWER_BOMB",
+    "ITEM_UPGRADE_FLASH_SHIFT_CHAIN": "ITEM_GHOST_AURA",
+}
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
@@ -52,15 +56,15 @@ def convert_conditional_resource(respects_lock: bool, res: ConditionalResources)
     item_id = get_item_id_for_item(res.resources[0][0])
     quantity = res.resources[0][1]
 
-    # only main pbs have 2 elements in res.resources, everything else is just 1
+    # Main PBs and Flash Shift have two items in res.resources, all others have 1
     if len(res.resources) != 1:
         item_id = get_item_id_for_item(res.resources[1][0])
-        assert item_id == "ITEM_WEAPON_POWER_BOMB"
+        assert item_id in _MAIN_GRANTED_BY_AMMO.values()
         assert len(res.resources) == 2
 
     # non-required mains
-    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
-        item_id = "ITEM_WEAPON_POWER_BOMB"
+    if item_id in _MAIN_GRANTED_BY_AMMO and not respects_lock:
+        item_id = _MAIN_GRANTED_BY_AMMO[item_id]
 
     return {"item_id": item_id, "quantity": quantity}
 
@@ -119,11 +123,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has no extra {err}")
-    
+
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " + 
+        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " +
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
-    
+
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
@@ -312,9 +316,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
             for area in world.areas:
                 world_dict[area.extra["asset_id"]] = area.name
-            
+
             all_dict[scenario] = world_dict
-        
+
         # fix Burenia Main Tower and Golzuna Tower
         all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
         all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
