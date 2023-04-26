@@ -173,16 +173,6 @@ def set_default_window_icon(window: QtWidgets.QWidget):
     window.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
 
 
-def set_combo_with_value(combo: QtWidgets.QComboBox, value):
-    """
-    Searches all items of the given combo for the given value and changes the current index to that one.
-    :param combo:
-    :param value:
-    :return:
-    """
-    combo.setCurrentIndex(combo.findData(value))
-
-
 def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool):
     edit.has_error = has_error
     if has_error:

@@ -10,6 +10,7 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
+from randovania.gui.lib.signal_handling import set_combo_with_value
 
 SUIT_DEFAULT_COLORS = [
     [(255, 173, 50), (220, 25, 45), (132, 240, 60)],  # Power
@@ -119,7 +120,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         self.on_new_user_preferences(patches.user_preferences)
 
     def on_new_user_preferences(self, user_preferences: PrimeUserPreferences):
-        self.sound_mode_combo.setCurrentIndex(self.sound_mode_combo.findData(user_preferences.sound_mode))
+        set_combo_with_value(self.sound_mode_combo, user_preferences.sound_mode)
 
         for field in dataclasses.fields(user_preferences):
             if field.name in self.field_to_slider_mapping:

@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
+from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
@@ -25,7 +26,7 @@ def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_man
     combo = window._default_items[category]
 
     # Run
-    combo.setCurrentIndex(combo.findData(item))
+    set_combo_with_value(combo, item)
 
     # Assert
     assert editor.major_items_configuration.default_items[category] == item

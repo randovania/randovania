@@ -6,7 +6,7 @@ from PySide6 import QtWidgets
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
-from randovania.gui.lib import common_qt_lib, signal_handling
+from randovania.gui.lib import signal_handling
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -75,12 +75,12 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
-        common_qt_lib.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
+        signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
 
         self.single_set_for_pickups_that_solve_check.setChecked(layout.single_set_for_pickups_that_solve)
         self.staggered_multi_pickup_placement_check.setChecked(layout.staggered_multi_pickup_placement)
 
-        common_qt_lib.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
+        signal_handling.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
 
     @classmethod
     def tab_title(cls) -> str:

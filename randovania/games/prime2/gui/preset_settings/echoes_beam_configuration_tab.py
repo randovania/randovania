@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QComboBox
 from randovania.game_description.game_description import GameDescription
 from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
 from randovania.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
+from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -145,8 +146,8 @@ class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration)
         for beam in _BEAMS:
             config: BeamAmmoConfiguration = getattr(beam_configuration, beam)
 
-            self._beam_ammo_a[beam].setCurrentIndex(self._beam_ammo_a[beam].findData(config.ammo_a))
-            self._beam_ammo_b[beam].setCurrentIndex(self._beam_ammo_b[beam].findData(config.ammo_b))
+            set_combo_with_value(self._beam_ammo_a[beam], config.ammo_a)
+            set_combo_with_value(self._beam_ammo_b[beam], config.ammo_b)
             self._beam_ammo_b[beam].setEnabled(config.ammo_a != -1)
             self._beam_uncharged[beam].setValue(config.uncharged_cost)
             self._beam_charged[beam].setValue(config.charged_cost)
