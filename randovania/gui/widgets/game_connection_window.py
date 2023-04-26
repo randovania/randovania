@@ -117,6 +117,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         for choice, action in self._builder_actions.items():
             action.setEnabled(add_action_enabled[choice])
 
+        # TODO: multiworld can't handle multiple builders, so disable it for now
+        self.add_builder_button.setEnabled(not self.game_connection.connection_builders)
+
         self.update_builder_ui()
 
     def update_builder_ui(self):
