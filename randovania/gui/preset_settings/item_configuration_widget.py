@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
+from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.layout.base.major_item_state import MajorItemState, MajorItemStateCase, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.lib import enum_lib
 
@@ -45,7 +46,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self.priority_combo.addItem("Normal", 1.0)
         self.priority_combo.addItem("High", 1.5)
         self.priority_combo.addItem("Very High", 2.0)
-        self.priority_combo.setCurrentIndex(self.priority_combo.findData(1.0))
+        set_combo_with_value(self.priority_combo, 1.0)
 
         # connect
         self.state_case_combo.currentIndexChanged.connect(self._on_select_case)

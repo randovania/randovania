@@ -3,6 +3,7 @@ from PySide6 import QtCore
 
 from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadRoomGuiType
+from randovania.gui.lib.signal_handling import set_combo_with_value
 
 
 @pytest.mark.parametrize(["widget_field", "field_name"], [
@@ -29,6 +30,6 @@ def test_room_names_dropdown(skip_qtbot):
     dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
 
-    skip_qtbot.keyClicks(dialog.room_names_dropdown, DreadRoomGuiType.WITH_FADE.long_name)
+    set_combo_with_value(dialog.room_names_dropdown, DreadRoomGuiType.WITH_FADE)
 
     assert dialog.cosmetic_patches == DreadCosmeticPatches(show_room_names=DreadRoomGuiType.WITH_FADE)
