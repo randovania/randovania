@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class ConnectorBuilderChoice(Enum):
+    DEBUG = "debug"
     DOLPHIN = "dolphin"
     NINTENDONT = "nintendont"
 
@@ -14,6 +15,7 @@ class ConnectorBuilderChoice(Enum):
 
 
 _pretty_backend_name = {
+    ConnectorBuilderChoice.DEBUG: "Debug",
     ConnectorBuilderChoice.DOLPHIN: "Dolphin",
     ConnectorBuilderChoice.NINTENDONT: "Nintendont",
 }

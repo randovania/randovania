@@ -116,6 +116,7 @@ class GameConnection(QObject):
         connector.PlayerLocationChanged.connect(functools.partial(self._on_player_location_changed, connector))
         connector.PickupIndexCollected.connect(functools.partial(self._on_pickup_index_collected, connector))
         connector.InventoryUpdated.connect(functools.partial(self._on_inventory_updated, connector))
+        self._ensure_connected_state_exists(connector)
 
     def _ensure_connected_state_exists(self, connector: RemoteConnector) -> ConnectedGameState:
         the_id = connector.layout_uuid or self.uuid_for_unknown

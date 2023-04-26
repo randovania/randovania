@@ -9,9 +9,13 @@ from qasync import asyncSlot
 import randovania
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.builder.connector_builder_factory import ConnectorBuilderOption
+from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
-from randovania.game_connection.game_connection import GameConnection
+from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+from randovania.game_connection.game_connection import GameConnection
+from randovania.games.game import RandovaniaGame
+from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.lib import enum_lib
@@ -61,6 +65,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.add_builder_menu = QtWidgets.QMenu(self.add_builder_button)
         self._builder_actions = {}
         for choice in enum_lib.iterate_enum(ConnectorBuilderChoice):
+            if choice is ConnectorBuilderChoice.DEBUG and (randovania.is_frozen() or not randovania.is_dev_version()):
+                continue
+
             action = QtGui.QAction(choice.pretty_text, self.add_builder_menu)
             self._builder_actions[choice] = action
             action.triggered.connect(functools.partial(self._add_connector_builder, choice))
@@ -71,25 +78,45 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.game_connection.BuildersUpdated.connect(self.update_builder_ui)
         self.setup_builder_ui()
 
-    async def _prompt_for_ip(self, title: str, label: str) -> str | None:
+    async def _prompt_for_text(self, title: str, label: str) -> str | None:
         dialog = QtWidgets.QInputDialog(self)
         dialog.setModal(True)
         dialog.setWindowTitle(title)
         dialog.setLabelText(label)
-        new_ip = ""
+        new_text = ""
         if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            new_ip = dialog.textValue()
+            new_text = dialog.textValue()
 
-        if new_ip == "":
+        if new_text == "":
             return None
-        return new_ip
+        return new_text
+
+    async def _prompt_for_game(self, title: str, label: str) -> RandovaniaGame | None:
+        games_by_name = {
+            game.long_name: game
+            for game in sorted(RandovaniaGame.all_games(), key=lambda it: it.long_name)
+        }
+
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle(title)
+        dialog.setLabelText(label)
+        dialog.setComboBoxItems(list(games_by_name.keys()))
+        new_text = ""
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
+            new_text = dialog.textValue()
+
+        if new_text == "":
+            return None
+
+        return games_by_name[new_text]
 
     @asyncSlot()
     async def _add_connector_builder(self, choice: ConnectorBuilderChoice):
         args = {}
 
         if choice == ConnectorBuilderChoice.NINTENDONT:
-            new_ip = await self._prompt_for_ip(
+            new_ip = await self._prompt_for_text(
                 "Enter Wii's IP",
                 "Enter the IP address of your Wii. "
                 "You can check the IP address on the pause screen of Homebrew Channel."
@@ -97,6 +124,15 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             if new_ip is None:
                 return
             args["ip"] = new_ip
+
+        if choice == ConnectorBuilderChoice.DEBUG:
+            new_game = await self._prompt_for_game(
+                "Choose Game",
+                "Select the game to use for the debug connection."
+            )
+            if new_game is None:
+                return
+            args["game"] = new_game.value
 
         self.game_connection.add_connection_builder(
             ConnectorBuilderOption(choice, args).create_builder()
@@ -142,6 +178,13 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             action.triggered.connect(functools.partial(self.on_upload_nintendont_action, builder))
             ui.menu.addAction(action)
 
+        if isinstance(builder, DebugConnectorBuilder):
+            ui.menu.addSeparator()
+            action = QtGui.QAction(ui.menu)
+            action.setText("Open debug interface")
+            action.triggered.connect(functools.partial(self.open_debug_connector_window, builder))
+            ui.menu.addAction(action)
+
         ui.description.setText(builder.pretty_text)
         self.ui_for_builder[builder] = ui
 
@@ -171,3 +214,10 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             box.setText(f"Error uploading to Wii: {e}")
         finally:
             box.button(QtWidgets.QMessageBox.StandardButton.Ok).setEnabled(True)
+
+    def open_debug_connector_window(self, builder: DebugConnectorBuilder):
+        connector = self.game_connection.get_connector_for_builder(builder)
+        if connector is not None:
+            assert isinstance(connector, DebugRemoteConnector)
+            builder.connector_window = DebugConnectorWindow(connector)
+            builder.connector_window.show()
