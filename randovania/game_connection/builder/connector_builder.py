@@ -1,4 +1,4 @@
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtCore
 
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice

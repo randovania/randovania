@@ -10,8 +10,6 @@ from qasync import asyncSlot
 
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.network_client.game_session import GameSessionPickups
 from randovania.network_client.network_client import UnableToConnect

@@ -4,16 +4,14 @@ import json
 from pathlib import Path
 
 from PySide6 import QtWidgets, QtGui
-from qasync import asyncSlot
 
 from randovania import get_data_path
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.window_manager import get_global_window_manager, WindowManager
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.interface_common.options import Options
 

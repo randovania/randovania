@@ -2,9 +2,6 @@ import dataclasses
 import logging
 import struct
 
-import shiboken6
-from PySide6 import QtCore
-from qasync import asyncSlot
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
