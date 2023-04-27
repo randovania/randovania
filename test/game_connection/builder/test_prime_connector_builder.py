@@ -1,3 +1,4 @@
+import pytest
 from mock import AsyncMock
 
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
@@ -54,8 +55,43 @@ async def test_identify_game_ntsc():
     connector = await con_builder.build_connector()
 
     # Assert
+    con_builder.executor.perform_memory_operations.assert_called()
     assert isinstance(connector, EchoesRemoteConnector)
     assert connector.version is echoes_dol_versions.ALL_VERSIONS[0]
+
+
+@pytest.mark.parametrize("via_exception", [False, True])
+async def test_identify_game_fail_second(via_exception):
+    # Setup
+    def side_effect(ops: list[MemoryOperation]):
+        if len(ops) > 1:
+            return {
+                op: b"!#$M"
+                for op in ops
+                if op.address == 0x803ac3b0
+            }
+        return {}
+
+    con_builder = MockedPrimeConnectorBuilder()
+
+    con_builder.executor.connect.return_value = None
+    con_builder.executor.perform_memory_operations.side_effect = side_effect
+    if via_exception:
+        con_builder.executor.perform_single_memory_operation.side_effect = MemoryOperationException
+    else:
+        con_builder.executor.perform_single_memory_operation.return_value = b"nope"
+
+    # Run
+    connector = await con_builder.build_connector()
+
+    # Assert
+    assert connector is None
+    con_builder.executor.perform_memory_operations.assert_called()
+    con_builder.executor.disconnect.assert_called_once_with()
+    if via_exception:
+        assert str(con_builder.get_status_message()) == str(MemoryOperationException())
+    else:
+        assert con_builder.get_status_message() == "Could not identify which game it is"
 
 
 async def test_is_this_version_throws_error():
@@ -71,12 +107,16 @@ async def test_is_this_version_throws_error():
 
     con_builder = MockedPrimeConnectorBuilder()
 
+    con_builder.executor.connect.return_value = None
     con_builder.executor.perform_memory_operations.side_effect = side_effect
     con_builder.executor.perform_single_memory_operation.side_effect = MemoryOperationException
 
     # Run
     connector = await con_builder.build_connector()
+
     # Assert
+    con_builder.executor.perform_memory_operations.assert_called()
+    con_builder.executor.disconnect.assert_called_once_with()
     assert connector is None
 
 
@@ -89,3 +129,4 @@ async def test_executor_not_connecting():
 
     # Assert
     assert connector is None
+    con_builder.executor.connect.assert_awaited_once_with()

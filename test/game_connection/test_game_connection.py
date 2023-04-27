@@ -2,14 +2,82 @@ from unittest.mock import AsyncMock, call, ANY
 from unittest.mock import MagicMock
 
 import pytest
-from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 
-from randovania.game_connection.game_connection import GameConnection
+from randovania.game_connection.builder.connector_builder_factory import ConnectorBuilderOption
+from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
+from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
+from randovania.game_connection.connection_base import GameConnectionStatus
+from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
+from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.game import RandovaniaGame
 
 
 @pytest.fixture(name="connection")
 def _connection(skip_qtbot):
     return GameConnection(MagicMock())
+
+
+async def test_create_builders_on_init(skip_qtbot):
+    # Setup
+    options = MagicMock()
+    options.__enter__ = MagicMock(return_value=options)
+    builder_option = ConnectorBuilderOption(ConnectorBuilderChoice.DOLPHIN, {})
+    options.connector_builders = [builder_option]
+
+    # Run
+    connection = GameConnection(options)
+
+    # Assert
+    assert options.connector_builders == [builder_option]
+    assert options.connector_builders[0] is not builder_option
+    assert connection.connection_builders
+
+
+async def test_add_remove_builder(connection, qapp):
+    # Setup
+    connection._options.__enter__ = MagicMock(return_value=connection._options)
+    connection._options.connector_builders = []
+    builder = DolphinConnectorBuilder()
+
+    # Run
+    connection.add_connection_builder(builder)
+    assert connection._options.connector_builders == [ConnectorBuilderOption(ConnectorBuilderChoice.DOLPHIN, {})]
+    assert connection.connection_builders == [builder]
+
+    connection.remove_connection_builder(builder)
+    assert connection._options.connector_builders == []
+    assert connection.connection_builders == []
+
+
+async def test_start(connection, qapp):
+    # Setup
+    connection._timer = MagicMock()
+
+    # Run
+    await connection.start()
+
+    # Assert
+    connection._timer.start.assert_called_once_with()
+
+
+async def test_stop(connection, qapp):
+    # Setup
+    connection._timer = MagicMock()
+    connector = AsyncMock()
+    connector.is_disconnected = MagicMock(return_value=True)
+    connection.remote_connectors[MagicMock()] = connector
+
+    # Run
+    await connection.stop()
+
+    # Assert
+    assert connection.remote_connectors == {}
+    assert connection.connected_states == {}
+    connection._timer.stop.assert_called_once_with()
+    connector.force_finish.assert_awaited_once_with()
 
 
 async def test_auto_update_empty(connection, qapp):
@@ -69,3 +137,37 @@ async def test_auto_update_remove_connector(connection, qapp):
         call(), call(),
     ])
     assert connection.remote_connectors == {}
+
+
+async def test_connector_state_update(connection, qapp):
+    # Setup
+    builder = DebugConnectorBuilder(RandovaniaGame.BLANK.value)
+    connection.add_connection_builder(builder)
+
+    game_state_updated = MagicMock()
+    connection.GameStateUpdated.connect(game_state_updated)
+
+    # Run
+    await connection._auto_update()
+    connector = connection.get_connector_for_builder(builder)
+    assert isinstance(connector, DebugRemoteConnector)
+
+    def make(status: GameConnectionStatus, inv: dict, indices: set):
+        return ConnectedGameState(connection.uuid_for_unknown, connector, status, inv, indices)
+
+    assert connection.get_backend_choice_for_state(ConnectedGameState(connection.uuid_for_unknown, connector)
+                                                   ) == ConnectorBuilderChoice.DEBUG
+
+    connector.PickupIndexCollected.emit(PickupIndex(1))
+    game_state_updated.assert_called_once_with(make(GameConnectionStatus.Disconnected, {}, {PickupIndex(1)}))
+
+    connector.PlayerLocationChanged.emit(PlayerLocationEvent(None, None))
+    game_state_updated.assert_called_with(make(GameConnectionStatus.TitleScreen, {}, {PickupIndex(1)}))
+
+    connector.PlayerLocationChanged.emit(PlayerLocationEvent(MagicMock(), None))
+    game_state_updated.assert_called_with(make(GameConnectionStatus.InGame, {}, {PickupIndex(1)}))
+
+    connector.InventoryUpdated.emit({"foo": 5})
+    game_state_updated.assert_called_with(make(GameConnectionStatus.InGame, {"foo": 5}, {PickupIndex(1)}))
+
+
