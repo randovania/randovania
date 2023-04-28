@@ -61,6 +61,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
 - Fixed: Unsupported features are now disallowed from use in Multiworld sessions.
 
+### Cave Story
+
+- Fixed: Exporting on Linux no longer fails due to Rest Area in Plantation using "lounge" instead of "Lounge".
+
 ### Metroid Dread
 
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
@@ -68,10 +72,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Fixed: Energy Tanks are now considered major items in Major/Minor split. 
-
-### Cave Story
-
-- Fixed: Exporting on Linux no longer fails due to Rest Area in Plantation using "lounge" instead of "Lounge".
 
 ### Metroid Prime
 
