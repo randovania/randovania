@@ -84,42 +84,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## [5.6.1] - 2023-04-??
 
 - Nothing.
