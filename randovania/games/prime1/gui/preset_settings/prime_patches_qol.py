@@ -62,4 +62,4 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
         config = preset.configuration
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
-        signal_handling.combo_set_to_value(self.cutscene_combo, config.qol_cutscenes)
+        signal_handling.set_combo_with_value(self.cutscene_combo, config.qol_cutscenes)

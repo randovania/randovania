@@ -3,6 +3,7 @@ from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.gui.generated.widget_pickup_style_ui import Ui_PickupStyleWidget
+from randovania.gui.lib import signal_handling
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
@@ -37,7 +38,6 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
         return persist
 
     def update(self, layout: BaseConfiguration):
-        self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(layout.pickup_model_style))
-        self.pickup_data_source_combo.setCurrentIndex(
-            self.pickup_data_source_combo.findData(layout.pickup_model_data_source))
+        signal_handling.set_combo_with_value(self.pickup_model_combo, layout.pickup_model_style)
+        signal_handling.set_combo_with_value(self.pickup_data_source_combo, layout.pickup_model_data_source)
         self.pickup_data_source_combo.setEnabled(layout.pickup_model_style != PickupModelStyle.ALL_VISIBLE)

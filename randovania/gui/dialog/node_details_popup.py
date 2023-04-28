@@ -24,6 +24,7 @@ from randovania.game_description.world.world import World
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import common_qt_lib, async_dialog, signal_handling
+from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.lib import enum_lib, frozen_lib
 
@@ -126,7 +127,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         try:
             visible_tab = self._fill_for_type(node)
-            self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
+            set_combo_with_value(self.node_type_combo, tab_to_type[visible_tab])
             refresh_if_needed(self.node_type_combo, self.on_node_type_combo)
         except Exception:
             pass
@@ -174,20 +175,20 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         area = self.game.world_list.nodes_to_area(other_node)
         world = self.game.world_list.nodes_to_world(other_node)
 
-        self.dock_connection_world_combo.setCurrentIndex(self.dock_connection_world_combo.findData(world))
+        signal_handling.set_combo_with_value(self.dock_connection_world_combo, world)
         refresh_if_needed(self.dock_connection_world_combo, self.on_dock_connection_world_combo)
-        self.dock_connection_area_combo.setCurrentIndex(self.dock_connection_area_combo.findData(area))
+        signal_handling.set_combo_with_value(self.dock_connection_area_combo, area)
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
-        self.dock_connection_node_combo.setCurrentIndex(self.dock_connection_node_combo.findData(other_node))
+        signal_handling.set_combo_with_value(self.dock_connection_node_combo, other_node)
 
         # Dock Weakness
-        self.dock_type_combo.setCurrentIndex(self.dock_type_combo.findData(node.dock_type))
+        signal_handling.set_combo_with_value(self.dock_type_combo, node.dock_type)
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
-        self.dock_weakness_combo.setCurrentIndex(self.dock_weakness_combo.findData(node.default_dock_weakness))
+        signal_handling.set_combo_with_value(self.dock_weakness_combo, node.default_dock_weakness)
 
     def fill_for_pickup(self, node: PickupNode):
         self.pickup_index_spin.setValue(node.pickup_index.index)
-        signal_handling.combo_set_to_value(self.location_category_combo, node.location_category)
+        signal_handling.set_combo_with_value(self.location_category_combo, node.location_category)
 
     def fill_for_teleporter(self, node: TeleporterNode):
         world = self.game.world_list.world_by_area_location(node.default_connection)
@@ -196,20 +197,20 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         except KeyError:
             area = None
 
-        signal_handling.combo_set_to_value(self.teleporter_destination_world_combo, world)
+        signal_handling.set_combo_with_value(self.teleporter_destination_world_combo, world)
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
-        signal_handling.combo_set_to_value(self.teleporter_destination_area_combo, area)
+        signal_handling.set_combo_with_value(self.teleporter_destination_area_combo, area)
         self.teleporter_editable_check.setChecked(node.editable)
         self.teleporter_vanilla_name_edit.setChecked(node.keep_name_when_vanilla)
 
     def fill_for_event(self, node: EventNode):
-        self.event_resource_combo.setCurrentIndex(self.event_resource_combo.findData(node.event))
+        signal_handling.set_combo_with_value(self.event_resource_combo, node.event)
 
     def fill_for_configurable(self, node: ConfigurableNode):
         pass
 
     def fill_for_hint(self, node: HintNode):
-        signal_handling.combo_set_to_value(self.hint_kind_combo, node.kind)
+        signal_handling.set_combo_with_value(self.hint_kind_combo, node.kind)
         self.set_hint_requirement_to_collect(node.requirement_to_collect)
 
     def set_hint_requirement_to_collect(self, requirement: Requirement):
