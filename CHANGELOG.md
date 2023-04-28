@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Cave Story
 
-- Changed: Rest Area in Plantation is now internally called "Lounge" instead of "lounge" to prevent crahses occurring when exporting on Linux.
+- Fixed: Exporting on Linux no longer fails due to Rest Area in Plantation using "lounge" instead of "Lounge".
 
 ### Metroid Prime
 
