@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.7.0] - 2023-05-??
 
-- Nothing yet.
+- Fixed: Unsupported features are now disallowed from use in Multiworld sessions.
+
+### Metroid Prime
+
+- Fixed: TODO (PR #4228)
 
 ## [5.6.1] - 2023-04-??
 
