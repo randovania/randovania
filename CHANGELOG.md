@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
-- Fixed: TODO (PR #4228)
+- Fixed: Room Rando no longer overrides the results of Door Lock Rando when exporting.
 
 #### Logic Database
 
