@@ -21,7 +21,8 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
     window = PresetStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
 
     # Run
@@ -36,7 +37,8 @@ def test_starting_location_world_select(skip_qtbot, preset_manager):
     # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
     window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
@@ -63,7 +65,8 @@ def test_quick_fill_default(skip_qtbot, preset_manager, game_enum: RandovaniaGam
     # Setup
     base = preset_manager.default_preset_for_game(game_enum).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
     window = PresetStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
@@ -83,7 +86,8 @@ def test_quick_fill_save_station(skip_qtbot, preset_manager, game_enum: Randovan
     # Setup
     base = preset_manager.default_preset_for_game(game_enum).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
     window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
@@ -99,7 +103,8 @@ def test_quick_fill_cs_classic(skip_qtbot, preset_manager):
     # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
     window = PresetCSStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
@@ -119,7 +124,8 @@ def test_check_credits(skip_qtbot, preset_manager):
     # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
     window = PresetMetroidStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())
     skip_qtbot.addWidget(window)
 
@@ -133,7 +139,8 @@ def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
     # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.BLANK).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
-    editor = PresetEditor(preset)
+    options = MagicMock()
+    editor = PresetEditor(preset, options)
 
     game_desc = default_database.game_description_for(preset.game)
     window = PresetStartingArea(editor, default_database.game_description_for(preset.game), MagicMock())

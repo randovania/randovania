@@ -29,6 +29,7 @@ from randovania.games.prime2.layout.translator_configuration import LayoutTransl
 from randovania.generator import generator
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
+from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -786,9 +787,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     # View
     def focus_on_world(self, world: World):
-        self.map_world_combo.setCurrentIndex(self.map_world_combo.findData(world))
-        self.graph_map_world_combo.setCurrentIndex(self.graph_map_world_combo.findData(world))
+        signal_handling.set_combo_with_value(self.map_world_combo, world)
+        signal_handling.set_combo_with_value(self.graph_map_world_combo, world)
         self.on_map_world_combo(0)
 
     def focus_on_area(self, area: Area):
-        self.map_area_combo.setCurrentIndex(self.map_area_combo.findData(area))
+        signal_handling.set_combo_with_value(self.map_area_combo, area)

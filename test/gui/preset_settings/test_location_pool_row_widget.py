@@ -58,7 +58,8 @@ def test_location_pool_row_actions(pickup_node, skip_qtbot):
 
 def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echoes_game_description, skip_qtbot):
     # Setup
-    preset_editor = PresetEditor(customized_preset)
+    options = MagicMock()
+    preset_editor = PresetEditor(customized_preset, options)
 
     location_pool_tab = PresetLocationPool(preset_editor, echoes_game_description, MagicMock())
 

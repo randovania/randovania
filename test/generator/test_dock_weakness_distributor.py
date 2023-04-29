@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 import dataclasses
 
 from randovania.generator.generator import generate_and_validate_description
@@ -7,7 +9,8 @@ from randovania.layout.generator_parameters import GeneratorParameters
 
 
 async def test_dock_weakness_distribute(default_blank_preset):
-    _editor = PresetEditor(default_blank_preset.fork())
+    options = MagicMock()
+    _editor = PresetEditor(default_blank_preset.fork(), options)
     with _editor as editor:
         editor.dock_rando_configuration = dataclasses.replace(
             editor.dock_rando_configuration,
