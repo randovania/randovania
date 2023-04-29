@@ -78,7 +78,7 @@ class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
         config = preset.configuration
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
-        signal_handling.combo_set_to_value(self.room_rando_combo, config.room_rando)
+        signal_handling.set_combo_with_value(self.room_rando_combo, config.room_rando)
         self.superheated_slider.setValue(preset.configuration.superheated_probability)
         self.submerged_slider.setValue(preset.configuration.submerged_probability)
         self._on_slider_changed()

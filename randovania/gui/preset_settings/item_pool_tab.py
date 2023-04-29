@@ -4,6 +4,7 @@ from functools import partial
 
 from PySide6 import QtWidgets, QtCore
 
+import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -96,8 +97,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Default Items
         for category, default_item in major_configuration.default_items.items():
-            combo = self._default_items[category]
-            combo.setCurrentIndex(combo.findData(default_item))
+            randovania.gui.lib.signal_handling.set_combo_with_value(self._default_items[category], default_item)
 
             for item, widget in self._boxes_for_category[category.name][2].items():
                 widget.setEnabled(default_item != item)

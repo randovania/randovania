@@ -321,7 +321,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         return all_dict
 
-
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
         return {

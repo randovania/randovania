@@ -11,7 +11,7 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
-from randovania.gui.lib import common_qt_lib, signal_handling
+from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -34,7 +34,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.elevator_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         for value in enum_lib.iterate_enum(TeleporterShuffleMode):
             self.elevators_combo.addItem(value.long_name, value)
@@ -194,7 +194,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         config = preset.configuration
         config_elevators: TeleporterConfiguration = config.elevators
 
-        common_qt_lib.set_combo_with_value(self.elevators_combo, config_elevators.mode)
+        signal_handling.set_combo_with_value(self.elevators_combo, config_elevators.mode)
         can_shuffle_target = config_elevators.mode not in (TeleporterShuffleMode.VANILLA,
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)

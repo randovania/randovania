@@ -120,8 +120,7 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
     def set_selected_tricks(self, trick_level: TrickLevelConfiguration):
         for (trick, trick_check), combo in self.tricks.items():
             trick_check.setChecked(True)
-            idx = combo.findData(trick_level.level_for_trick(trick).as_number)
-            combo.setCurrentIndex(idx)
+            signal_handling.set_combo_with_value(combo, trick_level.level_for_trick(trick).as_number)
 
     def selected_tricks(self) -> dict[TrickResourceInfo, int]:
         return {
