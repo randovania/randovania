@@ -12,6 +12,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
+import randovania
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -531,7 +532,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if self._preset_manager.is_included_preset_uuid(old_preset.uuid):
             old_preset = old_preset.fork()
 
-        editor = PresetEditor(old_preset)
+        editor = PresetEditor(old_preset, self._options)
         self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
@@ -578,10 +579,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await self._do_import_preset(row_index, preset)
 
     async def _do_import_preset(self, row_index: int, preset: VersionedPreset):
-        if incompatible := preset.get_preset().settings_incompatible_with_multiworld():
+        message = "The following settings are incompatible with multiworld:\n"
+        incompatible = preset.get_preset().settings_incompatible_with_multiworld()
+        if not incompatible and not randovania.is_dev_version():
+            incompatible = preset.get_preset().configuration.unsupported_features()
+            message = "The following settings are unsupported:\n"
+
+        if incompatible:
             return await async_dialog.warning(
                 self, "Incompatible preset",
-                "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible),
+                message + "\n".join(incompatible),
                 async_dialog.StandardButton.Ok, async_dialog.StandardButton.Ok
             )
 
@@ -1360,7 +1367,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                     self.game_connection.expected_game,
                     self.game_connection.get_current_inventory(),
                     self.game_connection.current_status,
-                    self.game_connection.backend_choice,
+                    self.game_connection.connector_builder_choice,
                 )
         except UnableToConnect:
             logger.info("Unable to connect to server to update status")

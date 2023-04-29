@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QWidget
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches, CorruptionSuit
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.corruption_cosmetic_patches_dialog_ui import Ui_CorruptionCosmeticPatchesDialog
+from randovania.gui.lib.signal_handling import set_combo_with_value
 
 
 class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCosmeticPatchesDialog):
@@ -31,7 +32,7 @@ class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCo
     def on_new_cosmetic_patches(self, patches: CorruptionCosmeticPatches):
         self.random_door_colors_check.setChecked(patches.random_door_colors)
         self.random_welding_colors_check.setChecked(patches.random_welding_colors)
-        self.suit_combo.setCurrentIndex(self.suit_combo.findData(patches.player_suit))
+        set_combo_with_value(self.suit_combo, patches.player_suit)
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):

@@ -12,6 +12,7 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
@@ -333,7 +334,7 @@ class WorldReader:
                 return PickupNode(
                     **generic_args,
                     pickup_index=PickupIndex(data["pickup_index"]),
-                    major_location=data["major_location"],
+                    location_category=LocationCategory(data["location_category"]),
                 )
 
             elif node_type == "teleporter":

@@ -38,6 +38,10 @@ def resource_user_friendly_name(resource: ResourceInfo) -> str:
     return _RESOURCE_NAME_TRANSLATION.get(resource.long_name, resource.long_name)
 
 
+def resource_user_friendly_delta(resource: ResourceInfo) -> str:
+    return f"{resource_user_friendly_name(resource)}Changed"
+
+
 def _pickups_count_by_name(pickups: list[PickupEntry]) -> dict[str, int]:
     result = collections.defaultdict(int)
     for it in pickups:

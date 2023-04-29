@@ -129,8 +129,8 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
         if pickups:
             state = state.assign_pickups_resources(pickups)
-            multiplier *= sum(pickup.probability_multiplier for pickup in pickups) / len(pickups)
-            offset += sum(pickup.probability_offset for pickup in pickups) / len(pickups)
+            multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
+            offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
 
         base_weight = _calculate_weights_for(reach_lib.advance_to_with_reach_copy(player_state.reach, state),
                                              current_uncollected)

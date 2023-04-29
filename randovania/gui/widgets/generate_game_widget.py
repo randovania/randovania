@@ -197,7 +197,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         else:
             parent_uuid = None
 
-        editor = PresetEditor(old_preset)
+        editor = PresetEditor(old_preset, self._options)
         self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())

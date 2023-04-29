@@ -188,7 +188,10 @@ class GamePatches:
         return self.dock_weakness[node.node_index] or node.default_dock_weakness
 
     def has_default_weakness(self, node: DockNode) -> bool:
-        return self.dock_weakness[node.node_index] is None
+        if self.dock_weakness[node.node_index] is None:
+            return True
+        
+        return self.dock_weakness[node.node_index] == node.default_dock_weakness
 
     def should_shuffle_weakness(self, node: DockNode) -> bool:
         return self.weaknesses_to_shuffle[node.node_index]

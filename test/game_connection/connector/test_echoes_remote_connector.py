@@ -25,18 +25,17 @@ def echoes_version():
 
 @pytest.fixture(name="connector")
 def echoes_remote_connector(version: EchoesDolVersion):
-    connector = EchoesRemoteConnector(version)
+    connector = EchoesRemoteConnector(version, AsyncMock())
     return connector
 
 
 async def test_is_this_version(connector: EchoesRemoteConnector):
     # Setup
     build_info = b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32"
-    executor = AsyncMock()
-    executor.perform_single_memory_operation.return_value = build_info
+    connector.executor.perform_single_memory_operation.return_value = build_info
 
     # Run
-    assert await connector.is_this_version(executor)
+    assert await connector.is_this_version()
 
 
 @pytest.mark.parametrize(["message_original", "message_encoded", "previous_size"], [
@@ -59,14 +58,13 @@ async def test_write_string_to_game_buffer(connector: EchoesRemoteConnector, ver
 
 async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     # Setup
-    executor = AsyncMock()
-    executor.perform_memory_operations.side_effect = lambda ops: {
+    connector.executor.perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II", item.max_capacity, item.max_capacity)
         for op, item in zip(ops, connector.game.resource_database.item)
     }
 
     # Run
-    inventory = await connector.get_inventory(executor)
+    inventory = await connector.get_inventory()
 
     # Assert
     assert inventory == {
@@ -79,8 +77,7 @@ async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
     # Setup
     custom_inventory = {"Darkburst": InventoryItem(0, 50)}
 
-    executor = AsyncMock()
-    executor.perform_memory_operations.side_effect = lambda ops: {
+    connector.executor.perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II",
                         *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity)))
         for op, item in zip(ops, connector.game.resource_database.item)
@@ -89,15 +86,14 @@ async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
     # Run
     msg = "Received InventoryItem(amount=0, capacity=50) for Darkburst, which is an invalid state."
     with pytest.raises(MemoryOperationException, match=re.escape(msg)):
-        await connector.get_inventory(executor)
+        await connector.get_inventory()
 
 
 async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
     # Setup
     custom_inventory = {"Darkburst": InventoryItem(1, 0)}
 
-    executor = AsyncMock()
-    executor.perform_memory_operations.side_effect = lambda ops: {
+    connector.executor.perform_memory_operations.side_effect = lambda ops: {
         op: struct.pack(">II",
                         *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity)))
         for op, item in zip(ops, connector.game.resource_database.item)
@@ -106,21 +102,21 @@ async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
     # Run
     msg = "Received InventoryItem(amount=1, capacity=0) for Darkburst, which is an invalid state."
     with pytest.raises(MemoryOperationException, match=re.escape(msg)):
-        await connector.get_inventory(executor)
+        await connector.get_inventory()
 
 
 @pytest.mark.parametrize("capacity", [0, 10])
 async def test_known_collected_locations_nothing(connector: EchoesRemoteConnector, capacity: int):
     # Setup
-    executor = AsyncMock()
-    executor.perform_single_memory_operation.return_value = struct.pack(">II", 0, capacity)
+    connector.executor.perform_single_memory_operation.return_value = struct.pack(">II", 0, capacity)
+    connector.execute_remote_patches = AsyncMock()
 
     # Run
-    locations, patches = await connector.known_collected_locations(executor)
+    locations = await connector.known_collected_locations()
 
     # Assert
     assert locations == set()
-    assert patches == []
+    connector.execute_remote_patches.assert_not_awaited()
 
 
 @pytest.mark.parametrize("capacity", [0, 10])
@@ -130,11 +126,11 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
-    executor = AsyncMock()
-    executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
+    connector.executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
+    connector.execute_remote_patches = AsyncMock()
 
     # Run
-    locations, patches = await connector.known_collected_locations(executor)
+    locations = await connector.known_collected_locations()
 
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
@@ -143,49 +139,45 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
                                             -10)
 
     assert locations == {PickupIndex(9)}
-    assert patches == [DolRemotePatch([], mock_item_patch.return_value)]
+    connector.execute_remote_patches.assert_awaited_once_with([DolRemotePatch([], mock_item_patch.return_value)])
 
 
-async def test_find_missing_remote_pickups_nothing(connector: EchoesRemoteConnector):
+async def test_receive_remote_pickups_nothing(connector: EchoesRemoteConnector):
     # Setup
-    executor = AsyncMock()
     inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)}
+    connector.execute_remote_patches = AsyncMock()
 
     # Run
-    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, [], False)
-
-    # Assert
-    assert patches == []
-    assert not has_message
+    await connector.receive_remote_pickups(inventory, [])
+    connector.execute_remote_patches.assert_not_awaited()
 
 
-async def test_find_missing_remote_pickups_pending_location(connector: EchoesRemoteConnector):
+async def test_receive_remote_pickups_pending_location(connector: EchoesRemoteConnector):
     # Setup
-    executor = AsyncMock()
     inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(5, 15)}
+    connector.execute_remote_patches = AsyncMock()
 
     # Run
-    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, [], False)
-
-    # Assert
-    assert patches == []
-    assert not has_message
+    await connector.receive_remote_pickups(inventory, [])
+    connector.execute_remote_patches.assert_not_awaited()
 
 
 @pytest.mark.parametrize("in_cooldown", [False, True])
-async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion,
+async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion,
                                                        mocker, in_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.increment_item_capacity_patch")
     mock_call_display_hud_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.call_display_hud_patch")
+    if in_cooldown:
+        connector.message_cooldown = 1.0
+    connector.execute_remote_patches = AsyncMock()
 
     pickup_patches = MagicMock()
     connector._write_string_to_game_buffer = MagicMock()
     connector._patches_for_pickup = AsyncMock(return_value=([pickup_patches, pickup_patches], "The Message"))
 
-    executor = AsyncMock()
     inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)}
     permanent_pickups = [
         ("A", MagicMock()),
@@ -193,13 +185,11 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
     ]
 
     # Run
-    patches, has_message = await connector.find_missing_remote_pickups(executor, inventory, permanent_pickups,
-                                                                       in_cooldown)
+    await connector.receive_remote_pickups(inventory, permanent_pickups)
 
     # Assert
     if in_cooldown:
-        assert patches == []
-        assert not has_message
+        connector.execute_remote_patches.assert_not_awaited()
         mock_item_patch.assert_not_called()
         connector._patches_for_pickup.assert_not_called()
         connector._write_string_to_game_buffer.assert_not_called()
@@ -210,8 +200,7 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
                                             RandovaniaGame.METROID_PRIME_ECHOES,
                                             connector.game.resource_database.multiworld_magic_item.extra["item_id"])
     connector._patches_for_pickup.assert_awaited_once_with(permanent_pickups[0][0], permanent_pickups[0][1], inventory)
-    assert has_message
-    assert patches == [
+    connector.execute_remote_patches.assert_awaited_once_with([
         DolRemotePatch([], pickup_patches),
         DolRemotePatch([], pickup_patches),
         DolRemotePatch([], mock_item_patch.return_value),
@@ -219,14 +208,14 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
             [connector._write_string_to_game_buffer.return_value],
             mock_call_display_hud_patch.return_value,
         ),
-    ]
+    ])
     connector._write_string_to_game_buffer.assert_called_once_with("The Message")
     mock_call_display_hud_patch.assert_called_once_with(version.string_display)
 
 
 @pytest.mark.parametrize("has_item_percentage", [False, True])
 async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker,
-                                  generic_item_category, has_item_percentage):
+                                  generic_item_category, has_item_percentage, default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
@@ -240,6 +229,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
         ]
 
     pickup = PickupEntry("Pickup", 0, generic_item_category, generic_item_category, progression=tuple(),
+                         generator_params=default_generator_params,
                          extra_resources=(
                              (db.energy_tank, db.energy_tank.max_capacity),
                              *item_percentage_resource,
@@ -269,8 +259,6 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
         return_value=(patch_address, patch_bytes)
     )
 
-    executor = AsyncMock()
-
     memory_op_a = MemoryOperation(1234, write_bytes=b"1234")
     instructions = [BaseInstruction(), BaseInstruction()]
     patches = [
@@ -284,11 +272,11 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     ]
 
     # Run
-    await connector.execute_remote_patches(executor, patches)
+    await connector.execute_remote_patches(patches)
 
     # Assert
-    mock_remote_execute.assert_called_once_with(version.string_display, instructions)
-    executor.perform_memory_operations.assert_awaited_once_with(memory_operations)
+    mock_remote_execute.assert_called_once_with(RandovaniaGame.METROID_PRIME_ECHOES, version.string_display, instructions)
+    connector.executor.perform_memory_operations.assert_awaited_once_with(memory_operations)
 
 
 @pytest.mark.parametrize("correct_vtable", [False, True])
@@ -299,15 +287,14 @@ async def test_fetch_game_status(connector: EchoesRemoteConnector, version: Echo
     # Setup
     expected_world = connector.game.world_list.worlds[0]
 
-    executor = AsyncMock()
-    executor.perform_memory_operations.side_effect = lambda ops: {
+    connector.executor.perform_memory_operations.side_effect = lambda ops: {
         ops[0]: expected_world.extra["asset_id"].to_bytes(4, "big") if has_world else b"DEAD",
         ops[1]: b"\x01" if has_pending_op else b"\x00",
         ops[2]: version.cplayer_vtable.to_bytes(4, "big") if correct_vtable else b"CAFE",
     }
 
     # Run
-    actual_has_op, actual_world = await connector.current_game_status(executor)
+    actual_has_op, actual_world = await connector.current_game_status()
 
     # Assert
     if has_world and correct_vtable:
@@ -328,7 +315,7 @@ async def test_receive_required_missile_launcher(connector: EchoesRemoteConnecto
         True,
     )
 
-    executor = AsyncMock()
+    connector.execute_remote_patches = AsyncMock()
     permanent_pickups = (("Received Missile Launcher from Someone Else", pickup),)
 
     inventory = {
@@ -336,11 +323,10 @@ async def test_receive_required_missile_launcher(connector: EchoesRemoteConnecto
     }
 
     # Run
-    patches, has_message = await connector.find_missing_remote_pickups(
-        executor, inventory, permanent_pickups, False,
+    await connector.receive_remote_pickups(
+        inventory, permanent_pickups
     )
-    assert has_message
-    assert len(patches) == 5
-    await connector.execute_remote_patches(executor, patches)
 
-    # Assert
+    connector.execute_remote_patches.assert_awaited_once()
+    assert len(connector.execute_remote_patches.call_args[0][0]) == 5
+

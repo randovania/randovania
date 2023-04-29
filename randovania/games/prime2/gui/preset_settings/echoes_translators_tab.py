@@ -12,7 +12,7 @@ from randovania.games.prime2.exporter.game_exporter import decode_randomizer_dat
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
 from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
-from randovania.gui.lib.common_qt_lib import set_combo_with_value
+from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor

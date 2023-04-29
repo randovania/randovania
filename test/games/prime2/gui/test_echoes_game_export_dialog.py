@@ -92,6 +92,10 @@ def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
 def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
+    mock_discover: MagicMock = mocker.patch(
+        "randovania.games.common.prime_family.gui.export_validator.discover_game", autospec=True,
+        return_value=("G2ME01", "Metroid Prime 2")
+    )
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file", autospec=True,
                                side_effect=[
                                    None,
@@ -119,24 +123,24 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     assert not window.input_file_edit.has_error
 
     # Deletes the internal data
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == ""
     assert window.input_file_edit.has_error
 
     # User cancelled, stays unchanged
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == ""
     assert window.input_file_edit.has_error
 
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("some/game.iso"))
     assert window.input_file_edit.has_error
 
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("existing.iso"))
     assert not window.input_file_edit.has_error
 
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("missing_again.iso"))
     assert window.input_file_edit.has_error
 
@@ -146,6 +150,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
         call(window, ["iso"], existing_file=None),
         call(window, ["iso"], existing_file=tmp_path.joinpath("existing.iso")),
     ])
+    mock_discover.assert_called_once_with(tmp_path.joinpath("existing.iso"))
 
 
 @pytest.mark.parametrize("is_prime_multi", [False, True])

@@ -12,9 +12,9 @@ from randovania.layout.base.ammo_configuration import AmmoConfiguration
 @pytest.fixture(
     params=[
         {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'\x00', "items_state": {}},
-        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'\x8a\x91\x00',
+        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'\x8aH\x80',
          "items_state": {"Missile Expansion": {"ammo_count": [10], "pickup_count": 12}}},
-        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'\x8f\x91\x00',
+        {"game": RandovaniaGame.METROID_PRIME_ECHOES, "encoded": b'\x8fH\x80',
          "items_state": {"Missile Expansion": {"ammo_count": [15], "pickup_count": 12}}},
         {"game": RandovaniaGame.METROID_PRIME_CORRUPTION, "encoded": b'\x00', "items_state": {}},
     ],

@@ -238,7 +238,7 @@
                         "start_point_actor_name": "wagontrain_forest_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Transport to Elun"
@@ -346,10 +346,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Bridge Gate": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Tunnel to Ammo Recharge Station": {
@@ -431,7 +433,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Bridge Gate": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -642,7 +644,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 114,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Chozo Soldier Arena": {
                             "type": "and",
@@ -826,7 +828,7 @@
                         "start_point_actor_name": "SP_Checkpoint_PlasmaBeam",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Plasma Beam Room (Lower)": {
                             "type": "and",
@@ -1100,11 +1102,8 @@
                             }
                         },
                         "Event - Chozo Soldier Fight": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: Chozo Soldier requirements",
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Fight Chozo-X"
                         }
                     }
                 },
@@ -1179,7 +1178,7 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Spider Magnet Room": {
                             "type": "and",
@@ -1467,7 +1466,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 115,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "and",
@@ -1588,7 +1587,7 @@
                         "start_point_actor_name": "SP_PlasmaBeam",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "and",
@@ -1776,7 +1775,7 @@
                         "start_point_actor_name": "SP_Checkpoint_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Chozo Soldier Arena": {
                             "type": "and",
@@ -1979,7 +1978,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 117,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Room Bottom": {
                             "type": "and",
@@ -2217,7 +2216,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 116,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Grapple Block Alcove": {
                             "type": "resource",
@@ -2730,7 +2729,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 118,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Tunnel to Vertical Bomb Maze (Lower)": {
                             "type": "or",

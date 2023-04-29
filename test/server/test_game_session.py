@@ -188,6 +188,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
                                                  mock_get_resource_database: MagicMock,
                                                  mock_get_pickup_target: MagicMock,
                                                  flask_app, two_player_session, generic_item_category,
+                                                 default_generator_params,
                                                  echoes_resource_database, mocker):
     # Setup
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
@@ -198,7 +199,8 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
 
     pickup = PickupEntry("A", PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
                          generic_item_category, generic_item_category,
-                         progression=((echoes_resource_database.item[0], 1),))
+                         progression=((echoes_resource_database.item[0], 1),),
+                         generator_params=default_generator_params)
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
     mock_get_resource_database.return_value = echoes_resource_database
 
@@ -220,7 +222,7 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
             "pickups": [{
                 'provider_name': 'Other Name',
                 'pickup': ('C?+ZkYioLIdm}4kHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhL'
-                           'E{v_DHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhLE{v_A0uBH')
+                           'E{v_DHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhLE{v_A0t)~')
             }]
         },
         room=f"game-session-1-1234"
@@ -236,12 +238,14 @@ def test_game_session_collect_pickup_for_self(mock_session_description: Property
                                               mock_get_pickup_target: MagicMock,
                                               mock_emit: MagicMock,
                                               flask_app, two_player_session, generic_item_category,
+                                              default_generator_params,
                                               echoes_resource_database):
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
     pickup = PickupEntry("A", 1, generic_item_category, generic_item_category,
-                         progression=((echoes_resource_database.item[0], 1),))
+                         progression=((echoes_resource_database.item[0], 1),),
+                         generator_params=default_generator_params)
     mock_get_resource_database.return_value = echoes_resource_database
     mock_get_pickup_target.return_value = PickupTarget(pickup, 0)
 

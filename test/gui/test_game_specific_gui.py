@@ -9,7 +9,8 @@ from randovania.layout import filtered_database
 
 def test_preset_editor_tabs_for(skip_qtbot, game_enum: RandovaniaGame, preset_manager):
     preset = preset_manager.default_preset_for_game(game_enum)
-    editor = PresetEditor(preset.get_preset().fork())
+    options = MagicMock()
+    editor = PresetEditor(preset.get_preset().fork(), options)
     window_manager = MagicMock()
     game = filtered_database.game_description_for_layout(preset.get_preset().configuration)
 

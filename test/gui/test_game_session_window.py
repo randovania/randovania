@@ -85,7 +85,7 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
         game_connection.expected_game,
         game_connection.get_current_inventory.return_value,
         game_connection.current_status,
-        game_connection.backend_choice,
+        game_connection.connector_builder_choice,
     )
 
 

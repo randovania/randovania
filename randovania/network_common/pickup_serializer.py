@@ -4,8 +4,9 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
-    PickupModel
+    PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.games.game import RandovaniaGame
@@ -73,7 +74,7 @@ def _encode_item_category(category: ItemCategory):
     yield from bitpacking.encode_string(category.long_name)
     yield from bitpacking.encode_string(category.hint_details[0])
     yield from bitpacking.encode_string(category.hint_details[1])
-    yield from bitpacking.encode_bool(category.is_major)
+    yield from bitpacking.encode_bool(category.hinted_as_major)
     yield from bitpacking.encode_bool(category.is_key)
 
 
@@ -82,7 +83,7 @@ def _decode_item_category(decoder: BitPackDecoder) -> ItemCategory:
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
-        is_major=bitpacking.decode_bool(decoder),
+        hinted_as_major=bitpacking.decode_bool(decoder),
         is_key=bitpacking.decode_bool(decoder)
     )
 
@@ -111,9 +112,14 @@ class BitPackPickupEntry:
         if self.value.resource_lock is not None:
             yield from helper.encode_resource_lock(self.value.resource_lock)
         yield from bitpacking.encode_bool(self.value.respects_lock)
-        yield from BitPackFloat(self.value.probability_offset).bit_pack_encode(_PROBABILITY_OFFSET_META)
-        yield from BitPackFloat(self.value.probability_multiplier).bit_pack_encode(_PROBABILITY_MULTIPLIER_META)
-        yield from bitpacking.encode_big_int(self.value.required_progression)
+        yield from self.value.generator_params.preferred_location_category.bit_pack_encode({})
+        yield from BitPackFloat(self.value.generator_params.probability_offset).bit_pack_encode(
+            _PROBABILITY_OFFSET_META
+        )
+        yield from BitPackFloat(self.value.generator_params.probability_multiplier).bit_pack_encode(
+            _PROBABILITY_MULTIPLIER_META
+        )
+        yield from bitpacking.encode_big_int(self.value.generator_params.required_progression)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
@@ -133,6 +139,8 @@ class BitPackPickupEntry:
         if bitpacking.decode_bool(decoder):
             resource_lock = helper.decode_resource_lock(decoder)
         respects_lock = bitpacking.decode_bool(decoder)
+
+        location_category = LocationCategory.bit_pack_unpack(decoder, {})
         probability_offset = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_OFFSET_META)
         probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
         required_progression = bitpacking.decode_big_int(decoder)
@@ -147,7 +155,10 @@ class BitPackPickupEntry:
             unlocks_resource=unlocks_resource,
             resource_lock=resource_lock,
             respects_lock=respects_lock,
-            probability_offset=probability_offset,
-            probability_multiplier=probability_multiplier,
-            required_progression=required_progression,
+            generator_params=PickupGeneratorParams(
+                preferred_location_category=location_category,
+                probability_offset=probability_offset,
+                probability_multiplier=probability_multiplier,
+                required_progression=required_progression,
+            ),
         )

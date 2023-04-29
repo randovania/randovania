@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>474</width>
-         <height>626</height>
+         <y>-35</y>
+         <width>460</width>
+         <height>661</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -293,31 +293,7 @@
            <string>Heated rooms</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="heated_damage_description">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much damage per second you take in heated rooms, when you don't have proper protection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QCheckBox" name="heated_damage_varia_check">
-             <property name="text">
-              <string>Only Varia Suit provides heat protection, instead of all suits.</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="heated_damage_label">
-             <property name="text">
-              <string>Heated damage rate</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
+           <item row="1" column="1">
             <widget class="QDoubleSpinBox" name="heated_damage_spin">
              <property name="suffix">
               <string> energy/s</string>
@@ -330,6 +306,20 @@
              </property>
              <property name="value">
               <double>1.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="heated_damage_label">
+             <property name="text">
+              <string>Heated damage rate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="heated_damage_description">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much damage per second you take in heated rooms, when you don't have proper protection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>

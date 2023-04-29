@@ -1,12 +1,16 @@
 from unittest.mock import MagicMock
+from mock import AsyncMock
 
 import pytest
 
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
+from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher.prime1_dol_patches import Prime1DolVersion
+from randovania.games.prime1.patcher.prime1_dol_versions import ALL_VERSIONS
 
 
 @pytest.fixture(name="version")
@@ -17,12 +21,13 @@ def prime1_version():
 
 @pytest.fixture(name="connector")
 def remote_connector(version: Prime1DolVersion):
-    connector = Prime1RemoteConnector(version)
+    connector = Prime1RemoteConnector(version, DolphinExecutor())
     return connector
 
 
 @pytest.mark.parametrize("artifact", [False, True])
-async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, artifact: bool, generic_item_category):
+async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, artifact: bool, generic_item_category,
+                                  default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
@@ -38,6 +43,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
         extra = (db.energy_tank, db.energy_tank.max_capacity)
 
     pickup = PickupEntry("Pickup", 0, generic_item_category, generic_item_category, progression=tuple(),
+                         generator_params=default_generator_params,
                          extra_resources=(
                              extra,
                          ))
@@ -69,3 +75,35 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 
     assert patches == expected_patches
     assert message == "Received Pickup from Someone."
+
+@pytest.mark.parametrize("has_cooldown", [False, True])
+@pytest.mark.parametrize("has_patches", [False, True])
+async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool):
+    connector = PrimeRemoteConnector(ALL_VERSIONS[0], AsyncMock())
+
+    # Setup
+    if has_cooldown:
+        initial_cooldown = 2.0
+    else:
+        initial_cooldown = 0.0
+    connector.message_cooldown = initial_cooldown
+
+    connector._patches_for_pickup = AsyncMock()
+    connector._patches_for_pickup.return_value = ([[]], "")
+    magic_item = MagicMock()
+    magic_item.amount = 0
+    magic_item.capacity = 0
+    inventory = MagicMock()
+    inventory.get = MagicMock()
+    inventory.get.return_value = magic_item
+
+    remote_pickups = [("", MagicMock())] if has_patches else []
+
+    # Run
+    await connector.receive_remote_pickups(inventory, remote_pickups)
+
+    # Assert
+    if has_patches and not has_cooldown:
+        assert connector.message_cooldown == 4.0
+    else:
+        assert connector.message_cooldown == initial_cooldown

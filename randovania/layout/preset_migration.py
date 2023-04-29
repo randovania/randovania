@@ -746,6 +746,20 @@ def _migrate_v45(preset: dict) -> dict:
         preset["configuration"]["portal_rando"] = False
     return preset
 
+def _migrate_v46(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["april_fools_hints"] = False
+    return preset
+
+def _migrate_v47(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"].pop("deterministic_idrone")
+        preset["configuration"].pop("deterministic_maze")
+        preset["configuration"].pop("qol_game_breaking")
+        preset["configuration"].pop("qol_pickup_scans")
+        preset["configuration"].pop("heat_protection_only_varia")
+        preset["configuration"]["legacy_mode"] = False
+    return preset
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -793,6 +807,8 @@ _MIGRATIONS = [
     _migrate_v43,
     _migrate_v44,
     _migrate_v45,
+    _migrate_v46,
+    _migrate_v47,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
