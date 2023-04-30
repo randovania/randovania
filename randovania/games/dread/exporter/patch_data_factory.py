@@ -58,10 +58,21 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
 
 
 def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
-    return [
+    resources = [
         list(convert_conditional_resource(conditional_resource))
         for conditional_resource in detail.conditional_resources
     ]
+
+    if (detail.original_pickup.resource_lock is not None and not detail.original_pickup.respects_lock
+        and not detail.original_pickup.unlocks_resource):
+        # Add the lock resource into the pickup in addition to the expansion's resources
+        assert len(resources) == 1
+        resources[0].append({
+            "item_id": get_item_id_for_item(detail.original_pickup.resource_lock.locked_by),
+            "quantity": 1,
+        })
+
+    return resources
 
 
 class DreadPatchDataFactory(BasePatchDataFactory):
@@ -201,18 +212,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             model_names = alt_model
 
         resources = get_resources_for_details(detail)
-
-        if (
-            len(resources) == 1
-            and not detail.original_pickup.respects_lock
-            and detail.original_pickup.resource_lock is not None
-        ):
-            # Add the lock resource into the pickup as well
-            resources[0].append({
-                "item_id": get_item_id_for_item(detail.original_pickup.resource_lock.locked_by),
-                "quantity": 1,
-            })
-            pass
 
         pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")

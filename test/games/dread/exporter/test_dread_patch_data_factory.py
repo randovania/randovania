@@ -78,10 +78,14 @@ def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_man
 
     # Assert
     assert result == [
-        {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX" if locked else "ITEM_WEAPON_POWER_BOMB",
-            "quantity": 2
-        }
+        [
+            { "item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2 },
+        ]
+        if locked else
+        [
+            { "item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2 },
+            { "item_id": "ITEM_WEAPON_POWER_BOMB", "quantity": 1 },
+        ]
     ]
 
 
@@ -108,10 +112,10 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
 
     # Assert
     assert result == [
-        {
-            "item_id": "ITEM_WEAPON_POWER_BOMB",
-            "quantity": 3
-        }
+        [
+            { "item_id": "ITEM_WEAPON_POWER_BOMB", "quantity": 1 },
+            { "item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 3 },
+        ]
     ]
 
 
@@ -147,10 +151,12 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
         "pickup_type": "actor",
         "caption": "Speed Booster acquired.",
         "resources": [
-            {
-                "item_id": "ITEM_SPEED_BOOSTER",
-                "quantity": 1
-            }
+            [
+                {
+                    "item_id": "ITEM_SPEED_BOOSTER",
+                    "quantity": 1
+                }
+            ]
         ],
         "pickup_actor": {
             "scenario": "s010_cave",
