@@ -36,14 +36,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
 - Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
 - Added: A new way to reach the tunnel in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump (Advanced)
+- Added: Use a Shinespark to climb up from Above Screw Attack Blocks in Burenia Main Hub Tower Bottom with only Gravity Suit.
+- Added: Use a Shinespark to climb up from Alcove Across Grapple Block in Burenia Main Hub Tower Bottom with only Speedbooster using Speedbooster Conservation Beginner.
+- Added: Use a Shinespark with Gravity Suit to reach Ammo Recharge South at the bottom of Burenia Gravity Suit Tower before the Destroy Gravity Suit Floor event.
+- Added: Use Spin Boost And Gravity Suit with different trick strategies to cross the big gap in Burenia Main Hub Tower Middle.
+- Added: Use a Shinespark with Gravity Suit to reach the Spider Magnet wall in Burenia Main Hub Tower Middle from the bottom of the room.
+- Added: Climb up to the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit and Flash Shift.
+- Added: Climb up from the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit, a Slide Jump, Spin Boost and a Wall Jump.
+- Added: Allow using Shinesparks in Gravity Suit Tower by storing speed in the upper part of Gravity Suit Room, also when Door Lock rando is enabled.
 - Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
 - Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
 - Changed: Reduced the difficulty of the walljump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
 - Changed: Using Walljump Advanded to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
-- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
+- Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morhph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
 - Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
+- Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
+- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
 
 ### Metroid Prime
 
