@@ -1,4 +1,5 @@
 import os
+from typing import Iterator
 
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -35,11 +36,6 @@ _ALTERNATIVE_MODELS = {
     "PROGRESSIVE_SPIN": ["powerup_doublejump", "powerup_spacejump"],
 }
 
-_MAIN_GRANTED_BY_AMMO = {
-    "ITEM_WEAPON_POWER_BOMB_MAX": "ITEM_WEAPON_POWER_BOMB",
-    "ITEM_UPGRADE_FLASH_SHIFT_CHAIN": "ITEM_GHOST_AURA",
-}
-
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
@@ -49,30 +45,22 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
     if not res.resources:
-        return {"item_id": "ITEM_NONE", "quantity": 0}
+        yield {"item_id": "ITEM_NONE", "quantity": 0}
+        return
 
-    item_id = get_item_id_for_item(res.resources[0][0])
-    quantity = res.resources[0][1]
+    for resource in reversed(res.resources):
+        item_id = get_item_id_for_item(resource[0])
+        quantity = resource[1]
 
-    # Main PBs and Flash Shift have two items in res.resources, all others have 1
-    if len(res.resources) != 1:
-        item_id = get_item_id_for_item(res.resources[1][0])
-        assert item_id in _MAIN_GRANTED_BY_AMMO.values()
-        assert len(res.resources) == 2
-
-    # non-required mains
-    if item_id in _MAIN_GRANTED_BY_AMMO and not respects_lock:
-        item_id = _MAIN_GRANTED_BY_AMMO[item_id]
-
-    return {"item_id": item_id, "quantity": quantity}
+        yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
     return [
-        convert_conditional_resource(detail.original_pickup.respects_lock, res)
-        for res in detail.conditional_resources
+        list(convert_conditional_resource(conditional_resource))
+        for conditional_resource in detail.conditional_resources
     ]
 
 
@@ -213,6 +201,18 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             model_names = alt_model
 
         resources = get_resources_for_details(detail)
+
+        if (
+            len(resources) == 1
+            and not detail.original_pickup.respects_lock
+            and detail.original_pickup.resource_lock is not None
+        ):
+            # Add the lock resource into the pickup as well
+            resources[0].append({
+                "item_id": get_item_id_for_item(detail.original_pickup.resource_lock.locked_by),
+                "quantity": 1,
+            })
+            pass
 
         pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
