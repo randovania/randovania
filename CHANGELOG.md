@@ -36,14 +36,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
 - Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
 - Added: A new way to reach the tunnel in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump (Advanced)
-- Changed: Walljump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
+- Added: Use a Shinespark to climb up from Above Screw Attack Blocks in Burenia Main Hub Tower Bottom with only Gravity Suit.
+- Added: Use a Shinespark to climb up from Alcove Across Grapple Block in Burenia Main Hub Tower Bottom with only Speed Booster using Speed Booster Conservation Beginner.
+- Added: Use a Shinespark with Gravity Suit to reach Ammo Recharge South at the bottom of Burenia Gravity Suit Tower before the Destroy Gravity Suit Floor event.
+- Added: Use Spin Boost And Gravity Suit with different trick strategies to cross the big gap in Burenia Main Hub Tower Middle.
+- Added: Use a Shinespark with Gravity Suit to reach the Spider Magnet wall in Burenia Main Hub Tower Middle from the bottom of the room.
+- Added: Climb up to the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit and Flash Shift.
+- Added: Climb up from the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit, a Slide Jump, Spin Boost and a Wall Jump.
+- Added: Allow using Shinesparks in Gravity Suit Tower by storing speed in the upper part of Gravity Suit Room, also when Door Lock rando is enabled.
+- Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
 - Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
-- Changed: Reduced the difficulty of the walljump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
-- Changed: Using Walljump Advanded to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
-- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
+- Changed: Reduced the difficulty of the Wall Jump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
+- Changed: Using Wall Jump Advanced to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
+- Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
 - Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
+- Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
+- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
 
 ### Metroid Prime
 
@@ -59,6 +69,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Method to climb Forgotten Bridge with Jump Off Enemy (Advanced)
 - Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
+- Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
+- Added: Method to reach the top cannon in Sanctuary Entrance using Bombs, Space Jump Boots, Bomb Space Jump (Advanced), and Standable Terrain (Advanced).
 
 # [5.7.0] - 2023-05-??
 
@@ -81,7 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
 - Fixed: All pickups in the pool are now correctly assigned major or minor.
-- Fixed: TODO (PR #4228)
+- Fixed: Room Rando no longer overrides the results of Door Lock Rando when exporting.
 
 #### Logic Database
 
@@ -121,7 +133,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: Use Flash Shift and Spin Boost with Walljump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
+- Added: Use Flash Shift and Spin Boost with Wall Jump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
 - Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
@@ -276,19 +288,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Water Bomb Jump to reach the item in Cataris - Teleport to Dairon without Gravity Suit.
 - Added: Flash Shift (Intermediate), Morph Ball (Intermediate), and Spin Boost (Beginner) wall jumps for climbing up Experiment Z-57's arena.
 - Added: Spin Boost and Slide Jump (Beginner) for climbing the upper part of Experiment Z-57's room.
-- Added: Speedbooster Conservation (Intermediate) for climbing to either the top platform or Double Obsydomithon Room in Cataris - Teleport to Artaria (Blue).
+- Added: Speed Booster Conservation (Intermediate) for climbing to either the top platform or Double Obsydomithon Room in Cataris - Teleport to Artaria (Blue).
 - Added: Grapple Movement (Beginner) to climb Cataris - Moving Magnet Walls (Tall).
 - Added: Flash Shift (Intermediate), Morph Ball (Advanced), and Spin Boost with Spider Magnet wall jumps to climb Cataris - Moving Magnet Walls (Tall).
-- Added: Speedbooster Conservation (Beginner) to collect the lower item in Cataris - Teleport to Ghavoran without Gravity Suit.
+- Added: Speed Booster Conservation (Beginner) to collect the lower item in Cataris - Teleport to Ghavoran without Gravity Suit.
 - Added: Damage Boost (Intermediate) for reaching the teleport in Cataris - Teleport to Ghavoran with Spider Magnet.
 - Added: "Adam Skip" added to logic as Wall Jump (Advanced) in Cataris - Moving Magnet Walls (Small).
 - Added: Space Jump method of Cross Bomb Skip (Hypermode) to skip needing Speed for the item in Cataris - EMMI Zone Item Tunnel.
-- Added: Spin Boost Movement (Intermediate) and Speedbooster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
+- Added: Spin Boost Movement (Intermediate) and Speed Booster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
 - Added: Spin Boost method to climb Hanubia - Escape Room 3.
-- Added: Morph Ball Single-Wall Walljumps to get to the Nav Station in Itorash - Transport to Hanubia.
+- Added: Morph Ball Single-Wall Wall Jumps to get to the Nav Station in Itorash - Transport to Hanubia.
 - Added: Flash Shift Skip (Intermediate) with Bombs to skip the Flash Shift gate in Teleport to Ferenia.
 - Added: Aim Down Clips (Intermediate/Advanced) to go to and from Storm Missile Gate Room without Morph Ball.
-- Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speedbooster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
+- Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speed Booster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
 - Added: Aim Down Clip (Expert) to reach the blobs in Gravity Suit Tower from the top level.
 - Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
@@ -297,7 +309,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Flash Shift Skip (Beginner) in Purple EMMI Introduction; (Intermediate) with normal bombs.
 - Added: Moving from Ferenia - Transport to Ghavoran to Pitfall Puzzle Room with Spin Boost, Flash Shift, or Speed Booster.
 - Added: Using Normal Bomb Jump with a Cross Bomb at the top, for sideways movement, to reach the item in Artaria Proto EMMI Introduction.
-- Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
+- Changed: Increased difficulty of Flash Shift Wall Jump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Changed: Simplified many room nodes and connections.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Changed: Using Flash Shift to collect the fan pickup in Burenia Hub to Dairon is now Advanced (from Beginner).
@@ -426,10 +438,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Other various methods of going through rooms
 - Added: New Diffusion Abuse trick for pushing Wide Beam blocks and activating the lava buttons in Cataris.
 - Added: Cross Bomb Skip (Advanced) for Dairon's Cross Bomb Puzzle Room item
-- Added: Power Bombs method for the Speedbooster Conservation for Dairon's Cross Bomb Puzzle Room item
+- Added: Power Bombs method for the Speed Booster Conservation for Dairon's Cross Bomb Puzzle Room item
 - Changed: Separated the First Tunnel Blob event into two to account for Diffusion/Wave not needing to be in the tunnel
 - Changed: Deleted some unnecessary tile nodes
-- Changed: Various instances of Walljump (Beginner) to trivial
+- Changed: Various instances of Wall Jump (Beginner) to trivial
 - Changed: Some Grapple options to include Grapple Movement
 - Changed: Some Movement tricks to Climb Sloped Tunnels
 - Changed: Some Movement tricks to Skip Cross Bomb
