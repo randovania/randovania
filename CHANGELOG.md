@@ -61,6 +61,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement.
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 
+#### Logic Database
+
+- Added: 7 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 175
+
+##### Tallon Overworld 
+
+- Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall
+- Added: Root Cave - L-Jump method to reach upper area
+
+#### Magmoor Caverns
+- Added: Twin Fires Tunnel - Transport to Talon -> Twin Fires, NSJ & SJ dashes now require standable terrain
+
+##### Phendrana Drifts
+- Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
+- Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
+
 ### Metroid Prime 2: Echoes
 
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
@@ -122,25 +138,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Proper combat requirements for the Amorbis fight.
 - Removed: Incorrect and improper connections to and from the Amorbis fight.
-
-### Metroid Prime
-
-#### Logic Database
-
-- Added: 7 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 175
-
-##### Tallon Overworld 
-
-- Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall
-- Added: Root Cave - L-Jump method to reach upper area
-
-#### Magmoor Caverns
-- Added: Twin Fires Tunnel - Transport to Talon -> Twin Fires, NSJ & SJ dashes now require standable terrain
-
-##### Phendrana Drifts
-- Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
-- Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
-
 
 ### Metroid Dread
 
