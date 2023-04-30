@@ -31,6 +31,7 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_easier_path_to_itorash: bool
     x_starts_released: bool
     allow_highly_dangerous_logic: bool
+    april_fools_hints: bool
     artifacts: DreadArtifactConfig
     constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
     constant_cold_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
@@ -47,9 +48,6 @@ class DreadConfiguration(BaseConfiguration):
         for trick in gd.resource_database.trick:
             if trick.hide_from_ui and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
                 result.append(f"Enabled {trick.long_name}")
-
-        if self.starting_location.locations != (gd.starting_location,):
-            result.append("Custom Starting Location")
 
         if not self.elevators.is_vanilla:
             result.append("Random Elevators")

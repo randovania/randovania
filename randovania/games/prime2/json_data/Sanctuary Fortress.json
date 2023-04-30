@@ -336,15 +336,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spider",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -358,7 +349,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Boost",
+                                                                    "name": "Spider",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -369,21 +360,124 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bombs",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Bombs",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "BombJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Bombs",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Movement",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "InstantMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandableTerrain",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "SpaceJump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Movement",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -395,8 +489,17 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://clips.twitch.tv/RoughTriangularSheepPermaSmug-lBZ81dzbFIH6a89O",
                                                         "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -410,61 +513,18 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "BombJump",
-                                                                    "amount": 1,
+                                                                    "name": "BSJ",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
+                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "StandableTerrain",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "InstantMorph",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SpaceJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -745,7 +805,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 94,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Temple Transport Access": {
                             "type": "and",
@@ -1417,7 +1477,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 95,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Room Top": {
                             "type": "and",
@@ -1894,7 +1954,7 @@
                                                                                                             {
                                                                                                                 "type": "and",
                                                                                                                 "data": {
-                                                                                                                    "comment": null,
+                                                                                                                    "comment": "https://clips.twitch.tv/GenerousComfortablePassionfruitDerp",
                                                                                                                     "items": [
                                                                                                                         {
                                                                                                                             "type": "resource",
@@ -1915,6 +1975,68 @@
                                                                                         }
                                                                                     }
                                                                                 ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://www.twitch.tv/dyceron/clip/TemperedScrumptiousCucumberFloof-JUhNr_ZvHlc_ppZL",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "Event45",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "BSJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "EnemyHop",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandableTerrain",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 3,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -2439,7 +2561,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 96,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -2699,7 +2821,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 97,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Reactor Core": {
                             "type": "resource",
@@ -3413,7 +3535,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 98,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Minigyro Chamber": {
                             "type": "and",
@@ -3829,7 +3951,7 @@
                         "Pickup (Missile)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=gPxjNeg4ItE",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4100,7 +4222,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 99,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Torvus Transport Access": {
                             "type": "and",
@@ -5311,7 +5433,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 100,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Central Hive East Transport": {
                             "type": "and",
@@ -5808,7 +5930,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 101,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Main Research": {
                             "type": "resource",
@@ -6960,7 +7082,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 102,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Dynamo Storage": {
                             "type": "and",
@@ -6982,7 +7104,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 103,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Dynamo Storage": {
                             "type": "and",
@@ -7090,7 +7212,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=yrXFvJcN308",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -7505,7 +7627,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 104,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Culling Chamber": {
                             "type": "resource",
@@ -8937,7 +9059,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 105,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -10836,7 +10958,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 106,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Hive Cache 3": {
                             "type": "and",
@@ -11983,7 +12105,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 107,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Front of Echo Gate": {
                             "type": "and",
@@ -12496,7 +12618,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 108,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Next to Scan Post": {
                             "type": "and",
@@ -15178,7 +15300,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 109,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Central Hive West Transport": {
                             "type": "resource",
@@ -15202,7 +15324,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 110,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Portal to Watch Station": {
                             "type": "resource",
@@ -16564,7 +16686,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 111,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Room Bottom": {
                             "type": "and",
@@ -20547,7 +20669,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 112,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Above Bomb Slot": {
                             "type": "and",
@@ -23222,7 +23344,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 113,
-                    "major_location": false,
+                    "location_category": "minor",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -25034,7 +25156,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 114,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Hive Dynamo Access": {
                             "type": "resource",
@@ -26406,7 +26528,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 115,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Hive Temple Access": {
                             "type": "and",
@@ -27539,7 +27661,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 116,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -28631,7 +28753,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=NUbKATjYJDc",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -28722,7 +28844,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 117,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Door to Entrance Defense Hall": {
                             "type": "or",
@@ -29581,7 +29703,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "pickup_index": 118,
-                    "major_location": true,
+                    "location_category": "major",
                     "connections": {
                         "Bottom Floor": {
                             "type": "and",

@@ -51,7 +51,6 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.heated_damage_spin.setMaximum(config_fields["heat_damage"].metadata["max"])
 
             signal_handling.on_checked(self.progressive_damage_reduction_check, self._persist_progressive_damage)
-            signal_handling.on_checked(self.heated_damage_varia_check, self._persist_heat_protection_only_varia)
             self.heated_damage_spin.valueChanged.connect(self._persist_argument("heat_damage"))
 
         else:
@@ -80,7 +79,6 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
         elif self.game_enum == RandovaniaGame.METROID_PRIME:
             self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
-            self.heated_damage_varia_check.setChecked(config.heat_protection_only_varia)
             self.heated_damage_spin.setValue(config.heat_damage)
 
     def _persist_tank_capacity(self):
@@ -110,10 +108,6 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def _persist_progressive_damage(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("progressive_damage_reduction", checked)
-
-    def _persist_heat_protection_only_varia(self, checked: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("heat_protection_only_varia", checked)
 
     def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:

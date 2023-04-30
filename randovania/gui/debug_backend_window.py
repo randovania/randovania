@@ -19,12 +19,8 @@ from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
 from randovania.patching.prime import all_prime_dol_patches
-
-
-class DebugGameBackendChoice:
-    @property
-    def pretty_text(self):
-        return "Debug"
+from randovania.game_connection.connector.remote_connector_v2 import RemoteConnectorV2
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 
 
 def _echoes_powerup_address(item_index: int) -> int:
@@ -62,11 +58,16 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self._timer.setInterval(10000)
 
         self._used_version = echoes_dol_versions.ALL_VERSIONS[0]
-        self._connector = EchoesRemoteConnector(self._used_version)
+        self.connector = EchoesRemoteConnector(self._used_version, self)
+        self.executor = self
         self.game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
         self._game_memory = bytearray(24 * (2 ** 20))
         self._game_memory_initialized = False
+
+    @property
+    def connector_builder_choice(self) -> ConnectorBuilderChoice:
+        return ConnectorBuilderChoice.DOLPHIN
 
     def _on_collect_randomly_toggle(self, value: int):
         if bool(value):
@@ -116,7 +117,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self.logger.info(f"Wrote {data.hex()} to {hex(address)}")
 
     async def _update_inventory_label(self):
-        inventory = await self._connector.get_inventory(self)
+        inventory = await self.connector.get_inventory()
 
         s = "<br />".join(
             f"{name} x {quantity.amount}/{quantity.capacity}" for name, quantity in inventory.items()
@@ -252,7 +253,11 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
             self._used_version.string_display.display_hud_memo: self._display_hud_memo,
         }
 
-        patch_address, _ = all_prime_dol_patches.create_remote_execution_body(self._used_version.string_display, [])
+        patch_address, _ = all_prime_dol_patches.create_remote_execution_body(
+            self.game.game,
+            self._used_version.string_display,
+            [],
+        )
         current_address = patch_address
         while current_address - patch_address < 0x2000:
             instruction = self._read_memory(current_address, 4)
@@ -352,15 +357,14 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
 
         self._write_memory(has_message_address, b"\x00")
 
+    async def build_connector(self) -> RemoteConnectorV2 | None:
+        return self.connector
+
     # MemoryOperationExecutor
 
     @property
     def lock_identifier(self) -> str | None:
         return None
-
-    @property
-    def backend_choice(self):
-        return DebugGameBackendChoice()
 
     async def connect(self) -> bool:
         await self._ensure_initialized_game_memory()

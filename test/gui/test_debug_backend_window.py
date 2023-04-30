@@ -25,12 +25,11 @@ def debug_executor_window(skip_qtbot):
 async def test_display_message(executor: DebugExecutorWindow):
     # Setup
     await executor._ensure_initialized_game_memory()
-    connector = PrimeRemoteConnector(executor._used_version)
+    connector = PrimeRemoteConnector(executor._used_version, executor)
     message = "Foo Bar"
 
     # Run
     await connector.execute_remote_patches(
-        executor,
         [connector._dol_patch_for_hud_message(message)],
     )
     executor._handle_remote_execution()
@@ -42,10 +41,9 @@ async def test_display_message(executor: DebugExecutorWindow):
 async def test_update_inventory_label(executor: DebugExecutorWindow, echoes_resource_database):
     # Setup
     await executor._ensure_initialized_game_memory()
-    connector = PrimeRemoteConnector(executor._used_version)
+    connector = PrimeRemoteConnector(executor._used_version, executor)
 
     await connector.execute_remote_patches(
-        executor,
         [
             DolRemotePatch([], all_prime_dol_patches.increment_item_capacity_patch(
                 executor._used_version.powerup_functions,

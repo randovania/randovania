@@ -2,7 +2,6 @@ import dolphin_memory_engine
 
 from randovania.game_connection.executor.memory_operation import (MemoryOperationException, MemoryOperation,
                                                                   MemoryOperationExecutor)
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
 MEM1_START = 0x80000000
 MEM1_END = 0x81800000
@@ -22,10 +21,6 @@ class DolphinExecutor(MemoryOperationExecutor):
     @property
     def lock_identifier(self) -> str | None:
         return "randovania-dolphin-backend"
-
-    @property
-    def backend_choice(self) -> MemoryExecutorChoice:
-        return MemoryExecutorChoice.DOLPHIN
 
     async def connect(self) -> bool:
         if not self.dolphin.is_hooked():

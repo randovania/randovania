@@ -5,19 +5,19 @@ import os
 import sys
 
 from PySide6.QtCore import QCoreApplication
+from randovania.game_connection.builder.connector_builder import ConnectorBuilder
+from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
+from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 
 from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
-from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor
-from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
 from randovania.game_connection.game_connection import GameConnection
 
 should_quit = False
 old_hook = sys.excepthook
 
 
-async def worker(app: QCoreApplication, executor: MemoryOperationExecutor):
-    connection = GameConnection(executor)
+async def worker(connector_builder: ConnectorBuilder):
+    connection = GameConnection(connector_builder)
 
     await connection.start()
     try:
@@ -85,13 +85,13 @@ def main():
     loop.set_exception_handler(catch_exceptions_async)
 
     if args.nintendont is not None:
-        executor = NintendontExecutor(args.nintendont)
+        connector_builder = NintendontConnectorBuilder(args.nintendont)
     else:
-        executor = DolphinExecutor()
+        connector_builder = DolphinConnectorBuilder()
 
     with loop:
         try:
-            asyncio.get_event_loop().run_until_complete(worker(app, executor))
+            asyncio.get_event_loop().run_until_complete(worker(connector_builder))
         finally:
             app.quit()
 

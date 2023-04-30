@@ -10,6 +10,7 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
+from randovania.gui.lib.signal_handling import set_combo_with_value
 
 SUIT_DEFAULT_COLORS = [
     [(255, 173, 50), (220, 25, 45), (132, 240, 60)],  # Power
@@ -90,7 +91,6 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
     def connect_signals(self):
         super().connect_signals()
 
-        self.qol_cosmetic_check.stateChanged.connect(self._persist_option_then_notify("qol_cosmetic"))
         self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
         self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
         self.force_fusion_check.stateChanged.connect(self._persist_option_then_notify("force_fusion"))
@@ -109,7 +109,6 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
             check.stateChanged.connect(partial(self._on_check_update, check, field_name))
 
     def on_new_cosmetic_patches(self, patches: PrimeCosmeticPatches):
-        self.qol_cosmetic_check.setChecked(patches.qol_cosmetic)
         self.open_map_check.setChecked(patches.open_map)
         self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.force_fusion_check.setChecked(patches.force_fusion)
@@ -121,7 +120,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         self.on_new_user_preferences(patches.user_preferences)
 
     def on_new_user_preferences(self, user_preferences: PrimeUserPreferences):
-        self.sound_mode_combo.setCurrentIndex(self.sound_mode_combo.findData(user_preferences.sound_mode))
+        set_combo_with_value(self.sound_mode_combo, user_preferences.sound_mode)
 
         for field in dataclasses.fields(user_preferences):
             if field.name in self.field_to_slider_mapping:

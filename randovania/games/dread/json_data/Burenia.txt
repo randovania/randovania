@@ -26,10 +26,10 @@ Extra - asset_id: collision_camera_000
   * Extra - right_shield_def: None
   > Door to Upper Burenia Hub
       Trivial
-  > Map Station
+  > Save Station
       Trivial
 
-> Map Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: maproom
   * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
@@ -85,13 +85,13 @@ Extra - asset_id: collision_camera_001
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 92; Major Location? False
+  * Pickup 92; Category? Minor
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to Transport to Ghavoran
       Morph Ball
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_DoorProfessor
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -183,7 +183,7 @@ Extra - asset_id: collision_camera_002
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 81; Major Location? False
+  * Pickup 81; Category? Minor
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Bottom-left Corner
@@ -191,7 +191,7 @@ Extra - asset_id: collision_camera_002
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 90; Major Location? False
+  * Pickup 90; Category? Minor
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Fan Platform
@@ -248,7 +248,7 @@ Extra - asset_id: collision_camera_002
           Any of the following:
               Spider Magnet or Space Jump or Speed Booster or Simple IBJ
               Grapple Beam and Grapple Movement (Beginner)
-              Walljump (Beginner) and Use Spin Boost
+              Wall Jump (Beginner) and Use Spin Boost
   > Door to Upper Burenia Hub
       Any of the following:
           After Burenia - Dairon Hub Speed Blocks Destroyed
@@ -349,7 +349,7 @@ Extra - asset_id: collision_camera_003
   > Tram to Dairon - Upper Transport to Burenia
       Trivial
 
-> Tram to Dairon - Upper Transport to Burenia; Heals? False; Spawn Point; Default Node
+> Tram to Dairon - Upper Transport to Burenia; Heals? False; Default Node
   * Layers: default
   * Teleporter to Dairon - Upper Transport to Burenia
   * Extra - actor_name: wagontrain_baselab_000
@@ -420,7 +420,7 @@ Extra - asset_id: collision_camera_005
   > Tunnel to Underneath Drogyga (Lower)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Hydrogiga
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -604,7 +604,7 @@ Extra - asset_id: collision_camera_007
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 80; Major Location? False
+  * Pickup 80; Category? Minor
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Water Bottom
@@ -748,7 +748,7 @@ Extra - asset_id: collision_camera_008
                   Speed Booster
                   Any of the following:
                       Disabled Door Lock Randomizer
-                      After Burenia - Ferenia Teleport Grapple Block and Knowledge (Beginner) and Speedbooster Conservation (Intermediate)
+                      After Burenia - Ferenia Teleport Grapple Block and Knowledge (Beginner) and Speed Booster Conservation (Intermediate)
               All of the following:
                   # You can stand on the edge of a flash gate without it closing
                   Knowledge (Beginner)
@@ -760,7 +760,7 @@ Extra - asset_id: collision_camera_008
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 91; Major Location? True
+  * Pickup 91; Category? Major
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Door to Drogyga Eyedoor
@@ -791,7 +791,7 @@ Extra - asset_id: collision_camera_008
   > Ammo Recharge Alcove
       Trivial
 
-> Teleporter to Ferenia - Teleport to Burenia (Cyan); Heals? False; Spawn Point; Default Node
+> Teleporter to Ferenia - Teleport to Burenia (Cyan); Heals? False; Default Node
   * Layers: default
   * Teleporter to Ferenia - Teleport to Burenia (Cyan)
   * Extra - actor_name: LE_Teleport_Secret
@@ -871,10 +871,10 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_def: None
   > Door to Upper Burenia Hub
       Trivial
-  > Navigation Room
+  > Save Station
       Trivial
 
-> Navigation Room; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: accesspoint_000
@@ -890,6 +890,7 @@ Extra - asset_id: collision_camera_009
 Main Hub Tower Top
 Extra - total_boundings: {'x1': -5000.0, 'x2': -900.0, 'y1': -2115.0, 'y2': 3700.0}
 Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900.0, -2115.0]]
+Extra - asset_id: collision_camera_010
 > Dock to Main Hub Tower Middle (Left); Heals? False
   * Layers: default
   * Open Passage to Main Hub Tower Middle/Dock to Main Hub Tower Top (Left)
@@ -928,8 +929,9 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
       All of the following:
           Morph Ball
           Any of the following:
-              Flash Shift or Grapple Beam or Spider Magnet or Use Spin Boost
-              Speed Booster and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer
+              Flash Shift or Spider Magnet or Use Spin Boost
+              Speed Booster and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer
+              Grapple Beam and Grapple Movement (Beginner)
   > Upper Left Magnet Wall
       Morph Ball
 
@@ -976,7 +978,7 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 82; Major Location? True
+  * Pickup 82; Category? Major
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Upper Left Magnet Wall
@@ -984,13 +986,13 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 84; Major Location? False
+  * Pickup 84; Category? Minor
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Teleport to Ferenia
       Morph Ball
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_GhostDash
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1002,7 +1004,7 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   > Door to Underwater Horseshoe
       Any of the following:
           Flash Shift or Spider Magnet or Slide Jump (Beginner) or Simple IBJ or Use Spin Boost
-          Speed Booster and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer
+          Speed Booster and Speed Booster Conservation (Intermediate) and Disabled Door Lock Randomizer
           Morph Ball and Single-wall Wall Jump (Beginner)
   > Door to Teleport to Ferenia
       Morph Ball
@@ -1065,10 +1067,14 @@ Extra - asset_id: collision_camera_010
       Trivial
   > Event - Lower Magnet Wall
       Spider Magnet and Horizontal Water Movement
+  > Upper Water Ledge - Right
+      All of the following:
+          # https://youtu.be/HdSOvizUQjo
+          Flash Shift and Gravity Suit and Slide and Spin Boost and Slide Jump (Beginner) and Wall Jump (Intermediate)
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 89; Major Location? True
+  * Pickup 89; Category? Major
   * Extra - actor_name: item_missiletankplus_001
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Missile Tank Plus Platform
@@ -1083,18 +1089,18 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Tunnel to Teleport to Ghavoran (Upper Tunnel)
-      Trivial
   > Left of Central Grapple Block
       Morph Ball and After Burenia - Main Hub Middle Grapple Block
   > Dock to Main Hub Tower Top (Right)
       Trivial
   > Event - Main Hub Middle Graple Block (Back)
       Gravity Suit and Break/Move Grapple Block from Behind
+  > Outside Upper Tunnel
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 94; Major Location? False
+  * Pickup 94; Category? Minor
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Giant Water Bottom
@@ -1112,14 +1118,9 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Morph Ball Tunnel to Teleport to Ghavoran/Tunnel to Main Hub Tower Middle (Upper)
   > Door to Teleport to Ghavoran (Plasma)
-      Any of the following:
-          Gravity Suit or Spider Magnet or Perform WBJ
-          Grapple Beam and Grapple Movement (Beginner)
-          Morph Ball and Movement (Beginner)
-  > Upper Water Ledge - Right
-      Any of the following:
-          Gravity Suit or Perform WBJ or Use Spin Boost
-          Grapple Beam and Grapple Movement (Beginner)
+      Morph Ball and Movement (Beginner)
+  > Outside Upper Tunnel
+      Can Slide Underwater
 
 > Tunnel to Teleport to Ghavoran (Lower Tunnel); Heals? False
   * Layers: default
@@ -1127,7 +1128,7 @@ Extra - asset_id: collision_camera_010
   > Door to Teleport to Ghavoran (Charge)
       All of the following:
           Gravity Suit
-          Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
   > Missile Tank Plus Platform
       Horizontal Water Movement
   > Giant Water Bottom
@@ -1136,15 +1137,11 @@ Extra - asset_id: collision_camera_010
 > Mid-Left Spider Magnet Pit; Heals? False
   * Layers: default
   > Left of Central Grapple Block
-      Gravity Suit or Spider Magnet or Perform WBJ
+      Any of the following:
+          Gravity Suit or Spider Magnet or Perform WBJ
+          Grapple Beam and Grapple Movement (Beginner)
   > Upper Water Ledge - Left
       Grapple Beam or Gravity Suit or Spider Magnet or Perform WBJ or Use Spin Boost
-  > Dock to Main Hub Tower Top (Left)
-      All of the following:
-          Gravity Suit or Spider Magnet
-          Any of the following:
-              Simple IBJ or Use Spin Boost
-              Flash Shift and Walljump (Beginner)
 
 > Left of Central Grapple Block; Heals? False
   * Layers: default
@@ -1154,6 +1151,12 @@ Extra - asset_id: collision_camera_010
       Grapple Beam
   > Mid-Left Spider Magnet Pit
       Trivial
+  > Dock to Main Hub Tower Top (Left)
+      All of the following:
+          Any of the following:
+              Gravity Suit or Spider Magnet or Movement (Intermediate)
+              Water Bomb Jump (Intermediate) and Lay Bomb
+          Flash Shift or Simple IBJ or Use Spin Boost
 
 > Missile Tank Plus Platform; Heals? False
   * Layers: default
@@ -1186,6 +1189,8 @@ Extra - asset_id: collision_camera_010
       Any of the following:
           Gravity Suit
           Grapple Beam and Before Burenia - Hub Magnet Wall and Grapple Movement (Beginner)
+  > Event - Lower Magnet Wall
+      Gravity Suit and Spider Magnet and Speed Booster
   > Upper Water Ledge - Left
       All of the following:
           Gravity Suit
@@ -1211,17 +1216,43 @@ Extra - asset_id: collision_camera_010
   > Mid-Left Spider Magnet Pit
       Trivial
   > Upper Water Ledge - Right
-      Horizontal Water Movement
+      Any of the following:
+          Horizontal Water Movement
+          All of the following:
+              Gravity Suit and Spin Boost
+              Any of the following:
+                  All of the following:
+                      # https://youtu.be/EKucxlQ6XtE
+                      Slide and Slide Jump (Intermediate)
+                  All of the following:
+                      # https://youtu.be/rb01nTDYOXk
+                      Movement (Intermediate)
+                  All of the following:
+                      # https://youtu.be/wlCOhr95pAY
+                      Wall Jump (Intermediate)
   > Falling from above
       Trivial
 
 > Upper Water Ledge - Right; Heals? False
   * Layers: default
-  > Tunnel to Teleport to Ghavoran (Upper Tunnel)
-      Trivial
   > Upper Water Ledge - Left
-      Horizontal Water Movement
+      Any of the following:
+          Horizontal Water Movement
+          All of the following:
+              Gravity Suit and Spin Boost
+              Any of the following:
+                  All of the following:
+                      # https://youtu.be/EKucxlQ6XtE
+                      Slide and Slide Jump (Intermediate)
+                  All of the following:
+                      # https://youtu.be/rb01nTDYOXk
+                      Movement (Intermediate)
+                  All of the following:
+                      # https://youtu.be/wlCOhr95pAY
+                      Wall Jump (Intermediate)
   > Falling from above
+      Trivial
+  > Outside Upper Tunnel
       Trivial
 
 > Falling from above; Heals? False
@@ -1257,10 +1288,24 @@ Extra - asset_id: collision_camera_010
   > Door to Teleport to Ghavoran (Plasma)
       Trivial
 
+> Outside Upper Tunnel; Heals? False
+  * Layers: default
+  > Door to Teleport to Ghavoran (Plasma)
+      Any of the following:
+          Gravity Suit or Spider Magnet or Perform WBJ
+          Grapple Beam and Grapple Movement (Beginner)
+  > Tunnel to Teleport to Ghavoran (Upper Tunnel)
+      Morph Ball and After Burenia - Ghavoran Teleport Blob
+  > Upper Water Ledge - Right
+      Any of the following:
+          Gravity Suit or Perform WBJ or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
+
 ----------------
 Main Hub Tower Bottom
 Extra - total_boundings: {'x1': -5000.0, 'x2': -900.0, 'y1': -11800.0, 'y2': -7000.0}
 Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-4700.0, -11200.0], [-4700.0, -11800.0], [-900.0, -11800.0]]
+Extra - asset_id: collision_camera_010
 > Door to Energy Recharge South; Heals? False
   * Layers: default
   * Power Beam Door to Energy Recharge South/Door to Main Hub Tower Bottom
@@ -1347,6 +1392,8 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
 
 > Above Screw Attack Blocks; Heals? False
   * Layers: default
+  > Door to Energy Recharge South
+      Gravity Suit and Speed Booster
   > Door to Save Station South Access (Lower)
       All of the following:
           Gravity Suit
@@ -1370,11 +1417,13 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
           Gravity Suit and Screw Attack
           Any of the following:
               Space Jump or Speed Booster or Simple IBJ
-              Flash Shift and Walljump (Beginner) and Use Spin Boost
+              Flash Shift and Wall Jump (Beginner) and Use Spin Boost
   > Inside Tunnel
       All of the following:
           Gravity Suit and Morph Ball
-          Space Jump or Speed Booster or Simple IBJ
+          Any of the following:
+              Space Jump or Speed Booster or Simple IBJ
+              Flash Shift and Spin Boost and Wall Jump (Beginner)
 
 > Tunnel to Storm Missile Gate Room; Heals? False
   * Layers: default
@@ -1384,6 +1433,8 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
 
 > Alcove Across Grapple Block; Heals? False
   * Layers: default
+  > Door to Energy Recharge South
+      Speed Booster and After Burenia - Prepare Speed Boost in Save Station and After Burenia - Main Hub Bottom Blob and Speed Booster Conservation (Beginner)
   > Door to Save Station South Access (Upper)
       Gravity Suit
   > Door to Storm Missile Gate Room
@@ -1392,8 +1443,8 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
           Any of the following:
               Use Spin Boost
               All of the following:
-                  After Burenia - Prepare Speedboost in Save Station
-                  Gravity Suit or Speedbooster Conservation (Intermediate)
+                  After Burenia - Prepare Speed Boost in Save Station
+                  Gravity Suit or Speed Booster Conservation (Intermediate)
               Flash Shift and Gravity Suit
   > Event - Main Hub Bottom Blob, Left
       Lay Bomb or Shoot Beam
@@ -1453,7 +1504,7 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
           Any of the following:
               Simple IBJ or Use Spin Boost
               Morph Ball and Single-wall Wall Jump (Intermediate)
-              Flash Shift and Walljump (Intermediate)
+              Flash Shift and Wall Jump (Intermediate)
 
 > Dock from Main Hub Tower Middle; Heals? False
   * Layers: default
@@ -1463,7 +1514,7 @@ Extra - polygon: [[-900.0, -7000.0], [-5000.0, -7000.0], [-5000.0, -10700.0], [-
 
 > Event - Prepare Speedboost in Save Station; Heals? False
   * Layers: default
-  * Event Burenia - Prepare Speedboost in Save Station
+  * Event Burenia - Prepare Speed Boost in Save Station
   > Door to Save Station South Access (Upper)
       Trivial
 
@@ -1494,7 +1545,7 @@ Extra - asset_id: collision_camera_011
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_000
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -1570,7 +1621,7 @@ Extra - asset_id: collision_camera_013
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 77; Major Location? False
+  * Pickup 77; Category? Minor
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Main Hub Tower Bottom
@@ -1618,13 +1669,13 @@ Extra - asset_id: collision_camera_014
 
 > Pickup (Flash Shift); Heals? False
   * Layers: default
-  * Pickup 78; Major Location? True
+  * Pickup 78; Category? Major
   * Extra - actor_name: powerup_ghostaura
   * Extra - actor_def: actordef:actors/items/powerup_ghostaura/charclasses/powerup_ghostaura.bmsad
   > Door from Main Hub Tower Top
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_GhostDashObtained
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -1653,7 +1704,7 @@ Extra - asset_id: collision_camera_015
       Destroy Enky
   > Upper Water Platform
       All of the following:
-          After Burenia - Early Gravity Pickup 1 and After Burenia - Ghavoran Teleport Enky and Speedbooster Conservation (Advanced) and Can SSC
+          After Burenia - Early Gravity Pickup 1 and After Burenia - Ghavoran Teleport Enky and Speed Booster Conservation (Advanced) and Can SSC
           Any of the following:
               # Cross Bomb - https://www.youtube.com/watch?v=1l7rJwAUSLE Power Bomb - https://www.youtube.com/watch?v=477-pmla1kU
               Lay Cross Bomb or Lay Power Bomb
@@ -1728,7 +1779,7 @@ Extra - asset_id: collision_camera_015
   > Upper Water Platform
       Trivial
 
-> Teleporter to Ghavoran - Teleport to Burenia; Heals? False; Spawn Point; Default Node
+> Teleporter to Ghavoran - Teleport to Burenia; Heals? False; Default Node
   * Layers: default
   * Teleporter to Ghavoran - Teleport to Burenia
   * Extra - actor_name: teleporter_forest_000
@@ -1762,7 +1813,7 @@ Extra - asset_id: collision_camera_015
   > Event - Ghavoran Teleport Blob, Adjacent
       Lay Bomb or Shoot Beam
   > Tunnel to Main Hub Tower Middle (Upper)
-      Morph Ball and After Burenia - Ghavoran Teleport Blob
+      After Burenia - Ghavoran Teleport Blob and Can Slide Underwater
 
 > Event - Ghavoran Teleport Blob, through Floor; Heals? False
   * Layers: default
@@ -1772,7 +1823,7 @@ Extra - asset_id: collision_camera_015
 
 > Tunnel to Main Hub Tower Middle (Upper); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Main Hub Tower Middle/Tunnel to Teleport to Ghavoran (Upper Tunnel)
+  * Slide Tunnel to Main Hub Tower Middle/Tunnel to Teleport to Ghavoran (Upper Tunnel)
   > Door to Main Hub Tower Middle (Plasma)
       All of the following:
           Wave Beam and Disabled Door Lock Randomizer and Can Slide Underwater
@@ -1822,10 +1873,10 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_def: None
   > Door to Gravity Suit Tower
       Trivial
-  > Navigation Room
+  > Save Station
       Trivial
 
-> Navigation Room; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: accesspoint_001
@@ -1858,13 +1909,13 @@ Extra - asset_id: collision_camera_017
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 83; Major Location? False
+  * Pickup 83; Category? Minor
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Navigation Station South
       Screw Attack
 
-> Elevator to Artaria - Transport to Burenia; Heals? False; Spawn Point; Default Node
+> Elevator to Artaria - Transport to Burenia; Heals? False; Default Node
   * Layers: default
   * Teleporter to Artaria - Transport to Burenia
   * Extra - actor_name: elevator_cave_000
@@ -1910,7 +1961,7 @@ Extra - asset_id: collision_camera_018
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
-  * Pickup 86; Major Location? False
+  * Pickup 86; Category? Minor
   * Extra - actor_name: item_energyfragment_002
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Door to Teleport to Ghavoran (Upper)
@@ -1918,7 +1969,7 @@ Extra - asset_id: collision_camera_018
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 87; Major Location? True
+  * Pickup 87; Category? Major
   * Extra - actor_name: item_missiletankplus_002
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Next to Exit Tunnel
@@ -1940,7 +1991,7 @@ Extra - asset_id: collision_camera_018
           Morph Ball
           Any of the following:
               Simple IBJ or Use Spin Boost
-              Flash Shift and Walljump (Beginner)
+              Flash Shift and Wall Jump (Beginner)
   > Water Bottom
       Trivial
   > Dock to Early Gravity Speedboost Room 2 (Upper)
@@ -2024,7 +2075,7 @@ Extra - asset_id: collision_camera_019
           All of the following:
               Grapple Beam
               Spider Magnet or Grapple Movement (Beginner)
-          Flash Shift and Walljump (Beginner)
+          Flash Shift and Wall Jump (Beginner)
   > Dock to Early Gravity Speedboost Room 1 (Lower)
       After Burenia - Early Gravity Speed Blocks Destroyed
   > Water Pit
@@ -2114,7 +2165,7 @@ Extra - asset_id: collision_camera_021
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
-  * Pickup 88; Major Location? True
+  * Pickup 88; Category? Major
   * Extra - actor_name: item_missiletankplus
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Next to Bottom Pickup
@@ -2122,7 +2173,7 @@ Extra - asset_id: collision_camera_021
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 93; Major Location? False
+  * Pickup 93; Category? Minor
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Teleport to Ghavoran
@@ -2146,7 +2197,11 @@ Extra - asset_id: collision_camera_021
               Use Spin Boost
               All of the following:
                   Gravity Suit
-                  Flash Shift or Simple IBJ
+                  Any of the following:
+                      Flash Shift or Simple IBJ
+                      All of the following:
+                          Speed Booster
+                          After Burenia - Gravity Suit Room Store Shinespark or Disabled Door Lock Randomizer
 
 > Door to Teleport to Ghavoran; Heals? False
   * Layers: default
@@ -2243,7 +2298,7 @@ Extra - asset_id: collision_camera_021
   > Event - Twin Robot Fight
       Fight Twin Robots
 
-> Start Point 4; Heals? False; Spawn Point; Default Node
+> Start Point 4; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_AccessPoint_9
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2265,7 +2320,11 @@ Extra - asset_id: collision_camera_021
           Gravity Suit and After Burenia - Destroy Gravity Suit Floor
           Any of the following:
               Space Jump or Simple IBJ
-              Speed Booster and Disabled Door Lock Randomizer
+              All of the following:
+                  Speed Booster
+                  Any of the following:
+                      After Burenia - Gravity Suit Room Store Shinespark
+                      Disabled Door Lock Randomizer and Lay Power Bomb
   > Dock to Ammo Recharge South (Middle)
       Any of the following:
           Space Jump or Before Burenia - Destroy Gravity Suit Floor
@@ -2307,8 +2366,8 @@ Extra - asset_id: collision_camera_021
       All of the following:
           Flash Shift and Gravity Suit and After Burenia - Destroy Gravity Suit Floor
           Any of the following:
-              Walljump (Advanced)
-              Walljump (Intermediate) and Use Spin Boost
+              Wall Jump (Advanced)
+              Wall Jump (Intermediate) and Use Spin Boost
   > Event - Break Floor Blob 1
       Lay Bomb or Shoot Beam
   > Event - Break Floor Blob 2
@@ -2326,9 +2385,9 @@ Extra - asset_id: collision_camera_021
       Any of the following:
           Space Jump
           Infinite Bomb Jump (Advanced) and Lay Normal Bomb
-          Flash Shift and Walljump (Intermediate) and Use Spin Boost
+          Flash Shift and Wall Jump (Intermediate) and Use Spin Boost
           All of the following:
-              Speed Booster and Speedbooster Conservation (Intermediate)
+              Speed Booster and Speed Booster Conservation (Intermediate)
               Before Burenia - Destroy Gravity Suit Floor or Disabled Door Lock Randomizer
           Infinite Bomb Jump (Intermediate) and Lay Cross Bomb
   > Next to Bottom Pickup
@@ -2433,10 +2492,12 @@ the blast shield issue.
       Shoot Diffusion or Wave
   > Start Point
       Trivial
+  > Event - Store Shinespark In Upper Room
+      Trivial
 
 > Pickup (Gravity Suit); Heals? False
   * Layers: default
-  * Pickup 79; Major Location? True
+  * Pickup 79; Category? Major
   * Extra - actor_name: itemsphere_gravitysuit
   * Extra - actor_def: actordef:actors/items/itemsphere_gravitysuit/charclasses/itemsphere_gravitysuit.bmsad
   * Extra - map_icon_actor: powerup_gravitysuit
@@ -2445,7 +2506,7 @@ the blast shield issue.
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
-  * Pickup 85; Major Location? False
+  * Pickup 85; Category? Minor
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Tunnel to Gravity Suit Room Access (Lower)
@@ -2473,7 +2534,7 @@ the blast shield issue.
   > Door to Gravity Suit Tower (Upper)
       Trivial
 
-> Start Point; Heals? False; Spawn Point; Default Node
+> Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_GravitySuit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2506,6 +2567,12 @@ the blast shield issue.
   * Layers: default
   * Event Burenia - Gravity Suit Blob
   > Tunnel to Gravity Suit Room Access (Lower)
+      Trivial
+
+> Event - Store Shinespark In Upper Room; Heals? False
+  * Layers: default
+  * Event Burenia - Gravity Suit Room Store Shinespark
+  > Door to Gravity Suit Tower (Upper)
       Trivial
 
 ----------------
@@ -2563,7 +2630,7 @@ Extra - asset_id: collision_camera_025
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
-  * Pickup 95; Major Location? True
+  * Pickup 95; Category? Major
   * Extra - actor_name: item_energytank
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Door to Main Hub Tower Bottom
@@ -2643,7 +2710,7 @@ Extra - asset_id: collision_camera_027
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_001
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
@@ -2657,7 +2724,7 @@ Drogyga Arena
 Extra - total_boundings: {'x1': -1900.0, 'x2': 1000.0, 'y1': 10300.0, 'y2': 11550.0}
 Extra - polygon: [[1000.0, 11500.0], [-1400.0, 11500.0], [-1500.0, 11550.0], [-1800.0, 11550.0], [-1900.0, 11500.0], [-1900.0, 10300.0], [1000.0, 10300.0]]
 Extra - asset_id: collision_camera_028
-> Before Fight; Heals? False; Spawn Point; Default Node
+> Before Fight; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Hydrogiga_Dead
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2697,7 +2764,7 @@ Extra - asset_id: collision_camera_028
 
 > Pickup (Drogyga); Heals? False
   * Layers: default
-  * Pickup 140; Major Location? True
+  * Pickup 140; Category? Major
   * Extra - pickup_type: cutscene
   * Extra - callback_function: OnHydrogigaDead_CUSTOM
   * Extra - boss_hint_name: Drogyga
@@ -2754,7 +2821,7 @@ Extra - asset_id: collision_camera_030
   > Save Station
       Trivial
 
-> Save Station; Heals? False; Default Node
+> Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: savestation_002
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad

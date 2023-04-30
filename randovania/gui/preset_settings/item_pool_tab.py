@@ -4,6 +4,7 @@ from functools import partial
 
 from PySide6 import QtWidgets, QtCore
 
+import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -26,9 +27,10 @@ from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
+from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.major_item_state import MajorItemState
-from randovania.layout.preset import Preset
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.layout.preset import Preset
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
     "For a total of {total} from this source."
@@ -50,7 +52,7 @@ def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
     game: RandovaniaGame
     _boxes_for_category: dict[str, tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout,
-                                         dict[MajorItem, ItemConfigurationWidget]]]
+    dict[MajorItem, ItemConfigurationWidget]]]
     _default_items: dict[ItemCategory, QtWidgets.QComboBox]
 
     _ammo_item_count_spinboxes: dict[str, list[QtWidgets.QSpinBox]]
@@ -95,8 +97,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Default Items
         for category, default_item in major_configuration.default_items.items():
-            combo = self._default_items[category]
-            combo.setCurrentIndex(combo.findData(default_item))
+            randovania.gui.lib.signal_handling.set_combo_with_value(self._default_items[category], default_item)
 
             for item, widget in self._boxes_for_category[category.name][2].items():
                 widget.setEnabled(default_item != item)
@@ -176,8 +177,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         # Item pool count
         try:
             pool_items, maximum_size = pool_creator.calculate_pool_item_count(layout)
-            self.item_pool_count_label.setText(f"Items in pool: {pool_items}/{maximum_size}")
+            message = f"Items in pool: {pool_items}/{maximum_size}"
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, pool_items > maximum_size)
+            if layout.available_locations.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+                major_details, minor_details = pool_creator.calculate_split_pool_item_count(layout)
+                (major_count, num_major_nodes), (minor_count, num_minor_nodes) = major_details, minor_details
+                message += f"<br />Majors: {major_count}/{num_major_nodes} - Minors: {minor_count}/{num_minor_nodes}"
+
+            self.item_pool_count_label.setText(message)
 
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText(f"Invalid Configuration: {invalid_config}")
@@ -322,11 +329,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             for ammo_index, ammo_item in enumerate(ammo.items):
                 item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
+                minimum_count = -item.max_capacity if ammo.allows_negative else 0
 
                 item_count_label = QtWidgets.QLabel(pickup_box)
                 item_count_label.setText(item.long_name if len(ammo.items) > 1 else "Contains")
 
                 item_count_spinbox = ScrollProtectedSpinBox(pickup_box)
+                item_count_spinbox.setMinimum(minimum_count)
                 item_count_spinbox.setMaximum(item.max_capacity)
                 item_count_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_item_count_spinbox,
                                                                 ammo, ammo_index))

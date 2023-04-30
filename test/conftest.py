@@ -12,7 +12,8 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
@@ -195,12 +196,19 @@ def generic_item_category() -> ItemCategory:
         name="generic",
         long_name="Generic Item Category",
         hint_details=("an ", "unspecified item"),
-        is_major=False
+        hinted_as_major=False
     )
 
 
 @pytest.fixture()
-def blank_pickup(echoes_item_database) -> PickupEntry:
+def default_generator_params() -> PickupGeneratorParams:
+    return PickupGeneratorParams(
+        preferred_location_category=LocationCategory.MAJOR,
+    )
+
+
+@pytest.fixture()
+def blank_pickup(echoes_item_database, default_generator_params) -> PickupEntry:
     return PickupEntry(
         name="Blank Pickup",
         model=PickupModel(
@@ -210,6 +218,7 @@ def blank_pickup(echoes_item_database) -> PickupEntry:
         item_category=echoes_item_database.item_categories["suit"],
         broad_category=echoes_item_database.item_categories["life_support"],
         progression=(),
+        generator_params=default_generator_params,
         resource_lock=None,
         unlocks_resource=False,
     )

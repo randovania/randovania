@@ -7,7 +7,7 @@ from PySide6 import QtWidgets
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.dock import DockRandoParams, DockType, DockWeakness
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
-from randovania.gui.lib import common_qt_lib, signal_handling
+from randovania.gui.lib import signal_handling
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -53,7 +53,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
 
     def on_preset_changed(self, preset: Preset):
         dock_rando = preset.configuration.dock_rando
-        common_qt_lib.set_combo_with_value(self.mode_combo, dock_rando.mode)
+        signal_handling.set_combo_with_value(self.mode_combo, dock_rando.mode)
         self.mode_description.setText(dock_rando.mode.description)
 
         for dock_type, weakness_checks in self.type_checks.items():

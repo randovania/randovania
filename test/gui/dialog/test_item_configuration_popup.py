@@ -1,3 +1,4 @@
+from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.layout.base.major_item_state import MajorItemState, MajorItemStateCase
 
@@ -31,7 +32,7 @@ def test_state_change_to_starting(skip_qtbot, echoes_item_database, echoes_resou
     # Run
     popup = ItemConfigurationWidget(None, item, state, echoes_resource_database)
     skip_qtbot.addWidget(popup)
-    popup.state_case_combo.setCurrentIndex(popup.state_case_combo.findData(MajorItemStateCase.STARTING_ITEM))
+    set_combo_with_value(popup.state_case_combo, MajorItemStateCase.STARTING_ITEM)
 
     # Assert
     assert popup.state == MajorItemState(

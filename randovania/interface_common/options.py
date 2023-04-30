@@ -6,7 +6,7 @@ from enum import Enum
 from pathlib import Path
 from typing import TypeVar, Callable, Any
 
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence, update_checker, persisted_options
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -112,9 +112,10 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
+    "experimental_settings": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
-    "game_backend": Serializer(lambda it: it.value, MemoryExecutorChoice),
+    "game_backend": Serializer(lambda it: it.value, ConnectorBuilderChoice),
     "nintendont_ip": Serializer(identity, str),
     "selected_tracker": Serializer(identity, str),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
@@ -166,10 +167,11 @@ class Options:
     _advanced_timeout_during_generation: bool | None = None
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
+    _experimental_settings: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
-    _game_backend: MemoryExecutorChoice | None = None
+    _game_backend: ConnectorBuilderChoice | None = None
     _nintendont_ip: str | None = None
     _selected_tracker: str | None = None
 
@@ -374,11 +376,19 @@ class Options:
         self._edit_field("dark_mode", value)
 
     @property
-    def game_backend(self) -> MemoryExecutorChoice:
-        return _return_with_default(self._game_backend, lambda: MemoryExecutorChoice.DOLPHIN)
+    def experimental_settings(self) -> bool:
+        return _return_with_default(self._experimental_settings, lambda: False)
+
+    @experimental_settings.setter
+    def experimental_settings(self, value: bool):
+        self._edit_field("experimental_settings", value)
+
+    @property
+    def game_backend(self) -> ConnectorBuilderChoice:
+        return _return_with_default(self._game_backend, lambda: ConnectorBuilderChoice.DOLPHIN)
 
     @game_backend.setter
-    def game_backend(self, value: MemoryExecutorChoice):
+    def game_backend(self, value: ConnectorBuilderChoice):
         self._edit_field("game_backend", value)
 
     @property

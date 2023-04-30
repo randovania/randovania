@@ -4,6 +4,7 @@ from typing import Iterator
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_info import (
     ResourceGainTuple, ResourceGain, ResourceQuantity,
     ResourceCollection,
@@ -50,20 +51,25 @@ class PickupModel(JsonDataclass):
 
 
 @dataclass(frozen=True)
+class PickupGeneratorParams:
+    preferred_location_category: LocationCategory
+    probability_offset: float = 0
+    probability_multiplier: float = 1
+    required_progression: int = 0
+
+
+@dataclass(frozen=True)
 class PickupEntry:
     name: str
     model: PickupModel
     item_category: ItemCategory
     broad_category: ItemCategory
     progression: ResourceGainTuple
+    generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = tuple()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
-    probability_offset: float = 0
-    probability_multiplier: float = 1
-    required_progression: int = 0
-    is_major_override: bool | None = None
 
     def __post_init__(self):
         if not isinstance(self.progression, tuple):
@@ -155,9 +161,3 @@ class PickupEntry:
     def all_resources(self) -> Iterator[ResourceQuantity]:
         yield from self.progression
         yield from self.extra_resources
-
-    @property
-    def is_expansion(self) -> bool:
-        if self.is_major_override is not None:
-            return self.is_major_override
-        return self.item_category.is_expansion

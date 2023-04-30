@@ -18,7 +18,7 @@ import socketio.exceptions
 
 from randovania.bitpacking import bitpacking
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import (GameSessionListEntry, GameSessionEntry, User, GameSessionActions,
@@ -488,7 +488,7 @@ class NetworkClient:
                                             (self._current_game_session_meta.id, user_id, action.value, arg))
 
     async def session_self_update(self, game: RandovaniaGame | None, inventory: Inventory, state: GameConnectionStatus,
-                                  backend: MemoryExecutorChoice):
+                                  backend: ConnectorBuilderChoice):
 
         if game is None or state not in (GameConnectionStatus.TrackerOnly, GameConnectionStatus.InGame):
             inventory_binary = None

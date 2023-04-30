@@ -84,8 +84,14 @@ def _get_single_hud_text(pickup_name: str,
                          resources: ResourceGainTuple,
                          ) -> str:
     return memo_data[pickup_name].format(**{
-        item_names.resource_user_friendly_name(resource): quantity
-        for resource, quantity in resources
+        **{
+            item_names.resource_user_friendly_name(resource): abs(quantity)
+            for resource, quantity in resources
+        },
+        **{
+            item_names.resource_user_friendly_delta(resource): "increased" if quantity >= 0 else "decreased"
+            for resource, quantity in resources
+        }
     })
 
 

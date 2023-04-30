@@ -5,7 +5,7 @@ import pytest
 import socketio.exceptions
 
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
+from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
@@ -208,10 +208,11 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     mock_decode.assert_has_calls([call('VtI6Bb3p', db), call('VtI6Bb3y', db), call('VtI6Bb3*', db)])
 
 
-def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_item_category):
+def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_item_category,
+                       default_generator_params):
     data = (
         "h^WxYK%Bzb%4P&bZe?<3c~o*?ZgXa3a!qe!b!=sZ&dS`%<kH75DmyE4E0aqZ0!yPSX#yJyqboamlgnXlAeaHwx"
-        "y`|qjis5Tm5_m@(Ur7@&dS`%<kH75DmyE4E0aqZ0!yPSX#yJyqboamlgnXlAeaHwxy`|qjis5Tm5_m@(Ur6S-~"
+        "y`|qjis5Tm5_m@(Ur7@&dS`%<kH75DmyE4E0aqZ0!yPSX#yJyqboamlgnXlAeaHwxy`|qjis5Tm5_m@(Ur6Sum"
     )
     expected_pickup = PickupEntry(
         name="The Name",
@@ -222,12 +223,13 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
         item_category=generic_item_category,
         broad_category=generic_item_category,
         progression=tuple(),
+        generator_params=default_generator_params,
     )
 
     # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
     # from randovania.server.game_session import _base64_encode_pickup
     # new_data = _base64_encode_pickup(expected_pickup, echoes_resource_database)
-    # assert new_data == data
+    # assert new_data == data; assert False
 
     # Run
     pickup = _decode_pickup(data, echoes_resource_database)
@@ -244,7 +246,7 @@ async def test_session_self_update(client: NetworkClient):
     inventory: Inventory = {ItemResourceInfo(33, "None", "None", 1): InventoryItem(1, 1)}
 
     await client.session_self_update(RandovaniaGame.METROID_PRIME_ECHOES, inventory,
-                                     GameConnectionStatus.InGame, MemoryExecutorChoice.DOLPHIN)
+                                     GameConnectionStatus.InGame, ConnectorBuilderChoice.DOLPHIN)
 
     client._emit_with_result.assert_awaited_once_with(
         "game_session_self_update",
