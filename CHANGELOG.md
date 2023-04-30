@@ -17,16 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: 7 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 175
+
 ##### Tallon Overworld 
 
-- Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall (videos added)
-- Added: Root Cave - R-Jump method (video added)
+- Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall
+- Added: Root Cave - L-Jump method to reach upper area
 
+#### Magmoor Caverns
+- Added: Twin Fires Tunnel - Transport to Talon -> Twin Fires, NSJ & SJ dashes now require standable terrain
 
 ##### Phendrana Drifts
 - Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
 - Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
-- Added: Hunter Cave - Various videos
+
 
 ### Metroid Dread
 
