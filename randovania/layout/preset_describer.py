@@ -2,7 +2,7 @@ import collections
 from typing import Iterable, Sequence
 
 from randovania.game_description import default_database
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
@@ -144,7 +144,7 @@ class GamePresetDescriber:
 
         return template_strings
 
-    def expected_starting_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+    def expected_starting_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         """Lists what are the expected starting item count.
         The configuration so it can vary based on progressive settings, as example."""
         return {
@@ -152,7 +152,7 @@ class GamePresetDescriber:
             for major in configuration.major_items_configuration.items_state.keys()
         }
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         """Lists what are the expected shuffled item count.
         The configuration so it can vary based on progressive settings, as example."""
         return {
@@ -221,7 +221,7 @@ def merge_categories(categories: Iterable[PresetDescription]) -> str:
     )
 
 
-def handle_progressive_expected_counts(counts: dict[MajorItem, int], configuration: MajorItemsConfiguration,
+def handle_progressive_expected_counts(counts: dict[StandardPickupDefinition, int], configuration: MajorItemsConfiguration,
                                        progressive: str, non_progressive: Sequence[str]) -> None:
     progressive_item = configuration.get_item_with_name(progressive)
     non_progressive_items = [configuration.get_item_with_name(name) for name in non_progressive]

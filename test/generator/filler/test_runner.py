@@ -6,7 +6,7 @@ import pytest
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
-from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.item.item_category import PickupCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -123,15 +123,15 @@ def test_add_hints_precision(empty_patches):
     }
 
 
-def _make_pickup(item_category: ItemCategory, generator_params: PickupGeneratorParams):
+def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGeneratorParams):
     return PickupEntry(
         name="Pickup",
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        item_category=item_category,
-        broad_category=item_category,
+        pickup_category=pickup_category,
+        broad_category=pickup_category,
         progression=tuple(),
         generator_params=generator_params,
     )
@@ -147,7 +147,7 @@ def test_add_relative_hint(echoes_game_description, echoes_game_patches, precise
     target_precision = MagicMock(spec=HintItemPrecision)
     precision = MagicMock(spec=HintItemPrecision)
     patches = echoes_game_patches.assign_new_pickups([
-        (PickupIndex(8), PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"],
+        (PickupIndex(8), PickupTarget(_make_pickup(echoes_item_database.pickup_categories["movement"],
                                                    default_generator_params), 0)),
     ])
     hint_distributor = EchoesHintDistributor()

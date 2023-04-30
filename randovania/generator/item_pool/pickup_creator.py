@@ -1,8 +1,8 @@
 from typing import Sequence
 
-from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.ammo import AmmoPickupDefinition
+from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_PICKUP_CATEGORY, PickupCategory
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -14,11 +14,11 @@ from randovania.games.prime3.patcher import corruption_items
 from randovania.layout.base.major_item_state import MajorItemState
 
 
-def create_major_item(item: MajorItem,
+def create_standard_pickup(item: StandardPickupDefinition,
                       state: MajorItemState,
                       include_percentage: bool,
                       resource_database: ResourceDatabase,
-                      ammo: Ammo | None,
+                      ammo: AmmoPickupDefinition | None,
                       ammo_requires_major_item: bool,
 
                       ) -> PickupEntry:
@@ -35,7 +35,7 @@ def create_major_item(item: MajorItem,
 
     extra_resources = [
         (resource_database.get_item(ammo_index), ammo_count)
-        for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo)
+        for ammo_index, ammo_count in zip(item.ammo, state.included_ammo)
     ]
     if include_percentage and resource_database.item_percentage is not None:
         extra_resources.append((resource_database.item_percentage, 1))
@@ -56,7 +56,7 @@ def create_major_item(item: MajorItem,
             game=resource_database.game_enum,
             name=item.model_name,
         ),
-        item_category=item.item_category,
+        pickup_category=item.pickup_category,
         broad_category=item.broad_category,
         unlocks_resource=item.unlocks_ammo,
         respects_lock=ammo_requires_major_item,
@@ -69,7 +69,7 @@ def create_major_item(item: MajorItem,
     )
 
 
-def create_ammo_expansion(ammo: Ammo,
+def create_ammo_pickup(ammo: AmmoPickupDefinition,
                           ammo_count: Sequence[int],
                           requires_major_item: bool,
                           resource_database: ResourceDatabase,
@@ -96,7 +96,7 @@ def create_ammo_expansion(ammo: Ammo,
             game=resource_database.game_enum,
             name=ammo.model_name,
         ),
-        item_category=ammo.item_category,
+        pickup_category=ammo.pickup_category,
         broad_category=ammo.broad_category,
         respects_lock=requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database),
@@ -118,7 +118,7 @@ def create_dark_temple_key(key_number: int,
     :param resource_database:
     :return:
     """
-    TEMPLE_KEY_CATEGORY = ItemCategory(
+    TEMPLE_KEY_CATEGORY = PickupCategory(
         name="temple_key",
         long_name="Dark Temple Key",
         hint_details=("a ", "red Temple Key"),
@@ -133,7 +133,7 @@ def create_dark_temple_key(key_number: int,
             game=resource_database.game_enum,
             name=echoes_items.DARK_TEMPLE_KEY_MODEL,
         ),
-        item_category=TEMPLE_KEY_CATEGORY,
+        pickup_category=TEMPLE_KEY_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
@@ -151,7 +151,7 @@ def create_sky_temple_key(key_number: int,
     :param resource_database:
     :return:
     """
-    SKY_TEMPLE_KEY_CATEGORY = ItemCategory(
+    SKY_TEMPLE_KEY_CATEGORY = PickupCategory(
         name="sky_temple_key",
         long_name="Sky Temple Key",
         hint_details=("a ", "Sky Temple Key"),
@@ -166,7 +166,7 @@ def create_sky_temple_key(key_number: int,
             game=resource_database.game_enum,
             name=echoes_items.SKY_TEMPLE_KEY_MODEL,
         ),
-        item_category=SKY_TEMPLE_KEY_CATEGORY,
+        pickup_category=SKY_TEMPLE_KEY_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
@@ -178,7 +178,7 @@ def create_sky_temple_key(key_number: int,
 def create_dread_artifact(artifact_number: int,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:
-    DREAD_ARTIFACT_CATEGORY = ItemCategory(
+    DREAD_ARTIFACT_CATEGORY = PickupCategory(
         name="dna",
         long_name="Metroid DNA",
         hint_details=("some ", "Metroid DNA"),
@@ -193,7 +193,7 @@ def create_dread_artifact(artifact_number: int,
             game=resource_database.game_enum,
             name=f"DNA_{artifact_number + 1}"
         ),
-        item_category=DREAD_ARTIFACT_CATEGORY,
+        pickup_category=DREAD_ARTIFACT_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
@@ -205,7 +205,7 @@ def create_dread_artifact(artifact_number: int,
 def create_energy_cell(cell_index: int,
                        resource_database: ResourceDatabase,
                        ) -> PickupEntry:
-    ENERGY_CELL_CATEGORY = ItemCategory(
+    ENERGY_CELL_CATEGORY = PickupCategory(
         name="energy_cell",
         long_name="Energy Cell",
         hint_details=("an ", "energy cell"),
@@ -226,7 +226,7 @@ def create_energy_cell(cell_index: int,
             game=resource_database.game_enum,
             name=corruption_items.ENERGY_CELL_MODEL,
         ),
-        item_category=ENERGY_CELL_CATEGORY,
+        pickup_category=ENERGY_CELL_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
@@ -239,7 +239,7 @@ def create_artifact(artifact_index: int,
                     minimum_progression: int,
                     resource_database: ResourceDatabase,
                     ) -> PickupEntry:
-    ARTIFACT_CATEGORY = ItemCategory(
+    ARTIFACT_CATEGORY = PickupCategory(
         name="artifact",
         long_name="Artifact",
         hint_details=("an ", "artifact"),
@@ -256,7 +256,7 @@ def create_artifact(artifact_index: int,
             game=resource_database.game_enum,
             name=prime_items.ARTIFACT_MODEL[artifact_index],
         ),
-        item_category=ARTIFACT_CATEGORY,
+        pickup_category=ARTIFACT_CATEGORY,
         broad_category=GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
@@ -281,8 +281,8 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
             game=resource_database.game_enum,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
-        item_category=USELESS_ITEM_CATEGORY,
-        broad_category=USELESS_ITEM_CATEGORY,
+        pickup_category=USELESS_PICKUP_CATEGORY,
+        broad_category=USELESS_PICKUP_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
@@ -304,8 +304,8 @@ def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
             game=resource_database.game_enum,
             name="Nothing",
         ),
-        item_category=USELESS_ITEM_CATEGORY,
-        broad_category=USELESS_ITEM_CATEGORY,
+        pickup_category=USELESS_PICKUP_CATEGORY,
+        broad_category=USELESS_PICKUP_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
@@ -324,8 +324,8 @@ def create_visual_etm() -> PickupEntry:
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
-        item_category=USELESS_ITEM_CATEGORY,
-        broad_category=USELESS_ITEM_CATEGORY,
+        pickup_category=USELESS_PICKUP_CATEGORY,
+        broad_category=USELESS_PICKUP_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),

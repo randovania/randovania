@@ -18,7 +18,7 @@ def create_victory_key(resource_database: ResourceDatabase):
             game=resource_database.game_enum,
             name="VictoryKey"
         ),
-        item_category=pickup_creator.GENERIC_KEY_CATEGORY,
+        pickup_category=pickup_creator.GENERIC_KEY_CATEGORY,
         broad_category=pickup_creator.GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,

@@ -43,10 +43,10 @@ def test_create_starting_popup_items(echoes_game_patches, echoes_item_database):
     db = echoes_game_patches.game.resource_database
 
     def create_major(n):
-        return pickup_creator.create_major_item(echoes_item_database.get_item_with_name(n), MajorItemState(), False, db,
+        return pickup_creator.create_standard_pickup(echoes_item_database.get_pickup_with_name(n), MajorItemState(), False, db,
                                                 None, False)
 
-    missile = pickup_creator.create_ammo_expansion(echoes_item_database.get_item_with_name("Missile Expansion"),
+    missile = pickup_creator.create_ammo_pickup(echoes_item_database.get_pickup_with_name("Missile Expansion"),
                                                    [5], False, db)
     tank = create_major("Energy Tank")
 
@@ -118,8 +118,8 @@ def test_create_spawn_point_field(echoes_game_description, echoes_item_database,
     # Setup
     resource_db = echoes_game_description.resource_database
 
-    morph = pickup_creator.create_major_item(
-        echoes_item_database.get_item_with_name("Morph Ball"),
+    morph = pickup_creator.create_standard_pickup(
+        echoes_item_database.get_pickup_with_name("Morph Ball"),
         MajorItemState(), False, resource_db, None, False,
     )
 
@@ -364,12 +364,12 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
         num_included_in_starting_items=0,
         included_ammo=(5,),
     )
-    pickup = pickup_creator.create_major_item(
-        echoes_item_database.major_items["Seeker Launcher"],
+    pickup = pickup_creator.create_standard_pickup(
+        echoes_item_database.standard_pickups["Seeker Launcher"],
         state,
         True,
         echoes_resource_database,
-        echoes_item_database.ammo["Missile Expansion"],
+        echoes_item_database.ammo_pickups["Missile Expansion"],
         True
     )
     creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
@@ -401,8 +401,8 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
 @pytest.mark.parametrize("simplified", [False, True])
 def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, echoes_resource_database):
     # Setup
-    pickup = pickup_creator.create_ammo_expansion(
-        echoes_item_database.ammo["Power Bomb Expansion"],
+    pickup = pickup_creator.create_ammo_pickup(
+        echoes_item_database.ammo_pickups["Power Bomb Expansion"],
         [2],
         True,
         echoes_resource_database,
@@ -446,8 +446,8 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
 
 def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_resource_database):
     # Setup
-    pickup = pickup_creator.create_ammo_expansion(
-        echoes_item_database.ammo["Power Bomb Expansion"],
+    pickup = pickup_creator.create_ammo_pickup(
+        echoes_item_database.ammo_pickups["Power Bomb Expansion"],
         [2],
         False,
         echoes_resource_database,

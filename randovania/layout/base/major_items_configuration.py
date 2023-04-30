@@ -5,8 +5,8 @@ from typing import Iterator, TypeVar, Iterable
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.item_category import PickupCategory
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_item_state import MajorItemState
 
@@ -23,21 +23,21 @@ def _check_matching_items(actual: Iterable[T], reference: Iterable[T]):
 @dataclasses.dataclass(frozen=True)
 class MajorItemsConfiguration(BitPackValue):
     game: RandovaniaGame
-    items_state: dict[MajorItem, MajorItemState]
-    default_items: dict[ItemCategory, MajorItem]
+    items_state: dict[StandardPickupDefinition, MajorItemState]
+    default_items: dict[PickupCategory, StandardPickupDefinition]
     minimum_random_starting_items: int
     maximum_random_starting_items: int
 
     def __post_init__(self):
-        item_database = default_database.item_database_for_game(self.game)
+        item_database = default_database.pickup_database_for_game(self.game)
 
-        _check_matching_items(self.items_state.keys(), item_database.major_items.values())
-        _check_matching_items(self.default_items.keys(), item_database.default_items.keys())
+        _check_matching_items(self.items_state.keys(), item_database.standard_pickups.values())
+        _check_matching_items(self.default_items.keys(), item_database.default_pickups.keys())
 
         for item, state in self.items_state.items():
             state.check_consistency(item)
 
-        for category, options in item_database.default_items.items():
+        for category, options in item_database.default_pickups.items():
             if category not in self.default_items:
                 raise ValueError(f"Category {category} is missing an item.")
 
@@ -62,10 +62,10 @@ class MajorItemsConfiguration(BitPackValue):
 
     @classmethod
     def from_json(cls, value: dict, game: RandovaniaGame) -> "MajorItemsConfiguration":
-        item_database = default_database.item_database_for_game(game)
+        item_database = default_database.pickup_database_for_game(game)
 
         items_state = {}
-        for name, item in item_database.major_items.items():
+        for name, item in item_database.standard_pickups.items():
             if name in value["items_state"]:
                 state = MajorItemState.from_json(value["items_state"][name])
             else:
@@ -73,8 +73,8 @@ class MajorItemsConfiguration(BitPackValue):
             items_state[item] = state
 
         default_items = {
-            category: item_database.major_items[value["default_items"][category.name]]
-            for category, _ in item_database.default_items.items()
+            category: item_database.standard_pickups[value["default_items"][category.name]]
+            for category, _ in item_database.default_pickups.items()
         }
 
         return cls(
@@ -88,7 +88,7 @@ class MajorItemsConfiguration(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         reference: MajorItemsConfiguration = metadata["reference"]
 
-        name_to_item: dict[str, MajorItem] = {item.name: item for item in self.items_state.keys()}
+        name_to_item: dict[str, StandardPickupDefinition] = {item.name: item for item in self.items_state.keys()}
 
         modified_items = sorted(
             item.name for item, state in self.items_state.items()
@@ -101,7 +101,7 @@ class MajorItemsConfiguration(BitPackValue):
 
         # default_items
         for category, default in self.default_items.items():
-            all_major = [major for major in reference.items_state.keys() if major.item_category == category]
+            all_major = [major for major in reference.items_state.keys() if major.pickup_category == category]
             yield from bitpacking.pack_array_element(default, all_major)
 
         # random starting items
@@ -112,7 +112,7 @@ class MajorItemsConfiguration(BitPackValue):
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "MajorItemsConfiguration":
         reference: MajorItemsConfiguration = metadata["reference"]
 
-        name_to_item: dict[str, MajorItem] = {item.name: item for item in reference.items_state.keys()}
+        name_to_item: dict[str, StandardPickupDefinition] = {item.name: item for item in reference.items_state.keys()}
         modified_items = bitpacking.decode_sorted_array_elements(decoder, sorted(name_to_item.keys()))
 
         items_state = copy.copy(reference.items_state)
@@ -124,7 +124,7 @@ class MajorItemsConfiguration(BitPackValue):
         # default_items
         default_items = {}
         for category in reference.default_items.keys():
-            all_major = [major for major in reference.items_state.keys() if major.item_category == category]
+            all_major = [major for major in reference.items_state.keys() if major.pickup_category == category]
             default_items[category] = decoder.decode_element(all_major)
 
         # random starting items
@@ -139,18 +139,18 @@ class MajorItemsConfiguration(BitPackValue):
             maximum_random_starting_items=maximum,
         )
 
-    def get_item_with_name(self, name: str) -> MajorItem:
+    def get_item_with_name(self, name: str) -> StandardPickupDefinition:
         for item in self.items_state.keys():
             if item.name == name:
                 return item
         raise KeyError(name)
 
-    def replace_state_for_item(self, item: MajorItem, state: MajorItemState) -> "MajorItemsConfiguration":
+    def replace_state_for_item(self, item: StandardPickupDefinition, state: MajorItemState) -> "MajorItemsConfiguration":
         return self.replace_states({
             item: state
         })
 
-    def replace_states(self, new_states: dict[MajorItem, MajorItemState]) -> "MajorItemsConfiguration":
+    def replace_states(self, new_states: dict[StandardPickupDefinition, MajorItemState]) -> "MajorItemsConfiguration":
         """
         Creates a copy of this MajorItemsConfiguration where the state of all given items are replaced by the given
         states.
@@ -164,7 +164,7 @@ class MajorItemsConfiguration(BitPackValue):
 
         return dataclasses.replace(self, items_state=items_state)
 
-    def replace_default_item(self, category: ItemCategory, item: MajorItem) -> "MajorItemsConfiguration":
+    def replace_default_item(self, category: PickupCategory, item: StandardPickupDefinition) -> "MajorItemsConfiguration":
         """
         Creates a copy of this MajorItemsConfiguration where the default item for the given category
         is replaced by the given item.
@@ -184,16 +184,10 @@ class MajorItemsConfiguration(BitPackValue):
             if state.include_copy_in_original_location:
                 total_pickups += 1
 
-            for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
+            for ammo_index, ammo_count in zip(item.ammo, state.included_ammo):
                 result[ammo_index] = result.get(ammo_index, 0) + ammo_count * total_pickups
 
         return result
 
     def dangerous_settings(self) -> list[str]:
-        result = []
-        for major_item, state in self.items_state.items():
-            if (major_item.warning is not None and "EXPERIMENTAL" in major_item.warning
-                    and state.num_included_in_starting_items == 0):
-                result.append(f"Not starting with {major_item.name}")
-
-        return result
+        return [] # TODO: remove this if it won't be used?

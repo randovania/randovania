@@ -36,7 +36,7 @@ def pool_creator(results: PoolResults,
     if not configuration.puppies_anywhere:
         puppy_indices = get_valid_indices(PUPPY_INDICES)
         rng.shuffle(puppy_indices)
-        puppies: list[PickupEntry] = list(filter(lambda p: p.item_category.name == "puppies", results.to_place))
+        puppies: list[PickupEntry] = list(filter(lambda p: p.pickup_category.name == "puppies", results.to_place))
         for p in puppies:
             results.to_place.remove(p)
             results.assignment[puppy_indices.pop()] = p

@@ -4,7 +4,7 @@ from typing import Iterator
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.ammo import AmmoPickupDefinition
 
 
 @dataclasses.dataclass(frozen=True)
@@ -13,7 +13,7 @@ class AmmoState(BitPackValue):
     pickup_count: int = 0
     requires_major_item: bool = True
 
-    def check_consistency(self, ammo: Ammo):
+    def check_consistency(self, ammo: AmmoPickupDefinition):
         db = default_database.resource_database_for(ammo.game)
 
         if len(self.ammo_count) != len(ammo.items):
@@ -30,7 +30,7 @@ class AmmoState(BitPackValue):
             raise ValueError(f"Pickup count must be at least 0, got {self.pickup_count}")
 
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
-        ammo: Ammo = metadata["ammo"]
+        ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
         for count, ammo_index in zip(self.ammo_count, ammo.items):
@@ -48,7 +48,7 @@ class AmmoState(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "AmmoState":
-        ammo: Ammo = metadata["ammo"]
+        ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
         # Ammo Count

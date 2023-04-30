@@ -2,7 +2,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_item_state import MajorItemState
@@ -33,21 +33,21 @@ from randovania.layout.base.major_item_state import MajorItemState
          "json": {"included_ammo": [230, 200]}},
     ],
     name="major_item_state")
-def _major_item_state(request, echoes_item_database, generic_item_category):
+def _major_item_state(request, echoes_item_database, generic_pickup_category):
     encoded: bytes = request.param["encoded"]
 
-    item = MajorItem(
+    item = StandardPickupDefinition(
         game=RandovaniaGame.METROID_PRIME_ECHOES,
         name="Item Name",
-        item_category=generic_item_category,
-        broad_category=generic_item_category,
+        pickup_category=generic_pickup_category,
+        broad_category=generic_pickup_category,
         model_name="Model Name",
         progression=(request.param.get("progression", "Power"),),
         default_starting_count=0,
         default_shuffled_count=1,
-        ammo_index=request.param.get("ammo_index", ()),
+        ammo=request.param.get("ammo_index", ()),
         must_be_starting=True,
-        original_index=None,
+        original_location=None,
         probability_offset=0,
         preferred_location_category=LocationCategory.MAJOR,
     )

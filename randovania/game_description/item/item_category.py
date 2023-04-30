@@ -4,7 +4,7 @@ from randovania.lib import frozen_lib
 
 
 @dataclass(frozen=True, order=True)
-class ItemCategory:
+class PickupCategory:
     name: str
     long_name: str
     hint_details: tuple[str, str]
@@ -17,7 +17,7 @@ class ItemCategory:
         assert len(self.hint_details) == 2, "Hint details must be 2 elements"
 
     @classmethod
-    def from_json(cls, name: str, value: dict) -> "ItemCategory":
+    def from_json(cls, name: str, value: dict) -> "PickupCategory":
         return cls(
             name=name,
             long_name=value["long_name"],
@@ -51,14 +51,14 @@ class ItemCategory:
         return self.name == "expansion"
 
 
-USELESS_ITEM_CATEGORY = ItemCategory(
+USELESS_PICKUP_CATEGORY = PickupCategory(
     name="useless",
     long_name="Useless",
     hint_details=("an ", "Energy Transfer Module"),
     hinted_as_major=False
 )
 
-GENERIC_KEY_CATEGORY = ItemCategory(
+GENERIC_KEY_CATEGORY = PickupCategory(
     name="key",
     long_name="Key",
     hint_details=("a ", "key"),

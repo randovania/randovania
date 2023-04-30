@@ -2,7 +2,7 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
 from randovania.gui.lib.signal_handling import set_combo_with_value
@@ -13,7 +13,7 @@ from randovania.lib import enum_lib
 class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
     Changed = Signal()
 
-    def __init__(self, parent: QWidget, item: MajorItem, starting_state: MajorItemState,
+    def __init__(self, parent: QWidget, item: StandardPickupDefinition, starting_state: MajorItemState,
                  resources_database: ResourceDatabase):
         super().__init__(parent)
         self.setupUi(self)
@@ -28,7 +28,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self.separator_line.hide()
 
         for case in enum_lib.iterate_enum(MajorItemStateCase):
-            if case == MajorItemStateCase.VANILLA and item.original_index is None:
+            if case == MajorItemStateCase.VANILLA and item.original_location is None:
                 continue
             if case == MajorItemStateCase.STARTING_ITEM and len(item.progression) > 1:
                 continue
@@ -58,7 +58,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self.priority_combo.currentIndexChanged.connect(self._on_select)
 
         # Update
-        self.vanilla_check.setEnabled(item.original_index is not None)
+        self.vanilla_check.setEnabled(item.original_location is not None)
         if not self.vanilla_check.isEnabled():
             self.vanilla_check.setToolTip(
                 "This item does not exist in the original game, so there's no vanilla location."
@@ -68,24 +68,24 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         if not self.starting_check.isEnabled():
             self.starting_check.setToolTip("Progressive items are not allowed to be marked as starting.")
 
-        if item.ammo_index:
+        if item.ammo:
             ammo_names = " and ".join(
-                resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo_index)
+                resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo)
             self.provided_ammo_label.setText(
                 f"<html><head/><body><p>{ammo_names} provided by {item.name}</p></body></html>"
             )
             self.provided_ammo_spinbox.setMaximum(min(
                 resources_database.get_item(ammo_index).max_capacity
-                for ammo_index in item.ammo_index
+                for ammo_index in item.ammo
             ))
         else:
             self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
 
-        if self._item.warning is not None:
-            self.warning_label = QtWidgets.QLabel(self._item.warning, self)
-            self.warning_label.setWordWrap(True)
-            self.root_layout.addWidget(self.warning_label, self.root_layout.rowCount(), 0, 1, -1)
+        if self._item.description is not None:
+            self.description_label = QtWidgets.QLabel(self._item.description, self)
+            self.description_label.setWordWrap(True)
+            self.root_layout.addWidget(self.description_label, self.root_layout.rowCount(), 0, 1, -1)
 
         self.set_custom_fields_visible(False)
         if self._item.must_be_starting:
@@ -191,5 +191,5 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
     def included_ammo(self) -> tuple[int, ...]:
         return tuple(
             self.provided_ammo_spinbox.value()
-            for _ in self._item.ammo_index
+            for _ in self._item.ammo
         )

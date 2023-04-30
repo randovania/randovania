@@ -17,11 +17,11 @@ from randovania.layout.preset import Preset
 class MetroidPresetItemPool(PresetItemPool):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
-        item_database = default_database.item_database_for_game(self.game)
+        item_database = default_database.pickup_database_for_game(self.game)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
 
-        self._energy_tank_item = item_database.major_items["Energy Tank"]
+        self._energy_tank_item = item_database.standard_pickups["Energy Tank"]
         self._create_energy_tank_box(game_description.resource_database.energy_tank)
         self._create_pickup_style_box(size_policy)
 

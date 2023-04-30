@@ -1,24 +1,24 @@
 from dataclasses import dataclass
 
 from randovania.game_description.item import migrations
-from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.ammo import AmmoPickupDefinition
+from randovania.game_description.item.item_category import PickupCategory
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True)
-class ItemDatabase:
-    item_categories: dict[str, ItemCategory]
-    major_items: dict[str, MajorItem]
-    ammo: dict[str, Ammo]
-    default_items: dict[ItemCategory, tuple[MajorItem, ...]]
+class PickupDatabase:
+    pickup_categories: dict[str, PickupCategory]
+    standard_pickups: dict[str, StandardPickupDefinition]
+    ammo_pickups: dict[str, AmmoPickupDefinition]
+    default_pickups: dict[PickupCategory, tuple[StandardPickupDefinition, ...]]
 
-    def get_item_with_name(self, name: str) -> MajorItem | Ammo:
-        return self.major_items.get(name) or self.ammo.get(name)
+    def get_pickup_with_name(self, name: str) -> StandardPickupDefinition | AmmoPickupDefinition:
+        return self.standard_pickups.get(name) or self.ammo_pickups.get(name)
 
 
-def read_database(database_data: dict, game: RandovaniaGame) -> ItemDatabase:
+def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
     """
     :param database_data:
     :param game:
@@ -26,59 +26,59 @@ def read_database(database_data: dict, game: RandovaniaGame) -> ItemDatabase:
     """
     migrations.migrate_current(database_data)
 
-    item_categories = {
-        name: ItemCategory.from_json(name, value)
-        for name, value in database_data["item_categories"].items()
+    pickup_categories = {
+        name: PickupCategory.from_json(name, category)
+        for name, category in database_data["pickup_categories"].items()
     }
 
-    major_items = {
-        name: MajorItem.from_json(name, value, game, item_categories)
-        for name, value in database_data["items"].items()
+    standard_pickups = {
+        name: StandardPickupDefinition.from_json(name, pickup, game, pickup_categories)
+        for name, pickup in database_data["standard_pickups"].items()
     }
 
-    ammo = {
-        name: Ammo.from_json(name, value, game, item_categories)
-        for name, value in database_data["ammo"].items()
+    ammo_pickups = {
+        name: AmmoPickupDefinition.from_json(name, pickup, game, pickup_categories)
+        for name, pickup in database_data["ammo_pickups"].items()
     }
 
-    default_items = {
-        item_categories[category_name]: tuple(major_items[item_name] for item_name in value)
-        for category_name, value in database_data["default_items"].items()
+    default_pickups = {
+        pickup_categories[category_name]: tuple(standard_pickups[pickup_name] for pickup_name in pickup_names)
+        for category_name, pickup_names in database_data["default_pickups"].items()
     }
 
-    return ItemDatabase(item_categories, major_items, ammo, default_items)
+    return PickupDatabase(pickup_categories, standard_pickups, ammo_pickups, default_pickups)
 
 
-def write_database(database: ItemDatabase) -> dict:
+def write_database(database: PickupDatabase) -> dict:
     """
 
     :param database:
     :return:
     """
-    item_categories = {
-        name: item_category.as_json
-        for name, item_category in database.item_categories.items()
+    pickup_categories = {
+        name: pickup_category.as_json
+        for name, pickup_category in database.pickup_categories.items()
     }
 
-    major_items_data = {
-        name: item.as_json
-        for name, item in database.major_items.items()
+    standard_pickups = {
+        name: pickup.as_json
+        for name, pickup in database.standard_pickups.items()
     }
 
-    ammo_data = {
+    ammo_pickups = {
         name: ammo.as_json
-        for name, ammo in database.ammo.items()
+        for name, ammo in database.ammo_pickups.items()
     }
 
-    default_data = {
-        category.name: [item.name for item in items]
-        for category, items in database.default_items.items()
+    default_pickups = {
+        category.name: [pickup.name for pickup in pickups]
+        for category, pickups in database.default_pickups.items()
     }
 
     return {
         "schema_version": migrations.CURRENT_VERSION,
-        "item_categories": item_categories,
-        "items": major_items_data,
-        "ammo": ammo_data,
-        "default_items": default_data,
+        "pickup_categories": pickup_categories,
+        "standard_pickups": standard_pickups,
+        "ammo_pickups": ammo_pickups,
+        "default_pickups": default_pickups,
     }

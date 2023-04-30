@@ -4,14 +4,14 @@ from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
-from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.ammo import AmmoPickupDefinition
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_state import AmmoState
 
 
 @dataclass(frozen=True)
 class AmmoConfiguration(bitpacking.BitPackValue):
-    items_state: dict[Ammo, AmmoState]
+    items_state: dict[AmmoPickupDefinition, AmmoState]
 
     def __post_init__(self):
         for ammo, state in self.items_state.items():
@@ -56,18 +56,18 @@ class AmmoConfiguration(bitpacking.BitPackValue):
 
     @classmethod
     def from_json(cls, value: dict, game: RandovaniaGame) -> "AmmoConfiguration":
-        item_database = default_database.item_database_for_game(game)
+        item_database = default_database.pickup_database_for_game(game)
         return cls(
             items_state={
-                item_database.ammo[name]: AmmoState.from_json(state)
+                item_database.ammo_pickups[name]: AmmoState.from_json(state)
                 for name, state in value["items_state"].items()
             },
         )
 
-    def replace_state_for_ammo(self, ammo: Ammo, state: AmmoState) -> "AmmoConfiguration":
+    def replace_state_for_ammo(self, ammo: AmmoPickupDefinition, state: AmmoState) -> "AmmoConfiguration":
         return self.replace_states({ammo: state})
 
-    def replace_states(self, new_states: dict[Ammo, AmmoState]) -> "AmmoConfiguration":
+    def replace_states(self, new_states: dict[AmmoPickupDefinition, AmmoState]) -> "AmmoConfiguration":
         """
         Creates a copy of this AmmoConfiguration where the state of all given items are replaced by the given
         states.

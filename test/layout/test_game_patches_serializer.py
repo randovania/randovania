@@ -102,7 +102,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     }
 
     def create_pickup(name, percentage=True):
-        return pickup_creator.create_major_item(echoes_item_database.major_items[name],
+        return pickup_creator.create_standard_pickup(echoes_item_database.standard_pickups[name],
                                                 MajorItemState(), percentage, game.resource_database,
                                                 None, False)
 
@@ -173,7 +173,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
 
 
 @pytest.mark.parametrize("has_convert", [False, True])
-def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_item_category,
+def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_pickup_category,
                                default_generator_params):
     # Setup
     name = "Some Random Name"
@@ -192,8 +192,8 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, gene
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name="HyperMissile",
         ),
-        item_category=generic_item_category,
-        broad_category=generic_item_category,
+        pickup_category=generic_pickup_category,
+        broad_category=generic_pickup_category,
         progression=(
             (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
             (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),

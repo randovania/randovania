@@ -1,5 +1,5 @@
 from randovania.game_description import default_database
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration, BeamAmmoConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -94,10 +94,10 @@ class EchoesPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, EchoesConfiguration)
         major_items = configuration.major_items_configuration
-        item_database = default_database.item_database_for_game(configuration.game)
+        item_database = default_database.pickup_database_for_game(configuration.game)
 
         template_strings = super().format_params(configuration)
-        unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo["Beam Ammo Expansion"]]
+        unified_ammo = configuration.ammo_configuration.items_state[item_database.ammo_pickups["Beam Ammo Expansion"]]
 
         # Difficulty
         if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
@@ -155,7 +155,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         count = super().expected_shuffled_item_count(configuration)
         majors = configuration.major_items_configuration
 

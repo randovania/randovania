@@ -55,11 +55,11 @@ class Bootstrap:
         if game.minimal_logic is None:
             raise ValueError(f"Minimal logic enabled, but {game.game} doesn't have support for it.")
 
-        item_db = default_database.item_database_for_game(game.game)
+        item_db = default_database.pickup_database_for_game(game.game)
 
         items_to_skip = set()
         for it in game.minimal_logic.items_to_exclude:
-            if it.reason is None or major_items.items_state[item_db.major_items[it.reason]].num_shuffled_pickups != 0:
+            if it.reason is None or major_items.items_state[item_db.standard_pickups[it.reason]].num_shuffled_pickups != 0:
                 items_to_skip.add(it.name)
 
         custom_item_count = game.minimal_logic.custom_item_amount

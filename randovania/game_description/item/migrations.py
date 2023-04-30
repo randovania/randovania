@@ -24,11 +24,32 @@ def _migrate_v3(data: dict) -> dict:
 
     return data
 
+def _migrate_v4(data: dict) -> dict:
+    data["pickup_categories"] = data.pop("item_categories")
+
+    data["standard_pickups"] = data.pop("items")
+    for pickup in data["standard_pickups"].values():
+        pickup["pickup_category"] = pickup.pop("item_category")
+        if "original_index" in pickup:
+            pickup["original_location"] = pickup.pop("original_index")
+        if "warning" in pickup:
+            pickup["description"] = pickup.pop("warning")
+
+    data["ammo_pickups"] = data.pop("ammo")
+    for pickup in data["ammo_pickups"].values():
+        if "is_major" in pickup:
+            pickup.pop("is_major")
+
+    data["default_pickups"] = data.pop("default_items")
+
+    return data
+
 
 _MIGRATIONS = [
     None,
     _migrate_v2,
     _migrate_v3,
+    _migrate_v4,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

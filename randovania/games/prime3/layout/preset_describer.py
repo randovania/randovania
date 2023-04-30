@@ -1,4 +1,4 @@
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
@@ -42,7 +42,7 @@ class CorruptionPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         count = super().expected_shuffled_item_count(configuration)
         majors = configuration.major_items_configuration
 

@@ -3,7 +3,7 @@ from typing import Iterable
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
@@ -17,7 +17,7 @@ def _state_has_item(state: MajorItemState) -> bool:
 
 class ProgressiveItemWidget(QtWidgets.QCheckBox):
     def __init__(self, parent: QtWidgets.QWidget, editor: PresetEditor,
-                 progressive_item: MajorItem, non_progressive_items: Iterable[MajorItem]):
+                 progressive_item: StandardPickupDefinition, non_progressive_items: Iterable[StandardPickupDefinition]):
         super().__init__(parent)
         self._editor = editor
         self.progressive_item = progressive_item
@@ -25,7 +25,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         self.setTristate(True)
         self.clicked.connect(self.change_progressive)
 
-    def on_preset_changed(self, preset: Preset, elements: dict[MajorItem, QtWidgets.QWidget]):
+    def on_preset_changed(self, preset: Preset, elements: dict[StandardPickupDefinition, QtWidgets.QWidget]):
         major_configuration = preset.configuration.major_items_configuration
 
         has_progressive = _state_has_item(major_configuration.items_state[self.progressive_item])

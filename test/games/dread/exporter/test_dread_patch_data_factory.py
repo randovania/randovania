@@ -43,13 +43,13 @@ def test_create_patch_data(test_files_dir, mocker):
 
 
 def _preset_with_locked_pb(preset: Preset, locked: bool):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    item_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     preset = dataclasses.replace(
         preset,
         configuration=dataclasses.replace(
             preset.configuration,
             ammo_configuration=preset.configuration.ammo_configuration.replace_state_for_ammo(
-                item_database.ammo["Power Bomb Tank"],
+                item_database.ammo_pickups["Power Bomb Tank"],
                 AmmoState(requires_major_item=locked),
             )
         )
@@ -59,12 +59,12 @@ def _preset_with_locked_pb(preset: Preset, locked: bool):
 
 @pytest.mark.parametrize("locked", [False, True])
 def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_manager):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    item_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     resource_db = dread_game_description.resource_database
 
     # Setup
-    pickup = pickup_creator.create_ammo_expansion(
-        item_database.ammo["Power Bomb Tank"],
+    pickup = pickup_creator.create_ammo_pickup(
+        item_database.ammo_pickups["Power Bomb Tank"],
         [2],
         locked,
         resource_db,
@@ -87,16 +87,16 @@ def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_man
 
 @pytest.mark.parametrize("locked", [False, True])
 def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    item_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     resource_db = dread_game_description.resource_database
 
     # Setup
-    pickup = pickup_creator.create_major_item(
-        item_database.major_items["Power Bomb"],
+    pickup = pickup_creator.create_standard_pickup(
+        item_database.standard_pickups["Power Bomb"],
         MajorItemState(included_ammo=(3,)),
         include_percentage=False,
         resource_database=resource_db,
-        ammo=item_database.ammo["Power Bomb Tank"],
+        ammo=item_database.ammo_pickups["Power Bomb Tank"],
         ammo_requires_major_item=locked,
     )
 
@@ -116,7 +116,7 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
 
 
 def test_pickup_data_for_a_major(dread_game_description, preset_manager):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    item_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     resource_db = dread_game_description.resource_database
 
     preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
@@ -126,8 +126,8 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
     description.get_seed_for_player.return_value = 1000
 
     # Setup
-    pickup = pickup_creator.create_major_item(
-        item_database.major_items["Speed Booster"],
+    pickup = pickup_creator.create_standard_pickup(
+        item_database.standard_pickups["Speed Booster"],
         MajorItemState(),
         include_percentage=False,
         resource_database=resource_db,

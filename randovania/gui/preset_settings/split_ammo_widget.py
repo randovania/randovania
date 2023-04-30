@@ -4,7 +4,7 @@ from typing import Iterable, NamedTuple
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.ammo import AmmoPickupDefinition
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.ammo_state import AmmoState
 from randovania.layout.preset import Preset
@@ -19,7 +19,7 @@ class AmmoPickupWidgets(NamedTuple):
 
 class SplitAmmoWidget(QtWidgets.QCheckBox):
     def __init__(self, parent: QtWidgets.QWidget, editor: PresetEditor,
-                 unified_ammo: Ammo, split_ammo: Iterable[Ammo]):
+                 unified_ammo: AmmoPickupDefinition, split_ammo: Iterable[AmmoPickupDefinition]):
         super().__init__(parent)
         self._editor = editor
         self.unified_ammo = unified_ammo
@@ -35,7 +35,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         if len(unified_ammo.items) != len(self.split_ammo):
             raise ValueError("The unified ammo should have as many items as there are split ammo items.")
 
-    def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: dict[Ammo, AmmoPickupWidgets]):
+    def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: dict[AmmoPickupDefinition, AmmoPickupWidgets]):
         ammo_configuration = preset.configuration.ammo_configuration
 
         has_unified = ammo_configuration.items_state[self.unified_ammo].pickup_count > 0

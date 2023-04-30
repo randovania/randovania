@@ -5,7 +5,7 @@ from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
@@ -18,14 +18,14 @@ from randovania.layout.preset import Preset
 class DreadPresetItemPool(PresetItemPool):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
-        item_database = default_database.item_database_for_game(self.game)
+        item_database = default_database.pickup_database_for_game(self.game)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
 
         self._energy_item_to_starting_spinbox = {}
         self._energy_item_to_shuffled_spinbox = {}
-        self._energy_tank_item = item_database.major_items["Energy Tank"]
-        self._energy_part_item = item_database.major_items["Energy Part"]
+        self._energy_tank_item = item_database.standard_pickups["Energy Tank"]
+        self._energy_part_item = item_database.standard_pickups["Energy Part"]
         self._create_energy_box()
         self._create_pickup_style_box(size_policy)
 
@@ -77,7 +77,7 @@ class DreadPresetItemPool(PresetItemPool):
 
             row += 1
 
-    def _on_update_starting(self, value: int, item: MajorItem):
+    def _on_update_starting(self, value: int, item: StandardPickupDefinition):
         with self._editor as options:
             major_configuration = options.major_items_configuration
             options.major_items_configuration = major_configuration.replace_state_for_item(
@@ -86,7 +86,7 @@ class DreadPresetItemPool(PresetItemPool):
                                     num_included_in_starting_items=value)
             )
 
-    def _on_update_shuffled(self, value: int, item: MajorItem):
+    def _on_update_shuffled(self, value: int, item: StandardPickupDefinition):
         with self._editor as options:
             major_configuration = options.major_items_configuration
             options.major_items_configuration = major_configuration.replace_state_for_item(

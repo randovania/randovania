@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -40,7 +40,7 @@ class CSPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         count = super().expected_shuffled_item_count(configuration)
         majors = configuration.major_items_configuration
 

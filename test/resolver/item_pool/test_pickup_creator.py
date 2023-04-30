@@ -1,8 +1,8 @@
 import pytest
 
-from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY, Ammo
-from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY, ItemCategory
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.ammo import AMMO_PICKUP_CATEGORY, AmmoPickupDefinition
+from randovania.game_description.item.item_category import USELESS_PICKUP_CATEGORY, PickupCategory
+from randovania.game_description.item.major_item import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import (
     PickupEntry,
@@ -15,7 +15,7 @@ from randovania.layout.base.major_item_state import MajorItemState
 
 
 @pytest.mark.parametrize("percentage", [False, True])
-def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resource_database, generic_item_category):
+def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resource_database, generic_pickup_category):
     # Setup
     item_a = echoes_resource_database.get_item("DarkVisor")
     item_b = echoes_resource_database.get_item("MorphBall")
@@ -23,25 +23,25 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
     ammo_a = echoes_resource_database.get_item("EnergyTank")
     ammo_b = echoes_resource_database.get_item("DarkAmmo")
 
-    less_generic_item_category = ItemCategory(
+    less_generic_pickup_category = PickupCategory(
         name="the_category",
         long_name="The Category",
         hint_details=("a ", " wonderful item"),
         hinted_as_major=True
     )
 
-    major_item = MajorItem(
+    major_item = StandardPickupDefinition(
         game=echoes_resource_database.game_enum,
         name="The Item",
-        item_category=less_generic_item_category,
-        broad_category=generic_item_category,
+        pickup_category=less_generic_pickup_category,
+        broad_category=generic_pickup_category,
         model_name="SuperModel",
         progression=("DarkVisor", "MorphBall", "Bombs"),
         default_starting_count=0,
         default_shuffled_count=1,
-        ammo_index=("EnergyTank", "DarkAmmo"),
+        ammo=("EnergyTank", "DarkAmmo"),
         must_be_starting=False,
-        original_index=None,
+        original_location=None,
         probability_offset=5,
         preferred_location_category=LocationCategory.MAJOR,
     )
@@ -65,7 +65,7 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
         )
 
     # Run
-    result = pickup_creator.create_major_item(major_item, state, percentage,
+    result = pickup_creator.create_standard_pickup(major_item, state, percentage,
                                               echoes_resource_database,
                                               None, False)
 
@@ -79,8 +79,8 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
             (item_c, 1),
         ),
         extra_resources=extra_resources,
-        item_category=less_generic_item_category,
-        broad_category=generic_item_category,
+        pickup_category=less_generic_pickup_category,
+        broad_category=generic_pickup_category,
         respects_lock=False,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
@@ -109,12 +109,12 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
     )
 
     # Run
-    result = pickup_creator.create_major_item(
-        echoes_item_database.major_items["Missile Launcher"],
+    result = pickup_creator.create_standard_pickup(
+        echoes_item_database.standard_pickups["Missile Launcher"],
         state,
         True,
         echoes_resource_database,
-        echoes_item_database.ammo["Missile Expansion"],
+        echoes_item_database.ammo_pickups["Missile Expansion"],
         True
     )
 
@@ -129,8 +129,8 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
             (echoes_resource_database.item_percentage, 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "MissileLauncher"),
-        item_category=echoes_item_database.item_categories["missile"],
-        broad_category=echoes_item_database.item_categories["missile_related"],
+        pickup_category=echoes_item_database.pickup_categories["missile"],
+        broad_category=echoes_item_database.pickup_categories["missile_related"],
         generator_params=default_generator_params,
         resource_lock=ResourceLock(
             locked_by=missile_launcher,
@@ -163,12 +163,12 @@ def test_create_seeker_launcher(ammo_quantity: int,
     )
 
     # Run
-    result = pickup_creator.create_major_item(
-        echoes_item_database.major_items["Seeker Launcher"],
+    result = pickup_creator.create_standard_pickup(
+        echoes_item_database.standard_pickups["Seeker Launcher"],
         state,
         True,
         echoes_resource_database,
-        echoes_item_database.ammo["Missile Expansion"],
+        echoes_item_database.ammo_pickups["Missile Expansion"],
         ammo_requires_major_item
     )
 
@@ -184,8 +184,8 @@ def test_create_seeker_launcher(ammo_quantity: int,
             (echoes_resource_database.item_percentage, 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "SeekerLauncher"),
-        item_category=echoes_item_database.item_categories["missile"],
-        broad_category=echoes_item_database.item_categories["missile_related"],
+        pickup_category=echoes_item_database.pickup_categories["missile"],
+        broad_category=echoes_item_database.pickup_categories["missile_related"],
         respects_lock=ammo_requires_major_item,
         resource_lock=ResourceLock(
             locked_by=missile_launcher,
@@ -203,11 +203,11 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
     ammo_a = echoes_resource_database.get_item("Missile")
     temporary_a = echoes_resource_database.get_item("Temporary1")
 
-    ammo = Ammo(
+    ammo = AmmoPickupDefinition(
         game=echoes_resource_database.game_enum,
         name="The Item",
         items=("Missile",),
-        broad_category=USELESS_ITEM_CATEGORY,
+        broad_category=USELESS_PICKUP_CATEGORY,
         unlocked_by="MissileLauncher",
         temporary="Temporary1",
         model_name="AmmoModel",
@@ -216,7 +216,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
     ammo_count = (11, 150)
 
     # Run
-    result = pickup_creator.create_ammo_expansion(
+    result = pickup_creator.create_ammo_pickup(
         ammo, ammo_count, requires_major_item, echoes_resource_database)
 
     # Assert
@@ -228,8 +228,8 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
             (ammo_a, ammo_count[0]),
             (echoes_resource_database.item_percentage, 1),
         ),
-        item_category=AMMO_ITEM_CATEGORY,
-        broad_category=USELESS_ITEM_CATEGORY,
+        pickup_category=AMMO_PICKUP_CATEGORY,
+        broad_category=USELESS_PICKUP_CATEGORY,
         respects_lock=requires_major_item,
         resource_lock=ResourceLock(
             locked_by=primary_a,
@@ -247,8 +247,8 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
 @pytest.mark.parametrize("include_before", [False, True])
 def test_missile_expansion_before_launcher(include_before, echoes_item_database, echoes_resource_database):
     # Setup
-    ammo = echoes_item_database.ammo["Missile Expansion"]
-    major_item = echoes_item_database.major_items["Missile Launcher"]
+    ammo = echoes_item_database.ammo_pickups["Missile Expansion"]
+    major_item = echoes_item_database.standard_pickups["Missile Launcher"]
 
     missile = echoes_resource_database.get_item(ammo.items[0])
     missile_launcher = echoes_resource_database.get_item(major_item.progression[0])
@@ -256,8 +256,8 @@ def test_missile_expansion_before_launcher(include_before, echoes_item_database,
     percent = echoes_resource_database.item_percentage
 
     # Run
-    expansion = pickup_creator.create_ammo_expansion(ammo, [5], True, echoes_resource_database)
-    launcher = pickup_creator.create_major_item(
+    expansion = pickup_creator.create_ammo_pickup(ammo, [5], True, echoes_resource_database)
+    launcher = pickup_creator.create_standard_pickup(
         major_item, MajorItemState(included_ammo=(5,)),
         True, echoes_resource_database, ammo, True
     )

@@ -22,27 +22,27 @@ def game_description_for(game: RandovaniaGame) -> GameDescription:
     return result
 
 
-def _read_item_database_in_path(path: Path, game: RandovaniaGame) -> item_database.ItemDatabase:
+def _read_pickup_database_in_path(path: Path, game: RandovaniaGame) -> item_database.PickupDatabase:
     with path.joinpath("item-database.json").open() as database_file:
-        item_database_data = json.load(database_file)
+        pickup_database_data = json.load(database_file)
 
-    return item_database.read_database(item_database_data, game)
+    return item_database.read_database(pickup_database_data, game)
 
 
-def _write_item_database_in_path(item_db: item_database.ItemDatabase, path: Path):
-    data = item_database.write_database(item_db)
+def _write_pickup_database_in_path(pickup_db: item_database.PickupDatabase, path: Path):
+    data = item_database.write_database(pickup_db)
     with path.joinpath("item-database.json").open("w") as database_file:
         json.dump(data, database_file, indent=4)
 
 
 @functools.lru_cache
-def item_database_for_game(game: RandovaniaGame):
-    return _read_item_database_in_path(game.data_path.joinpath("item_database"),
+def pickup_database_for_game(game: RandovaniaGame):
+    return _read_pickup_database_in_path(game.data_path.joinpath("item_database"),
                                        game)
 
 
-def write_item_database_for_game(item_db: item_database.ItemDatabase, game: RandovaniaGame):
-    _write_item_database_in_path(item_db, game.data_path.joinpath("item_database"))
+def write_pickup_database_for_game(pickup_db: item_database.PickupDatabase, game: RandovaniaGame):
+    _write_pickup_database_in_path(pickup_db, game.data_path.joinpath("item_database"))
 
 
 @functools.lru_cache

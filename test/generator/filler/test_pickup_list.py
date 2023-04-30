@@ -135,8 +135,8 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
 def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_database, echoes_game_patches):
     # Setup
     db = echoes_game_description.resource_database
-    missile_expansion = pickup_creator.create_ammo_expansion(
-        echoes_item_database.ammo["Missile Expansion"],
+    missile_expansion = pickup_creator.create_ammo_pickup(
+        echoes_item_database.ammo_pickups["Missile Expansion"],
         [5],
         False,
         db,

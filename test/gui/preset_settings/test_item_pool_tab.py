@@ -20,9 +20,9 @@ def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_man
     editor = PresetEditor(preset, options)
     window = PresetItemPool(editor, echoes_game_description, MagicMock())
 
-    item_database = default_database.item_database_for_game(window.game)
-    item = item_database.major_items["Dark Beam"]
-    category = item_database.item_categories["beam"]
+    item_database = default_database.pickup_database_for_game(window.game)
+    item = item_database.standard_pickups["Dark Beam"]
+    category = item_database.pickup_categories["beam"]
     combo = window._default_items[category]
 
     # Run
