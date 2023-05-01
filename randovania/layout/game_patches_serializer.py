@@ -18,7 +18,7 @@ from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
-from randovania.generator.item_pool import pool_creator, PoolResults
+from randovania.generator.pickup_pool import pool_creator, PoolResults
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 

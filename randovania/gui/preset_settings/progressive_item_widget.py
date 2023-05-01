@@ -3,21 +3,21 @@ from typing import Iterable
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.preset import Preset
 
 
-def _state_has_item(state: MajorItemState) -> bool:
+def _state_has_item(state: StandardPickupState) -> bool:
     return (state.num_shuffled_pickups > 0
-            or state.num_included_in_starting_items > 0
+            or state.num_included_in_starting_pickups > 0
             or state.include_copy_in_original_location)
 
 
 class ProgressiveItemWidget(QtWidgets.QCheckBox):
     def __init__(self, parent: QtWidgets.QWidget, editor: PresetEditor,
-                 progressive_item: MajorItem, non_progressive_items: Iterable[MajorItem]):
+                 progressive_item: StandardPickupDefinition, non_progressive_items: Iterable[StandardPickupDefinition]):
         super().__init__(parent)
         self._editor = editor
         self.progressive_item = progressive_item
@@ -25,11 +25,11 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         self.setTristate(True)
         self.clicked.connect(self.change_progressive)
 
-    def on_preset_changed(self, preset: Preset, elements: dict[MajorItem, QtWidgets.QWidget]):
-        major_configuration = preset.configuration.major_items_configuration
+    def on_preset_changed(self, preset: Preset, elements: dict[StandardPickupDefinition, QtWidgets.QWidget]):
+        major_configuration = preset.configuration.standard_pickup_configuration
 
-        has_progressive = _state_has_item(major_configuration.items_state[self.progressive_item])
-        has_non_progressive = any(_state_has_item(major_configuration.items_state[item])
+        has_progressive = _state_has_item(major_configuration.pickups_state[self.progressive_item])
+        has_non_progressive = any(_state_has_item(major_configuration.pickups_state[item])
                                   for item in self.non_progressive_items)
 
         if not has_progressive and not has_non_progressive:
@@ -49,14 +49,14 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
     def change_progressive(self, is_progressive: bool):
         with self._editor as editor:
             if is_progressive:
-                non_progressive_state = MajorItemState()
-                progressive_state = MajorItemState(num_shuffled_pickups=len(self.non_progressive_items))
+                non_progressive_state = StandardPickupState()
+                progressive_state = StandardPickupState(num_shuffled_pickups=len(self.non_progressive_items))
             else:
-                non_progressive_state = MajorItemState(num_shuffled_pickups=1)
-                progressive_state = MajorItemState()
+                non_progressive_state = StandardPickupState(num_shuffled_pickups=1)
+                progressive_state = StandardPickupState()
 
             new_states = {self.progressive_item: progressive_state}
             for item in self.non_progressive_items:
                 new_states[item] = non_progressive_state
 
-            editor.major_items_configuration = editor.major_items_configuration.replace_states(new_states)
+            editor.standard_pickup_configuration = editor.standard_pickup_configuration.replace_states(new_states)

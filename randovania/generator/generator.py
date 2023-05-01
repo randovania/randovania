@@ -16,7 +16,7 @@ from randovania.generator.filler.filler_library import (
 from randovania.generator.filler.runner import (FillerResults, PlayerPool,
                                                 run_filler)
 from randovania.generator.hint_distributor import PreFillParams
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -31,7 +31,7 @@ from randovania.layout.exceptions import InvalidConfiguration
 
 def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
                              configuration: BaseConfiguration) -> None:
-    min_starting_items = configuration.major_items_configuration.minimum_random_starting_items
+    min_starting_items = configuration.standard_pickup_configuration.minimum_random_starting_pickups
     if len(item_pool) > game.world_list.num_pickup_nodes + min_starting_items:
         raise InvalidConfiguration(
             "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(

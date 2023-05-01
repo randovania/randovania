@@ -173,7 +173,7 @@ def _print_header(player_states: list[PlayerState]):
             with_world=True,
         )
 
-    debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
+    debug.debug_print("{}\nRetcon filler started with standard pickups:\n{}".format(
         "*" * 100,
         "\n".join(
             "Player {}: {}".format(
