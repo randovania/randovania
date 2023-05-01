@@ -6,7 +6,8 @@ from randovania.game_description.pickup.standard_pickup import StandardPickupDef
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.standard_pickup_widget_ui import Ui_StandardPickupWidget
 from randovania.gui.lib.signal_handling import set_combo_with_value
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase, DEFAULT_MAXIMUM_SHUFFLED
+from randovania.layout.base import standard_pickup_state
+from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase
 from randovania.lib import enum_lib
 
 
@@ -53,7 +54,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         self.vanilla_check.toggled.connect(self._on_select)
         self.starting_check.toggled.connect(self._on_select)
         self.shuffled_spinbox.valueChanged.connect(self._on_select)
-        self.shuffled_spinbox.setMaximum(DEFAULT_MAXIMUM_SHUFFLED[-1])
+        self.shuffled_spinbox.setMaximum(standard_pickup_state.DEFAULT_MAXIMUM_SHUFFLED[-1])
         self.provided_ammo_spinbox.valueChanged.connect(self._on_select)
         self.priority_combo.currentIndexChanged.connect(self._on_select)
 
@@ -130,7 +131,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
 
         elif case == StandardPickupStateCase.SHUFFLED:
             return StandardPickupState(num_shuffled_pickups=len(self._pickup.progression),
-                                  included_ammo=included_ammo)
+                                       included_ammo=included_ammo)
 
         else:
             return None

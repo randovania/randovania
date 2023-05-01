@@ -608,7 +608,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
 
-        ammo_with_mains = [ammo.name for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
+        ammo_with_mains = [ammo.name
+                           for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
                            if state.requires_main_item]
         if ammo_with_mains:
             raise ValueError("Preset has {} with required mains enabled. This is currently not supported.".format(

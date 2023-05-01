@@ -113,7 +113,8 @@ class StandardPickupState:
 
         return cls(**kwargs)
 
-    def bit_pack_encode(self, pickup: StandardPickupDefinition, reference: StandardPickupState) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, pickup: StandardPickupDefinition, reference: StandardPickupState,
+                        ) -> Iterator[tuple[int, int]]:
         db = default_database.resource_database_for(pickup.game)
         if pickup.progression:
             main_index = pickup.progression[0]
@@ -154,7 +155,8 @@ class StandardPickupState:
                         break
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, pickup: StandardPickupDefinition, reference: StandardPickupState) -> StandardPickupState:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, pickup: StandardPickupDefinition, reference: StandardPickupState,
+                        ) -> StandardPickupState:
         db = default_database.resource_database_for(pickup.game)
         if pickup.progression:
             main_index = pickup.progression[0]

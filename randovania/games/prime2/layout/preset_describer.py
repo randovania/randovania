@@ -97,7 +97,9 @@ class EchoesPresetDescriber(GamePresetDescriber):
         pickup_database = default_database.pickup_database_for_game(configuration.game)
 
         template_strings = super().format_params(configuration)
-        unified_ammo = configuration.ammo_pickup_configuration.pickups_state[pickup_database.ammo_pickups["Beam Ammo Expansion"]]
+        unified_ammo = configuration.ammo_pickup_configuration.pickups_state[
+            pickup_database.ammo_pickups["Beam Ammo Expansion"]
+        ]
 
         # Difficulty
         if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):

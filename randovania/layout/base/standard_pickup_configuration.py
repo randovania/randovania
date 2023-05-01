@@ -88,7 +88,9 @@ class StandardPickupConfiguration(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         reference: StandardPickupConfiguration = metadata["reference"]
 
-        name_to_pickup: dict[str, StandardPickupDefinition] = {pickup.name: pickup for pickup in self.pickups_state.keys()}
+        name_to_pickup: dict[str, StandardPickupDefinition] = {
+            pickup.name: pickup for pickup in self.pickups_state.keys()
+        }
 
         modified_pickups = sorted(
             pickup.name for pickup, state in self.pickups_state.items()
@@ -112,7 +114,9 @@ class StandardPickupConfiguration(BitPackValue):
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "StandardPickupConfiguration":
         reference: StandardPickupConfiguration = metadata["reference"]
 
-        name_to_pickup: dict[str, StandardPickupDefinition] = {pickup.name: pickup for pickup in reference.pickups_state.keys()}
+        name_to_pickup: dict[str, StandardPickupDefinition] = {
+            pickup.name: pickup for pickup in reference.pickups_state.keys()
+        }
         modified_pickups = bitpacking.decode_sorted_array_elements(decoder, sorted(name_to_pickup.keys()))
 
         pickups_state = copy.copy(reference.pickups_state)
@@ -145,12 +149,14 @@ class StandardPickupConfiguration(BitPackValue):
                 return pickup
         raise KeyError(name)
 
-    def replace_state_for_pickup(self, pickup: StandardPickupDefinition, state: StandardPickupState) -> "StandardPickupConfiguration":
+    def replace_state_for_pickup(self, pickup: StandardPickupDefinition, state: StandardPickupState,
+                                 ) -> "StandardPickupConfiguration":
         return self.replace_states({
             pickup: state
         })
 
-    def replace_states(self, new_states: dict[StandardPickupDefinition, StandardPickupState]) -> "StandardPickupConfiguration":
+    def replace_states(self, new_states: dict[StandardPickupDefinition, StandardPickupState],
+                       ) -> "StandardPickupConfiguration":
         """
         Creates a copy of this MajorItemsConfiguration where the state of all given pickups are replaced by the given
         states.
@@ -164,7 +170,8 @@ class StandardPickupConfiguration(BitPackValue):
 
         return dataclasses.replace(self, pickups_state=pickups_state)
 
-    def replace_default_pickup(self, category: PickupCategory, pickup: StandardPickupDefinition) -> "StandardPickupConfiguration":
+    def replace_default_pickup(self, category: PickupCategory, pickup: StandardPickupDefinition,
+                               ) -> "StandardPickupConfiguration":
         """
         Creates a copy of this MajorItemsConfiguration where the default pickup for the given category
         is replaced by the given pickup.

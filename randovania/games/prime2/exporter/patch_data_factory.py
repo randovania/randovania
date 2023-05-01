@@ -507,12 +507,9 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             "&push;&main-color=#33ffd6;{}&pop;",
         )
 
-        [pickup_category_visors] = [
-            cat for cat in self.configuration.standard_pickup_configuration.default_pickups.keys() if cat.name == "visor"
-        ]
-        [pickup_category_beams] = [
-            cat for cat in self.configuration.standard_pickup_configuration.default_pickups.keys() if cat.name == "beam"
-        ]
+        default_pickups = self.configuration.standard_pickup_configuration.default_pickups
+        [pickup_category_visors] = [cat for cat in default_pickups.keys() if cat.name == "visor"]
+        [pickup_category_beams] = [cat for cat in default_pickups.keys() if cat.name == "beam"]
 
         result["menu_mod"] = self.configuration.menu_mod
         result["dol_patches"] = EchoesDolPatchesData(
@@ -521,8 +518,8 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             safe_zone_heal_per_second=self.configuration.safe_zone.heal_per_second,
             user_preferences=self.cosmetic_patches.user_preferences,
             default_items={
-                "visor": self.configuration.standard_pickup_configuration.default_pickups[pickup_category_visors].name,
-                "beam": self.configuration.standard_pickup_configuration.default_pickups[pickup_category_beams].name,
+                "visor": default_pickups[pickup_category_visors].name,
+                "beam": default_pickups[pickup_category_beams].name,
             },
             unvisited_room_names=(self.configuration.elevators.can_use_unvisited_room_names
                                   and self.cosmetic_patches.unvisited_room_names),

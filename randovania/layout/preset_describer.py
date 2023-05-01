@@ -221,7 +221,8 @@ def merge_categories(categories: Iterable[PresetDescription]) -> str:
     )
 
 
-def handle_progressive_expected_counts(counts: dict[StandardPickupDefinition, int], configuration: StandardPickupConfiguration,
+def handle_progressive_expected_counts(counts: dict[StandardPickupDefinition, int],
+                                       configuration: StandardPickupConfiguration,
                                        progressive: str, non_progressive: Sequence[str]) -> None:
     progressive_item = configuration.get_pickup_with_name(progressive)
     non_progressive_items = [configuration.get_pickup_with_name(name) for name in non_progressive]

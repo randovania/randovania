@@ -61,7 +61,9 @@ class PresetTab(QtWidgets.QMainWindow):
         def bound(value: int):
             with self._editor as editor:
                 kwargs = {field_name: bool(value)}
-                editor.standard_pickup_configuration = dataclasses.replace(editor.standard_pickup_configuration, **kwargs)
+                editor.standard_pickup_configuration = dataclasses.replace(
+                    editor.standard_pickup_configuration, **kwargs,
+                )
 
         return bound
 
