@@ -47,7 +47,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
             "target": 50}]},
     ],
     name="patches_with_data")
-def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_item_database):
+def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
     game = echoes_game_description
     db = game.resource_database
 
@@ -102,7 +102,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     }
 
     def create_pickup(name, percentage=True):
-        return pickup_creator.create_standard_pickup(echoes_item_database.standard_pickups[name],
+        return pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups[name],
                                                 MajorItemState(), percentage, game.resource_database,
                                                 None, False)
 

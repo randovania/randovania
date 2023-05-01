@@ -6,7 +6,7 @@ import pytest
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
-from randovania.game_description.item.item_category import PickupCategory
+from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -141,13 +141,13 @@ def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGenera
 @pytest.mark.parametrize("location_precision", [HintLocationPrecision.RELATIVE_TO_AREA,
                                                 HintLocationPrecision.RELATIVE_TO_INDEX])
 def test_add_relative_hint(echoes_game_description, echoes_game_patches, precise_distance, location_precision,
-                           echoes_item_database, default_generator_params):
+                           echoes_pickup_database, default_generator_params):
     # Setup
     rng = Random(5000)
     target_precision = MagicMock(spec=HintItemPrecision)
     precision = MagicMock(spec=HintItemPrecision)
     patches = echoes_game_patches.assign_new_pickups([
-        (PickupIndex(8), PickupTarget(_make_pickup(echoes_item_database.pickup_categories["movement"],
+        (PickupIndex(8), PickupTarget(_make_pickup(echoes_pickup_database.pickup_categories["movement"],
                                                    default_generator_params), 0)),
     ])
     hint_distributor = EchoesHintDistributor()

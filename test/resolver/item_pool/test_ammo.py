@@ -7,8 +7,8 @@ from randovania.layout.base.ammo_configuration import AmmoConfiguration
 
 def test_add_ammo(echoes_resource_database, mocker):
     # Setup
-    mock_create_ammo_expansion: MagicMock = mocker.patch(
-        "randovania.generator.item_pool.ammo.create_ammo_expansion", autospec=True)
+    mock_create_ammo_pickup: MagicMock = mocker.patch(
+        "randovania.generator.item_pool.ammo.create_ammo_pickup", autospec=True)
 
     ammo1 = MagicMock()
     ammo2 = MagicMock()
@@ -24,8 +24,8 @@ def test_add_ammo(echoes_resource_database, mocker):
     results = list(randovania.generator.item_pool.ammo.add_ammo(echoes_resource_database, ammo_configuration))
 
     # Assert
-    assert results == [mock_create_ammo_expansion.return_value, mock_create_ammo_expansion.return_value]
-    mock_create_ammo_expansion.assert_has_calls([
+    assert results == [mock_create_ammo_pickup.return_value, mock_create_ammo_pickup.return_value]
+    mock_create_ammo_pickup.assert_has_calls([
         call(ammo1, state1.ammo_count, state1.requires_major_item, echoes_resource_database),
         call(ammo2, state2.ammo_count, state2.requires_major_item, echoes_resource_database),
     ])

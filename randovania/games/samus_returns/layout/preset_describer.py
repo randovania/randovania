@@ -1,4 +1,4 @@
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
@@ -53,7 +53,7 @@ class MSRPresetDescriber(GamePresetDescriber):
         count = super().expected_shuffled_item_count(configuration)
         majors = configuration.major_items_configuration
 
-        from randovania.games.samus_returns.item_database import progressive_items
+        from randovania.games.samus_returns.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
             handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 

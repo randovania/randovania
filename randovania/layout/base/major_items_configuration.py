@@ -5,8 +5,8 @@ from typing import Iterator, TypeVar, Iterable
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.item.item_category import PickupCategory
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_item_state import MajorItemState
 
@@ -29,15 +29,15 @@ class MajorItemsConfiguration(BitPackValue):
     maximum_random_starting_items: int
 
     def __post_init__(self):
-        item_database = default_database.pickup_database_for_game(self.game)
+        pickup_database = default_database.pickup_database_for_game(self.game)
 
-        _check_matching_items(self.items_state.keys(), item_database.standard_pickups.values())
-        _check_matching_items(self.default_items.keys(), item_database.default_pickups.keys())
+        _check_matching_items(self.items_state.keys(), pickup_database.standard_pickups.values())
+        _check_matching_items(self.default_items.keys(), pickup_database.default_pickups.keys())
 
         for item, state in self.items_state.items():
             state.check_consistency(item)
 
-        for category, options in item_database.default_pickups.items():
+        for category, options in pickup_database.default_pickups.items():
             if category not in self.default_items:
                 raise ValueError(f"Category {category} is missing an item.")
 
@@ -62,10 +62,10 @@ class MajorItemsConfiguration(BitPackValue):
 
     @classmethod
     def from_json(cls, value: dict, game: RandovaniaGame) -> "MajorItemsConfiguration":
-        item_database = default_database.pickup_database_for_game(game)
+        pickup_database = default_database.pickup_database_for_game(game)
 
         items_state = {}
-        for name, item in item_database.standard_pickups.items():
+        for name, item in pickup_database.standard_pickups.items():
             if name in value["items_state"]:
                 state = MajorItemState.from_json(value["items_state"][name])
             else:
@@ -73,8 +73,8 @@ class MajorItemsConfiguration(BitPackValue):
             items_state[item] = state
 
         default_items = {
-            category: item_database.standard_pickups[value["default_items"][category.name]]
-            for category, _ in item_database.default_pickups.items()
+            category: pickup_database.standard_pickups[value["default_items"][category.name]]
+            for category, _ in pickup_database.default_pickups.items()
         }
 
         return cls(

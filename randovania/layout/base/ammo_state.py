@@ -4,7 +4,7 @@ from typing import Iterator
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.item.ammo import AmmoPickupDefinition
+from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 
 
 @dataclasses.dataclass(frozen=True)

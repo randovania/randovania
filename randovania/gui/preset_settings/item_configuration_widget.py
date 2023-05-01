@@ -2,7 +2,7 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
 from randovania.gui.lib.signal_handling import set_combo_with_value

@@ -8,10 +8,10 @@ import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.item.ammo import AmmoPickupDefinition
-from randovania.game_description.item.item_category import PickupCategory
-from randovania.game_description.item.item_database import PickupDatabase
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_database import PickupDatabase
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
@@ -70,14 +70,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         # Relevant Items
         self.game = editor.game
         self.game_description = default_database.game_description_for(self.game)
-        item_database = default_database.pickup_database_for_game(self.game)
+        pickup_database = default_database.pickup_database_for_game(self.game)
 
         self._register_random_starting_events()
-        self._create_categories_boxes(item_database, size_policy)
-        self._create_customizable_default_items(item_database)
-        self._create_major_item_boxes(item_database, self.game_description.resource_database)
-        self._create_progressive_widgets(item_database)
-        self._create_ammo_pickup_boxes(size_policy, item_database)
+        self._create_categories_boxes(pickup_database, size_policy)
+        self._create_customizable_default_items(pickup_database)
+        self._create_major_item_boxes(pickup_database, self.game_description.resource_database)
+        self._create_progressive_widgets(pickup_database)
+        self._create_ammo_pickup_boxes(size_policy, pickup_database)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -205,29 +205,29 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             options.major_items_configuration = dataclasses.replace(options.major_items_configuration,
                                                                     maximum_random_starting_items=value)
 
-    def _create_categories_boxes(self, item_database: PickupDatabase, size_policy):
+    def _create_categories_boxes(self, pickup_database: PickupDatabase, size_policy):
         self._boxes_for_category = {}
 
         categories = set()
-        for major_item in item_database.standard_pickups.values():
+        for major_item in pickup_database.standard_pickups.values():
             if not major_item.hide_from_gui:
                 categories.add(major_item.pickup_category)
 
-        all_categories = list(item_database.pickup_categories.values())
-        for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
-            category_box = Foldable(major_item_category.long_name)
-            category_box.setObjectName(f"category_box {major_item_category}")
+        all_categories = list(pickup_database.pickup_categories.values())
+        for standard_pickup_category in sorted(categories, key=lambda it: all_categories.index(it)):
+            category_box = Foldable(standard_pickup_category.long_name)
+            category_box.setObjectName(f"category_box {standard_pickup_category}")
             category_layout = QtWidgets.QGridLayout()
-            category_layout.setObjectName(f"category_layout {major_item_category}")
+            category_layout.setObjectName(f"category_layout {standard_pickup_category}")
             category_box.set_content_layout(category_layout)
 
             self.item_pool_layout.addWidget(category_box)
-            self._boxes_for_category[major_item_category.name] = category_box, category_layout, {}
+            self._boxes_for_category[standard_pickup_category.name] = category_box, category_layout, {}
 
-    def _create_customizable_default_items(self, item_database: PickupDatabase):
+    def _create_customizable_default_items(self, pickup_database: PickupDatabase):
         self._default_items = {}
 
-        for category, possibilities in item_database.default_pickups.items():
+        for category, possibilities in pickup_database.default_pickups.items():
             parent, layout, _ = self._boxes_for_category[category.name]
 
             label = QtWidgets.QLabel(parent)
@@ -260,8 +260,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             )
             editor.major_items_configuration = new_config
 
-    def _create_major_item_boxes(self, item_database: PickupDatabase, resource_database: ResourceDatabase):
-        for major_item in item_database.standard_pickups.values():
+    def _create_major_item_boxes(self, pickup_database: PickupDatabase, resource_database: ResourceDatabase):
+        for major_item in pickup_database.standard_pickups.values():
             if major_item.hide_from_gui or major_item.pickup_category.name == "energy_tank":
                 continue
 
@@ -284,10 +284,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             )
 
     # Ammo
-    def _create_ammo_pickup_boxes(self, size_policy, item_database: PickupDatabase):
+    def _create_ammo_pickup_boxes(self, size_policy, pickup_database: PickupDatabase):
         """
         Creates the GroupBox with SpinBoxes for selecting the pickup count of all the ammo
-        :param item_database:
+        :param pickup_database:
         :return:
         """
 
@@ -303,13 +303,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
             self._boxes_for_category[broad_to_category.get(ammo.broad_category.name, ammo.broad_category.name)][:2]
-            for ammo in item_database.ammo_pickups.values()
+            for ammo in pickup_database.ammo_pickups.values()
         }
 
         for box, layout in layouts_with_lines:
             layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
-        for ammo in item_database.ammo_pickups.values():
+        for ammo in pickup_database.ammo_pickups.values():
             category_box, category_layout, _ = self._boxes_for_category[broad_to_category.get(ammo.broad_category.name,
                                                                                               ammo.broad_category.name)]
 
@@ -403,13 +403,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 dataclasses.replace(ammo_configuration.items_state[ammo], requires_major_item=bool(value))
             )
 
-    def _create_progressive_widgets(self, item_database: PickupDatabase):
+    def _create_progressive_widgets(self, pickup_database: PickupDatabase):
         self._progressive_widgets = []
 
         all_progressive = list(self.game.gui.progressive_item_gui_tuples)
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
-            self._boxes_for_category[item_database.standard_pickups[progressive_item_name].pickup_category.name][:2]
+            self._boxes_for_category[pickup_database.standard_pickups[progressive_item_name].pickup_category.name][:2]
             for progressive_item_name, non_progressive_items in all_progressive
         }
 
@@ -417,13 +417,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
         for progressive_item_name, non_progressive_items in all_progressive:
-            progressive_item = item_database.standard_pickups[progressive_item_name]
+            progressive_item = pickup_database.standard_pickups[progressive_item_name]
             parent, layout, _ = self._boxes_for_category[progressive_item.pickup_category.name]
 
             widget = ProgressiveItemWidget(
                 parent, self._editor,
                 progressive_item=progressive_item,
-                non_progressive_items=[item_database.standard_pickups[it] for it in non_progressive_items],
+                non_progressive_items=[pickup_database.standard_pickups[it] for it in non_progressive_items],
             )
             widget.setText("Use progressive {}".format(" → ".join(non_progressive_items)))
             self._progressive_widgets.append(widget)

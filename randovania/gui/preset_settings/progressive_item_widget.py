@@ -3,7 +3,7 @@ from typing import Iterable
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset

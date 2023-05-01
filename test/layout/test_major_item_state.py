@@ -2,7 +2,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.major_item_state import MajorItemState
@@ -33,7 +33,7 @@ from randovania.layout.base.major_item_state import MajorItemState
          "json": {"included_ammo": [230, 200]}},
     ],
     name="major_item_state")
-def _major_item_state(request, echoes_item_database, generic_pickup_category):
+def _major_item_state(request, echoes_pickup_database, generic_pickup_category):
     encoded: bytes = request.param["encoded"]
 
     item = StandardPickupDefinition(

@@ -2,7 +2,7 @@ import collections
 from typing import Iterable, Sequence
 
 from randovania.game_description import default_database
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import RandomizationMode

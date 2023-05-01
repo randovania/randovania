@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -44,7 +44,7 @@ class CSPresetDescriber(GamePresetDescriber):
         count = super().expected_shuffled_item_count(configuration)
         majors = configuration.major_items_configuration
 
-        from randovania.games.cave_story.item_database import progressive_items
+        from randovania.games.cave_story.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
             handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 

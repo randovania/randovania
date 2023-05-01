@@ -4,7 +4,7 @@ from typing import Iterable, NamedTuple
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.item.ammo import AmmoPickupDefinition
+from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.ammo_state import AmmoState
 from randovania.layout.preset import Preset

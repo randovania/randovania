@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from randovania.game_description.item import migrations
-from randovania.game_description.item.ammo import AmmoPickupDefinition
-from randovania.game_description.item.item_category import PickupCategory
-from randovania.game_description.item.major_item import StandardPickupDefinition
+from randovania.game_description.pickup import migrations
+from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.games.game import RandovaniaGame
 
 

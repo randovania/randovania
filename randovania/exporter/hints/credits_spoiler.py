@@ -31,8 +31,8 @@ def get_locations_for_major_pickups_and_keys(
             if target.player != players_config.player_index:
                 continue
 
-            item_category = target.pickup.pickup_category
-            if item_category.hinted_as_major or item_category.is_key:
+            pickup_category = target.pickup.pickup_category
+            if pickup_category.hinted_as_major or pickup_category.is_key:
                 player_name = None
                 if players_config.is_multiworld:
                     player_name = players_config.player_names[player_index]

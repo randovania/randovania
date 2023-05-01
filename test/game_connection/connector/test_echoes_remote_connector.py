@@ -305,13 +305,13 @@ async def test_fetch_game_status(connector: EchoesRemoteConnector, version: Echo
 
 
 async def test_receive_required_missile_launcher(connector: EchoesRemoteConnector,
-                                                 echoes_item_database, echoes_resource_database):
+                                                 echoes_pickup_database, echoes_resource_database):
     pickup = pickup_creator.create_standard_pickup(
-        echoes_item_database.standard_pickups["Missile Launcher"],
+        echoes_pickup_database.standard_pickups["Missile Launcher"],
         MajorItemState(included_ammo=(5,)),
         True,
         echoes_resource_database,
-        echoes_item_database.ammo_pickups["Missile Expansion"],
+        echoes_pickup_database.ammo_pickups["Missile Expansion"],
         True,
     )
 

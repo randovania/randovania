@@ -132,11 +132,11 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     assert result == tuple()
 
 
-def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_database, echoes_game_patches):
+def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_database, echoes_game_patches):
     # Setup
     db = echoes_game_description.resource_database
     missile_expansion = pickup_creator.create_ammo_pickup(
-        echoes_item_database.ammo_pickups["Missile Expansion"],
+        echoes_pickup_database.ammo_pickups["Missile Expansion"],
         [5],
         False,
         db,
@@ -163,7 +163,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_dat
 
 
 @pytest.mark.parametrize("has_light_beam", [False, True])
-async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_description, echoes_item_database,
+async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_description, echoes_pickup_database,
                                                         default_echoes_preset, mocker, has_light_beam):
     # Setup
     mocker.patch("randovania.game_description.default_database.game_description_for",

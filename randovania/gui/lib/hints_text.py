@@ -65,11 +65,11 @@ _GAME_SPECIFIC = {
 def update_hints_text(game: RandovaniaGame,
                       hint_item_names_tree_widget: QtWidgets.QTableWidget,
                       ):
-    item_database = default_database.pickup_database_for_game(game)
+    pickup_database = default_database.pickup_database_for_game(game)
 
     rows = []
 
-    for item in item_database.standard_pickups.values():
+    for item in pickup_database.standard_pickups.values():
         rows.append((
             item.name,
             item.pickup_category.hint_details[1],
@@ -77,15 +77,15 @@ def update_hints_text(game: RandovaniaGame,
             item.broad_category.hint_details[1],
         ))
 
-    for name, item_category, broad_category in _GAME_SPECIFIC.get(game, lambda: [])():
+    for name, pickup_category, broad_category in _GAME_SPECIFIC.get(game, lambda: [])():
         rows.append((
             name,
-            item_category.hint_details[1],
-            item_category.general_details[1],
+            pickup_category.hint_details[1],
+            pickup_category.general_details[1],
             broad_category.hint_details[1],
         ))
 
-    for ammo in item_database.ammo_pickups.values():
+    for ammo in pickup_database.ammo_pickups.values():
         rows.append((
             ammo.name,
             ammo.pickup_category.hint_details[1],

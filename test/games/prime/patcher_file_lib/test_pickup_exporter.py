@@ -7,8 +7,8 @@ import pytest
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.item.ammo import AMMO_PICKUP_CATEGORY
-from randovania.game_description.item.item_category import USELESS_PICKUP_CATEGORY
+from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
+from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion, PickupGeneratorParams
@@ -22,11 +22,11 @@ from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
-def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resource_database):
+def test_get_single_hud_text_all_major_items(echoes_pickup_database, echoes_resource_database):
     memo_data = default_database.default_prime2_memo_data()
 
     # Run
-    for item in echoes_item_database.standard_pickups.values():
+    for item in echoes_pickup_database.standard_pickups.values():
         pickup = pickup_creator.create_standard_pickup(item, MajorItemState(), False, echoes_resource_database, None, False)
 
         result = pickup_exporter._get_all_hud_text(pickup_exporter._conditional_resources_for_pickup(pickup),
@@ -348,9 +348,9 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     )
 
 
-def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_database):
+def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resource_database):
     # Setup
-    progressive_suit = echoes_item_database.standard_pickups["Progressive Suit"]
+    progressive_suit = echoes_pickup_database.standard_pickups["Progressive Suit"]
     pickup = pickup_creator.create_standard_pickup(progressive_suit, MajorItemState(), False, echoes_resource_database,
                                               None, False)
 
@@ -365,9 +365,9 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
     ("Beam Ammo Expansion", [4, 20], "Beam Ammo Expansion. Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage"),
     ("Missile Expansion", [4], "Missile Expansion. Provides 4 Missiles and 1 Item Percentage"),
 ])
-def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_database, item, ammo, result):
+def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_database, item, ammo, result):
     # Setup
-    expansion = echoes_item_database.ammo_pickups[item]
+    expansion = echoes_pickup_database.ammo_pickups[item]
     pickup = pickup_creator.create_ammo_pickup(expansion, ammo, False, echoes_resource_database)
 
     # Run

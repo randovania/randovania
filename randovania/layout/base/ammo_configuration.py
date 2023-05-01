@@ -4,7 +4,7 @@ from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
-from randovania.game_description.item.ammo import AmmoPickupDefinition
+from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_state import AmmoState
 
@@ -56,10 +56,10 @@ class AmmoConfiguration(bitpacking.BitPackValue):
 
     @classmethod
     def from_json(cls, value: dict, game: RandovaniaGame) -> "AmmoConfiguration":
-        item_database = default_database.pickup_database_for_game(game)
+        pickup_database = default_database.pickup_database_for_game(game)
         return cls(
             items_state={
-                item_database.ammo_pickups[name]: AmmoState.from_json(state)
+                pickup_database.ammo_pickups[name]: AmmoState.from_json(state)
                 for name, state in value["items_state"].items()
             },
         )

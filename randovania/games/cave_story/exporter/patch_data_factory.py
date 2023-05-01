@@ -8,7 +8,7 @@ from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.item.item_category import USELESS_PICKUP_CATEGORY
+from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_type import ResourceType

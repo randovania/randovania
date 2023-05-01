@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from frozendict import frozendict
 
-from randovania.game_description.item.item_category import PickupCategory
+from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import ResourceLock
 from randovania.game_description.resources.resource_database import ResourceDatabase

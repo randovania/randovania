@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Iterator
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_description.item.item_category import PickupCategory
+from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_info import (

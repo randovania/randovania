@@ -507,10 +507,10 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             "&push;&main-color=#33ffd6;{}&pop;",
         )
 
-        [item_category_visors] = [
+        [pickup_category_visors] = [
             cat for cat in self.configuration.major_items_configuration.default_items.keys() if cat.name == "visor"
         ]
-        [item_category_beams] = [
+        [pickup_category_beams] = [
             cat for cat in self.configuration.major_items_configuration.default_items.keys() if cat.name == "beam"
         ]
 
@@ -521,8 +521,8 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             safe_zone_heal_per_second=self.configuration.safe_zone.heal_per_second,
             user_preferences=self.cosmetic_patches.user_preferences,
             default_items={
-                "visor": self.configuration.major_items_configuration.default_items[item_category_visors].name,
-                "beam": self.configuration.major_items_configuration.default_items[item_category_beams].name,
+                "visor": self.configuration.major_items_configuration.default_items[pickup_category_visors].name,
+                "beam": self.configuration.major_items_configuration.default_items[pickup_category_beams].name,
             },
             unvisited_room_names=(self.configuration.elevators.can_use_unvisited_room_names
                                   and self.cosmetic_patches.unvisited_room_names),

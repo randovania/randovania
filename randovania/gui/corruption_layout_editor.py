@@ -1,7 +1,7 @@
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.item.item_database import PickupDatabase
+from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime3.patcher.gollop_corruption_patcher import layout_string_for_items
@@ -9,10 +9,10 @@ from randovania.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLa
 from randovania.gui.lib import common_qt_lib
 
 
-def _fill_combo(item_database: PickupDatabase, combo: QtWidgets.QComboBox):
+def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox):
     items = []
-    items.extend(item.name for item in item_database.standard_pickups.values())
-    items.extend(item.name for item in item_database.ammo_pickups.values())
+    items.extend(item.name for item in pickup_database.standard_pickups.values())
+    items.extend(item.name for item in pickup_database.ammo_pickups.values())
     items.extend(f"Energy Cell {i}" for i in range(1, 10))
 
     for item in sorted(items):
@@ -26,7 +26,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
         common_qt_lib.set_default_window_icon(self)
 
         self.game_description = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-        item_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION)
+        pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION)
         world_list = self.game_description.world_list
         self._index_to_combo = {}
 
@@ -68,7 +68,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
                     layout.addWidget(node_label, area_count, 0)
 
                     node_combo = QtWidgets.QComboBox(group)
-                    _fill_combo(item_database, node_combo)
+                    _fill_combo(pickup_database, node_combo)
                     node_combo.currentIndexChanged.connect(self.update_layout_string)
                     layout.addWidget(node_combo, area_count, 1)
 
@@ -91,7 +91,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
             layout.addWidget(node_label, area_count, 0)
 
             node_combo = QtWidgets.QComboBox(group)
-            _fill_combo(item_database, node_combo)
+            _fill_combo(pickup_database, node_combo)
             node_combo.currentIndexChanged.connect(self.update_layout_string)
             layout.addWidget(node_combo, area_count, 1)
 

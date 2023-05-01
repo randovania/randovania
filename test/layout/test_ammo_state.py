@@ -14,8 +14,8 @@ from randovania.layout.base.ammo_state import AmmoState
         {"encoded": b'\x0b0', "json": {"ammo_count": [-5], "pickup_count": 1, }},
     ],
     name="state_with_data")
-def _state_with_data(request, echoes_item_database):
-    ammo = echoes_item_database.ammo_pickups["Missile Expansion"]
+def _state_with_data(request, echoes_pickup_database):
+    ammo = echoes_pickup_database.ammo_pickups["Missile Expansion"]
     return request.param["encoded"], AmmoState.from_json(request.param["json"]), ammo
 
 
