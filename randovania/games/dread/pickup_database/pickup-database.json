@@ -366,8 +366,10 @@
             ],
             "default_shuffled_count": 1,
             "default_starting_count": 0,
-            "ammo": [],
-            "unlocks_ammo": false,
+            "ammo": [
+                "FlashUpgrade"
+            ],
+            "unlocks_ammo": true,
             "hide_from_gui": false,
             "must_be_starting": false,
             "probability_offset": 0,
@@ -709,6 +711,25 @@
             "probability_multiplier": 1,
             "preferred_location_category": "minor",
             "extra": {}
+        },
+        "Speed Booster Upgrade": {
+            "pickup_category": "misc",
+            "broad_category": "misc",
+            "model_name": "item_speedboostupgrade",
+            "progression": [
+                "SpeedBoostUpgrade"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "preferred_location_category": "major",
+            "extra": {},
+            "warning": "Speed Booster Upgrades reduce the amount of time it takes Speed Booster to activate by 0.25 seconds (for each upgrade collected).\nThe minimum charge time is 0.25s."
         }
     },
     "ammo_pickups": {
@@ -743,6 +764,19 @@
             "temporary": "PBAmmo",
             "unlocked_by": "MainPB",
             "allows_negative": true
+        },
+        "Flash Shift Upgrade": {
+            "model_name": "item_flashshiftupgrade",
+            "items": [
+                "FlashUpgrade"
+            ],
+            "preferred_location_category": "major",
+            "broad_category": "aeion",
+            "extra": {},
+            "temporary": "FlashUpgrade",
+            "unlocked_by": "Flash",
+            "allows_negative": false,
+            "warning": "Flash Shift Upgrades allow you to flash one additional time (for each upgrade collected) after the first before Aeion must recharge.\nThe vanilla game allows for 2 flashes after the first."
         }
     },
     "default_pickups": {}

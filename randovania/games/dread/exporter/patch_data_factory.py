@@ -1,4 +1,5 @@
 import os
+from typing import Iterator
 
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -35,7 +36,6 @@ _ALTERNATIVE_MODELS = {
     "PROGRESSIVE_SPIN": ["powerup_doublejump", "powerup_spacejump"],
 }
 
-
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
@@ -45,31 +45,34 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
     if not res.resources:
-        return {"item_id": "ITEM_NONE", "quantity": 0}
+        yield {"item_id": "ITEM_NONE", "quantity": 0}
+        return
 
-    item_id = get_item_id_for_item(res.resources[0][0])
-    quantity = res.resources[0][1]
+    for resource in reversed(res.resources):
+        item_id = get_item_id_for_item(resource[0])
+        quantity = resource[1]
 
-    # only main pbs have 2 elements in res.resources, everything else is just 1
-    if len(res.resources) != 1:
-        item_id = get_item_id_for_item(res.resources[1][0])
-        assert item_id == "ITEM_WEAPON_POWER_BOMB"
-        assert len(res.resources) == 2
-
-    # non-required mains
-    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
-        item_id = "ITEM_WEAPON_POWER_BOMB"
-
-    return {"item_id": item_id, "quantity": quantity}
+        yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
-    return [
-        convert_conditional_resource(detail.original_pickup.respects_lock, res)
-        for res in detail.conditional_resources
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
+    pickup = detail.original_pickup
+    resources = [
+        list(convert_conditional_resource(conditional_resource))
+        for conditional_resource in detail.conditional_resources
     ]
+
+    if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
+        # Add the lock resource into the pickup in addition to the expansion's resources
+        assert len(resources) == 1
+        resources[0].append({
+            "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
+            "quantity": 1,
+        })
+
+    return resources
 
 
 class DreadPatchDataFactory(BasePatchDataFactory):
@@ -119,11 +122,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has no extra {err}")
-    
+
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " + 
+        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " +
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
-    
+
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
@@ -312,9 +315,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
             for area in world.areas:
                 world_dict[area.extra["asset_id"]] = area.name
-            
+
             all_dict[scenario] = world_dict
-        
+
         # fix Burenia Main Tower and Golzuna Tower
         all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
         all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
