@@ -57,8 +57,8 @@ async def run_filler(rng: Random,
         config = pool.configuration
 
         status_update(f"Creating state for player {index + 1}")
-        major_items = list(pool.pickups)
-        rng.shuffle(major_items)
+        standard_pickups = list(pool.pickups)
+        rng.shuffle(standard_pickups)
 
         new_game, state = pool.game_generator.bootstrap.logic_bootstrap(config, pool.game,
                                                                         pool.patches)
@@ -67,7 +67,7 @@ async def run_filler(rng: Random,
             index=index,
             game=new_game,
             initial_state=state,
-            pickups_left=major_items,
+            pickups_left=standard_pickups,
             configuration=FillerConfiguration(
                 randomization_mode=config.available_locations.randomization_mode,
                 minimum_random_starting_items=major_configuration.minimum_random_starting_pickups,

@@ -45,7 +45,6 @@ class DreadPresetItemPool(PresetItemPool):
     def _create_pickup_style_box(self, size_policy):
         self.pickup_style_widget = PickupStyleWidget(None, self._editor)
         self.item_pool_layout.insertWidget(1, self.pickup_style_widget)
-        # widget.Changed.connect(partial(self._on_major_item_updated, widget))
 
     def _create_energy_box(self):
         category_box, category_layout, _ = self._boxes_for_category["energy_tank"]

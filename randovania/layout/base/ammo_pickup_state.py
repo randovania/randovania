@@ -66,7 +66,7 @@ class AmmoPickupState(BitPackValue):
         # Pickup Count
         pickup_count = bitpacking.decode_big_int(decoder)
 
-        # Require Major Item
+        # Require Main Item
         requires_main_item = True
         if ammo.unlocked_by is not None:
             requires_main_item = bitpacking.decode_bool(decoder)

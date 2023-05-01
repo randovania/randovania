@@ -11,7 +11,7 @@ class MSRPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, MSRConfiguration)
 
-        major_items = configuration.standard_pickup_configuration
+        standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
@@ -28,8 +28,8 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Item Pool": [
                 {
-                    "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
-                    "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
+                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
+                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
                 }
             ],
             "Gameplay": [
@@ -49,8 +49,8 @@ class MSRPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        count = super().expected_shuffled_item_count(configuration)
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
+        count = super().expected_shuffled_pickup_count(configuration)
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.samus_returns.pickup_database import progressive_items

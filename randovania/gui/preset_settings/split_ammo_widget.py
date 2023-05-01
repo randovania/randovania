@@ -14,7 +14,7 @@ class AmmoPickupWidgets(NamedTuple):
     pickup_spinbox: QtWidgets.QSpinBox
     expected_count: QtWidgets.QLabel
     pickup_box: QtWidgets.QGroupBox
-    require_major_item_check: QtWidgets.QCheckBox | None
+    require_main_item_check: QtWidgets.QCheckBox | None
 
 
 class SplitAmmoWidget(QtWidgets.QCheckBox):

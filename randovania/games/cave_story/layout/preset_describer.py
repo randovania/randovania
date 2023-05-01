@@ -40,8 +40,8 @@ class CSPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        count = super().expected_shuffled_item_count(configuration)
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
+        count = super().expected_shuffled_pickup_count(configuration)
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.cave_story.pickup_database import progressive_items

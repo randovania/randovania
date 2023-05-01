@@ -36,7 +36,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     """
     base_results = PoolResults([], {}, [])
 
-    # Adding major items to the pool
+    # Adding standard pickups to the pool
     _extend_pool_results(base_results, add_standard_pickups(game.resource_database,
                                                        layout_configuration.standard_pickup_configuration,
                                                        layout_configuration.ammo_pickup_configuration))

@@ -11,14 +11,14 @@ from randovania.layout.preset_describer import (
 class CorruptionPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, CorruptionConfiguration)
-        major_items = configuration.standard_pickup_configuration
+        standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
             "Item Pool": [
                 {
-                    "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
-                    "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
+                    "Progressive Missile": has_shuffled_item(standard_pickups, "Progressive Missile"),
+                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
                 }
             ],
             "Difficulty": [
@@ -42,8 +42,8 @@ class CorruptionPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        count = super().expected_shuffled_item_count(configuration)
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
+        count = super().expected_shuffled_pickup_count(configuration)
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.prime3.pickup_database import progressive_items

@@ -93,7 +93,7 @@ def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict
 class EchoesPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, EchoesConfiguration)
-        major_items = configuration.standard_pickup_configuration
+        standard_pickups = configuration.standard_pickup_configuration
         pickup_database = default_database.pickup_database_for_game(configuration.game)
 
         template_strings = super().format_params(configuration)
@@ -114,8 +114,8 @@ class EchoesPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Item Pool": [
                 {
-                    "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
-                    "Progressive Grapple": has_shuffled_item(major_items, "Progressive Grapple"),
+                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
+                    "Progressive Grapple": has_shuffled_item(standard_pickups, "Progressive Grapple"),
                     "Split beam ammo": unified_ammo.pickup_count == 0,
                 }
             ],
@@ -155,8 +155,8 @@ class EchoesPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        count = super().expected_shuffled_item_count(configuration)
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
+        count = super().expected_shuffled_pickup_count(configuration)
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.prime2.pickup_database import progressive_items

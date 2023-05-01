@@ -49,7 +49,7 @@ class DreadPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, DreadConfiguration)
 
-        major_items = configuration.standard_pickup_configuration
+        standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
@@ -69,12 +69,12 @@ class DreadPresetDescriber(GamePresetDescriber):
             ],
             "Item Pool": [
                 {
-                    "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
-                    "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
-                    "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
-                    "Progressive Bomb": has_shuffled_item(major_items, "Progressive Bomb"),
-                    "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
-                    "Progressive Spin": has_shuffled_item(major_items, "Progressive Spin")
+                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
+                    "Progressive Charge Beam": has_shuffled_item(standard_pickups, "Progressive Charge Beam"),
+                    "Progressive Missile": has_shuffled_item(standard_pickups, "Progressive Missile"),
+                    "Progressive Bomb": has_shuffled_item(standard_pickups, "Progressive Bomb"),
+                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
+                    "Progressive Spin": has_shuffled_item(standard_pickups, "Progressive Spin")
                 }
             ],
             "Gameplay": [
@@ -102,8 +102,8 @@ class DreadPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        count = super().expected_shuffled_item_count(configuration)
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
+        count = super().expected_shuffled_pickup_count(configuration)
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.dread.pickup_database import progressive_items

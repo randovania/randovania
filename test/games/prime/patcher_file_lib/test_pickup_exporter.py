@@ -22,7 +22,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
-def test_get_single_hud_text_all_major_items(echoes_pickup_database, echoes_resource_database):
+def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes_resource_database):
     memo_data = default_database.default_prime2_memo_data()
 
     # Run

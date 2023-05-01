@@ -45,19 +45,19 @@ def get_locations_for_major_pickups_and_keys(
 
 
 def generic_credits(
-        major_items_configuration: StandardPickupConfiguration,
+        standard_pickup_configuration: StandardPickupConfiguration,
         all_patches: dict[int, GamePatches],
         players_config: PlayersConfiguration,
         namer: HintNamer,
         pickup_name_format: str = "{}",
 ) -> dict[str, str]:
-    major_name_order = {
+    major_pickup_name_order = {
         pickup.name: index
-        for index, pickup in enumerate(major_items_configuration.pickups_state.keys())
+        for index, pickup in enumerate(standard_pickup_configuration.pickups_state.keys())
     }
 
     def sort_pickup(p: PickupEntry):
-        return major_name_order.get(p.name, math.inf), p.name
+        return major_pickup_name_order.get(p.name, math.inf), p.name
 
     details = get_locations_for_major_pickups_and_keys(all_patches, players_config)
     major_pickups_spoiler = {
@@ -75,7 +75,7 @@ def generic_credits(
 
 
 def prime_trilogy_credits(
-        major_items_configuration: StandardPickupConfiguration,
+        standard_pickup_configuration: StandardPickupConfiguration,
         all_patches: dict[int, GamePatches],
         players_config: PlayersConfiguration,
         namer: HintNamer,
@@ -83,7 +83,7 @@ def prime_trilogy_credits(
         pickup_name_format: str,
 ) -> str:
     credit_items = generic_credits(
-        major_items_configuration,
+        standard_pickup_configuration,
         all_patches,
         players_config,
         namer,

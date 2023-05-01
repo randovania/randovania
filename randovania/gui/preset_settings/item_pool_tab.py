@@ -91,21 +91,21 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
 
-        # Random Starting Items
+        # Random Starting Pickups
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_pickups)
         self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_pickups)
 
-        # Default Items
+        # Default Pickups
         for category, default_item in major_configuration.default_pickups.items():
             randovania.gui.lib.signal_handling.set_combo_with_value(self._default_pickups[category], default_item)
 
             for item, widget in self._boxes_for_category[category.name][2].items():
                 widget.setEnabled(default_item != item)
 
-        # Major Items
+        # Standard Pickups
         for _, _, elements in self._boxes_for_category.values():
-            for major_item, widget in elements.items():
-                widget.set_new_state(major_configuration.pickups_state[major_item])
+            for standard_pickup, widget in elements.items():
+                widget.set_new_state(major_configuration.pickups_state[standard_pickup])
 
         # Progressive Items
         for progressive_widget in self._progressive_widgets:
@@ -133,10 +133,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             widgets = self._ammo_pickup_widgets[ammo]
             widgets.pickup_spinbox.setValue(state.pickup_count)
 
-            if widgets.require_major_item_check is not None:
-                widgets.require_major_item_check.setChecked(state.requires_main_item)
+            if widgets.require_main_item_check is not None:
+                widgets.require_main_item_check.setChecked(state.requires_main_item)
                 if self.game == RandovaniaGame.METROID_PRIME:
-                    widgets.require_major_item_check.setChecked(False)
+                    widgets.require_main_item_check.setChecked(False)
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
