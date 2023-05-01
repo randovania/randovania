@@ -1,5 +1,5 @@
 {
-    "schema_version": 47,
+    "schema_version": 49,
     "base_preset_uuid": null,
     "name": "April Fools 2023",
     "uuid": "188c652e-9d76-4ce9-91e7-a40f3272feff",
@@ -21,8 +21,8 @@
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Wide Beam": {},
                 "Plasma Beam": {},
                 "Wave Beam": {},
@@ -38,7 +38,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Missiles": {
-                    "num_included_in_starting_items": 1,
+                    "num_included_in_starting_pickups": 1,
                     "included_ammo": [
                         50
                     ]
@@ -58,8 +58,8 @@
                     "num_shuffled_pickups": 1
                 },
                 "Pulse Radar": {
-                    "num_included_in_starting_items": 1,
-                    "num_shuffled_pickups": 30
+                    "num_shuffled_pickups": 30,
+                    "num_included_in_starting_pickups": 1
                 },
                 "Varia Suit": {},
                 "Gravity Suit": {},
@@ -81,7 +81,7 @@
                     ]
                 },
                 "Slide": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Spider Magnet": {
                     "num_shuffled_pickups": 1
@@ -104,32 +104,32 @@
                     "num_shuffled_pickups": 20
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Tank": {
                     "ammo_count": [
                         -5
                     ],
                     "pickup_count": 50,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Missile+ Tank": {
                     "ammo_count": [
                         100
                     ],
                     "pickup_count": 2,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Power Bomb Tank": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 13,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },

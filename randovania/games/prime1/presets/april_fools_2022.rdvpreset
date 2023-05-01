@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 49,
     "base_preset_uuid": null,
     "name": "April Fools 2022",
     "uuid": "798dd544-d607-4304-981d-388468192159",
@@ -35,15 +35,16 @@
         "starting_location": [
             {
                 "world_name": "Tallon Overworld",
-                "area_name": "Landing Site"
+                "area_name": "Landing Site",
+                "node_name": "Ship"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Charge Beam": {
                     "num_shuffled_pickups": 5
                 },
@@ -51,17 +52,17 @@
                     "num_shuffled_pickups": 5
                 },
                 "Wave Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Ice Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Plasma Beam": {
                     "num_shuffled_pickups": 2,
                     "priority": 0.5
                 },
                 "Missile Launcher": {
-                    "num_included_in_starting_items": 1,
+                    "num_included_in_starting_pickups": 1,
                     "included_ammo": [
                         5
                     ]
@@ -70,10 +71,10 @@
                     "num_shuffled_pickups": 4
                 },
                 "Combat Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Scan Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Thermal Visor": {
                     "num_shuffled_pickups": 3
@@ -87,10 +88,10 @@
                 },
                 "Energy Tank": {
                     "num_shuffled_pickups": 50,
-                    "num_included_in_starting_items": 4
+                    "num_included_in_starting_pickups": 4
                 },
                 "Morph Ball": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Morph Ball Bomb": {
                     "num_shuffled_pickups": 6
@@ -110,7 +111,7 @@
                     ]
                 },
                 "Power Suit": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Varia Suit": {},
                 "Gravity Suit": {
@@ -132,25 +133,25 @@
                     "num_shuffled_pickups": 5
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Expansion": {
                     "ammo_count": [
                         2
                     ],
                     "pickup_count": 167,
-                    "requires_major_item": false
+                    "requires_main_item": false
                 },
                 "Power Bomb Expansion": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 7,
-                    "requires_major_item": false
+                    "requires_main_item": false
                 }
             }
         },
@@ -230,7 +231,6 @@
         "artifact_minimum_progression": 6,
         "heat_damage": 10.0,
         "warp_to_start": true,
-        "heat_protection_only_varia": true,
         "progressive_damage_reduction": true,
         "allow_underwater_movement_without_gravity": true,
         "small_samus": false,
@@ -243,8 +243,6 @@
         "submerged_probability": 50,
         "room_rando": "Two-way",
         "spring_ball": true,
-        "deterministic_idrone": true,
-        "deterministic_maze": true,
         "main_plaza_door": true,
         "blue_save_doors": true,
         "backwards_frigate": true,
@@ -252,8 +250,7 @@
         "backwards_upper_mines": true,
         "backwards_lower_mines": false,
         "phazon_elite_without_dynamo": true,
-        "qol_game_breaking": true,
-        "qol_pickup_scans": true,
+        "legacy_mode": false,
         "qol_cutscenes": "competitive",
         "enemy_attributes": null
     }

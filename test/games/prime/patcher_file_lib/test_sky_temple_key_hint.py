@@ -9,7 +9,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.patcher import echoes_items
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 

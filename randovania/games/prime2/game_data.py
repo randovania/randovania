@@ -14,7 +14,7 @@ def _options():
 def _gui() -> game.GameGui:
     from randovania.games.common.prime_family.gui.teleporter_details_tab import TeleporterDetailsTab
     from randovania.games.prime2 import gui
-    from randovania.games.prime2.item_database import progressive_items
+    from randovania.games.prime2.pickup_database import progressive_items
 
     return game.GameGui(
         tab_provider=gui.prime2_preset_tabs,

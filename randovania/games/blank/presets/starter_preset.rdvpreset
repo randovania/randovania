@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 49,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "98fd4d7d-7d17-4a81-bb17-0838311c7be1",
@@ -13,15 +13,16 @@
         "starting_location": [
             {
                 "world_name": "Intro",
-                "area_name": "Starting Area"
+                "area_name": "Starting Area",
+                "node_name": "Spawn Point"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Weapon": {
                     "num_shuffled_pickups": 1,
                     "included_ammo": [
@@ -35,18 +36,18 @@
                     "num_shuffled_pickups": 1
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 1,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },

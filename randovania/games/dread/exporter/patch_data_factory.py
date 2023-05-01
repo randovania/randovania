@@ -18,7 +18,7 @@ from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 _ALTERNATIVE_MODELS = {
@@ -300,7 +300,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _credits_spoiler(self) -> dict[str, str]:
         return credits_spoiler.generic_credits(
-            self.configuration.major_items_configuration,
+            self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
             DreadHintNamer(self.description.all_patches, self.players_config),
@@ -401,7 +401,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _tilegroup_patches(self):
         return [
-            # beam blocks -> speedboost blocks in Artaria EMMI zone speedbooster puzzle to prevent softlock
+            # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
             dict(
                 actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
                 tiletype="SPEEDBOOST"

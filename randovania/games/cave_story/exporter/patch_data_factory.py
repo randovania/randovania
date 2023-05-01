@@ -8,7 +8,7 @@ from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
+from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_type import ResourceType
@@ -44,8 +44,8 @@ class CSPatchDataFactory(BasePatchDataFactory):
         nothing_item = PickupTarget(PickupEntry(
             "Nothing",
             PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
-            USELESS_ITEM_CATEGORY,
-            USELESS_ITEM_CATEGORY,
+            USELESS_PICKUP_CATEGORY,
+            USELESS_PICKUP_CATEGORY,
             tuple(),
             generator_params=PickupGeneratorParams(
                 preferred_location_category=LocationCategory.MAJOR,  # TODO
@@ -71,7 +71,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
             if target == nothing_item:
                 pickup_script = nothing_item_script
             else:
-                pickup_script = self.item_db.get_item_with_name(target.pickup.name).extra.get("script",
+                pickup_script = self.pickup_db.get_pickup_with_name(target.pickup.name).extra.get("script",
                                                                                               nothing_item_script)
             pickups[mapname][event] = pickup_script
 
@@ -294,10 +294,10 @@ class CSPatchDataFactory(BasePatchDataFactory):
         maps["Start"]["pickups"]["0201"] = starting_script
 
         # Configurable missile ammo
-        small_missile_ammo = self.item_db.ammo["Missile Expansion"]
-        hell_missile_ammo = self.item_db.ammo["Large Missile Expansion"]
+        small_missile_ammo = self.pickup_db.ammo_pickups["Missile Expansion"]
+        hell_missile_ammo = self.pickup_db.ammo_pickups["Large Missile Expansion"]
 
-        ammo_state = self.configuration.ammo_configuration.items_state
+        ammo_state = self.configuration.ammo_pickup_configuration.pickups_state
         small_missile = ammo_state[small_missile_ammo].ammo_count[0]
         hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
         base_missiles = starting_items[missile]
@@ -323,7 +323,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                          ("Large Life Capsule", "0014")]
         for name, event in life_capsules:
             amount = \
-                self.configuration.major_items_configuration.items_state[self.item_db.major_items[name]].included_ammo[
+                self.configuration.standard_pickup_configuration.pickups_state[self.pickup_db.standard_pickups[name]].included_ammo[
                     0]
             head[event] = {
                 "needle": ".!<ML%+....",

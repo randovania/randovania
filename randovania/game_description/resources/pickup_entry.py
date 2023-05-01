@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Iterator
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_info import (
@@ -62,8 +62,8 @@ class PickupGeneratorParams:
 class PickupEntry:
     name: str
     model: PickupModel
-    item_category: ItemCategory
-    broad_category: ItemCategory
+    pickup_category: PickupCategory
+    broad_category: PickupCategory
     progression: ResourceGainTuple
     generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = tuple()
