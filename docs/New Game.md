@@ -32,10 +32,10 @@ database is saved as the split format, as well as the human-readable version.
    5. Ensure your GameData includes an entry for this default preset.
 
 
-6. Create the folder `item_database` in your game folder with the following content:
-   1. `item-database.json`, with content `{"item_categories": {}, "items": {}, "ammo": {}, "default_items": {}}`.
-   2. `default_state/ammo.json`, with content `{"maximum_ammo": {}, "items_state": {}}`.
-   3. `default_state/major-items.json`, with content  `{"items_state": {}}`.
+6. Create the folder `pickup_database` in your game folder with the following content:
+   1. `pickup-database.json`, with content `{"pickup_categories": {}, "standard_pickups": {}, "ammo_pickups": {}, "default_pickups": {}}`.
+   2. `default_state/ammo-pickups.json`, with content `{"maximum_ammo": {}, "pickups_state": {}}`.
+   3. `default_state/standard-pickups.json`, with content  `{"pickups_state": {}}`.
 
 
 7. Run the unit tests. If some tests don't pass, one of the steps above have incorrect data.
