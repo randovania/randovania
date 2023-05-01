@@ -2,7 +2,7 @@ from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.item.item_database import ItemDatabase
+from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
@@ -16,9 +16,9 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
-        item_database = default_database.item_database_for_game(self.game)
+        pickup_database = default_database.pickup_database_for_game(self.game)
 
-        self._create_split_ammo_widgets(item_database)
+        self._create_split_ammo_widgets(pickup_database)
 
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)
@@ -26,7 +26,7 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
         for split_ammo in self._split_ammo_widgets:
             split_ammo.on_preset_changed(preset, self._ammo_pickup_widgets)
 
-    def _create_split_ammo_widgets(self, item_database: ItemDatabase):
+    def _create_split_ammo_widgets(self, pickup_database: PickupDatabase):
         parent, layout, _ = self._boxes_for_category["beam"]
 
         self._split_ammo_widgets = []
@@ -34,10 +34,10 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
         if self.game == RandovaniaGame.METROID_PRIME_ECHOES:
             beam_ammo = SplitAmmoWidget(
                 parent, self._editor,
-                unified_ammo=item_database.ammo["Beam Ammo Expansion"],
+                unified_ammo=pickup_database.ammo_pickups["Beam Ammo Expansion"],
                 split_ammo=[
-                    item_database.ammo["Dark Ammo Expansion"],
-                    item_database.ammo["Light Ammo Expansion"],
+                    pickup_database.ammo_pickups["Dark Ammo Expansion"],
+                    pickup_database.ammo_pickups["Light Ammo Expansion"],
                 ],
             )
             beam_ammo.setText("Split Beam Ammo Expansions")

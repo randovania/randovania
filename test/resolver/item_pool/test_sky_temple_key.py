@@ -3,7 +3,7 @@ import pytest
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.generator.item_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 
 item_ids = [29, 30, 31, 101, 102, 103, 104, 105, 106]
 

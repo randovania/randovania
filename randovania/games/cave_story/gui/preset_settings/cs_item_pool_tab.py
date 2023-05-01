@@ -3,7 +3,7 @@ from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.preset import Preset
 
 
@@ -27,7 +27,7 @@ class CSPresetItemPool(PresetItemPool):
 
         if bad_ending:
             explosive_box.setVisible(False)
-            explosive_box._update_for_state(MajorItemState(True, 0, 0))
+            explosive_box._update_for_state(StandardPickupState(True, 0, 0))
         else:
             explosive_box.setVisible(True)
-            explosive_box._update_for_state(MajorItemState(False, 1, 0))
+            explosive_box._update_for_state(StandardPickupState(False, 1, 0))

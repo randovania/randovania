@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 49,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "407e97ed-decb-4889-8ab7-943f86ae48a4",
@@ -13,15 +13,16 @@
         "starting_location": [
             {
                 "world_name": "Artaria",
-                "area_name": "Intro Room"
+                "area_name": "Intro Room",
+                "node_name": "Start Point"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Wide Beam": {},
                 "Plasma Beam": {},
                 "Wave Beam": {},
@@ -37,7 +38,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Missiles": {
-                    "num_included_in_starting_items": 1,
+                    "num_included_in_starting_pickups": 1,
                     "included_ammo": [
                         15
                     ]
@@ -57,7 +58,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Pulse Radar": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Varia Suit": {},
                 "Gravity Suit": {},
@@ -79,7 +80,7 @@
                     ]
                 },
                 "Slide": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Spider Magnet": {
                     "num_shuffled_pickups": 1
@@ -102,32 +103,32 @@
                     "num_shuffled_pickups": 16
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Tank": {
                     "ammo_count": [
                         2
                     ],
                     "pickup_count": 75,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Missile+ Tank": {
                     "ammo_count": [
                         10
                     ],
                     "pickup_count": 11,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Power Bomb Tank": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 13,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },
@@ -190,6 +191,7 @@
         "hanubia_easier_path_to_itorash": true,
         "x_starts_released": false,
         "allow_highly_dangerous_logic": false,
+        "april_fools_hints": false,
         "artifacts": {
             "prefer_emmi": true,
             "prefer_major_bosses": true,
