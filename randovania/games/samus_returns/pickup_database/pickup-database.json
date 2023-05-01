@@ -1,6 +1,6 @@
 {
-    "schema_version": 4,
-    "item_categories": {
+    "schema_version": 5,
+    "pickup_categories": {
         "beam": {
             "long_name": "Beams",
             "hint_details": [
@@ -98,9 +98,9 @@
             "hinted_as_major": false
         }
     },
-    "items": {
+    "standard_pickups": {
         "Wave Beam": {
-            "item_category": "beam",
+            "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "powerup_wavebeam",
             "progression": [
@@ -118,7 +118,7 @@
             "extra": {}
         },
         "Spazer Beam": {
-            "item_category": "beam",
+            "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "powerup_spazerbeam",
             "progression": [
@@ -134,10 +134,10 @@
             "probability_multiplier": 1,
             "preferred_location_category": "major",
             "extra": {},
-            "warning": "Spazer Beam automatically gives you Wave Beam.\nIt's recommended to use Progressive Beam instead."
+            "description": "Spazer Beam automatically gives you Wave Beam.\nIt's recommended to use Progressive Beam instead."
         },
         "Plasma Beam": {
-            "item_category": "beam",
+            "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "powerup_plasmabeam",
             "progression": [
@@ -153,11 +153,11 @@
             "probability_multiplier": 1,
             "preferred_location_category": "major",
             "extra": {},
-            "original_index": 125,
-            "warning": "Plasma Beam automatically gives you both Wave and Spazer Beam.\nIt's recommended to use Progressive Beam instead."
+            "original_location": 125,
+            "description": "Plasma Beam automatically gives you both Wave and Spazer Beam.\nIt's recommended to use Progressive Beam instead."
         },
         "Progressive Beam": {
-            "item_category": "beam",
+            "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "PROGRESSIVE_BEAM",
             "progression": [
@@ -177,7 +177,7 @@
             "extra": {}
         },
         "Charge Beam": {
-            "item_category": "beam",
+            "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "powerup_chargebeam",
             "progression": [
@@ -195,7 +195,7 @@
             "extra": {}
         },
         "Ice Beam": {
-            "item_category": "beam",
+            "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "powerup_icebeam",
             "progression": [
@@ -213,7 +213,7 @@
             "extra": {}
         },
         "Grapple Beam": {
-            "item_category": "beam",
+            "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "powerup_grapplebeam",
             "progression": [
@@ -231,7 +231,7 @@
             "extra": {}
         },
         "Missile": {
-            "item_category": "missile",
+            "pickup_category": "missile",
             "broad_category": "missile_related",
             "model_name": "itemsphere",
             "progression": [
@@ -251,7 +251,7 @@
             "extra": {}
         },
         "Super Missile": {
-            "item_category": "missile",
+            "pickup_category": "missile",
             "broad_category": "missile_related",
             "model_name": "powerup_supermissile",
             "progression": [
@@ -269,10 +269,10 @@
             "probability_multiplier": 1,
             "preferred_location_category": "major",
             "extra": {},
-            "original_index": 100
+            "original_location": 100
         },
         "Scan Pulse": {
-            "item_category": "aeion",
+            "pickup_category": "aeion",
             "broad_category": "aeion",
             "model_name": "powerup_scanningpulse",
             "progression": [
@@ -290,10 +290,10 @@
             "probability_multiplier": 1,
             "preferred_location_category": "major",
             "extra": {},
-            "original_index": 13
+            "original_location": 13
         },
         "Lightning Armor": {
-            "item_category": "aeion",
+            "pickup_category": "aeion",
             "broad_category": "aeion",
             "model_name": "powerup_energyshield",
             "progression": [
@@ -313,7 +313,7 @@
             "extra": {}
         },
         "Beam Burst": {
-            "item_category": "aeion",
+            "pickup_category": "aeion",
             "broad_category": "aeion",
             "model_name": "powerup_energywave",
             "progression": [
@@ -333,7 +333,7 @@
             "extra": {}
         },
         "Phase Drift": {
-            "item_category": "aeion",
+            "pickup_category": "aeion",
             "broad_category": "aeion",
             "model_name": "powerup_phasedisplacement",
             "progression": [
@@ -353,7 +353,7 @@
             "extra": {}
         },
         "Varia Suit": {
-            "item_category": "suit",
+            "pickup_category": "suit",
             "broad_category": "life_support",
             "model_name": "powerup_variasuit",
             "progression": [
@@ -371,7 +371,7 @@
             "extra": {}
         },
         "Gravity Suit": {
-            "item_category": "suit",
+            "pickup_category": "suit",
             "broad_category": "life_support",
             "model_name": "powerup_gravitysuit",
             "progression": [
@@ -387,10 +387,10 @@
             "probability_multiplier": 1,
             "preferred_location_category": "major",
             "extra": {},
-            "warning": "Gravity Suit automatically gives you Varia Suit.\nIt's recommended to use Progressive Suit instead."
+            "description": "Gravity Suit automatically gives you Varia Suit.\nIt's recommended to use Progressive Suit instead."
         },
         "Progressive Suit": {
-            "item_category": "suit",
+            "pickup_category": "suit",
             "broad_category": "life_support",
             "model_name": "PROGRESSIVE_SUIT",
             "progression": [
@@ -409,7 +409,7 @@
             "extra": {}
         },
         "Morph Ball": {
-            "item_category": "morph_ball",
+            "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "powerup_morphball",
             "progression": [
@@ -425,10 +425,10 @@
             "probability_multiplier": 1,
             "preferred_location_category": "major",
             "extra": {},
-            "original_index": 144
+            "original_location": 144
         },
         "Spider Ball": {
-            "item_category": "morph_ball",
+            "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "powerup_spiderball",
             "progression": [
@@ -446,7 +446,7 @@
             "extra": {}
         },
         "Bomb": {
-            "item_category": "morph_ball",
+            "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "powerup_bomb",
             "progression": [
@@ -464,7 +464,7 @@
             "extra": {}
         },
         "Spring Ball": {
-            "item_category": "morph_ball",
+            "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "powerup_springball",
             "progression": [
@@ -482,7 +482,7 @@
             "extra": {}
         },
         "Power Bomb": {
-            "item_category": "morph_ball",
+            "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "powerup_powerbomb",
             "progression": [
@@ -502,7 +502,7 @@
             "extra": {}
         },
         "High Jump Boots": {
-            "item_category": "movement",
+            "pickup_category": "movement",
             "broad_category": "movement",
             "model_name": "powerup_highjumpboots",
             "progression": [
@@ -520,7 +520,7 @@
             "extra": {}
         },
         "Space Jump": {
-            "item_category": "movement",
+            "pickup_category": "movement",
             "broad_category": "movement",
             "model_name": "powerup_spacejump",
             "progression": [
@@ -538,7 +538,7 @@
             "extra": {}
         },
         "Screw Attack": {
-            "item_category": "misc",
+            "pickup_category": "misc",
             "broad_category": "misc",
             "model_name": "powerup_screwattack",
             "progression": [
@@ -556,7 +556,7 @@
             "extra": {}
         },
         "Energy Tank": {
-            "item_category": "energy_tank",
+            "pickup_category": "energy_tank",
             "broad_category": "life_support",
             "model_name": "item_energytank",
             "progression": [
@@ -574,7 +574,7 @@
             "extra": {}
         },
         "Baby Metroid": {
-            "item_category": "misc",
+            "pickup_category": "misc",
             "broad_category": "misc",
             "model_name": "item_energytank",
             "progression": [
@@ -592,7 +592,7 @@
             "extra": {}
         }
     },
-    "ammo": {
+    "ammo_pickups": {
         "Missile Tank": {
             "model_name": "item_missiletank",
             "items": [
@@ -634,5 +634,5 @@
             "extra": {}
         }
     },
-    "default_items": {}
+    "default_pickups": {}
 }
