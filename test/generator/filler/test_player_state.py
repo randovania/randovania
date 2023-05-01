@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import player_state
 from randovania.generator.filler.filler_configuration import FillerConfiguration
@@ -69,16 +70,21 @@ def test_current_state_report(state_for_blank):
 @pytest.mark.parametrize("num_assigned_pickups", [0, 1])
 def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pickups,
                                  randomization_mode, blank_pickup):
+    blank_wl = state_for_blank.game.world_list
     state_for_blank.configuration = dataclasses.replace(state_for_blank.configuration,
                                                         randomization_mode=randomization_mode,
                                                         first_progression_must_be_local=must_be_local)
     state_for_blank.num_assigned_pickups = num_assigned_pickups
     second_state = MagicMock()
+    second_state.game.world_list.node_from_pickup_index.return_value.location_category = LocationCategory.MAJOR
 
     locations_weighted = {
         (state_for_blank, PickupIndex(0)): 1,
+        (state_for_blank, PickupIndex(1)): 1,
         (second_state, PickupIndex(0)): 1,
     }
+    assert blank_wl.node_from_pickup_index(PickupIndex(0)).location_category == LocationCategory.MAJOR
+    assert blank_wl.node_from_pickup_index(PickupIndex(1)).location_category == LocationCategory.MINOR
 
     # Run
     filtered = state_for_blank.filter_usable_locations(locations_weighted, blank_pickup)
@@ -90,7 +96,7 @@ def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pi
         del expected[(second_state, PickupIndex(0))]
 
     if randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT:
-        del expected[(state_for_blank, PickupIndex(0))]
+        del expected[(state_for_blank, PickupIndex(1))]
 
     assert filtered == expected
 
