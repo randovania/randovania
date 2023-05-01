@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
+- Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
 
 ### Metroid Prime
 
@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
+- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
 
 ## [5.6.1] - 2023-04-??
 
