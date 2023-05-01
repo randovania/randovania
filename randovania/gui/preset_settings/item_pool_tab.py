@@ -16,7 +16,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.foldable import Foldable
@@ -176,11 +176,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Item pool count
         try:
-            pool_items, maximum_size = pool_creator.calculate_pool_item_count(layout)
+            pool_items, maximum_size = pool_creator.calculate_pool_pickup_count(layout)
             message = f"Items in pool: {pool_items}/{maximum_size}"
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, pool_items > maximum_size)
             if layout.available_locations.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                major_details, minor_details = pool_creator.calculate_split_pool_item_count(layout)
+                major_details, minor_details = pool_creator.calculate_split_pool_pickup_count(layout)
                 (major_count, num_major_nodes), (minor_count, num_minor_nodes) = major_details, minor_details
                 message += f"<br />Majors: {major_count}/{num_major_nodes} - Minors: {minor_count}/{num_minor_nodes}"
 

@@ -3,7 +3,7 @@ from typing import Iterable, Sequence
 
 from randovania.game_description import default_database
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -114,7 +114,7 @@ class GamePresetDescriber:
         item_pool = self._calculate_item_pool(configuration)
 
         template_strings["Item Pool"].append(
-            "Size: {} of {}".format(*pool_creator.calculate_pool_item_count(configuration))
+            "Size: {} of {}".format(*pool_creator.calculate_pool_pickup_count(configuration))
         )
         if item_pool:
             template_strings["Item Pool"].append(", ".join(item_pool))

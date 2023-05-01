@@ -1,14 +1,14 @@
 from unittest.mock import MagicMock, call
 
-import randovania.generator.item_pool.ammo
-import randovania.generator.item_pool.pickup_creator
+import randovania.generator.pickup_pool.ammo_pickup
+import randovania.generator.pickup_pool.pickup_creator
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 
 
 def test_add_ammo(echoes_resource_database, mocker):
     # Setup
     mock_create_ammo_pickup: MagicMock = mocker.patch(
-        "randovania.generator.item_pool.ammo.create_ammo_pickup", autospec=True)
+        "randovania.generator.pickup_pool.ammo_pickup.create_ammo_pickup", autospec=True)
 
     ammo1 = MagicMock()
     ammo2 = MagicMock()
@@ -21,7 +21,7 @@ def test_add_ammo(echoes_resource_database, mocker):
     })
 
     # Run
-    results = list(randovania.generator.item_pool.ammo.add_ammo(echoes_resource_database, ammo_configuration))
+    results = list(randovania.generator.pickup_pool.ammo_pickup.add_ammo_pickups(echoes_resource_database, ammo_configuration))
 
     # Assert
     assert results == [mock_create_ammo_pickup.return_value, mock_create_ammo_pickup.return_value]

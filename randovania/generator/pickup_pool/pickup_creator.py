@@ -14,71 +14,71 @@ from randovania.games.prime3.patcher import corruption_items
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
-def create_standard_pickup(item: StandardPickupDefinition,
+def create_standard_pickup(pickup: StandardPickupDefinition,
                       state: StandardPickupState,
                       include_percentage: bool,
                       resource_database: ResourceDatabase,
                       ammo: AmmoPickupDefinition | None,
-                      ammo_requires_major_item: bool,
+                      ammo_requires_main_item: bool,
 
                       ) -> PickupEntry:
     """
     Creates a Pickup for the given MajorItem
     :param include_percentage:
     :param state:
-    :param item:
+    :param pickup:
     :param resource_database:
     :param ammo:
-    :param ammo_requires_major_item:
+    :param ammo_requires_main_item:
     :return:
     """
 
     extra_resources = [
-        (resource_database.get_item(ammo_index), ammo_count)
-        for ammo_index, ammo_count in zip(item.ammo, state.included_ammo)
+        (resource_database.get_item(ammo_name), ammo_count)
+        for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo)
     ]
     if include_percentage and resource_database.item_percentage is not None:
         extra_resources.append((resource_database.item_percentage, 1))
 
     def _create_resources(base_resource: str | None) -> ResourceQuantity:
         # FIXME: hacky quantity for Hazard Shield
-        quantity = 5 if item.name == "Hazard Shield" else 1
+        quantity = 5 if pickup.name == "Hazard Shield" else 1
         return resource_database.get_item(base_resource), quantity
 
     return PickupEntry(
-        name=item.name,
+        name=pickup.name,
         progression=tuple(
             _create_resources(progression)
-            for progression in item.progression
+            for progression in pickup.progression
         ),
         extra_resources=tuple(extra_resources),
         model=PickupModel(
             game=resource_database.game_enum,
-            name=item.model_name,
+            name=pickup.model_name,
         ),
-        pickup_category=item.pickup_category,
-        broad_category=item.broad_category,
-        unlocks_resource=item.unlocks_ammo,
-        respects_lock=ammo_requires_major_item,
+        pickup_category=pickup.pickup_category,
+        broad_category=pickup.broad_category,
+        unlocks_resource=pickup.unlocks_ammo,
+        respects_lock=ammo_requires_main_item,
         resource_lock=ammo.create_resource_lock(resource_database) if ammo is not None else None,
         generator_params=PickupGeneratorParams(
-            preferred_location_category=item.preferred_location_category,
-            probability_offset=item.probability_offset,
-            probability_multiplier=item.probability_multiplier * state.priority,
+            preferred_location_category=pickup.preferred_location_category,
+            probability_offset=pickup.probability_offset,
+            probability_multiplier=pickup.probability_multiplier * state.priority,
         ),
     )
 
 
 def create_ammo_pickup(ammo: AmmoPickupDefinition,
                           ammo_count: Sequence[int],
-                          requires_major_item: bool,
+                          requires_main_item: bool,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:
     """
     Creates a Pickup for an expansion of the given ammo.
     :param ammo:
     :param ammo_count:
-    :param requires_major_item:
+    :param requires_main_item:
     :param resource_database:
     :return:
     """
@@ -98,7 +98,7 @@ def create_ammo_pickup(ammo: AmmoPickupDefinition,
         ),
         pickup_category=ammo.pickup_category,
         broad_category=ammo.broad_category,
-        respects_lock=requires_major_item,
+        respects_lock=requires_main_item,
         resource_lock=ammo.create_resource_lock(resource_database),
         generator_params=PickupGeneratorParams(
             preferred_location_category=ammo.preferred_location_category,

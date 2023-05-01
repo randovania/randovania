@@ -5,7 +5,7 @@ from PySide6 import QtWidgets, QtCore
 from randovania.game_description import default_database
 from randovania.game_description.world.hint_node import HintNode
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 
 
 def prime1_hint_text():

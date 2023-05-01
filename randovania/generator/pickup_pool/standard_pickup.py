@@ -2,32 +2,32 @@ from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.generator.item_pool import PoolResults
-from randovania.generator.item_pool.pickup_creator import create_standard_pickup
+from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.pickup_creator import create_standard_pickup
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 
 
-def _find_ammo_for(ammo_index: tuple[str, ...],
-                   ammo_configuration: AmmoPickupConfiguration,
+def _find_ammo_for(ammo_names: tuple[str, ...],
+                   ammo_pickup_configuration: AmmoPickupConfiguration,
                    ) -> tuple[AmmoPickupDefinition | None, bool]:
-    for ammo, ammo_state in ammo_configuration.pickups_state.items():
-        if ammo.items == ammo_index:
+    for ammo, ammo_state in ammo_pickup_configuration.pickups_state.items():
+        if ammo.items == ammo_names:
             return ammo, ammo_state.requires_main_item
 
     return None, False
 
 
-def add_major_items(resource_database: ResourceDatabase,
-                    major_items_configuration: StandardPickupConfiguration,
-                    ammo_configuration: AmmoPickupConfiguration,
+def add_standard_pickups(resource_database: ResourceDatabase,
+                    standard_pickup_configuration: StandardPickupConfiguration,
+                    ammo_pickup_configuration: AmmoPickupConfiguration,
                     ) -> PoolResults:
     """
 
     :param resource_database:
-    :param major_items_configuration:
-    :param ammo_configuration:
+    :param standard_pickup_configuration:
+    :param ammo_pickup_configuration:
     :return:
     """
 
@@ -35,26 +35,26 @@ def add_major_items(resource_database: ResourceDatabase,
     new_assignment: dict[PickupIndex, PickupEntry] = {}
     starting = []
 
-    for item, state in major_items_configuration.pickups_state.items():
-        if len(item.ammo) != len(state.included_ammo):
+    for pickup, state in standard_pickup_configuration.pickups_state.items():
+        if len(pickup.ammo) != len(state.included_ammo):
             raise InvalidConfiguration(
                 "Item {0.name} uses {0.ammo_index} as ammo, but there's only {1} values in included_ammo".format(
-                    item, len(state.included_ammo)))
+                    pickup, len(state.included_ammo)))
 
-        ammo, locked_ammo = _find_ammo_for(item.ammo, ammo_configuration)
+        ammo, locked_ammo = _find_ammo_for(pickup.ammo, ammo_pickup_configuration)
 
         if state.include_copy_in_original_location:
-            if item.original_location is None:
+            if pickup.original_location is None:
                 raise InvalidConfiguration(
-                    f"Item {item.name} does not exist in the original game, cannot use state {state}",
+                    f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
                 )
-            new_assignment[item.original_location] = create_standard_pickup(item, state, True,
+            new_assignment[pickup.original_location] = create_standard_pickup(pickup, state, True,
                                                                     resource_database, ammo, locked_ammo)
 
         for _ in range(state.num_shuffled_pickups):
-            item_pool.append(create_standard_pickup(item, state, True, resource_database, ammo, locked_ammo))
+            item_pool.append(create_standard_pickup(pickup, state, True, resource_database, ammo, locked_ammo))
 
         for _ in range(state.num_included_in_starting_pickups):
-            starting.append(create_standard_pickup(item, state, False, resource_database, ammo, locked_ammo))
+            starting.append(create_standard_pickup(pickup, state, False, resource_database, ammo, locked_ammo))
 
     return PoolResults(item_pool, new_assignment, starting)

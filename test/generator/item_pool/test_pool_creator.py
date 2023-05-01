@@ -10,7 +10,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.cave_story.generator.pool_creator import CAMP_INDICES, FIRST_CAVE_INDICES, STRONG_WEAPONS
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
@@ -25,7 +25,7 @@ def test_calculate_pool_item_count(default_echoes_configuration):
     )
 
     # Run
-    result = pool_creator.calculate_pool_item_count(layout_configuration)
+    result = pool_creator.calculate_pool_pickup_count(layout_configuration)
 
     # Assert
     assert result == (118, 121)

@@ -12,7 +12,7 @@ from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFac
     get_resources_for_details
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.ammo_pickup_state import AmmoPickupState
 from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -97,7 +97,7 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
         include_percentage=False,
         resource_database=resource_db,
         ammo=pickup_database.ammo_pickups["Power Bomb Tank"],
-        ammo_requires_major_item=locked,
+        ammo_requires_main_item=locked,
     )
 
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
@@ -132,7 +132,7 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
         include_percentage=False,
         resource_database=resource_db,
         ammo=None,
-        ammo_requires_major_item=False,
+        ammo_requires_main_item=False,
     )
 
     factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), MagicMock())

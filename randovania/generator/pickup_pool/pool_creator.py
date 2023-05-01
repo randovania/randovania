@@ -5,9 +5,9 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator.base_patches_factory import MissingRng
-from randovania.generator.item_pool import PoolResults
-from randovania.generator.item_pool.ammo import add_ammo
-from randovania.generator.item_pool.major_items import add_major_items
+from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups
+from randovania.generator.pickup_pool.standard_pickup import add_standard_pickups
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -37,12 +37,12 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     base_results = PoolResults([], {}, [])
 
     # Adding major items to the pool
-    _extend_pool_results(base_results, add_major_items(game.resource_database,
+    _extend_pool_results(base_results, add_standard_pickups(game.resource_database,
                                                        layout_configuration.standard_pickup_configuration,
                                                        layout_configuration.ammo_pickup_configuration))
 
     # Adding ammo to the pool
-    base_results.to_place.extend(add_ammo(game.resource_database,
+    base_results.to_place.extend(add_ammo_pickups(game.resource_database,
                                           layout_configuration.ammo_pickup_configuration))
     try:
         layout_configuration.game.generator.item_pool_creator(
@@ -55,7 +55,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     return base_results
 
 
-def calculate_pool_item_count(layout: BaseConfiguration) -> tuple[int, int]:
+def calculate_pool_pickup_count(layout: BaseConfiguration) -> tuple[int, int]:
     """
     Calculate how many pickups are needed for given layout, with how many spots are there.
     :param layout:
@@ -66,15 +66,15 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> tuple[int, int]:
     num_pickup_nodes = game_description.world_list.num_pickup_nodes
     pool_results = calculate_pool_results(layout, game_description,
                                           rng_required=False)
-    min_starting_items = layout.standard_pickup_configuration.minimum_random_starting_pickups
+    min_starting_pickups = layout.standard_pickup_configuration.minimum_random_starting_pickups
 
     pool_count = len(pool_results.to_place) + len(pool_results.assignment)
-    maximum_size = num_pickup_nodes + min_starting_items
+    maximum_size = num_pickup_nodes + min_starting_pickups
 
     return pool_count, maximum_size
 
 
-def calculate_split_pool_item_count(layout: BaseConfiguration) -> tuple[tuple[int, int], tuple[int, int]]:
+def calculate_split_pool_pickup_count(layout: BaseConfiguration) -> tuple[tuple[int, int], tuple[int, int]]:
     """
     Calculate how many pickups are needed for given layout, with how many spots are there. Split by major/minor.
     :param layout:

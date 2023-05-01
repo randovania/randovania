@@ -23,7 +23,7 @@ from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.generator.item_pool import pickup_creator, pool_creator
+from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle

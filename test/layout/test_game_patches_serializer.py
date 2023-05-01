@@ -21,7 +21,7 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
-from randovania.generator.item_pool import pickup_creator, pool_creator
+from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration

@@ -10,7 +10,7 @@ from randovania.game_description.resources.pickup_entry import (
     PickupModel, PickupGeneratorParams,
 )
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 

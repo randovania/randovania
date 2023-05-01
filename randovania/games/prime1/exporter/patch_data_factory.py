@@ -21,7 +21,7 @@ from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, 
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode, LayoutCutsceneMode
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_SHINY_MISSILE = 1024

@@ -7,7 +7,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.generator.base_patches_factory import MissingRng
-from randovania.generator.item_pool import PoolResults
+from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 

@@ -2,11 +2,11 @@ from typing import Iterator
 
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.generator.item_pool.pickup_creator import create_ammo_pickup
+from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 
 
-def add_ammo(resource_database: ResourceDatabase,
+def add_ammo_pickups(resource_database: ResourceDatabase,
              ammo_configuration: AmmoPickupConfiguration,
              ) -> Iterator[PickupEntry]:
     """
