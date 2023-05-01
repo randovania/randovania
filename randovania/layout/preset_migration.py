@@ -782,22 +782,23 @@ def _migrate_v48(preset: dict) -> dict:
 
 def _migrate_v49(preset: dict) -> dict:
     if preset["game"] == "dread":
-        flash_shift_config: dict = preset["configuration"]["major_items_configuration"]["items_state"]["Flash Shift"]
-        ammo_config: dict = preset["configuration"]["ammo_configuration"]["items_state"]
+        config = preset["configuration"]
+        flash_shift_config: dict = config["standard_pickup_configuration"]["pickups_state"]["Flash Shift"]
+        ammo_config: dict = config["ammo_pickup_configuration"]["pickups_state"]
 
         # check to make sure preset wasn't manually migrated
         if flash_shift_config.get("included_ammo") is None:
             # 2 is the vanilla chain limit; include this many upgrades by default
             flash_shift_config["included_ammo"] = [2]
-            preset["configuration"]["major_items_configuration"]["items_state"]["Flash Shift"] = flash_shift_config
+            config["standard_pickup_configuration"]["pickups_state"]["Flash Shift"] = flash_shift_config
 
         if ammo_config.get("Flash Shift Upgrade") is None:
             ammo_config["Flash Shift Upgrade"] = {
                 "ammo_count": [1],
                 "pickup_count": 0,
-                "requires_major_item": True,
+                "requires_main_item": True,
             }
-            preset["configuration"]["ammo_configuration"]["items_state"] = ammo_config
+            preset["configuration"]["ammo_pickup_configuration"]["pickups_state"] = ammo_config
 
     return preset
 
