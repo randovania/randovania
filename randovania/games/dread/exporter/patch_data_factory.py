@@ -58,17 +58,17 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
 
 
 def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
+    pickup = detail.original_pickup
     resources = [
         list(convert_conditional_resource(conditional_resource))
         for conditional_resource in detail.conditional_resources
     ]
 
-    if (detail.original_pickup.resource_lock is not None and not detail.original_pickup.respects_lock
-        and not detail.original_pickup.unlocks_resource):
+    if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
         # Add the lock resource into the pickup in addition to the expansion's resources
         assert len(resources) == 1
         resources[0].append({
-            "item_id": get_item_id_for_item(detail.original_pickup.resource_lock.locked_by),
+            "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
             "quantity": 1,
         })
 
