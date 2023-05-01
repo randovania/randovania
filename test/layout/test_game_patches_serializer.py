@@ -23,7 +23,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
@@ -103,7 +103,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
 
     def create_pickup(name, percentage=True):
         return pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups[name],
-                                                MajorItemState(), percentage, game.resource_database,
+                                                StandardPickupState(), percentage, game.resource_database,
                                                 None, False)
 
     if request.param.get("starting_pickup"):

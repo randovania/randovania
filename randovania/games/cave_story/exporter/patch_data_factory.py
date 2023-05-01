@@ -297,7 +297,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
         small_missile_ammo = self.pickup_db.ammo_pickups["Missile Expansion"]
         hell_missile_ammo = self.pickup_db.ammo_pickups["Large Missile Expansion"]
 
-        ammo_state = self.configuration.ammo_configuration.items_state
+        ammo_state = self.configuration.ammo_pickup_configuration.pickups_state
         small_missile = ammo_state[small_missile_ammo].ammo_count[0]
         hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
         base_missiles = starting_items[missile]
@@ -323,7 +323,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                          ("Large Life Capsule", "0014")]
         for name, event in life_capsules:
             amount = \
-                self.configuration.major_items_configuration.items_state[self.pickup_db.standard_pickups[name]].included_ammo[
+                self.configuration.standard_pickup_configuration.pickups_state[self.pickup_db.standard_pickups[name]].included_ammo[
                     0]
             head[event] = {
                 "needle": ".!<ML%+....",

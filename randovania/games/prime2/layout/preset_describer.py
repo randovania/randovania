@@ -93,11 +93,11 @@ def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict
 class EchoesPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, EchoesConfiguration)
-        major_items = configuration.major_items_configuration
+        major_items = configuration.standard_pickup_configuration
         pickup_database = default_database.pickup_database_for_game(configuration.game)
 
         template_strings = super().format_params(configuration)
-        unified_ammo = configuration.ammo_configuration.items_state[pickup_database.ammo_pickups["Beam Ammo Expansion"]]
+        unified_ammo = configuration.ammo_pickup_configuration.pickups_state[pickup_database.ammo_pickups["Beam Ammo Expansion"]]
 
         # Difficulty
         if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
@@ -129,7 +129,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {
                         "Missiles needs Launcher": "Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
@@ -157,7 +157,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
 
     def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         count = super().expected_shuffled_item_count(configuration)
-        majors = configuration.major_items_configuration
+        majors = configuration.standard_pickup_configuration
 
         from randovania.games.prime2.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():

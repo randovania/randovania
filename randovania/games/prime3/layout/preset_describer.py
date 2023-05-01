@@ -11,7 +11,7 @@ from randovania.layout.preset_describer import (
 class CorruptionPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, CorruptionConfiguration)
-        major_items = configuration.major_items_configuration
+        major_items = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
@@ -29,7 +29,7 @@ class CorruptionPresetDescriber(GamePresetDescriber):
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {
                         "Missiles needs Launcher": "Missile Expansion",
                         "Ship Missiles needs Main": "Ship Missile Expansion",
@@ -44,7 +44,7 @@ class CorruptionPresetDescriber(GamePresetDescriber):
 
     def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         count = super().expected_shuffled_item_count(configuration)
-        majors = configuration.major_items_configuration
+        majors = configuration.standard_pickup_configuration
 
         from randovania.games.prime3.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():

@@ -6,7 +6,7 @@ from PySide6.QtCore import Qt
 
 from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.ammo_state import AmmoState
+from randovania.layout.base.ammo_pickup_state import AmmoPickupState
 from randovania.layout.preset import Preset
 
 
@@ -36,10 +36,10 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
             raise ValueError("The unified ammo should have as many items as there are split ammo items.")
 
     def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: dict[AmmoPickupDefinition, AmmoPickupWidgets]):
-        ammo_configuration = preset.configuration.ammo_configuration
+        ammo_configuration = preset.configuration.ammo_pickup_configuration
 
-        has_unified = ammo_configuration.items_state[self.unified_ammo].pickup_count > 0
-        has_split = any(ammo_configuration.items_state[item].pickup_count > 0
+        has_unified = ammo_configuration.pickups_state[self.unified_ammo].pickup_count > 0
+        has_split = any(ammo_configuration.pickups_state[item].pickup_count > 0
                         for item in self.split_ammo)
 
         if not has_split and not has_unified:
@@ -59,40 +59,40 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
 
     def change_split(self, has_split: bool):
         with self._editor as editor:
-            ammo_configuration = editor.ammo_configuration
+            ammo_configuration = editor.ammo_pickup_configuration
 
             current_total = sum(
-                ammo_configuration.items_state[ammo].pickup_count
+                ammo_configuration.pickups_state[ammo].pickup_count
                 for ammo in (self.unified_ammo, *self.split_ammo)
             )
 
             new_states = {}
             if has_split:
-                ref = ammo_configuration.items_state[self.unified_ammo]
+                ref = ammo_configuration.pickups_state[self.unified_ammo]
                 for i, split in enumerate(self.split_ammo):
                     new_count = current_total // len(self.split_ammo)
-                    new_states[split] = AmmoState(
+                    new_states[split] = AmmoPickupState(
                         ammo_count=(math.ceil(
                             ref.ammo_count[i] * (current_total / new_count),
                         ),),
                         pickup_count=new_count,
                     )
-                new_states[self.unified_ammo] = AmmoState(
+                new_states[self.unified_ammo] = AmmoPickupState(
                     ammo_count=tuple(0 for _ in self.unified_ammo.items),
                     pickup_count=0,
                 )
 
             else:
                 for split in self.split_ammo:
-                    new_states[split] = AmmoState(
+                    new_states[split] = AmmoPickupState(
                         ammo_count=(0,),
                         pickup_count=0
                     )
-                new_states[self.unified_ammo] = AmmoState(
+                new_states[self.unified_ammo] = AmmoPickupState(
                     ammo_count=tuple(
                         math.ceil(
-                            ammo_configuration.items_state[split].ammo_count[0] * (
-                                    ammo_configuration.items_state[split].pickup_count / current_total
+                            ammo_configuration.pickups_state[split].ammo_count[0] * (
+                                    ammo_configuration.pickups_state[split].pickup_count / current_total
                             )
                         )
                         for split in self.split_ammo
@@ -100,5 +100,5 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
                     pickup_count=current_total,
                 )
 
-            editor.ammo_configuration = ammo_configuration.replace_states(new_states)
+            editor.ammo_pickup_configuration = ammo_configuration.replace_states(new_states)
             self._last_check_state = (has_split, not has_split)

@@ -11,7 +11,7 @@ from randovania.game_description.resources.pickup_entry import (
 )
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.item_pool import pickup_creator
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 @pytest.mark.parametrize("percentage", [False, True])
@@ -45,10 +45,10 @@ def test_create_pickup_for(percentage: bool, echoes_pickup_database, echoes_reso
         probability_offset=5,
         preferred_location_category=LocationCategory.MAJOR,
     )
-    state = MajorItemState(
+    state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=0,
-        num_included_in_starting_items=0,
+        num_included_in_starting_pickups=0,
         included_ammo=(10, 20),
     )
 
@@ -101,10 +101,10 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_pickup_database, ech
     missile_launcher = echoes_resource_database.get_item("MissileLauncher")
     temporary = echoes_resource_database.get_item("Temporary1")
 
-    state = MajorItemState(
+    state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=0,
-        num_included_in_starting_items=0,
+        num_included_in_starting_pickups=0,
         included_ammo=(ammo_quantity,),
     )
 
@@ -155,10 +155,10 @@ def test_create_seeker_launcher(ammo_quantity: int,
     seeker_launcher = echoes_resource_database.get_item("Seekers")
     temporary = echoes_resource_database.get_item("Temporary1")
 
-    state = MajorItemState(
+    state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=0,
-        num_included_in_starting_items=0,
+        num_included_in_starting_pickups=0,
         included_ammo=(ammo_quantity,),
     )
 
@@ -258,7 +258,7 @@ def test_missile_expansion_before_launcher(include_before, echoes_pickup_databas
     # Run
     expansion = pickup_creator.create_ammo_pickup(ammo, [5], True, echoes_resource_database)
     launcher = pickup_creator.create_standard_pickup(
-        major_item, MajorItemState(included_ammo=(5,)),
+        major_item, StandardPickupState(included_ammo=(5,)),
         True, echoes_resource_database, ammo, True
     )
 

@@ -6,15 +6,15 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 
 
 def _create_config_for(game: RandovaniaGame, replace: dict):
     with game.data_path.joinpath("pickup_database", "default_state", "standard-pickups.json").open() as open_file:
         default_data = json.load(open_file)
 
-    default_data["minimum_random_starting_items"] = 0
-    default_data["maximum_random_starting_items"] = 0
+    default_data["minimum_random_starting_pickups"] = 0
+    default_data["maximum_random_starting_pickups"] = 0
 
     data = copy.deepcopy(default_data)
     for field, value in replace.items():
@@ -22,8 +22,8 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
             data[field][key] = inner_value
 
     return (
-        MajorItemsConfiguration.from_json(default_data, game),
-        MajorItemsConfiguration.from_json(data, game),
+        StandardPickupConfiguration.from_json(default_data, game),
+        StandardPickupConfiguration.from_json(data, game),
     )
 
 
@@ -31,11 +31,11 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
     params=[
         {"encoded": b'\x00\x00\x00', "replace": {}},
         {"encoded": b'\x03\x1b\xa8\x00', "replace": {
-            "items_state": {
+            "pickups_state": {
                 "Spider Ball": {
                     "include_copy_in_original_location": True,
                     "num_shuffled_pickups": 1,
-                    "num_included_in_starting_items": 0,
+                    "num_included_in_starting_pickups": 0,
                     "included_ammo": [],
                 }
             }
@@ -66,7 +66,7 @@ def test_decode_prime2(prime2_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = MajorItemsConfiguration.bit_pack_unpack(decoder, {"reference": default})
+    result = StandardPickupConfiguration.bit_pack_unpack(decoder, {"reference": default})
 
     # Assert
     assert result == expected

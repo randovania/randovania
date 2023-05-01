@@ -11,11 +11,11 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher import prime_items
 from randovania.games.prime2.patcher import echoes_items
 from randovania.games.prime3.patcher import corruption_items
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def create_standard_pickup(item: StandardPickupDefinition,
-                      state: MajorItemState,
+                      state: StandardPickupState,
                       include_percentage: bool,
                       resource_database: ResourceDatabase,
                       ammo: AmmoPickupDefinition | None,

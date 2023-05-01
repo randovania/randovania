@@ -297,7 +297,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _credits_spoiler(self) -> dict[str, str]:
         return credits_spoiler.generic_credits(
-            self.configuration.major_items_configuration,
+            self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
             DreadHintNamer(self.description.all_patches, self.players_config),

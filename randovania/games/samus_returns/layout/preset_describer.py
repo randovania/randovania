@@ -11,7 +11,7 @@ class MSRPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, MSRConfiguration)
 
-        major_items = configuration.major_items_configuration
+        major_items = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
@@ -37,7 +37,7 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {
                         "Super Missile needs Launcher": "Super Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
@@ -51,7 +51,7 @@ class MSRPresetDescriber(GamePresetDescriber):
 
     def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         count = super().expected_shuffled_item_count(configuration)
-        majors = configuration.major_items_configuration
+        majors = configuration.standard_pickup_configuration
 
         from randovania.games.samus_returns.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():

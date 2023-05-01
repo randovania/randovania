@@ -11,7 +11,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.major_item_state import DEFAULT_MAXIMUM_SHUFFLED
+from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLED
 from randovania.layout.preset import Preset
 
 
@@ -32,14 +32,14 @@ class DreadPresetItemPool(PresetItemPool):
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)
         layout = preset.configuration
-        major_configuration = layout.major_items_configuration
+        major_configuration = layout.standard_pickup_configuration
 
         self.pickup_style_widget.update(layout)
 
         # Energy Tank
         for item in [self._energy_tank_item, self._energy_part_item]:
-            state = major_configuration.items_state[item]
-            self._energy_item_to_starting_spinbox[item].setValue(state.num_included_in_starting_items)
+            state = major_configuration.pickups_state[item]
+            self._energy_item_to_starting_spinbox[item].setValue(state.num_included_in_starting_pickups)
             self._energy_item_to_shuffled_spinbox[item].setValue(state.num_shuffled_pickups)
 
     def _create_pickup_style_box(self, size_policy):
@@ -79,18 +79,18 @@ class DreadPresetItemPool(PresetItemPool):
 
     def _on_update_starting(self, value: int, item: StandardPickupDefinition):
         with self._editor as options:
-            major_configuration = options.major_items_configuration
-            options.major_items_configuration = major_configuration.replace_state_for_item(
+            major_configuration = options.standard_pickup_configuration
+            options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 item,
-                dataclasses.replace(major_configuration.items_state[item],
-                                    num_included_in_starting_items=value)
+                dataclasses.replace(major_configuration.pickups_state[item],
+                                    num_included_in_starting_pickups=value)
             )
 
     def _on_update_shuffled(self, value: int, item: StandardPickupDefinition):
         with self._editor as options:
-            major_configuration = options.major_items_configuration
-            options.major_items_configuration = major_configuration.replace_state_for_item(
+            major_configuration = options.standard_pickup_configuration
+            options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 item,
-                dataclasses.replace(major_configuration.items_state[item],
+                dataclasses.replace(major_configuration.pickups_state[item],
                                     num_shuffled_pickups=value)
             )

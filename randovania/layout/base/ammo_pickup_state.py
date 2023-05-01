@@ -8,10 +8,10 @@ from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 
 
 @dataclasses.dataclass(frozen=True)
-class AmmoState(BitPackValue):
+class AmmoPickupState(BitPackValue):
     ammo_count: tuple[int, ...] = (0,)
     pickup_count: int = 0
-    requires_major_item: bool = True
+    requires_main_item: bool = True
 
     def check_consistency(self, ammo: AmmoPickupDefinition):
         db = default_database.resource_database_for(ammo.game)
@@ -19,11 +19,11 @@ class AmmoState(BitPackValue):
         if len(self.ammo_count) != len(ammo.items):
             raise ValueError(f"Ammo state has {len(self.ammo_count)} ammo counts, expected {len(ammo.items)}")
 
-        for count, ammo_index in zip(self.ammo_count, ammo.items):
-            ammo_item = db.get_item(ammo_index)
+        for count, ammo_name in zip(self.ammo_count, ammo.items):
+            ammo_item = db.get_item(ammo_name)
             minimum_count = -ammo_item.max_capacity if ammo.allows_negative else 0
             if not (minimum_count <= count <= ammo_item.max_capacity):
-                raise ValueError(f"Ammo count for item {ammo_index} of value {count} is not "
+                raise ValueError(f"Ammo count for item {ammo_name} of value {count} is not "
                                  f"in range [{minimum_count}, {ammo_item.max_capacity}].")
 
         if self.pickup_count < 0:
@@ -33,8 +33,8 @@ class AmmoState(BitPackValue):
         ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
-        for count, ammo_index in zip(self.ammo_count, ammo.items):
-            ammo_item = db.get_item(ammo_index)
+        for count, ammo_name in zip(self.ammo_count, ammo.items):
+            ammo_item = db.get_item(ammo_name)
             yield from bitpacking.encode_int_with_limits(
                 abs(count),
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
@@ -44,17 +44,17 @@ class AmmoState(BitPackValue):
 
         yield from bitpacking.encode_big_int(self.pickup_count)
         if ammo.unlocked_by is not None:
-            yield from bitpacking.encode_bool(self.requires_major_item)
+            yield from bitpacking.encode_bool(self.requires_main_item)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "AmmoState":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "AmmoPickupState":
         ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
         # Ammo Count
         ammo_count = []
-        for ammo_index in ammo.items:
-            ammo_item = db.get_item(ammo_index)
+        for ammo_name in ammo.items:
+            ammo_item = db.get_item(ammo_name)
             count = bitpacking.decode_int_with_limits(
                 decoder,
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
@@ -67,14 +67,14 @@ class AmmoState(BitPackValue):
         pickup_count = bitpacking.decode_big_int(decoder)
 
         # Require Major Item
-        requires_major_item = True
+        requires_main_item = True
         if ammo.unlocked_by is not None:
-            requires_major_item = bitpacking.decode_bool(decoder)
+            requires_main_item = bitpacking.decode_bool(decoder)
 
         return cls(
             ammo_count=tuple(ammo_count),
             pickup_count=pickup_count,
-            requires_major_item=requires_major_item,
+            requires_main_item=requires_main_item,
         )
 
     @property
@@ -90,7 +90,7 @@ class AmmoState(BitPackValue):
         return result
 
     @classmethod
-    def from_json(cls, value: dict) -> "AmmoState":
+    def from_json(cls, value: dict) -> "AmmoPickupState":
         kwargs = {}
 
         for field in dataclasses.fields(cls):

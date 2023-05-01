@@ -5,7 +5,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 @pytest.fixture(
@@ -19,7 +19,7 @@ from randovania.layout.base.major_item_state import MajorItemState
 
         # Energy Tank
         {"encoded": b'\x92\x88', "bit_count": 13, "progression": "EnergyTank", "json": {"num_shuffled_pickups": 6,
-                                                                                        "num_included_in_starting_items": 10}},
+                                                                                        "num_included_in_starting_pickups": 10}},
 
         # Ammo
         {"encoded": b'\x1b\x80', "bit_count": 9, "ammo_index": ("PowerBomb",), "json": {"included_ammo": [7]}},
@@ -32,11 +32,11 @@ from randovania.layout.base.major_item_state import MajorItemState
         {"encoded": b'\x1b\x9b ', "bit_count": 22, "ammo_index": ("DarkAmmo", "LightAmmo"),
          "json": {"included_ammo": [230, 200]}},
     ],
-    name="major_item_state")
-def _major_item_state(request, echoes_pickup_database, generic_pickup_category):
+    name="standard_pickup_state")
+def _standard_pickup_state(request, echoes_pickup_database, generic_pickup_category):
     encoded: bytes = request.param["encoded"]
 
-    item = StandardPickupDefinition(
+    pickup = StandardPickupDefinition(
         game=RandovaniaGame.METROID_PRIME_ECHOES,
         name="Item Name",
         pickup_category=generic_pickup_category,
@@ -52,28 +52,28 @@ def _major_item_state(request, echoes_pickup_database, generic_pickup_category):
         preferred_location_category=LocationCategory.MAJOR,
     )
     included_ammo = tuple(0 for _ in request.param["json"].get("included_ammo", []))
-    reference = MajorItemState(included_ammo=included_ammo)
-    return item, encoded, request.param["bit_count"], MajorItemState.from_json(request.param["json"]), reference
+    reference = StandardPickupState(included_ammo=included_ammo)
+    return pickup, encoded, request.param["bit_count"], StandardPickupState.from_json(request.param["json"]), reference
 
 
-def test_decode(major_item_state):
+def test_decode(standard_pickup_state):
     # Setup
-    item, data, _, expected, reference = major_item_state
+    pickup, data, _, expected, reference = standard_pickup_state
 
     # Run
     decoder = BitPackDecoder(data)
-    result = MajorItemState.bit_pack_unpack(decoder, item, reference=reference)
+    result = StandardPickupState.bit_pack_unpack(decoder, pickup, reference=reference)
 
     # Assert
     assert result == expected
 
 
-def test_encode(major_item_state):
+def test_encode(standard_pickup_state):
     # Setup
-    item, expected_bytes, expected_bit_count, value, reference = major_item_state
+    pickup, expected_bytes, expected_bit_count, value, reference = standard_pickup_state
 
     # Run
-    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode(item, reference=reference))
+    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode(pickup, reference=reference))
 
     # Assert
     assert bit_count == expected_bit_count
@@ -81,8 +81,8 @@ def test_encode(major_item_state):
 
 
 def test_blank_as_json():
-    assert MajorItemState().as_json == {}
+    assert StandardPickupState().as_json == {}
 
 
 def test_blank_from_json():
-    assert MajorItemState.from_json({}) == MajorItemState()
+    assert StandardPickupState.from_json({}) == StandardPickupState()

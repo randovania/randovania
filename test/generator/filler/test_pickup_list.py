@@ -14,7 +14,7 @@ from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout.base.base_configuration import StartingLocationList
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.resolver.state import State, StateGameData
 
 
@@ -175,10 +175,10 @@ async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_descri
         starting_location=StartingLocationList.with_elements([
             NodeIdentifier.create("Temple Grounds", "Fake Quad Arena", "Before Quadraxis")
         ], small_echoes_game_description.game),
-        major_items_configuration=config.major_items_configuration.replace_state_for_item(
-            config.major_items_configuration.get_item_with_name("Missile Launcher"),
-            MajorItemState(
-                num_included_in_starting_items=1,
+        standard_pickup_configuration=config.standard_pickup_configuration.replace_state_for_pickup(
+            config.standard_pickup_configuration.get_pickup_with_name("Missile Launcher"),
+            StandardPickupState(
+                num_included_in_starting_pickups=1,
                 included_ammo=(5,),
             ),
         ),

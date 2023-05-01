@@ -8,7 +8,7 @@ from randovania.game_description.resources.resource_info import ResourceGain, Re
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData
@@ -48,7 +48,7 @@ class Bootstrap:
 
     def _add_minimal_logic_initial_resources(self, resources: ResourceCollection,
                                              game: GameDescription,
-                                             major_items: MajorItemsConfiguration,
+                                             major_items: StandardPickupConfiguration,
                                              ) -> None:
         resource_database = game.resource_database
 
@@ -59,7 +59,7 @@ class Bootstrap:
 
         items_to_skip = set()
         for it in game.minimal_logic.items_to_exclude:
-            if it.reason is None or major_items.items_state[item_db.standard_pickups[it.reason]].num_shuffled_pickups != 0:
+            if it.reason is None or major_items.pickups_state[item_db.standard_pickups[it.reason]].num_shuffled_pickups != 0:
                 items_to_skip.add(it.name)
 
         custom_item_count = game.minimal_logic.custom_item_amount
@@ -180,7 +180,7 @@ class Bootstrap:
         if configuration.trick_level.minimal_logic:
             self._add_minimal_logic_initial_resources(starting_state.resources,
                                                       game,
-                                                      configuration.major_items_configuration)
+                                                      configuration.standard_pickup_configuration)
 
         static_resources = ResourceCollection.with_database(game.resource_database)
         static_resources.add_resource_gain(

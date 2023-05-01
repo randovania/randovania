@@ -38,12 +38,12 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
 
     # Adding major items to the pool
     _extend_pool_results(base_results, add_major_items(game.resource_database,
-                                                       layout_configuration.major_items_configuration,
-                                                       layout_configuration.ammo_configuration))
+                                                       layout_configuration.standard_pickup_configuration,
+                                                       layout_configuration.ammo_pickup_configuration))
 
     # Adding ammo to the pool
     base_results.to_place.extend(add_ammo(game.resource_database,
-                                          layout_configuration.ammo_configuration))
+                                          layout_configuration.ammo_pickup_configuration))
     try:
         layout_configuration.game.generator.item_pool_creator(
             base_results, layout_configuration, game, base_patches, rng,
@@ -66,7 +66,7 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> tuple[int, int]:
     num_pickup_nodes = game_description.world_list.num_pickup_nodes
     pool_results = calculate_pool_results(layout, game_description,
                                           rng_required=False)
-    min_starting_items = layout.major_items_configuration.minimum_random_starting_items
+    min_starting_items = layout.standard_pickup_configuration.minimum_random_starting_pickups
 
     pool_count = len(pool_results.to_place) + len(pool_results.assignment)
     maximum_size = num_pickup_nodes + min_starting_items

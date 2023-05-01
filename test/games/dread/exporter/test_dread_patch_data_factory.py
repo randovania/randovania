@@ -14,8 +14,8 @@ from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPa
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.ammo_state import AmmoState
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.ammo_pickup_state import AmmoPickupState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
@@ -48,9 +48,9 @@ def _preset_with_locked_pb(preset: Preset, locked: bool):
         preset,
         configuration=dataclasses.replace(
             preset.configuration,
-            ammo_configuration=preset.configuration.ammo_configuration.replace_state_for_ammo(
+            ammo_configuration=preset.configuration.ammo_pickup_configuration.replace_state_for_ammo(
                 pickup_database.ammo_pickups["Power Bomb Tank"],
-                AmmoState(requires_major_item=locked),
+                AmmoPickupState(requires_main_item=locked),
             )
         )
     )
@@ -93,7 +93,7 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
     # Setup
     pickup = pickup_creator.create_standard_pickup(
         pickup_database.standard_pickups["Power Bomb"],
-        MajorItemState(included_ammo=(3,)),
+        StandardPickupState(included_ammo=(3,)),
         include_percentage=False,
         resource_database=resource_db,
         ammo=pickup_database.ammo_pickups["Power Bomb Tank"],
@@ -128,7 +128,7 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
     # Setup
     pickup = pickup_creator.create_standard_pickup(
         pickup_database.standard_pickups["Speed Booster"],
-        MajorItemState(),
+        StandardPickupState(),
         include_percentage=False,
         resource_database=resource_db,
         ammo=None,

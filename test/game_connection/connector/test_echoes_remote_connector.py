@@ -14,7 +14,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
 from randovania.generator.item_pool import pickup_creator
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 @pytest.fixture(name="version")
@@ -308,7 +308,7 @@ async def test_receive_required_missile_launcher(connector: EchoesRemoteConnecto
                                                  echoes_pickup_database, echoes_resource_database):
     pickup = pickup_creator.create_standard_pickup(
         echoes_pickup_database.standard_pickups["Missile Launcher"],
-        MajorItemState(included_ammo=(5,)),
+        StandardPickupState(included_ammo=(5,)),
         True,
         echoes_resource_database,
         echoes_pickup_database.ammo_pickups["Missile Expansion"],

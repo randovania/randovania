@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, call
 
 import randovania.generator.item_pool.ammo
 import randovania.generator.item_pool.pickup_creator
-from randovania.layout.base.ammo_configuration import AmmoConfiguration
+from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 
 
 def test_add_ammo(echoes_resource_database, mocker):
@@ -15,7 +15,7 @@ def test_add_ammo(echoes_resource_database, mocker):
     state1 = MagicMock()
     state2 = MagicMock()
 
-    ammo_configuration = AmmoConfiguration({
+    ammo_configuration = AmmoPickupConfiguration({
         ammo1: state1,
         ammo2: state2,
     })
@@ -26,6 +26,6 @@ def test_add_ammo(echoes_resource_database, mocker):
     # Assert
     assert results == [mock_create_ammo_pickup.return_value, mock_create_ammo_pickup.return_value]
     mock_create_ammo_pickup.assert_has_calls([
-        call(ammo1, state1.ammo_count, state1.requires_major_item, echoes_resource_database),
-        call(ammo2, state2.ammo_count, state2.requires_major_item, echoes_resource_database),
+        call(ammo1, state1.ammo_count, state1.requires_main_item, echoes_resource_database),
+        call(ammo2, state2.ammo_count, state2.requires_main_item, echoes_resource_database),
     ])

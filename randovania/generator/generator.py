@@ -31,7 +31,7 @@ from randovania.layout.exceptions import InvalidConfiguration
 
 def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
                              configuration: BaseConfiguration) -> None:
-    min_starting_items = configuration.major_items_configuration.minimum_random_starting_items
+    min_starting_items = configuration.standard_pickup_configuration.minimum_random_starting_pickups
     if len(item_pool) > game.world_list.num_pickup_nodes + min_starting_items:
         raise InvalidConfiguration(
             "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(

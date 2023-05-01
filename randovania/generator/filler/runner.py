@@ -62,7 +62,7 @@ async def run_filler(rng: Random,
 
         new_game, state = pool.game_generator.bootstrap.logic_bootstrap(config, pool.game,
                                                                         pool.patches)
-        major_configuration = config.major_items_configuration
+        major_configuration = config.standard_pickup_configuration
         player_states.append(PlayerState(
             index=index,
             game=new_game,
@@ -70,8 +70,8 @@ async def run_filler(rng: Random,
             pickups_left=major_items,
             configuration=FillerConfiguration(
                 randomization_mode=config.available_locations.randomization_mode,
-                minimum_random_starting_items=major_configuration.minimum_random_starting_items,
-                maximum_random_starting_items=major_configuration.maximum_random_starting_items,
+                minimum_random_starting_items=major_configuration.minimum_random_starting_pickups,
+                maximum_random_starting_items=major_configuration.maximum_random_starting_pickups,
                 indices_to_exclude=config.available_locations.excluded_indices,
                 logical_resource_action=config.logical_resource_action,
                 first_progression_must_be_local=config.first_progression_must_be_local,

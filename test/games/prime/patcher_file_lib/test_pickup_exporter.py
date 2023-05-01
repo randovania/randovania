@@ -18,7 +18,7 @@ from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
@@ -27,7 +27,7 @@ def test_get_single_hud_text_all_major_items(echoes_pickup_database, echoes_reso
 
     # Run
     for item in echoes_pickup_database.standard_pickups.values():
-        pickup = pickup_creator.create_standard_pickup(item, MajorItemState(), False, echoes_resource_database, None, False)
+        pickup = pickup_creator.create_standard_pickup(item, StandardPickupState(), False, echoes_resource_database, None, False)
 
         result = pickup_exporter._get_all_hud_text(pickup_exporter._conditional_resources_for_pickup(pickup),
                                                    memo_data)
@@ -351,7 +351,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resource_database):
     # Setup
     progressive_suit = echoes_pickup_database.standard_pickups["Progressive Suit"]
-    pickup = pickup_creator.create_standard_pickup(progressive_suit, MajorItemState(), False, echoes_resource_database,
+    pickup = pickup_creator.create_standard_pickup(progressive_suit, StandardPickupState(), False, echoes_resource_database,
                                               None, False)
 
     # Run

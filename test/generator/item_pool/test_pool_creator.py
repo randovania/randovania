@@ -17,9 +17,9 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 def test_calculate_pool_item_count(default_echoes_configuration):
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
-        major_items_configuration=dataclasses.replace(
-            default_echoes_configuration.major_items_configuration,
-            minimum_random_starting_items=2,
+        standard_pickup_configuration=dataclasses.replace(
+            default_echoes_configuration.standard_pickup_configuration,
+            minimum_random_starting_pickups=2,
         ),
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
     )

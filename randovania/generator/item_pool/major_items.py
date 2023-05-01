@@ -4,24 +4,24 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_standard_pickup
-from randovania.layout.base.ammo_configuration import AmmoConfiguration
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 
 
 def _find_ammo_for(ammo_index: tuple[str, ...],
-                   ammo_configuration: AmmoConfiguration,
+                   ammo_configuration: AmmoPickupConfiguration,
                    ) -> tuple[AmmoPickupDefinition | None, bool]:
-    for ammo, ammo_state in ammo_configuration.items_state.items():
+    for ammo, ammo_state in ammo_configuration.pickups_state.items():
         if ammo.items == ammo_index:
-            return ammo, ammo_state.requires_major_item
+            return ammo, ammo_state.requires_main_item
 
     return None, False
 
 
 def add_major_items(resource_database: ResourceDatabase,
-                    major_items_configuration: MajorItemsConfiguration,
-                    ammo_configuration: AmmoConfiguration,
+                    major_items_configuration: StandardPickupConfiguration,
+                    ammo_configuration: AmmoPickupConfiguration,
                     ) -> PoolResults:
     """
 
@@ -35,7 +35,7 @@ def add_major_items(resource_database: ResourceDatabase,
     new_assignment: dict[PickupIndex, PickupEntry] = {}
     starting = []
 
-    for item, state in major_items_configuration.items_state.items():
+    for item, state in major_items_configuration.pickups_state.items():
         if len(item.ammo) != len(state.included_ammo):
             raise InvalidConfiguration(
                 "Item {0.name} uses {0.ammo_index} as ammo, but there's only {1} values in included_ammo".format(
@@ -54,7 +54,7 @@ def add_major_items(resource_database: ResourceDatabase,
         for _ in range(state.num_shuffled_pickups):
             item_pool.append(create_standard_pickup(item, state, True, resource_database, ammo, locked_ammo))
 
-        for _ in range(state.num_included_in_starting_items):
+        for _ in range(state.num_included_in_starting_pickups):
             starting.append(create_standard_pickup(item, state, False, resource_database, ammo, locked_ammo))
 
     return PoolResults(item_pool, new_assignment, starting)

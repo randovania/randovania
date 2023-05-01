@@ -25,7 +25,7 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -43,7 +43,7 @@ def test_create_starting_popup_items(echoes_game_patches, echoes_pickup_database
     db = echoes_game_patches.game.resource_database
 
     def create_major(n):
-        return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n), MajorItemState(), False, db,
+        return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n), StandardPickupState(), False, db,
                                                 None, False)
 
     missile = pickup_creator.create_ammo_pickup(echoes_pickup_database.get_pickup_with_name("Missile Expansion"),
@@ -120,7 +120,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
     morph = pickup_creator.create_standard_pickup(
         echoes_pickup_database.get_pickup_with_name("Morph Ball"),
-        MajorItemState(), False, resource_db, None, False,
+        StandardPickupState(), False, resource_db, None, False,
     )
 
     loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
@@ -358,10 +358,10 @@ def test_get_single_hud_text_locked_pbs():
 
 def test_pickup_data_for_seeker_launcher(echoes_pickup_database, echoes_resource_database):
     # Setup
-    state = MajorItemState(
+    state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=0,
-        num_included_in_starting_items=0,
+        num_included_in_starting_pickups=0,
         included_ammo=(5,),
     )
     pickup = pickup_creator.create_standard_pickup(

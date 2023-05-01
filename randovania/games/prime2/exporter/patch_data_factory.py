@@ -499,7 +499,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         result["convert_other_game_assets"] = self.cosmetic_patches.convert_other_game_assets
         result["credits"] = "\n\n\n\n\n" + credits_spoiler.prime_trilogy_credits(
-            self.configuration.major_items_configuration,
+            self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
             self.namer,
@@ -508,10 +508,10 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         )
 
         [pickup_category_visors] = [
-            cat for cat in self.configuration.major_items_configuration.default_items.keys() if cat.name == "visor"
+            cat for cat in self.configuration.standard_pickup_configuration.default_pickups.keys() if cat.name == "visor"
         ]
         [pickup_category_beams] = [
-            cat for cat in self.configuration.major_items_configuration.default_items.keys() if cat.name == "beam"
+            cat for cat in self.configuration.standard_pickup_configuration.default_pickups.keys() if cat.name == "beam"
         ]
 
         result["menu_mod"] = self.configuration.menu_mod
@@ -521,8 +521,8 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             safe_zone_heal_per_second=self.configuration.safe_zone.heal_per_second,
             user_preferences=self.cosmetic_patches.user_preferences,
             default_items={
-                "visor": self.configuration.major_items_configuration.default_items[pickup_category_visors].name,
-                "beam": self.configuration.major_items_configuration.default_items[pickup_category_beams].name,
+                "visor": self.configuration.standard_pickup_configuration.default_pickups[pickup_category_visors].name,
+                "beam": self.configuration.standard_pickup_configuration.default_pickups[pickup_category_beams].name,
             },
             unvisited_room_names=(self.configuration.elevators.can_use_unvisited_room_names
                                   and self.cosmetic_patches.unvisited_room_names),

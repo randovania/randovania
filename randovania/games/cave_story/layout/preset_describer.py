@@ -27,7 +27,7 @@ class CSPresetDescriber(GamePresetDescriber):
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {"Missiles need main Launcher": "Missile Expansion"}
                 ),
                 {"No falling blocks in B2": configuration.no_blocks}
@@ -42,7 +42,7 @@ class CSPresetDescriber(GamePresetDescriber):
 
     def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         count = super().expected_shuffled_item_count(configuration)
-        majors = configuration.major_items_configuration
+        majors = configuration.standard_pickup_configuration
 
         from randovania.games.cave_story.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():

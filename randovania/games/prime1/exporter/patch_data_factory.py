@@ -608,8 +608,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
 
-        ammo_with_mains = [ammo.name for ammo, state in self.configuration.ammo_configuration.items_state.items()
-                           if state.requires_major_item]
+        ammo_with_mains = [ammo.name for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
+                           if state.requires_main_item]
         if ammo_with_mains:
             raise ValueError("Preset has {} with required mains enabled. This is currently not supported.".format(
                 " and ".join(ammo_with_mains)
@@ -784,7 +784,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             map_default_state = "default"
 
         credits_string = credits_spoiler.prime_trilogy_credits(
-            self.configuration.major_items_configuration,
+            self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
             namer,

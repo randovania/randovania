@@ -7,7 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_manager):
@@ -23,14 +23,14 @@ def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_man
     pickup_database = default_database.pickup_database_for_game(window.game)
     item = pickup_database.standard_pickups["Dark Beam"]
     category = pickup_database.pickup_categories["beam"]
-    combo = window._default_items[category]
+    combo = window._default_pickups[category]
 
     # Run
     set_combo_with_value(combo, item)
 
     # Assert
-    assert editor.major_items_configuration.default_items[category] == item
-    assert editor.major_items_configuration.items_state[item] == MajorItemState(
-        num_included_in_starting_items=1,
+    assert editor.standard_pickup_configuration.default_pickups[category] == item
+    assert editor.standard_pickup_configuration.pickups_state[item] == StandardPickupState(
+        num_included_in_starting_pickups=1,
         included_ammo=(50,)
     )

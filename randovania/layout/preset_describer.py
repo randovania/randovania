@@ -4,11 +4,11 @@ from typing import Iterable, Sequence
 from randovania.game_description import default_database
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.base.ammo_configuration import AmmoConfiguration
+from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
 
@@ -28,11 +28,11 @@ class GamePresetDescriber:
         expected_count = self.expected_starting_item_count(configuration)
         starting_items = []
 
-        for major_item, item_state in configuration.major_items_configuration.items_state.items():
+        for major_item, item_state in configuration.standard_pickup_configuration.pickups_state.items():
             if major_item.hide_from_gui:
                 continue
 
-            count = item_state.num_included_in_starting_items
+            count = item_state.num_included_in_starting_pickups
             if count != expected_count[major_item]:
                 if count > 1:
                     starting_items.append(f"{count}x {major_item.name}")
@@ -51,7 +51,7 @@ class GamePresetDescriber:
         expected_count = self.expected_shuffled_item_count(configuration)
         item_pool = []
 
-        for major_item, item_state in configuration.major_items_configuration.items_state.items():
+        for major_item, item_state in configuration.standard_pickup_configuration.pickups_state.items():
             if major_item.hide_from_gui:
                 continue
 
@@ -70,7 +70,7 @@ class GamePresetDescriber:
         """Function providing any game-specific information to display in presets such as the goal."""
 
         game_description = default_database.game_description_for(configuration.game)
-        major_items = configuration.major_items_configuration
+        major_items = configuration.standard_pickup_configuration
 
         template_strings = collections.defaultdict(list)
 
@@ -84,12 +84,12 @@ class GamePresetDescriber:
         # Item Placement
         randomization_mode = configuration.available_locations.randomization_mode
 
-        if major_items.minimum_random_starting_items == major_items.maximum_random_starting_items:
-            random_starting_items = f"{major_items.minimum_random_starting_items}"
+        if major_items.minimum_random_starting_pickups == major_items.maximum_random_starting_pickups:
+            random_starting_items = f"{major_items.minimum_random_starting_pickups}"
         else:
             random_starting_items = "{} to {}".format(
-                major_items.minimum_random_starting_items,
-                major_items.maximum_random_starting_items,
+                major_items.minimum_random_starting_pickups,
+                major_items.maximum_random_starting_pickups,
             )
 
         template_strings["Logic Settings"].append(configuration.trick_level.pretty_description(game_description))
@@ -149,7 +149,7 @@ class GamePresetDescriber:
         The configuration so it can vary based on progressive settings, as example."""
         return {
             major: major.default_starting_count
-            for major in configuration.major_items_configuration.items_state.keys()
+            for major in configuration.standard_pickup_configuration.pickups_state.keys()
         }
 
     def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
@@ -157,37 +157,37 @@ class GamePresetDescriber:
         The configuration so it can vary based on progressive settings, as example."""
         return {
             major: major.default_shuffled_count
-            for major in configuration.major_items_configuration.items_state.keys()
+            for major in configuration.standard_pickup_configuration.pickups_state.keys()
         }
 
 
-def _require_majors_check(ammo_configuration: AmmoConfiguration, ammo_names: list[str]) -> list[bool]:
+def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str]) -> list[bool]:
     result = [False] * len(ammo_names)
 
     name_index_mapping = {name: i for i, name in enumerate(ammo_names)}
 
-    for ammo, state in ammo_configuration.items_state.items():
+    for ammo, state in ammo_configuration.pickups_state.items():
         if ammo.name in name_index_mapping:
-            result[name_index_mapping[ammo.name]] = state.requires_major_item
+            result[name_index_mapping[ammo.name]] = state.requires_main_item
 
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoConfiguration, message_to_item: dict[str, str]):
+def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]):
     item_names = [item for item in message_to_item.values()]
     main_required = _require_majors_check(ammo_configuration, item_names)
     return dict(zip(message_to_item.keys(), main_required))
 
 
-def has_shuffled_item(configuration: MajorItemsConfiguration, item_name: str) -> bool:
-    for item, state in configuration.items_state.items():
+def has_shuffled_item(configuration: StandardPickupConfiguration, item_name: str) -> bool:
+    for item, state in configuration.pickups_state.items():
         if item.name == item_name:
             return (state.num_shuffled_pickups + int(state.include_copy_in_original_location)) > 0
     return False
 
 
-def has_vanilla_item(configuration: MajorItemsConfiguration, item_name: str) -> bool:
-    for item, state in configuration.items_state.items():
+def has_vanilla_item(configuration: StandardPickupConfiguration, item_name: str) -> bool:
+    for item, state in configuration.pickups_state.items():
         if item.name == item_name:
             return state.include_copy_in_original_location
     return False
@@ -221,10 +221,10 @@ def merge_categories(categories: Iterable[PresetDescription]) -> str:
     )
 
 
-def handle_progressive_expected_counts(counts: dict[StandardPickupDefinition, int], configuration: MajorItemsConfiguration,
+def handle_progressive_expected_counts(counts: dict[StandardPickupDefinition, int], configuration: StandardPickupConfiguration,
                                        progressive: str, non_progressive: Sequence[str]) -> None:
-    progressive_item = configuration.get_item_with_name(progressive)
-    non_progressive_items = [configuration.get_item_with_name(name) for name in non_progressive]
+    progressive_item = configuration.get_pickup_with_name(progressive)
+    non_progressive_items = [configuration.get_pickup_with_name(name) for name in non_progressive]
 
     if has_shuffled_item(configuration, progressive):
         counts[progressive_item] = len(non_progressive)
