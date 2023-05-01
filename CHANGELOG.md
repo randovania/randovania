@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The resolver now allows dangerous resources in additional resources.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
+- Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 
 ### Cave Story
 
