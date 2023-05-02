@@ -687,7 +687,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         k_column_count = 2
 
         pickup_by_name = {}
-        pickup_with_quantity = {}
+        pickup_with_quantity: dict[PickupEntry, int] = {}
 
         for pickup in item_pool:
             if pickup.name in pickup_by_name:
@@ -701,7 +701,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for pickup, quantity in pickup_with_quantity.items():
             self._collected_pickups[pickup] = 0
-            parent_widget, parent_layout = parent_widgets.get(pickup.item_category.name, major_pickup_parent_widgets)
+            parent_widget, parent_layout = parent_widgets.get(pickup.pickup_category.name, major_pickup_parent_widgets)
 
             row = row_for_parent[parent_widget]
 

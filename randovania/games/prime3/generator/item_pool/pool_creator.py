@@ -4,8 +4,8 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime3.generator.item_pool.energy_cells import add_energy_cells
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
-from randovania.generator.item_pool import PoolResults
-from randovania.generator.item_pool.pool_creator import _extend_pool_results
+from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.pool_creator import _extend_pool_results
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 

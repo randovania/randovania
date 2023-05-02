@@ -23,9 +23,9 @@ from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.generator.item_pool import pickup_creator, pool_creator
+from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -39,14 +39,14 @@ def test_create_starting_popup_empty(echoes_game_patches):
     assert result == []
 
 
-def test_create_starting_popup_items(echoes_game_patches, echoes_item_database):
+def test_create_starting_popup_items(echoes_game_patches, echoes_pickup_database):
     db = echoes_game_patches.game.resource_database
 
     def create_major(n):
-        return pickup_creator.create_major_item(echoes_item_database.get_item_with_name(n), MajorItemState(), False, db,
+        return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n), StandardPickupState(), False, db,
                                                 None, False)
 
-    missile = pickup_creator.create_ammo_expansion(echoes_item_database.get_item_with_name("Missile Expansion"),
+    missile = pickup_creator.create_ammo_pickup(echoes_pickup_database.get_pickup_with_name("Missile Expansion"),
                                                    [5], False, db)
     tank = create_major("Energy Tank")
 
@@ -114,13 +114,13 @@ def test_add_header_data_to_result():
     assert json.loads(json.dumps(result)) == expected
 
 
-def test_create_spawn_point_field(echoes_game_description, echoes_item_database, empty_patches):
+def test_create_spawn_point_field(echoes_game_description, echoes_pickup_database, empty_patches):
     # Setup
     resource_db = echoes_game_description.resource_database
 
-    morph = pickup_creator.create_major_item(
-        echoes_item_database.get_item_with_name("Morph Ball"),
-        MajorItemState(), False, resource_db, None, False,
+    morph = pickup_creator.create_standard_pickup(
+        echoes_pickup_database.get_pickup_with_name("Morph Ball"),
+        StandardPickupState(), False, resource_db, None, False,
     )
 
     loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
@@ -356,20 +356,20 @@ def test_get_single_hud_text_locked_pbs():
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
 
 
-def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_database):
+def test_pickup_data_for_seeker_launcher(echoes_pickup_database, echoes_resource_database):
     # Setup
-    state = MajorItemState(
+    state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=0,
-        num_included_in_starting_items=0,
+        num_included_in_starting_pickups=0,
         included_ammo=(5,),
     )
-    pickup = pickup_creator.create_major_item(
-        echoes_item_database.major_items["Seeker Launcher"],
+    pickup = pickup_creator.create_standard_pickup(
+        echoes_pickup_database.standard_pickups["Seeker Launcher"],
         state,
         True,
         echoes_resource_database,
-        echoes_item_database.ammo["Missile Expansion"],
+        echoes_pickup_database.ammo_pickups["Missile Expansion"],
         True
     )
     creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
@@ -399,10 +399,10 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
 
 
 @pytest.mark.parametrize("simplified", [False, True])
-def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, echoes_resource_database):
+def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database, echoes_resource_database):
     # Setup
-    pickup = pickup_creator.create_ammo_expansion(
-        echoes_item_database.ammo["Power Bomb Expansion"],
+    pickup = pickup_creator.create_ammo_pickup(
+        echoes_pickup_database.ammo_pickups["Power Bomb Expansion"],
         [2],
         True,
         echoes_resource_database,
@@ -444,10 +444,10 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
     }
 
 
-def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_resource_database):
+def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, echoes_resource_database):
     # Setup
-    pickup = pickup_creator.create_ammo_expansion(
-        echoes_item_database.ammo["Power Bomb Expansion"],
+    pickup = pickup_creator.create_ammo_pickup(
+        echoes_pickup_database.ammo_pickups["Power Bomb Expansion"],
         [2],
         False,
         echoes_resource_database,

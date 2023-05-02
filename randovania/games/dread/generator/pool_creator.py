@@ -6,9 +6,9 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.generator.item_pool import PoolResults
-from randovania.generator.item_pool.pickup_creator import create_dread_artifact
-from randovania.generator.item_pool.pool_creator import _extend_pool_results
+from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.pickup_creator import create_dread_artifact
+from randovania.generator.pickup_pool.pool_creator import _extend_pool_results
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 

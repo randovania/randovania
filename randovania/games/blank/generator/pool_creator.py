@@ -2,11 +2,12 @@ from random import Random
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.pickup import pickup_category
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.blank.layout.blank_configuration import BlankConfiguration
-from randovania.generator.item_pool import PoolResults, pickup_creator
+from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -18,8 +19,8 @@ def create_victory_key(resource_database: ResourceDatabase):
             game=resource_database.game_enum,
             name="VictoryKey"
         ),
-        item_category=pickup_creator.GENERIC_KEY_CATEGORY,
-        broad_category=pickup_creator.GENERIC_KEY_CATEGORY,
+        pickup_category=pickup_category.GENERIC_KEY_CATEGORY,
+        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
             probability_offset=0.25,

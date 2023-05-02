@@ -3,7 +3,7 @@ from random import Random
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.item.item_database import ItemDatabase
+from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
@@ -16,7 +16,7 @@ class BasePatchDataFactory:
     description: LayoutDescription
     players_config: PlayersConfiguration
     game: GameDescription
-    item_db: ItemDatabase
+    pickup_db: PickupDatabase
     patches: GamePatches
     rng: Random
 
@@ -29,7 +29,7 @@ class BasePatchDataFactory:
         self.players_config = players_config
         self.cosmetic_patches = cosmetic_patches
 
-        self.item_db = default_database.item_database_for_game(self.game_enum())
+        self.pickup_db = default_database.pickup_database_for_game(self.game_enum())
 
         self.patches = description.all_patches[players_config.player_index]
         self.configuration = description.get_preset(players_config.player_index).configuration

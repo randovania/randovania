@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The resolver now allows dangerous resources in additional resources.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
+- Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 
 ### Cave Story
 
@@ -53,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
 - Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
+- Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
 
 ### Metroid Prime
@@ -63,12 +65,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 48 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 217
+- Added: 55 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 224
+
+##### Tallon Overworld 
+
+- Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall
+- Added: Root Cave - L-Jump method to reach upper area
+
+#### Magmoor Caverns
+
+- Added: Twin Fires Tunnel - Transport to Talon -> Twin Fires, NSJ & SJ dashes now require standable terrain
+
+##### Phendrana Drifts
+
+- Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
+- Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
 
 ##### Phazon Mines
 
 - Fixed: Fungal Hall B - Scan dash method now requires scan visor
 - Fixed: Ventillation Shaft - Combat dash to climb room now requires dock rando to be off 
+
 
 ### Metroid Prime 2: Echoes
 

@@ -1,4 +1,4 @@
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
@@ -49,7 +49,7 @@ class DreadPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, DreadConfiguration)
 
-        major_items = configuration.major_items_configuration
+        standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
@@ -69,12 +69,12 @@ class DreadPresetDescriber(GamePresetDescriber):
             ],
             "Item Pool": [
                 {
-                    "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
-                    "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
-                    "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
-                    "Progressive Bomb": has_shuffled_item(major_items, "Progressive Bomb"),
-                    "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
-                    "Progressive Spin": has_shuffled_item(major_items, "Progressive Spin")
+                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
+                    "Progressive Charge Beam": has_shuffled_item(standard_pickups, "Progressive Charge Beam"),
+                    "Progressive Missile": has_shuffled_item(standard_pickups, "Progressive Missile"),
+                    "Progressive Bomb": has_shuffled_item(standard_pickups, "Progressive Bomb"),
+                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
+                    "Progressive Spin": has_shuffled_item(standard_pickups, "Progressive Spin")
                 }
             ],
             "Gameplay": [
@@ -83,7 +83,7 @@ class DreadPresetDescriber(GamePresetDescriber):
             "Goal": describe_artifacts(configuration.artifacts),
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {
                         "Power Bomb needs Main": "Power Bomb Expansion",
                     }
@@ -102,11 +102,11 @@ class DreadPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
-        count = super().expected_shuffled_item_count(configuration)
-        majors = configuration.major_items_configuration
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
+        count = super().expected_shuffled_pickup_count(configuration)
+        majors = configuration.standard_pickup_configuration
 
-        from randovania.games.dread.item_database import progressive_items
+        from randovania.games.dread.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
             handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 
