@@ -22,7 +22,7 @@ class AmmoPickupDefinition:
     unlocked_by: str | None = None
     temporary: str | None = None
     allows_negative: bool | None = None
-    warning: str | None = None
+    description: str | None = None
     extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
@@ -49,7 +49,7 @@ class AmmoPickupDefinition:
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
             allows_negative=value.get("allows_negative"),
-            warning=value.get("warning"),
+            description=value.get("description"),
             extra=frozen_lib.wrap(value.get("extra", {}))
         )
 
@@ -67,8 +67,8 @@ class AmmoPickupDefinition:
             result["unlocked_by"] = self.unlocked_by
         if self.allows_negative is not None:
             result["allows_negative"] = self.allows_negative
-        if self.warning is not None:
-            result["warning"] = self.warning
+        if self.description is not None:
+            result["description"] = self.description
         return result
 
     @property
