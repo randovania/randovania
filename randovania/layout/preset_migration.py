@@ -805,7 +805,7 @@ def _migrate_v49(preset: dict) -> dict:
 
 def _migrate_v50(preset: dict) -> dict:
     if preset["game"] == "dread":
-        preset["configuration"]["raven_beak_damage_table_handling"] = DreadRavenBeakDamageMode.CONSISTENT_LOW
+        preset["configuration"]["raven_beak_damage_table_handling"] = "consistent_low"
     return preset
 
 
