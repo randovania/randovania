@@ -57,7 +57,7 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
 
 
 def _pickup_description(pickup: PickupEntry) -> str:
-    if not pickup.item_category.is_expansion:
+    if not pickup.pickup_category.is_expansion:
         if len(pickup.progression) > 1:
             return "Provides the following in order: {}.".format(
                 ", ".join(conditional.name for conditional in pickup.conditional_resources)

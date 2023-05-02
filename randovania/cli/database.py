@@ -201,7 +201,7 @@ def refresh_all_logic(args):
 
     gd_per_game = {}
     path_per_game = {}
-    idb_per_game = {}
+    pdb_per_game = {}
 
     for game in iterate_enum(RandovaniaGame):
         logging.info("Reading %s", game.long_name)
@@ -210,8 +210,8 @@ def refresh_all_logic(args):
         gd = data_reader.decode_data(data)
         gd_per_game[game] = gd
 
-        idb = default_database.item_database_for_game(game)
-        idb_per_game[game] = idb
+        pdb = default_database.pickup_database_for_game(game)
+        pdb_per_game[game] = pdb
 
     should_stop = False
     if args.integrity_check:
@@ -234,7 +234,7 @@ def refresh_all_logic(args):
         path.with_suffix("").mkdir(parents=True, exist_ok=True)
         pretty_print.write_human_readable_game(gd, path.with_suffix(""))
 
-        default_database.write_item_database_for_game(idb_per_game[game], game)
+        default_database.write_pickup_database_for_game(pdb_per_game[game], game)
 
 
 def refresh_all_command(sub_parsers):

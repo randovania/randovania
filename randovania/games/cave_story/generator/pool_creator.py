@@ -7,7 +7,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.generator.base_patches_factory import MissingRng
-from randovania.generator.item_pool import PoolResults
+from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -36,7 +36,7 @@ def pool_creator(results: PoolResults,
     if not configuration.puppies_anywhere:
         puppy_indices = get_valid_indices(PUPPY_INDICES)
         rng.shuffle(puppy_indices)
-        puppies: list[PickupEntry] = list(filter(lambda p: p.item_category.name == "puppies", results.to_place))
+        puppies: list[PickupEntry] = list(filter(lambda p: p.pickup_category.name == "puppies", results.to_place))
         for p in puppies:
             results.to_place.remove(p)
             results.assignment[puppy_indices.pop()] = p

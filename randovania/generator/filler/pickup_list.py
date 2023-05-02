@@ -114,7 +114,7 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
     pickups_for_this = list(pickup_pool)
 
     # Check pickups that give less items in total first
-    # This means we test for expansions before the major items, in case both give the same resource
+    # This means we test for expansions before the standard pickups, in case both give the same resource
     # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
     pickups_for_this.sort(
         key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True))

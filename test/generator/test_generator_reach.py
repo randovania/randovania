@@ -24,7 +24,7 @@ from randovania.generator import reach_lib
 from randovania.generator.generator_reach import (
     GeneratorReach
 )
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.reach_lib import (
     advance_reach_with_possible_unsafe_resources

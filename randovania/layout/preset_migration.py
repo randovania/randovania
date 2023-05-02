@@ -763,6 +763,47 @@ def _migrate_v47(preset: dict) -> dict:
     return preset
 
 def _migrate_v48(preset: dict) -> dict:
+    ammo_pickup_config = preset["configuration"].pop("ammo_configuration")
+    ammo_pickup_config["pickups_state"] = ammo_pickup_config.pop("items_state")
+    for state in ammo_pickup_config["pickups_state"].values():
+        state["requires_main_item"] = state.pop("requires_major_item")
+    preset["configuration"]["ammo_pickup_configuration"] = ammo_pickup_config
+
+    std_pickup_config = preset["configuration"].pop("major_items_configuration")
+    std_pickup_config["pickups_state"] = std_pickup_config.pop("items_state")
+    for state in std_pickup_config["pickups_state"].values():
+        if "num_included_in_starting_items" in state:
+            state["num_included_in_starting_pickups"] = state.pop("num_included_in_starting_items")
+    std_pickup_config["default_pickups"] = std_pickup_config.pop("default_items")
+    std_pickup_config["minimum_random_starting_pickups"] = std_pickup_config.pop("minimum_random_starting_items")
+    std_pickup_config["maximum_random_starting_pickups"] = std_pickup_config.pop("maximum_random_starting_items")
+    preset["configuration"]["standard_pickup_configuration"] = std_pickup_config
+
+    return preset
+
+def _migrate_v49(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        config = preset["configuration"]
+        flash_shift_config: dict = config["standard_pickup_configuration"]["pickups_state"]["Flash Shift"]
+        ammo_config: dict = config["ammo_pickup_configuration"]["pickups_state"]
+
+        # check to make sure preset wasn't manually migrated
+        if flash_shift_config.get("included_ammo") is None:
+            # 2 is the vanilla chain limit; include this many upgrades by default
+            flash_shift_config["included_ammo"] = [2]
+            config["standard_pickup_configuration"]["pickups_state"]["Flash Shift"] = flash_shift_config
+
+        if ammo_config.get("Flash Shift Upgrade") is None:
+            ammo_config["Flash Shift Upgrade"] = {
+                "ammo_count": [1],
+                "pickup_count": 0,
+                "requires_main_item": True,
+            }
+            preset["configuration"]["ammo_pickup_configuration"]["pickups_state"] = ammo_config
+
+    return preset
+
+def _migrate_v50(preset: dict) -> dict:
     if preset["game"] == "dread":
         preset["configuration"]["raven_beak_damage_table_handling"] = DreadRavenBeakDamageMode.CONSISTENT_LOW
     return preset
@@ -817,6 +858,8 @@ _MIGRATIONS = [
     _migrate_v46,
     _migrate_v47,
     _migrate_v48,
+    _migrate_v49,
+    _migrate_v50,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

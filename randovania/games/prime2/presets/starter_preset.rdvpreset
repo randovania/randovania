@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 49,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "fcbe4e3f-b1fa-41cc-83cb-c86d84c10f0f",
@@ -13,20 +13,21 @@
         "starting_location": [
             {
                 "world_name": "Temple Grounds",
-                "area_name": "Landing Site"
+                "area_name": "Landing Site",
+                "node_name": "Save Station"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Combat Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Scan Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Dark Visor": {
                     "num_shuffled_pickups": 1
@@ -35,7 +36,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Varia Suit": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Dark Suit": {},
                 "Light Suit": {},
@@ -44,10 +45,10 @@
                 },
                 "Double Damage": {},
                 "Power Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Charge Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Dark Beam": {
                     "num_shuffled_pickups": 1,
@@ -70,7 +71,7 @@
                 },
                 "Unlimited Beam Ammo": {},
                 "Morph Ball": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Morph Ball Bomb": {
                     "num_shuffled_pickups": 1
@@ -142,42 +143,42 @@
                     "num_shuffled_pickups": 14
                 }
             },
-            "default_items": {
+            "default_pickups": {
                 "visor": "Combat Visor",
                 "beam": "Power Beam"
             },
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 33,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Power Bomb Expansion": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 8,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Dark Ammo Expansion": {
                     "ammo_count": [
                         20
                     ],
                     "pickup_count": 10,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Light Ammo Expansion": {
                     "ammo_count": [
                         20
                     ],
                     "pickup_count": 10,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Beam Ammo Expansion": {
                     "ammo_count": [
@@ -185,7 +186,7 @@
                         200
                     ],
                     "pickup_count": 0,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },
@@ -324,6 +325,7 @@
         "dangerous_energy_tank": false,
         "use_new_patcher": false,
         "inverted_mode": false,
+        "portal_rando": false,
         "allow_jumping_on_dark_water": false,
         "allow_vanilla_dark_beam": true,
         "allow_vanilla_light_beam": true,

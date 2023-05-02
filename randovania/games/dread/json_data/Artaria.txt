@@ -81,7 +81,7 @@ Extra - asset_id: collision_camera_000
               Can Slide Underwater
               Any of the following:
                   Gravity Suit or Perform WBJ or Use Spin Boost
-                  Flash Shift and Walljump (Beginner)
+                  Flash Shift and Wall Jump (Beginner)
           Before Artaria - EMMI Zone Water Device and Can Slide
 
 > Tunnel to First Tutorial Access; Heals? False
@@ -326,7 +326,7 @@ Extra - asset_id: collision_camera_003
   > Near Missile Tank 1
       Any of the following:
           Space Jump or Simple IBJ
-          Speed Booster and Speedbooster Conservation (Intermediate)
+          Speed Booster and Speed Booster Conservation (Intermediate)
           All of the following:
               # https://youtu.be/m4FANVI7eOU
               Before Elun - Release X Parasites and Shoot Ice Missile
@@ -458,7 +458,7 @@ Extra - asset_id: collision_camera_004
   > Dock to EMMI Zone First Entrance (Lower)
       Any of the following:
           Gravity Suit or After Artaria - Water Introduction Blob or Use Spin Boost
-          Slide and Speed Booster and Before Artaria - Water Introduction Blob and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer
+          Slide and Speed Booster and Before Artaria - Water Introduction Blob and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer
   > Event - Water Introduction Blob
       Lay Bomb or Shoot Beam
 
@@ -526,8 +526,8 @@ Extra - asset_id: collision_camera_005
       Any of the following:
           Spider Magnet or Space Jump or Simple IBJ
           Grapple Beam and Grapple Movement (Beginner)
-          Walljump (Beginner) and Use Spin Boost
-          Flash Shift and Walljump (Intermediate)
+          Wall Jump (Beginner) and Use Spin Boost
+          Flash Shift and Wall Jump (Intermediate)
           Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Pickup (Missile Tank); Heals? False
@@ -575,7 +575,7 @@ Extra - asset_id: collision_camera_005
               Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
               After Artaria - Central Unit or After Elun - Release X Parasites
           All of the following:
-              Walljump (Beginner)
+              Wall Jump (Beginner)
               Flash Shift or Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
           Speed Booster and Disabled Door Lock Randomizer
@@ -628,7 +628,7 @@ Extra - asset_id: collision_camera_006
               After Artaria - Central Unit and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
           Morph Ball and Single-wall Wall Jump (Intermediate)
   > Door to EMMI Zone First Entrance
-      Flash Shift or Speed Booster or Walljump (Advanced) or Simple IBJ or Use Spin Boost
+      Flash Shift or Speed Booster or Wall Jump (Advanced) or Simple IBJ or Use Spin Boost
   > Event - First Chase Blob
       Pseudo-Wave Beam (Intermediate) or Shoot Diffusion or Wave
   > Start Point
@@ -1043,7 +1043,7 @@ Extra - asset_id: collision_camera_010
           Spider Magnet or Space Jump or Simple IBJ
           Speed Booster and Disabled Door Lock Randomizer
           All of the following:
-              Flash Shift and Walljump (Intermediate)
+              Flash Shift and Wall Jump (Intermediate)
               After Artaria - Central Unit or Movement (Intermediate)
           All of the following:
               Morph Ball and Single-wall Wall Jump (Advanced)
@@ -1078,10 +1078,14 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_def: None
   * Extra - exclude_from_dock_rando: True
   > Door to EMMI Zone Exit Northwest
-      All of the following:
-          # very dumb triple flash shift off of frozen enemy.
-          Flash Shift and Stand on Frozen Enemy (Advanced) and Shoot Ice Missile
-          After Artaria - Central Unit or Movement (Intermediate)
+      Any of the following:
+          All of the following:
+              # very dumb triple flash shift off of frozen enemy.
+              Flash Shift and Stand on Frozen Enemy (Advanced) and Shoot Ice Missile
+              After Artaria - Central Unit or Movement (Intermediate)
+          All of the following:
+              # can reach trivially by jumping up from tunnel and flashing 4 times
+              Flash Shift and Flash Shift Upgrade ≥ 3
   > Door to Wide Beam Block Room (Upper)
       Trivial
   > Pickup (Power Bomb Tank)
@@ -1135,7 +1139,7 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Slide Tunnel to EMMI Zone Exit South/Tunnel to EMMI Zone Hub
   > Next to Water Device
-      Speedbooster Conservation (Beginner) and Ballspark
+      Speed Booster Conservation (Beginner) and Ballspark
 
 > Next to Water Device; Heals? False
   * Layers: default
@@ -1144,7 +1148,7 @@ Extra - asset_id: collision_camera_010
   > Event - Water Device
       Trivial
   > Dock to EMMI Zone Exit South
-      Walljump (Intermediate) or Simple IBJ or Use Spin Boost
+      Wall Jump (Intermediate) or Simple IBJ or Use Spin Boost
   > Tunnel to EMMI Zone Exit South
       Any of the following:
           Morph Ball
@@ -1282,9 +1286,9 @@ Extra - asset_id: collision_camera_011
           After Artaria - Thermal Device
           Any of the following:
               Space Jump or Simple IBJ
-              Walljump (Intermediate) and Use Spin Boost
+              Wall Jump (Intermediate) and Use Spin Boost
               All of the following:
-                  Gravity Suit and Speedbooster Conservation (Beginner) and Disabled Door Lock Randomizer and Ballspark
+                  Gravity Suit and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer and Ballspark
                   After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
   > Teleporter to Cataris - Teleport to Artaria (Red)
       Trivial
@@ -1595,7 +1599,11 @@ Extra - asset_id: collision_camera_015
   > Door to White EMMI Arena (Top)
       Any of the following:
           Space Jump
-          Movement (Beginner) and Use Spin Boost
+          All of the following:
+              Movement (Beginner)
+              Any of the following:
+                  Use Spin Boost
+                  Speed Booster and Speed Booster Upgrade and Disabled Door Lock Randomizer
   > Tunnel to White EMMI Arena
       Trivial
   > Event - EMMI Magnet Platform Lowered
@@ -1775,7 +1783,7 @@ Extra - asset_id: collision_camera_016
           After Artaria - Proto Central Unit
           Any of the following:
               Space Jump
-              Spin Boost and Walljump (Beginner)
+              Spin Boost and Wall Jump (Beginner)
               All of the following:
                   Flash Shift or Spin Boost
                   Speed Booster or Simple IBJ
@@ -1809,9 +1817,9 @@ Extra - asset_id: collision_camera_017
   > Door to EMMI Zone Spinner (Middle)
       Any of the following:
           Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Beginner)
+          Flash Shift and Wall Jump (Beginner)
           All of the following:
-              Stand on Frozen Enemy (Intermediate) and Walljump (Advanced) and Shoot Ice Missile
+              Stand on Frozen Enemy (Intermediate) and Wall Jump (Advanced) and Shoot Ice Missile
               After Artaria - Central Unit or After Elun - Release X Parasites
           Morph Ball and Single-wall Wall Jump (Intermediate)
   > Start Point
@@ -1846,7 +1854,7 @@ Extra - asset_id: collision_camera_017
           All of the following:
               Flash Shift
               Any of the following:
-                  Walljump (Intermediate)
+                  Wall Jump (Intermediate)
                   Slide and Slide Jump (Beginner)
           Morph Ball and Single-wall Wall Jump (Intermediate)
 
@@ -2742,7 +2750,7 @@ Extra - asset_id: collision_camera_032
   * Extra - right_shield_def: None
   > Door to Save Station North
       Any of the following:
-          Flash Shift or Walljump (Intermediate) or Simple IBJ or Use Spin Boost
+          Flash Shift or Wall Jump (Intermediate) or Simple IBJ or Use Spin Boost
           All of the following:
               Grapple Beam
               Spider Magnet or Grapple Movement (Beginner)
@@ -3458,10 +3466,10 @@ Extra - asset_id: collision_camera_056
                   After Artaria - Water Reservoir Blob and Perform WBJ
               Any of the following:
                   Simple IBJ or Use Spin Boost
-                  Flash Shift and Walljump (Intermediate)
+                  Flash Shift and Wall Jump (Intermediate)
           All of the following:
               Speed Booster
-              Gravity Suit or After Artaria - Prepare Speedboost in Map Station
+              Gravity Suit or After Artaria - Prepare Speed Booster in Map Station
 
 > Dock to Red Chozo Arena; Heals? False
   * Layers: default
@@ -3489,7 +3497,7 @@ Extra - asset_id: collision_camera_056
   > Tower Middle
       Any of the following:
           Use Spin Boost
-          Speed Booster and After Artaria - Waterfall Rotatable and Speedbooster Conservation (Intermediate) and Disabled Door Lock Randomizer and Shoot Plasma Beam
+          Speed Booster and After Artaria - Waterfall Rotatable and Speed Booster Conservation (Intermediate) and Disabled Door Lock Randomizer and Shoot Plasma Beam
   > Event - Waterfall Rotatable (Above)
       Wave Beam
 
@@ -3501,7 +3509,7 @@ Extra - asset_id: collision_camera_056
 
 > Event - Prepare Speeboost in Map Station; Heals? False
   * Layers: default
-  * Event Artaria - Prepare Speedboost in Map Station
+  * Event Artaria - Prepare Speed Booster in Map Station
   > Door to Map Station
       Trivial
 
@@ -3694,7 +3702,7 @@ Extra - asset_id: collision_camera_061
   > Dock to EMMI Zone Hub
       Trivial
   > Tunnel to EMMI Zone Hub
-      Speedbooster Conservation (Beginner) and Ballspark
+      Speed Booster Conservation (Beginner) and Ballspark
 
 > Dock to EMMI Zone Hub; Heals? False
   * Layers: default
@@ -4679,7 +4687,7 @@ Extra - asset_id: collision_camera_079
                       Movement (Intermediate) and Disabled Door Lock Randomizer
           All of the following:
               Flash Shift
-              Grapple Beam or Walljump (Beginner)
+              Grapple Beam or Wall Jump (Beginner)
 
 > Door to Transport to Cataris; Heals? False
   * Layers: default
@@ -4755,6 +4763,19 @@ Extra - asset_id: collision_camera_081
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 2
+      All of the following:
+          # Any% NMG early screw using either the Short Boost trick or a Speed Booster Upgrade
+          Speed Booster and After Artaria - Screw Attack Water Blob and Movement (Advanced) and Ballspark
+          Any of the following:
+              # Need to open the grapple door and then short boost, or be able to charge speed in the space from the door to the water
+              Speed Booster Upgrade ≥ 3
+              All of the following:
+                  # Any% NMG "SASB" Short Boost
+                  Grapple Beam and Short Boost (Expert) and Disabled Door Lock Randomizer and Can Short Boost
+              All of the following:
+                  # Alternative to Short Boost using SB Upgrades
+                  Grapple Beam and Speed Booster Upgrade and Disabled Door Lock Randomizer
   > Blob - Right
       Lay Bomb or Lay Power Bomb
 
@@ -4866,7 +4887,7 @@ Extra - asset_id: collision_camera_081
           After Artaria - Screw Attack Rotatable
           Any of the following:
               Space Jump or Simple IBJ
-              Walljump (Beginner) and Use Spin Boost
+              Wall Jump (Beginner) and Use Spin Boost
   > Event - Screw Attack Rotatable
       All of the following:
           Knowledge (Intermediate)
@@ -4890,7 +4911,7 @@ Extra - asset_id: collision_camera_081
   > Next to Upper Tank
       All of the following:
           Screw Attack
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Wall Jump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Teleporter to Cataris; Heals? False; Default Node
   * Layers: default
@@ -4913,7 +4934,7 @@ Extra - asset_id: collision_camera_081
   > Door to Freezer (Power)
       All of the following:
           Morph Ball
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Wall Jump (Beginner) or Simple IBJ or Use Spin Boost
   > Blob - Left
       Trivial
 

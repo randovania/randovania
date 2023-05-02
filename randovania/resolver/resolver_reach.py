@@ -94,8 +94,8 @@ class ResolverReach:
             for target_node, requirement in logic.game.world_list.potential_nodes_from(node, context):
                 target_node_index = target_node.node_index
 
-                if checked_nodes.get(target_node_index, math.inf) <= energy or nodes_to_check.get(target_node_index,
-                                                                                                  math.inf) <= energy:
+                if checked_nodes.get(target_node_index, -math.inf) >= energy or nodes_to_check.get(target_node_index,
+                                                                                                   -math.inf) >= energy:
                     continue
 
                 if requirement_to_leave != Requirement.trivial():
