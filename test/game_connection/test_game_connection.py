@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_connection.builder.connector_builder_factory import ConnectorBuilderOption
+from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector

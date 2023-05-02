@@ -8,7 +8,7 @@ from qasync import asyncSlot
 
 import randovania
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.builder.connector_builder_factory import ConnectorBuilderOption
+from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector

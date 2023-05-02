@@ -6,7 +6,7 @@ from enum import Enum
 from pathlib import Path
 from typing import TypeVar, Callable, Any
 
-from randovania.game_connection.builder.connector_builder_factory import ConnectorBuilderOption
+from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence, update_checker, persisted_options

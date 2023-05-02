@@ -8,7 +8,7 @@ from enum import Enum
 from PySide6.QtCore import Signal, QObject
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.builder.connector_builder_factory import ConnectorBuilderOption
+from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_description.resources.item_resource_info import Inventory
