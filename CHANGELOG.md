@@ -63,7 +63,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 47 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 216
+- Added: 48 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 217
+
+##### Phazon Mines
+
+- Fixed: Fungal Hall B - Scan dash method now requires scan visor
+- Fixed: Ventillation Shaft - Combat dash to climb room now requires dock rando to be off 
 
 ### Metroid Prime 2: Echoes
 
