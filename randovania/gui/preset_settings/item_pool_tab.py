@@ -321,10 +321,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             current_row = 0
 
-            if ammo.warning is not None:
-                warning_label = QtWidgets.QLabel(ammo.warning, pickup_box)
-                warning_label.setWordWrap(True)
-                layout.addWidget(warning_label, current_row, 0, 1, -1)
+            if ammo.description is not None:
+                description_label = QtWidgets.QLabel(ammo.description, pickup_box)
+                description_label.setWordWrap(True)
+                layout.addWidget(description_label, current_row, 0, 1, -1)
                 current_row += 1
 
             def add_row(widget_a: QtWidgets.QWidget, widget_b: QtWidgets.QWidget):
