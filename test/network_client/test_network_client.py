@@ -1,12 +1,13 @@
+import uuid
 from pathlib import Path
 from unittest.mock import MagicMock, AsyncMock, call
 
 import pytest
 import socketio.exceptions
 
-from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
-from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_connection.game_connection import GameConnectionStatus
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionPickups
@@ -198,6 +199,7 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
 
     # Assert
     assert client._current_game_session_pickups == GameSessionPickups(
+        id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
         game=RandovaniaGame.METROID_PRIME_CORRUPTION,
         pickups=(
             ("Message A", pickups[0]),

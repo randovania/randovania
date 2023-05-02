@@ -9,8 +9,7 @@ from randovania.game_connection.builder.connector_builder import ConnectorBuilde
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 
-from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_connection.game_connection import GameConnection
+from randovania.game_connection.game_connection import GameConnection, GameConnectionStatus
 
 should_quit = False
 old_hook = sys.excepthook

@@ -48,6 +48,7 @@ def test_migrate_from_v11(option):
             'output_format': None,
             'use_external_models': []
         },
+        "connector_builders": [],
         'schema_version': persisted_options._CURRENT_OPTIONS_FILE_VERSION,
     }
     assert new_data == expected_data
@@ -275,24 +276,24 @@ def test_serialize_fields(option: Options):
 def test_edit_during_options_changed(tmpdir):
     # Setup
     option = Options(Path(tmpdir))
-    option._selected_tracker = "start"
+    option._displayed_alerts = set()
 
     def on_changed():
         with option:
-            option.selected_tracker = "final"
+            option.displayed_alerts = {InfoAlert.MULTIWORLD_FAQ}
 
     option.on_options_changed = on_changed
 
     # Run
     with option:
-        option.selected_tracker = "middle"
+        option.displayed_alerts = {InfoAlert.FAQ}
 
     second_option = Options(Path(tmpdir))
     second_option.load_from_disk()
 
     # Assert
-    assert option.selected_tracker == "final"
-    assert option.selected_tracker == second_option.selected_tracker
+    assert option.displayed_alerts == {InfoAlert.MULTIWORLD_FAQ}
+    assert option.displayed_alerts == second_option.displayed_alerts
 
 
 @pytest.mark.parametrize("ignore_decode_errors", [False, True])

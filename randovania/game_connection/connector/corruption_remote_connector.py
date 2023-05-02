@@ -1,9 +1,8 @@
 import struct
 
-from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
 from randovania.games.prime3.patcher.corruption_dol_patches import CorruptionDolVersion
@@ -33,7 +32,6 @@ def _corruption_powerup_offset(item_index: int) -> int:
 class CorruptionRemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: CorruptionDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
-
 
     def _asset_id_format(self):
         return ">Q"
@@ -107,5 +105,5 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         # Not yet implemented
         return
 
-    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[DolRemotePatch]) -> None:
+    async def execute_remote_patches(self, patches: list[DolRemotePatch]) -> None:
         raise RuntimeError("Unable to execute remote patches in Corruption")

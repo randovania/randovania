@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>168</width>
-    <height>199</height>
+    <width>243</width>
+    <height>210</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,17 +16,20 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="select_game_layout">
       <item>
-       <widget class="QLabel" name="connection_status_label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QComboBox" name="select_game_combo"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="select_game_button">
+        <property name="maximumSize">
+         <size>
+          <width>120</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="text">
-         <string>Connection Status</string>
+         <string>Connections</string>
         </property>
        </widget>
       </item>
@@ -44,7 +47,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>168</width>
+     <width>243</width>
      <height>17</height>
     </rect>
    </property>
@@ -54,46 +57,13 @@
     </property>
     <widget class="QMenu" name="menu_tracker">
      <property name="title">
-      <string>Tracker</string>
-     </property>
-    </widget>
-    <widget class="QMenu" name="menu_backend">
-     <property name="title">
-      <string>Choose game connection</string>
+      <string>Theme</string>
      </property>
     </widget>
     <addaction name="menu_tracker"/>
-    <addaction name="menu_backend"/>
-    <addaction name="action_force_update"/>
    </widget>
    <addaction name="menu_options"/>
   </widget>
-  <action name="action_theme_2d_style">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>2D Style</string>
-   </property>
-  </action>
-  <action name="action_theme_game_icons">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Game Icons (Echoes only)</string>
-   </property>
-  </action>
-  <action name="actionasdf">
-   <property name="text">
-    <string>asdf</string>
-   </property>
-  </action>
-  <action name="action_force_update">
-   <property name="text">
-    <string>Force Update</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

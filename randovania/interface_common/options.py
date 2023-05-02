@@ -6,7 +6,8 @@ from enum import Enum
 from pathlib import Path
 from typing import TypeVar, Callable, Any
 
-from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
+from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence, update_checker, persisted_options
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -116,9 +117,9 @@ _SERIALIZER_FOR_FIELD = {
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
     "game_backend": Serializer(lambda it: it.value, ConnectorBuilderChoice),
-    "nintendont_ip": Serializer(identity, str),
-    "selected_tracker": Serializer(identity, str),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
+    "connector_builders": Serializer(lambda obj: [it.as_json for it in obj],
+                                     lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]),
 }
 
 
@@ -133,6 +134,7 @@ def add_per_game_serializer():
         )
         _SERIALIZER_FOR_FIELD[f"is_game_expanded_{game.value}"] = Serializer(identity, bool)
         _SERIALIZER_FOR_FIELD[f"selected_preset_uuid_{game.value}"] = Serializer(str, uuid.UUID)
+        _SERIALIZER_FOR_FIELD[f"selected_tracker_{game.value}"] = Serializer(identity, str)
 
 
 add_per_game_serializer()
@@ -172,8 +174,7 @@ class Options:
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
     _game_backend: ConnectorBuilderChoice | None = None
-    _nintendont_ip: str | None = None
-    _selected_tracker: str | None = None
+    _connector_builders: list[ConnectorBuilderOption] | None = None
 
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
@@ -184,6 +185,7 @@ class Options:
             self._set_field(f"game_{game.value}", None)
             self._set_field(f"is_game_expanded_{game.value}", None)
             self._set_field(f"selected_preset_uuid_{game.value}", None)
+            self._set_field(f"selected_tracker_{game.value}", None)
 
     def __getattr__(self, item):
         if isinstance(item, str):
@@ -193,6 +195,8 @@ class Options:
                 game_name = item[len("is_game_expanded_"):]
             elif item.startswith("selected_preset_uuid_"):
                 game_name = item[len("selected_preset_uuid_"):]
+            elif item.startswith("selected_tracker_"):
+                game_name = item[len("selected_tracker_"):]
             else:
                 raise AttributeError(item)
 
@@ -391,28 +395,26 @@ class Options:
     def game_backend(self, value: ConnectorBuilderChoice):
         self._edit_field("game_backend", value)
 
-    @property
-    def nintendont_ip(self) -> str | None:
-        return self._nintendont_ip
+    def selected_tracker_for(self, game: RandovaniaGame) -> str:
+        return getattr(self, f"selected_tracker_{game.value}")
 
-    @nintendont_ip.setter
-    def nintendont_ip(self, value: str | None):
-        self._edit_field("nintendont_ip", value)
+    def set_selected_tracker_for(self, game: RandovaniaGame, value: str):
+        self._edit_field(f"selected_tracker_{game.value}", value)
 
     @property
-    def selected_tracker(self) -> str:
-        return self._selected_tracker
+    def connector_builders(self) -> list[ConnectorBuilderOption]:
+        return self._connector_builders or []
 
-    @selected_tracker.setter
-    def selected_tracker(self, value: str):
-        self._edit_field("selected_tracker", value)
+    @connector_builders.setter
+    def connector_builders(self, value: list[ConnectorBuilderOption]):
+        self._edit_field("connector_builders", value)
 
     @property
-    def displayed_alerts(self):
+    def displayed_alerts(self) -> set[InfoAlert]:
         return _return_with_default(self._displayed_alerts, set)
 
     @displayed_alerts.setter
-    def displayed_alerts(self, value):
+    def displayed_alerts(self, value: set[InfoAlert]):
         self._edit_field("displayed_alerts", value)
 
     def is_alert_displayed(self, value: InfoAlert):

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DebugBackendWindow</class>
- <widget class="QMainWindow" name="DebugBackendWindow">
+ <class>DebugConnectorWindow</class>
+ <widget class="QMainWindow" name="DebugConnectorWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,11 +23,11 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="grid_layout">
     <item row="4" column="3">
      <widget class="QPushButton" name="reset_button">
       <property name="text">
-       <string>Reset</string>
+       <string>Finish</string>
       </property>
      </widget>
     </item>
@@ -56,20 +56,20 @@
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="QScrollArea" name="scrollArea">
+        <widget class="QScrollArea" name="inventory_scroll_area">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
+         <widget class="QWidget" name="inventory_scroll_contents">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>305</width>
-            <height>270</height>
+            <width>329</width>
+            <height>308</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
+          <layout class="QVBoxLayout" name="inventory_scroll_layout">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -115,7 +115,7 @@
      <x>0</x>
      <y>0</y>
      <width>697</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>
