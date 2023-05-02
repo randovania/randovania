@@ -5,9 +5,9 @@ from unittest.mock import MagicMock, AsyncMock, call
 import pytest
 import socketio.exceptions
 
-from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
+from randovania.game_connection.game_connection import GameConnectionStatus
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import GameSessionPickups

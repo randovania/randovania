@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, call
 import pytest
 from mock import AsyncMock
 
-from randovania.game_connection.connection_base import InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperationException

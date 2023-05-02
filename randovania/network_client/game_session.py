@@ -4,7 +4,7 @@ import json
 import uuid
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_connection.connection_base import InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame

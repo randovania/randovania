@@ -140,7 +140,7 @@ class MultiworldClient(QObject):
         self._notify_task = asyncio.create_task(self._notify_collect_locations())
 
     async def _on_new_state(self):
-        if self._all_data is None:
+        if not self.is_active:
             return
 
         connector_by_uid: dict[uuid.UUID, RemoteConnector] = {

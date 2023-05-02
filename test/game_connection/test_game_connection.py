@@ -6,11 +6,10 @@ import pytest
 from randovania.game_connection.builder.connector_builder_factory import ConnectorBuilderOption
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
-from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
+from randovania.game_connection.game_connection import GameConnection, ConnectedGameState, GameConnectionStatus
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 

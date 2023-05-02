@@ -18,7 +18,8 @@ import socketio
 import socketio.exceptions
 
 from randovania.bitpacking import bitpacking
-from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
+from randovania.game_connection.game_connection import GameConnectionStatus
+from randovania.game_description.resources.item_resource_info import InventoryItem, Inventory
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame

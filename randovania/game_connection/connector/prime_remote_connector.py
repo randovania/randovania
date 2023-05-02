@@ -4,7 +4,6 @@ import struct
 
 
 from randovania.dol_patching import assembler
-from randovania.game_connection.connection_base import InventoryItem, Inventory
 from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
     PlayerLocationEvent
 from randovania.game_connection.executor.memory_operation import (
@@ -12,7 +11,7 @@ from randovania.game_connection.executor.memory_operation import (
 )
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import (

@@ -168,9 +168,10 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         ui.menu.addAction("Remove").triggered.connect(
             functools.partial(self.game_connection.remove_connection_builder, builder)
         )
-        ui.menu.addAction("Open Auto-Tracker").triggered.connect(
-            functools.partial(self.open_auto_tracker, builder)
-        )
+        # TODO: add the auto tracker action
+        # ui.menu.addAction("Open Auto-Tracker").triggered.connect(
+        #     functools.partial(self.open_auto_tracker, builder)
+        # )
         if isinstance(builder, NintendontConnectorBuilder):
             ui.menu.addSeparator()
             action = QtGui.QAction(ui.menu)
@@ -189,9 +190,6 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.ui_for_builder[builder] = ui
 
         self.builders_layout.addWidget(ui.group)
-
-    def open_auto_tracker(self, builder: ConnectorBuilder):
-        pass
 
     @asyncSlot()
     async def on_upload_nintendont_action(self, builder: NintendontConnectorBuilder):

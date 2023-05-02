@@ -1,9 +1,8 @@
 import struct
 
-from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
 from randovania.games.prime3.patcher.corruption_dol_patches import CorruptionDolVersion
