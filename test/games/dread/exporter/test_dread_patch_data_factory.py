@@ -245,3 +245,23 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
         expected_data = json.load(file)
 
     assert data == expected_data
+
+
+def test_create_patch_with_crazy_settings(test_files_dir, mocker, setup_and_teardown_for_custom_spawn):
+    # test for various uncommon or unusual preset settings
+    file = test_files_dir.joinpath("log_files", "dread", "crazy_settings.rdvgame")
+    description = LayoutDescription.from_file(file)
+    players_config = PlayersConfiguration(0, {0: "Dread"})
+    cosmetic_patches = DreadCosmeticPatches()
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+                 new_callable=PropertyMock, return_value="Words Hash")
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
+                 new_callable=PropertyMock, return_value="$$$$$")
+
+    data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
+
+    # Expected Result
+    with test_files_dir.joinpath("patcher_data", "dread", "crazy_settings.json").open("r") as file:
+        expected_data = json.load(file)
+
+    assert data == expected_data
