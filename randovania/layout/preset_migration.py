@@ -3,7 +3,6 @@ import uuid
 
 from randovania.game_description import migration_data, default_database
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.games.dread.layout.dread_configuration import DreadRavenBeakDamageMode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
