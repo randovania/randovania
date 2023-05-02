@@ -459,7 +459,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "lava": self.configuration.constant_lava_damage,
             },
             "game_patches": {
-                "raven_beak_damage_table_handling": "consistent_low",
+                "raven_beak_damage_table_handling": self.configuration.raven_beak_damage_table_handling.value,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,

@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
 - Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
 - Added: Ice Missile Cover and Diffusion Beam Cover can now be added to Door Lock Randomizer
+- Added: New option under "Game Modifications" to choose how inconsistencies in Raven Beak's damage resistance are handled.
 - Changed: The doors in Itorash are now excluded from being shuffled in Door Lock Randomizer.
 
 #### Patcher Changes

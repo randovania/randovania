@@ -2,13 +2,18 @@ import dataclasses
 
 import pytest
 
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig, DreadRavenBeakDamageMode
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 
 
-@pytest.mark.parametrize("has_artifacts", [False, True])
-def test_dread_format_params(has_artifacts):
+@pytest.mark.parametrize(["has_artifacts", "rb_damage_mode"], [
+    [False, DreadRavenBeakDamageMode.CONSISTENT_LOW],
+    [True, DreadRavenBeakDamageMode.CONSISTENT_LOW],
+    [False, DreadRavenBeakDamageMode.CONSISTENT_HIGH],
+    [False, DreadRavenBeakDamageMode.UNMODIFIED],
+])
+def test_dread_format_params(has_artifacts: bool, rb_damage_mode: DreadRavenBeakDamageMode):
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
     assert isinstance(preset.configuration, DreadConfiguration)
@@ -18,7 +23,8 @@ def test_dread_format_params(has_artifacts):
             prefer_emmi=True,
             prefer_major_bosses=False,
             required_artifacts=3 if has_artifacts else 0,
-        )
+        ),
+        raven_beak_damage_table_handling=rb_damage_mode
     )
 
     # Run
@@ -30,9 +36,7 @@ def test_dread_format_params(has_artifacts):
             "Damage Strictness: Medium",
             "Immediate Energy Part"
         ],
-        "Game Changes": [
-            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
-        ],
+        "Game Changes": _get_expected_game_changes_text(rb_damage_mode),
         "Environmental Damage": [
             "Heat: Constant 20 dmg/s",
             "Cold: Constant 20 dmg/s",
@@ -56,3 +60,19 @@ def test_dread_format_params(has_artifacts):
             "Pulse Radar"
         ]
     }
+
+def _get_expected_game_changes_text(rb_damage_mode: DreadRavenBeakDamageMode):
+    if rb_damage_mode == DreadRavenBeakDamageMode.UNMODIFIED:
+        return [
+            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
+            "Raven Beak Damage: Unmodified",
+        ]
+    elif rb_damage_mode == DreadRavenBeakDamageMode.CONSISTENT_HIGH:
+        return [
+            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
+            "Raven Beak Damage: Consistent, without damage reduction",
+        ]
+    else:
+        return [
+            "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
+        ]

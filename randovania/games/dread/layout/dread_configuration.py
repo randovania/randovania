@@ -1,6 +1,7 @@
 import dataclasses
+from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackDataclass
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -22,6 +23,25 @@ class DreadArtifactConfig(BitPackDataclass, JsonDataclass):
         return []
 
 
+class DreadRavenBeakDamageMode(BitPackEnum, Enum):
+    UNMODIFIED = "unmodified"
+    CONSISTENT_LOW = "consistent_low"
+    CONSISTENT_HIGH = "consistent_high"
+
+    @property
+    def long_name(self) -> str:
+        if self == DreadRavenBeakDamageMode.UNMODIFIED:
+            return "Unmodified"
+        elif self == DreadRavenBeakDamageMode.CONSISTENT_LOW:
+            return "Consistent, with damage reduction"
+        elif self == DreadRavenBeakDamageMode.CONSISTENT_HIGH:
+            return "Consistent, without damage reduction"
+
+    @property
+    def is_default(self) -> bool:
+        return self == DreadRavenBeakDamageMode.CONSISTENT_LOW
+
+
 @dataclasses.dataclass(frozen=True)
 class DreadConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
@@ -30,6 +50,7 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_shortcut_no_grapple: bool
     hanubia_easier_path_to_itorash: bool
     x_starts_released: bool
+    raven_beak_damage_table_handling: DreadRavenBeakDamageMode
     allow_highly_dangerous_logic: bool
     april_fools_hints: bool
     artifacts: DreadArtifactConfig
