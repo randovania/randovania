@@ -1,4 +1,5 @@
 import json
+import uuid
 from pathlib import Path
 from unittest.mock import MagicMock, AsyncMock, call
 
@@ -6,7 +7,6 @@ import pytest
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.gui.multiworld_client import MultiworldClient, Data
 
 
@@ -26,10 +26,10 @@ async def test_start(client, tmpdir):
     client.network_client.session_self_update = AsyncMock()
 
     # Run
-    await client.start(Path(tmpdir).joinpath("missing_file.json"))
+    await client.start(Path(tmpdir).joinpath("state"))
 
     # Assert
-    game_connection.set_location_collected_listener.assert_called_once_with(client.on_location_collected)
+    game_connection.GameStateUpdated.connect.assert_called_once_with(client.on_game_state_updated)
     client.network_client.GameSessionPickupsUpdated.connect.assert_called_once_with(client.on_network_game_updated)
 
 
@@ -38,49 +38,63 @@ async def test_stop(client: MultiworldClient):
     await client.stop()
 
     # Assert
-    client.game_connection.set_location_collected_listener.assert_called_once_with(None)
+    client.game_connection.GameStateUpdated.disconnect.assert_called_once_with(client.on_game_state_updated)
     client.network_client.GameSessionPickupsUpdated.disconnect.assert_called_once_with(client.on_network_game_updated)
-    client.game_connection.set_expected_game.assert_called_once_with(None)
-    client.game_connection.set_permanent_pickups.assert_called_once_with(())
+    assert client._remote_games == {}
+    assert client._all_data is None
 
 
-@pytest.mark.parametrize("wrong_game", [False, True])
 @pytest.mark.parametrize("exists", [False, True])
-async def test_on_location_collected(client: MultiworldClient, tmpdir, exists, wrong_game):
-    client._data = Data(Path(tmpdir).joinpath("data.json"))
-    client._data.collected_locations = {10, 15} if exists else {10}
+async def test_on_new_state(client: MultiworldClient, tmpdir, exists):
+    the_id = uuid.UUID("00000000-0000-1111-0000-000000000000")
+    data = Data(Path(tmpdir).joinpath("data.json"))
+    client._all_data = {the_id: data}
+    data.collected_locations = {10, 15} if exists else {10}
     client.start_notify_collect_locations_task = MagicMock()
 
-    if wrong_game and not exists:
-        expected_locations = {10}
-    else:
-        expected_locations = {10, 15}
+    remote_game = MagicMock()
+    client._remote_games = {
+        the_id: remote_game
+    }
 
-    if not wrong_game:
-        client._expected_game = RandovaniaGame.METROID_PRIME_ECHOES
+    connector = AsyncMock()
+    state = MagicMock()
+    state.id = the_id
+    state.collected_indices = {PickupIndex(15)}
+    client.game_connection.connected_states = {connector: state}
 
     # Run
-    await client.on_location_collected(RandovaniaGame.METROID_PRIME_ECHOES, PickupIndex(15))
+    await client._on_new_state()
 
     # Assert
-    assert client._data.collected_locations == expected_locations
+    assert data.collected_locations == {10, 15}
 
-    if exists or wrong_game:
+    connector.set_remote_pickups.assert_awaited_once_with(remote_game.pickups)
+
+    if exists:
         client.start_notify_collect_locations_task.assert_not_called()
     else:
         client.start_notify_collect_locations_task.assert_called_once_with()
 
 
-async def test_on_game_updated(client, tmpdir):
-    client._data = Data(Path(tmpdir).joinpath("data.json"))
+async def test_on_game_state_updated(client):
+    client._on_new_state = AsyncMock()
+    await client.on_game_state_updated(MagicMock())
+    client._on_new_state.assert_awaited_once_with()
+
+
+async def test_on_network_game_updated(client, tmpdir):
+    client._on_new_state = AsyncMock()
     pickups = MagicMock()
 
     # Run
     await client.on_network_game_updated(pickups)
 
     # Assert
-    client.game_connection.set_expected_game.assert_called_once_with(pickups.game)
-    client.game_connection.set_permanent_pickups.assert_called_once_with(pickups.pickups)
+    client._on_new_state.assert_awaited_once_with()
+    assert client._remote_games == {
+        pickups.id: pickups
+    }
 
 
 async def test_notify_collect_locations(client, tmpdir):
@@ -96,7 +110,9 @@ async def test_notify_collect_locations(client, tmpdir):
         "uploaded_locations": [15],
         "latest_message_displayed": 0,
     }))
-    client._data = Data(data_path)
+    client._all_data = {
+        uuid.UUID("00000000-0000-1111-0000-000000000000"): Data(data_path)
+    }
 
     # Run
     await client._notify_collect_locations()
@@ -104,20 +120,3 @@ async def test_notify_collect_locations(client, tmpdir):
     # Assert
     network_client.game_session_collect_locations.assert_has_awaits([call((10,)), call((10,))])
     assert set(json.loads(data_path.read_text())["uploaded_locations"]) == {10, 15}
-
-
-async def test_lock_file_on_init(skip_qtbot, tmpdir):
-    # Setup
-    network_client = MagicMock()
-    network_client.game_session_request_update = AsyncMock()
-    network_client.session_self_update = AsyncMock()
-    game_connection = MagicMock(spec=GameConnection)
-    game_connection.lock_identifier = str(tmpdir.join("my-lock"))
-
-    # Run
-    client = MultiworldClient(network_client, game_connection)
-    assert tmpdir.join("my-lock.pid").exists()
-
-    await client.start(Path(tmpdir).joinpath("data.json"))
-    await client.stop()
-    assert not tmpdir.join("my-lock.pid").exists()

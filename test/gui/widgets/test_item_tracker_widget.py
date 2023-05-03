@@ -1,6 +1,6 @@
 import pytest
 
-from randovania.game_connection.connection_base import InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 
 

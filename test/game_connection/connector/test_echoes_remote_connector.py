@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 
 from randovania.dol_patching.assembler import BaseInstruction
-from randovania.game_connection.connection_base import InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation

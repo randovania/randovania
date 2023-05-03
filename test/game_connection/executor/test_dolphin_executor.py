@@ -1,19 +1,87 @@
 from unittest.mock import MagicMock, call
 
+import pid
 import pytest
 
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
-from randovania.game_connection.executor.memory_operation import MemoryOperation
+from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
 
 
 @pytest.fixture(name="executor")
 def dolphin_executor():
     executor = DolphinExecutor()
     executor.dolphin = MagicMock()
+    executor._pid = MagicMock()
     return executor
 
 
-async def test_perform_memory_operations(executor: DolphinExecutor):
+async def test_connect_cant_hook(executor: DolphinExecutor):
+    # Setup
+    executor.dolphin.is_hooked.return_value = False
+
+    # Run
+    result = await executor.connect()
+
+    # Assert
+    assert result == "Unable to connect to Dolphin"
+    executor.dolphin.hook.assert_called_once_with()
+
+
+async def test_connect_pid_fail(executor: DolphinExecutor):
+    # Setup
+    executor.dolphin.is_hooked.return_value = True
+    executor._pid.create.side_effect = pid.PidFileError
+
+    # Run
+    result = await executor.connect()
+
+    # Assert
+    assert result == "Another Randovania is connected to Dolphin already"
+    executor._pid.create.assert_called_once_with()
+    executor.dolphin.hook.assert_not_called()
+
+
+async def test_connect_success(executor: DolphinExecutor):
+    # Setup
+    executor.dolphin.is_hooked.return_value = True
+
+    # Run
+    result = await executor.connect()
+
+    # Assert
+    assert result is None
+    executor._pid.create.assert_called_once_with()
+    executor.dolphin.hook.assert_not_called()
+
+
+@pytest.mark.parametrize(["was_hooked", "now_hooked"], [
+    (False, False),
+    (False, True),
+    (True, True),
+])
+def test_is_connected(executor: DolphinExecutor, was_hooked, now_hooked):
+    # Setup
+    executor.dolphin.is_hooked.side_effect = [was_hooked, now_hooked]
+    executor._test_still_hooked = MagicMock()
+
+    # Run
+    result = executor.is_connected()
+
+    # Assert
+    if was_hooked:
+        executor._test_still_hooked.assert_called_once_with()
+    else:
+        executor._test_still_hooked.assert_not_called()
+    assert result == now_hooked
+
+
+def test_disconnect(executor: DolphinExecutor):
+    executor.disconnect()
+    executor._pid.close.assert_called_once_with()
+    executor.dolphin.un_hook.assert_called_once_with()
+
+
+async def test_perform_memory_operations_success(executor: DolphinExecutor):
     executor.dolphin.follow_pointers.return_value = 0x80003000
     executor.dolphin.read_bytes.side_effect = [b"A" * 50, b"B" * 30, b"C" * 10]
 
@@ -33,3 +101,71 @@ async def test_perform_memory_operations(executor: DolphinExecutor):
         call(0x80002000, 10),
     ])
     executor.dolphin.write_bytes.assert_called_once_with(0x80003000 + 10, b"1" * 30)
+
+
+async def test_perform_memory_operations_follow_fail(executor: DolphinExecutor):
+    executor.dolphin.follow_pointers = MagicMock(side_effect=RuntimeError("can't follow"))
+    executor._test_still_hooked = MagicMock()
+
+    # Run
+    result = await executor.perform_memory_operations([
+        MemoryOperation(0x80001000, offset=20, read_byte_count=50),
+    ])
+
+    # Assert
+    assert list(result.values()) == []
+    executor.dolphin.follow_pointers.assert_called_once_with(0x80001000, [0x0])
+    executor.dolphin.read_bytes.assert_not_called()
+    executor.dolphin.write_bytes.assert_not_called()
+    executor._test_still_hooked.assert_called_once_with()
+
+
+async def test_perform_memory_operations_follow_fail_disconnect(executor: DolphinExecutor):
+    executor.dolphin.follow_pointers = MagicMock(side_effect=RuntimeError("can't follow"))
+    executor._test_still_hooked = MagicMock()
+    executor.dolphin.is_hooked.side_effect = [True, False]
+
+    # Run
+    with pytest.raises(MemoryOperationException):
+        await executor.perform_memory_operations([
+            MemoryOperation(0x80001000, offset=20, read_byte_count=50),
+        ])
+
+    # Assert
+    executor.dolphin.follow_pointers.assert_called_once_with(0x80001000, [0x0])
+    executor.dolphin.read_bytes.assert_not_called()
+    executor.dolphin.write_bytes.assert_not_called()
+    executor._test_still_hooked.assert_called_once_with()
+
+
+def test_test_still_hooked_success(executor: DolphinExecutor):
+    # Setup
+    executor.dolphin.read_bytes.return_value = b"A" * 4
+
+    # Run
+    executor._test_still_hooked()
+
+    # Assert
+    executor.dolphin.un_hook.assert_not_called()
+
+
+def test_test_still_hooked_bad_read(executor: DolphinExecutor):
+    # Setup
+    executor.dolphin.read_bytes.return_value = b"A" * 3
+
+    # Run
+    executor._test_still_hooked()
+
+    # Assert
+    executor.dolphin.un_hook.assert_called_once_with()
+
+
+def test_test_still_hooked_unhook(executor: DolphinExecutor):
+    # Setup
+    executor.dolphin.read_bytes.side_effect = RuntimeError("can't read")
+
+    # Run
+    executor._test_still_hooked()
+
+    # Assert
+    executor.dolphin.un_hook.assert_called_once_with()
