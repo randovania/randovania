@@ -16,7 +16,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.available_locations import LocationPickupMode, RandomizationMode
 from randovania.layout.preset import Preset
 
 
@@ -103,8 +103,13 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
         self._on_update_randomization_mode()
 
         for node, row_widget in self._row_widget_for_node.items():
-            can_have_progression = node.pickup_index not in available_locations.excluded_indices
-            row_widget.set_can_have_progression(can_have_progression)
+            if node.pickup_index in available_locations.excluded_indices:
+                location_mode = LocationPickupMode.SHUFFLED_NO_PROGRESSION
+            elif node.pickup_index in available_locations.minor_only_indices:
+                location_mode = LocationPickupMode.SHUFFLED_NO_MAJORS
+            else:
+                location_mode = LocationPickupMode.SHUFFLED
+            row_widget.set_location_pickup_mode(location_mode)
 
         self._during_batch_update = False
 
@@ -114,11 +119,13 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
             editor.available_locations = dataclasses.replace(editor.available_locations, randomization_mode=mode)
             for node, row_widget in self._row_widget_for_node.items():
                 if mode == RandomizationMode.MAJOR_MINOR_SPLIT and node.location_category == LocationCategory.MINOR:
-                    row_widget.set_can_have_progression(False)
+                    row_widget.set_location_pickup_mode(LocationPickupMode.SHUFFLED_NO_PROGRESSION)
+                    row_widget.set_is_major_only_location(False)
                     row_widget.setEnabled(False)
                 else:
                     row_widget.setEnabled(True)
-                    row_widget.set_can_have_progression(True)
+                    row_widget.set_location_pickup_mode(LocationPickupMode.SHUFFLED)
+                    row_widget.set_is_major_only_location(node.location_category == LocationCategory.MAJOR)
 
     def _on_location_changed(self, node: PickupNode):
         if self._during_batch_update:
@@ -126,5 +133,5 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
         with self._editor as editor:
             editor.available_locations = editor.available_locations.ensure_index(
                 node.pickup_index,
-                not self._row_widget_for_node[node].can_have_progression
+                self._row_widget_for_node[node].location_pickup_mode
             )

@@ -37,21 +37,44 @@ class RandomizationMode(BitPackEnum, Enum):
         raise ValueError(f"Unknown value: {self}")
 
 
+class LocationPickupMode(BitPackEnum, Enum):
+    SHUFFLED = "shuffled"
+    SHUFFLED_NO_PROGRESSION = "shuffled_no_progression"
+    SHUFFLED_NO_MAJORS = "shuffled_no_majors"
+
+    @property
+    def long_name(self) -> str:
+        if self == LocationPickupMode.SHUFFLED:
+            return "Shuffled"
+        elif self == LocationPickupMode.SHUFFLED_NO_PROGRESSION:
+            return "Shuffled (no progression)"
+        elif self == LocationPickupMode.SHUFFLED_NO_MAJORS:
+            return "Shuffled (no majors)"
+        else:
+            raise ValueError(f"Unknown: {self}")
+
+
 @dataclasses.dataclass(frozen=True)
 class AvailableLocationsConfiguration(BitPackValue):
     randomization_mode: RandomizationMode
     excluded_indices: frozenset[PickupIndex]
+    minor_only_indices: frozenset[PickupIndex]
     game: RandovaniaGame
 
     @property
-    def _sorted_indices(self) -> list[int]:
+    def _sorted_excluded_indices(self) -> list[int]:
         return list(sorted(item.index for item in self.excluded_indices))
+
+    @property
+    def _sorted_minor_only_indices(self) -> list[int]:
+        return list(sorted(item.index for item in self.minor_only_indices))
 
     @property
     def as_json(self) -> dict:
         return {
             "randomization_mode": self.randomization_mode.value,
-            "excluded_indices": self._sorted_indices,
+            "excluded_indices": self._sorted_excluded_indices,
+            "minor_only_indices": self._sorted_minor_only_indices,
         }
 
     @classmethod
@@ -59,6 +82,7 @@ class AvailableLocationsConfiguration(BitPackValue):
         return cls(
             randomization_mode=RandomizationMode(value["randomization_mode"]),
             excluded_indices=frozenset(PickupIndex(item) for item in value["excluded_indices"]),
+            minor_only_indices=frozenset(PickupIndex(item) for item in value.get("minor_only_indices", [])),
             game=game,
         )
 
@@ -66,9 +90,16 @@ class AvailableLocationsConfiguration(BitPackValue):
         db = default_database.game_description_for(self.game)
 
         yield from self.randomization_mode.bit_pack_encode(metadata)
+
         if self.excluded_indices:
             yield from bitpacking.encode_bool(True)
-            yield from bitpacking.pack_sorted_array_elements(self._sorted_indices, _all_indices(db))
+            yield from bitpacking.pack_sorted_array_elements(self._sorted_excluded_indices, _all_indices(db))
+        else:
+            yield from bitpacking.encode_bool(False)
+
+        if self.minor_only_indices:
+            yield from bitpacking.encode_bool(True)
+            yield from bitpacking.pack_sorted_array_elements(self._sorted_minor_only_indices, _all_indices(db))
         else:
             yield from bitpacking.encode_bool(False)
 
@@ -80,20 +111,38 @@ class AvailableLocationsConfiguration(BitPackValue):
         randomization_mode = RandomizationMode.bit_pack_unpack(decoder, metadata)
 
         if bitpacking.decode_bool(decoder):
-            indices = bitpacking.decode_sorted_array_elements(decoder, _all_indices(db))
+            excluded_indices = bitpacking.decode_sorted_array_elements(decoder, _all_indices(db))
         else:
-            indices = []
+            excluded_indices = []
+
+        if bitpacking.decode_bool(decoder):
+            minor_only_indices = bitpacking.decode_sorted_array_elements(decoder, _all_indices(db))
+        else:
+            minor_only_indices = []
 
         return AvailableLocationsConfiguration(
             randomization_mode=randomization_mode,
-            excluded_indices=frozenset(PickupIndex(item) for item in indices),
+            excluded_indices=frozenset(PickupIndex(item) for item in excluded_indices),
+            minor_only_indices=frozenset(PickupIndex(item) for item in minor_only_indices),
             game=game,
         )
 
-    def ensure_index(self, index: PickupIndex, present: bool):
+    def ensure_index(self, index: PickupIndex, mode: LocationPickupMode):
         excluded_indices = set(self.excluded_indices)
-        if present:
+        minor_only_indices = set(self.minor_only_indices)
+
+        if mode == LocationPickupMode.SHUFFLED_NO_PROGRESSION:
             excluded_indices.add(index)
         elif index in excluded_indices:
             excluded_indices.remove(index)
-        return dataclasses.replace(self, excluded_indices=frozenset(excluded_indices))
+
+        if mode == LocationPickupMode.SHUFFLED_NO_MAJORS:
+            minor_only_indices.add(index)
+        elif index in minor_only_indices:
+            minor_only_indices.remove(index)
+
+        return dataclasses.replace(
+            self,
+            excluded_indices=frozenset(excluded_indices),
+            minor_only_indices=frozenset(minor_only_indices),
+        )
