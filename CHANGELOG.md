@@ -69,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 7 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 175
+- Added: 55 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 224
 
 ##### Tallon Overworld 
 
@@ -77,11 +77,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Root Cave - L-Jump method to reach upper area
 
 #### Magmoor Caverns
+
 - Added: Twin Fires Tunnel - Transport to Talon -> Twin Fires, NSJ & SJ dashes now require standable terrain
 
 ##### Phendrana Drifts
+
 - Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
 - Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
+
+##### Phazon Mines
+
+- Fixed: Fungal Hall B - Scan dash method now requires scan visor
+- Fixed: Ventillation Shaft - Combat dash to climb room now requires door lock rando to be off 
+
 
 ### Metroid Prime 2: Echoes
 
@@ -145,6 +153,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Proper combat requirements for the Amorbis fight.
 - Removed: Incorrect and improper connections to and from the Amorbis fight.
 
+### Metroid Prime
+
+#### Logic Database
+
+- Added: 48 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 216
+
 ### Metroid Dread
 
 #### Logic Database
@@ -185,8 +199,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Ridley shorelines, biotech research 2, and exterior docking hangar actors now scale with boss size
 
 #### Logic Database
-
-- Added: 47 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 168
 
 ##### Tallon Overworld
 
