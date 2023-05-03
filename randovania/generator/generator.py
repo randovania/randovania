@@ -112,21 +112,25 @@ def _distribute_remaining_items(rng: Random,
                                 ) -> FillerResults:
     major_pickup_nodes: list[tuple[int, PickupNode]] = []
     minor_pickup_nodes: list[tuple[int, PickupNode]] = []
+    avoid_majors_pickup_nodes: set[tuple[int, PickupNode]] = set()
     all_remaining_pickups: list[PickupTarget] = []
     remaining_major_pickups: list[PickupTarget] = []
 
     assignments: dict[int, list[PickupTargetAssociation]] = {}
-    
+
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
     for player, filler_result in filler_results.player_results.items():
         split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
+        minor_only_indices = presets[player].configuration.available_locations.minor_only_indices
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
                                                           filler_result.patches.pickup_assignment):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:
                 major_pickup_nodes.append((player, pickup_node))
             else:
                 minor_pickup_nodes.append((player, pickup_node))
+                if pickup_node.pickup_index in minor_only_indices:
+                    avoid_majors_pickup_nodes.add((player, pickup_node))
 
         for pickup in filler_result.unassigned_pickups:
             target = PickupTarget(pickup, player)
@@ -160,6 +164,13 @@ def _distribute_remaining_items(rng: Random,
     all_remaining_pickups.extend(remaining_major_pickups)
     rng.shuffle(unassigned_pickup_nodes)
     rng.shuffle(all_remaining_pickups)
+
+    # after shuffling, sort both lists such that locations marked as "no majors" come first and major items come last
+    # this will attempt to prevent majors from being assigned to locations marked as "no majors", but allows for such
+    # assignments to happen if there aren't enough remaining locations
+    unassigned_pickup_nodes.sort(key=lambda n: 0 if n in avoid_majors_pickup_nodes else 1)
+    all_remaining_pickups.sort(
+        key=lambda t: 1 if t.pickup.generator_params.preferred_location_category == LocationCategory.MAJOR else 0)
 
     if len(all_remaining_pickups) > len(unassigned_pickup_nodes):
         raise InvalidConfiguration(
