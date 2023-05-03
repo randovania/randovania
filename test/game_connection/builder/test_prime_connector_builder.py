@@ -1,13 +1,5 @@
 import pytest
-from mock import AsyncMock
-
-from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
-from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
-    MemoryOperationExecutor
-from randovania.games.prime2.patcher import echoes_dol_versions
-from mock import AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
@@ -21,6 +13,7 @@ class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):
     def __init__(self):
         super().__init__()
         self.executor = AsyncMock()
+        self.executor.disconnect = MagicMock()
 
     def create_executor(self) -> MemoryOperationExecutor:
         return self.executor

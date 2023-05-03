@@ -24,6 +24,8 @@ def prime1_version():
 @pytest.fixture(name="connector")
 def remote_connector(version: Prime1DolVersion):
     connector = Prime1RemoteConnector(version, AsyncMock())
+    connector.executor.is_connected = MagicMock()
+    connector.executor.disconnect = MagicMock()
     return connector
 
 
