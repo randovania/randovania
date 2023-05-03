@@ -125,7 +125,8 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
                 else:
                     row_widget.setEnabled(True)
                     row_widget.set_location_pickup_mode(LocationPickupMode.SHUFFLED)
-                    row_widget.set_is_major_only_location(node.location_category == LocationCategory.MAJOR)
+                    row_widget.set_is_major_only_location(mode == RandomizationMode.MAJOR_MINOR_SPLIT and
+                                                          node.location_category == LocationCategory.MAJOR)
 
     def _on_location_changed(self, node: PickupNode):
         if self._during_batch_update:

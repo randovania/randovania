@@ -9,6 +9,7 @@ from randovania.game_description.world.pickup_node import PickupNode
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 from randovania.interface_common.preset_editor import PresetEditor
+from randovania.layout.base.available_locations import LocationPickupMode
 
 
 @pytest.fixture(name="pickup_node")
@@ -51,7 +52,7 @@ def test_location_pool_row_actions(pickup_node, skip_qtbot):
 
     # Run & Assert
     assert not signal_received
-    widget.set_can_have_progression(True)
+    widget.set_location_pickup_mode(LocationPickupMode.SHUFFLED)
     assert signal_received
     assert widget.radio_shuffled.isChecked()
 
@@ -79,6 +80,7 @@ def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echo
 
     # Run & Assert
     assert first_major.isEnabled()
+    assert first_major.radio_shuffled_no_majors.isEnabled()
     assert first_non_major.isEnabled()
     assert not first_major.radio_shuffled.isChecked()
 
@@ -86,5 +88,6 @@ def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echo
     location_pool_tab._on_update_randomization_mode()
 
     assert first_major.isEnabled()
+    assert not first_major.radio_shuffled_no_majors.isEnabled()
     assert not first_non_major.isEnabled()
     assert first_major.radio_shuffled.isChecked()
