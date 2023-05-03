@@ -26,8 +26,12 @@ class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):
         pass
 
 
-async def test_identify_game_ntsc():
+async def test_identify_game_ntsc(mocker):
     # Setup
+    mock_start_updates = mocker.patch(
+        "randovania.game_connection.connector.prime_remote_connector.PrimeRemoteConnector.start_updates"
+    )
+
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
             return {
@@ -51,6 +55,7 @@ async def test_identify_game_ntsc():
     con_builder.executor.perform_memory_operations.assert_called()
     assert isinstance(connector, EchoesRemoteConnector)
     assert connector.version is echoes_dol_versions.ALL_VERSIONS[0]
+    mock_start_updates.assert_called_once_with()
 
 
 @pytest.mark.parametrize("via_exception", [False, True])
