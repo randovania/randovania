@@ -27,6 +27,15 @@ class RandomizationMode(BitPackEnum, Enum):
     def default(cls) -> "RandomizationMode":
         return cls.FULL
 
+    @property
+    def description(self) -> str:
+        if self == RandomizationMode.FULL:
+            return "Full shuffle"
+        if self == RandomizationMode.MAJOR_MINOR_SPLIT:
+            return "Major/minor split"
+
+        raise ValueError(f"Unknown value: {self}")
+
 
 @dataclasses.dataclass(frozen=True)
 class AvailableLocationsConfiguration(BitPackValue):
