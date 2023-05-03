@@ -320,4 +320,3 @@ class PrimeRemoteConnector(RemoteConnector):
 
     def start_updates(self):
         self._timer.start()
-
