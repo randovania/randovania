@@ -46,25 +46,21 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
     result = RandovaniaGame.METROID_PRIME.data.layout.preset_describer.format_params(configuration)
     expected = {
         "Logic Settings": [
-            "All tricks disabled",
-            "Dangerous Actions: Randomly"
-        ],
-        "Starting Items": [
-            "Vanilla"
+            "All tricks disabled"
         ],
         "Item Pool": [
             "Size: 95 of 100",
-            "2x Charge Beam",
+            "Vanilla starting items",
+            "Shuffles 2x Charge Beam",
             "6 Artifacts, 6 min actions",
         ],
-        "Difficulty": [
-            "Damage Strictness: Medium"
-        ],
         "Gameplay": [
-            "Starting Location: Tallon Overworld - Landing Site"
+            "Starts at Tallon Overworld - Landing Site"
         ],
         "Quality of Life": [
             "Phazon suit hint: Area only"
+        ],
+        "Difficulty": [
         ],
         "Game Changes": [
             "Progressive suit damage reduction",
