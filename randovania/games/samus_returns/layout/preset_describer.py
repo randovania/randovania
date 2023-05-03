@@ -23,7 +23,7 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Difficulty": [
                 {
-                    f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100
+                    f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100
                 },
             ],
             "Item Pool": [

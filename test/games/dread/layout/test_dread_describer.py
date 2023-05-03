@@ -33,7 +33,6 @@ def test_dread_format_params(has_artifacts: bool, rb_damage_mode: DreadRavenBeak
     # Assert
     assert dict(result) == {
         "Difficulty": [
-            "Damage Strictness: Medium",
             "Immediate Energy Part"
         ],
         "Game Changes": _get_expected_game_changes_text(rb_damage_mode),
@@ -43,22 +42,18 @@ def test_dread_format_params(has_artifacts: bool, rb_damage_mode: DreadRavenBeak
             "Lava: Constant 20 dmg/s",
         ],
         "Gameplay": [
-            "Starting Location: Artaria - Intro Room"
+            "Starts at Artaria - Intro Room"
         ],
         "Goal": ["3 Metroid DNA", "Prefers E.M.M.I."] if has_artifacts else ["Reach Itorash"],
         "Item Pool": [
             "Size: 148 of 149" if has_artifacts else "Size: 145 of 149",
-            "No Pulse Radar",
+            "Starts with Pulse Radar",
             "Progressive Beam, Progressive Charge Beam, Progressive Missile, "
             "Progressive Bomb, Progressive Suit, Progressive Spin"
         ],
         "Logic Settings": [
-            "All tricks disabled",
-            "Dangerous Actions: Randomly"
+            "All tricks disabled"
         ],
-        "Starting Items": [
-            "Pulse Radar"
-        ]
     }
 
 def _get_expected_game_changes_text(rb_damage_mode: DreadRavenBeakDamageMode):

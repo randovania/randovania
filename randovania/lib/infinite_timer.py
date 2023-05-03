@@ -42,5 +42,5 @@ class InfiniteTimer(QtCore.QObject):
             return t.result()
 
         assert self._current_task is None
-        _current_task = asyncio.ensure_future(self._target_wrap())
-        _current_task.add_done_callback(_error_handler)
+        self._current_task = asyncio.create_task(self._target_wrap())
+        self._current_task.add_done_callback(_error_handler)

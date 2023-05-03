@@ -1,5 +1,5 @@
 import collections
-from typing import Iterable, Sequence
+from collections.abc import Iterable, Sequence
 
 from randovania.game_description import default_database
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
@@ -7,64 +7,64 @@ from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
 
 
-def _bool_to_str(b: bool) -> str:
-    if b:
-        return "Yes"
-    else:
-        return "No"
-
-
 PresetDescription = tuple[str, list[str]]
 
 
 class GamePresetDescriber:
-    def _calculate_starting_items(self, configuration: BaseConfiguration) -> list[str]:
-        expected_count = self.expected_starting_item_count(configuration)
-        starting_items = []
+    def _calculate_pickup_pool(self, configuration: BaseConfiguration) -> list[str]:
+        expected_starting_count = self.expected_starting_item_count(configuration)
+        expected_shuffled_count = self.expected_shuffled_pickup_count(configuration)
+        shuffled_list = []
+        starting_list = []
+        is_vanilla_starting = True
+        excluded_list = []
 
         for standard_pickup, pickup_state in configuration.standard_pickup_configuration.pickups_state.items():
             if standard_pickup.hide_from_gui:
                 continue
 
-            count = pickup_state.num_included_in_starting_pickups
-            if count != expected_count[standard_pickup]:
-                if count > 1:
-                    starting_items.append(f"{count}x {standard_pickup.name}")
-                elif count == 1:
-                    starting_items.append(standard_pickup.name)
+            starting_count = pickup_state.num_included_in_starting_pickups
+            shuffled_count = pickup_state.num_shuffled_pickups + int(pickup_state.include_copy_in_original_location)
+
+            if starting_count != expected_starting_count[standard_pickup]:
+                if starting_count > 1:
+                    starting_list.append(f"{starting_count}x {standard_pickup.name}")
+                elif starting_count == 1:
+                    starting_list.append(standard_pickup.name)
                 else:
-                    starting_items.append(f"No {standard_pickup.name}")
+                    is_vanilla_starting = False
+                    if shuffled_count == 0:
+                        excluded_list.append(standard_pickup.name)
 
-        if starting_items:
-            return starting_items
-        else:
-            # If an expected item is missing, it's added as "No X". So empty starting_items means it's precisely vanilla
-            return ["Vanilla"]
+            if shuffled_count != expected_shuffled_count[standard_pickup]:
+                if shuffled_count > 1:
+                    shuffled_list.append(f"{shuffled_count}x {standard_pickup.name}")
+                elif shuffled_count == 1:
+                    shuffled_list.append(standard_pickup.name)
+                elif starting_count == 0:
+                    excluded_list.append(standard_pickup.name)
 
-    def _calculate_item_pool(self, configuration: BaseConfiguration) -> list[str]:
-        expected_count = self.expected_shuffled_pickup_count(configuration)
-        item_pool = []
+        result = []
 
-        for standard_pickup, pickup_state in configuration.standard_pickup_configuration.pickups_state.items():
-            if standard_pickup.hide_from_gui:
-                continue
+        if starting_list:
+            result.append("Starts with " + ", ".join(starting_list))
+        elif is_vanilla_starting:
+            result.append("Vanilla starting items")
 
-            count = pickup_state.num_shuffled_pickups + int(pickup_state.include_copy_in_original_location)
-            if count != expected_count[standard_pickup]:
-                if count > 1:
-                    item_pool.append(f"{count}x {standard_pickup.name}")
-                elif count == 1:
-                    item_pool.append(standard_pickup.name)
-                else:
-                    item_pool.append(f"No {standard_pickup.name}")
+        if excluded_list:
+            result.append("Excludes " + ", ".join(excluded_list))
 
-        return item_pool
+        if shuffled_list:
+            result.append("Shuffles " + ", ".join(shuffled_list))
+
+        return result
 
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         """Function providing any game-specific information to display in presets such as the goal."""
@@ -93,8 +93,11 @@ class GamePresetDescriber:
             )
 
         template_strings["Logic Settings"].append(configuration.trick_level.pretty_description(game_description))
-        template_strings["Logic Settings"].append(
-            f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
+
+        if not configuration.logical_resource_action.is_default():
+            template_strings["Logic Settings"].append(
+                f"{configuration.logical_resource_action.long_name} dangerous actions"
+            )
 
         if configuration.single_set_for_pickups_that_solve:
             template_strings["Logic Settings"].append("Experimental potential actions")
@@ -102,26 +105,23 @@ class GamePresetDescriber:
         if configuration.staggered_multi_pickup_placement:
             template_strings["Logic Settings"].append("Experimental staggered pickups")
 
-        if randomization_mode != RandomizationMode.FULL:
-            template_strings["Item Placement"].append(f"Randomization Mode: {randomization_mode.value}")
-
-        # Starting Items
-        if random_starting_pickups != "0":
-            template_strings["Starting Items"].append(f"Random Starting Items: {random_starting_pickups}")
-        template_strings["Starting Items"].extend(self._calculate_starting_items(configuration))
+        if randomization_mode != RandomizationMode.default():
+            template_strings["Item Pool"].append(randomization_mode.description)
 
         # Item Pool
-        item_pool = self._calculate_item_pool(configuration)
-
         template_strings["Item Pool"].append(
             "Size: {} of {}".format(*pool_creator.calculate_pool_pickup_count(configuration))
         )
-        if item_pool:
-            template_strings["Item Pool"].append(", ".join(item_pool))
+
+        if random_starting_pickups != "0":
+            template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
+
+        template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
 
         # Difficulty
-        template_strings["Difficulty"].append(
-            f"Damage Strictness: {configuration.damage_strictness.long_name}"
+        if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:
+            template_strings["Difficulty"].append(
+                f"{configuration.damage_strictness.long_name} damage strictness"
         )
         if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
             template_strings["Difficulty"].append(f"Pickup: {configuration.pickup_model_style.long_name} "
@@ -131,16 +131,15 @@ class GamePresetDescriber:
         starting_locations = configuration.starting_location.locations
         if len(starting_locations) == 1:
             area = game_description.world_list.area_by_area_location(starting_locations[0])
-            starting_location = game_description.world_list.area_name(area)
+            starting_location = f"Starts at {game_description.world_list.area_name(area)}"
         else:
-            starting_location = f"{len(starting_locations)} locations"
-
-        template_strings["Gameplay"].append(f"Starting Location: {starting_location}")
+            starting_location = f"{len(starting_locations)} starting locations"
+        template_strings["Gameplay"].append(starting_location)
 
         # Dock Locks
         dock_mode = configuration.dock_rando.mode
         if dock_mode != DockRandoMode.VANILLA:
-            template_strings["Door Locks"].append(f"Mode: {dock_mode.long_name} ({dock_mode.description})")
+            template_strings["Gameplay"].append(dock_mode.description)
 
         return template_strings
 

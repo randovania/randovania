@@ -1,13 +1,5 @@
 import pytest
-from mock import AsyncMock
-
-from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
-from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
-    MemoryOperationExecutor
-from randovania.games.prime2.patcher import echoes_dol_versions
-from mock import AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
@@ -21,6 +13,7 @@ class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):
     def __init__(self):
         super().__init__()
         self.executor = AsyncMock()
+        self.executor.disconnect = MagicMock()
 
     def create_executor(self) -> MemoryOperationExecutor:
         return self.executor
@@ -33,8 +26,12 @@ class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):
         pass
 
 
-async def test_identify_game_ntsc():
+async def test_identify_game_ntsc(mocker):
     # Setup
+    mock_start_updates = mocker.patch(
+        "randovania.game_connection.connector.prime_remote_connector.PrimeRemoteConnector.start_updates"
+    )
+
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
             return {
@@ -58,6 +55,7 @@ async def test_identify_game_ntsc():
     con_builder.executor.perform_memory_operations.assert_called()
     assert isinstance(connector, EchoesRemoteConnector)
     assert connector.version is echoes_dol_versions.ALL_VERSIONS[0]
+    mock_start_updates.assert_called_once_with()
 
 
 @pytest.mark.parametrize("via_exception", [False, True])

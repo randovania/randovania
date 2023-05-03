@@ -64,7 +64,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Immediate Energy Part": configuration.immediate_energy_parts,
                 },
                 {
-                    f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100
+                    f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100
                 },
             ],
             "Item Pool": [

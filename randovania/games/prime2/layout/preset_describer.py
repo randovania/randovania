@@ -103,15 +103,18 @@ class EchoesPresetDescriber(GamePresetDescriber):
 
         # Difficulty
         if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
-            template_strings["Difficulty"].append("Dark Aether: {:.2f} dmg/s Varia, {:.2f} dmg/s Dark".format(
-                configuration.varia_suit_damage, configuration.dark_suit_damage
-            ))
+            template_strings["Difficulty"].append(
+                "Dark Aether deals {:.2f} dmg/s to Varia, {:.2f} dmg/s to Dark Suit".format(
+                    configuration.varia_suit_damage, configuration.dark_suit_damage
+                ))
 
         if configuration.energy_per_tank != 100:
-            template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
+            template_strings["Difficulty"].append(f"{configuration.energy_per_tank} energy per Energy Tank")
 
         if configuration.safe_zone.heal_per_second != 1:
-            template_strings["Difficulty"].append(f"Safe Zone: {configuration.safe_zone.heal_per_second:.2f} energy/s")
+            template_strings["Difficulty"].append(
+                f"Safe Zones restore {configuration.safe_zone.heal_per_second:.2f} energy/s"
+            )
 
         extra_message_tree = {
             "Item Pool": [
