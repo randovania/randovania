@@ -144,9 +144,19 @@ def _distribute_remaining_items(rng: Random,
     def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget):
         assignments[node_player].append((node.pickup_index, pickup_target))
 
-    def assign_while_both_non_empty(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]):
+    def shuffle_assignment_lists(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]):
         rng.shuffle(nodes)
         rng.shuffle(pickups)
+
+        # after shuffling, sort both lists such that locations marked as "no majors" come first and major items come last
+        # this will attempt to prevent majors from being assigned to locations marked as "no majors", but allows for such
+        # assignments to happen if there aren't enough remaining locations
+        nodes.sort(key=lambda n: 0 if n in avoid_majors_pickup_nodes else 1)
+        pickups.sort(
+            key=lambda t: 1 if t.pickup.generator_params.preferred_location_category == LocationCategory.MAJOR else 0)
+
+    def assign_while_both_non_empty(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]):
+        shuffle_assignment_lists(nodes, pickups)
 
         while nodes and pickups:
             node_player, node = nodes.pop()
@@ -162,15 +172,7 @@ def _distribute_remaining_items(rng: Random,
     # spill-over from one pool into the other
     unassigned_pickup_nodes = [*major_pickup_nodes, *minor_pickup_nodes]
     all_remaining_pickups.extend(remaining_major_pickups)
-    rng.shuffle(unassigned_pickup_nodes)
-    rng.shuffle(all_remaining_pickups)
-
-    # after shuffling, sort both lists such that locations marked as "no majors" come first and major items come last
-    # this will attempt to prevent majors from being assigned to locations marked as "no majors", but allows for such
-    # assignments to happen if there aren't enough remaining locations
-    unassigned_pickup_nodes.sort(key=lambda n: 0 if n in avoid_majors_pickup_nodes else 1)
-    all_remaining_pickups.sort(
-        key=lambda t: 1 if t.pickup.generator_params.preferred_location_category == LocationCategory.MAJOR else 0)
+    shuffle_assignment_lists(unassigned_pickup_nodes, all_remaining_pickups)
 
     if len(all_remaining_pickups) > len(unassigned_pickup_nodes):
         raise InvalidConfiguration(
