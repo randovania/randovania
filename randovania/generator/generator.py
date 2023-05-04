@@ -148,9 +148,9 @@ def _distribute_remaining_items(rng: Random,
         rng.shuffle(nodes)
         rng.shuffle(pickups)
 
-        # after shuffling, sort both lists such that locations marked as "no majors" come first and major items come last
-        # this will attempt to prevent majors from being assigned to locations marked as "no majors", but allows for such
-        # assignments to happen if there aren't enough remaining locations
+        # after shuffling, sort both lists such that locations marked as "no majors" come first and major items come
+        # last this will attempt to prevent majors from being assigned to locations marked as "no majors", but allows
+        # for such assignments to happen if there aren't enough remaining locations
         nodes.sort(key=lambda n: 0 if n in avoid_majors_pickup_nodes else 1)
         pickups.sort(
             key=lambda t: 1 if t.pickup.generator_params.preferred_location_category == LocationCategory.MAJOR else 0)
