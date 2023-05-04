@@ -46,7 +46,6 @@ class PrimeConfiguration(BaseConfiguration):
     artifact_minimum_progression: int = dataclasses.field(metadata={"min": 0, "max": 99})
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     warp_to_start: bool
-    heat_protection_only_varia: bool
     progressive_damage_reduction: bool
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
@@ -61,8 +60,6 @@ class PrimeConfiguration(BaseConfiguration):
         metadata={"min": 0, "max": 1000})  # div 1000 to get coefficient, div 10 to get %
     room_rando: RoomRandoMode
     spring_ball: bool
-    deterministic_idrone: bool
-    deterministic_maze: bool
 
     main_plaza_door: bool
     blue_save_doors: bool
@@ -72,8 +69,7 @@ class PrimeConfiguration(BaseConfiguration):
     backwards_lower_mines: bool
     phazon_elite_without_dynamo: bool
 
-    qol_game_breaking: bool
-    qol_pickup_scans: bool
+    legacy_mode: bool
     qol_cutscenes: LayoutCutsceneMode
 
     enemy_attributes: EnemyAttributeRandomizer | None
@@ -88,8 +84,8 @@ class PrimeConfiguration(BaseConfiguration):
         if self.shuffle_item_pos:
             result.append("Shuffled Item Position")
 
-        if not self.qol_game_breaking:
-            result.append("Missing Game Breaking Fixes")
+        if self.legacy_mode:
+            result.append("Legacy Mode")
 
         if self.room_rando != RoomRandoMode.NONE:
             result.append("Room Randomizer")

@@ -1,9 +1,8 @@
 import struct
 
-from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
 from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
@@ -33,16 +32,15 @@ def _echoes_powerup_offset(item_index: int) -> int:
 
 
 class EchoesRemoteConnector(PrimeRemoteConnector):
-    def __init__(self, version: EchoesDolVersion):
-        super().__init__(version)
+    def __init__(self, version: EchoesDolVersion, executor: MemoryOperationExecutor):
+        super().__init__(version, executor)
 
     def _asset_id_format(self):
         return ">I"
 
-    async def current_game_status(self, executor: MemoryOperationExecutor) -> tuple[bool, World | None]:
+    async def current_game_status(self) -> tuple[bool, World | None]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
-        :param executor:
         :return: bool indicating if there's a pending `execute_remote_patches` operation.
         """
 
@@ -57,14 +55,14 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
             MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
         ]
-        results = await executor.perform_memory_operations(memory_ops)
+        results = await self.executor.perform_memory_operations(memory_ops)
 
         pending_op_byte = results[memory_ops[1]]
         has_pending_op = pending_op_byte != b"\x00"
         return has_pending_op, self._current_status_world(results.get(memory_ops[0]),
                                                           results.get(memory_ops[2]))
 
-    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: list[ItemResourceInfo],
+    async def _memory_op_for_items(self, items: list[ItemResourceInfo],
                                    ) -> list[MemoryOperation]:
         player_state_pointer = self.version.cstate_manager_global + 0x150c
         return [

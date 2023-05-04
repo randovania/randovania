@@ -5,7 +5,6 @@ from asyncio import StreamReader, StreamWriter
 
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
 
 @dataclasses.dataclass(frozen=True)
@@ -106,17 +105,13 @@ class NintendontExecutor(MemoryOperationExecutor):
     def lock_identifier(self) -> str | None:
         return None
 
-    @property
-    def backend_choice(self) -> MemoryExecutorChoice:
-        return MemoryExecutorChoice.NINTENDONT
-
-    async def connect(self) -> bool:
+    async def connect(self) -> str | None:
         if self._socket is not None:
-            return True
+            return None
 
         try:
             self._socket_error = None
-            self.logger.info(f"Connecting to {self._ip}:{self._port}.")
+            # self.logger.info(f"Connecting to {self._ip}:{self._port}.")
             reader, writer = await asyncio.open_connection(self._ip, self._port)
 
             # Send API details request
@@ -131,14 +126,14 @@ class NintendontExecutor(MemoryOperationExecutor):
 
             self.logger.info(f"Remote replied with API level {api_version}, connection successful.")
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
-            return True
+            return None
 
         except (OSError, asyncio.TimeoutError, struct.error, UnicodeError) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
-            self.logger.warning(f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}")
+            message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
             self._socket_error = e
-            return False
+            return message
 
     def disconnect(self):
         socket = self._socket

@@ -45,7 +45,7 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
     assert indices == [pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index]
 
 
-def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_category):
+def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_category, default_generator_params):
     # Starting State
     db = state_game_data.resource_database
     starting_node = state_game_data.world_list.resolve_teleporter_connection(empty_patches.game.starting_location)
@@ -53,11 +53,12 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_catego
 
     resource_a = db.item[0]
     resource_b = db.item[1]
-    p = PickupEntry("B", 2, generic_item_category, generic_item_category,
+    p = PickupEntry("B", 2, generic_pickup_category, generic_pickup_category,
                     progression=(
                         (resource_a, 1),
                         (resource_b, 1),
-                    ))
+                    ),
+                    generator_params=default_generator_params)
 
     # Run
     state.add_pickup_to_state(s, p)
@@ -70,7 +71,8 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_catego
     })
 
 
-def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic_item_category):
+def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic_pickup_category,
+                                         default_generator_params):
     # Setup
     db = state_game_data.resource_database
     starting_node = state_game_data.world_list.resolve_teleporter_connection(empty_patches.game.starting_location)
@@ -78,10 +80,11 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic
 
     resource_a = db.get_item("Ammo")
     resource_b = db.item[0]
-    p = PickupEntry("A", 2, generic_item_category, generic_item_category,
+    p = PickupEntry("A", 2, generic_pickup_category, generic_pickup_category,
                     progression=(
                         (resource_a, 5),
                     ),
+                    generator_params=default_generator_params,
                     extra_resources=(
                     ),
                     unlocks_resource=True,
@@ -99,16 +102,16 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic
     assert final.resources == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})
 
 
-def test_state_with_pickup(state_game_data, empty_patches, generic_item_category):
+def test_state_with_pickup(state_game_data, empty_patches, generic_pickup_category, default_generator_params):
     # Setup
     db = state_game_data.resource_database
     starting = state.State(ResourceCollection(), (), 99, None, empty_patches, None, state_game_data)
 
     resource_a = db.item[0]
-    p = PickupEntry("A", 2, generic_item_category, generic_item_category,
+    p = PickupEntry("A", 2, generic_pickup_category, generic_pickup_category,
                     progression=(
                         (resource_a, 1),
-                    ))
+                    ), generator_params=default_generator_params)
 
     # Run
     final = state.state_with_pickup(starting, p)

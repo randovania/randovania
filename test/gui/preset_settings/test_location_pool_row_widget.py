@@ -2,6 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
@@ -22,7 +23,7 @@ def _pickup_node():
         extra={},
         valid_starting_location=False,
         pickup_index=PickupIndex(1),
-        major_location=True,
+        location_category=LocationCategory.MAJOR,
     )
 
 
@@ -57,7 +58,8 @@ def test_location_pool_row_actions(pickup_node, skip_qtbot):
 
 def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echoes_game_description, skip_qtbot):
     # Setup
-    preset_editor = PresetEditor(customized_preset)
+    options = MagicMock()
+    preset_editor = PresetEditor(customized_preset, options)
 
     location_pool_tab = PresetLocationPool(preset_editor, echoes_game_description, MagicMock())
 
@@ -67,9 +69,9 @@ def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echo
     first_major: LocationPoolRowWidget = None
     first_non_major: LocationPoolRowWidget = None
     for row_widget in location_pool_tab._row_widget_for_node.values():
-        if first_major is None and row_widget.node.major_location:
+        if first_major is None and row_widget.node.location_category == LocationCategory.MAJOR:
             first_major = row_widget
-        elif first_non_major is None and not row_widget.node.major_location:
+        elif first_non_major is None and row_widget.node.location_category == LocationCategory.MINOR:
             first_non_major = row_widget
         if first_major is not None and first_non_major is not None:
             break

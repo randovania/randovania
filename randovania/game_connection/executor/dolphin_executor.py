@@ -1,8 +1,8 @@
 import dolphin_memory_engine
+import pid
 
 from randovania.game_connection.executor.memory_operation import (MemoryOperationException, MemoryOperation,
                                                                   MemoryOperationExecutor)
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
 MEM1_START = 0x80000000
 MEM1_END = 0x81800000
@@ -18,24 +18,29 @@ class DolphinExecutor(MemoryOperationExecutor):
     def __init__(self):
         super().__init__()
         self.dolphin = dolphin_memory_engine
+        self._pid = pid.PidFile("randovania-dolphin-backend")
 
     @property
     def lock_identifier(self) -> str | None:
         return "randovania-dolphin-backend"
 
-    @property
-    def backend_choice(self) -> MemoryExecutorChoice:
-        return MemoryExecutorChoice.DOLPHIN
-
-    async def connect(self) -> bool:
+    async def connect(self) -> str | None:
         if not self.dolphin.is_hooked():
             self.dolphin.hook()
 
-        return self.dolphin.is_hooked()
+        if not self.dolphin.is_hooked():
+            return "Unable to connect to Dolphin"
+
+        try:
+            self._pid.create()
+        except pid.PidFileError:
+            return "Another Randovania is connected to Dolphin already"
+
+        return None
 
     def disconnect(self):
-        # Nothing to do
-        pass
+        self._pid.close()
+        self.dolphin.un_hook()
 
     def _test_still_hooked(self):
         try:

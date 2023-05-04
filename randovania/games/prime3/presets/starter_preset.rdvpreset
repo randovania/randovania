@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 49,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "5682c9ef-d447-4327-b473-ba1216d83439",
@@ -13,20 +13,21 @@
         "starting_location": [
             {
                 "world_name": "G.F.S. Valhalla",
-                "area_name": "Docking Bay 5"
+                "area_name": "Docking Bay 5",
+                "node_name": "Samus Ship"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Charge Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Power Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Plasma Beam": {
                     "num_shuffled_pickups": 1
@@ -58,10 +59,10 @@
                     "num_shuffled_pickups": 1
                 },
                 "Combat Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Scan Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Command Visor": {
                     "num_shuffled_pickups": 1
@@ -70,7 +71,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Space Jump Boots": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Screw Attack": {
                     "num_shuffled_pickups": 1
@@ -82,10 +83,10 @@
                     "num_shuffled_pickups": 14
                 },
                 "Morph Ball": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Morph Ball Bombs": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Boost Ball": {
                     "num_shuffled_pickups": 1
@@ -115,25 +116,25 @@
                     ]
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 49,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Ship Missile Expansion": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 8,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },

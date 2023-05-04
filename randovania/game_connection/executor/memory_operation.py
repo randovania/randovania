@@ -1,8 +1,6 @@
 import dataclasses
 import logging
 
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
-
 
 class MemoryOperationException(Exception):
     pass
@@ -47,18 +45,10 @@ class MemoryOperationExecutor:
     def __init__(self):
         self.logger = logging.getLogger(type(self).__name__)
 
-    @property
-    def lock_identifier(self) -> str | None:
+    async def connect(self) -> str | None:
         raise NotImplementedError()
 
-    @property
-    def backend_choice(self) -> MemoryExecutorChoice:
-        raise NotImplementedError()
-
-    async def connect(self) -> bool:
-        raise NotImplementedError()
-
-    async def disconnect(self):
+    def disconnect(self):
         raise NotImplementedError()
 
     def is_connected(self) -> bool:

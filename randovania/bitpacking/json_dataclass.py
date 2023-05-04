@@ -32,6 +32,8 @@ class JsonDataclass:
         extra_args = cls.json_extra_arguments()
         extra_args.update(extra)
 
+        resolved_types = typing.get_type_hints(cls)
+
         new_instance = {}
         for field in dataclasses.fields(cls):
             if not field.init or (field.name not in json_dict and (field.default != dataclasses.MISSING
@@ -39,7 +41,11 @@ class JsonDataclass:
                 continue
             arg = json_dict[field.name]
             if arg is not None:
-                type_ = type_lib.resolve_optional(field.type)[0]
+                field_type = field.type
+                if isinstance(field_type, str):
+                    field_type = resolved_types[field.name]
+
+                type_ = type_lib.resolve_optional(field_type)[0]
                 if issubclass(type_, Enum):
                     arg = type_(arg)
                 elif hasattr(type_, "from_json"):

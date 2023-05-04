@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import Union, Iterator
+from typing import Union
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
 ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo, NodeResourceInfo]
 ResourceQuantity = tuple[ResourceInfo, int]
 ResourceGainTuple = tuple[ResourceQuantity, ...]
-ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
+ResourceGain = Union[typing.Iterable[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
 
 
 class ResourceCollection:

@@ -19,6 +19,18 @@ class PresetTab(QtWidgets.QMainWindow):
         self.game_description = game_description
         self._window_manager = window_manager
 
+    def update_experimental_visibility(self):
+        for w in self.experimental_settings:
+            w.setVisible(self._editor._options.experimental_settings)
+
+    @classmethod
+    def is_experimental(cls) -> bool:
+        return False
+
+    @property
+    def experimental_settings(self) -> typing.Iterable[QtWidgets.QWidget]:
+        yield from []
+
     @classmethod
     def tab_title(cls) -> str:
         raise NotImplementedError()
@@ -49,7 +61,9 @@ class PresetTab(QtWidgets.QMainWindow):
         def bound(value: int):
             with self._editor as editor:
                 kwargs = {field_name: bool(value)}
-                editor.major_items_configuration = dataclasses.replace(editor.major_items_configuration, **kwargs)
+                editor.standard_pickup_configuration = dataclasses.replace(
+                    editor.standard_pickup_configuration, **kwargs,
+                )
 
         return bound
 

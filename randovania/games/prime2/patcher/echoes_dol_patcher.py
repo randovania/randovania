@@ -30,7 +30,7 @@ def apply_patches(game_root: Path, patches_data: EchoesDolPatchesData):
 
     dol_file.set_editable(True)
     with dol_file:
-        all_prime_dol_patches.apply_remote_execution_patch(version.string_display, dol_file)
+        all_prime_dol_patches.apply_remote_execution_patch(version.game, version.string_display, dol_file)
         all_prime_dol_patches.apply_energy_tank_capacity_patch(version.health_capacity, patches_data.energy_per_tank,
                                                                dol_file)
         all_prime_dol_patches.apply_reverse_energy_tank_heal_patch(version.sda2_base, version.dangerous_energy_tank,

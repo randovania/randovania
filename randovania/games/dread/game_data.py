@@ -13,7 +13,7 @@ def _options():
 
 def _gui() -> game.GameGui:
     from randovania.games.dread import gui
-    from randovania.games.dread.item_database import progressive_items
+    from randovania.games.dread.pickup_database import progressive_items
 
     return game.GameGui(
         tab_provider=gui.dread_preset_tabs,
@@ -57,7 +57,10 @@ game_data: game.GameData = game.GameData(
     presets=[
         {
             "path": "starter_preset.rdvpreset"
-        }
+        },
+        {
+            "path": "april_fools_2023.rdvpreset"
+        },
     ],
 
     faq=[
@@ -123,4 +126,6 @@ game_data: game.GameData = game.GameData(
     patch_data_factory=_patch_data_factory,
 
     exporter=_exporter,
+
+    multiple_start_nodes_per_area=True,
 )

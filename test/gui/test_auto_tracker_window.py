@@ -1,66 +1,130 @@
+import uuid
 from unittest.mock import MagicMock
 
 import pytest
-from PySide6 import QtWidgets
 
-from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
+from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
+from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
+from randovania.game_connection.game_connection import ConnectedGameState
+from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 
 
-@pytest.fixture(name="window")
-def auto_tracker_window(skip_qtbot):
-    connection = MagicMock()
-    connection.pretty_current_status = "Pretty"
-    window = AutoTrackerWindow(connection, MagicMock())
-    skip_qtbot.addWidget(window)
-    return window
-
-
-@pytest.mark.parametrize("current_status", [GameConnectionStatus.Disconnected,
-                                            GameConnectionStatus.TrackerOnly,
-                                            GameConnectionStatus.InGame])
-@pytest.mark.parametrize("correct_game", [False, True])
-async def test_on_timer_update(current_status: GameConnectionStatus, correct_game,
-                               skip_qtbot, mocker):
+def test_create_tracker_no_game(skip_qtbot):
     # Setup
-    inventory = {}
-    game_connection = MagicMock()
-    game_connection.pretty_current_status = "Pretty Status"
+    connection = MagicMock()
+    connection.connected_states = {}
+    connection.get_connector_for_builder.return_value = None
 
-    window = AutoTrackerWindow(game_connection, MagicMock())
-    skip_qtbot.addWidget(window)
-    window._update_timer = MagicMock()
-
-    game_connection.get_current_inventory.return_value = inventory
-    game_connection.current_status = current_status
-
-    if correct_game:
-        window._current_tracker_game = game_connection.connector.game_enum
-
-    mock_update_state = MagicMock()
-    window.item_tracker.update_state = mock_update_state
+    connector = MagicMock()
+    connector.game_enum = RandovaniaGame.METROID_PRIME
 
     # Run
-    await window._on_timer_update_raw()
+    window = AutoTrackerWindow(connection, None, MagicMock())
+    skip_qtbot.addWidget(window)
+    # window.create_tracker() is implied
 
     # Assert
-    if current_status != GameConnectionStatus.Disconnected and correct_game:
-        mock_update_state.assert_called_once_with(inventory)
-    else:
-        mock_update_state.assert_not_called()
-    window._update_timer.start.assert_called_once_with()
+    assert window.item_tracker is None
+    assert window._dummy_tracker is not None
 
-
-@pytest.mark.parametrize("name", ["Metroid Prime - Game Art (Standard)",
-                                  "Metroid Prime 2: Echoes - Game Art (Standard)"])
-def test_create_tracker(window: AutoTrackerWindow, name):
+    # Now swap to a proper tracker
+    connection.get_connector_for_builder.return_value = connector
     window.create_tracker()
-    assert type(window.item_tracker) is QtWidgets.QWidget
-    for action, action_name in window._action_to_name.items():
-        if action_name == name:
-            action.setChecked(True)
 
-    window.create_tracker()
+    assert window._dummy_tracker is None
+    assert window._current_tracker_game == RandovaniaGame.METROID_PRIME
+
+
+@pytest.mark.parametrize(
+    ["game", "tracker_name"], [
+        (RandovaniaGame.METROID_PRIME, "Game Art (Standard)"),
+        (RandovaniaGame.METROID_PRIME_ECHOES, "Game Art (Standard)"),
+    ])
+def test_create_tracker_valid(skip_qtbot, game, tracker_name):
+    # Setup
+    connection = MagicMock()
+    connector = connection.get_connector_for_builder.return_value
+    connector.game_enum = game
+    connection.connected_states = {
+        connector: ConnectedGameState(uuid.UUID(int=0), connector)
+    }
+
+    # Run
+    window = AutoTrackerWindow(connection, None, MagicMock())
+    skip_qtbot.addWidget(window)
+    # window.create_tracker() is implied
+
+    # Assert
     assert isinstance(window.item_tracker, ItemTrackerWidget)
     assert len(window.item_tracker.tracker_elements) > 10
+    assert window._dummy_tracker is None
+    assert window._current_tracker_game == game
+
+    # Select new theme
+    action = [action for action in window._tracker_actions[game]
+              if action.text() == tracker_name][0]
+    action.setChecked(True)
+
+    window.create_tracker()
+    assert window._current_tracker_name == tracker_name
+
+
+def test_update_sources_combo(skip_qtbot):
+    # Setup
+    connection = MagicMock()
+    connection.connected_states = {}
+    connection.get_connector_for_builder.return_value = None
+    connection.connection_builders = []
+
+    # Run
+    window = AutoTrackerWindow(connection, None, MagicMock())
+    skip_qtbot.addWidget(window)
+
+    # Empty
+    # window.update_sources_combo() is implied
+    assert window.select_game_combo.itemText(0) == "No sources available"
+    assert window.select_game_combo.count() == 1
+
+    # One builder
+    builder = DolphinConnectorBuilder()
+    connection.connection_builders = [builder]
+    window.update_sources_combo()
+    assert window.select_game_combo.itemText(0) == "Dolphin"
+    assert window.select_game_combo.count() == 1
+
+    # Two builders
+    builder2 = DebugConnectorBuilder(RandovaniaGame.BLANK.value)
+    connection.connection_builders = [builder2, builder]
+    window.update_sources_combo()
+    assert window.select_game_combo.itemText(0) == "Debug"
+    assert window.select_game_combo.itemText(1) == "Dolphin"
+    assert window.select_game_combo.currentIndex() == 1
+    assert window.select_game_combo.count() == 2
+
+
+@pytest.mark.parametrize("correct_source", [False, True])
+def test_on_game_state_updated(skip_qtbot, mocker, correct_source):
+    # Setup
+    inventory = MagicMock()
+    connection = MagicMock()
+    connector = connection.get_connector_for_builder.return_value
+    mocker.patch("randovania.gui.auto_tracker_window.AutoTrackerWindow.create_tracker")
+
+    # Run
+    window = AutoTrackerWindow(connection, None, MagicMock())
+    window.selected_builder = MagicMock()
+    window.item_tracker = MagicMock()
+    skip_qtbot.addWidget(window)
+    window.on_game_state_updated(ConnectedGameState(
+        uuid.UUID(int=0), connector if correct_source else MagicMock(),
+        current_inventory=inventory,
+    ))
+
+    # Assert
+    connection.get_connector_for_builder.assert_called_once_with(window.selected_builder.return_value)
+    if correct_source:
+        window.item_tracker.update_state.assert_called_once_with(inventory)
+    else:
+        window.item_tracker.update_state.assert_not_called()

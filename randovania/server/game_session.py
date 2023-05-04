@@ -10,6 +10,7 @@ import flask_socketio
 import peewee
 from playhouse import flask_utils
 
+import randovania
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
@@ -227,6 +228,9 @@ def _change_row(sio: ServerApp, session: GameSession, arg: tuple[int, dict]):
     if preset.game not in session.allowed_games:
         raise InvalidAction(f"Only {preset.game} preset not allowed.")
 
+    if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
+        raise InvalidAction("Preset uses unsupported features.")
+
     try:
         with database.db.atomic():
             preset_row = GameSessionPreset.get(GameSessionPreset.session == session,
@@ -302,6 +306,8 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
                 preset = VersionedPreset.with_preset(permalink_preset)
                 if preset.game not in session.allowed_games:
                     raise InvalidAction(f"{preset.game} preset not allowed.")
+                if not randovania.is_dev_version() and permalink_preset.configuration.unsupported_features():
+                    raise InvalidAction(f"Preset {permalink_preset.name} uses unsupported features.")
                 preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 

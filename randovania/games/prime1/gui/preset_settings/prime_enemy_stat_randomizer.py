@@ -40,6 +40,10 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
     def uses_patches_tab(cls) -> bool:
         return True
 
+    @classmethod
+    def is_experimental(cls) -> bool:
+        return True
+
     def _on_activation(self):
         checked: bool = self.activate_randomizer.isChecked()
         widget_arr = [self.minimum_label, self.maximum_label, self.scale_attribute_label, self.range_scale_low,

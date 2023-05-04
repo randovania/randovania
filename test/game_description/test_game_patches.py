@@ -1,4 +1,4 @@
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 
 
 def test_assign_extra_pickups(empty_patches):

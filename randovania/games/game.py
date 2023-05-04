@@ -18,7 +18,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
-    from randovania.generator.item_pool import PoolResults
+    from randovania.generator.pickup_pool import PoolResults
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab

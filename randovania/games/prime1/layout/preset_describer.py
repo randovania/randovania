@@ -96,7 +96,7 @@ class PrimePresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Difficulty": [
                 {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},
-                {f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100},
+                {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
             ],
             "Gameplay": [
                 {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
@@ -107,23 +107,18 @@ class PrimePresetDescriber(GamePresetDescriber):
             ],
             "Quality of Life": [
                 {
-                    "Fixes to game breaking bugs": configuration.qol_game_breaking,
-                    "Pickup scans": configuration.qol_pickup_scans,
-                },
-                {
                     f"Phazon suit hint: {phazon_hint}": phazon_hint is not None
                 }
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {
                         "Missiles needs Launcher": "Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
                     }
                 ),
                 {
-                    "Varia-only heat protection": configuration.heat_protection_only_varia,
                     "Progressive suit damage reduction": configuration.progressive_damage_reduction,
                 },
                 {
@@ -154,10 +149,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     "Spring Ball": configuration.spring_ball,
-                },
-                {
-                    "Deterministic I. Drone RNG": configuration.deterministic_idrone,
-                    "Deterministic Maze RNG": configuration.deterministic_maze,
                 },
                 {
                     cutscene_removal: cutscene_removal is not None,
@@ -191,6 +182,9 @@ class PrimePresetDescriber(GamePresetDescriber):
         ]
         if backwards:
             template_strings["Game Changes"].append("Allowed backwards: {}".format(", ".join(backwards)))
+
+        if configuration.legacy_mode:
+            template_strings["Game Changes"].append("Legacy Mode")
 
         # Artifacts
         template_strings["Item Pool"].append(f"{configuration.artifact_target.num_artifacts} Artifacts, "

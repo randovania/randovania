@@ -119,7 +119,7 @@ async def show_tracker(app: QtWidgets.QApplication):
         app.exit(1)
         return
 
-    app.tracker = AutoTrackerWindow(app.game_connection, options)
+    app.tracker = AutoTrackerWindow(app.game_connection, None, options)
     logger.info("Displaying auto tracker")
     app.tracker.show()
 
@@ -138,7 +138,7 @@ async def show_game_details(app: QtWidgets.QApplication, options, file_path: Pat
     layout = await layout_loader.load_layout_description(None, file_path)
     if layout is None:
         return
-    
+
     details_window = GameDetailsWindow(None, options)
     details_window.update_layout_description(layout)
     logger.info("Displaying game details")
@@ -188,40 +188,6 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
         await show_game_session(app, options, args.session_id)
     else:
         raise RuntimeError(f"Unknown command: {command}")
-
-
-def create_memory_executor(debug_game_backend: bool, options):
-    from randovania.interface_common.options import Options
-    options = typing.cast(Options, options)
-
-    logger.info("Preparing game backend...")
-    if debug_game_backend:
-        from randovania.gui.debug_backend_window import DebugExecutorWindow
-        backend = DebugExecutorWindow()
-        backend.show()
-    else:
-        try:
-            from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
-        except ImportError as e:
-            from randovania.gui.lib import common_qt_lib
-            import traceback
-            common_qt_lib.show_install_visual_cpp_redist("{}\n\nTraceback:\n{}".format(
-                e,
-                "\n".join(traceback.format_tb(e.__traceback__)))
-            )
-            raise SystemExit(1)
-
-        from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
-        from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
-
-        logger.info("Loaded all game backends...")
-        if options.game_backend == MemoryExecutorChoice.NINTENDONT and options.nintendont_ip is not None:
-            backend = NintendontExecutor(options.nintendont_ip)
-        else:
-            backend = DolphinExecutor()
-
-    logger.info("Game backend configured: %s", type(backend))
-    return backend
 
 
 async def _load_options() -> Options | None:
@@ -295,11 +261,9 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
         app.exit(1)
         return
 
-    executor = create_memory_executor(args.debug_game_backend, options)
-
     logging.info("Configuring game connection with the backend...")
     from randovania.game_connection.game_connection import GameConnection
-    app.game_connection = GameConnection(executor)
+    app.game_connection = GameConnection(options)
 
     logging.info("Configuring qasync...")
     import qasync
@@ -366,7 +330,6 @@ def create_subparsers(sub_parsers):
     parser.add_argument("--preview", action="store_true", help="Activates preview features")
     parser.add_argument("--custom-network-storage", type=Path, help="Use a custom path to store the network login.")
     parser.add_argument("--login-as-guest", type=str, help="Login as the given quest user")
-    parser.add_argument("--debug-game-backend", action="store_true", help="Opens the debug game backend.")
 
     gui_parsers = parser.add_subparsers(dest="command")
     gui_parsers.add_parser("main", help="Displays the Main Window").set_defaults(func=run)

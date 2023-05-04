@@ -46,38 +46,38 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
     result = RandovaniaGame.METROID_PRIME.data.layout.preset_describer.format_params(configuration)
     expected = {
         "Logic Settings": [
-            "All tricks disabled",
-            "Dangerous Actions: Randomly"
-        ],
-        "Starting Items": [
-            "Vanilla"
+            "All tricks disabled"
         ],
         "Item Pool": [
             "Size: 95 of 100",
-            "2x Charge Beam",
+            "Vanilla starting items",
+            "Shuffles 2x Charge Beam",
             "6 Artifacts, 6 min actions",
         ],
-        "Difficulty": [
-            "Damage Strictness: Medium"
-        ],
         "Gameplay": [
-            "Starting Location: Tallon Overworld - Landing Site"
+            "Starts at Tallon Overworld - Landing Site"
         ],
         "Quality of Life": [
-            "Fixes to game breaking bugs, Pickup scans",
             "Phazon suit hint: Area only"
         ],
+        "Difficulty": [
+        ],
         "Game Changes": [
-            "Varia-only heat protection, Progressive suit damage reduction",
+            "Progressive suit damage reduction",
             "Warp to start, Unlocked Vault door, Unlocked Save Station doors, Phazon Elite without Dynamo",
             "53.1% chance of superheated, 28.7% chance of submerged",
-            "Deterministic I. Drone RNG, Deterministic Maze RNG",
             "Competitive cutscene removal",
             "Allowed backwards: Frigate, Labs, Upper Mines"
         ]
     }
+
     if use_enemy_attribute_randomizer:
         expected["Game Changes"].insert(5, "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, Enemies will be stretched randomly")
     else:
         expected["Game Changes"].insert(2, "Random Boss Sizes")
+
+    # clean changes in order should trip tests
+    expected["Game Changes"].sort()
+    result["Game Changes"].sort()
+
     assert expected == result

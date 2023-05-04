@@ -4,31 +4,33 @@ from functools import partial
 
 from PySide6 import QtWidgets, QtCore
 
+import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.item.item_database import ItemDatabase
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_database import PickupDatabase
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
+from randovania.gui.preset_settings.item_configuration_widget import StandardPickupWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.major_item_state import MajorItemState
-from randovania.layout.preset import Preset
+from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.layout.preset import Preset
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
     "For a total of {total} from this source."
@@ -50,11 +52,11 @@ def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
     game: RandovaniaGame
     _boxes_for_category: dict[str, tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout,
-                                         dict[MajorItem, ItemConfigurationWidget]]]
-    _default_items: dict[ItemCategory, QtWidgets.QComboBox]
+    dict[StandardPickupDefinition, StandardPickupWidget]]]
+    _default_pickups: dict[PickupCategory, QtWidgets.QComboBox]
 
     _ammo_item_count_spinboxes: dict[str, list[QtWidgets.QSpinBox]]
-    _ammo_pickup_widgets: dict[Ammo, AmmoPickupWidgets]
+    _ammo_pickup_widgets: dict[AmmoPickupDefinition, AmmoPickupWidgets]
 
     _progressive_widgets: list[ProgressiveItemWidget]
 
@@ -68,14 +70,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         # Relevant Items
         self.game = editor.game
         self.game_description = default_database.game_description_for(self.game)
-        item_database = default_database.item_database_for_game(self.game)
+        pickup_database = default_database.pickup_database_for_game(self.game)
 
         self._register_random_starting_events()
-        self._create_categories_boxes(item_database, size_policy)
-        self._create_customizable_default_items(item_database)
-        self._create_major_item_boxes(item_database, self.game_description.resource_database)
-        self._create_progressive_widgets(item_database)
-        self._create_ammo_pickup_boxes(size_policy, item_database)
+        self._create_categories_boxes(pickup_database, size_policy)
+        self._create_customizable_default_items(pickup_database)
+        self._create_standard_pickup_boxes(pickup_database, self.game_description.resource_database)
+        self._create_progressive_widgets(pickup_database)
+        self._create_ammo_pickup_boxes(size_policy, pickup_database)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -87,37 +89,36 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration
-        major_configuration = layout.major_items_configuration
+        major_configuration = layout.standard_pickup_configuration
 
-        # Random Starting Items
-        self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
-        self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_items)
+        # Random Starting Pickups
+        self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_pickups)
+        self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_pickups)
 
-        # Default Items
-        for category, default_item in major_configuration.default_items.items():
-            combo = self._default_items[category]
-            combo.setCurrentIndex(combo.findData(default_item))
+        # Default Pickups
+        for category, default_item in major_configuration.default_pickups.items():
+            randovania.gui.lib.signal_handling.set_combo_with_value(self._default_pickups[category], default_item)
 
             for item, widget in self._boxes_for_category[category.name][2].items():
                 widget.setEnabled(default_item != item)
 
-        # Major Items
+        # Standard Pickups
         for _, _, elements in self._boxes_for_category.values():
-            for major_item, widget in elements.items():
-                widget.set_new_state(major_configuration.items_state[major_item])
+            for standard_pickup, widget in elements.items():
+                widget.set_new_state(major_configuration.pickups_state[standard_pickup])
 
         # Progressive Items
         for progressive_widget in self._progressive_widgets:
             progressive_widget.on_preset_changed(
                 preset,
-                self._boxes_for_category[progressive_widget.progressive_item.item_category.name][2],
+                self._boxes_for_category[progressive_widget.progressive_item.pickup_category.name][2],
             )
 
         # Ammo
-        ammo_configuration = layout.ammo_configuration
+        ammo_configuration = layout.ammo_pickup_configuration
 
         ammo_provided = major_configuration.calculate_provided_ammo()
-        for ammo, state in ammo_configuration.items_state.items():
+        for ammo, state in ammo_configuration.pickups_state.items():
             for ammo_index, count in enumerate(state.ammo_count):
                 ammo_provided[ammo.items[ammo_index]] += count * state.pickup_count
 
@@ -128,14 +129,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             for ammo_index in ammo_provided.keys()
         }
 
-        for ammo, state in ammo_configuration.items_state.items():
+        for ammo, state in ammo_configuration.pickups_state.items():
             widgets = self._ammo_pickup_widgets[ammo]
             widgets.pickup_spinbox.setValue(state.pickup_count)
 
-            if widgets.require_major_item_check is not None:
-                widgets.require_major_item_check.setChecked(state.requires_major_item)
+            if widgets.require_main_item_check is not None:
+                widgets.require_main_item_check.setChecked(state.requires_main_item)
                 if self.game == RandovaniaGame.METROID_PRIME:
-                    widgets.require_major_item_check.setChecked(False)
+                    widgets.require_main_item_check.setChecked(False)
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
@@ -175,9 +176,15 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Item pool count
         try:
-            pool_items, maximum_size = pool_creator.calculate_pool_item_count(layout)
-            self.item_pool_count_label.setText(f"Items in pool: {pool_items}/{maximum_size}")
+            pool_items, maximum_size = pool_creator.calculate_pool_pickup_count(layout)
+            message = f"Items in pool: {pool_items}/{maximum_size}"
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, pool_items > maximum_size)
+            if layout.available_locations.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+                major_details, minor_details = pool_creator.calculate_split_pool_pickup_count(layout)
+                (major_count, num_major_nodes), (minor_count, num_minor_nodes) = major_details, minor_details
+                message += f"<br />Majors: {major_count}/{num_major_nodes} - Minors: {minor_count}/{num_minor_nodes}"
+
+            self.item_pool_count_label.setText(message)
 
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText(f"Invalid Configuration: {invalid_config}")
@@ -190,37 +197,37 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def _on_update_minimum_starting(self, value: int):
         with self._editor as options:
-            options.major_items_configuration = dataclasses.replace(options.major_items_configuration,
-                                                                    minimum_random_starting_items=value)
+            options.standard_pickup_configuration = dataclasses.replace(options.standard_pickup_configuration,
+                                                                    minimum_random_starting_pickups=value)
 
     def _on_update_maximum_starting(self, value: int):
         with self._editor as options:
-            options.major_items_configuration = dataclasses.replace(options.major_items_configuration,
-                                                                    maximum_random_starting_items=value)
+            options.standard_pickup_configuration = dataclasses.replace(options.standard_pickup_configuration,
+                                                                    maximum_random_starting_pickups=value)
 
-    def _create_categories_boxes(self, item_database: ItemDatabase, size_policy):
+    def _create_categories_boxes(self, pickup_database: PickupDatabase, size_policy):
         self._boxes_for_category = {}
 
         categories = set()
-        for major_item in item_database.major_items.values():
-            if not major_item.hide_from_gui:
-                categories.add(major_item.item_category)
+        for standard_pickup in pickup_database.standard_pickups.values():
+            if not standard_pickup.hide_from_gui:
+                categories.add(standard_pickup.pickup_category)
 
-        all_categories = list(item_database.item_categories.values())
-        for major_item_category in sorted(categories, key=lambda it: all_categories.index(it)):
-            category_box = Foldable(major_item_category.long_name)
-            category_box.setObjectName(f"category_box {major_item_category}")
+        all_categories = list(pickup_database.pickup_categories.values())
+        for standard_pickup_category in sorted(categories, key=lambda it: all_categories.index(it)):
+            category_box = Foldable(standard_pickup_category.long_name)
+            category_box.setObjectName(f"category_box {standard_pickup_category}")
             category_layout = QtWidgets.QGridLayout()
-            category_layout.setObjectName(f"category_layout {major_item_category}")
+            category_layout.setObjectName(f"category_layout {standard_pickup_category}")
             category_box.set_content_layout(category_layout)
 
             self.item_pool_layout.addWidget(category_box)
-            self._boxes_for_category[major_item_category.name] = category_box, category_layout, {}
+            self._boxes_for_category[standard_pickup_category.name] = category_box, category_layout, {}
 
-    def _create_customizable_default_items(self, item_database: ItemDatabase):
-        self._default_items = {}
+    def _create_customizable_default_items(self, pickup_database: PickupDatabase):
+        self._default_pickups = {}
 
-        for category, possibilities in item_database.default_items.items():
+        for category, possibilities in pickup_database.default_pickups.items():
             parent, layout, _ = self._boxes_for_category[category.name]
 
             label = QtWidgets.QLabel(parent)
@@ -228,39 +235,39 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             layout.addWidget(label, 0, 0)
 
             combo = ScrollProtectedComboBox(parent)
-            for item in possibilities:
-                combo.addItem(item.name, item)
-            combo.currentIndexChanged.connect(partial(self._on_default_item_updated, category, combo))
+            for pickup in possibilities:
+                combo.addItem(pickup.name, pickup)
+            combo.currentIndexChanged.connect(partial(self._on_default_pickup_updated, category, combo))
             layout.addWidget(combo, 0, 1)
 
             if len(possibilities) <= 1:
                 label.hide()
                 combo.hide()
 
-            self._default_items[category] = combo
+            self._default_pickups[category] = combo
 
-    def _on_default_item_updated(self, category: ItemCategory, combo: QtWidgets.QComboBox, _):
-        item: MajorItem = combo.currentData()
+    def _on_default_pickup_updated(self, category: PickupCategory, combo: QtWidgets.QComboBox, _):
+        pickup: StandardPickupDefinition = combo.currentData()
         with self._editor as editor:
-            new_config = editor.major_items_configuration
-            new_config = new_config.replace_default_item(category, item)
-            new_config = new_config.replace_state_for_item(
-                item,
-                MajorItemState(
-                    num_included_in_starting_items=1,
-                    included_ammo=new_config.items_state[item].included_ammo
+            new_config = editor.standard_pickup_configuration
+            new_config = new_config.replace_default_pickup(category, pickup)
+            new_config = new_config.replace_state_for_pickup(
+                pickup,
+                StandardPickupState(
+                    num_included_in_starting_pickups=1,
+                    included_ammo=new_config.pickups_state[pickup].included_ammo
                 ),
             )
-            editor.major_items_configuration = new_config
+            editor.standard_pickup_configuration = new_config
 
-    def _create_major_item_boxes(self, item_database: ItemDatabase, resource_database: ResourceDatabase):
-        for major_item in item_database.major_items.values():
-            if major_item.hide_from_gui or major_item.item_category.name == "energy_tank":
+    def _create_standard_pickup_boxes(self, pickup_database: PickupDatabase, resource_database: ResourceDatabase):
+        for standard_pickup in pickup_database.standard_pickups.values():
+            if standard_pickup.hide_from_gui or standard_pickup.pickup_category.name == "energy_tank":
                 continue
 
-            category_box, category_layout, elements = self._boxes_for_category[major_item.item_category.name]
-            widget = ItemConfigurationWidget(None, major_item, MajorItemState(), resource_database)
-            widget.Changed.connect(partial(self._on_major_item_updated, widget))
+            category_box, category_layout, elements = self._boxes_for_category[standard_pickup.pickup_category.name]
+            widget = StandardPickupWidget(None, standard_pickup, StandardPickupState(), resource_database)
+            widget.Changed.connect(partial(self._on_standard_pickup_updated, widget))
 
             row = category_layout.rowCount()
             if row > 1:
@@ -268,19 +275,19 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 widget.separator_line.show()
 
             category_layout.addWidget(widget, row, 0, 1, 2)
-            elements[major_item] = widget
+            elements[standard_pickup] = widget
 
-    def _on_major_item_updated(self, item_widget: ItemConfigurationWidget):
+    def _on_standard_pickup_updated(self, pickup_widget: StandardPickupWidget):
         with self._editor as editor:
-            editor.major_items_configuration = editor.major_items_configuration.replace_state_for_item(
-                item_widget.item, item_widget.state
+            editor.standard_pickup_configuration = editor.standard_pickup_configuration.replace_state_for_pickup(
+                pickup_widget.pickup, pickup_widget.state
             )
 
     # Ammo
-    def _create_ammo_pickup_boxes(self, size_policy, item_database: ItemDatabase):
+    def _create_ammo_pickup_boxes(self, size_policy, pickup_database: PickupDatabase):
         """
         Creates the GroupBox with SpinBoxes for selecting the pickup count of all the ammo
-        :param item_database:
+        :param pickup_database:
         :return:
         """
 
@@ -296,13 +303,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
             self._boxes_for_category[broad_to_category.get(ammo.broad_category.name, ammo.broad_category.name)][:2]
-            for ammo in item_database.ammo.values()
+            for ammo in pickup_database.ammo_pickups.values()
         }
 
         for box, layout in layouts_with_lines:
             layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
-        for ammo in item_database.ammo.values():
+        for ammo in pickup_database.ammo_pickups.values():
             category_box, category_layout, _ = self._boxes_for_category[broad_to_category.get(ammo.broad_category.name,
                                                                                               ammo.broad_category.name)]
 
@@ -314,6 +321,12 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             current_row = 0
 
+            if ammo.description is not None:
+                description_label = QtWidgets.QLabel(ammo.description, pickup_box)
+                description_label.setWordWrap(True)
+                layout.addWidget(description_label, current_row, 0, 1, -1)
+                current_row += 1
+
             def add_row(widget_a: QtWidgets.QWidget, widget_b: QtWidgets.QWidget):
                 nonlocal current_row
                 layout.addWidget(widget_a, current_row, 0)
@@ -322,11 +335,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             for ammo_index, ammo_item in enumerate(ammo.items):
                 item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
+                minimum_count = -item.max_capacity if ammo.allows_negative else 0
 
                 item_count_label = QtWidgets.QLabel(pickup_box)
                 item_count_label.setText(item.long_name if len(ammo.items) > 1 else "Contains")
 
                 item_count_spinbox = ScrollProtectedSpinBox(pickup_box)
+                item_count_spinbox.setMinimum(minimum_count)
                 item_count_spinbox.setMaximum(item.max_capacity)
                 item_count_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_item_count_spinbox,
                                                                 ammo, ammo_index))
@@ -346,15 +361,15 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             # FIXME: hardcoded check to hide required mains for Prime 1
             if ammo.temporary:
-                require_major_item_check = QtWidgets.QCheckBox(pickup_box)
-                require_major_item_check.setText("Requires the major item to work?")
-                require_major_item_check.stateChanged.connect(partial(self._on_update_ammo_require_major_item, ammo))
+                require_main_item_check = QtWidgets.QCheckBox(pickup_box)
+                require_main_item_check.setText("Requires the main item to work?")
+                require_main_item_check.stateChanged.connect(partial(self._on_update_ammo_require_main_item, ammo))
                 if self.game == RandovaniaGame.METROID_PRIME:
-                    require_major_item_check.setVisible(False)
-                layout.addWidget(require_major_item_check, current_row, 0, 1, 2)
+                    require_main_item_check.setVisible(False)
+                layout.addWidget(require_main_item_check, current_row, 0, 1, 2)
                 current_row += 1
             else:
-                require_major_item_check = None
+                require_main_item_check = None
 
             expected_count = QtWidgets.QLabel(pickup_box)
             expected_count.setWordWrap(True)
@@ -363,44 +378,44 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             current_row += 1
 
             self._ammo_pickup_widgets[ammo] = AmmoPickupWidgets(pickup_spinbox, expected_count,
-                                                                pickup_box, require_major_item_check)
+                                                                pickup_box, require_main_item_check)
             category_layout.addWidget(pickup_box)
 
-    def _on_update_ammo_pickup_item_count_spinbox(self, ammo: Ammo, ammo_index: int, value: int):
+    def _on_update_ammo_pickup_item_count_spinbox(self, ammo: AmmoPickupDefinition, ammo_index: int, value: int):
         with self._editor as options:
-            ammo_configuration = options.ammo_configuration
-            state = ammo_configuration.items_state[ammo]
+            ammo_configuration = options.ammo_pickup_configuration
+            state = ammo_configuration.pickups_state[ammo]
             ammo_count = list(state.ammo_count)
             ammo_count[ammo_index] = value
 
-            options.ammo_configuration = ammo_configuration.replace_state_for_ammo(
+            options.ammo_pickup_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo,
                 dataclasses.replace(state, ammo_count=tuple(ammo_count))
             )
 
-    def _on_update_ammo_pickup_num_count_spinbox(self, ammo: Ammo, value: int):
+    def _on_update_ammo_pickup_num_count_spinbox(self, ammo: AmmoPickupDefinition, value: int):
         with self._editor as options:
-            ammo_configuration = options.ammo_configuration
-            options.ammo_configuration = ammo_configuration.replace_state_for_ammo(
+            ammo_configuration = options.ammo_pickup_configuration
+            options.ammo_pickup_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo,
-                dataclasses.replace(ammo_configuration.items_state[ammo], pickup_count=value)
+                dataclasses.replace(ammo_configuration.pickups_state[ammo], pickup_count=value)
             )
 
-    def _on_update_ammo_require_major_item(self, ammo: Ammo, value: int):
+    def _on_update_ammo_require_main_item(self, ammo: AmmoPickupDefinition, value: int):
         with self._editor as options:
-            ammo_configuration = options.ammo_configuration
-            options.ammo_configuration = ammo_configuration.replace_state_for_ammo(
+            ammo_configuration = options.ammo_pickup_configuration
+            options.ammo_pickup_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo,
-                dataclasses.replace(ammo_configuration.items_state[ammo], requires_major_item=bool(value))
+                dataclasses.replace(ammo_configuration.pickups_state[ammo], requires_main_item=bool(value))
             )
 
-    def _create_progressive_widgets(self, item_database: ItemDatabase):
+    def _create_progressive_widgets(self, pickup_database: PickupDatabase):
         self._progressive_widgets = []
 
         all_progressive = list(self.game.gui.progressive_item_gui_tuples)
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
-            self._boxes_for_category[item_database.major_items[progressive_item_name].item_category.name][:2]
+            self._boxes_for_category[pickup_database.standard_pickups[progressive_item_name].pickup_category.name][:2]
             for progressive_item_name, non_progressive_items in all_progressive
         }
 
@@ -408,13 +423,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
         for progressive_item_name, non_progressive_items in all_progressive:
-            progressive_item = item_database.major_items[progressive_item_name]
-            parent, layout, _ = self._boxes_for_category[progressive_item.item_category.name]
+            progressive_item = pickup_database.standard_pickups[progressive_item_name]
+            parent, layout, _ = self._boxes_for_category[progressive_item.pickup_category.name]
 
             widget = ProgressiveItemWidget(
                 parent, self._editor,
                 progressive_item=progressive_item,
-                non_progressive_items=[item_database.major_items[it] for it in non_progressive_items],
+                non_progressive_items=[pickup_database.standard_pickups[it] for it in non_progressive_items],
             )
             widget.setText("Use progressive {}".format(" → ".join(non_progressive_items)))
             self._progressive_widgets.append(widget)

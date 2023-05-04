@@ -5,15 +5,172 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.6.0] - 2023-??-??
+## [?.?.0] - 2023-06-??
+
+- WIP: New multiworld in progress (TODO: proper message when done)
+- Added: Skip usual Door Lock randomizer logic when the only valid lock option is unlocked doors.
+- Changed: The resolver now allows dangerous resources in additional resources.
+- Changed: Improved preset descriptions, making them significantly simpler.
+- Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
+- Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
+
+### Cave Story
+
+- Nothing.
+
+### Metroid Dread
+
+- **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
+- Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
+- Added: Ice Missile Cover and Diffusion Beam Cover can now be added to Door Lock Randomizer
+- Added: New option under "Game Modifications" to choose how inconsistencies in Raven Beak's damage resistance are handled.
+- Changed: The doors in Itorash are now excluded from being shuffled in Door Lock Randomizer.
+
+#### Patcher Changes
+
+- Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
+
+#### Logic Database
+
+- Added: Grapple Movement (Beginner) for going up the left side of Burenia - Main Hub Tower Middle.
+- Added: Movement (Intermediate) and Water Bomb Jump (Intermediate) for getting out of the water at the same spot.
+- Added: Grapple Movement (Beginner) for the Grapple only method of reaching the Missile Tank in Main Hub Tower Top.
+- Added: Use Speed Booster to skip breaking the blob submerged in water in Artaria Early Cloak room, requires Speed Booster Conservation (Beginner).
+- Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
+- Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
+- Added: A new way to reach the tunnel in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump (Advanced)
+- Added: Use a Shinespark to climb up from Above Screw Attack Blocks in Burenia Main Hub Tower Bottom with only Gravity Suit.
+- Added: Use a Shinespark to climb up from Alcove Across Grapple Block in Burenia Main Hub Tower Bottom with only Speed Booster using Speed Booster Conservation Beginner.
+- Added: Use a Shinespark with Gravity Suit to reach Ammo Recharge South at the bottom of Burenia Gravity Suit Tower before the Destroy Gravity Suit Floor event.
+- Added: Use Spin Boost And Gravity Suit with different trick strategies to cross the big gap in Burenia Main Hub Tower Middle.
+- Added: Use a Shinespark with Gravity Suit to reach the Spider Magnet wall in Burenia Main Hub Tower Middle from the bottom of the room.
+- Added: Climb up to the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit and Flash Shift.
+- Added: Climb up from the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit, a Slide Jump, Spin Boost and a Wall Jump.
+- Added: Allow using Shinesparks in Gravity Suit Tower by storing speed in the upper part of Gravity Suit Room, also when Door Lock rando is enabled.
+- Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
+- Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
+- Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
+- Changed: Going through Artaria Lower Path to Cataris using Damage Boost no longer requires Morph Ball.
+- Changed: Reduced the difficulty of the Wall Jump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
+- Changed: Using Wall Jump Advanced to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
+- Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
+- Fixed: Experiment Z-57's pickup is now a major item location in Major/Minor split.
+- Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
+- Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
+- Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
+
+### Metroid Prime
+
+- Changed: Divided the "Other" tab into "Quality of Life" and "Chaos".
+- Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement.
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+
+#### Logic Database
+
+- Added: 55 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 224
+
+##### Tallon Overworld 
+
+- Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall
+- Added: Root Cave - L-Jump method to reach upper area
+
+#### Magmoor Caverns
+
+- Added: Twin Fires Tunnel - Transport to Talon -> Twin Fires, NSJ & SJ dashes now require standable terrain
+
+##### Phendrana Drifts
+
+- Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
+- Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
+
+##### Phazon Mines
+
+- Fixed: Fungal Hall B - Scan dash method now requires scan visor
+- Fixed: Ventillation Shaft - Combat dash to climb room now requires door lock rando to be off 
+
+
+### Metroid Prime 2: Echoes
+
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+
+#### Logic Database
+
+- Added: Method to climb Forgotten Bridge with Jump Off Enemy (Advanced)
+- Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
+- Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
+- Added: Method to reach the top cannon in Sanctuary Entrance using Bombs, Space Jump Boots, Bomb Space Jump (Advanced), and Standable Terrain (Advanced).
+
+# [5.7.0] - 2023-05-??
+
+- Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
+- Fixed: Unsupported features are now disallowed from use in Multiworld sessions.
+
+### Cave Story
+
+- Fixed: Exporting on Linux no longer fails due to Rest Area in Plantation using "lounge" instead of "Lounge".
+
+### Metroid Dread
+
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
+
+#### Logic Database
+
+- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
+
+### Metroid Prime
+
+- Added: Selecting an ISO that isn't for Metroid Prime is now explicitly refused when exporting.
+- Fixed: All pickups in the pool are now correctly assigned major or minor.
+- Fixed: Room Rando no longer overrides the results of Door Lock Rando when exporting.
+
+#### Logic Database
+
+- Fixed: The Artifact of Truth pickup is now a major location for Major/Minor split.
+
+### Metroid Prime 2: Echoes
+
+- Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
+
+## [5.6.1] - 2023-04-??
+
+- Nothing.
+
+## [5.6.0] - 2023-04-02
 
 - Added: Trick Details popup now lists the usages in each area.
 - Added: Opening the Data Visualizer from the Trick Details while customizing a preset now automatically configured the trick filters based on the preset being edited.
 - Changed: Setting trick filters in the Data Visualizer based on a preset now sets all tricks, even those at disabled.
+- Changed: Optimize Solver by choosing actions in a smarter order. Prefer actions of types that are likely to progress th. Postpone dangerous actions. This should make the solver able to validate seeds where it previously timed out. Solving should in general be faster in general.
+- Fixed: Solver bug that made it unable to detect dangerous actions, which could result in some possible seeds being considered impossible.
+- Fixed: Searching for Multiworld sessions by name is no longer case sensitive.
 
-## [5.5.2] - 2023-??-??
+### Metroid Prime 2: Echoes
 
-- Nothing.
+#### Logic Database
+
+- Added: Proper combat requirements for the Amorbis fight.
+- Removed: Incorrect and improper connections to and from the Amorbis fight.
+
+### Metroid Prime
+
+#### Logic Database
+
+- Added: 48 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 216
+
+### Metroid Dread
+
+#### Logic Database
+
+- Added: Use Flash Shift and Spin Boost with Wall Jump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
+- Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
+- Changed: Simplified various database connections.
+- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
+- Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
+- Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
+- Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
+- Fixed: Add missing requirement to release the X before leaving Elun.
 
 ## [5.5.1] - 2023-02-28
 
@@ -42,8 +199,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Ridley shorelines, biotech research 2, and exterior docking hangar actors now scale with boss size
 
 #### Logic Database
-
-- Added: 47 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 168
 
 ##### Tallon Overworld
 
@@ -161,19 +316,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Water Bomb Jump to reach the item in Cataris - Teleport to Dairon without Gravity Suit.
 - Added: Flash Shift (Intermediate), Morph Ball (Intermediate), and Spin Boost (Beginner) wall jumps for climbing up Experiment Z-57's arena.
 - Added: Spin Boost and Slide Jump (Beginner) for climbing the upper part of Experiment Z-57's room.
-- Added: Speedbooster Conservation (Intermediate) for climbing to either the top platform or Double Obsydomithon Room in Cataris - Teleport to Artaria (Blue).
+- Added: Speed Booster Conservation (Intermediate) for climbing to either the top platform or Double Obsydomithon Room in Cataris - Teleport to Artaria (Blue).
 - Added: Grapple Movement (Beginner) to climb Cataris - Moving Magnet Walls (Tall).
 - Added: Flash Shift (Intermediate), Morph Ball (Advanced), and Spin Boost with Spider Magnet wall jumps to climb Cataris - Moving Magnet Walls (Tall).
-- Added: Speedbooster Conservation (Beginner) to collect the lower item in Cataris - Teleport to Ghavoran without Gravity Suit.
+- Added: Speed Booster Conservation (Beginner) to collect the lower item in Cataris - Teleport to Ghavoran without Gravity Suit.
 - Added: Damage Boost (Intermediate) for reaching the teleport in Cataris - Teleport to Ghavoran with Spider Magnet.
 - Added: "Adam Skip" added to logic as Wall Jump (Advanced) in Cataris - Moving Magnet Walls (Small).
 - Added: Space Jump method of Cross Bomb Skip (Hypermode) to skip needing Speed for the item in Cataris - EMMI Zone Item Tunnel.
-- Added: Spin Boost Movement (Intermediate) and Speedbooster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
+- Added: Spin Boost Movement (Intermediate) and Speed Booster Conservation (Beginner) for getting up Hanubia - Central Unit without Space Jump or Infinite Bomb Jump.
 - Added: Spin Boost method to climb Hanubia - Escape Room 3.
-- Added: Morph Ball Single-Wall Walljumps to get to the Nav Station in Itorash - Transport to Hanubia.
+- Added: Morph Ball Single-Wall Wall Jumps to get to the Nav Station in Itorash - Transport to Hanubia.
 - Added: Flash Shift Skip (Intermediate) with Bombs to skip the Flash Shift gate in Teleport to Ferenia.
 - Added: Aim Down Clips (Intermediate/Advanced) to go to and from Storm Missile Gate Room without Morph Ball.
-- Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speedbooster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
+- Added: Shine Sink Clip/Aim Down Clip (Intermediate) and Speed Booster Conservation (Advanced) to reach the bottom of Teleport to Ghavoran from the top level.
 - Added: Aim Down Clip (Expert) to reach the blobs in Gravity Suit Tower from the top level.
 - Added: Aim Down Clip (Intermediate) in Main Hub Tower Middle to Main Hub Tower Bottom.
 - Added: Shine Sink Clip/Aim Down Clip (Intermediate) in Gravity Suit room top door to bottom door.
@@ -182,7 +337,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Flash Shift Skip (Beginner) in Purple EMMI Introduction; (Intermediate) with normal bombs.
 - Added: Moving from Ferenia - Transport to Ghavoran to Pitfall Puzzle Room with Spin Boost, Flash Shift, or Speed Booster.
 - Added: Using Normal Bomb Jump with a Cross Bomb at the top, for sideways movement, to reach the item in Artaria Proto EMMI Introduction.
-- Changed: Increased difficulty of Flash Shift Walljump to reach the Raven Beak elevator from Intermediate to Advanced.
+- Changed: Increased difficulty of Flash Shift Wall Jump to reach the Raven Beak elevator from Intermediate to Advanced.
 - Changed: Simplified many room nodes and connections.
 - Changed: Shine Sink Clip in Main Hub Tower Middle to Main Hub Tower Bottom is now Intermediate (from Expert).
 - Changed: Using Flash Shift to collect the fan pickup in Burenia Hub to Dairon is now Advanced (from Beginner).
@@ -311,10 +466,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Other various methods of going through rooms
 - Added: New Diffusion Abuse trick for pushing Wide Beam blocks and activating the lava buttons in Cataris.
 - Added: Cross Bomb Skip (Advanced) for Dairon's Cross Bomb Puzzle Room item
-- Added: Power Bombs method for the Speedbooster Conservation for Dairon's Cross Bomb Puzzle Room item
+- Added: Power Bombs method for the Speed Booster Conservation for Dairon's Cross Bomb Puzzle Room item
 - Changed: Separated the First Tunnel Blob event into two to account for Diffusion/Wave not needing to be in the tunnel
 - Changed: Deleted some unnecessary tile nodes
-- Changed: Various instances of Walljump (Beginner) to trivial
+- Changed: Various instances of Wall Jump (Beginner) to trivial
 - Changed: Some Grapple options to include Grapple Movement
 - Changed: Some Movement tricks to Climb Sloped Tunnels
 - Changed: Some Movement tricks to Skip Cross Bomb

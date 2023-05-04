@@ -8,11 +8,10 @@ from pathlib import Path
 from typing import Optional
 
 from PySide6 import QtWidgets, QtGui, QtCore
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
-from randovania.game_connection.game_connection import GameConnection
+import randovania
+from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
@@ -22,7 +21,6 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
@@ -253,9 +251,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.background_process_button.setMenu(self.background_process_menu)
 
         # Game Connection
-        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_label,
-                                                         self.game_connection, self._options)
-        self.game_connection_setup.setup_tool_button_menu(self.game_connection_tool)
+        self.game_connection_button.clicked.connect(window_manager.open_game_connection_window)
 
         # Session status
         self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
@@ -276,15 +272,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.tracker_docks = {}
 
         # tab stuff
-        self.splitDockWidget(self.players_dock, self.game_dock, Qt.Vertical)
-        self.splitDockWidget(self.game_dock, self.observers_dock, Qt.Horizontal)
+        self.splitDockWidget(self.players_dock, self.game_dock, QtCore.Qt.Orientation.Vertical)
+        self.splitDockWidget(self.game_dock, self.observers_dock, QtCore.Qt.Orientation.Horizontal)
         self.tabifyDockWidget(self.game_dock, self.history_dock)
         self.tabifyDockWidget(self.game_dock, self.audit_dock)
         self.game_dock.raise_()
 
         self.resizeDocks([self.players_dock, self.game_dock],
                          [self.height() - 200, 100],
-                         Qt.Vertical)
+                         QtCore.Qt.Orientation.Vertical)
 
     def connect_to_events(self):
         # Advanced Options
@@ -327,7 +323,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.network_client.GameSessionAuditLogUpdated.connect(self.on_game_session_audit_log_update)
         self.network_client.GameSessionInventoryUpdated.connect(self.on_game_session_inventory_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
-        self.game_connection.Updated.connect(self.on_game_connection_updated)
+        self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
 
     @classmethod
     async def create_and_update(cls, network_client: QtNetworkClient, game_connection: GameConnection,
@@ -342,7 +338,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             window.update_session_audit_log(network_client.current_game_session_audit_log)
             window.on_server_connection_state_updated(network_client.connection_state)
             window.connect_to_events()
-            await window.on_game_connection_updated()
+            # await window.on_game_state_updated()
 
             logger.debug("Finished creating GameSessionWindow")
 
@@ -376,7 +372,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         except Exception as e:
             logging.exception(f"Unable to disconnect: {e}")
         try:
-            self.game_connection.Updated.disconnect(self.on_game_connection_updated)
+            self.game_connection.GameStateUpdated.disconnect(self.on_game_state_updated)
         except Exception as e:
             logging.exception(f"Unable to disconnect: {e}")
 
@@ -508,7 +504,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         message_box = QtWidgets.QMessageBox(self)
         message_box.setWindowTitle(preset.name)
         message_box.setText(description)
-        message_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        message_box.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
         await async_dialog.execute_dialog(message_box)
 
     @asyncSlot()
@@ -531,7 +527,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if self._preset_manager.is_included_preset_uuid(old_preset.uuid):
             old_preset = old_preset.fork()
 
-        editor = PresetEditor(old_preset)
+        editor = PresetEditor(old_preset, self._options)
         self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
@@ -578,10 +574,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await self._do_import_preset(row_index, preset)
 
     async def _do_import_preset(self, row_index: int, preset: VersionedPreset):
-        if incompatible := preset.get_preset().settings_incompatible_with_multiworld():
+        message = "The following settings are incompatible with multiworld:\n"
+        incompatible = preset.get_preset().settings_incompatible_with_multiworld()
+        if not incompatible and not randovania.is_dev_version():
+            incompatible = preset.get_preset().configuration.unsupported_features()
+            message = "The following settings are unsupported:\n"
+
+        if incompatible:
             return await async_dialog.warning(
                 self, "Incompatible preset",
-                "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible),
+                message + "\n".join(incompatible),
                 async_dialog.StandardButton.Ok, async_dialog.StandardButton.Ok
             )
 
@@ -612,10 +614,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def _row_delete(self, row: RowWidget):
         row_index = self.rows.index(row)
         if row != self.rows[-1]:
-            await async_dialog.message_box(self, QMessageBox.Icon.Critical,
+            await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Critical,
                                            "Unable to delete row", "Can only delete the last row.")
         elif len(self.rows) <= 1:
-            await async_dialog.message_box(self, QMessageBox.Icon.Critical,
+            await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Critical,
                                            "Unable to delete row", "At least one row must remain.")
         else:
             await self._admin_global_action(SessionAdminGlobalAction.DELETE_ROW, row_index)
@@ -751,7 +753,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         else:
             message = "Session deleted", "The session has been deleted."
         await asyncio.gather(async_dialog.warning(self, *message), leave_session)
-        return QTimer.singleShot(0, self.close)
+        return QtCore.QTimer.singleShot(0, self.close)
 
     def sync_rows_to_game_session(self):
         game_session = self._game_session
@@ -890,7 +892,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             if not self.multiworld_client.is_active:
                 you = self._game_session.players[self.network_client.current_user.id]
                 session_id = f"{self._game_session.id}_{self._game_session.game_details.seed_hash}_{you.row}"
-                persist_path = self.network_client.server_data_path.joinpath(f"game_session_{session_id}.json")
+                persist_path = self.network_client.server_data_path.joinpath(f"game_session_{session_id}")
                 await self.multiworld_client.start(persist_path)
 
         elif self.multiworld_client.is_active:
@@ -1062,8 +1064,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self, "Clear generated game?",
             "Clearing the generated game will allow presets to be customized again, but all "
             "players must export the ISOs again.",
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
-        if result == QMessageBox.StandardButton.Yes:
+            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+            QtWidgets.QMessageBox.StandardButton.No
+        )
+        if result == QtWidgets.QMessageBox.StandardButton.Yes:
             await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, None)
 
     @asyncSlot()
@@ -1145,7 +1149,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         num_players = sum(1 for player in self._game_session.players.values() if not player.is_observer)
         if num_players != self._game_session.num_rows:
             await async_dialog.message_box(self,
-                                           QMessageBox.Icon.Critical,
+                                           QtWidgets.QMessageBox.Icon.Critical,
                                            "Missing players",
                                            "Unable to start the session: there are missing players.\n"
                                            "All slots of all teams must be filled before start.",
@@ -1216,7 +1220,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         options = self._options
 
         if not options.is_alert_displayed(InfoAlert.MULTIWORLD_FAQ):
-            await async_dialog.message_box(self, QMessageBox.Icon.Information, "Multiworld FAQ",
+            await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information, "Multiworld FAQ",
                                            "Have you read the Multiworld FAQ?\n"
                                            "It can be found in the main Randovania window → Help → Multiworld")
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
@@ -1352,36 +1356,27 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         else:
             await self.network_client.connect_to_server()
 
-    @asyncSlot()
-    async def on_game_connection_updated(self):
+    @asyncSlot(ConnectedGameState)
+    async def on_game_state_updated(self, state: ConnectedGameState):
         try:
             async with self._update_status_lock:
                 await self.network_client.session_self_update(
-                    self.game_connection.expected_game,
-                    self.game_connection.get_current_inventory(),
-                    self.game_connection.current_status,
-                    self.game_connection.backend_choice,
+                    state.source.game_enum,
+                    state.current_inventory,
+                    state.status,
+                    self.game_connection.get_backend_choice_for_state(state)
                 )
         except UnableToConnect:
             logger.info("Unable to connect to server to update status")
             await asyncio.sleep(1)
 
+        except KeyError:
+            logger.warning("Unable to find backend choice for state")
+            await asyncio.sleep(1)
+
         except error.BaseNetworkError as e:
             logger.warning(f"Received a {e} when updating status for server")
             await asyncio.sleep(1)
-
-    def _about_to_show_item_tracker_menu(self, row_id: int, widget: PlayerWidget):
-        preset = self._game_session.presets[row_id]
-
-        widget.open_tracker.clear()
-
-        if row_id in self.tracker_docks:
-            widget.open_tracker.addAction("Tracker already open").setEnabled(False)
-        elif preset.game not in self._trackers:
-            widget.open_tracker.addAction(f"No tracker available for {preset.game.long_name}").setEnabled(False)
-        else:
-            for name in sorted(self._trackers[preset.game].keys()):
-                widget.open_tracker.addAction(name).setData(self._trackers[preset.game][name])
 
     def _on_close_item_tracker(self, row_id: int):
         self.removeDockWidget(self.tracker_docks.pop(row_id))
@@ -1423,12 +1418,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self, f"Tracker: {self.team_players[row_id].player.name}", json_lib.read_path(tracker_path),
             lambda: self._on_close_item_tracker(row_id)
         )
-        item_tracker.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        item_tracker.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
         item_tracker.customContextMenuRequested.connect(functools.partial(
             self._item_tracker_menu_requested,
             row_id=row_id,
         ))
-        self.addDockWidget(Qt.TopDockWidgetArea, item_tracker)
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, item_tracker)
         item_tracker.setFloating(True)
 
         self.tracker_docks[row_id] = item_tracker

@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import dataclasses
 import typing
+from collections.abc import Iterable
 from dataclasses import dataclass
 from typing import Iterator
 
@@ -168,7 +169,7 @@ class GamePatches:
                 yield node, nodes[target]
 
     # Dock Weakness
-    def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> GamePatches:
+    def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:
         new_weakness = list(self.dock_weakness)
 
         for node, weakness in weaknesses:
@@ -176,7 +177,7 @@ class GamePatches:
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
 
-    def assign_weaknesses_to_shuffle(self, weaknesses: Iterator[tuple[DockNode, bool]]) -> GamePatches:
+    def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[DockNode, bool]]) -> GamePatches:
         new_to_shuffle = list(self.weaknesses_to_shuffle)
 
         for node, shuffle in weaknesses:
@@ -188,7 +189,10 @@ class GamePatches:
         return self.dock_weakness[node.node_index] or node.default_dock_weakness
 
     def has_default_weakness(self, node: DockNode) -> bool:
-        return self.dock_weakness[node.node_index] is None
+        if self.dock_weakness[node.node_index] is None:
+            return True
+        
+        return self.dock_weakness[node.node_index] == node.default_dock_weakness
 
     def should_shuffle_weakness(self, node: DockNode) -> bool:
         return self.weaknesses_to_shuffle[node.node_index]

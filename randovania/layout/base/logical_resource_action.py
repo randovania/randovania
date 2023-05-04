@@ -12,6 +12,9 @@ class LayoutLogicalResourceAction(BitPackEnum, Enum):
     def long_name(self) -> str:
         return PRETTY_NAME[self]
 
+    def is_default(self) -> bool:
+        return self == LayoutLogicalResourceAction.RANDOMLY
+
 
 PRETTY_NAME = {
     LayoutLogicalResourceAction.RANDOMLY: "Randomly",

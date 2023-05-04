@@ -106,6 +106,33 @@ def _convert_v19(options: dict) -> dict:
     return options
 
 
+def _convert_v20(options: dict) -> dict:
+    # added experimental settings
+    options.get("game_prime1", {}).get("cosmetic_patches", {}).pop("qol_cosmetic", None)
+    return options
+
+
+def _convert_v21(options: dict) -> dict:
+    # multiple connectors
+    options["connector_builders"] = []
+
+    nintendont_ip = options.pop("nintendont_ip", None)
+    choice = options.get("game_backend")
+    params = {}
+    if choice == "nintendont":
+        params = {"ip": nintendont_ip}
+        if (params["ip"] or "") == "":
+            choice = None
+
+    if choice is not None:
+        options["connector_builders"].append({
+            "choice": choice,
+            "params": params,
+        })
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -126,6 +153,8 @@ _CONVERTER_FOR_VERSION = [
     _convert_v17,
     _convert_v18,
     _convert_v19,
+    _convert_v20,
+    _convert_v21,
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

@@ -37,6 +37,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+    from randovania.gui.widgets.game_connection_window import GameConnectionWindow
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -67,6 +68,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
+    game_connection_window: GameConnectionWindow | None = None
 
     GameDetailsSignal = Signal(LayoutDescription)
     RequestOpenLayoutSignal = Signal(Path)
@@ -200,6 +202,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
+        self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
@@ -314,6 +317,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         logging.info("Creating OnlineInteractions...")
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
+        self.game_connection_button.clicked.connect(self.open_game_connection_window)
 
         logging.info("Will update for modified options")
         with self._options:
@@ -443,12 +447,21 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         QtGui.QDesktopServices.openUrl(QUrl(self._current_version_url))
 
+    def open_game_connection_window(self):
+        from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+        if self.game_connection_window is None:
+            self.game_connection_window = GameConnectionWindow(common_qt_lib.get_game_connection())
+
+        self.game_connection_window.show()
+        self.game_connection_window.raise_()
+
     # Options
     def on_options_changed(self):
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
+        self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
 
         self.tab_game_details.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
@@ -596,9 +609,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         with self._options as options:
             options.dark_mode = self.menu_action_dark_mode.isChecked()
 
+    def _on_menu_action_experimental_settings(self):
+        with self._options as options:
+            options.experimental_settings = self.menu_action_experimental_settings.isChecked()
+
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
-        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
+        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self, self._options)
         self.auto_tracker_window.show()
 
     def _on_menu_action_previously_generated_games(self):

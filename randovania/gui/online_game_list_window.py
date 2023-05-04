@@ -134,7 +134,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             for session in reversed(self.sessions)
             if (session.has_password in displayed_has_password
                 and session.state in displayed_states
-                and name_filter in session.name
+                and name_filter.lower() in session.name.lower()
                 and (dont_filter_age or (now - session.creation_date) < max_session_age))
         ]
         self.visible_sessions = visible_sessions

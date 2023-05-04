@@ -3,31 +3,34 @@ import uuid
 from typing import Callable
 
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.ammo_configuration import AmmoConfiguration
+from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 from randovania.layout.preset import Preset
+from randovania.interface_common.options import Options
 
 
 class PresetEditor:
     _on_changed: Callable[[], None] | None = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
+    _options: Options
 
     _name: str
     _uuid: uuid.UUID
     _game: RandovaniaGame
     _configuration: BaseConfiguration
 
-    def __init__(self, initial_preset: Preset):
+    def __init__(self, initial_preset: Preset, options: Options):
         self._name = initial_preset.name
         self._uuid = initial_preset.uuid
         self._game = initial_preset.game
         self._configuration = initial_preset.configuration
+        self._options = options
 
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)
@@ -103,20 +106,20 @@ class PresetEditor:
         self.set_configuration_field("available_locations", value)
 
     @property
-    def major_items_configuration(self) -> MajorItemsConfiguration:
-        return self.configuration.major_items_configuration
+    def standard_pickup_configuration(self) -> StandardPickupConfiguration:
+        return self.configuration.standard_pickup_configuration
 
-    @major_items_configuration.setter
-    def major_items_configuration(self, value: MajorItemsConfiguration):
-        self.set_configuration_field("major_items_configuration", value)
+    @standard_pickup_configuration.setter
+    def standard_pickup_configuration(self, value: StandardPickupConfiguration):
+        self.set_configuration_field("standard_pickup_configuration", value)
 
     @property
-    def ammo_configuration(self) -> AmmoConfiguration:
-        return self.configuration.ammo_configuration
+    def ammo_pickup_configuration(self) -> AmmoPickupConfiguration:
+        return self.configuration.ammo_pickup_configuration
 
-    @ammo_configuration.setter
-    def ammo_configuration(self, value: AmmoConfiguration):
-        self.set_configuration_field("ammo_configuration", value)
+    @ammo_pickup_configuration.setter
+    def ammo_pickup_configuration(self, value: AmmoPickupConfiguration):
+        self.set_configuration_field("ammo_pickup_configuration", value)
 
     @property
     def dock_rando_configuration(self) -> DockRandoConfiguration:

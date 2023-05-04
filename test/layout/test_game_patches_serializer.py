@@ -21,9 +21,9 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
-from randovania.generator.item_pool import pickup_creator, pool_creator
+from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
@@ -47,7 +47,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
             "target": 50}]},
     ],
     name="patches_with_data")
-def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_item_database):
+def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
     game = echoes_game_description
     db = game.resource_database
 
@@ -102,8 +102,8 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     }
 
     def create_pickup(name, percentage=True):
-        return pickup_creator.create_major_item(echoes_item_database.major_items[name],
-                                                MajorItemState(), percentage, game.resource_database,
+        return pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups[name],
+                                                StandardPickupState(), percentage, game.resource_database,
                                                 None, False)
 
     if request.param.get("starting_pickup"):
@@ -173,7 +173,8 @@ def test_decode(patches_with_data, default_echoes_configuration):
 
 
 @pytest.mark.parametrize("has_convert", [False, True])
-def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_item_category):
+def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_pickup_category,
+                               default_generator_params):
     # Setup
     name = "Some Random Name"
     if has_convert:
@@ -191,16 +192,17 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, gene
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name="HyperMissile",
         ),
-        item_category=generic_item_category,
-        broad_category=generic_item_category,
+        pickup_category=generic_pickup_category,
+        broad_category=generic_pickup_category,
         progression=(
             (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
             (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),
         ),
+        generator_params=default_generator_params,
         extra_resources=(
             (find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage"), 5),
         ),
-        resource_lock=resource_lock
+        resource_lock=resource_lock,
     )
 
     # Run

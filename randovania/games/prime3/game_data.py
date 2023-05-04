@@ -12,7 +12,7 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.prime3.item_database import progressive_items
+    from randovania.games.prime3.pickup_database import progressive_items
     from randovania.games.prime3 import gui
 
     return game.GameGui(

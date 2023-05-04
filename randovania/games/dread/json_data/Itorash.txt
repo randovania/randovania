@@ -12,7 +12,8 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Elevator to Raven Beak
+  * Extra - exclude_from_dock_rando: True
+  > Save Station
       Trivial
 
 > Door to Elevator to Raven Beak; Heals? False
@@ -24,7 +25,8 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Transport to Hanubia
+  * Extra - exclude_from_dock_rando: True
+  > Save Station
       Trivial
 
 > Save Station; Heals? False; Default Node
@@ -33,6 +35,10 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
   * Extra - start_point_actor_name: savestation_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  > Door to Transport to Hanubia
+      Trivial
+  > Door to Elevator to Raven Beak
+      Trivial
 
 ----------------
 Transport to Hanubia
@@ -48,6 +54,7 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Total Recharge
       Trivial
 
@@ -69,7 +76,7 @@ Extra - asset_id: collision_camera_001
   > Artifact Gate
       Any of the following:
           Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Beginner)
+          Flash Shift and Wall Jump (Beginner)
           Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Elevator to Hanubia; Heals? False; Spawn Point; Default Node
@@ -86,7 +93,7 @@ Extra - asset_id: collision_camera_001
   > Artifact Gate
       Any of the following:
           Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Beginner)
+          Flash Shift and Wall Jump (Beginner)
           Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Artifact Gate; Heals? False
@@ -110,6 +117,7 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Extra - exclude_from_dock_rando: True
   > Event - Destroy Generator
       Lay Power Bomb
   > Elevator to Raven Beak Arena
@@ -117,8 +125,8 @@ Extra - asset_id: collision_camera_002
           After Itorash - Destroy Generator
           Any of the following:
               Space Jump or Speed Booster or Simple IBJ
-              Spin Boost and Walljump (Beginner)
-              Flash Shift and Walljump (Advanced)
+              Spin Boost and Wall Jump (Beginner)
+              Flash Shift and Wall Jump (Advanced)
 
 > Event - Destroy Generator; Heals? False
   * Layers: default

@@ -1,4 +1,5 @@
 import os
+from typing import Iterator
 
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -17,7 +18,7 @@ from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 _ALTERNATIVE_MODELS = {
@@ -35,7 +36,6 @@ _ALTERNATIVE_MODELS = {
     "PROGRESSIVE_SPIN": ["powerup_doublejump", "powerup_spacejump"],
 }
 
-
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
@@ -45,40 +45,45 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
     if not res.resources:
-        return {"item_id": "ITEM_NONE", "quantity": 0}
+        yield {"item_id": "ITEM_NONE", "quantity": 0}
+        return
 
-    item_id = get_item_id_for_item(res.resources[0][0])
-    quantity = res.resources[0][1]
+    for resource in reversed(res.resources):
+        item_id = get_item_id_for_item(resource[0])
+        quantity = resource[1]
 
-    # only main pbs have 2 elements in res.resources, everything else is just 1
-    if len(res.resources) != 1:
-        item_id = get_item_id_for_item(res.resources[1][0])
-        assert item_id == "ITEM_WEAPON_POWER_BOMB"
-        assert len(res.resources) == 2
-
-    # non-required mains
-    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
-        item_id = "ITEM_WEAPON_POWER_BOMB"
-
-    return {"item_id": item_id, "quantity": quantity}
+        yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
-    return [
-        convert_conditional_resource(detail.original_pickup.respects_lock, res)
-        for res in detail.conditional_resources
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
+    pickup = detail.original_pickup
+    resources = [
+        list(convert_conditional_resource(conditional_resource))
+        for conditional_resource in detail.conditional_resources
     ]
+
+    if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
+        # Add the lock resource into the pickup in addition to the expansion's resources
+        assert len(resources) == 1
+        resources[0].append({
+            "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
+            "quantity": 1,
+        })
+
+    return resources
 
 
 class DreadPatchDataFactory(BasePatchDataFactory):
     cosmetic_patches: DreadCosmeticPatches
     configuration: DreadConfiguration
+    spawnpoint_name_prefix = "SP_RDV_"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
+        self.new_spawn_points: dict[Node, dict] = {}
 
         tank = self.configuration.energy_per_tank
         self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
@@ -118,17 +123,50 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has no extra {err}")
 
+    def _key_error_for_start_node(self, node: Node):
+        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " +
+                        "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
+
+    def _get_or_create_spawn_point(self, node: Node, level_name: str):
+        if node in self.new_spawn_points:
+            return self.new_spawn_points[node]["new_actor"]["actor"]
+        else:
+            try:
+                area = self.game.world_list.area_by_area_location(node.identifier.area_identifier)
+                collision_camera_name = area.extra["asset_id"]
+                new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
+                self.new_spawn_points[node] = {
+                    "new_actor": {
+                        "actor": new_spawnpoint_name,
+                        "scenario": level_name
+                    },
+                    "location": {
+                        "x": node.location.x,
+                        "y": node.location.y,
+                        "z": node.location.z
+                    },
+                    "collision_camera_name": collision_camera_name
+                }
+                return new_spawnpoint_name
+            except KeyError:
+                raise self._key_error_for_start_node(node)
+
+
     def _start_point_ref_for(self, node: Node) -> dict:
         world = self.game.world_list.nodes_to_world(node)
         level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
 
-        try:
+        if "start_point_actor_name" in node.extra:
             return {
                 "scenario": level_name,
                 "actor": node.extra["start_point_actor_name"],
             }
-        except KeyError as e:
-            raise self._key_error_for_node(node, e)
+        else:
+            return {
+                "scenario": level_name,
+                "actor": self._get_or_create_spawn_point(node, level_name),
+            }
+
 
     def _level_name_for(self, node: Node) -> str:
         world = self.game.world_list.nodes_to_world(node)
@@ -259,14 +297,32 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ])
 
         return text
-    
+
     def _credits_spoiler(self) -> dict[str, str]:
         return credits_spoiler.generic_credits(
-            self.configuration.major_items_configuration,
+            self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
             DreadHintNamer(self.description.all_patches, self.players_config),
         )
+
+    def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
+        # generate a 2D dictionary of (scenario, collision camera) => room name
+        all_dict: dict = {}
+        for world in self.game.world_list.worlds:
+            scenario = world.extra["scenario_id"]
+            world_dict: dict = {}
+
+            for area in world.areas:
+                world_dict[area.extra["asset_id"]] = area.name
+
+            all_dict[scenario] = world_dict
+
+        # fix Burenia Main Tower and Golzuna Tower
+        all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
+        all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
+
+        return all_dict
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
@@ -281,8 +337,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             },
             "lua": {
                 "custom_init": {
-                    "enable_death_counter": c.show_death_counter
+                    "enable_death_counter": c.show_death_counter,
+                    "enable_room_name_display": c.show_room_names.value,
                 },
+                "camera_names_dict": self._build_area_name_dict()
             },
         }
 
@@ -300,7 +358,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             if "actor_name" not in node.extra:
                 print(f"Invalid door (no actor): {node}")
                 continue
-            
+
             result.append({
                 "actor": (actor := self._teleporter_ref_for(node)),
                 "door_type": (door_type := weakness.extra["type"]),
@@ -343,7 +401,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _tilegroup_patches(self):
         return [
-            # beam blocks -> speedboost blocks in Artaria EMMI zone speedbooster puzzle to prevent softlock
+            # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
             dict(
                 actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
                 tiletype="SPEEDBOOST"
@@ -401,7 +459,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "lava": self.configuration.constant_lava_damage,
             },
             "game_patches": {
-                "consistent_raven_beak_damage_table": True,
+                "raven_beak_damage_table_handling": self.configuration.raven_beak_damage_table_handling.value,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
@@ -409,6 +467,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "show_shields_on_minimap": self.configuration.dock_rando.mode == DockRandoMode.VANILLA,
             "door_patches": self._door_patches(),
             "tile_group_patches": self._tilegroup_patches(),
+            "new_spawn_points": list(self.new_spawn_points.values()),
             "objective": self._objective_patches(),
         }
 
@@ -420,8 +479,8 @@ class DreadAcquiredMemo(dict):
     @classmethod
     def with_expansion_text(cls):
         result = cls()
-        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missiles}."
-        result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity increased by {Missiles}."
+        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."
+        result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bombs}."
         result["Energy Part"] = "Energy Part acquired.\nCollect 4 to increase energy capacity."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."

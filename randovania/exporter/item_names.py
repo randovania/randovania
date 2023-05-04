@@ -4,7 +4,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
-from randovania.generator.item_pool.pool_creator import calculate_pool_results
+from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 _RESOURCE_NAME_TRANSLATION = {
@@ -36,6 +36,10 @@ def resource_user_friendly_name(resource: ResourceInfo) -> str:
     :return:
     """
     return _RESOURCE_NAME_TRANSLATION.get(resource.long_name, resource.long_name)
+
+
+def resource_user_friendly_delta(resource: ResourceInfo) -> str:
+    return f"{resource_user_friendly_name(resource)}Changed"
 
 
 def _pickups_count_by_name(pickups: list[PickupEntry]) -> dict[str, int]:

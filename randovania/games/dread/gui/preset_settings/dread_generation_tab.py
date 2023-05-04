@@ -37,7 +37,7 @@ class PresetDreadGeneration(PresetGeneration):
         )
 
     @property
-    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget] | None:
+    def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget]:
         yield self.highdanger_logic_check
         yield self.highdanger_logic_label
 

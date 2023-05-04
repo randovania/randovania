@@ -57,7 +57,7 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
 
 
 def _pickup_description(pickup: PickupEntry) -> str:
-    if not pickup.item_category.is_expansion:
+    if not pickup.pickup_category.is_expansion:
         if len(pickup.progression) > 1:
             return "Provides the following in order: {}.".format(
                 ", ".join(conditional.name for conditional in pickup.conditional_resources)
@@ -84,8 +84,14 @@ def _get_single_hud_text(pickup_name: str,
                          resources: ResourceGainTuple,
                          ) -> str:
     return memo_data[pickup_name].format(**{
-        item_names.resource_user_friendly_name(resource): quantity
-        for resource, quantity in resources
+        **{
+            item_names.resource_user_friendly_name(resource): abs(quantity)
+            for resource, quantity in resources
+        },
+        **{
+            item_names.resource_user_friendly_delta(resource): "increased" if quantity >= 0 else "decreased"
+            for resource, quantity in resources
+        }
     })
 
 

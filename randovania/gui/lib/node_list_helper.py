@@ -37,9 +37,9 @@ class NodeListHelper:
 
             if area not in areas_by_world[world.name]:
                 areas_by_world[world.name].append(area)
-                if identifier.area_identifier not in nodes_by_area:
-                    nodes_by_area[identifier.area_identifier] = []
-                nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node_name))
+            if identifier.area_identifier not in nodes_by_area:
+                nodes_by_area[identifier.area_identifier] = []
+            nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node_name))
 
         return worlds, areas_by_world, nodes_by_area
 
@@ -130,11 +130,19 @@ class NodeListHelper:
 
                 for node in nodes_by_area[area_check.area_location]:
                     node_check = QtWidgets.QCheckBox(group_box)
-                    node_check.setText(f"    {node.name}")
+                    node_check.setText(node.name)
                     node_check.node_location = node.identifier
                     node_check.stateChanged.connect(functools.partial(_on_check_node, node_check))
-                    group_box.vertical_layout.addWidget(node_check)
-                    if len(nodes_by_area[area_check.area_location]) == 1:
+
+                    if len(nodes_by_area[area_check.area_location]) > 1:
+                        node_inner_layout = QtWidgets.QHBoxLayout()
+                        node_inner_layout.setSpacing(2)
+                        spacer = QtWidgets.QSpacerItem(20, 20, 
+                                                       QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+                        node_inner_layout.addItem(spacer)
+                        node_inner_layout.addWidget(node_check)
+                        group_box.vertical_layout.addLayout(node_inner_layout)
+                    else:
                         node_check.setVisible(False)
                     checks_for_node[node_check.node_location] = node_check
 

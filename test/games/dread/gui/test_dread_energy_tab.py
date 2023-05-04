@@ -15,9 +15,10 @@ def test_toggle_immediate_parts(skip_qtbot, dread_game_description, preset_manag
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
     base_configuration = preset.configuration
+    options = MagicMock()
     assert isinstance(base_configuration, DreadConfiguration)
 
-    tab = PresetDreadEnergy(editor := PresetEditor(preset), dread_game_description, MagicMock())
+    tab = PresetDreadEnergy(editor := PresetEditor(preset, options), dread_game_description, MagicMock())
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
 

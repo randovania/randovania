@@ -100,7 +100,7 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
         return f"Teleporter to {world_list.area_name(other)}"
 
     elif isinstance(node, PickupNode):
-        return f"Pickup {node.pickup_index.index}; Major Location? {node.major_location}"
+        return f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
 
     elif isinstance(node, EventNode):
         return f"Event {node.event.long_name}"

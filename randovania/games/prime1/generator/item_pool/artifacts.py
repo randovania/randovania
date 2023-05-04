@@ -1,7 +1,7 @@
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
-from randovania.generator.item_pool import PoolResults, pickup_creator
+from randovania.generator.pickup_pool import PoolResults, pickup_creator
 
 
 def add_artifacts(resource_database: ResourceDatabase,

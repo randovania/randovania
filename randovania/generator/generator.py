@@ -7,6 +7,7 @@ import tenacity
 
 from randovania.game_description.assignment import (PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator import dock_weakness_distributor
@@ -15,7 +16,7 @@ from randovania.generator.filler.filler_library import (
 from randovania.generator.filler.runner import (FillerResults, PlayerPool,
                                                 run_filler)
 from randovania.generator.hint_distributor import PreFillParams
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -30,7 +31,7 @@ from randovania.layout.exceptions import InvalidConfiguration
 
 def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
                              configuration: BaseConfiguration) -> None:
-    min_starting_items = configuration.major_items_configuration.minimum_random_starting_items
+    min_starting_items = configuration.standard_pickup_configuration.minimum_random_starting_pickups
     if len(item_pool) > game.world_list.num_pickup_nodes + min_starting_items:
         raise InvalidConfiguration(
             "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(
@@ -109,8 +110,8 @@ def _distribute_remaining_items(rng: Random,
                                 filler_results: FillerResults,
                                 presets: list[Preset]
                                 ) -> FillerResults:
-    priority_major_pickup_nodes: list[tuple[int, PickupNode]] = []
-    unassigned_pickup_nodes: list[tuple[int, PickupNode]] = []
+    major_pickup_nodes: list[tuple[int, PickupNode]] = []
+    minor_pickup_nodes: list[tuple[int, PickupNode]] = []
     all_remaining_pickups: list[PickupTarget] = []
     remaining_major_pickups: list[PickupTarget] = []
 
@@ -119,38 +120,44 @@ def _distribute_remaining_items(rng: Random,
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
     for player, filler_result in filler_results.player_results.items():
+        split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
                                                           filler_result.patches.pickup_assignment):
-            if modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT and pickup_node.major_location:
-                priority_major_pickup_nodes.append((player, pickup_node))
+            if split_major and pickup_node.location_category == LocationCategory.MAJOR:
+                major_pickup_nodes.append((player, pickup_node))
             else:
-                unassigned_pickup_nodes.append((player, pickup_node))
+                minor_pickup_nodes.append((player, pickup_node))
 
         for pickup in filler_result.unassigned_pickups:
             target = PickupTarget(pickup, player)
-            if pickup.is_expansion:
-                all_remaining_pickups.append(target)
-            else:
+            if split_major and pickup.generator_params.preferred_location_category == LocationCategory.MAJOR:
                 remaining_major_pickups.append(target)
+            else:
+                all_remaining_pickups.append(target)
 
         assignments[player] = []
 
     def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget):
         assignments[node_player].append((node.pickup_index, pickup_target))
 
-    # minor/major split
-    rng.shuffle(priority_major_pickup_nodes)
-    rng.shuffle(remaining_major_pickups)
+    def assign_while_both_non_empty(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]):
+        rng.shuffle(nodes)
+        rng.shuffle(pickups)
 
-    while priority_major_pickup_nodes and remaining_major_pickups:
-        node_player, node = priority_major_pickup_nodes.pop()
-        pickup = remaining_major_pickups.pop()
-        assign_pickup(node_player, node, pickup)
+        while nodes and pickups:
+            node_player, node = nodes.pop()
+            pickup = pickups.pop()
+            assign_pickup(node_player, node, pickup)
 
-    unassigned_pickup_nodes.extend(priority_major_pickup_nodes)
+    # distribute major pickups
+    assign_while_both_non_empty(major_pickup_nodes, remaining_major_pickups)
+
+    # distribute minor pickups (and full randomization)
+    assign_while_both_non_empty(minor_pickup_nodes, all_remaining_pickups)
+
+    # spill-over from one pool into the other
+    unassigned_pickup_nodes = [*major_pickup_nodes, *minor_pickup_nodes]
     all_remaining_pickups.extend(remaining_major_pickups)
-
-    # full randomization and excess majors
     rng.shuffle(unassigned_pickup_nodes)
     rng.shuffle(all_remaining_pickups)
 
