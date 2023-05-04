@@ -222,7 +222,7 @@ class PlayerState:
             weighted = {
                 loc: weight
                 for loc, weight in weighted.items()
-                if (loc[0].game.world_list.node_from_pickup_index(loc[1]).location_category !=
+                if (loc[0].game.world_list.node_from_pickup_index(loc[1]).location_category ==
                     action.generator_params.preferred_location_category)
             }
 
