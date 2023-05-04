@@ -1,4 +1,6 @@
 import datetime
+import json
+import uuid
 from unittest.mock import MagicMock, AsyncMock, ANY
 
 import pytest
@@ -7,153 +9,136 @@ from PySide6 import QtWidgets
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.gui.game_session_window import GameSessionWindow
+from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
-from randovania.network_client.game_session import (
-    GameSessionEntry, PlayerSessionEntry, User, GameSessionAction,
-    GameSessionActions, GameDetails,
-)
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import NotAuthorizedForAction
-from randovania.network_common.session_state import GameSessionState
+from randovania.network_common.multiplayer_session import (
+    MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerWorldAction,
+    MultiplayerWorldActions, GameDetails, MultiplayerWorld,
+)
+from randovania.network_common.session_state import MultiplayerSessionState
 
 
-@pytest.fixture(name="window")
-async def _window(skip_qtbot):
-    game_connection = MagicMock(spec=GameConnection)
-    game_connection.executor = AsyncMock()
-    game_connection.lock_identifier = None
-    game_connection.pretty_current_status = "Pretty Status"
-    window = GameSessionWindow(MagicMock(), game_connection, MagicMock(), MagicMock(), MagicMock())
+@pytest.fixture()
+async def window(skip_qtbot) -> MultiplayerSessionWindow:
+    window = MultiplayerSessionWindow(MagicMock(), MagicMock(), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
     return window
 
 
-async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
+@pytest.fixture()
+def sample_session(preset_manager):
+    u1 = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    u2 = uuid.UUID('4bdb294e-9059-4fdf-9822-3f649023249a')
+
+    return MultiplayerSessionEntry(
+        id=1234,
+        name="The Session",
+        worlds=[
+            MultiplayerWorld(
+                name="W1", id=u1, preset_raw=json.dumps(
+                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
+                ),
+            ),
+            MultiplayerWorld(
+                name="W2", id=u2, preset_raw=json.dumps(
+                    preset_manager.default_preset.as_json
+                ),
+            ),
+        ],
+        users_list=[
+            MultiplayerUser(12, "Player A", True, worlds={u1: "Online"}),
+        ],
+        game_details=None,
+        state=MultiplayerSessionState.SETUP,
+        generation_in_progress=None,
+        allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
+    )
+
+
+async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session):
     # Setup
     network_client = MagicMock()
     network_client.current_user = User(id=12, name="Player A")
-    network_client.session_self_update = AsyncMock()
+    network_client.server_call = AsyncMock()
     game_connection = MagicMock(spec=GameConnection)
     game_connection.executor = AsyncMock()
     game_connection.pretty_current_status = "Maybe Connected"
     game_connection.lock_identifier = None
 
-    initial_session = GameSessionEntry(
+    u1 = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    u2 = uuid.UUID('4bdb294e-9059-4fdf-9822-3f649023249a')
+
+    initial_session = sample_session
+    second_session = MultiplayerSessionEntry(
         id=1234,
         name="The Session",
-        presets=[preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES),
-                 preset_manager.default_preset],
-        players={
-            12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
-        },
-        game_details=None,
-        state=GameSessionState.SETUP,
-        generation_in_progress=None,
-        allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
-    )
-    second_session = GameSessionEntry(
-        id=1234,
-        name="The Session",
-        presets=[preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES)],
-        players={
-            12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
-            24: PlayerSessionEntry(24, "Player B", None, False, "Online"),
-        },
+        worlds=[
+            MultiplayerWorld(
+                name="W1", id=u1, preset_raw=json.dumps(
+                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
+                ),
+            ),
+        ],
+        users_list=[
+            MultiplayerUser(12, "Player A", True, worlds={u1: "Online"}),
+            MultiplayerUser(24, "Player B", False, {}),
+        ],
         game_details=GameDetails(
             seed_hash="AB12",
             word_hash="Chykka Required",
             spoiler=True,
         ),
-        state=GameSessionState.IN_PROGRESS,
+        state=MultiplayerSessionState.IN_PROGRESS,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
     )
-    network_client.current_game_session_meta = initial_session
-
-    window = await GameSessionWindow.create_and_update(network_client, game_connection, preset_manager,
-                                                       MagicMock(), MagicMock())
-    window.update_multiworld_client_status = AsyncMock()
+    window = await MultiplayerSessionWindow.create_and_update(network_client, initial_session,
+                                                              MagicMock(), MagicMock())
     skip_qtbot.addWidget(window)
 
     # Run
-    await window.on_game_session_meta_update(second_session)
-    window.update_multiworld_client_status.assert_awaited()
-    network_client.session_self_update.assert_not_awaited()
-    # TODO: maybe it should actually update?
-    # network_client.session_self_update.assert_awaited_once_with(
-    #     game_connection.expected_game,
-    #     game_connection.get_current_inventory.return_value,
-    #     game_connection.current_status,
-    #     game_connection.connector_builder_choice,
-    # )
+    await window.on_meta_update(second_session)
+    network_client.server_call.assert_awaited_once_with(
+        'multiplayer_request_session_update', 1234
+    )
 
 
-async def test_on_game_session_actions_update(window: GameSessionWindow, default_echoes_preset):
+async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session):
     # Setup
-    game_session = MagicMock()
-    game_session.presets = [default_echoes_preset]
-    window._game_session = game_session
+    window._session = sample_session
     timestamp = datetime.datetime(year=2020, month=1, day=5)
 
     # Run
-    await window.on_game_session_actions_update(
-        GameSessionActions((
-            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), timestamp),
-        ))
+    await window.on_actions_update(
+        MultiplayerWorldActions(
+            session_id=sample_session.id,
+            actions=[
+                MultiplayerWorldAction(
+                    provider=sample_session.worlds[0].id,
+                    receiver=sample_session.worlds[1].id,
+                    pickup="Bombs",
+                    location=0,
+                    time=timestamp
+                ),
+            ],
+        )
     )
 
     texts = [
-        window.history_table_widget.item(0, i).text()
+        window.tab_history.item(0, i).text()
         for i in range(5)
     ]
     assert texts == [
-        'A',
-        'B',
+        'W1',
+        'W2',
         'Bombs',
         'Temple Grounds/Hive Chamber A/Pickup (Missile)',
         timestamp.strftime("%c")
     ]
-
-
-@pytest.mark.parametrize("in_game", [False, True])
-async def test_update_multiworld_client_status(window, in_game):
-    # Setup
-    window._game_session = MagicMock()
-    window._game_session.state = GameSessionState.IN_PROGRESS if in_game else GameSessionState.SETUP
-    window.multiworld_client = MagicMock()
-    window.multiworld_client.is_active = not in_game
-    window.multiworld_client.start = AsyncMock()
-    window.multiworld_client.stop = AsyncMock()
-
-    # Run
-    await window.update_multiworld_client_status()
-
-    # Assert
-    if in_game:
-        called, not_called = window.multiworld_client.start, window.multiworld_client.stop
-    else:
-        called, not_called = window.multiworld_client.stop, window.multiworld_client.start
-    called.assert_awaited_once()
-    not_called.assert_not_awaited()
-
-
-async def test_row_show_preset_summary(window, mocker, preset_manager):
-    # Setup
-    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-
-    row = MagicMock()
-    window.rows = [row]
-    window._game_session = MagicMock()
-    window._game_session.presets = [preset_manager.default_preset]
-
-    # Run
-    await window._row_show_preset_summary(row)
-
-    # Assert
-    execute_dialog.assert_awaited_once()
 
 
 @pytest.mark.parametrize(["has_background_process", "generation_in_progress", "game_details", "expected_text"], [
@@ -162,13 +147,13 @@ async def test_row_show_preset_summary(window, mocker, preset_manager):
     (False, None, None, "Generate game"),
     (False, None, True, "Clear generated game"),
 ])
-def test_update_background_process_button(window, has_background_process, generation_in_progress, game_details,
-                                          expected_text):
-    window._game_session = MagicMock()
+def test_update_background_process_button(window: MultiplayerSessionWindow, has_background_process,
+                                          generation_in_progress, game_details, expected_text):
+    window._session = MagicMock()
 
     window._background_thread = True if has_background_process else None
-    window._game_session.generation_in_progress = generation_in_progress
-    window._game_session.game_details = game_details
+    window._session.generation_in_progress = generation_in_progress
+    window._session.game_details = game_details
 
     # Run
     window.update_background_process_button()
@@ -177,53 +162,53 @@ def test_update_background_process_button(window, has_background_process, genera
     assert window.background_process_button.text() == expected_text
 
 
-def test_sync_background_process_to_game_session_other_generation(window):
-    window._game_session = MagicMock()
-    window._game_session.generation_in_progress = True
+def test_sync_background_process_to_session_other_generation(window: MultiplayerSessionWindow):
+    window._session = MagicMock()
+    window._session.generation_in_progress = True
     window._generating_game = False
 
     # Run
-    window.sync_background_process_to_game_session()
+    window.sync_background_process_to_session()
 
     # Assert
     assert window.progress_label.text().startswith("Game being generated by")
 
 
-def test_sync_background_process_to_game_session_stop_background(window):
-    window._game_session = MagicMock()
-    window._game_session.generation_in_progress = None
+def test_sync_background_process_to_session_stop_background(window: MultiplayerSessionWindow):
+    window._session = MagicMock()
+    window._session.generation_in_progress = None
     window._background_thread = True
     window._generating_game = True
     window.stop_background_process = MagicMock()
 
     # Run
-    window.sync_background_process_to_game_session()
+    window.sync_background_process_to_session()
 
     # Assert
     window.stop_background_process.assert_called_once_with()
 
 
-def test_sync_background_process_to_game_session_nothing(window):
-    window._game_session = MagicMock()
-    window._game_session.generation_in_progress = None
+def test_sync_background_process_to_session_nothing(window: MultiplayerSessionWindow):
+    window._session = MagicMock()
+    window._session.generation_in_progress = None
     window._background_thread = None
     window._generating_game = False
     window.stop_background_process = MagicMock()
 
     # Run
-    window.sync_background_process_to_game_session()
+    window.sync_background_process_to_session()
 
     # Assert
     assert window.progress_label.text() == ""
 
 
 @pytest.mark.parametrize("has_game", [False, True])
-async def test_update_logic_settings_window(window, mocker, has_game):
+async def test_update_logic_settings_window(window: MultiplayerSessionWindow, mocker, has_game):
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
-    window._game_session = MagicMock()
+    window._session = MagicMock()
     window._logic_settings_window = MagicMock()
-    window._game_session.game_details = True if has_game else None
+    window._session.game_details = True if has_game else None
 
     # Run
     await window.update_logic_settings_window()
@@ -246,7 +231,7 @@ async def test_update_logic_settings_window(window, mocker, has_game):
 async def test_change_password_title_or_duplicate(window, mocker, action, method_name):
     def set_text_value(dialog: QtWidgets.QInputDialog):
         dialog.setTextValue("magoo")
-        return QtWidgets.QDialog.Accepted
+        return QtWidgets.QDialog.DialogCode.Accepted
 
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                   side_effect=set_text_value)
@@ -260,16 +245,19 @@ async def test_change_password_title_or_duplicate(window, mocker, action, method
     window._admin_global_action.assert_awaited_once_with(action, "magoo")
 
 
-async def test_generate_game(window, mocker, preset_manager):
+async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
     mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
     spoiler = True
-    game_session = MagicMock()
-    game_session.presets = [preset_manager.default_preset, preset_manager.default_preset]
+    session = MagicMock()
+    session.worlds = [
+        MultiplayerWorld(id=uuid.uuid4(), name="W1", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
+        MultiplayerWorld(id=uuid.uuid4(), name="W2", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
+    ]
 
-    window._game_session = game_session
+    window._session = session
     window._upload_layout_description = AsyncMock()
     window._admin_global_action = AsyncMock()
 
@@ -297,41 +285,42 @@ async def test_generate_game(window, mocker, preset_manager):
     window._upload_layout_description.assert_awaited_once_with(mock_generate_layout.return_value)
 
 
-async def test_check_dangerous_presets(window, mocker):
+async def test_check_dangerous_presets(window: MultiplayerSessionWindow, mocker):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_warning.return_value = QtWidgets.QMessageBox.No
+    mock_warning.return_value = QtWidgets.QMessageBox.StandardButton.No
 
-    game_session = MagicMock()
-    game_session.presets = [MagicMock(), MagicMock(), MagicMock()]
-    game_session.presets[0].name = "Preset A"
-    game_session.presets[0].dangerous_settings.return_value = ["Cake"]
-    game_session.presets[1].name = "Preset B"
-    game_session.presets[1].dangerous_settings.return_value = ["Bomb", "Knife"]
-    game_session.presets[2].dangerous_settings.return_value = []
+    presets = [MagicMock(), MagicMock(), MagicMock()]
+    presets[0].dangerous_settings.return_value = ["Cake"]
+    presets[1].dangerous_settings.return_value = ["Bomb", "Knife"]
+    presets[2].dangerous_settings.return_value = []
 
-    window._game_session = game_session
-    window.team_players = [MagicMock(), MagicMock()]
-    window.team_players[0].player.name = "Crazy Person"
-    window.team_players[1].player = None
+    session = MagicMock()
+    session.worlds = [MagicMock(), MagicMock(), MagicMock()]
+    session.worlds[0].name = "Crazy Person"
+    session.worlds[1].name = "World 2"
+    session.worlds[2].name = "World 3"
+
+    window._session = session
 
     permalink = MagicMock(spec=Permalink)
     permalink.parameters = MagicMock(spec=GeneratorParameters)
-    permalink.parameters.presets = list(game_session.presets)
+    permalink.parameters.presets = presets
 
     # Run
     result = await window._check_dangerous_presets(permalink)
 
     # Assert
     message = ("The following presets have settings that can cause an impossible game:\n"
-               "\nCrazy Person - Preset A: Cake"
-               "\nPlayer 2 - Preset B: Bomb, Knife"
+               "\nCrazy Person: Cake"
+               "\nWorld 2: Bomb, Knife"
                "\n\nDo you want to continue?")
-    mock_warning.assert_awaited_once_with(window, "Dangerous preset", message,
-                                          QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+    mock_warning.assert_awaited_once_with(
+        window, "Dangerous preset", message,
+        QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
     assert not result
 
 
-async def test_copy_permalink_is_admin(window, mocker):
+async def test_copy_permalink_is_admin(window: MultiplayerSessionWindow, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     window._admin_global_action = AsyncMock(return_value="<permalink>")
@@ -346,7 +335,7 @@ async def test_copy_permalink_is_admin(window, mocker):
     mock_set_clipboard.assert_called_once_with("<permalink>")
 
 
-async def test_copy_permalink_not_admin(window, mocker):
+async def test_copy_permalink_not_admin(window: MultiplayerSessionWindow, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
@@ -362,23 +351,23 @@ async def test_copy_permalink_not_admin(window, mocker):
     mock_set_clipboard.assert_not_called()
 
 
-async def test_import_permalink(window, mocker):
-    mock_permalink_dialog = mocker.patch("randovania.gui.game_session_window.PermalinkDialog")
+async def test_import_permalink(window: MultiplayerSessionWindow, mocker):
+    mock_permalink_dialog = mocker.patch("randovania.gui.multiplayer_session_window.PermalinkDialog")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    execute_dialog.return_value = QtWidgets.QDialog.Accepted
+    execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_warning.return_value = QtWidgets.QMessageBox.Yes
+    mock_warning.return_value = QtWidgets.QMessageBox.StandardButton.Yes
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
     permalink.parameters.player_count = 2
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
 
-    game_session = MagicMock()
-    game_session.num_rows = 2
-    game_session.presets = [MagicMock(), MagicMock()]
+    session = MagicMock()
+    session.num_rows = 2
+    session.worlds = [MagicMock(), MagicMock()]
 
-    window._game_session = game_session
+    window._session = session
     window.generate_game_with_permalink = AsyncMock()
 
     # Run
@@ -386,16 +375,17 @@ async def test_import_permalink(window, mocker):
 
     # Assert
     execute_dialog.assert_awaited_once_with(mock_permalink_dialog.return_value)
-    mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY, QtWidgets.QMessageBox.No)
+    mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY,
+                                          QtWidgets.QMessageBox.StandardButton.No)
     window.generate_game_with_permalink.assert_awaited_once_with(permalink, retries=None)
 
 
 @pytest.mark.parametrize("already_kicked", [True, False])
-async def test_on_kicked(skip_qtbot, window, mocker, already_kicked):
+async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, already_kicked):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
-    window.network_client.leave_game_session = AsyncMock()
-    window._game_session = MagicMock()
+    window.network_client.leave_multiplayer_session = AsyncMock()
+    window._session = MagicMock()
     window._already_kicked = already_kicked
     window.close = MagicMock(return_value=None)
 
@@ -406,20 +396,23 @@ async def test_on_kicked(skip_qtbot, window, mocker, already_kicked):
 
     # Assert
     if already_kicked:
-        window.network_client.leave_game_session.assert_not_awaited()
+        window.network_client.leave_multiplayer_session.assert_not_awaited()
         mock_warning.assert_not_awaited()
         window.close.assert_not_called()
     else:
-        window.network_client.leave_game_session.assert_awaited_once_with(False)
+        window.network_client.leave_multiplayer_session.assert_awaited_once_with(window._session)
         mock_warning.assert_awaited_once()
         window.close.assert_called_once_with()
 
 
 @pytest.mark.parametrize("accept", [False, True])
-async def test_finish_session(window, accept, mocker):
+async def test_finish_session(window: MultiplayerSessionWindow, accept, mocker):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
+    mock_warning.return_value = (
+        QtWidgets.QMessageBox.StandardButton.Yes if accept else QtWidgets.QMessageBox.StandardButton.No
+    )
 
+    window._session = MagicMock()
     window.network_client.session_admin_global = AsyncMock()
 
     # Run
@@ -428,39 +421,39 @@ async def test_finish_session(window, accept, mocker):
     # Assert
     mock_warning.assert_awaited_once()
     if accept:
-        window.network_client.session_admin_global.assert_awaited_once_with(SessionAdminGlobalAction.FINISH_SESSION,
-                                                                            None)
+        window.network_client.session_admin_global.assert_awaited_once_with(
+            window._session, SessionAdminGlobalAction.FINISH_SESSION, None)
     else:
         window.network_client.session_admin_global.assert_not_awaited()
 
 
-async def test_save_iso(window, mocker, echoes_game_description):
+async def test_game_export_listener(window: MultiplayerSessionWindow, mocker, echoes_game_description,
+                                    preset_manager):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       return_value=QtWidgets.QDialog.Accepted)
+                                       return_value=QtWidgets.QDialog.DialogCode.Accepted)
 
-    preset = MagicMock()
-    # preset.game = RandovaniaGame.METROID_PRIME_ECHOES
-    window._game_session = MagicMock()
-    window._game_session.players[window.network_client.current_user.id].is_observer = False
-    window._game_session.players[window.network_client.current_user.id].row = 0
-    window._game_session.presets = [preset]
+    game = MagicMock()
+    window._session = MagicMock()
+    window._session.worlds = [MultiplayerWorld(
+        id=uuid.uuid4(),
+        name="W1",
+        preset_raw=json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json)
+    )]
     window.network_client.session_admin_player = AsyncMock()
 
-    patch_data = window.network_client.session_admin_player.return_value
-
-    game = preset.game
+    patch_data = MagicMock()
     game.exporter.is_busy = False
 
     # Run
-    await window.save_iso()
+    await window.game_export_listener(game, patch_data)
 
     # Assert
     game.gui.export_dialog.assert_called_once_with(
         window._options,
         patch_data,
-        window._game_session.game_details.word_hash,
+        window._session.game_details.word_hash,
         False,
-        [game],
+        [RandovaniaGame.METROID_PRIME_ECHOES],
     )
     mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
     game.exporter.export_game.assert_called_once_with(
@@ -471,13 +464,13 @@ async def test_save_iso(window, mocker, echoes_game_description):
 
 
 @pytest.mark.parametrize("is_member", [False, True])
-async def test_on_close_event(window: GameSessionWindow, mocker, is_member):
+async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_member):
     # Setup
     super_close_event = mocker.patch("PySide6.QtWidgets.QMainWindow.closeEvent")
     event = MagicMock()
-    window._game_session = MagicMock()
-    window._game_session.players = [window.network_client.current_user.id] if is_member else []
-    window.network_client.leave_game_session = AsyncMock()
+    window._session = MagicMock()
+    window._session.users = [window.network_client.current_user.id] if is_member else []
+    window.network_client.leave_multiplayer_session = AsyncMock()
     window.network_client.connection_state.is_disconnected = False
 
     # Run
@@ -486,6 +479,6 @@ async def test_on_close_event(window: GameSessionWindow, mocker, is_member):
     super_close_event.assert_called_once_with(event)
 
     if is_member:
-        window.network_client.leave_game_session.assert_awaited_once_with(False)
+        window.network_client.leave_multiplayer_session.assert_awaited_once_with(window._session)
     else:
-        window.network_client.leave_game_session.assert_not_awaited()
+        window.network_client.leave_multiplayer_session.assert_not_awaited()

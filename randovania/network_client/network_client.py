@@ -17,16 +17,19 @@ import sentry_sdk
 import socketio
 import socketio.exceptions
 
-from randovania.bitpacking import bitpacking
-from randovania.game_connection.game_connection import GameConnectionStatus
-from randovania.game_description.resources.item_resource_info import InventoryItem, Inventory
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+import randovania.network_common.multiplayer_session
+from randovania.bitpacking import bitpacking, construct_dataclass
 from randovania.game_description import default_database
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.games.game import RandovaniaGame
-from randovania.network_client.game_session import (GameSessionListEntry, GameSessionEntry, User, GameSessionActions,
-                                                    GameSessionAction, GameSessionPickups, GameSessionAuditLog,
-                                                    GameSessionAuditEntry, GameSessionInventory)
-from randovania.network_common import connection_headers, error, binary_formats, admin_actions, pickup_serializer
+from randovania.network_common import connection_headers, error, admin_actions, pickup_serializer, signals, \
+    multiplayer_session
+from randovania.network_common.multiplayer_session import (
+    MultiplayerSessionListEntry, MultiplayerSessionEntry, User, MultiplayerWorldActions,
+    MultiplayerPickups, MultiplayerSessionAuditLog,
+    WorldUserInventory
+)
+from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 
 class ConnectionState(Enum):
@@ -107,10 +110,7 @@ class NetworkClient:
     _num_emit_failures: int = 0
 
     # Game Session
-    _current_game_session_meta: GameSessionEntry | None = None
-    _current_game_session_actions: GameSessionActions | None = None
-    _current_game_session_pickups: GameSessionPickups | None = None
-    _current_game_session_audit_log: GameSessionAuditLog | None = None
+    _current_game_session_meta: MultiplayerSessionEntry | None = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -139,12 +139,12 @@ class NetworkClient:
         self.sio.on('connect_error', self.on_connect_error)
         self.sio.on('disconnect', self.on_disconnect)
         self.sio.on('user_session_update', self.on_user_session_updated)
-        self.sio.on("game_session_meta_update", self._on_game_session_meta_update_raw)
-        self.sio.on("game_session_actions_update", self._on_game_session_actions_update_raw)
-        self.sio.on("game_session_pickups_update", self._on_game_session_pickups_update_raw)
-        self.sio.on("game_session_audit_update", self._on_game_session_audit_update_raw)
-        self.sio.on("game_session_binary_inventory", self._on_game_session_inventory_raw)
-        self.sio.on("game_session_json_inventory", print)
+        self.sio.on(signals.SESSION_META_UPDATE, self._on_multiplayer_session_meta_update_raw)
+        self.sio.on(signals.SESSION_ACTIONS_UPDATE, self._on_multiplayer_session_actions_update_raw)
+        self.sio.on(signals.WORLD_PICKUPS_UPDATE, self._on_world_pickups_update_raw)
+        self.sio.on(signals.SESSION_AUDIT_UPDATE, self._on_multiplayer_session_audit_update_raw)
+        self.sio.on(signals.WORLD_BINARY_INVENTORY, self._on_world_user_inventory_raw)
+        self.sio.on(signals.WORLD_JSON_INVENTORY, print)
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -240,19 +240,12 @@ class NetworkClient:
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
         if persisted_session is not None:
-            if self._current_game_session_meta is not None:
-                session_id = self._current_game_session_meta.id
-            else:
-                session_id = None
             try:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
-                self.logger.debug(f"session restoring session, with id {session_id}")
-                await self.on_user_session_updated(await self._emit_with_result("restore_user_session",
-                                                                                (persisted_session, session_id),
-                                                                                handle_invalid_session=False))
-
-                if self._current_game_session_meta is not None:
-                    await self.game_session_request_update()
+                self.logger.debug("session restoring session")
+                await self.on_user_session_updated(await self.server_call(
+                    "restore_user_session", persisted_session, handle_invalid_session=False
+                ))
 
                 self.logger.info("session restored successful")
                 self.connection_state = ConnectionState.Connected
@@ -324,37 +317,44 @@ class NetworkClient:
         async with aiofiles.open(self.session_data_path, "wb") as open_file:
             await open_file.write(encoded_session_data)
 
-    # Game Session Updated
+    # Multiplayer Session Updated
 
-    async def _on_game_session_meta_update_raw(self, data: bytes):
-        entry = GameSessionEntry.from_json(data)
+    async def _on_multiplayer_session_meta_update_raw(self, data: dict):
+        entry = MultiplayerSessionEntry.from_json(data)
         self.logger.debug("%s: %s",
                           entry.id,
                           hashlib.blake2b(str(data).encode("utf-8")).hexdigest())
-        await self.on_game_session_meta_update(entry)
+        await self.on_multiplayer_session_meta_update(entry)
 
-    async def on_game_session_meta_update(self, entry: GameSessionEntry):
-        self.logger.info("name: %s, rows: %d, players: %d, game: %s, %s",
-                         entry.name, entry.num_rows, len(entry.players), str(entry.game_details),
+    async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry):
+        self.logger.info("name: %s, users: %d, game: %s, %s",
+                         entry.name, len(entry.users), str(entry.game_details),
                          entry.state.user_friendly_name)
         self._current_game_session_meta = entry
 
-    async def _on_game_session_actions_update_raw(self, data: bytes):
-        await self.on_game_session_actions_update(GameSessionActions(
-            tuple(GameSessionAction.from_json(item)
-                  for item in binary_formats.BinaryGameSessionActions.parse(data))
-        ))
+    async def _on_multiplayer_session_actions_update_raw(self, data: bytes):
+        await self.on_multiplayer_session_actions_update(
+            construct_dataclass.decode_json_dataclass(data, multiplayer_session.MultiplayerWorldActions)
+        )
 
-    async def on_game_session_actions_update(self, actions: GameSessionActions):
+    async def on_multiplayer_session_actions_update(self, actions: MultiplayerWorldActions):
         self.logger.info("num actions: %d", len(actions.actions))
-        self._current_game_session_actions = actions
 
-    async def _on_game_session_pickups_update_raw(self, data):
+    async def _on_multiplayer_session_audit_update_raw(self, data: bytes):
+        await self.on_multiplayer_session_audit_update(
+            construct_dataclass.decode_json_dataclass(data, multiplayer_session.MultiplayerSessionAuditLog)
+        )
+
+    async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog):
+        self.logger.info("num audit: %d", len(audit_log.entries))
+
+    # World Events
+    async def _on_world_pickups_update_raw(self, data):
         game = RandovaniaGame(data["game"])
         resource_database = default_database.resource_database_for(game)
 
-        await self.on_game_session_pickups_update(GameSessionPickups(
-            id=uuid.UUID("00000000-0000-1111-0000-000000000000"),  # TODO: should come from server
+        await self.on_world_pickups_update(MultiplayerPickups(
+            world_id=uuid.UUID(data["world"]),
             game=game,
             pickups=tuple(
                 (item["provider_name"], _decode_pickup(item["pickup"], resource_database))
@@ -362,41 +362,26 @@ class NetworkClient:
             ),
         ))
 
-    async def on_game_session_pickups_update(self, pickups: GameSessionPickups):
-        self.logger.info("num pickups: %d", len(pickups.pickups))
-        self._current_game_session_pickups = pickups
+    async def on_world_pickups_update(self, pickups: MultiplayerPickups):
+        self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
-    async def _on_game_session_audit_update_raw(self, data):
-        await self.on_game_session_audit_update(GameSessionAuditLog(
-            entries=tuple(
-                GameSessionAuditEntry.from_json(entry)
-                for entry in binary_formats.BinaryGameSessionAuditLog.parse(data)
-            ),
-        ))
-
-    async def on_game_session_audit_update(self, audit_log: GameSessionAuditLog):
-        self.logger.info("num audit: %d", len(audit_log.entries))
-        self._current_game_session_audit_log = audit_log
-
-    async def _on_game_session_inventory_raw(self, session_id: int, row_id: int, raw_inventory: bytes):
+    async def _on_world_user_inventory_raw(self, entry_id: str, raw_inventory: bytes):
         try:
-            inventory = binary_formats.BinaryInventory.parse(raw_inventory)
+            inventory = randovania.network_common.multiplayer_session.BinaryInventory.parse(raw_inventory)
         except construct.ConstructError as e:
-            self.logger.debug("Unable to parse inventory for row %d: %s", row_id, str(e))
+            self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(e))
             return
 
-        session_inventory = GameSessionInventory(
-            session_id=session_id,
-            row_id=row_id,
-            game=RandovaniaGame(inventory.game),
+        session_inventory = WorldUserInventory(
+            world_id=uuid.UUID(entry_id),
             inventory={
                 element.name: InventoryItem(element.amount, element.capacity)
                 for element in inventory.elements
             },
         )
-        await self.on_game_session_inventory(session_inventory)
+        await self.on_world_user_inventory(session_inventory)
 
-    async def on_game_session_inventory(self, inventory: GameSessionInventory):
+    async def on_world_user_inventory(self, inventory: WorldUserInventory):
         pass
 
     def _update_timeout_with(self, request_time: float, success: bool):
@@ -411,7 +396,7 @@ class NetworkClient:
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
-    async def _emit_with_result(self, event: str, data=None, namespace=None, *, handle_invalid_session: bool = True):
+    async def server_call(self, event: str, data=None, namespace=None, *, handle_invalid_session: bool = True):
         if self.connection_state.is_disconnected:
             self.logger.debug(f"{event}, urgent connect start")
             await self.connect_to_server()
@@ -449,68 +434,47 @@ class NetworkClient:
             raise possible_error
 
     async def game_session_request_update(self):
-        await self._emit_with_result("game_session_request_update", self._current_game_session_meta.id)
+        await self.server_call("game_session_request_update", self._current_game_session_meta.id)
 
-    async def game_session_collect_locations(self, locations: tuple[int, ...]):
-        await self._emit_with_result("game_session_collect_locations",
-                                     (self._current_game_session_meta.id, locations))
-
-    async def get_game_session_list(self, ignore_limit: bool) -> list[GameSessionListEntry]:
+    async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
-            GameSessionListEntry.from_json(item)
-            for item in await self._emit_with_result("list_game_sessions", (None if ignore_limit else 100,))
+            MultiplayerSessionListEntry.from_json(item)
+            for item in await self.server_call("multiplayer_list_sessions", (None if ignore_limit else 100,))
         ]
 
-    async def create_new_session(self, session_name: str) -> GameSessionEntry:
-        result = await self._emit_with_result("create_game_session", session_name)
-        self._current_game_session_meta = GameSessionEntry.from_json(result)
-        self._current_game_session_actions = None
-        self._current_game_session_audit_log = None
+    async def create_new_session(self, session_name: str) -> MultiplayerSessionEntry:
+        result = await self.server_call("multiplayer_create_session", session_name)
+        self._current_game_session_meta = MultiplayerSessionEntry.from_json(result)
         return self._current_game_session_meta
 
-    async def join_game_session(self, session: GameSessionListEntry, password: str | None):
-        result = await self._emit_with_result("join_game_session", (session.id, password))
-        self._current_game_session_meta = GameSessionEntry.from_json(result)
-        self._current_game_session_actions = None
-        self._current_game_session_audit_log = None
+    async def join_multiplayer_session(self, session: MultiplayerSessionListEntry, password: str | None):
+        result = await self.server_call("multiplayer_join_session", (session.id, password))
+        self._current_game_session_meta = MultiplayerSessionEntry.from_json(result)
+        return self._current_game_session_meta
 
-    async def leave_game_session(self, permanent: bool):
-        if permanent:
-            await self.session_admin_player(self._current_user.id, admin_actions.SessionAdminUserAction.KICK, None)
-        await self._emit_with_result("disconnect_game_session", self._current_game_session_meta.id)
-        self._current_game_session_meta = None
-        self._current_game_session_actions = None
-        self._current_game_session_audit_log = None
+    async def leave_multiplayer_session(self, session: MultiplayerSessionEntry):
+        await self.session_admin_player(session, self._current_user.id, admin_actions.SessionAdminUserAction.KICK, None)
 
-    async def session_admin_global(self, action: admin_actions.SessionAdminGlobalAction, arg):
-        return await self._emit_with_result("game_session_admin_session",
-                                            (self._current_game_session_meta.id, action.value, arg))
+    async def session_admin_global(self, session: MultiplayerSessionEntry,
+                                   action: admin_actions.SessionAdminGlobalAction, arg):
+        return await self.server_call("multiplayer_admin_session",
+                                      (session.id, action.value, arg))
 
-    async def session_admin_player(self, user_id: int, action: admin_actions.SessionAdminUserAction, arg):
-        return await self._emit_with_result("game_session_admin_player",
-                                            (self._current_game_session_meta.id, user_id, action.value, arg))
-
-    async def session_self_update(self, game: RandovaniaGame | None, inventory: Inventory, state: GameConnectionStatus,
-                                  backend: ConnectorBuilderChoice):
-
-        if game is None or state not in (GameConnectionStatus.TrackerOnly, GameConnectionStatus.InGame):
-            inventory_binary = None
-        else:
-            inventory_binary = binary_formats.BinaryInventory.build(construct.Container(
-                game=game.value,
-                elements=[
-                    {"name": resource.short_name, "amount": item.amount, "capacity": item.capacity}
-                    for resource, item in inventory.items()
-                ],
-            ))
-        state_string = f"{state.pretty_text} ({backend.pretty_text})"
-
-        await self._emit_with_result("game_session_self_update",
-                                     (self._current_game_session_meta.id, inventory_binary, state_string))
+    async def session_admin_player(self, session: MultiplayerSessionEntry, user_id: int,
+                                   action: admin_actions.SessionAdminUserAction, arg):
+        return await self.server_call("multiplayer_admin_player",
+                                      (session.id, user_id, action.value, arg))
 
     async def session_track_inventory(self, row: int, enable: bool):
-        await self._emit_with_result("game_session_watch_row_inventory",
-                                     (self._current_game_session_meta.id, row, enable, True))
+        await self.server_call("game_session_watch_row_inventory",
+                               (self._current_game_session_meta.id, row, enable, True))
+
+    async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
+        return construct_dataclass.decode_json_dataclass(
+            await self.server_call("multiplayer_world_sync",
+                                   construct_dataclass.encode_json_dataclass(request)),
+            ServerSyncResponse,
+        )
 
     @property
     def current_user(self) -> User | None:
@@ -525,16 +489,4 @@ class NetworkClient:
         if self.connection_state != ConnectionState.Connected:
             return
         self.connection_state = ConnectionState.ConnectedNotLogged
-        await self._emit_with_result("logout")
-
-    @property
-    def current_game_session_meta(self) -> GameSessionEntry | None:
-        return self._current_game_session_meta
-
-    @property
-    def current_game_session_actions(self) -> GameSessionActions:
-        return self._current_game_session_actions or GameSessionActions(tuple())
-
-    @property
-    def current_game_session_audit_log(self) -> GameSessionAuditLog:
-        return self._current_game_session_audit_log or GameSessionAuditLog(tuple())
+        await self.server_call("logout")

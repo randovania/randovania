@@ -5,6 +5,7 @@ import pytest
 
 from randovania.network_common.error import NotLoggedIn, ServerError, InvalidSession
 from randovania.server import database
+from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp, EnforceDiscordRole
 
 
@@ -72,64 +73,6 @@ def test_get_current_user_unknown_user(server_app, clean_database):
     # Run
     with pytest.raises(InvalidSession):
         server_app.get_current_user()
-
-
-def test_join_game_session(mocker, server_app):
-    mock_join_room = mocker.patch("flask_socketio.join_room")
-    membership = MagicMock()
-    membership.session.id = "session_id"
-    membership.user.id = "user_id"
-
-    session = {}
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = session
-
-    # Run
-    server_app.join_game_session(membership)
-
-    # Assert
-    mock_join_room.assert_has_calls([
-        call("game-session-session_id"),
-        call("game-session-session_id-user_id"),
-    ])
-    assert session == {
-        "current_game_session": "session_id",
-    }
-
-
-def test_leave_game_session_with_session(mocker, server_app):
-    # Setup
-    mock_leave_room = mocker.patch("flask_socketio.leave_room")
-    user = MagicMock()
-    user.id = "user_id"
-    server_app.get_current_user = lambda: user
-
-    session = {"current_game_session": "session_id"}
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = session
-
-    # Run
-    server_app.leave_game_session()
-
-    # Assert
-    mock_leave_room.assert_has_calls([
-        call("game-session-session_id"),
-        call("game-session-session_id-user_id"),
-    ])
-    assert session == {}
-
-
-def test_leave_game_session_without_session(mocker, server_app):
-    # Setup
-    mock_leave_room: MagicMock = mocker.patch("flask_socketio.leave_room")
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = {}
-
-    # Run
-    server_app.leave_game_session()
-
-    # Assert
-    mock_leave_room.assert_not_called()
 
 
 def test_on_success_ok(server_app):

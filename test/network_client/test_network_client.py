@@ -5,16 +5,13 @@ from unittest.mock import MagicMock, AsyncMock, call
 import pytest
 import socketio.exceptions
 
-from randovania.game_connection.game_connection import GameConnectionStatus
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.network_client.game_session import GameSessionPickups
 from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
+from randovania.network_common.multiplayer_session import MultiplayerPickups
 
 
 @pytest.fixture(name="client")
@@ -57,7 +54,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     await client.on_connect()
 
     # Assert
-    client.sio.call.assert_awaited_once_with("restore_user_session", (b"foo", None), namespace=None, timeout=30)
+    client.sio.call.assert_awaited_once_with("restore_user_session", b"foo", namespace=None, timeout=30)
 
     if valid_session:
         assert client.connection_state == ConnectionState.Connected
@@ -105,37 +102,33 @@ async def test_connect_to_server(tmpdir):
 
 
 async def test_session_admin_global(client):
-    client._emit_with_result = AsyncMock()
-    client._current_game_session_meta = MagicMock()
-    client._current_game_session_meta.id = 1234
+    client.server_call = AsyncMock()
+
+    game_session_meta = MagicMock()
+    game_session_meta.id = 1234
 
     # Run
-    result = await client.session_admin_global(SessionAdminGlobalAction.CHANGE_ROW, 5)
+    result = await client.session_admin_global(game_session_meta, SessionAdminGlobalAction.CHANGE_WORLD, 5)
 
     # Assert
-    assert result == client._emit_with_result.return_value
-    client._emit_with_result.assert_awaited_once_with("game_session_admin_session", (1234, "change_row", 5))
+    assert result == client.server_call.return_value
+    client.server_call.assert_awaited_once_with("multiplayer_admin_session", (1234, "change_world", 5))
 
 
-@pytest.mark.parametrize("permanent", [False, True])
-async def test_leave_game_session(client: NetworkClient, permanent: bool):
-    client._emit_with_result = AsyncMock()
-    client._current_game_session_meta = MagicMock()
-    client._current_game_session_meta.id = 1234
+async def test_leave_multiplayer_session(client: NetworkClient):
+    client.server_call = AsyncMock()
+    session_meta = MagicMock()
+    session_meta.id = 1234
     client._current_user = MagicMock()
     client._current_user.id = 5678
 
     # Run
-    await client.leave_game_session(permanent)
+    await client.leave_multiplayer_session(session_meta)
 
     # Assert
-    calls = [call("disconnect_game_session", 1234)]
-    if permanent:
-        calls.insert(0, call("game_session_admin_player", (1234, 5678, SessionAdminUserAction.KICK.value, None)))
-
-    client._emit_with_result.assert_has_awaits(calls)
-
-    assert client._current_game_session_meta is None
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_admin_player", (1234, 5678, SessionAdminUserAction.KICK.value, None)
+    )
 
 
 async def test_emit_with_result_timeout(client: NetworkClient):
@@ -146,7 +139,7 @@ async def test_emit_with_result_timeout(client: NetworkClient):
 
     # Run
     with pytest.raises(RequestTimeout, match="Timeout after "):
-        await client._emit_with_result("test_event")
+        await client.server_call("test_event")
 
 
 def test_update_timeout_with_increase(client: NetworkClient):
@@ -183,6 +176,7 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     db = corruption_game_description.resource_database
 
     data = {
+        "world": "00000000-0000-1111-0000-000000000000",
         "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
         "pickups": [
             {"provider_name": "Message A", "pickup": 'VtI6Bb3p'},
@@ -194,19 +188,21 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     pickups = [MagicMock(), MagicMock(), MagicMock()]
     mock_decode = mocker.patch("randovania.network_client.network_client._decode_pickup", side_effect=pickups)
 
+    client.on_world_pickups_update = AsyncMock()
+
     # Run
-    await client._on_game_session_pickups_update_raw(data)
+    await client._on_world_pickups_update_raw(data)
 
     # Assert
-    assert client._current_game_session_pickups == GameSessionPickups(
-        id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
+    client.on_world_pickups_update.assert_awaited_once_with(MultiplayerPickups(
+        world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
         game=RandovaniaGame.METROID_PRIME_CORRUPTION,
         pickups=(
             ("Message A", pickups[0]),
             ("Message B", pickups[1]),
             ("Message C", pickups[2]),
         )
-    )
+    ))
     mock_decode.assert_has_calls([call('VtI6Bb3p', db), call('VtI6Bb3y', db), call('VtI6Bb3*', db)])
 
 
@@ -238,19 +234,3 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
 
     # Assert
     assert pickup == expected_pickup
-
-
-async def test_session_self_update(client: NetworkClient):
-    client._emit_with_result = AsyncMock()
-    client._current_game_session_meta = MagicMock()
-    client._current_game_session_meta.id = 1234
-
-    inventory: Inventory = {ItemResourceInfo(33, "None", "None", 1): InventoryItem(1, 1)}
-
-    await client.session_self_update(RandovaniaGame.METROID_PRIME_ECHOES, inventory,
-                                     GameConnectionStatus.InGame, ConnectorBuilderChoice.DOLPHIN)
-
-    client._emit_with_result.assert_awaited_once_with(
-        "game_session_self_update",
-        (1234, b'\x01prime2\x00\x01None\x00\x01\x01', "In-game (Dolphin)")
-    )

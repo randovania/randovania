@@ -3,7 +3,6 @@ import dataclasses
 import functools
 import logging
 import uuid
-from enum import Enum
 
 from PySide6.QtCore import Signal, QObject
 
@@ -11,37 +10,13 @@ from randovania.game_connection.builder.connector_builder import ConnectorBuilde
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_description.resources.item_resource_info import Inventory
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.region import Region
+from randovania.game_description.resources.item_resource_info import Inventory
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.interface_common.options import Options
 from randovania.lib.infinite_timer import InfiniteTimer
-
-
-class GameConnectionStatus(Enum):
-    Disconnected = "disconnected"
-    UnknownGame = "unknown-game"
-    WrongGame = "wrong-game"
-    WrongHash = "wrong-hash"
-    TitleScreen = "title-screen"
-    TrackerOnly = "tracker-only"
-    InGame = "in-game"
-
-    @property
-    def pretty_text(self) -> str:
-        return _pretty_connection_status[self]
-
-
-_pretty_connection_status = {
-    GameConnectionStatus.Disconnected: "Disconnected",
-    GameConnectionStatus.UnknownGame: "Unknown game",
-    GameConnectionStatus.WrongGame: "Wrong game",
-    GameConnectionStatus.WrongHash: "Correct game, wrong seed hash",
-    GameConnectionStatus.TitleScreen: "Title screen",
-    GameConnectionStatus.TrackerOnly: "Tracker only",
-    GameConnectionStatus.InGame: "In-game",
-}
+from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
 @dataclasses.dataclass()
