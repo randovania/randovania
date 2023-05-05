@@ -34,7 +34,7 @@ def test_add_new_preset(tab, preset_manager):
     # Assert
     tab._window_manager.preset_manager.add_new_preset.assert_called_once_with(preset)
     tab.create_preset_tree.select_preset.assert_called_once_with(preset)
-    options.set_parent_for_preset.assert_not_called()
+    options.set_parent_for_preset.assert_called_once_with(preset.uuid, None)
     options.set_selected_preset_uuid_for.assert_called_once_with(tab.game, preset.uuid)
 
 
