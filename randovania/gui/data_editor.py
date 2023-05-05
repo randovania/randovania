@@ -5,7 +5,7 @@ from pathlib import Path
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QRadioButton, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
 from randovania.game_description import data_reader, data_writer, pretty_print, integrity_check, \
@@ -34,7 +34,7 @@ from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
+from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer, create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
 SHOW_WORLD_MIN_MAX_SPINNER = False
@@ -145,7 +145,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.zoom_slider.valueChanged.connect(self._on_slider_changed)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.nodes_scroll_layout.setAlignment(Qt.AlignTop)
-        self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
         world_reader, self.original_game_description = data_reader.decode_data_with_world_reader(data)
         self.resource_database = self.original_game_description.resource_database
@@ -552,13 +551,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 self.game_description.resource_database,
             ))
 
-        self._connections_visualizer = ConnectionsVisualizer(
-            self.other_node_alternatives_contents,
-            self.alternatives_grid_layout,
-            self.resource_database,
-            requirement,
-            False
-        )
+        self.other_node_alternatives_contents.clear()
+        create_tree_items_for_requirement(self.other_node_alternatives_contents,
+                                          self.other_node_alternatives_contents,
+                                          requirement)
 
     def _swap_selected_connection(self):
         self.focus_on_node(self.current_connection_node)
@@ -808,7 +804,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def update_slider(self, zoom_in):
         # update slider on wheel event
         current_val = self.zoom_slider.value()
-        if zoom_in:     
+        if zoom_in:
             self.zoom_slider.setValue(current_val + self.zoom_slider.tickInterval())
         else:
             self.zoom_slider.setValue(current_val - self.zoom_slider.tickInterval())
