@@ -52,14 +52,27 @@ def serialize_uuid_set(elements: set[uuid.UUID]) -> list[str]:
     return sorted(str(a) for a in elements)
 
 
-def decode_uuid_set(data: list[str]):
-    result = set()
+def serialize_uuid_list(elements: list[uuid.UUID]) -> list[str]:
+    return [str(a) for a in elements]
+
+
+def decode_uuid_container(data: list[str], add_item: Callable[[uuid.UUID], None]) -> None:
     for item in data:
         try:
-            result.add(uuid.UUID(item))
+            add_item(uuid.UUID(item))
         except ValueError:
             continue
 
+
+def decode_uuid_set(data: list[str]) -> set[uuid.UUID]:
+    result = set()
+    decode_uuid_container(data, result.add)
+    return result
+
+
+def decode_uuid_list(data: list[str]) -> list[uuid.UUID]:
+    result = list()
+    decode_uuid_container(data, result.append)
     return result
 
 
@@ -122,6 +135,13 @@ _SERIALIZER_FOR_FIELD = {
                                      lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]),
 }
 
+_PER_GAME_SERIALIZERS = {
+    "is_game_expanded": Serializer(identity, bool),
+    "selected_preset_uuid": Serializer(str, uuid.UUID),
+    "selected_tracker": Serializer(identity, str),
+    "preset_order": Serializer(serialize_uuid_list, decode_uuid_list),
+}
+
 
 def add_per_game_serializer():
     def make_decoder(g: RandovaniaGame):
@@ -132,9 +152,8 @@ def add_per_game_serializer():
             lambda it: it.as_json,
             make_decoder(game),
         )
-        _SERIALIZER_FOR_FIELD[f"is_game_expanded_{game.value}"] = Serializer(identity, bool)
-        _SERIALIZER_FOR_FIELD[f"selected_preset_uuid_{game.value}"] = Serializer(str, uuid.UUID)
-        _SERIALIZER_FOR_FIELD[f"selected_tracker_{game.value}"] = Serializer(identity, str)
+        for key, serializer in _PER_GAME_SERIALIZERS.items():
+            _SERIALIZER_FOR_FIELD[f"{key}_{game.value}"] = serializer
 
 
 add_per_game_serializer()
@@ -183,21 +202,21 @@ class Options:
 
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
-            self._set_field(f"is_game_expanded_{game.value}", None)
-            self._set_field(f"selected_preset_uuid_{game.value}", None)
-            self._set_field(f"selected_tracker_{game.value}", None)
+            for key in _PER_GAME_SERIALIZERS.keys():
+                self._set_field(f"{key}_{game.value}", None)
 
     def __getattr__(self, item):
         if isinstance(item, str):
+            game_name = None
             if item.startswith("game_"):
                 game_name = item[len("game_"):]
-            elif item.startswith("is_game_expanded_"):
-                game_name = item[len("is_game_expanded_"):]
-            elif item.startswith("selected_preset_uuid_"):
-                game_name = item[len("selected_preset_uuid_"):]
-            elif item.startswith("selected_tracker_"):
-                game_name = item[len("selected_tracker_"):]
             else:
+                for key in _PER_GAME_SERIALIZERS.keys():
+                    field_name = f"{key}_"
+                    if item.startswith(field_name):
+                        game_name = item[len(field_name):]
+                        break
+            if game_name is None:
                 raise AttributeError(item)
 
             try:
@@ -458,6 +477,12 @@ class Options:
     @hidden_preset_uuids.setter
     def hidden_preset_uuids(self, value):
         self._edit_field("hidden_preset_uuids", value)
+
+    def get_preset_order_for(self, game: RandovaniaGame) -> list[uuid.UUID]:
+        return list(_return_with_default(getattr(self, f"preset_order_{game.value}"), list))
+
+    def set_preset_order_for(self, game: RandovaniaGame, value: list[uuid.UUID]):
+        self._edit_field(f"preset_order_{game.value}", value)
 
     def is_preset_uuid_hidden(self, the_uuid: uuid.UUID) -> bool:
         return the_uuid in self.hidden_preset_uuids

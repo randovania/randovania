@@ -1,3 +1,4 @@
+import math
 import uuid
 
 from PySide6 import QtWidgets, QtGui
@@ -24,14 +25,34 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         if source.is_included_preset:
             return event.setDropAction(Qt.IgnoreAction)
 
+        new_order = self.options.get_preset_order_for(self.game)
+        try:
+            new_order.remove(source.uuid)
+        except ValueError:
+            # No order present, that's fine
+            pass
+
         item: QtWidgets.QTreeWidgetItem | None = self.itemAt(event.pos())
         if item is None:
-            target = None
+            target_uuid = None
+            new_order.append(source.uuid)
         else:
             target = self.preset_for_item(item)
 
+            if self.dropIndicatorPosition() != QtWidgets.QAbstractItemView.DropIndicatorPosition.OnItem:
+                target_uuid = self.options.get_parent_for_preset(target.uuid)
+
+                new_index = new_order.index(target.uuid)
+                if self.dropIndicatorPosition() != QtWidgets.QAbstractItemView.DropIndicatorPosition.AboveItem:
+                    new_index += 1
+                new_order.insert(new_index, source.uuid)
+
+            else:
+                target_uuid = target.uuid
+
         with self.options as options:
-            options.set_parent_for_preset(source.uuid, target.uuid if target is not None else None)
+            options.set_parent_for_preset(source.uuid, target_uuid)
+            options.set_preset_order_for(self.game, new_order)
 
         self.update_items()
         return event.setDropAction(Qt.IgnoreAction)
@@ -79,17 +100,27 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                 default_parent = item
 
         # Custom Presets
-        for preset in self.window_manager.preset_manager.custom_presets.values():
-            if preset.game != self.game:
-                continue
+        order_by_key = {
+            pid: i
+            for i, pid in enumerate(self.options.get_preset_order_for(self.game))
+        }
+        ordered_custom_presets = [
+            preset
+            for preset in self.window_manager.preset_manager.custom_presets.values()
+            if preset.game == self.game
+        ]
+        ordered_custom_presets.sort(
+            key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower())
+        )
 
+        for preset in ordered_custom_presets:
             preset_parent = self.options.get_parent_for_preset(preset.uuid)
             item = create_item(self if preset_parent is None else default_parent, preset)
             if preset_parent is None:
                 root_parents.add(item)
 
         # Set parents after, so don't have issues with order
-        for preset in sorted(self.window_manager.preset_manager.custom_presets.values(), key=lambda it: it.name):
+        for preset in ordered_custom_presets:
             preset_parent = self.options.get_parent_for_preset(preset.uuid)
             if preset_parent in self.preset_to_item:
                 self_item = self.preset_to_item[preset.uuid]
@@ -108,6 +139,14 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         for preset_uuid, item in self.preset_to_item.items():
             item.setExpanded(not self.options.is_preset_uuid_hidden(preset_uuid))
+
+        final_order = [
+            item.data(0, Qt.UserRole)
+            for item in self.findItems("", Qt.MatchFlag.MatchRecursive | Qt.MatchFlag.MatchStartsWith)
+        ]
+
+        with self.options as options:
+            options.set_preset_order_for(self.game, final_order)
 
         self.itemExpanded.connect(self.on_item_expanded)
         self.itemCollapsed.connect(self.on_item_collapsed)
