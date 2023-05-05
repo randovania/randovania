@@ -14,12 +14,17 @@ def create_tree_items_for_requirement(
         tree: QtWidgets.QTreeWidget,
         root: QtWidgets.QTreeWidget | QtWidgets.QTreeWidgetItem,
         requirement: Requirement,
-) -> None:
+) -> QtWidgets.QTreeWidgetItem:
     parents: list[QtWidgets.QTreeWidget | QtWidgets.QTreeWidgetItem] = [root]
+
+    result = None
 
     for depth, text in pretty_print.pretty_print_requirement(requirement):
         item = QtWidgets.QTreeWidgetItem(parents[depth])
         item.setExpanded(True)
+
+        if result is None:
+            result = item
 
         if "of the following" in text:
             item.setText(0, text)
@@ -50,6 +55,8 @@ def create_tree_items_for_requirement(
 
             label.setText(text)
             tree.setItemWidget(item, 0, label)
+
+    return result
 
 
 class ConnectionsVisualizer:
