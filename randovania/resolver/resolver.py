@@ -162,7 +162,13 @@ async def _inner_advance_depth(state: State,
                 )
 
                 if new_result[0] is None:
-                    debug.log_rollback(state, True, True)
+                    additional = logic.get_additional_requirements(action).alternatives
+
+                    logic.set_additional_requirements(
+                        state.node,
+                        _simplify_additional_requirement_set(RequirementSet(additional), state)
+                    )
+                    debug.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
