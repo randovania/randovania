@@ -486,13 +486,16 @@ class Options:
     def get_parent_for_preset(self, preset: uuid.UUID) -> uuid.UUID | None:
         return self.parent_for_presets.get(preset)
 
-    def set_parent_for_preset(self, preset: uuid.UUID, parent: uuid.UUID):
+    def set_parent_for_preset(self, preset: uuid.UUID, parent: uuid.UUID | None):
         current_dict = self.parent_for_presets
 
         if current_dict.get(preset) != parent:
             # Create a copy, so we don't modify the existing field
             new_dict = dict(current_dict)
-            new_dict[preset] = parent
+            if parent is None:
+                new_dict.pop(preset)
+            else:
+                new_dict[preset] = parent
             with self:
                 self.parent_for_presets = new_dict
 

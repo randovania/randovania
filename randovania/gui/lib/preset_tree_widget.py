@@ -17,23 +17,24 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
     expanded_connected: bool = False
 
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
-        item: QtWidgets.QTreeWidgetItem = self.itemAt(event.pos())
-        if not item:
-            return event.setDropAction(Qt.IgnoreAction)
-
         source = self.preset_for_item(self.currentItem())
-        target = self.preset_for_item(item)
-
-        if source is None or target is None:
+        if source is None:
             return event.setDropAction(Qt.IgnoreAction)
 
-        if source.game != target.game or source.is_included_preset:
+        if source.is_included_preset:
             return event.setDropAction(Qt.IgnoreAction)
+
+        item: QtWidgets.QTreeWidgetItem | None = self.itemAt(event.pos())
+        if item is None:
+            target = None
+        else:
+            target = self.preset_for_item(item)
 
         with self.options as options:
-            options.set_parent_for_preset(source.uuid, target.uuid)
+            options.set_parent_for_preset(source.uuid, target.uuid if target is not None else None)
 
-        return super().dropEvent(event)
+        self.update_items()
+        return event.setDropAction(Qt.IgnoreAction)
 
     def preset_for_item(self, item: QtWidgets.QTreeWidgetItem) -> VersionedPreset | None:
         return self.window_manager.preset_manager.preset_for_uuid(item.data(0, Qt.UserRole))
@@ -56,16 +57,21 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         default_parent = None
         root_parents = set()
 
+        def create_item(parent: QtWidgets.QTreeWidgetItem | QtWidgets.QTreeWidget,
+                        the_preset: VersionedPreset,
+                        ) -> QtWidgets.QTreeWidgetItem:
+            it = QtWidgets.QTreeWidgetItem(parent)
+            it.setText(0, the_preset.name)
+            it.setData(0, Qt.UserRole, the_preset.uuid)
+            self.preset_to_item[the_preset.uuid] = it
+            return it
+
         # Included presets
         for preset in self.window_manager.preset_manager.included_presets.values():
             if preset.game != self.game:
                 continue
 
-            item = QtWidgets.QTreeWidgetItem(self)
-            item.setText(0, preset.name)
-            item.setData(0, Qt.UserRole, preset.uuid)
-            item.setExpanded(True)
-            self.preset_to_item[preset.uuid] = item
+            item = create_item(self, preset)
             root_parents.add(item)
 
             if default_parent is None:
@@ -77,10 +83,10 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             if preset.game != self.game:
                 continue
 
-            item = QtWidgets.QTreeWidgetItem(default_parent)
-            item.setText(0, preset.name)
-            item.setData(0, Qt.UserRole, preset.uuid)
-            self.preset_to_item[preset.uuid] = item
+            preset_parent = self.options.get_parent_for_preset(preset.uuid)
+            item = create_item(self if preset_parent is None else default_parent, preset)
+            if preset_parent is None:
+                root_parents.add(item)
 
         # Set parents after, so don't have issues with order
         for preset in sorted(self.window_manager.preset_manager.custom_presets.values(), key=lambda it: it.name):
