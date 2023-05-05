@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: It's now possible to drag presets directly into the root of the presets.
 - Added: The order you place presets when drag and dropping is now saved.
 - Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.
-- Changed: The resolver now allows dangerous resources in additional resources.
 - Changed: Improved preset descriptions, making them significantly simpler.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
 - Changed: In the Data Visualizer, requirements are now displayed using a tree widget, which allows for collapsing the and/or blocks.
+- Changed: Optimized the solver by allowing more resources as additional resources, allowing more actions to be skipped until the necessary resources are found.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 
 ### Cave Story
