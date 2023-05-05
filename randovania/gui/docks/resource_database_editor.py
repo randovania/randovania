@@ -187,13 +187,8 @@ class TemplateEditor:
         self.template_layout.addLayout(self.connections_layout)
 
         self.connections_layout.setObjectName(f"connections_layout {self.template_name}")
-        self.visualizer = ConnectionsVisualizer(
-            self.foldable,
-            self.connections_layout,
-            db,
-            db.requirement_template[self.template_name],
-            False
-        )
+        self.visualizer = ConnectionsVisualizer(self.foldable, self.connections_layout,
+                                                db.requirement_template[self.template_name])
 
 
 class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
