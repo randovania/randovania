@@ -478,17 +478,3 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     logging.info(f"Time took to write files: {time.time() - start}")
     status_update(f"Finished writing the converted assets in {end - start:.3f}.", 1.0)
     return metadata
-
-
-def _debug_main():
-    import randovania
-    randovania.setup_logging("DEBUG", None)
-
-    from randovania.interface_common.options import Options
-    options = Options.with_default_data_dir()
-    convert_prime2_pickups(options.internal_copies_path.joinpath("prime2", "contents"),
-                           Path("converted"), print)
-
-
-if __name__ == '__main__':
-    _debug_main()

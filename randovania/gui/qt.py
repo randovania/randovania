@@ -13,6 +13,7 @@ from PySide6 import QtCore, QtWidgets
 
 import randovania
 from randovania.games.game import RandovaniaGame
+from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
     from randovania.interface_common.preset_manager import PresetManager
@@ -112,12 +113,8 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     await main_window.request_new_data()
 
 
-async def show_tracker(app: QtWidgets.QApplication):
+async def show_tracker(app: QtWidgets.QApplication, options):
     from randovania.gui.auto_tracker_window import AutoTrackerWindow
-    options = await _load_options()
-    if options is None:
-        app.exit(1)
-        return
 
     app.tracker = AutoTrackerWindow(app.game_connection, None, options)
     logger.info("Displaying auto tracker")
@@ -177,7 +174,7 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
 
 async def display_window_for(app: QtWidgets.QApplication, options: Options, command: str, args):
     if command == "tracker":
-        await show_tracker(app)
+        await show_tracker(app, options)
     elif command == "main":
         await show_main_window(app, options, args.preview)
     elif command == "data_editor":
@@ -190,13 +187,26 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
         raise RuntimeError(f"Unknown command: {command}")
 
 
-async def _load_options() -> Options | None:
+def add_options_cli_args(parser: ArgumentParser):
+    parser.add_argument(
+        "--local-data", type=Path,
+        default=persistence.local_data_dir(),
+        help="Selects the local data path. This is used to store preferences and temporary copies of huge files."
+    )
+    parser.add_argument(
+        "--user-data", type=Path,
+        default=persistence.roaming_data_dir(),
+        help="Selects the user data path. This is used to store your presets."
+    )
+
+
+async def _load_options(args) -> Options | None:
     logger.info("Loading up user preferences code...")
     from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
 
     logger.info("Restoring saved user preferences...")
-    options = Options.with_default_data_dir()
+    options = Options(args.local_data, args.user_data)
     if not await startup_tools.load_options_from_disk(options):
         return None
 
@@ -211,11 +221,6 @@ async def _load_options() -> Options | None:
         dulwich.repo.Repo.init(os.fspath(options.user_dir))
 
     theme.set_dark_theme(options.dark_mode)
-
-    from randovania.layout.versioned_preset import VersionedPreset
-    for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
-        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{VersionedPreset.file_extension()}"))
-
     logger.info("Loaded user preferences")
 
     return options
@@ -243,23 +248,23 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
     return loop
 
 
-async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
+async def qt_main(app: QtWidgets.QApplication, args):
     app.setQuitOnLastWindowClosed(False)
+
+    options = await _load_options(args)
+    if options is None:
+        app.exit(1)
+        return
+
     app.network_client = None
     logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
-    logging.info("Configuring server client...")
-    app.network_client = QtNetworkClient(data_dir)
+    app.network_client = QtNetworkClient(options.data_dir)
     logging.info("Server client ready.")
 
     if args.login_as_guest:
         logging.info("Logging as %s", args.login_as_guest)
         await app.network_client.login_as_guest(args.login_as_guest)
-
-    options = await _load_options()
-    if options is None:
-        app.exit(1)
-        return
 
     logging.info("Configuring game connection with the backend...")
     from randovania.game_connection.game_connection import GameConnection
@@ -278,7 +283,7 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
             logger.warning("Last Qt window closed, but currently not doing anything")
 
     app.setQuitOnLastWindowClosed(True)
-    app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
+    app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.ConnectionType.QueuedConnection)
 
     await asyncio.gather(app.game_connection.start(),
                          display_window_for(app, options, args.command, args))
@@ -298,15 +303,10 @@ def run(args):
     randovania.monitoring.client_init()
 
     locale.setlocale(locale.LC_ALL, "")  # use system's default locale
-    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-
-    data_dir = args.custom_network_storage
-    if data_dir is None:
-        from randovania.interface_common import persistence
-        data_dir = persistence.local_data_dir()
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
 
     is_preview = args.preview
-    start_logger(data_dir, is_preview)
+    start_logger(args.local_data, is_preview)
     app = QtWidgets.QApplication(sys.argv)
     app.applicationStateChanged.connect(_on_application_state_changed)
 
@@ -318,7 +318,7 @@ def run(args):
 
     loop = create_loop(app)
     with loop:
-        loop.create_task(qt_main(app, data_dir, args)).add_done_callback(main_done)
+        loop.create_task(qt_main(app, args)).add_done_callback(main_done)
         loop.run_forever()
 
 
@@ -328,8 +328,8 @@ def create_subparsers(sub_parsers):
         help="Run the Graphical User Interface"
     )
     parser.add_argument("--preview", action="store_true", help="Activates preview features")
-    parser.add_argument("--custom-network-storage", type=Path, help="Use a custom path to store the network login.")
     parser.add_argument("--login-as-guest", type=str, help="Login as the given quest user")
+    add_options_cli_args(parser)
 
     gui_parsers = parser.add_subparsers(dest="command")
     gui_parsers.add_parser("main", help="Displays the Main Window").set_defaults(func=run)
