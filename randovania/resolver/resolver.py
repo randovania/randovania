@@ -24,9 +24,6 @@ def _simplify_requirement_list(self: RequirementList, state: State,
                                ) -> RequirementList | None:
     items = []
     for item in self.values():
-        if item.negate:
-            return None
-
         if item.satisfied(state.resources, state.energy, state.resource_database):
             continue
 
