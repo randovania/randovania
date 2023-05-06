@@ -18,6 +18,17 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     if issubclass(type_, Enum):
         return type_(arg)
 
+    elif typing.get_origin(type_) == list:
+        if type_args := typing.get_args(type_):
+            value_type = type_args[0]
+        else:
+            value_type = typing.Any
+
+        return [
+            _decode_with_type(value, value_type, {})
+            for value in arg
+        ]
+
     elif typing.get_origin(type_) == dict:
         if type_args := typing.get_args(type_):
             key_type, value_type = type_args
@@ -50,6 +61,12 @@ def _encode_value(value: typing.Any) -> typing.Any:
 
     elif isinstance(value, uuid.UUID):
         value = str(value)
+
+    elif isinstance(value, list):
+        value = [
+            _encode_value(v)
+            for v in value
+        ]
 
     elif isinstance(value, dict):
         value = {

@@ -6,6 +6,7 @@ from typing import Optional
 import pytest
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.game import RandovaniaGame
 
 
 class A(Enum):
@@ -37,6 +38,7 @@ class D2OldSyntax(JsonDataclass):
 class HasDict(JsonDataclass):
     a: int
     b: dict[uuid.UUID, int]
+    c: list[RandovaniaGame]
 
 
 @pytest.fixture(
@@ -79,8 +81,9 @@ def test_from_json_missing_field_with_default():
 
 
 def test_has_dict():
-    value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15})
-    data = {"a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15}}
+    value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
+                    [RandovaniaGame.BLANK])
+    data = {"a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15}, "c": ["blank"]}
 
     assert HasDict.from_json(data) == value
     assert value.as_json == data
