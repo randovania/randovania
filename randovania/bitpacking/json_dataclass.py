@@ -1,6 +1,7 @@
 import dataclasses
 import inspect
 import typing
+import uuid
 from enum import Enum
 
 from randovania.lib import type_lib
@@ -18,6 +19,8 @@ class JsonDataclass:
             value = getattr(self, field.name)
             if isinstance(value, Enum):
                 value = value.value
+            elif isinstance(value, uuid.UUID):
+                value = str(value)
             elif value is not None and hasattr(value, "as_json"):
                 value = value.as_json
             result[field.name] = value
@@ -48,6 +51,8 @@ class JsonDataclass:
                 type_ = type_lib.resolve_optional(field_type)[0]
                 if issubclass(type_, Enum):
                     arg = type_(arg)
+                elif type_ is uuid.UUID:
+                    arg = uuid.UUID(arg)
                 elif hasattr(type_, "from_json"):
                     arg_spec = inspect.getfullargspec(type_.from_json)
                     arg = type_.from_json(arg, **{
