@@ -39,6 +39,8 @@ class HasDict(JsonDataclass):
     a: int
     b: dict[uuid.UUID, int]
     c: list[RandovaniaGame]
+    d: list
+    e: dict
 
 
 @pytest.fixture(
@@ -82,8 +84,9 @@ def test_from_json_missing_field_with_default():
 
 def test_has_dict():
     value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
-                    [RandovaniaGame.BLANK])
-    data = {"a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15}, "c": ["blank"]}
+                    [RandovaniaGame.BLANK], [None], {})
+    data = {"a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15},
+            "c": ["blank"], "d": [None], "e": {}}
 
     assert HasDict.from_json(data) == value
     assert value.as_json == data
