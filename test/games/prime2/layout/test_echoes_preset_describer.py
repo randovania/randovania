@@ -86,9 +86,13 @@ def test_echoes_format_params2(default_echoes_configuration):
             default_echoes_configuration.available_locations,
             randomization_mode=RandomizationMode.MAJOR_MINOR_SPLIT,
         ),
-        standard_pickup_configuration=std_pick.replace_states({
-            std_pick.get_pickup_with_name("Scan Visor"): StandardPickupState()
-        }),
+        standard_pickup_configuration=dataclasses.replace(
+            std_pick.replace_states({
+                std_pick.get_pickup_with_name("Scan Visor"): StandardPickupState()
+            }),
+            minimum_random_starting_pickups=1,
+            maximum_random_starting_pickups=2,
+        ),
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
         energy_per_tank=50,
         varia_suit_damage=21.2,
@@ -121,7 +125,9 @@ def test_echoes_format_params2(default_echoes_configuration):
         ],
         'Item Pool': [
             'Major/minor split',
-            'Size: 118 of 119',
+            'Major: 57/58',
+            'Minor: 61/61',
+            '1 to 2 random starting items',
             'Excludes Scan Visor',
             'Progressive Suit, Split beam ammo',
             'Sky Temple Keys at all bosses',

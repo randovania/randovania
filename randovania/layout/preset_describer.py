@@ -3,6 +3,7 @@ from collections.abc import Iterable, Sequence
 
 from randovania.game_description import default_database
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
@@ -109,9 +110,14 @@ class GamePresetDescriber:
             template_strings["Item Pool"].append(randomization_mode.description)
 
         # Item Pool
-        template_strings["Item Pool"].append(
-            "Size: {} of {}".format(*pool_creator.calculate_pool_pickup_count(configuration))
-        )
+        per_category_pool = pool_creator.calculate_pool_pickup_count(configuration)
+        if configuration.available_locations.randomization_mode is RandomizationMode.FULL:
+            pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
+            template_strings["Item Pool"].append(f"Size: {pool_items} of {maximum_size}")
+        else:
+            for category, (count, num_nodes) in per_category_pool.items():
+                if isinstance(category, LocationCategory):
+                    template_strings["Item Pool"].append(f"{category.long_name}: {count}/{num_nodes}")
 
         if random_starting_pickups != "0":
             template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
