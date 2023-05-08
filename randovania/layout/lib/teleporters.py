@@ -12,9 +12,12 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
+from randovania.lib import enum_lib
 
 
 class TeleporterShuffleMode(BitPackEnum, Enum):
+    long_name: str
+
     VANILLA = "vanilla"
     TWO_WAY_RANDOMIZED = "randomized"
     TWO_WAY_UNCHECKED = "two-way-unchecked"
@@ -22,22 +25,15 @@ class TeleporterShuffleMode(BitPackEnum, Enum):
     ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
-    @property
-    def long_name(self) -> str:
-        if self == TeleporterShuffleMode.VANILLA:
-            return "Original connections"
-        elif self == TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
-            return "Two-way, between areas"
-        elif self == TeleporterShuffleMode.TWO_WAY_UNCHECKED:
-            return "Two-way, unchecked"
-        elif self == TeleporterShuffleMode.ONE_WAY_ELEVATOR:
-            return "One-way, elevator room with cycles"
-        elif self == TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT:
-            return "One-way, elevator room with replacement"
-        elif self == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return "One-way, anywhere"
-        else:
-            raise ValueError(f"Unknown value: {self}")
+
+enum_lib.add_long_name(TeleporterShuffleMode, {
+    TeleporterShuffleMode.VANILLA: "Original connections",
+    TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between areas",
+    TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR: "One-way, elevator room with cycles",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT: "One-way, elevator room with replacement",
+    TeleporterShuffleMode.ONE_WAY_ANYTHING: "One-way, anywhere",
+})
 
 
 def _has_editable_teleporter(area: Area) -> bool:

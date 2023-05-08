@@ -1,17 +1,17 @@
 from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackEnum
+from randovania.lib import enum_lib
 
 
 class LocationCategory(BitPackEnum, Enum):
+    long_name: str
+
     MAJOR = "major"
     MINOR = "minor"
 
-    @property
-    def long_name(self) -> str:
-        if self == LocationCategory.MAJOR:
-            return "Major"
-        elif self == LocationCategory.MINOR:
-            return "Minor"
-        else:
-            raise ValueError(f"Unknown: {self}")
+
+enum_lib.add_long_name(LocationCategory, {
+    LocationCategory.MAJOR: "Major",
+    LocationCategory.MINOR: "Minor",
+})

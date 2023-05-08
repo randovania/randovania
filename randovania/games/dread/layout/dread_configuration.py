@@ -8,6 +8,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.lib.teleporters import TeleporterConfiguration
+from randovania.lib import enum_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -24,22 +25,22 @@ class DreadArtifactConfig(BitPackDataclass, JsonDataclass):
 
 
 class DreadRavenBeakDamageMode(BitPackEnum, Enum):
+    long_name: str
+
     UNMODIFIED = "unmodified"
     CONSISTENT_LOW = "consistent_low"
     CONSISTENT_HIGH = "consistent_high"
 
     @property
-    def long_name(self) -> str:
-        if self == DreadRavenBeakDamageMode.UNMODIFIED:
-            return "Unmodified"
-        elif self == DreadRavenBeakDamageMode.CONSISTENT_LOW:
-            return "Consistent, with damage reduction"
-        elif self == DreadRavenBeakDamageMode.CONSISTENT_HIGH:
-            return "Consistent, without damage reduction"
-
-    @property
     def is_default(self) -> bool:
         return self == DreadRavenBeakDamageMode.CONSISTENT_LOW
+
+
+enum_lib.add_long_name(DreadRavenBeakDamageMode, {
+    DreadRavenBeakDamageMode.UNMODIFIED: "Unmodified",
+    DreadRavenBeakDamageMode.CONSISTENT_LOW: "Consistent, with damage reduction",
+    DreadRavenBeakDamageMode.CONSISTENT_HIGH: "Consistent, without damage reduction",
+})
 
 
 @dataclasses.dataclass(frozen=True)

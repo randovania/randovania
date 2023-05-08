@@ -6,23 +6,22 @@ from randovania.game_description.resources.node_resource_info import NodeResourc
 from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.resource_node import ResourceNode
+from randovania.lib import enum_lib
 
 
 class HintNodeKind(Enum):
+    long_name: str
+
     GENERIC = "generic"
     SPECIFIC_PICKUP = "specific-pickup"
     SPECIFIC_ITEM = "specific-item"
 
-    @property
-    def long_name(self) -> str:
-        return _LORE_TYPE_LONG_NAME[self]
 
-
-_LORE_TYPE_LONG_NAME = {
+enum_lib.add_long_name(HintNodeKind, {
     HintNodeKind.GENERIC: "Generic",
     HintNodeKind.SPECIFIC_PICKUP: "Specific Pickup",
     HintNodeKind.SPECIFIC_ITEM: "Specific Item",
-}
+})
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
