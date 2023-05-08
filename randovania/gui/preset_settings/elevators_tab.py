@@ -10,6 +10,8 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter.patch_data_factory import should_keep_elevator_sounds
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
@@ -36,8 +38,13 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
 
         self.elevator_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
+        descriptions = ["<p>Controls where each elevator connects to.</p>"]
         for value in enum_lib.iterate_enum(TeleporterShuffleMode):
             self.elevators_combo.addItem(value.long_name, value)
+            descriptions.append(f'<p><span style="font-weight:600;">{value.long_name}</span>: {value.description}</p>')
+
+        self.elevators_description_label.setText("".join(descriptions))
+
         self.elevators_combo.currentIndexChanged.connect(self._update_elevator_mode)
         signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
         signal_handling.on_checked(self.elevators_allow_unvisited_names_check, self._update_allow_unvisited_names)
@@ -55,7 +62,6 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self._elevator_target_for_world, self._elevator_target_for_area, self._elevator_target_for_node = result
 
         if self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
-            self.elevators_help_sound_bug_label.setVisible(False)
             self.elevators_allow_unvisited_names_check.setVisible(False)
             self.elevators_line_3.setVisible(False)
             self.elevators_help_list_label.setVisible(False)
@@ -193,6 +199,12 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
         config_elevators: TeleporterConfiguration = config.elevators
+
+        sound_bug_warning = False
+        if isinstance(config, EchoesConfiguration):
+            sound_bug_warning = not should_keep_elevator_sounds(config)
+
+        self.elevators_help_sound_bug_label.setVisible(sound_bug_warning)
 
         signal_handling.set_combo_with_value(self.elevators_combo, config_elevators.mode)
         can_shuffle_target = config_elevators.mode not in (TeleporterShuffleMode.VANILLA,
