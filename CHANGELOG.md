@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: It's now possible to drag presets directly into the root of the presets.
 - Added: The order you place presets when drag and dropping is now saved.
 - Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.
+- Added: New Door Lock rando mode - Types. In this mode, every single door of a type is swapped with another type. Generation times should be fast and be compatible with multiworld.
+- Changed: Door Lock mode Two-way is now named Doors. The functionality is unchanged.
 - Changed: Improved preset descriptions, making them significantly simpler.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
 - Changed: In the Data Visualizer, requirements are now displayed using a tree widget, which allows for collapsing the and/or blocks.
