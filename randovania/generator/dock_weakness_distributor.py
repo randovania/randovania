@@ -2,7 +2,7 @@ import asyncio
 import dataclasses
 import time
 from random import Random
-from typing import Callable
+from typing import Callable, Self
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -71,7 +71,7 @@ class DockRandoLogic(Logic):
         self.dock = dock
 
     @classmethod
-    def from_logic(cls, logic: Logic, dock: DockNode) -> "DockRandoLogic":
+    def from_logic(cls, logic: Logic, dock: DockNode) -> Self:
         return cls(logic.game, logic.configuration, dock)
 
     @property
@@ -231,7 +231,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
         if patches.configuration.dock_rando.mode == DockRandoMode.VANILLA:
             continue
 
-        status_update(f"Preparing dock randomizer for player {player + 1}.")
+        status_update(f"Preparing door lock randomizer for player {player + 1}.")
         state, logic = resolver.setup_resolver(patches.configuration, patches)
 
         try:
@@ -248,7 +248,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
     while unassigned_docks:
         await asyncio.sleep(0)
-        status_update(f"{docks_placed}/{docks_to_place} docks placed")
+        status_update(f"{docks_placed}/{docks_to_place} door locks placed")
 
         player, dock = unassigned_docks.pop()
 
