@@ -36,8 +36,8 @@ core_blank_json = {
 
 @pytest.fixture(
     params=[
-        {"game": RandovaniaGame.BLANK, "encoded": b'@'},
-        {"game": RandovaniaGame.BLANK, "encoded": b'J\x05\x00', "can_change_to": ["Explosive Door"]},
+        {"game": RandovaniaGame.BLANK, "encoded": b'\x80'},
+        {"game": RandovaniaGame.BLANK, "encoded": b'\x94\n', "can_change_to": ["Explosive Door"]},
     ],
     name="config_with_data")
 def _config_with_data(request):

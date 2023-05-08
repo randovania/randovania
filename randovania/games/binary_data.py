@@ -274,7 +274,6 @@ ConstructDockWeaknessDatabase = Struct(
         name=String,
     ),
     dock_rando=Struct(
-        enable_one_way=Flag,
         force_change_two_way=Flag,
         resolver_attempts=VarInt,
         to_shuffle_proportion=Float64b,

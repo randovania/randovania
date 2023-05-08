@@ -53,7 +53,6 @@ sample_data = {
             "name": "",
         },
         "dock_rando": {
-            "enable_one_way": False,
             "force_change_two_way": False,
             "resolver_attempts": 200,
             "to_shuffle_proportion": 1.0
