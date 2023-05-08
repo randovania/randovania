@@ -139,8 +139,8 @@ def _convert_v22(options: dict) -> dict:
 
 
 def _convert_v23(options: dict) -> dict:
-    if "game_prime2" in options:
-        options["game_prime2"].pop("teleporter_sounds", None)
+    if "cosmetic_patches" in options.get("game_prime2", {}):
+        options["game_prime2"]["cosmetic_patches"].pop("teleporter_sounds", None)
 
     return options
 
