@@ -9,27 +9,29 @@ from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
 from randovania.game_description.world.dock import DockType, DockWeakness, DockWeaknessDatabase
 from randovania.games.game import RandovaniaGame
+from randovania.lib import enum_lib
 
 
 class DockRandoMode(BitPackEnum, Enum):
+    long_name: str
+    description: str
+
     VANILLA = "vanilla"
-    TWO_WAY = "two-way"
+    DOCKS = "docks"
+    WEAKNESSES = "weaknesses"
 
-    @property
-    def long_name(self) -> str:
-        if self == DockRandoMode.VANILLA:
-            return "Vanilla"
-        if self == DockRandoMode.TWO_WAY:
-            return "Two-way"
-        raise ValueError(f"Unknown value: {self}")
 
-    @property
-    def description(self) -> str:
-        if self == DockRandoMode.VANILLA:
-            return "Original door locks."
-        if self == DockRandoMode.TWO_WAY:
-            return "Random door locks; same lock on both sides."
-        raise ValueError(f"Unknown value: {self}")
+enum_lib.add_long_name(DockRandoMode, {
+    DockRandoMode.VANILLA: "Vanilla",
+    DockRandoMode.DOCKS: "Doors",
+    DockRandoMode.WEAKNESSES: "Types",
+})
+
+enum_lib.add_per_enum_field(DockRandoMode, "description", {
+    DockRandoMode.VANILLA: "Original door locks",
+    DockRandoMode.DOCKS: "Randomize each door lock individually",
+    DockRandoMode.WEAKNESSES: "Swap door lock types",
+})
 
 
 @dataclass(frozen=True)
@@ -200,6 +202,6 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []
-        if self.is_enabled():
-            danger.append("Door Lock randomizer")
+        if self.mode == DockRandoMode.DOCKS:
+            danger.append("Full Door Lock randomizer")
         return danger

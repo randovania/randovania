@@ -24,8 +24,8 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         self.setupUi(self)
 
         # Mode
-        self.mode_combo.setItemData(0, DockRandoMode.VANILLA)
-        self.mode_combo.setItemData(1, DockRandoMode.TWO_WAY)
+        for mode in DockRandoMode:
+            self.mode_combo.addItem(mode.long_name, mode)
 
         signal_handling.on_combo(self.mode_combo, self._on_mode_changed)
 
