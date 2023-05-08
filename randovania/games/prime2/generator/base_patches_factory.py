@@ -1,19 +1,64 @@
 import copy
+import dataclasses
+from collections.abc import Iterable
 from random import Random
-from typing import Iterator
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory, MissingRng)
+
+
+@dataclasses.dataclass(frozen=True)
+class WorldEntrances:
+    front: AreaIdentifier
+    left: AreaIdentifier
+    right: AreaIdentifier
+
+    @classmethod
+    def create(cls, world, front, left, right):
+        return cls(
+            front=AreaIdentifier(world, front),
+            left=AreaIdentifier(world, left),
+            right=AreaIdentifier(world, right),
+        )
+
+
+WORLDS = [
+    WorldEntrances.create(
+        "Great Temple",
+        front="Temple Transport A",  # Sanc
+        left="Temple Transport B",  # Agon
+        right="Temple Transport C",  # Torvus
+    ),
+    WorldEntrances.create(
+        "Agon Wastes",
+        front="Transport to Temple Grounds",
+        left="Transport to Sanctuary Fortress",
+        right="Transport to Torvus Bog",
+    ),
+    WorldEntrances.create(
+        "Torvus Bog",
+        front="Transport to Temple Grounds",
+        left="Transport to Agon Wastes",
+        right="Transport to Sanctuary Fortress",
+    ),
+    WorldEntrances.create(
+        "Sanctuary Fortress",
+        front="Transport to Temple Grounds",
+        left="Transport to Torvus Bog",
+        right="Transport to Agon Wastes",
+    ),
+]
 
 
 class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
@@ -46,8 +91,45 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
 
         return patches.assign_dock_connections(dock_assignment)
 
+    def elevator_echoes_shuffled(self, configuration: EchoesConfiguration, patches: GamePatches,
+                                 rng: Random) -> ElevatorConnection:
+        worlds = list(WORLDS)
+        rng.shuffle(worlds)
+
+        result = {}
+
+        def area_to_node(identifier: AreaIdentifier):
+            area = patches.game.world_list.area_by_area_location(identifier)
+            for node in area.actual_nodes:
+                if node.valid_starting_location:
+                    return node.identifier
+            raise KeyError(f"{identifier} has no valid starting location")
+
+        def link_to(source: AreaIdentifier, target: AreaIdentifier):
+            result[area_to_node(source)] = target
+            result[area_to_node(target)] = source
+
+        def tg_link_to(source: str, target: AreaIdentifier):
+            link_to(AreaIdentifier("Temple Grounds", source), target)
+
+        # TG -> GT
+        tg_link_to("Temple Transport A", worlds[0].front)
+        tg_link_to("Temple Transport B", worlds[0].left)
+        tg_link_to("Temple Transport C", worlds[0].right)
+
+        tg_link_to("Transport to Agon Wastes", worlds[1].front)
+        tg_link_to("Transport to Torvus Bog", worlds[2].front)
+        tg_link_to("Transport to Sanctuary Fortress", worlds[3].front)
+
+        # inter areas
+        link_to(worlds[1].right, worlds[2].left)
+        link_to(worlds[2].right, worlds[3].left)
+        link_to(worlds[3].right, worlds[1].left)
+
+        return result
+
     def configurable_node_assignment(self, configuration: EchoesConfiguration, game: GameDescription,
-                                     rng: Random) -> Iterator[NodeConfigurationAssociation]:
+                                     rng: Random) -> Iterable[NodeConfigurationAssociation]:
         """
         :param configuration:
         :param game:

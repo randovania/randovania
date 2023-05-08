@@ -40,8 +40,11 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
 
         descriptions = ["<p>Controls where each elevator connects to.</p>"]
         for value in enum_lib.iterate_enum(TeleporterShuffleMode):
-            self.elevators_combo.addItem(value.long_name, value)
-            descriptions.append(f'<p><span style="font-weight:600;">{value.long_name}</span>: {value.description}</p>')
+            if value.usable_by_game(editor.game):
+                self.elevators_combo.addItem(value.long_name, value)
+                descriptions.append(
+                    f'<p><span style="font-weight:600;">{value.long_name}</span>: {value.description}</p>'
+                )
 
         self.elevators_description_label.setText("".join(descriptions))
 
@@ -200,14 +203,23 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         config = preset.configuration
         config_elevators: TeleporterConfiguration = config.elevators
 
+        descriptions = [
+            "<p>Controls where each elevator connects to.</p>",
+            f'<p><span style="font-weight:600;">{config_elevators.mode.long_name}</span>:'
+            f' {config_elevators.mode.description}</p>',
+        ]
+        self.elevators_description_label.setText("".join(descriptions))
+
         sound_bug_warning = False
         if isinstance(config, EchoesConfiguration):
             sound_bug_warning = not should_keep_elevator_sounds(config)
-
         self.elevators_help_sound_bug_label.setVisible(sound_bug_warning)
 
         signal_handling.set_combo_with_value(self.elevators_combo, config_elevators.mode)
+        can_shuffle_source = config_elevators.mode not in (TeleporterShuffleMode.VANILLA,
+                                                           TeleporterShuffleMode.ECHOES_SHUFFLED)
         can_shuffle_target = config_elevators.mode not in (TeleporterShuffleMode.VANILLA,
+                                                           TeleporterShuffleMode.ECHOES_SHUFFLED,
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)
         static_areas = {
@@ -225,7 +237,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             if not is_locked and not can_shuffle_target:
                 is_locked = (destination in static_areas) or (origin_check and not dest_check)
 
-            origin_check.setEnabled(not config_elevators.is_vanilla and not is_locked)
+            origin_check.setEnabled(can_shuffle_source and not is_locked)
             origin_check.setChecked(origin not in config_elevators.excluded_teleporters.locations and not is_locked)
 
             origin_check.setToolTip("The destination for this teleporter is locked due to other settings."

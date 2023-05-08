@@ -1,6 +1,7 @@
 import dataclasses
 from enum import Enum
 
+import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
@@ -20,16 +21,24 @@ class TeleporterShuffleMode(BitPackEnum, Enum):
     description: str
 
     VANILLA = "vanilla"
+    ECHOES_SHUFFLED = "echoes-shuffled"
     TWO_WAY_RANDOMIZED = "randomized"
     TWO_WAY_UNCHECKED = "two-way-unchecked"
     ONE_WAY_ELEVATOR = "one-way-elevator"
     ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
+    def usable_by_game(self, game: RandovaniaGame):
+        if self != TeleporterShuffleMode.ECHOES_SHUFFLED:
+            return True
+        else:
+            return game == RandovaniaGame.METROID_PRIME_ECHOES
+
 
 enum_lib.add_long_name(TeleporterShuffleMode, {
     TeleporterShuffleMode.VANILLA: "Original connections",
-    TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between areas",
+    TeleporterShuffleMode.ECHOES_SHUFFLED: "Shuffle regions",
+    TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between regions",
     TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
     TeleporterShuffleMode.ONE_WAY_ELEVATOR: "One-way, elevator room with cycles",
     TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT: "One-way, elevator room with replacement",
@@ -39,10 +48,13 @@ enum_lib.add_long_name(TeleporterShuffleMode, {
 enum_lib.add_per_enum_field(TeleporterShuffleMode, "description", {
     TeleporterShuffleMode.VANILLA:
         "all elevators are connected to where they do in the original game.",
+    TeleporterShuffleMode.ECHOES_SHUFFLED:
+        "keeps Temple Grounds in place, shuffling the locations of all other regions with each other."
+        f"<p><img src=\"{randovania.get_data_path()}/gui_assets/echoes_elevator_map.png\" width=450/></p>",
     TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
         "after taking an elevator, the elevator in the room you are in will bring you back to where you were. "
-        "An elevator will never connect to another in the same area. "
-        "This is the only setting that guarantees all areas are reachable.",
+        "An elevator will never connect to another in the same region. "
+        "This is the only setting that guarantees all regions are reachable.",
     TeleporterShuffleMode.TWO_WAY_UNCHECKED:
         "after taking an elevator, the elevator in the room you are in will bring you back to where you were.",
     TeleporterShuffleMode.ONE_WAY_ELEVATOR:
@@ -180,11 +192,12 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
 
     def description(self):
         result = []
-        if not self.is_vanilla and self.excluded_teleporters.locations:
-            result.append(f"{len(self.excluded_teleporters.locations)} teleporters")
+        if self.mode not in {TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.ECHOES_SHUFFLED}:
+            if not self.is_vanilla and self.excluded_teleporters.locations:
+                result.append(f"{len(self.excluded_teleporters.locations)} teleporters")
 
-        if self.has_shuffled_target and self.excluded_targets.locations:
-            result.append(f"{len(self.excluded_targets.locations)} targets")
+            if self.has_shuffled_target and self.excluded_targets.locations:
+                result.append(f"{len(self.excluded_targets.locations)} targets")
 
         if result:
             return f"{self.mode.long_name}; excluded {', '.join(result)}"

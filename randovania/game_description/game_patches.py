@@ -3,9 +3,8 @@ from __future__ import annotations
 import copy
 import dataclasses
 import typing
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
-from typing import Iterator
 
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
@@ -79,7 +78,7 @@ class GamePatches:
             hints={},
         )
 
-    def assign_new_pickups(self, assignments: Iterator[PickupTargetAssociation]) -> GamePatches:
+    def assign_new_pickups(self, assignments: Iterable[PickupTargetAssociation]) -> GamePatches:
         new_pickup_assignment = copy.copy(self.pickup_assignment)
 
         for index, pickup in assignments:
@@ -89,7 +88,7 @@ class GamePatches:
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
 
-    def assign_node_configuration(self, assignment: Iterator[NodeConfigurationAssociation]) -> GamePatches:
+    def assign_node_configuration(self, assignment: Iterable[NodeConfigurationAssociation]) -> GamePatches:
         new_configurable = copy.copy(self.configurable_nodes)
 
         for identifier, requirement in assignment:
@@ -126,7 +125,7 @@ class GamePatches:
         return dataclasses.replace(self, hints=current)
 
     # Elevators
-    def assign_elevators(self, assignments: Iterator[TeleporterAssociation]) -> GamePatches:
+    def assign_elevators(self, assignments: Iterable[TeleporterAssociation]) -> GamePatches:
         elevator_connection = copy.copy(self.elevator_connection)
 
         for teleporter, target in assignments:
@@ -142,7 +141,7 @@ class GamePatches:
             yield self.game.world_list.get_teleporter_node(identifier), target
 
     # Dock Connection
-    def assign_dock_connections(self, assignment: Iterator[tuple[DockNode, Node]]) -> GamePatches:
+    def assign_dock_connections(self, assignment: Iterable[tuple[DockNode, Node]]) -> GamePatches:
         connections = list(self.dock_connection)
 
         for source, target in assignment:
@@ -191,7 +190,7 @@ class GamePatches:
     def has_default_weakness(self, node: DockNode) -> bool:
         if self.dock_weakness[node.node_index] is None:
             return True
-        
+
         return self.dock_weakness[node.node_index] == node.default_dock_weakness
 
     def should_shuffle_weakness(self, node: DockNode) -> bool:
