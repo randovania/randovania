@@ -203,5 +203,5 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []
         if self.mode == DockRandoMode.DOCKS:
-            danger.append("Full Door Lock randomizer")
+            danger.append(f"{self.mode.long_name}: {self.mode.description}")
         return danger

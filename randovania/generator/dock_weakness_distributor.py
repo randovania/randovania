@@ -63,6 +63,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
         patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
 
     else:
+        assert dock_rando.mode == DockRandoMode.WEAKNESSES
         docks_to_unlock = []
 
         for dock_type, type_state in dock_rando.types_state.items():

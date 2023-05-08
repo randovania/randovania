@@ -7,7 +7,6 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 

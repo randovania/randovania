@@ -19,7 +19,6 @@ from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 _ALTERNATIVE_MODELS = {
     "Nothing": ["itemsphere"],

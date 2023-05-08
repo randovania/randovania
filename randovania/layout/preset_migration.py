@@ -815,9 +815,10 @@ def _migrate_v50(preset: dict) -> dict:
 
 
 def _migrate_v51(preset: dict) -> dict:
-    # and starting this version, `swap` is also a valid value
-    if preset["configuration"]["dock_rando"]["mode"] == "two-way":
-        preset["configuration"]["dock_rando"]["mode"] = "docks"
+    # and starting this version, `weaknesses` is also a valid value
+    dock_rando = preset["configuration"]["dock_rando"]
+    if dock_rando["mode"] in ("one-way", "two-way"):
+        dock_rando["mode"] = "docks"
 
     return preset
 
