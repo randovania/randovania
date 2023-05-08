@@ -29,7 +29,8 @@ def _simplify_requirement_list(self: RequirementList, state: State,
 
         # We don't want to mark collecting a pickup/event node as a requirement to collecting that node.
         # This could be interesting for DockLock, as indicating it needs to be unlocked from the other side.
-        if item.resource.resource_type == ResourceType.NODE_IDENTIFIER:
+        if item.resource.resource_type == ResourceType.NODE_IDENTIFIER\
+                or item.resource.resource_type == ResourceType.EVENT:
             continue
 
         items.append(item)
