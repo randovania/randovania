@@ -36,8 +36,13 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
 
         self.elevator_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
+        descriptions = ["<p>Controls where each elevator connects to.</p>"]
         for value in enum_lib.iterate_enum(TeleporterShuffleMode):
             self.elevators_combo.addItem(value.long_name, value)
+            descriptions.append(f'<p><span style="font-weight:600;">{value.long_name}</span>: {value.description}</p>')
+
+        self.elevators_description_label.setText("".join(descriptions))
+
         self.elevators_combo.currentIndexChanged.connect(self._update_elevator_mode)
         signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
         signal_handling.on_checked(self.elevators_allow_unvisited_names_check, self._update_allow_unvisited_names)
