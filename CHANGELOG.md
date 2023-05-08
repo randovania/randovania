@@ -97,6 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Removed: The elevator sound effect removal is no longer an option and is now automatically enabled in the appropriate circumstances.
 
 #### Logic Database
 

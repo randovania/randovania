@@ -461,6 +461,24 @@ def _get_model_mapping(randomizer_data: dict):
     )
 
 
+def should_keep_elevator_sounds(configuration: EchoesConfiguration):
+    elev = configuration.elevators
+    if elev.is_vanilla:
+        return True
+
+    if elev.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
+        return False
+
+    return not (set(elev.editable_teleporters) & {
+        NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
+                              "Teleport to Great Temple - Sky Temple Energy Controller"),
+        NodeIdentifier.create("Great Temple", "Sky Temple Energy Controller",
+                              "Teleport to Temple Grounds - Sky Temple Gateway"),
+        NodeIdentifier.create("Sanctuary Fortress", "Aerie",
+                              "Elevator to Sanctuary Fortress - Aerie Transport Station"),
+    })
+
+
 class EchoesPatchDataFactory(BasePatchDataFactory):
     cosmetic_patches: EchoesCosmeticPatches
     configuration: EchoesConfiguration
@@ -523,7 +541,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             },
             unvisited_room_names=(self.configuration.elevators.can_use_unvisited_room_names
                                   and self.cosmetic_patches.unvisited_room_names),
-            teleporter_sounds=self.cosmetic_patches.teleporter_sounds or self.configuration.elevators.is_vanilla,
+            teleporter_sounds=should_keep_elevator_sounds(self.configuration),
             dangerous_energy_tank=self.configuration.dangerous_energy_tank,
         ).as_json
 

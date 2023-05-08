@@ -138,6 +138,13 @@ def _convert_v22(options: dict) -> dict:
     return options
 
 
+def _convert_v23(options: dict) -> dict:
+    if "game_prime2" in options:
+        options["game_prime2"].pop("teleporter_sounds", None)
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -161,6 +168,7 @@ _CONVERTER_FOR_VERSION = [
     _convert_v20,
     _convert_v21,
     _convert_v22,
+    _convert_v23,
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
