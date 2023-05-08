@@ -4,7 +4,7 @@ import uuid
 from randovania.game_description import migration_data, default_database
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
+from randovania.layout.base.dock_rando_configuration import DockTypeState
 from randovania.lib import migration_lib
 
 
@@ -640,6 +640,7 @@ def _update_default_dock_rando(preset: dict) -> dict:
     }
     return preset
 
+
 def _migrate_v32(preset: dict) -> dict:
     return _update_default_dock_rando(preset)
 
@@ -746,10 +747,12 @@ def _migrate_v45(preset: dict) -> dict:
         preset["configuration"]["portal_rando"] = False
     return preset
 
+
 def _migrate_v46(preset: dict) -> dict:
     if preset["game"] == "dread":
         preset["configuration"]["april_fools_hints"] = False
     return preset
+
 
 def _migrate_v47(preset: dict) -> dict:
     if preset["game"] == "prime1":
@@ -760,6 +763,7 @@ def _migrate_v47(preset: dict) -> dict:
         preset["configuration"].pop("heat_protection_only_varia")
         preset["configuration"]["legacy_mode"] = False
     return preset
+
 
 def _migrate_v48(preset: dict) -> dict:
     ammo_pickup_config = preset["configuration"].pop("ammo_configuration")
@@ -779,6 +783,7 @@ def _migrate_v48(preset: dict) -> dict:
     preset["configuration"]["standard_pickup_configuration"] = std_pickup_config
 
     return preset
+
 
 def _migrate_v49(preset: dict) -> dict:
     if preset["game"] == "dread":
@@ -802,9 +807,18 @@ def _migrate_v49(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v50(preset: dict) -> dict:
     if preset["game"] == "dread":
         preset["configuration"]["raven_beak_damage_table_handling"] = "consistent_low"
+    return preset
+
+
+def _migrate_v51(preset: dict) -> dict:
+    # and starting this version, `swap` is also a valid value
+    if preset["configuration"]["dock_rando"]["mode"] == "two-way":
+        preset["configuration"]["dock_rando"]["mode"] = "docks"
+
     return preset
 
 
@@ -859,6 +873,7 @@ _MIGRATIONS = [
     _migrate_v48,
     _migrate_v49,
     _migrate_v50,
+    _migrate_v51,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
