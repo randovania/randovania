@@ -6,15 +6,19 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
+from randovania.lib import enum_lib
 
 
 class TeleporterShuffleMode(BitPackEnum, Enum):
+    long_name: str
+    description: str
+
     VANILLA = "vanilla"
     TWO_WAY_RANDOMIZED = "randomized"
     TWO_WAY_UNCHECKED = "two-way-unchecked"
@@ -22,22 +26,34 @@ class TeleporterShuffleMode(BitPackEnum, Enum):
     ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
-    @property
-    def long_name(self) -> str:
-        if self == TeleporterShuffleMode.VANILLA:
-            return "Original connections"
-        elif self == TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
-            return "Two-way, between areas"
-        elif self == TeleporterShuffleMode.TWO_WAY_UNCHECKED:
-            return "Two-way, unchecked"
-        elif self == TeleporterShuffleMode.ONE_WAY_ELEVATOR:
-            return "One-way, elevator room with cycles"
-        elif self == TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT:
-            return "One-way, elevator room with replacement"
-        elif self == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return "One-way, anywhere"
-        else:
-            raise ValueError(f"Unknown value: {self}")
+
+enum_lib.add_long_name(TeleporterShuffleMode, {
+    TeleporterShuffleMode.VANILLA: "Original connections",
+    TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between areas",
+    TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR: "One-way, elevator room with cycles",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT: "One-way, elevator room with replacement",
+    TeleporterShuffleMode.ONE_WAY_ANYTHING: "One-way, anywhere",
+})
+
+enum_lib.add_per_enum_field(TeleporterShuffleMode, "description", {
+    TeleporterShuffleMode.VANILLA:
+        "all elevators are connected to where they do in the original game.",
+    TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
+        "after taking an elevator, the elevator in the room you are in will bring you back to where you were. "
+        "An elevator will never connect to another in the same area. "
+        "This is the only setting that guarantees all areas are reachable.",
+    TeleporterShuffleMode.TWO_WAY_UNCHECKED:
+        "after taking an elevator, the elevator in the room you are in will bring you back to where you were.",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR:
+        "all elevators bring you to an elevator room, but going backwards can go somewhere else. "
+        "All rooms are used as a destination exactly once, causing all elevators to be separated into loops.",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT:
+        "all elevators bring you to an elevator room, but going backwards can go somewhere else. "
+        "Rooms can be used as a destination multiple times, causing elevators which you can possibly not come back to.",
+    TeleporterShuffleMode.ONE_WAY_ANYTHING:
+        "elevators are connected to any room from the game.",
+})
 
 
 def _has_editable_teleporter(area: Area) -> bool:
@@ -74,13 +90,13 @@ class TeleporterList(location_list.LocationList):
 
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
-    if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and 
+    if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and
             area.name == "Credits" and node.name == area.default_node):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return (area.has_start_node() and area.default_node is not None and 
-        area.default_node == node.name and not has_save_station)
+    return (area.has_start_node() and area.default_node is not None and
+            area.default_node == node.name and not has_save_station)
 
 
 class TeleporterTargetList(location_list.LocationList):
