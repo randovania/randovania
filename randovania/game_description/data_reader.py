@@ -252,7 +252,6 @@ def read_dock_weakness_database(data: dict,
     default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
     dock_rando_config = DockRandoConfig(
-        enable_one_way=data["dock_rando"]["enable_one_way"],
         force_change_two_way=data["dock_rando"]["force_change_two_way"],
         resolver_attempts=data["dock_rando"]["resolver_attempts"],
         to_shuffle_proportion=data["dock_rando"]["to_shuffle_proportion"],

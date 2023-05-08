@@ -14,7 +14,6 @@ from randovania.games.game import RandovaniaGame
 class DockRandoMode(BitPackEnum, Enum):
     VANILLA = "vanilla"
     TWO_WAY = "two-way"
-    ONE_WAY = "one-way"
 
     @property
     def long_name(self) -> str:
@@ -22,8 +21,6 @@ class DockRandoMode(BitPackEnum, Enum):
             return "Vanilla"
         if self == DockRandoMode.TWO_WAY:
             return "Two-way"
-        if self == DockRandoMode.ONE_WAY:
-            return "One-way"
         raise ValueError(f"Unknown value: {self}")
 
     @property
@@ -32,8 +29,6 @@ class DockRandoMode(BitPackEnum, Enum):
             return "Original door locks."
         if self == DockRandoMode.TWO_WAY:
             return "Random door locks; same lock on both sides."
-        if self == DockRandoMode.ONE_WAY:
-            return "Random door locks; each side is separate."
         raise ValueError(f"Unknown value: {self}")
 
 

@@ -49,7 +49,7 @@ class DockNode(Node):
         return context.patches.get_dock_weakness_for(self)
 
     def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:
-        target_node = self.get_target_identifier(context)
+        target_node = self.get_target_node(context)
         if isinstance(target_node, DockNode):
             return context.patches.get_dock_weakness_for(target_node)
 
@@ -107,11 +107,11 @@ class DockNode(Node):
 
         return self.lock_node, requirement
 
-    def get_target_identifier(self, context: NodeContext) -> Node:
+    def get_target_node(self, context: NodeContext) -> Node:
         return context.patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        target_node = self.get_target_identifier(context)
+        target_node = self.get_target_node(context)
         yield self._open_dock_connection(context, target_node)
 
         if (lock_connection := self._lock_connection(context)) is not None:
