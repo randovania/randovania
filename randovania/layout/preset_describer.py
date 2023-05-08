@@ -143,9 +143,9 @@ class GamePresetDescriber:
         template_strings["Gameplay"].append(starting_location)
 
         # Dock Locks
-        dock_mode = configuration.dock_rando.mode
-        if dock_mode != DockRandoMode.VANILLA:
-            template_strings["Gameplay"].append(dock_mode.description)
+        dock_rando = configuration.dock_rando
+        if dock_rando.is_enabled():
+            template_strings["Gameplay"].append(dock_rando.mode.description)
 
         return template_strings
 

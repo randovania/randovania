@@ -27,7 +27,7 @@ from randovania.resolver.state import State
 def distribute_pre_fill_weaknesses(patches: GamePatches):
     dock_rando = patches.configuration.dock_rando
 
-    if dock_rando.mode == DockRandoMode.VANILLA:
+    if dock_rando.mode != DockRandoMode.FULL:
         return patches
 
     game = default_database.game_description_for(patches.configuration.game)
@@ -219,7 +219,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
     start_time = time.perf_counter()
 
     for player, patches in new_patches.items():
-        if patches.configuration.dock_rando.mode == DockRandoMode.VANILLA:
+        if patches.configuration.dock_rando.mode != DockRandoMode.FULL:
             continue
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")

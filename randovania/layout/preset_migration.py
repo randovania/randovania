@@ -632,7 +632,7 @@ def _update_default_dock_rando(preset: dict) -> dict:
     weakness_database = default_database.game_description_for(game).dock_weakness_database
 
     preset["configuration"]["dock_rando"] = {
-        "mode": DockRandoMode.VANILLA.value,
+        "mode": "vanilla",
         "types_state": {
             dock_type.short_name: DockTypeState.default_state(game, dock_type.short_name).as_json
             for dock_type in weakness_database.dock_types

@@ -18,7 +18,7 @@ class DreadBootstrap(MetroidBootstrap):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.mode != DockRandoMode.VANILLA:
+        if configuration.dock_rando.is_enabled():
             enabled_resources.add("DoorLocks")
 
         return enabled_resources

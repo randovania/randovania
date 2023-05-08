@@ -1,7 +1,7 @@
 import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator
+from typing import Iterator, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
@@ -152,7 +152,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame) -> "DockRandoConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> Self:
         weakness_database = cls._get_weakness_database(game)
         return cls(
             game=game,
@@ -177,7 +177,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
             yield from self.types_state[dock_type].bit_pack_encode({"reference": reference.types_state[dock_type]})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "DockRandoConfiguration":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Self:
         reference: DockRandoConfiguration = metadata["reference"]
 
         mode = DockRandoMode.bit_pack_unpack(decoder, None)
