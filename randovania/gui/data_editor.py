@@ -712,6 +712,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             dock_type=dock_weakness[0],
             default_connection=new_node_other_area_identifier,
             default_dock_weakness=dock_weakness[1],
+            exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
             incompatible_dock_weaknesses=tuple(),
         )
@@ -723,6 +724,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             dock_type=dock_weakness[0],
             default_connection=new_node_this_area_identifier,
             default_dock_weakness=dock_weakness[1],
+            exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
             incompatible_dock_weaknesses=tuple(),
         )
