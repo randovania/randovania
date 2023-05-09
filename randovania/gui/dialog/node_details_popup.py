@@ -250,6 +250,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
         signal_handling.set_combo_with_value(self.dock_weakness_combo, node.default_dock_weakness)
         self.dock_incompatible_model.items = list(node.incompatible_dock_weaknesses)
+        self.dock_exclude_lock_rando_check.setChecked(node.exclude_from_dock_rando)
 
     def fill_for_pickup(self, node: PickupNode):
         self.pickup_index_spin.setValue(node.pickup_index.index)
@@ -446,6 +447,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self.game.world_list.identifier_for_node(connection_node),
                 self.dock_weakness_combo.currentData(),
                 None, None,
+                self.dock_exclude_lock_rando_check.isChecked(),
                 tuple(self.dock_incompatible_model.items),
             )
 

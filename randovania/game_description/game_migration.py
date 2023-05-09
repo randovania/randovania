@@ -191,6 +191,7 @@ def _migrate_v16(data: dict) -> dict:
         for area_name, area in world["areas"].items():
             for node_name, node in area["nodes"].items():
                 if node["node_type"] == "dock":
+                    node["exclude_from_dock_rando"] = node["extra"].pop("exclude_from_dock_rando", False)
                     node["incompatible_dock_weaknesses"] = node["extra"].pop("excluded_dock_weaknesses", [])
 
     return data

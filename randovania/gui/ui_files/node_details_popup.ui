@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>556</width>
-    <height>698</height>
+    <height>846</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -322,6 +322,67 @@
        <property name="bottomMargin">
         <number>2</number>
        </property>
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="dock_connection_group">
+         <property name="title">
+          <string>Dock Connection</string>
+         </property>
+         <layout class="QHBoxLayout" name="dock_connection_layout">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="dock_connection_world_combo"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="dock_connection_area_combo"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="dock_connection_node_combo"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" rowspan="3">
+        <widget class="QGroupBox" name="dock_incompatible_box">
+         <property name="title">
+          <string>Incompatible Weaknesses</string>
+         </property>
+         <layout class="QVBoxLayout" name="dock_incompatible_layout">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QListView" name="dock_incompatible_list"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="dock_incompatible_button">
+            <property name="text">
+             <string>Remove Selected</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
@@ -377,37 +438,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QGroupBox" name="dock_connection_group">
-         <property name="title">
-          <string>Dock Connection</string>
-         </property>
-         <layout class="QHBoxLayout" name="dock_connection_layout">
-          <property name="leftMargin">
-           <number>2</number>
-          </property>
-          <property name="topMargin">
-           <number>4</number>
-          </property>
-          <property name="rightMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
-           <number>2</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="dock_connection_world_combo"/>
-          </item>
-          <item>
-           <widget class="QComboBox" name="dock_connection_area_combo"/>
-          </item>
-          <item>
-           <widget class="QComboBox" name="dock_connection_node_combo"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -420,35 +451,11 @@
          </property>
         </spacer>
        </item>
-       <item row="2" column="0" rowspan="2">
-        <widget class="QGroupBox" name="dock_incompatible_box">
-         <property name="title">
-          <string>Incompatible Weaknesses</string>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="dock_exclude_lock_rando_check">
+         <property name="text">
+          <string>Exclude from Dock Lock rando</string>
          </property>
-         <layout class="QVBoxLayout" name="dock_incompatible_layout">
-          <property name="leftMargin">
-           <number>2</number>
-          </property>
-          <property name="topMargin">
-           <number>2</number>
-          </property>
-          <property name="rightMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
-           <number>2</number>
-          </property>
-          <item>
-           <widget class="QListView" name="dock_incompatible_list"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dock_incompatible_button">
-            <property name="text">
-             <string>Remove Selected</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>

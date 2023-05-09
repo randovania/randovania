@@ -41,7 +41,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
                 patches.has_default_weakness(node)  # don't randomize anything that was already modified
                 and dock_rando.types_state[node.dock_type].can_shuffle
                 and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
-                and not node.extra.get("exclude_from_dock_rando", False)
+                and not node.exclude_from_dock_rando
         )
     ]
 

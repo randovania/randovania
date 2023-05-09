@@ -192,6 +192,7 @@ ConstructNode = NodeAdapter(Struct(
                 dock_type=String,
                 default_connection=ConstructNodeIdentifier,
                 default_dock_weakness=String,
+                exclude_from_dock_rando=Flag,
                 incompatible_dock_weaknesses=PrefixedArray(VarInt, String),
                 override_default_open_requirement=OptionalValue(ConstructRequirement),
                 override_default_lock_requirement=OptionalValue(ConstructRequirement),
