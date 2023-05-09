@@ -31,14 +31,14 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
         return patches
 
     game = default_database.game_description_for(patches.configuration.game)
-    dock_nodes = [node for node in game.world_list.all_nodes if isinstance(node, DockNode)]
     weakness_database = game.dock_weakness_database
 
     nodes_to_shuffle = [
         node
-        for node in dock_nodes
+        for node in game.world_list.all_nodes
         if (
-                patches.has_default_weakness(node)  # don't randomize anything that was already modified
+                isinstance(node, DockNode)
+                and patches.has_default_weakness(node)  # don't randomize anything that was already modified
                 and dock_rando.types_state[node.dock_type].can_shuffle
                 and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
                 and not node.exclude_from_dock_rando
@@ -54,9 +54,10 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
             unlocked = [node for node, _ in docks_to_unlock]
             docks_to_unlock.extend([
                 (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
-                for node in dock_nodes
+                for node in game.world_list.all_nodes
                 if (
-                        node not in unlocked
+                        isinstance(node, DockNode)
+                        and node not in unlocked
                         and game.world_list.node_by_identifier(node.default_connection) in unlocked
                 )
             ])
@@ -79,10 +80,15 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
             rng.shuffle(source_weaknesses)
             rng.shuffle(target_weaknesses)
             mapping: dict[DockWeakness, DockWeakness] = dict(zip(source_weaknesses, target_weaknesses))
+
+            # a node's weakness is not present in mapping if it has been excluded from changing
+            # if the node's not compatible with the new weakness, change to unlocked instead
             docks_to_unlock.extend(
-                (node, mapping[node.default_dock_weakness])
-                for node in dock_nodes
-                if node.default_dock_weakness in mapping
+                (node,
+                 weakness if weakness not in node.incompatible_dock_weaknesses else
+                 weakness_database.dock_rando_params[node.dock_type].unlocked)
+                for node in nodes_to_shuffle
+                if (weakness := mapping.get(node.default_dock_weakness)) is not None
             )
 
     return patches.assign_dock_weakness(docks_to_unlock)
