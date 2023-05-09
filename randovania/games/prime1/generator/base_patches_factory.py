@@ -6,7 +6,6 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 
 class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
@@ -26,7 +25,7 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         nic = NodeIdentifier.create
         power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door")
 
-        if configuration.main_plaza_door and configuration.dock_rando.mode == DockRandoMode.VANILLA:
+        if configuration.main_plaza_door and not configuration.dock_rando.is_enabled():
             dock_weakness.append(
                 (nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), power_weak),
             )

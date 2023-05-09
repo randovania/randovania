@@ -24,15 +24,12 @@ def _simplify_requirement_list(self: RequirementList, state: State,
                                ) -> RequirementList | None:
     items = []
     for item in self.values():
-        if item.negate:
-            return None
-
         if item.satisfied(state.resources, state.energy, state.resource_database):
             continue
 
         # We don't want to mark collecting a pickup/event node as a requirement to collecting that node.
         # This could be interesting for DockLock, as indicating it needs to be unlocked from the other side.
-        if item.resource.resource_type == ResourceType.NODE_IDENTIFIER:
+        if item.resource.resource_type in (ResourceType.NODE_IDENTIFIER, ResourceType.EVENT):
             continue
 
         items.append(item)
@@ -162,7 +159,13 @@ async def _inner_advance_depth(state: State,
                 )
 
                 if new_result[0] is None:
-                    debug.log_rollback(state, True, True)
+                    additional = logic.get_additional_requirements(action).alternatives
+
+                    logic.set_additional_requirements(
+                        state.node,
+                        _simplify_additional_requirement_set(RequirementSet(additional), state)
+                    )
+                    debug.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result

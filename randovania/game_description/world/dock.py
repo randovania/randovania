@@ -68,7 +68,7 @@ class DockWeakness:
         return self.name
 
     @property
-    def long_name(self):
+    def long_name(self) -> str:
         return self.extra.get("display_name", self.name)
 
     def can_unlock_from_back(self: DockWeakness, back_weak: DockWeakness | None) -> bool:
@@ -101,7 +101,6 @@ class DockType:
 
 @dataclass(frozen=True, slots=True)
 class DockRandoConfig:
-    enable_one_way: bool
     # whether a two-way door should change both sides, even if one side has an excluded weakness
     force_change_two_way: bool
     resolver_attempts: int

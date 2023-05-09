@@ -1,11 +1,83 @@
 import dataclasses
 import inspect
 import typing
+import uuid
 from enum import Enum
 
 from randovania.lib import type_lib
 
 T = typing.TypeVar("T")
+
+
+def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.Any:
+    type_ = type_lib.resolve_optional(type_)[0]
+
+    if arg is None:
+        return None
+
+    if issubclass(type_, Enum):
+        return type_(arg)
+
+    elif typing.get_origin(type_) == list:
+        if type_args := typing.get_args(type_):
+            value_type = type_args[0]
+        else:
+            value_type = typing.Any
+
+        return [
+            _decode_with_type(value, value_type, {})
+            for value in arg
+        ]
+
+    elif typing.get_origin(type_) == dict:
+        if type_args := typing.get_args(type_):
+            key_type, value_type = type_args
+        else:
+            key_type, value_type = str, typing.Any
+
+        return {
+            _decode_with_type(key, key_type, {}): _decode_with_type(value, value_type, {})
+            for key, value in arg.items()
+        }
+
+    elif type_ is uuid.UUID:
+        return uuid.UUID(arg)
+
+    elif hasattr(type_, "from_json"):
+        arg_spec = inspect.getfullargspec(type_.from_json)
+
+        return type_.from_json(arg, **{
+            name: value
+            for name, value in extra_args.items()
+            if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
+        })
+
+    return arg
+
+
+def _encode_value(value: typing.Any) -> typing.Any:
+    if isinstance(value, Enum):
+        value = value.value
+
+    elif isinstance(value, uuid.UUID):
+        value = str(value)
+
+    elif isinstance(value, list):
+        value = [
+            _encode_value(v)
+            for v in value
+        ]
+
+    elif isinstance(value, dict):
+        value = {
+            _encode_value(k): _encode_value(v)
+            for k, v in value.items()
+        }
+
+    elif value is not None and hasattr(value, "as_json"):
+        value = value.as_json
+
+    return value
 
 
 class JsonDataclass:
@@ -16,11 +88,7 @@ class JsonDataclass:
             if not field.init:
                 continue
             value = getattr(self, field.name)
-            if isinstance(value, Enum):
-                value = value.value
-            elif value is not None and hasattr(value, "as_json"):
-                value = value.as_json
-            result[field.name] = value
+            result[field.name] = _encode_value(value)
         return result
 
     @classmethod
@@ -45,16 +113,8 @@ class JsonDataclass:
                 if isinstance(field_type, str):
                     field_type = resolved_types[field.name]
 
-                type_ = type_lib.resolve_optional(field_type)[0]
-                if issubclass(type_, Enum):
-                    arg = type_(arg)
-                elif hasattr(type_, "from_json"):
-                    arg_spec = inspect.getfullargspec(type_.from_json)
-                    arg = type_.from_json(arg, **{
-                        name: value
-                        for name, value in extra_args.items()
-                        if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
-                    })
+                arg = _decode_with_type(arg, field_type, extra_args)
+
             new_instance[field.name] = arg
 
         unknown_keys = set(json_dict.keys()) - set(new_instance.keys())

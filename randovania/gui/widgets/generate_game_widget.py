@@ -176,8 +176,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None):
         with self._options as options:
-            if parent is not None:
-                options.set_parent_for_preset(preset.uuid, parent)
+            options.set_parent_for_preset(preset.uuid, parent)
             options.set_selected_preset_uuid_for(self.game, preset.uuid)
 
         self._window_manager.preset_manager.add_new_preset(preset)

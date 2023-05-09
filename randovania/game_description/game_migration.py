@@ -181,6 +181,11 @@ def _migrate_v14(data: dict) -> dict:
     return data
 
 
+def _migrate_v15(data: dict) -> dict:
+    del data["dock_weakness_database"]["dock_rando"]["enable_one_way"]
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -196,6 +201,7 @@ _MIGRATIONS = [
     _migrate_v12,
     _migrate_v13,
     _migrate_v14,
+    _migrate_v15,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -8,10 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [?.?.0] - 2023-06-??
 
 - WIP: New multiworld in progress (TODO: proper message when done)
-- Changed: The resolver now allows dangerous resources in additional resources.
+- Added: It's now possible to drag presets directly into the root of the presets.
+- Added: The order you place presets when drag and dropping is now saved.
+- Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.
+- Added: New Door Lock rando mode - Types. In this mode, every single door of a type is swapped with another type. Generation times should be fast and be compatible with multiworld.
+- Changed: Door Lock mode Two-way is now named Doors. The functionality is unchanged.
 - Changed: Improved preset descriptions, making them significantly simpler.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
+- Changed: In the Data Visualizer, requirements are now displayed using a tree widget, which allows for collapsing the and/or blocks.
+- Changed: Optimized the solver by allowing more resources as additional resources, allowing more actions to be skipped until the necessary resources are found.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
+- Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 
 ### Cave Story
 
@@ -64,6 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Divided the "Other" tab into "Quality of Life" and "Chaos".
 - Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement.
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Removed: One-Way door lock randomizer has been removed. This has actually been the case since 5.3.0!
 
 #### Logic Database
 
@@ -92,6 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Removed: The elevator sound effect removal is no longer an option and is now automatically enabled in the appropriate circumstances.
 
 #### Logic Database
 

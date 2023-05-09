@@ -24,12 +24,8 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         self.setupUi(self)
 
         # Mode
-        self.mode_combo.setItemData(0, DockRandoMode.VANILLA)
-        self.mode_combo.setItemData(1, DockRandoMode.TWO_WAY)
-        if game_description.dock_weakness_database.dock_rando_config.enable_one_way:
-            self.mode_combo.setItemData(2, DockRandoMode.ONE_WAY)
-        else:
-            self.mode_combo.setMaxCount(2)
+        for mode in DockRandoMode:
+            self.mode_combo.addItem(mode.long_name, mode)
 
         signal_handling.on_combo(self.mode_combo, self._on_mode_changed)
 
@@ -55,6 +51,8 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         dock_rando = preset.configuration.dock_rando
         signal_handling.set_combo_with_value(self.mode_combo, dock_rando.mode)
         self.mode_description.setText(dock_rando.mode.description)
+
+        self.multiworld_label.setVisible(len(dock_rando.settings_incompatible_with_multiworld()) > 0)
 
         for dock_type, weakness_checks in self.type_checks.items():
             state = dock_rando.types_state[dock_type]
@@ -106,8 +104,8 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         add_group("can_change_from", "Doors to Change", change_from)
         add_group("can_change_to", "Change Doors To", change_to)
 
-    def _persist_weakness_setting(self, field: str, dock_type: DockType, dock_weakness: DockWeakness) -> Callable[
-        [bool], None]:
+    def _persist_weakness_setting(self, field: str, dock_type: DockType, dock_weakness: DockWeakness,
+                                  ) -> Callable[[bool], None]:
         def _persist(value: bool):
             with self._editor as editor:
                 state = editor.dock_rando_configuration.types_state[dock_type]
