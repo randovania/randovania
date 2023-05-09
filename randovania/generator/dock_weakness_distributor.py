@@ -200,16 +200,8 @@ def _determine_valid_weaknesses(dock: DockNode,
         reach = ResolverReach.calculate_reach(logic, state)
 
         exclusions = set()
-
-        def get_excluded_weakness(d: DockNode):
-            # TODO: make this a proper DockNode property rather than an extra field
-            return [
-                dock_type_state.weakness_database.get_by_weakness(dock_type_state.dock_type_name, weakness)
-                for weakness in d.extra.get("excluded_dock_weaknesses", [])
-            ]
-
-        exclusions.update(get_excluded_weakness(dock))
-        exclusions.update(get_excluded_weakness(target))  # two-way
+        exclusions.update(dock.incompatible_dock_weaknesses)
+        exclusions.update(target.incompatible_dock_weaknesses)  # two-way
 
         if dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions) and target in reach.nodes:
             weighted_weaknesses[dock_type_params.locked] = 2.0

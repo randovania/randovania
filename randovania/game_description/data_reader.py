@@ -327,6 +327,10 @@ class WorldReader:
                     override_default_lock_requirement=read_optional_requirement(
                         data["override_default_lock_requirement"], self.resource_database
                     ),
+                    incompatible_dock_weaknesses=tuple([
+                        self.dock_weakness_database.get_by_weakness(data["dock_type"], name)
+                        for name in data["incompatible_dock_weaknesses"]
+                    ]),
                 )
 
             elif node_type == "pickup":
