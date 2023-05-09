@@ -1,10 +1,19 @@
+import dataclasses
+from random import Random
 from typing import Callable
 from unittest.mock import MagicMock, patch, call, AsyncMock
 
 import pytest
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.world.pickup_node import PickupNode
 
 from randovania.generator import generator
 from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
+from randovania.generator.pickup_pool import pickup_creator
+from randovania.interface_common.preset_manager import PresetManager
+from randovania.layout.base.available_locations import AvailableLocationsConfiguration, RandomizationMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.exceptions import InvalidConfiguration
 
@@ -75,3 +84,63 @@ def test_distribute_remaining_items_no_locations_left(echoes_game_description, e
     with pytest.raises(InvalidConfiguration,
                        match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."):
         generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])
+
+
+async def test_avoid_majors_locations_not_assigned_majors(dread_game_description: GameDescription,
+                                                          preset_manager: PresetManager):
+    # Setup
+    rng = Random(0)
+    preset = preset_manager.default_preset_for_game(dread_game_description.game).get_preset()
+    patches = GamePatches.create_from_game(dread_game_description, 0, preset.configuration)
+    all_pickup_nodes = [node
+                 for world in dread_game_description.world_list.worlds
+                 for area in world.areas
+                 for node in area.nodes
+                 if isinstance(node, PickupNode)]
+
+    pool = await generator.create_player_pool(rng, preset.configuration, 0, 1)
+
+    assert len(pool.pickups) <= len(all_pickup_nodes)
+    if len(pool.pickups) < len(all_pickup_nodes):
+        # Extend pickups list with enough "Nothing" pickups to fill all nodes
+        pickups_needed = len(all_pickup_nodes) - len(pool.pickups)
+        pool.pickups.extend(
+            [pickup_creator.create_nothing_pickup(dread_game_description.resource_database)] * pickups_needed)
+
+    minor_pickups = [pickup for pickup in pool.pickups
+                     if pickup.generator_params.preferred_location_category == LocationCategory.MINOR]
+
+    # Add one pickup index to "avoid_majors_indices" for each non-major pickup in the pool. This will ensure that
+    # there are exactly enough majors to fill the locations where majors are allowed, and exactly enough minors
+    # to fill the "no majors" locations. This makes it trivial to test the results afterwards.
+    avoid_majors_indices = [node.pickup_index for node in all_pickup_nodes][0:len(minor_pickups)]
+    available_locations = AvailableLocationsConfiguration(
+        randomization_mode=RandomizationMode.FULL,
+        excluded_indices=frozenset(),
+        minor_only_indices=avoid_majors_indices,
+        game=dread_game_description.game)
+
+    preset = dataclasses.replace(
+        preset,
+        configuration=dataclasses.replace(preset.configuration, available_locations=available_locations))
+
+    player_result = FillerPlayerResult(
+        game=dread_game_description,
+        patches=patches,
+        unassigned_pickups=pool.pickups
+    )
+    filler_results = FillerResults({0: player_result}, tuple())
+
+    # Run
+    filler_results = generator._distribute_remaining_items(rng, filler_results, [preset])
+
+    # Assert
+    result = filler_results.player_results[0]
+    avoid_majors_indices_with_majors = [
+        pickup_index
+        for pickup_index, target in result.patches.pickup_assignment.items()
+        if pickup_index in avoid_majors_indices
+        and target.pickup.generator_params.preferred_location_category == LocationCategory.MAJOR
+    ]
+
+    assert len(avoid_majors_indices_with_majors) == 0
