@@ -93,7 +93,15 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
             other_name = (f"(Area {node.default_connection.area_name}, "
                           f"index {node.default_connection.node_name}) [{e}]")
 
-        return f"{node.default_dock_weakness.name} to {other_name}"
+        message = f"{node.default_dock_weakness.name} to {other_name}"
+
+        if node.exclude_from_dock_rando:
+            message += "; Excluded from Dock Lock Rando"
+        elif node.incompatible_dock_weaknesses:
+            message += "; Dock Lock Rando incompatible with: "
+            message += ", ".join(weak.name for weak in node.incompatible_dock_weaknesses)
+        
+        return message
 
     elif isinstance(node, TeleporterNode):
         other = world_list.area_by_area_location(node.default_connection)
