@@ -286,7 +286,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -370,19 +370,6 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="2" column="1">
         <widget class="QPushButton" name="dock_update_name_button">
          <property name="text">
@@ -416,6 +403,50 @@
           </item>
           <item>
            <widget class="QComboBox" name="dock_connection_node_combo"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0" rowspan="2">
+        <widget class="QGroupBox" name="dock_incompatible_box">
+         <property name="title">
+          <string>Incompatible Weaknesses</string>
+         </property>
+         <layout class="QVBoxLayout" name="dock_incompatible_layout">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QListView" name="dock_incompatible_list"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="dock_incompatible_button">
+            <property name="text">
+             <string>Remove Selected</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
