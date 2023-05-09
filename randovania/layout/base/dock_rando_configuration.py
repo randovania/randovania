@@ -29,8 +29,8 @@ enum_lib.add_long_name(DockRandoMode, {
 
 enum_lib.add_per_enum_field(DockRandoMode, "description", {
     DockRandoMode.VANILLA: "Original door locks",
-    DockRandoMode.DOCKS: "Randomize each door lock individually",
-    DockRandoMode.WEAKNESSES: "Swap door lock types",
+    DockRandoMode.DOCKS: "Randomize the type of each door individually",
+    DockRandoMode.WEAKNESSES: "Randomizes all doors by type, turning all of one type into another",
 })
 
 
