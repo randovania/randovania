@@ -23,12 +23,14 @@ class PresetEditor:
     _name: str
     _uuid: uuid.UUID
     _game: RandovaniaGame
+    _description: str
     _configuration: BaseConfiguration
 
     def __init__(self, initial_preset: Preset, options: Options):
         self._name = initial_preset.name
         self._uuid = initial_preset.uuid
         self._game = initial_preset.game
+        self._description = initial_preset.description
         self._configuration = initial_preset.configuration
         self._options = options
 
@@ -58,7 +60,7 @@ class PresetEditor:
     def create_custom_preset_with(self) -> Preset:
         return Preset(
             name=self.name,
-            description="A preset that was customized.",
+            description=self._description,
             uuid=self._uuid,
             game=self._game,
             configuration=self.configuration,
@@ -76,6 +78,14 @@ class PresetEditor:
     @property
     def game(self):
         return self._game
+        
+    @property
+    def description(self):
+        return self._description
+        
+    @description.setter
+    def description(self, value):
+        self._set_field("description", value)
 
     @property
     def configuration(self) -> BaseConfiguration:
