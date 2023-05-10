@@ -4,6 +4,7 @@ import datetime
 import logging
 import random
 import uuid
+import markdown
 from pathlib import Path
 from typing import Callable
 
@@ -443,7 +444,8 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             try:
                 raw_preset = preset.get_preset()
                 can_generate = True
-                description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{raw_preset.description}</p>"
+                formatted_description = markdown.markdown(raw_preset.description)
+                description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{formatted_description}</p>"
                 description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
 
             except InvalidPreset as e:
