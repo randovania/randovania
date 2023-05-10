@@ -39,7 +39,10 @@ class InfiniteTimer(QtCore.QObject):
     def _on_timeout(self):
         def _error_handler(t):
             self._current_task = None
-            return t.result()
+            try:
+                return t.result()
+            except asyncio.CancelledError:
+                pass
 
         assert self._current_task is None
         self._current_task = asyncio.create_task(self._target_wrap())
