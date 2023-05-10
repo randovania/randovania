@@ -275,12 +275,12 @@ class PrimeRemoteConnector(RemoteConnector):
                     self.message_cooldown = max(self.message_cooldown - self._dt, 0.0)
                     await self._multiworld_interaction()
 
-        except MemoryOperationException:
+        except MemoryOperationException as e:
             # A memory operation failing is expected only when the socket is lost or dolphin is closed
             # It should automatically disconnect the executor, so fail loudly if that's not the case
             if self.executor.is_connected():
                 self.executor.disconnect()
-                raise
+                self.logger.debug("Disconnecting due to an exception: %s", str(e))
 
         finally:
             if self.is_disconnected():

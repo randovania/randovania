@@ -158,6 +158,7 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
     # Setup
     connector.message_cooldown = 0.0
     connector.executor.is_connected.return_value = True
+    connector.executor.disconnect = MagicMock()
 
     connector.get_inventory = AsyncMock()
     connector.current_game_status = AsyncMock(return_value=(
@@ -165,23 +166,22 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         MagicMock() if depth > 0 else None,  # world
     ))
 
-    expectation = contextlib.nullcontext()
+    should_disconnect = False
     if failure_at == 1:
         connector.get_inventory.side_effect = MemoryOperationException("error at _get_inventory")
-        expectation = pytest.raises(MemoryOperationException, match="error at _get_inventory")
+        should_disconnect = depth > 0
 
     connector._multiworld_interaction = AsyncMock()
     if failure_at == 2:
         connector._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
-        expectation = pytest.raises(MemoryOperationException, match="error at _check_for_collected_index")
+        should_disconnect = depth > 1
 
     expected_depth = min(depth, failure_at) if failure_at is not None else depth
-    if (failure_at or 999) > depth:
-        expectation = contextlib.nullcontext()
+    if (failure_at or 999) <= depth:
+        should_disconnect = True
 
     # Run
-    with expectation:
-        await connector.update()
+    await connector.update()
 
     # Assert
     connector.current_game_status.assert_awaited_once_with()
@@ -200,3 +200,8 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         assert connector._world is not None
     else:
         assert connector._world is None
+
+    if should_disconnect:
+        connector.executor.disconnect.assert_called_once_with()
+    else:
+        connector.executor.disconnect.assert_not_called()
