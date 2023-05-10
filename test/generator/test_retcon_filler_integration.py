@@ -29,8 +29,8 @@ def test_build_available_indices(has_exclusion: bool):
         exclusion = frozenset()
     configuration = FillerConfiguration(
         randomization_mode=RandomizationMode.FULL,
-        minimum_random_starting_items=0,
-        maximum_random_starting_items=0,
+        minimum_random_starting_pickups=0,
+        maximum_random_starting_pickups=0,
         indices_to_exclude=exclusion,
         logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
         first_progression_must_be_local=False,

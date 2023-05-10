@@ -38,7 +38,7 @@ class PlayerState:
     hint_seen_count: DefaultDict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
-    num_random_starting_items_placed: int
+    num_starting_pickups_placed: int
     num_assigned_pickups: int
 
     def __init__(self,
@@ -60,7 +60,7 @@ class PlayerState:
         self.hint_seen_count = collections.defaultdict(int)
         self.event_seen_count = collections.defaultdict(int)
         self.hint_initial_pickups = {}
-        self.num_random_starting_items_placed = 0
+        self.num_starting_pickups_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
@@ -110,8 +110,8 @@ class PlayerState:
 
     def potential_actions(self, locations_weighted: WeightedLocations) -> list[Action]:
         num_available_indices = len(self.filter_usable_locations(locations_weighted))
-        num_available_indices += (self.configuration.maximum_random_starting_items
-                                  - self.num_random_starting_items_placed)
+        num_available_indices += (self.configuration.maximum_random_starting_pickups
+                                  - self.num_starting_pickups_placed)
 
         pickups, uncollected_resource_nodes = self._unfiltered_potential_actions
         result: list[Action] = [Action(pickup_tuple) for pickup_tuple in pickups
@@ -247,6 +247,9 @@ class PlayerState:
             debug.debug_print(f"+ Only {len(valid_locations)} qualifying open locations, hint refused.")
 
         return can_hint
+
+    def count_self_locations(self, locations: WeightedLocations) -> int:
+        return sum(1 for player, _ in locations.keys() if player == self)
 
 
 def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,
