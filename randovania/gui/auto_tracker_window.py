@@ -151,6 +151,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         return self.select_game_combo.currentData()
 
     def on_game_state_updated(self, state: ConnectedGameState):
+        self.create_tracker()
         expected_connector = self.game_connection.get_connector_for_builder(self.selected_builder())
         if expected_connector == state.source:
             self.item_tracker.update_state(state.current_inventory)
