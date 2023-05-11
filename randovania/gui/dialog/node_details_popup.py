@@ -2,7 +2,8 @@ import json
 import logging
 import traceback
 
-from PySide6 import QtWidgets
+from PySide6 import QtWidgets, QtCore
+from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
 from randovania.game_description import integrity_check
@@ -13,6 +14,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.dock import DockWeakness, DockWeaknessDatabase, DockType
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.hint_node import HintNodeKind, HintNode
@@ -24,14 +26,72 @@ from randovania.game_description.world.world import World
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import common_qt_lib, async_dialog, signal_handling
-from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
+from randovania.gui.lib.signal_handling import set_combo_with_value
+from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
 from randovania.lib import enum_lib, frozen_lib
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):
     if combo.currentIndex() == 0:
         func(0)
+
+
+class DockWeaknessListModel(QtCore.QAbstractListModel):
+    items: list[DockWeakness]
+    delegate: ComboBoxItemDelegate
+    type: DockType
+
+    def __init__(self, db: DockWeaknessDatabase):
+        super().__init__()
+        self.db = db
+        self.delegate = ComboBoxItemDelegate()
+        self.change_type(db.dock_types[0])
+
+    def change_type(self, new_type: DockType):
+        self.type = new_type
+        self.items = []
+        self.delegate.items = [
+            it for it in self.db.weaknesses[self.type].keys()
+        ]
+
+    def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
+        return len(self.items) + 1
+
+    def data(self, index: QtCore.QModelIndex, role: int = ...) -> str | None:
+        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
+            return None
+
+        if index.row() < len(self.items):
+            return self.items[index.row()].name
+
+        elif role == Qt.ItemDataRole.DisplayRole:
+            return "New..."
+
+        return ""
+
+    def setData(self, index: QtCore.QModelIndex, value: str, role: int = ...) -> bool:
+        if role == Qt.ItemDataRole.EditRole:
+            new_weak = self.db.weaknesses[self.type][value]
+            if index.row() < len(self.items):
+                self.items[index.row()] = new_weak
+                self.dataChanged.emit(index, index, [QtCore.Qt.ItemDataRole.DisplayRole])
+            else:
+                row = self.rowCount()
+                self.beginInsertRows(QtCore.QModelIndex(), row + 1, row + 1)
+                self.items.append(new_weak)
+                self.endInsertRows()
+            return True
+        return False
+
+    def removeRows(self, row: int, count: int, parent: QtCore.QModelIndex = ...) -> bool:
+        self.beginRemoveRows(QtCore.QModelIndex(), row, row + count - 1)
+        del self.items[row:row + count]
+        self.endRemoveRows()
+        return True
+
+    def flags(self, index: QtCore.QModelIndex) -> Qt.ItemFlag:
+        return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEditable
 
 
 class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
@@ -69,6 +129,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for layer in game.layers:
             self.layers_combo.addItem(layer)
 
+        self.dock_incompatible_model = DockWeaknessListModel(self.game.dock_weakness_database)
+        self.dock_incompatible_list.setItemDelegate(self.dock_incompatible_model.delegate)
+        self.dock_incompatible_list.setModel(self.dock_incompatible_model)
         self.dock_type_combo.clear()
         for i, dock_type in enumerate(game.dock_weakness_database.dock_types):
             self.dock_type_combo.addItem(dock_type.long_name, userData=dock_type)
@@ -105,6 +168,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_connection_area_combo.currentIndexChanged.connect(self.on_dock_connection_area_combo)
         self.dock_type_combo.currentIndexChanged.connect(self.on_dock_type_combo)
         self.dock_update_name_button.clicked.connect(self.on_dock_update_name_button)
+        self.dock_incompatible_button.clicked.connect(self.on_dock_incompatible_delete_selected)
         self.teleporter_destination_world_combo.currentIndexChanged.connect(self.on_teleporter_destination_world_combo)
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
@@ -185,6 +249,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         signal_handling.set_combo_with_value(self.dock_type_combo, node.dock_type)
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
         signal_handling.set_combo_with_value(self.dock_weakness_combo, node.default_dock_weakness)
+        self.dock_incompatible_model.items = list(node.incompatible_dock_weaknesses)
+        self.dock_exclude_lock_rando_check.setChecked(node.exclude_from_dock_rando)
 
     def fill_for_pickup(self, node: PickupNode):
         self.pickup_index_spin.setValue(node.pickup_index.index)
@@ -290,8 +356,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def on_dock_type_combo(self, _):
         self.dock_weakness_combo.clear()
+        current_type: DockType = self.dock_type_combo.currentData()
 
-        for weakness in self.game.dock_weakness_database.get_by_type(self.dock_type_combo.currentData()):
+        self.dock_incompatible_model.change_type(current_type)
+        self.dock_incompatible_list.reset()
+
+        for weakness in self.game.dock_weakness_database.get_by_type(current_type):
             self.dock_weakness_combo.addItem(weakness.name, weakness)
 
     def on_dock_update_name_button(self):
@@ -300,6 +370,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         expected_name = integrity_check.base_dock_name(new_node)
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
+
+    def on_dock_incompatible_delete_selected(self):
+        indices = [
+            selection.row()
+            for selection in self.dock_incompatible_list.selectedIndexes()
+        ]
+        if indices:
+            assert len(indices) == 1
+            self.dock_incompatible_model.removeRow(indices[0])
 
     def on_teleporter_destination_world_combo(self, _):
         world: World = self.teleporter_destination_world_combo.currentData()
@@ -368,6 +447,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self.game.world_list.identifier_for_node(connection_node),
                 self.dock_weakness_combo.currentData(),
                 None, None,
+                self.dock_exclude_lock_rando_check.isChecked(),
+                tuple(self.dock_incompatible_model.items),
             )
 
         elif node_type == PickupNode:

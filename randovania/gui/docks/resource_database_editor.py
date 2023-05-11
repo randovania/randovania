@@ -127,14 +127,14 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         return True
 
     def flags(self, index: QtCore.QModelIndex) -> QtCore.Qt.ItemFlags:
-        result = QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+        result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         if self.allow_edits:
             if index.row() == len(self._get_items()):
                 if index.column() == 0:
-                    result |= QtCore.Qt.ItemIsEditable
+                    result |= Qt.ItemFlag.ItemIsEditable
             else:
                 if index.column() > 0:
-                    result |= QtCore.Qt.ItemIsEditable
+                    result |= Qt.ItemFlag.ItemIsEditable
         return result
 
 

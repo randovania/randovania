@@ -648,14 +648,13 @@ Extra - asset_id: collision_camera_006
 
 > Door to EMMI Zone Ballspark Hallway; Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Ballspark Hallway/Door to White EMMI Introduction
+  * Access Open to EMMI Zone Ballspark Hallway/Door to White EMMI Introduction; Dock Lock Rando incompatible with: Grapple Beam Door
   * Extra - actor_name: DoorFrame_014
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Teleport to Dairon (Lower)
       Trivial
 
@@ -1069,14 +1068,13 @@ Extra - asset_id: collision_camera_010
 
 > Door to EMMI Zone Ballspark Hallway; Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Ballspark Hallway/Door to EMMI Zone Hub
+  * Access Open to EMMI Zone Ballspark Hallway/Door to EMMI Zone Hub; Excluded from Dock Lock Rando
   * Extra - actor_name: DoorFrame_017
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Door to EMMI Zone Exit Northwest
       Any of the following:
           All of the following:
@@ -1768,14 +1766,13 @@ Extra - asset_id: collision_camera_016
 
 > Door to Proto EMMI Battle; Heals? False
   * Layers: default
-  * Power Beam Door to Proto EMMI Battle/Door to Proto EMMI Introduction
+  * Power Beam Door to Proto EMMI Battle/Door to Proto EMMI Introduction; Excluded from Dock Lock Rando
   * Extra - actor_name: Door058 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Door to Melee Tutorial Room (Lower)
       After Artaria - Proto Central Unit
   > Door to Melee Tutorial Room (Upper)
@@ -1971,7 +1968,7 @@ Extra - polygon: [[21900.0, 800.0], [17800.0, 800.0], [17800.0, -550.0], [21900.
 Extra - asset_id: collision_camera_020
 > Door to Phantom Cloak Tutorial; Heals? False
   * Layers: default
-  * Power Beam Door to Phantom Cloak Tutorial/Door to Corpius Arena
+  * Power Beam Door to Phantom Cloak Tutorial/Door to Corpius Arena; Excluded from Dock Lock Rando
   * Extra - actor_name: Door054 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - actor_layer: Boss
@@ -1979,7 +1976,6 @@ Extra - asset_id: collision_camera_020
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Start Point
       Trivial
 
@@ -2399,14 +2395,13 @@ Extra - polygon: [[-8100.0, 9200.0], [-12200.0, 9200.0], [-12200.0, 4700.0], [-8
 Extra - asset_id: collision_camera_026
 > Door to Varia Suit Tutorial North; Heals? False
   * Layers: default
-  * Access Locked to Varia Suit Tutorial North/Door to Chain Reaction Room
+  * Access Locked to Varia Suit Tutorial North/Door to Chain Reaction Room; Excluded from Dock Lock Rando
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Start Point
       All of the following:
           # TODO: Find heat values after constand damage numbers are decided on
@@ -2531,14 +2526,13 @@ Extra - polygon: [[-6100.0, 9900.0], [-8200.0, 9900.0], [-8200.0, 8100.0], [-610
 Extra - asset_id: collision_camera_029
 > Door to Chain Reaction Room; Heals? False
   * Layers: default
-  * Charge Beam Door to Chain Reaction Room/Door to Varia Suit Tutorial North
+  * Charge Beam Door to Chain Reaction Room/Door to Varia Suit Tutorial North; Excluded from Dock Lock Rando
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Ledge above lava
       Any of the following:
           Varia Suit
@@ -3179,27 +3173,25 @@ Extra - polygon: [[2800.0, 1750.0], [1300.0, 1750.0], [300.0, 1542.0], [-1300.0,
 Extra - asset_id: collision_camera_053
 > Door to White EMMI Introduction; Heals? False
   * Layers: default
-  * Access Open to White EMMI Introduction/Door to EMMI Zone Ballspark Hallway
+  * Access Open to White EMMI Introduction/Door to EMMI Zone Ballspark Hallway; Dock Lock Rando incompatible with: Grapple Beam Door
   * Extra - actor_name: DoorFrame_014
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to EMMI Zone Hub
       Trivial
 
 > Door to EMMI Zone Hub; Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Hub/Door to EMMI Zone Ballspark Hallway
+  * Access Open to EMMI Zone Hub/Door to EMMI Zone Ballspark Hallway; Excluded from Dock Lock Rando
   * Extra - actor_name: DoorFrame_017
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Door to White EMMI Introduction
       Trivial
 
@@ -3389,14 +3381,13 @@ Extra - asset_id: collision_camera_056
 
 > Door to Behind Waterfall; Heals? False
   * Layers: default
-  * Power Beam Door to Behind Waterfall/Door to Waterfall
+  * Power Beam Door to Behind Waterfall/Door to Waterfall; Dock Lock Rando incompatible with: Grapple Beam Door
   * Extra - actor_name: Door022 (PW-PW) _000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Pickup (Missile Tank)
       Trivial
   > Tower Middle
@@ -3599,14 +3590,13 @@ Extra - asset_id: collision_camera_059
 
 > Door to Waterfall; Heals? False
   * Layers: default
-  * Power Beam Door to Waterfall/Door to Behind Waterfall
+  * Power Beam Door to Waterfall/Door to Behind Waterfall; Dock Lock Rando incompatible with: Grapple Beam Door
   * Extra - actor_name: Door022 (PW-PW) _000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - excluded_dock_weaknesses: ('Grapple Beam Door',)
   > Door to Water Reservoir
       Trivial
 
@@ -3836,14 +3826,13 @@ Extra - polygon: [[21750.0, -1900.0], [17700.0, -1900.0], [17700.0, -3700.0], [1
 Extra - asset_id: collision_camera_064
 > Door to Proto EMMI Introduction; Heals? False
   * Layers: default
-  * Power Beam Door to Proto EMMI Introduction/Door to Proto EMMI Battle
+  * Power Beam Door to Proto EMMI Introduction/Door to Proto EMMI Battle; Excluded from Dock Lock Rando
   * Extra - actor_name: Door058 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Dock to Proto EMMI CU
       Trivial
 
@@ -4411,7 +4400,7 @@ Extra - asset_id: collision_camera_073
 
 > Door to Corpius Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Corpius Arena/Door to Phantom Cloak Tutorial
+  * Power Beam Door to Corpius Arena/Door to Phantom Cloak Tutorial; Excluded from Dock Lock Rando
   * Extra - actor_name: Door054 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - actor_layer: Boss
@@ -4419,7 +4408,6 @@ Extra - asset_id: collision_camera_073
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Extra - exclude_from_dock_rando: True
   > Door to Path to Corpius
       Trivial
 

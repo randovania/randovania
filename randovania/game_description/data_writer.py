@@ -274,6 +274,8 @@ def write_node(node: Node) -> dict:
         data["dock_type"] = node.dock_type.short_name
         data["default_connection"] = node.default_connection.as_json
         data["default_dock_weakness"] = node.default_dock_weakness.name
+        data["exclude_from_dock_rando"] = node.exclude_from_dock_rando
+        data["incompatible_dock_weaknesses"] = [weak.name for weak in node.incompatible_dock_weaknesses]
         data["override_default_open_requirement"] = write_optional_requirement(node.override_default_open_requirement)
         data["override_default_lock_requirement"] = write_optional_requirement(node.override_default_lock_requirement)
 

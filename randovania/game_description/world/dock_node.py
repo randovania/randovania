@@ -39,6 +39,8 @@ class DockNode(Node):
     default_dock_weakness: DockWeakness
     override_default_open_requirement: Requirement | None
     override_default_lock_requirement: Requirement | None
+    exclude_from_dock_rando: bool
+    incompatible_dock_weaknesses: tuple[DockWeakness, ...]
     lock_node: Node | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
     cache_default_connection: int | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
 

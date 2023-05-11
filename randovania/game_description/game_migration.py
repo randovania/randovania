@@ -186,6 +186,17 @@ def _migrate_v15(data: dict) -> dict:
     return data
 
 
+def _migrate_v16(data: dict) -> dict:
+    for world in data["worlds"]:
+        for area_name, area in world["areas"].items():
+            for node_name, node in area["nodes"].items():
+                if node["node_type"] == "dock":
+                    node["exclude_from_dock_rando"] = node["extra"].pop("exclude_from_dock_rando", False)
+                    node["incompatible_dock_weaknesses"] = node["extra"].pop("excluded_dock_weaknesses", [])
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -202,6 +213,7 @@ _MIGRATIONS = [
     _migrate_v13,
     _migrate_v14,
     _migrate_v15,
+    _migrate_v16,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
