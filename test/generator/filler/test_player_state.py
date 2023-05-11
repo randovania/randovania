@@ -16,8 +16,8 @@ from randovania.layout.base.logical_resource_action import LayoutLogicalResource
 def _default_filler_config() -> FillerConfiguration:
     return FillerConfiguration(
         randomization_mode=RandomizationMode.FULL,
-        minimum_random_starting_items=0,
-        maximum_random_starting_items=0,
+        minimum_random_starting_pickups=0,
+        maximum_random_starting_pickups=0,
         indices_to_exclude=frozenset(),
         logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
         first_progression_must_be_local=False,

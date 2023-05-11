@@ -278,6 +278,21 @@ def debug_print_weighted_locations(all_locations_weighted: WeightedLocations):
         ))
 
 
+def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations) -> bool:
+    cur_starting_pickups = player.num_starting_pickups_placed
+    minimum_starting_pickups = player.configuration.minimum_random_starting_pickups
+    maximum_starting_pickups = player.configuration.maximum_random_starting_pickups
+
+    result = cur_starting_pickups < minimum_starting_pickups or not locations
+
+    # Prefer a starting pickup over off-world locations.
+    # This simulates how in solo games, you get more starting pickups if you start in weird places
+    if player.count_self_locations(locations) == 0 and cur_starting_pickups < maximum_starting_pickups:
+        result = True
+
+    return result
+
+
 def _assign_pickup_somewhere(action: PickupEntry,
                              current_player: PlayerState,
                              player_states: list[PlayerState],
@@ -296,9 +311,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
 
     locations_weighted = current_player.filter_usable_locations(all_locations_weighted, action)
 
-    if locations_weighted and (current_player.num_random_starting_items_placed
-                               >= current_player.configuration.minimum_random_starting_items):
-
+    if not should_be_starting_pickup(current_player, locations_weighted):
         if debug.debug_level() > 2:
             debug_print_weighted_locations(all_locations_weighted)
 
@@ -333,9 +346,9 @@ def _assign_pickup_somewhere(action: PickupEntry,
                                                        len(player_states) > 1, index_owner_state.reach.node_context())
 
     else:
-        current_player.num_random_starting_items_placed += 1
-        if (current_player.num_random_starting_items_placed
-                > current_player.configuration.maximum_random_starting_items):
+        current_player.num_starting_pickups_placed += 1
+        if (current_player.num_starting_pickups_placed
+                > current_player.configuration.maximum_random_starting_pickups):
             raise UnableToGenerate("Attempting to place more extra starting items than the number allowed.")
 
         spoiler_entry = f"{action.name} as starting item"
