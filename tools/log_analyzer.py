@@ -340,7 +340,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     if csv_dir is not None:
         os.makedirs(csv_dir, exist_ok=True)
-        for field in "items", "locations", "item_hints", "location_hints", "regions":
+        for field in "items", "locations", "regions":
             data = final_results[field]
 
             if field == "regions":
