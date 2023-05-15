@@ -78,6 +78,16 @@ async def download_nintendont():
         final_dol_path.write_bytes(dol_bytes)
 
 
+def write_obfuscator_secret(path: Path, secret: bytes):
+    numbers = str([x for x in secret])
+    path.write_text(f"""# Generated file
+secret = b"".join(
+    bytes([x]) for x in
+    {numbers}
+)
+""")
+
+
 async def main():
     package_folder = Path("dist", "randovania")
     if package_folder.exists():
@@ -94,6 +104,12 @@ async def main():
 
     icon_path = randovania.get_icon_path()
     shutil.copyfile(icon_path, icon_path.with_name("executable_icon.ico"))
+
+    if (secret := os.environ["OBFUSCATOR_SECRET"]) is not None:
+        write_obfuscator_secret(
+            _ROOT_FOLDER.joinpath("randovania", "lib", "obfuscator_secret.py"),
+            secret.encode("ascii"),
+        )
 
     if is_production():
         server_suffix = "randovania"
