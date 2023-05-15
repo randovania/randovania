@@ -40,7 +40,7 @@ if typing.TYPE_CHECKING:
 @dataclass(frozen=True, slots=True)
 class GamePatches:
     """Determines patches that are made to the game's data."""
-    game: GameDescription
+    game: GameDescription = dataclasses.field(compare=False)
     player_index: int
     configuration: BaseConfiguration
     pickup_assignment: dict[PickupIndex, PickupTarget]

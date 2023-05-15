@@ -121,6 +121,7 @@ jobs:
         if: matrix.executable
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
           PRODUCTION: ${{ startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/stable') }}
 
       - name: executable check

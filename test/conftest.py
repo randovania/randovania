@@ -247,6 +247,22 @@ def empty_patches(default_blank_configuration, blank_game_description) -> GamePa
     return GamePatches.create_from_game(blank_game_description, 0, configuration)
 
 
+@pytest.fixture()
+def obfuscator_test_secret(monkeypatch):
+    from randovania.lib import obfuscator
+    monkeypatch.setattr(obfuscator, "_secret", "cNGtDlTqCYF3BFCAQTaDSo5O7DQtzjsd3mS801MPM_M=")
+    yield None
+    obfuscator._encrypt = None
+
+
+@pytest.fixture()
+def obfuscator_no_secret(monkeypatch):
+    from randovania.lib import obfuscator
+    monkeypatch.setattr(obfuscator, "_secret", None)
+    yield None
+    obfuscator._encrypt = None
+
+
 def pytest_addoption(parser):
     parser.addoption('--skip-generation-tests', action='store_true', dest="skip_generation_tests",
                      default=False, help="Skips running layout generation tests")
