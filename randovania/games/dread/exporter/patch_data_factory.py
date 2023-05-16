@@ -63,6 +63,10 @@ def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]
         for conditional_resource in detail.conditional_resources
     ]
 
+    # don't add more resources for multiworld items
+    if detail.other_player:
+        return resources
+
     if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
         # Add the lock resource into the pickup in addition to the expansion's resources
         assert len(resources) == 1
