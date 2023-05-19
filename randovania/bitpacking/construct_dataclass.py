@@ -33,6 +33,7 @@ def construct_for_dataclass(cls) -> construct.Construct:
 
 
 _direct_mapping = {
+    bool: construct.Flag,
     int: construct.VarInt,
     str: BinStr,
     uuid.UUID: BinStr,
