@@ -100,3 +100,8 @@ def test_mix_with_construct(sample_values):
     encoded = con.build(data)
     decoded = con.parse(encoded)
     assert decoded == data
+
+
+def test_generic_list_errors():
+    with pytest.raises(TypeError):
+        construct_for_type(list)
