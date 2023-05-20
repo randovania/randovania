@@ -406,21 +406,9 @@ def _migrate_v13(preset: dict) -> dict:
 
 def _migrate_v14(preset: dict) -> dict:
     game = RandovaniaGame(preset["game"])
-    db = default_database.game_description_for(game)
 
     def _migrate_area_location(old_loc: dict[str, int]) -> dict[str, str]:
-        result = migration_data.convert_area_loc_id_to_name(game, old_loc)
-
-        if "instance_id" in old_loc:
-            # FIXME
-            world = db.world_list.world_with_name(result["world_name"])
-            area = world.area_by_name(result["area_name"])
-            for node in area.nodes:
-                if node.extra.get("teleporter_instance_id") == old_loc["instance_id"]:
-                    result["node_name"] = node.name
-                    break
-
-        return result
+        return migration_data.convert_area_loc_id_to_name(game, old_loc)
 
     preset["configuration"]["starting_location"] = [
         _migrate_area_location(old_loc)
