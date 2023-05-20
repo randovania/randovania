@@ -205,17 +205,13 @@ def _migrate_v7(preset: dict) -> dict:
 
 
 def _migrate_v8(preset: dict) -> dict:
-    game = default_database.game_description_for(RandovaniaGame(preset["game"]))
-
-    # FIXME: area location is now something different, this code broke
+    migration = migration_data.get_raw_data(RandovaniaGame(preset["game"]))
 
     def _name_to_location(name: str):
         world_name, area_name = name.split("/", 1)
-        world = game.world_list.world_with_name(world_name)
-        area = world.area_by_name(area_name)
         return {
-            "world_asset_id": world.extra["asset_id"],
-            "area_asset_id": area.extra["asset_id"],
+            "world_asset_id": migration["world_name_to_id"][world_name],
+            "area_asset_id": migration["area_name_to_id"][world_name][area_name],
         }
 
     preset["configuration"]["multi_pickup_placement"] = False
