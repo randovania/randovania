@@ -3,7 +3,6 @@ import math
 import uuid
 
 from randovania.game_description import migration_data
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
@@ -708,10 +707,11 @@ def _migrate_v43(preset: dict) -> dict:
 
 
 def _migrate_v44(preset: dict) -> dict:
-    def add_node_name(loc):
-        area_identifier = AreaIdentifier(loc["world_name"], loc["area_name"])
-        node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
-        loc["node_name"] = node_identifier.node_name
+    def add_node_name(location):
+        node_name = migration_data.get_node_name_for_area(
+            preset["game"], location["world_name"], location["area_name"]
+        )
+        location["node_name"] = node_name
 
     for loc in preset["configuration"]["starting_location"]:
         add_node_name(loc)

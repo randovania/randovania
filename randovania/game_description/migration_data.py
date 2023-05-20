@@ -1,7 +1,5 @@
 import functools
 
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
 
@@ -53,13 +51,9 @@ def get_teleporter_area_to_node_mapping() -> dict[str, str]:
     return result
 
 
-def get_new_start_loc_from_old_start_loc(game: str, old_loc: AreaIdentifier) -> NodeIdentifier:
-    world_name = old_loc.world_name
-    area_name = old_loc.area_name
+def get_node_name_for_area(game: str, world_name: str, area_name: str) -> str:
     mapping = get_raw_data(RandovaniaGame(game))["start_node_per_area"][world_name]
-    node_name = mapping[area_name]
-
-    return NodeIdentifier(old_loc, node_name)
+    return mapping[area_name]
 
 
 def get_default_dock_lock_settings(game: RandovaniaGame) -> dict:
