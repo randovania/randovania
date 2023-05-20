@@ -1,10 +1,10 @@
+import copy
 import math
 import uuid
 
-from randovania.game_description import migration_data, default_database
+from randovania.game_description import migration_data
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.dock_rando_configuration import DockTypeState
 from randovania.lib import migration_lib
 
 
@@ -613,14 +613,10 @@ def _migrate_v31(preset: dict) -> dict:
 
 def _update_default_dock_rando(preset: dict) -> dict:
     game = RandovaniaGame(preset["game"])
-    weakness_database = default_database.game_description_for(game).dock_weakness_database
 
     preset["configuration"]["dock_rando"] = {
         "mode": "vanilla",
-        "types_state": {
-            dock_type.short_name: DockTypeState.default_state(game, dock_type.short_name).as_json
-            for dock_type in weakness_database.dock_types
-        }
+        "types_state": copy.deepcopy(migration_data.get_default_dock_lock_settings(game)),
     }
     return preset
 

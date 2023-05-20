@@ -60,3 +60,7 @@ def get_new_start_loc_from_old_start_loc(game: str, old_loc: AreaIdentifier) -> 
     node_name = mapping[area_name]
 
     return NodeIdentifier(old_loc, node_name)
+
+
+def get_default_dock_lock_settings(game: RandovaniaGame) -> dict:
+    return get_raw_data(game)["default_dock_lock_settings"]
