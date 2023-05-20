@@ -310,6 +310,22 @@ def _migrate_v16(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v17(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        for hint in game["hints"].values():
+            if (precision := hint.get("precision")) is not None:
+                if precision["location"] == "relative-to-area":
+                    old_loc = precision["relative"]["area_location"]
+                    precision["relative"]["area_location"] = {
+                        "region": old_loc["world_name"],
+                        "area": old_loc["area_name"],
+                    }
+                elif precision["location"] == "world-only":
+                    precision["location"] = "region-only"
+
+    return json_dict
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -327,6 +343,7 @@ _MIGRATIONS = [
     _migrate_v14,
     _migrate_v15,
     _migrate_v16,
+    _migrate_v17,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -14,14 +14,14 @@ class AreaIdentifier:
     @property
     def as_json(self) -> dict:
         return {
-            "world_name": self.region_name,
-            "area_name": self.area_name,
+            "region": self.region_name,
+            "area": self.area_name,
         }
 
     @classmethod
     def from_json(cls, value: dict) -> Self:
         try:
-            return cls(value["world_name"], value["area_name"])
+            return cls(value["region"], value["area"])
         except Exception:
             raise
 

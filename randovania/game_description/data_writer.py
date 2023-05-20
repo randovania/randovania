@@ -244,7 +244,7 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
     }
 
 
-# World/Area/Nodes
+# Region/Area/Nodes
 
 
 def write_node(node: Node) -> dict:
@@ -446,20 +446,20 @@ def write_game_description(game: GameDescription) -> dict:
         "victory_condition": write_requirement(game.victory_condition),
 
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
-        "worlds": write_region_list(game.region_list),
+        "regions": write_region_list(game.region_list),
     }
 
 
 def write_as_split_files(data: dict, base_path: Path):
     data = copy.copy(data)
-    regions = data.pop("worlds")
-    data["worlds"] = []
+    regions = data.pop("regions")
+    data["regions"] = []
 
     base_path.mkdir(parents=True, exist_ok=True)
 
     for region in regions:
         name = REGION_NAME_TO_FILE_NAME_RE.sub(r'', region["name"])
-        data["worlds"].append(f"{name}.json")
+        data["regions"].append(f"{name}.json")
         json_lib.write_path(
             base_path.joinpath(f"{name}.json"),
             region,

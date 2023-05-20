@@ -509,7 +509,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
 
     layers = frozen_lib.wrap(data["layers"])
     region_reader = RegionReader(resource_database, dock_weakness_database)
-    region_list = region_reader.read_region_list(data["worlds"])
+    region_list = region_reader.read_region_list(data["regions"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
     starting_location = NodeIdentifier.from_json(data["starting_location"])
@@ -537,11 +537,17 @@ def read_split_file(dir_path: Path):
     with dir_path.joinpath("header.json").open(encoding="utf-8") as meta_file:
         data = read_json_file(meta_file)
 
-    regions = data.pop("worlds")
-    data["worlds"] = []
+    key_name = "regions"
+    if key_name not in data:
+        # This code runs before we can run old data migration, so we need to handle this difference here
+        key_name = "worlds"
+
+    regions = data.pop(key_name)
+
+    data[key_name] = []
     for region_file_name in regions:
         with dir_path.joinpath(region_file_name).open(encoding="utf-8") as region_file:
-            data["worlds"].append(read_json_file(region_file))
+            data[key_name].append(read_json_file(region_file))
 
     return data
 

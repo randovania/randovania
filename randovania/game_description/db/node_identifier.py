@@ -17,12 +17,12 @@ class NodeIdentifier:
     @property
     def as_json(self) -> dict:
         result = self.area_identifier.as_json
-        result["node_name"] = self.node_name
+        result["node"] = self.node_name
         return result
 
     @classmethod
     def from_json(cls, value: dict) -> Self:
-        return cls(AreaIdentifier.from_json(value), value["node_name"])
+        return cls(AreaIdentifier.from_json(value), value["node"])
 
     @property
     def as_string(self) -> str:
