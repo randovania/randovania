@@ -1,5 +1,5 @@
 import construct
-from construct import PrefixedArray, VarInt, Struct, CString, Flag
+from construct import PrefixedArray, VarInt, Struct, CString
 
 from randovania.bitpacking import construct_dataclass
 from randovania.lib.construct_lib import OptionalValue
