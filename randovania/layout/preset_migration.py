@@ -716,16 +716,26 @@ def _migrate_v43(preset: dict) -> dict:
 
 
 def _migrate_v44(preset: dict) -> dict:
-    for start_loc in preset["configuration"]["starting_location"]:
-        area_identifier = AreaIdentifier(start_loc["world_name"], start_loc["area_name"])
+    def add_node_name(loc):
+        area_identifier = AreaIdentifier(loc["world_name"], loc["area_name"])
         node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
-        start_loc["node_name"] = node_identifier.node_name
+        loc["node_name"] = node_identifier.node_name
+
+    for loc in preset["configuration"]["starting_location"]:
+        add_node_name(loc)
 
     if "elevators" in preset["configuration"]:
-        for start_loc in preset["configuration"]["elevators"]["excluded_targets"]:
-            area_identifier = AreaIdentifier(start_loc["world_name"], start_loc["area_name"])
-            node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
-            start_loc["node_name"] = node_identifier.node_name
+        result = []
+        for loc in preset["configuration"]["elevators"]["excluded_teleporters"]:
+            try:
+                add_node_name(loc)
+                result.append(loc)
+            except KeyError:
+                continue
+        preset["configuration"]["elevators"]["excluded_teleporters"] = result
+
+        for loc in preset["configuration"]["elevators"]["excluded_targets"]:
+            add_node_name(loc)
 
     return preset
 
