@@ -10,8 +10,8 @@ from randovania.game_description.resources.pickup_entry import (PickupEntry, Con
                                                                 ResourceConversion)
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceGainTuple
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
@@ -259,7 +259,7 @@ def _get_visual_model(original_index: int,
 
 def export_all_indices(patches: GamePatches,
                        useless_target: PickupTarget,
-                       world_list: WorldList,
+                       region_list: RegionList,
                        rng: Random,
                        model_style: PickupModelStyle,
                        data_source: PickupModelDataSource,
@@ -270,7 +270,7 @@ def export_all_indices(patches: GamePatches,
     Creates the patcher data for all pickups in the game
     :param patches:
     :param useless_target:
-    :param world_list:
+    :param region_list:
     :param rng:
     :param model_style:
     :param data_source:
@@ -285,7 +285,7 @@ def export_all_indices(patches: GamePatches,
 
     indices = sorted(
         node.pickup_index
-        for node in world_list.iterate_nodes()
+        for node in region_list.iterate_nodes()
         if isinstance(node, PickupNode)
     )
 

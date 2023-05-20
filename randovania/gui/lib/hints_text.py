@@ -3,7 +3,7 @@ import collections
 from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
-from randovania.game_description.world.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
@@ -118,8 +118,8 @@ def update_hint_locations(game: RandovaniaGame,
 
     # First figure out which areas uses what hints.
     # This lets us use detect which hint types are used
-    for world in game_description.world_list.worlds:
-        for area in world.areas:
+    for region in game_description.region_list.regions:
+        for area in region.areas:
             hint_types = {}
 
             for node in area.nodes:
@@ -131,20 +131,20 @@ def update_hint_locations(game: RandovaniaGame,
                         hint_types[node.kind] = "✓"
 
             if hint_types:
-                hint_type_tree[world.correct_name(area.in_dark_aether)][area.name] = hint_types
+                hint_type_tree[region.correct_name(area.in_dark_aether)][area.name] = hint_types
 
     number_for_hint_type = {
         hint_type: i + 1
         for i, hint_type in enumerate(sorted(used_hint_kind, key=lambda it: it.long_name))
     }
 
-    for world_name, area_hints in hint_type_tree.items():
-        world_item = QtWidgets.QTreeWidgetItem(hint_tree_widget)
-        world_item.setText(0, world_name)
-        world_item.setExpanded(True)
+    for region_name, area_hints in hint_type_tree.items():
+        region_item = QtWidgets.QTreeWidgetItem(hint_tree_widget)
+        region_item.setText(0, region_name)
+        region_item.setExpanded(True)
 
         for area_name, hint_types in area_hints.items():
-            area_item = QtWidgets.QTreeWidgetItem(world_item)
+            area_item = QtWidgets.QTreeWidgetItem(region_item)
             area_item.setText(0, area_name)
 
             for hint_type, text in hint_types.items():

@@ -11,9 +11,9 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.world.dock import DockRandoParams, DockWeakness
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node import NodeContext
+from randovania.game_description.db.dock import DockRandoParams, DockWeakness
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import NodeContext
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.runner import FillerResults
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -34,8 +34,8 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
     game = default_database.game_description_for(patches.configuration.game)
     weakness_database = game.dock_weakness_database
     all_docks: dict[DockNode, DockNode] = {
-        node: game.world_list.node_by_identifier(node.default_connection)
-        for node in game.world_list.all_nodes
+        node: game.region_list.node_by_identifier(node.default_connection)
+        for node in game.region_list.all_nodes
         if isinstance(node, DockNode)
     }
 
@@ -145,7 +145,7 @@ class DockRandoLogic(Logic):
     @property
     def victory_condition(self) -> Requirement:
         context = NodeContext(
-            None, None, self.game.resource_database, self.game.world_list,
+            None, None, self.game.resource_database, self.game.region_list,
         )
         return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, context))
 
@@ -166,7 +166,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
             patches,
             patches.starting_resources(),
             game.resource_database,
-            game.world_list
+            game.region_list
         )
         for dock in patches.all_weaknesses_to_shuffle():
             if (player, dock.get_target_node(ctx)) not in player_docks:
@@ -313,7 +313,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
             patches,
             patches.starting_resources(),
             game.resource_database,
-            game.world_list,
+            game.region_list,
         ))
         assert isinstance(target, DockNode)
 

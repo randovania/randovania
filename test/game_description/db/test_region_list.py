@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 
 from frozendict import frozendict
 
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -10,14 +11,14 @@ from randovania.game_description.resources.node_resource_info import NodeResourc
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockWeakness, DockLockType, DockType, DockLock
-from randovania.game_description.world.dock_lock_node import DockLockNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock import DockWeakness, DockLockType, DockType, DockLock
+from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.layout import filtered_database
 
@@ -44,19 +45,19 @@ def test_connections_from_dock_blast_shield(empty_patches):
     area_1 = Area("Area 1", None, [node_1, node_1_lock], {}, {})
     area_2 = Area("Area 2", None, [node_2, node_2_lock], {}, {})
 
-    world = World("W", [area_1, area_2], {})
-    world_list = WorldList([world])
-    world_list.ensure_has_node_cache()
+    region = Region("W", [area_1, area_2], {})
+    region_list = RegionList([region])
+    region_list.ensure_has_node_cache()
 
-    game_mock = MagicMock()
-    game_mock.world_list = world_list
+    game_mock: GameDescription = MagicMock()
+    game_mock.region_list = region_list
     patches = dataclasses.replace(empty_patches, game=game_mock)
 
     context = NodeContext(
         patches=patches,
         current_resources=ResourceCollection(),
         database=patches.game.resource_database,
-        node_provider=world_list,
+        node_provider=region_list,
     )
 
     # Run
@@ -84,11 +85,11 @@ def test_node_index_multiple_games(default_prime_preset):
     alt_game = filtered_database.game_description_for_layout(alt_config)
     default_game = filtered_database.game_description_for_layout(default_config)
 
-    all_nodes_default = default_game.world_list.all_nodes
-    all_nodes_alt = alt_game.world_list.all_nodes
+    all_nodes_default = default_game.region_list.all_nodes
+    all_nodes_alt = alt_game.region_list.all_nodes
 
-    for node in alt_game.world_list.iterate_nodes():
+    for node in alt_game.region_list.iterate_nodes():
         assert all_nodes_alt[node.node_index] is node
 
-    for node in default_game.world_list.iterate_nodes():
+    for node in default_game.region_list.iterate_nodes():
         assert all_nodes_default[node.node_index] is node

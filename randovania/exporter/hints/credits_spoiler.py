@@ -14,7 +14,7 @@ class OwnedPickupLocation(NamedTuple):
     location: PickupLocation
 
     def export(self, namer: HintNamer) -> str:
-        hint = namer.format_location(self.location, with_world=True, with_area=True, with_color=False)
+        hint = namer.format_location(self.location, with_region=True, with_area=True, with_color=False)
         if self.player_name is not None:
             hint = f"{namer.format_player(self.player_name, with_color=True)}'s {hint}"
         return hint

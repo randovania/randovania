@@ -102,7 +102,7 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
             useless_target,
-            db.world_list,
+            db.region_list,
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
@@ -126,12 +126,12 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
 
         starting_point = self.patches.starting_location
 
-        starting_area = db.world_list.area_by_area_location(starting_point)
+        starting_area = db.region_list.area_by_area_location(starting_point)
 
         starting_save_index = starting_area.extra["save_index"]
 
         starting_location_info = {
-            "starting_region": starting_point.world_name,
+            "starting_region": starting_point.region_name,
             "starting_save_station_index": starting_save_index,
         }
 

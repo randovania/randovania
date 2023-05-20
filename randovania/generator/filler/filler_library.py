@@ -5,10 +5,10 @@ from typing import Iterator, TypeVar, Any, NamedTuple
 from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 
 

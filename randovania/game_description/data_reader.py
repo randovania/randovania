@@ -22,27 +22,27 @@ from randovania.game_description.resources.search import (
 )
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world import event_pickup
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.dock import (
+from randovania.game_description.db import event_pickup
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock import (
     DockRandoConfig, DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
 )
-from randovania.game_description.world.dock_lock_node import DockLockNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.hint_node import HintNodeKind, HintNode
-from randovania.game_description.world.node import (
+from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNodeKind, HintNode
+from randovania.game_description.db.node import (
     GenericNode, Node,
     NodeLocation
 )
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 from randovania.lib import frozen_lib
 
@@ -270,10 +270,10 @@ def location_from_json(location: dict[str, float]) -> NodeLocation:
     return NodeLocation(float(location["x"]), float(location["y"]), float(location["z"]))
 
 
-class WorldReader:
+class RegionReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    current_world_name: str
+    current_region_name: str
     current_area_name: str
     next_node_index: int
 
@@ -297,7 +297,7 @@ class WorldReader:
                 location = location_from_json(data["coordinates"])
 
             generic_args = {
-                "identifier": NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
+                "identifier": NodeIdentifier.create(self.current_region_name, self.current_area_name, name),
                 "node_index": self.next_node_index,
                 "heal": data["heal"],
                 "location": location,
@@ -429,16 +429,16 @@ class WorldReader:
     def read_area_list(self, data: dict[str, dict]) -> list[Area]:
         return [self.read_area(name, item) for name, item in data.items()]
 
-    def read_world(self, data: dict) -> World:
-        self.current_world_name = data["name"]
-        return World(
+    def read_region(self, data: dict) -> Region:
+        self.current_region_name = data["name"]
+        return Region(
             data["name"],
             self.read_area_list(data["areas"]),
             frozen_lib.wrap(data["extra"]),
         )
 
-    def read_world_list(self, data: list[dict]) -> WorldList:
-        return WorldList(read_array(data, self.read_world))
+    def read_region_list(self, data: list[dict]) -> RegionList:
+        return RegionList(read_array(data, self.read_region))
 
 
 def read_requirement_templates(data: dict, database: ResourceDatabase) -> dict[str, Requirement]:
@@ -499,7 +499,7 @@ def read_minimal_logic_db(data: dict | None) -> MinimalLogicData | None:
     )
 
 
-def decode_data_with_world_reader(data: dict) -> tuple[WorldReader, GameDescription]:
+def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
     data = game_migration.migrate_to_current(data)
 
     game = RandovaniaGame(data["game"])
@@ -508,20 +508,20 @@ def decode_data_with_world_reader(data: dict) -> tuple[WorldReader, GameDescript
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
     layers = frozen_lib.wrap(data["layers"])
-    world_reader = WorldReader(resource_database, dock_weakness_database)
-    world_list = world_reader.read_world_list(data["worlds"])
+    region_reader = RegionReader(resource_database, dock_weakness_database)
+    region_list = region_reader.read_region_list(data["worlds"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
     starting_location = NodeIdentifier.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
 
-    return world_reader, GameDescription(
+    return region_reader, GameDescription(
         game=game,
         resource_database=resource_database,
         layers=layers,
         dock_weakness_database=dock_weakness_database,
-        world_list=world_list,
+        region_list=region_list,
         victory_condition=victory_condition,
         starting_location=starting_location,
         initial_states=initial_states,
@@ -530,18 +530,18 @@ def decode_data_with_world_reader(data: dict) -> tuple[WorldReader, GameDescript
 
 
 def decode_data(data: dict) -> GameDescription:
-    return decode_data_with_world_reader(data)[1]
+    return decode_data_with_region_reader(data)[1]
 
 
 def read_split_file(dir_path: Path):
     with dir_path.joinpath("header.json").open(encoding="utf-8") as meta_file:
         data = read_json_file(meta_file)
 
-    worlds = data.pop("worlds")
+    regions = data.pop("worlds")
     data["worlds"] = []
-    for world_file_name in worlds:
-        with dir_path.joinpath(world_file_name).open(encoding="utf-8") as world_file:
-            data["worlds"].append(read_json_file(world_file))
+    for region_file_name in regions:
+        with dir_path.joinpath(region_file_name).open(encoding="utf-8") as region_file:
+            data["worlds"].append(read_json_file(region_file))
 
     return data
 

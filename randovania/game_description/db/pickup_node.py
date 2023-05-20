@@ -6,8 +6,8 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
-from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.resource_node import ResourceNode
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

@@ -7,7 +7,7 @@ from PySide6 import QtCore
 from PySide6.QtCore import Qt
 
 from randovania.game_description import default_database
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
 from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea, PresetStartingArea
@@ -43,7 +43,7 @@ def test_starting_location_world_select(skip_qtbot, preset_manager):
     skip_qtbot.addWidget(window)
 
     # Run
-    checkbox_list = window._starting_location_for_world
+    checkbox_list = window._starting_location_for_region
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(checkbox_list) == 10
     temple_grounds_checkbox = checkbox_list["Temple Grounds"]
@@ -147,19 +147,19 @@ def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
     skip_qtbot.addWidget(window)
     window.on_preset_changed(editor.create_custom_preset_with())
 
-    world = game_desc.world_list.world_with_name("Intro")
-    starting_area = world.area_by_name("Starting Area")
-    blue_key_room = world.area_by_name("Blue Key Room")
+    region = game_desc.region_list.region_with_name("Intro")
+    starting_area = region.area_by_name("Starting Area")
+    blue_key_room = region.area_by_name("Blue Key Room")
 
-    default_start_point = NodeIdentifier.create(world.name, starting_area.name, "Spawn Point")
-    second_start_point = NodeIdentifier.create(world.name, starting_area.name, "Second Spawn Point")
-    blue_key_start_point = NodeIdentifier.create(world.name, blue_key_room.name, "Spawn Point")
+    default_start_point = NodeIdentifier.create(region.name, starting_area.name, "Spawn Point")
+    second_start_point = NodeIdentifier.create(region.name, starting_area.name, "Second Spawn Point")
+    blue_key_start_point = NodeIdentifier.create(region.name, blue_key_room.name, "Spawn Point")
     checkbox_node_list = window._starting_location_for_node
     checkbox_area_list = window._starting_location_for_area
-    checkbox_world_list = window._starting_location_for_world
+    checkbox_region_list = window._starting_location_for_region
     starting_area_box = checkbox_area_list.get(default_start_point.area_identifier)
     blue_key_room_box = checkbox_area_list.get(blue_key_start_point.area_identifier)
-    intro_world_box = checkbox_world_list.get(world.name)
+    intro_world_box = checkbox_region_list.get(region.name)
 
     # check default start location is set
     assert checkbox_node_list.get(default_start_point, None) != None
@@ -199,7 +199,7 @@ def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
     assert intro_world_box.checkState() == QtCore.Qt.PartiallyChecked
     assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
 
-    # toggle world box
+    # toggle db box
     # don't ask me why qtbot clicks at the wrong position by default on this box
     skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2, intro_world_box.height() / 2))
     window.on_preset_changed(editor.create_custom_preset_with())

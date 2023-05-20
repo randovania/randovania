@@ -7,8 +7,8 @@ from typing import Iterator
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.pickup_node import PickupNode
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

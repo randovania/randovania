@@ -2,8 +2,8 @@ from random import Random
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision, PrecisionPair, HintItemPrecision
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
@@ -47,7 +47,7 @@ class CSHintDistributor(HintDistributor):
             already_hinted_indices = [hint.target for hint in patches.hints.values() if hint.target is not None]
             indices_with_hint = [
                 (node.pickup_index, HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED)
-                for node in patches.game.world_list.iterate_nodes()
+                for node in patches.game.region_list.iterate_nodes()
                 if isinstance(node, PickupNode)
                    and node.pickup_index not in already_hinted_indices
                    and patches.pickup_assignment[node.pickup_index].pickup.name in items_with_hint
@@ -60,7 +60,7 @@ class CSHintDistributor(HintDistributor):
         tiers = {
             (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
             (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 1,
-            (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED, True): 1,
+            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True): 1,
         }
 
         hints = []

@@ -1,10 +1,21 @@
 import copy
-import json
 import re
 from pathlib import Path
 from typing import TypeVar, Callable, Iterator
 
 from randovania.game_description import game_migration
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock import DockRandoParams, DockWeaknessDatabase, DockWeakness, DockLock
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node import Node, GenericNode
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.game_description import GameDescription, MinimalLogicData
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -17,21 +28,9 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.dock import DockRandoParams, DockWeaknessDatabase, DockWeakness, DockLock
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node import Node, GenericNode
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
-from randovania.lib import frozen_lib
+from randovania.lib import frozen_lib, json_lib
 
-WORLD_NAME_TO_FILE_NAME_RE = re.compile(r'[^a-zA-Z0-9\- ]')
+REGION_NAME_TO_FILE_NAME_RE = re.compile(r'[^a-zA-Z0-9\- ]')
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
@@ -354,38 +353,38 @@ def write_area(area: Area) -> dict:
     }
 
 
-def write_world(world: World) -> dict:
+def write_region(region: Region) -> dict:
     errors = []
     areas = {}
-    for area in world.areas:
+    for area in region.areas:
         try:
             areas[area.name] = write_area(area)
         except ValueError as e:
             errors.append(str(e))
 
     if errors:
-        raise ValueError("World {} has the following errors:\n> {}".format(
-            world.name, "\n\n> ".join(errors)))
+        raise ValueError("Region {} has the following errors:\n> {}".format(
+            region.name, "\n\n> ".join(errors)))
 
     return {
-        "name": world.name,
-        "extra": frozen_lib.unwrap(world.extra),
+        "name": region.name,
+        "extra": frozen_lib.unwrap(region.extra),
         "areas": areas,
     }
 
 
-def write_world_list(world_list: WorldList) -> list:
+def write_region_list(region_list: RegionList) -> list:
     errors = []
     known_indices = {}
 
-    worlds = []
-    for world in world_list.worlds:
+    regions = []
+    for region in region_list.regions:
         try:
-            worlds.append(write_world(world))
+            regions.append(write_region(region))
 
-            for node in world.all_nodes:
+            for node in region.all_nodes:
                 if isinstance(node, PickupNode):
-                    name = world_list.node_name(node, with_world=True, distinguish_dark_aether=True)
+                    name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
                     if node.pickup_index in known_indices:
                         errors.append(f"{name} has {node.pickup_index}, "
                                       f"but it was already used in {known_indices[node.pickup_index]}")
@@ -398,7 +397,7 @@ def write_world_list(world_list: WorldList) -> list:
     if errors:
         raise ValueError("\n\n".join(errors))
 
-    return worlds
+    return regions
 
 
 # Game Description
@@ -447,22 +446,26 @@ def write_game_description(game: GameDescription) -> dict:
         "victory_condition": write_requirement(game.victory_condition),
 
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
-        "worlds": write_world_list(game.world_list),
+        "worlds": write_region_list(game.region_list),
     }
 
 
 def write_as_split_files(data: dict, base_path: Path):
     data = copy.copy(data)
-    worlds = data.pop("worlds")
+    regions = data.pop("worlds")
     data["worlds"] = []
 
     base_path.mkdir(parents=True, exist_ok=True)
 
-    for world in worlds:
-        name = WORLD_NAME_TO_FILE_NAME_RE.sub(r'', world["name"])
+    for region in regions:
+        name = REGION_NAME_TO_FILE_NAME_RE.sub(r'', region["name"])
         data["worlds"].append(f"{name}.json")
-        with base_path.joinpath(f"{name}.json").open("w", encoding="utf-8") as world_file:
-            json.dump(world, world_file, indent=4)
+        json_lib.write_path(
+            base_path.joinpath(f"{name}.json"),
+            region,
+        )
 
-    with base_path.joinpath("header.json").open("w", encoding="utf-8") as meta:
-        json.dump(data, meta, indent=4)
+    json_lib.write_path(
+        base_path.joinpath("header.json"),
+        data,
+    )

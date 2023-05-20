@@ -12,13 +12,13 @@ from randovania.game_description.hint import (
 )
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.patcher import echoes_items
@@ -33,7 +33,7 @@ def _players_configuration() -> PlayersConfiguration:
     )
 
 
-def _create_world_list(asset_id: int, pickup_index: PickupIndex):
+def _create_region_list(asset_id: int, pickup_index: PickupIndex):
     nc = NodeIdentifier.create
 
     logbook_node = HintNode(nc("World", "Area", "Logbook A"),
@@ -42,8 +42,8 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     pickup_node = PickupNode(nc("World", "Area", "Pickup Node"),
                              1, True, None, "", ("default",), {}, False, pickup_index, True)
 
-    world_list = WorldList([
-        World("World", [
+    region_list = RegionList([
+        Region("World", [
             Area("Area", None, [logbook_node, pickup_node], {}, {}),
             Area("Other Area", None,
                  [PickupNode(nc("World", "Other Area", f"Pickup {i}"),
@@ -53,7 +53,7 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
         ], {}),
     ])
 
-    return logbook_node, pickup_node, world_list
+    return logbook_node, pickup_node, region_list
 
 
 @pytest.fixture(name="echoes_hint_exporter")
@@ -70,13 +70,13 @@ def test_create_hints_nothing(echoes_game_patches, players_config, monkeypatch, 
     asset_id = 1000
     pickup_index = PickupIndex(0)
 
-    hint_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "world_list", world_list)
+    hint_node, _, region_list = _create_region_list(asset_id, pickup_index)
+    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     patches = dataclasses.replace(
         echoes_game_patches,
         hints={
-            world_list.identifier_for_node(hint_node): Hint(
+            region_list.identifier_for_node(hint_node): Hint(
                 HintType.LOCATION,
                 PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED,
                               include_owner=False),
@@ -87,7 +87,7 @@ def test_create_hints_nothing(echoes_game_patches, players_config, monkeypatch, 
     namer = EchoesHintNamer({0: patches}, players_config)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, world_list,
+    result = hints.create_patches_hints({0: patches}, players_config, region_list,
                                         namer, rng)
 
     # Assert
@@ -101,18 +101,18 @@ def test_create_hints_nothing(echoes_game_patches, players_config, monkeypatch, 
 def test_create_hints_item_joke(empty_patches, players_config):
     # Setup
     asset_id = 1000
-    logbook_node, _, world_list = _create_world_list(asset_id, PickupIndex(50))
+    logbook_node, _, region_list = _create_region_list(asset_id, PickupIndex(50))
 
     patches = dataclasses.replace(
         empty_patches,
         hints={
-            world_list.identifier_for_node(logbook_node): Hint(HintType.JOKE, None)
+            region_list.identifier_for_node(logbook_node): Hint(HintType.JOKE, None)
         })
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, world_list,
+    result = hints.create_patches_hints({0: patches}, players_config, region_list,
                                         namer, rng)
 
     # Assert
@@ -237,7 +237,7 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;World - Area&pop;"),
-    (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#FF3333;World&pop;"),
+    (HintLocationPrecision.REGION_ONLY, "&push;&main-color=#FF3333;World&pop;"),
 ])
 @pytest.mark.parametrize("owner", [False, True])
 @pytest.mark.parametrize("is_multiworld", [False, True])
@@ -246,8 +246,8 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
-    logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "world_list", world_list)
+    logbook_node, _, region_list = _create_region_list(asset_id, pickup_index)
+    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     players_config = PlayersConfiguration(
         player_index=0,
@@ -264,7 +264,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            world_list.identifier_for_node(logbook_node): Hint(
+            region_list.identifier_for_node(logbook_node): Hint(
                 HintType.LOCATION,
                 PrecisionPair(location[0], location_precision, include_owner=owner),
                 pickup_index,
@@ -274,7 +274,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     namer = EchoesHintNamer({0: patches}, players_config)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, world_list,
+    result = hints.create_patches_hints({0: patches}, players_config, region_list,
                                         namer, rng)
 
     # Assert
@@ -301,8 +301,8 @@ def test_create_hints_guardians(echoes_game_patches, pickup_index_and_guardian, 
     asset_id = 1000
     pickup_index, guardian = pickup_index_and_guardian
 
-    logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "world_list", world_list)
+    logbook_node, _, region_list = _create_region_list(asset_id, pickup_index)
+    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     patches = dataclasses.replace(
         echoes_game_patches,
@@ -310,7 +310,7 @@ def test_create_hints_guardians(echoes_game_patches, pickup_index_and_guardian, 
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            world_list.identifier_for_node(logbook_node): Hint(
+            region_list.identifier_for_node(logbook_node): Hint(
                 HintType.LOCATION,
                 PrecisionPair(HintLocationPrecision.GUARDIAN, item[0],
                               include_owner=False),
@@ -321,7 +321,7 @@ def test_create_hints_guardians(echoes_game_patches, pickup_index_and_guardian, 
     namer = EchoesHintNamer({0: patches}, players_config)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, world_list,
+    result = hints.create_patches_hints({0: patches}, players_config, region_list,
                                         namer, rng)
 
     # Assert
@@ -341,8 +341,8 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
     asset_id = 1000
     pickup_index = PickupIndex(50)
 
-    logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "world_list", world_list)
+    logbook_node, _, region_list = _create_region_list(asset_id, pickup_index)
+    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     patches = dataclasses.replace(
         echoes_game_patches,
@@ -350,7 +350,7 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            world_list.identifier_for_node(logbook_node): Hint(
+            region_list.identifier_for_node(logbook_node): Hint(
                 HintType.LOCATION,
                 PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0],
                               include_owner=False),
@@ -361,7 +361,7 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
     namer = EchoesHintNamer({0: patches}, players_config)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, world_list,
+    result = hints.create_patches_hints({0: patches}, players_config, region_list,
                                         namer, rng)
 
     # Assert

@@ -180,8 +180,8 @@ def setup_and_teardown_for_wrong_custom_spawn():
     # modify the default start to have no collision_camera (asset_id) and no vanilla
     # actor name for a start point
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Intro Room")
+    region = game_desc.region_list.region_with_name("Artaria")
+    area = region.area_by_name("Intro Room")
     node = area.node_with_name("Start Point")
     modified_node = dataclasses.replace(node, extra={})
     area.nodes.remove(node)
@@ -216,8 +216,8 @@ def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker, setup_and_
 def setup_and_teardown_for_custom_spawn():
     # modify a node to be a valid start point without a vanilla spawn
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Charge Tutorial")
+    region = game_desc.region_list.region_with_name("Artaria")
+    area = region.area_by_name("Charge Tutorial")
     node = area.node_with_name("Start Point")
     modified_node = dataclasses.replace(node, valid_starting_location=True)
     area.nodes.remove(node)

@@ -17,7 +17,7 @@ def _process_connections(game: GameDescription, process: Callable[[Requirement, 
         if dock_weakness.lock is not None:
             process(dock_weakness.lock.requirement, result)
 
-    for area in game.world_list.all_areas:
+    for area in game.region_list.all_areas:
         for _, _, requirement in area.all_connections:
             process(requirement, result)
 

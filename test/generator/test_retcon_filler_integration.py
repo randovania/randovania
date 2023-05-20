@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 
 import randovania.generator.filler.player_state
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
@@ -20,8 +21,8 @@ def test_build_available_indices(has_exclusion: bool):
     world_b.pickup_indices = [PickupIndex(3), PickupIndex(4)]
     world_b.major_pickup_indices = [PickupIndex(3)]
 
-    world_list = MagicMock()
-    world_list.worlds = [world_a, world_b]
+    region_list = MagicMock(spec=RegionList)
+    region_list.regions = [world_a, world_b]
 
     if has_exclusion:
         exclusion = frozenset([PickupIndex(3)])
@@ -41,7 +42,7 @@ def test_build_available_indices(has_exclusion: bool):
     )
 
     # Run
-    indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(world_list,
+    indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(region_list,
                                                                                                       configuration)
 
     # Assert

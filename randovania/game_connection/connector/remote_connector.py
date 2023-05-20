@@ -5,15 +5,15 @@ from PySide6 import QtCore
 
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.world import World
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
 
 PickupEntryWithOwner = tuple[str, PickupEntry]
 
 
 class PlayerLocationEvent(typing.NamedTuple):
-    world: World | None
+    world: Region | None
     area: Area | None
 
 

@@ -7,7 +7,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.cave_story.generator.pool_creator import CAMP_INDICES, FIRST_CAVE_INDICES, STRONG_WEAPONS
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode

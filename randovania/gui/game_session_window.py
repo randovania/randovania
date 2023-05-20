@@ -855,9 +855,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 preset = self._game_session.presets[action.provider_row]
                 game = default_database.game_description_for(preset.game)
                 try:
-                    location_node = game.world_list.node_from_pickup_index(action.location)
-                    location_name = game.world_list.node_name(location_node, with_world=True,
-                                                              distinguish_dark_aether=True)
+                    location_node = game.region_list.node_from_pickup_index(action.location)
+                    location_name = game.region_list.node_name(location_node, with_region=True,
+                                                               distinguish_dark_aether=True)
                 except KeyError as e:
                     logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
                                    preset.game.long_name)

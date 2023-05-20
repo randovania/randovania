@@ -9,7 +9,7 @@ from randovania.game_description.requirements.requirement_set import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
@@ -152,7 +152,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
     resources.set_resource(db.get_item("Missile"), 5)
 
     state = State(resources, (), 99, None, echoes_game_patches, None, StateGameData(
-        db, echoes_game_description.world_list, 100, 99,
+        db, echoes_game_description.region_list, 100, 99,
     ))
 
     # Run

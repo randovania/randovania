@@ -1,5 +1,4 @@
 import argparse
-import dataclasses
 import json
 import logging
 import typing
@@ -120,22 +119,22 @@ def create_export_videos_command(sub_parsers):
 def view_area_command_logic(args):
     from randovania.game_description import pretty_print
     game = load_game_description(args)
-    world_list = game.world_list
+    region_list = game.region_list
 
     try:
-        world = world_list.world_with_name(args.world)
+        region = region_list.region_with_name(args.region)
 
     except KeyError:
-        options = "\n".join(_get_sorted_list_of_names(world_list.worlds, " "))
-        print(f"Unknown world named '{args.world}'. Options:\n{options}")
+        options = "\n".join(_get_sorted_list_of_names(region_list.regions, " "))
+        print(f"Unknown region named '{args.region}'. Options:\n{options}")
         raise SystemExit(1)
 
     try:
-        area = world.area_by_name(args.area)
+        area = region.area_by_name(args.area)
 
     except KeyError:
-        options = "\n".join(_get_sorted_list_of_names(world.areas, " "))
-        print(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
+        options = "\n".join(_get_sorted_list_of_names(region.areas, " "))
+        print(f"Unknown area named '{args.area}' in region {region}. Options:\n{options}")
         raise SystemExit(1)
 
     pretty_print.pretty_print_area(game, area)
@@ -161,9 +160,9 @@ def view_area_command(sub_parsers):
         help="Simplify the RequirementSets"
     )
     parser.add_argument(
-        "world",
+        "region",
         type=str,
-        help="The name of the world that contains the area."
+        help="The name of the region that contains the area."
     )
     parser.add_argument(
         "area",
@@ -270,7 +269,7 @@ def _list_paths_with_resource(game,
     count = 0
     game = typing.cast(GameDescription, game)
 
-    for area in game.world_list.all_areas:
+    for area in game.region_list.all_areas:
         area_had_resource = False
 
         for source, connection in area.connections.items():
@@ -284,7 +283,7 @@ def _list_paths_with_resource(game,
                         area_had_resource = True
                         if not print_only_area:
                             print("At {}, from {} to {}:\n{}\n".format(
-                                game.world_list.area_name(area),
+                                game.region_list.area_name(area),
                                 source.name,
                                 target.name,
                                 sorted(individual for individual in alternative.values()
@@ -293,7 +292,7 @@ def _list_paths_with_resource(game,
                         count += 1
 
         if area_had_resource and print_only_area:
-            print(game.world_list.area_name(area))
+            print(game.region_list.area_name(area))
 
     print(f"Total routes: {count}")
 
@@ -303,7 +302,7 @@ def list_paths_with_dangerous_logic(args):
     print_only_area = args.print_only_area
     count = 0
 
-    for area in game.world_list.all_areas:
+    for area in game.region_list.all_areas:
         area_had_resource = False
 
         for source, connection in area.connections.items():
@@ -314,7 +313,7 @@ def list_paths_with_dangerous_logic(args):
                             area_had_resource = True
                             if not print_only_area:
                                 print("At {0}, from {1} to {2}:\n{3}\n".format(
-                                    game.world_list.area_name(area),
+                                    game.region_list.area_name(area),
                                     area,
                                     source.name,
                                     sorted(individual for individual in alternative.values()),
@@ -322,7 +321,7 @@ def list_paths_with_dangerous_logic(args):
                             count += 1
 
         if area_had_resource and print_only_area:
-            print(game.world_list.area_name(area))
+            print(game.region_list.area_name(area))
 
     print(f"Total routes: {count}")
 
@@ -374,18 +373,18 @@ def list_paths_with_resource_command(sub_parsers):
     parser.set_defaults(func=list_paths_with_resource_logic)
 
 
-def render_worlds_graph_logic(args):
+def render_region_graph_logic(args):
     import hashlib
     import re
     import graphviz
-    from randovania.game_description.world.teleporter_node import TeleporterNode
-    from randovania.game_description.world.dock_node import DockNode
-    from randovania.game_description.world.pickup_node import PickupNode
+    from randovania.game_description.db.teleporter_node import TeleporterNode
+    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.pickup_node import PickupNode
 
     gd = load_game_description(args)
     dot = graphviz.Digraph(comment=gd.game.long_name)
 
-    worlds = list(gd.world_list.worlds)
+    regions = list(gd.region_list.regions)
 
     added_edges = set()
     _IMPOSSIBLE_LOCKS = {"No Return Portal", "Permanently Locked"}
@@ -419,15 +418,15 @@ def render_worlds_graph_logic(args):
         return "#{:06x}".format(int.from_bytes(h, "big"))
 
     def _add_connection(dock_node: DockNode):
-        the_world = gd.world_list.nodes_to_world(dock_node)
-        source_area = gd.world_list.nodes_to_area(dock_node)
-        target_node = gd.world_list.node_by_identifier(dock_node.default_connection)
-        target_area = gd.world_list.nodes_to_area(target_node)
+        the_region = gd.region_list.nodes_to_region(dock_node)
+        source_area = gd.region_list.nodes_to_area(dock_node)
+        target_node = gd.region_list.node_by_identifier(dock_node.default_connection)
+        target_area = gd.region_list.nodes_to_area(target_node)
 
         if dock_node.default_dock_weakness.name in _IMPOSSIBLE_LOCKS:
             return
 
-        edge_id = f"{the_world.name}-{source_area.name}-{target_node.name}"
+        edge_id = f"{the_region.name}-{source_area.name}-{target_node.name}"
         if edge_id in added_edges:
             return
 
@@ -435,26 +434,26 @@ def render_worlds_graph_logic(args):
         direction = None
         if isinstance(target_node, DockNode) and _weakness_name(target_node.default_dock_weakness.name) == weak_name:
             direction = "both"
-            added_edges.add(f"{the_world.name}-{target_area.name}-{target_node.name}")
+            added_edges.add(f"{the_region.name}-{target_area.name}-{target_node.name}")
 
         color = vulnerabilities_colors.get(weak_name, _hash_to_color(weak_name))
         dot.edge(
-            f"{the_world.name}-{source_area.name}",
-            f"{the_world.name}-{target_area.name}",
+            f"{the_region.name}-{source_area.name}",
+            f"{the_region.name}-{target_area.name}",
             weak_name, dir=direction, color=color, fontcolor=color,
         )
         added_edges.add(edge_id)
 
     def _add_teleporter(teleporter_node: TeleporterNode):
-        source_world = gd.world_list.nodes_to_world(teleporter_node)
-        source_area = gd.world_list.nodes_to_area(teleporter_node)
-        target_node = gd.world_list.resolve_teleporter_connection(teleporter_node.default_connection)
-        target_world = gd.world_list.nodes_to_world(target_node)
-        target_area = gd.world_list.nodes_to_area(target_node)
+        source_region = gd.region_list.nodes_to_region(teleporter_node)
+        source_area = gd.region_list.nodes_to_area(teleporter_node)
+        target_node = gd.region_list.resolve_teleporter_connection(teleporter_node.default_connection)
+        target_region = gd.region_list.nodes_to_region(target_node)
+        target_area = gd.region_list.nodes_to_area(target_node)
 
         dot.edge(
-            f"{source_world.name}-{source_area.name}",
-            f"{target_world.name}-{target_area.name}",
+            f"{source_region.name}-{source_area.name}",
+            f"{target_region.name}-{target_area.name}",
             "Elevator",
         )
 
@@ -470,8 +469,8 @@ def render_worlds_graph_logic(args):
     colors = per_game_colors.get(gd.game)
     if colors is None:
         colors = {
-            world.name: _hash_to_color(world.name)
-            for world in gd.world_list.worlds
+            region.name: _hash_to_color(region.name)
+            for region in gd.region_list.regions
         }
 
     dark_colors = {
@@ -482,17 +481,17 @@ def render_worlds_graph_logic(args):
         "Great Temple": "#7d2996",
     }
 
-    for world in worlds:
-        for area in world.areas:
+    for region in regions:
+        for area in region.areas:
             shape = None
             if any(isinstance(node, TeleporterNode) for node in area.nodes):
                 shape = "polygon"
 
-            c = (dark_colors if area.in_dark_aether else colors)[world.name]
+            c = (dark_colors if area.in_dark_aether else colors)[region.name]
             fillcolor = "".join(f"{max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64):02x}"
                                 for i in range(3))
             dot.node(
-                f"{world.name}-{area.name}", area.name,
+                f"{region.name}-{area.name}", area.name,
                 color=c,
                 fillcolor=f"#{fillcolor}",
                 style="filled",
@@ -505,11 +504,11 @@ def render_worlds_graph_logic(args):
                 if args.include_pickups and isinstance(node, PickupNode):
                     dot.node(str(node.pickup_index), re.search(r"Pickup \(([^)]+)\)", node.name).group(1),
                              shape="house")
-                    dot.edge(f"{world.name}-{area.name}", str(node.pickup_index))
+                    dot.edge(f"{region.name}-{area.name}", str(node.pickup_index))
 
-    for world in worlds:
-        print(f"Adding docks for {world.name}")
-        for area in world.areas:
+    for region in regions:
+        print(f"Adding docks for {region.name}")
+        for area in region.areas:
             for node in area.nodes:
                 if isinstance(node, DockNode):
                     _add_connection(node)
@@ -520,25 +519,25 @@ def render_worlds_graph_logic(args):
     print(dot.render(format="png", cleanup=True, view=True))
 
 
-def render_worlds_graph(sub_parsers):
+def render_regions_graph(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "render-world-graph",
+        "render-region-graph",
         help="Renders an image with all area connections",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
     parser.add_argument("--include-teleporters", action="store_true")
     parser.add_argument("--include-pickups", action="store_true")
 
-    parser.set_defaults(func=render_worlds_graph_logic)
+    parser.set_defaults(func=render_region_graph_logic)
 
 
 def pickups_per_area_command_logic(args):
-    from randovania.game_description.world.pickup_node import PickupNode
+    from randovania.game_description.db.pickup_node import PickupNode
     gd = load_game_description(args)
 
-    for world in gd.world_list.worlds:
-        num_pickups = sum(1 for node in world.all_nodes if isinstance(node, PickupNode))
-        print(f"{world.correct_name(False)}: {num_pickups}")
+    for region in gd.region_list.regions:
+        num_pickups = sum(1 for node in region.all_nodes if isinstance(node, PickupNode))
+        print(f"{region.correct_name(False)}: {num_pickups}")
 
 
 def pickups_per_area_command(sub_parsers):
@@ -555,7 +554,7 @@ def rename_docks_logic(args):
     from randovania.game_description import data_writer
     from randovania.game_description import pretty_print
     from randovania.game_description.editor import Editor
-    from randovania.game_description.world.dock_node import DockNode
+    from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description import integrity_check
 
     game = RandovaniaGame(args.game)
@@ -566,8 +565,8 @@ def rename_docks_logic(args):
     # Make the changes
     editor = Editor(gd)
 
-    for world in gd.world_list.worlds:
-        for area in world.areas:
+    for region in gd.region_list.regions:
+        for area in region.areas:
             for i in range(len(area.nodes)):
                 node = area.nodes[i]
                 if not isinstance(node, DockNode):
@@ -583,8 +582,8 @@ def rename_docks_logic(args):
                         suffix = f" ({docks_to_same_target.index(node) + 1})"
 
                     print(f"In {area.name}, renaming '{node.name}' to '{expected_name}{suffix}'")
-                    editor.replace_node(area, node,
-                                        dataclasses.replace(node, name=f"{expected_name}{suffix}"))
+                    editor.rename_node(area, node,
+                                       new_name=f"{expected_name}{suffix}")
 
     # Write it back
     logging.info("Writing database files")
@@ -632,7 +631,7 @@ def create_subparsers(sub_parsers):
     refresh_pickup_database_command(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
-    render_worlds_graph(sub_parsers)
+    render_regions_graph(sub_parsers)
     pickups_per_area_command(sub_parsers)
     rename_docks_command(sub_parsers)
     create_export_videos_command(sub_parsers)

@@ -132,10 +132,10 @@ def get_yt_ids(req: Requirement, highest_diff: int) -> Iterable[tuple[str, int, 
 def collect_game_info(game: RandovaniaGame) -> dict[str, dict[str, dict[str, dict[str, list[tuple[str, int, int]]]]]]:
     db = default_database.game_description_for(game)
 
-    worlds = {}
-    for world in db.world_list.worlds:
+    regions = {}
+    for region in db.region_list.regions:
         areas = {}
-        for area in world.areas:
+        for area in region.areas:
             nodes = {}
             for node in area.nodes:
                 connections = {}
@@ -152,12 +152,12 @@ def collect_game_info(game: RandovaniaGame) -> dict[str, dict[str, dict[str, dic
                 areas[area.name] = nodes
 
         if areas:
-            worlds[world.name] = areas
+            regions[region.name] = areas
 
-    return worlds
+    return regions
 
 
-def generate_world_html(name: str, areas: dict[str, dict[str, dict[str, list[tuple[str, int, int]]]]]) -> str:
+def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tuple[str, int, int]]]]]) -> str:
     body = ""
     toc = """
     <div id="toc_container">
@@ -213,16 +213,16 @@ def filename_friendly_game_name(game: RandovaniaGame):
 
 
 def export_videos(game: RandovaniaGame, out_dir: Path):
-    worlds = collect_game_info(game)
-    if not worlds:
+    regions = collect_game_info(game)
+    if not regions:
         return  # no youtube videos in this game's database
 
     out_dir_game = out_dir.joinpath(filename_friendly_game_name(game))
     out_dir_game.mkdir(exist_ok=True, parents=True)
 
-    for world, area in worlds.items():
-        html = generate_world_html(world, area)
-        out_dir_game.joinpath(world + ".html").write_text(html)
+    for region_name, area in regions.items():
+        html = generate_region_html(region_name, area)
+        out_dir_game.joinpath(region_name + ".html").write_text(html)
 
     full_name = game.long_name
     html = HTML_HEADER_FORMAT % ("Index - " + full_name, full_name, get_date())
@@ -232,12 +232,12 @@ def export_videos(game: RandovaniaGame, out_dir: Path):
         <ul>
     """
 
-    TOC_WORLD_FORMAT = '''
+    toc_region_format = '''
         <li><a href="%s">%s</a>\n
     '''
 
-    for world in sorted(worlds):
-        toc += TOC_WORLD_FORMAT % (world + ".html", world)
+    for region_name in sorted(regions):
+        toc += toc_region_format % (region_name + ".html", region_name)
 
     toc += """
         </ul>

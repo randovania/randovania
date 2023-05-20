@@ -4,8 +4,8 @@ from enum import Enum
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGain
-from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.lib import enum_lib
 
 

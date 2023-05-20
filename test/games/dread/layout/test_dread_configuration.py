@@ -2,7 +2,7 @@ import dataclasses
 
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.trick_level import LayoutTrickLevel

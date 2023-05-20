@@ -10,9 +10,9 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory, MissingRng)
@@ -71,7 +71,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
 
         dock_assignment = []
 
-        for world in patches.game.world_list.worlds:
+        for world in patches.game.region_list.regions:
             light_portals = []
             dark_portals = []
 
@@ -99,7 +99,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         result = {}
 
         def area_to_node(identifier: AreaIdentifier):
-            area = patches.game.world_list.area_by_area_location(identifier)
+            area = patches.game.region_list.area_by_area_location(identifier)
             for node in area.actual_nodes:
                 if node.valid_starting_location:
                     return node.identifier
@@ -152,11 +152,11 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         )
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
-        for node in game.world_list.iterate_nodes():
+        for node in game.region_list.iterate_nodes():
             if not isinstance(node, ConfigurableNode):
                 continue
 
-            identifier = game.world_list.identifier_for_node(node)
+            identifier = game.region_list.identifier_for_node(node)
             requirement = configuration.translator_configuration.translator_requirement[identifier]
             if requirement in random_requirements:
                 if rng is None:

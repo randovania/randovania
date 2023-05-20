@@ -123,7 +123,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
         for asset in randomizer_data_additions
     }
 
-    wl = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).world_list
+    wl = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).region_list
     pickup_index_to_mrea_asset_id = {
         location["Index"]: wl.nodes_to_area(wl.node_from_pickup_index(PickupIndex(location["Index"]))).extra["asset_id"]
         for location in randomizer_data["LocationData"]

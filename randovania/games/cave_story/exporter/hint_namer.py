@@ -30,7 +30,7 @@ class CSHintNamer(HintNamer):
             HintLocationPrecision.DETAILED: TemplatedFormatter(
                 "{{start}} {determiner}{pickup} {{mid}} in {node}.", self
             ),
-            HintLocationPrecision.WORLD_ONLY: TemplatedFormatter(
+            HintLocationPrecision.REGION_ONLY: TemplatedFormatter(
                 "{{start}} {determiner}{pickup} {{mid}} in {node}.", self
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
@@ -47,13 +47,13 @@ class CSHintNamer(HintNamer):
     def format_player(self, name: str, with_color: bool) -> str:
         return name
 
-    def format_world(self, location: PickupLocation, with_color: bool) -> str:
-        world_list = default_database.game_description_for(location.game).world_list
-        return world_list.world_name_from_node(world_list.node_from_pickup_index(location.location), True)
+    def format_region(self, location: PickupLocation, with_color: bool) -> str:
+        region_list = default_database.game_description_for(location.game).region_list
+        return region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
 
-    def format_area(self, location: PickupLocation, with_world: bool, with_color: bool) -> str:
-        world_list = default_database.game_description_for(location.game).world_list
-        area = world_list.nodes_to_area(world_list.node_from_pickup_index(location.location))
+    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
+        region_list = default_database.game_description_for(location.game).region_list
+        area = region_list.nodes_to_area(region_list.node_from_pickup_index(location.location))
         return area.name
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
