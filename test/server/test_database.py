@@ -25,9 +25,9 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
         s.layout_description = description
         s.save()
         game_details = {
-            'seed_hash': 'KCCTOEX4',
+            'seed_hash': 'VNBKJI3X',
             'spoiler': True,
-            'word_hash': 'Judgment Shredder Collapsed',
+            'word_hash': 'Dead Skiff Suit',
         }
 
     # Run
