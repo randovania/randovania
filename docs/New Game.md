@@ -16,7 +16,7 @@ Once the GameData has been created, the following steps are required:
 
 
 3. Add the new database file to `json_data/{game-id}.json` or `json_data/header.json` in your game folder.
-The latter must have the world list split into multiple files. 
+The latter must have the region list split into multiple files. 
 **TODO**: list minimum requirements for the database file (areas, docks?, etc.) 
 
 
