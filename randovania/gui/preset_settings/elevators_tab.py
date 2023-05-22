@@ -5,10 +5,10 @@ import functools
 from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.patch_data_factory import should_keep_elevator_sounds
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -28,7 +28,7 @@ from randovania.patching.prime import elevators
 class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
     _elevator_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
     _elevator_source_destination: dict[NodeIdentifier, NodeIdentifier | None]
-    _elevator_target_for_world: dict[str, QtWidgets.QCheckBox]
+    _elevator_target_for_region: dict[str, QtWidgets.QCheckBox]
     _elevator_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
     _elevator_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
 
@@ -62,7 +62,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             TeleporterTargetList.nodes_list(self.game_enum),
             self._on_elevator_target_check_changed,
         )
-        self._elevator_target_for_world, self._elevator_target_for_area, self._elevator_target_for_node = result
+        self._elevator_target_for_region, self._elevator_target_for_area, self._elevator_target_for_node = result
 
         if self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
             self.elevators_allow_unvisited_names_check.setVisible(False)
@@ -98,7 +98,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         return self.game_description.game
 
     def _create_check_for_source_elevator(self, location: NodeIdentifier):
-        name = elevators.get_elevator_or_area_name(self.game_enum, self.game_description.world_list,
+        name = elevators.get_elevator_or_area_name(self.game_enum, self.game_description.region_list,
                                                    location.area_location, True)
 
         check = QtWidgets.QCheckBox(self.elevators_source_group)
@@ -109,7 +109,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
 
     def _create_source_elevators(self):
         row = 0
-        world_list = self.game_description.world_list
+        region_list = self.game_description.region_list
 
         custom_weights = {}
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
@@ -122,7 +122,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             }
         locations = TeleporterList.nodes_list(self.game_enum)
         node_identifiers: dict[NodeIdentifier, Area] = {
-            loc: world_list.area_by_area_location(loc.area_location)
+            loc: region_list.area_by_area_location(loc.area_location)
             for loc in locations
         }
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
@@ -132,7 +132,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self._elevator_source_destination = {}
 
         for location in sorted(locations,
-                               key=lambda loc: (custom_weights.get(loc.area_location.world_name, 0),
+                               key=lambda loc: (custom_weights.get(loc.area_location.region_name, 0),
                                                 checks[loc].text())):
             if location not in checks:
                 continue
@@ -142,12 +142,12 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             other_locations = [
                 node.default_connection
                 for node in node_identifiers[location].nodes
-                if isinstance(node, TeleporterNode) and world_list.identifier_for_node(node) == location
+                if isinstance(node, TeleporterNode) and region_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
             teleporters_in_target = [
-                world_list.identifier_for_node(node)
-                for node in world_list.area_by_area_location(other_locations[0]).nodes
+                region_list.identifier_for_node(node)
+                for node in region_list.area_by_area_location(other_locations[0]).nodes
                 if isinstance(node, TeleporterNode)
             ]
 
@@ -191,12 +191,12 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                 excluded_teleporters=config.excluded_teleporters.ensure_has_location(location, not checked),
             )
 
-    def _on_elevator_target_check_changed(self, world_areas: list[NodeIdentifier], checked: bool):
+    def _on_elevator_target_check_changed(self, areas: list[NodeIdentifier], checked: bool):
         with self._editor as editor:
             config = editor.layout_configuration_elevators
             editor.layout_configuration_elevators = dataclasses.replace(
                 config,
-                excluded_targets=config.excluded_targets.ensure_has_locations(world_areas, not checked),
+                excluded_targets=config.excluded_targets.ensure_has_locations(areas, not checked),
             )
 
     def on_preset_changed(self, preset: Preset):
@@ -261,7 +261,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self.update_node_list(
             config_elevators.excluded_targets.locations,
             True,
-            self._elevator_target_for_world,
+            self._elevator_target_for_region,
             self._elevator_target_for_area,
             self._elevator_target_for_node
         )

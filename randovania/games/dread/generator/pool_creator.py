@@ -4,7 +4,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_dread_artifact
@@ -40,7 +40,7 @@ def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng:
     if rng is not None:
         rng.shuffle(locations)
         new_assignment = {
-            game.world_list.get_pickup_node(location).pickup_index: key
+            game.region_list.get_pickup_node(location).pickup_index: key
             for location, key in zip(locations, keys_to_shuffle)
         }
         item_pool = [key for key in keys_to_shuffle if key not in new_assignment.values()]

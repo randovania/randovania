@@ -10,10 +10,10 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -112,18 +112,18 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
         if isinstance(identifier, NodeIdentifier):
-            return self.game.world_list.node_by_identifier(identifier)
+            return self.game.region_list.node_by_identifier(identifier)
         else:
-            area = self.game.world_list.area_by_area_location(identifier)
+            area = self.game.region_list.area_by_area_location(identifier)
             node = area.node_with_name(area.default_node)
             assert node is not None
             return node
 
     def _key_error_for_node(self, node: Node, err: KeyError):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has no extra {err}")
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " +
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a " +
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
 
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
@@ -131,7 +131,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             return self.new_spawn_points[node]["new_actor"]["actor"]
         else:
             try:
-                area = self.game.world_list.area_by_area_location(node.identifier.area_identifier)
+                area = self.game.region_list.area_by_area_location(node.identifier.area_identifier)
                 collision_camera_name = area.extra["asset_id"]
                 new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
                 self.new_spawn_points[node] = {
@@ -150,10 +150,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             except KeyError:
                 raise self._key_error_for_start_node(node)
 
-
     def _start_point_ref_for(self, node: Node) -> dict:
-        world = self.game.world_list.nodes_to_world(node)
-        level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+        region = self.game.region_list.nodes_to_region(node)
+        level_name: str = os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
 
         if "start_point_actor_name" in node.extra:
             return {
@@ -166,10 +165,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "actor": self._get_or_create_spawn_point(node, level_name),
             }
 
-
     def _level_name_for(self, node: Node) -> str:
-        world = self.game.world_list.nodes_to_world(node)
-        return os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+        region = self.game.region_list.nodes_to_region(node)
+        return os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
 
     def _teleporter_ref_for(self, node: Node, actor_key: str = "actor_name") -> dict:
         try:
@@ -212,7 +210,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         resources = get_resources_for_details(detail)
 
-        pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
+        pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
         hud_text = detail.collection_text[0]
@@ -261,11 +259,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "hint_id": logbook_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.world_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
                     self.description.all_patches, self.players_config, True
                 ),
             }
-            for logbook_node in self.game.world_list.iterate_nodes()
+            for logbook_node in self.game.region_list.iterate_nodes()
             if isinstance(logbook_node, HintNode)
         ]
 
@@ -308,14 +306,14 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
         # generate a 2D dictionary of (scenario, collision camera) => room name
         all_dict: dict = {}
-        for world in self.game.world_list.worlds:
-            scenario = world.extra["scenario_id"]
-            world_dict: dict = {}
+        for region in self.game.region_list.regions:
+            scenario = region.extra["scenario_id"]
+            region_dict: dict = {}
 
-            for area in world.areas:
-                world_dict[area.extra["asset_id"]] = area.name
+            for area in region.areas:
+                region_dict[area.extra["asset_id"]] = area.name
 
-            all_dict[scenario] = world_dict
+            all_dict[scenario] = region_dict
 
         # fix Burenia Main Tower and Golzuna Tower
         all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
@@ -344,7 +342,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         }
 
     def _door_patches(self):
-        wl = self.game.world_list
+        wl = self.game.region_list
 
         result = []
         used_actors = {}
@@ -418,7 +416,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
             useless_target,
-            self.game.world_list,
+            self.game.region_list,
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,

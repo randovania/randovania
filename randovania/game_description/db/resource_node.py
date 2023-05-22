@@ -1,7 +1,7 @@
 import dataclasses
 
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
-from randovania.game_description.world.node import NodeContext, Node
+from randovania.game_description.db.node import NodeContext, Node
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

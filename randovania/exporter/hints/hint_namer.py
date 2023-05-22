@@ -19,10 +19,10 @@ class HintNamer:
     def format_player(self, name: str, with_color: bool) -> str:
         raise NotImplementedError()
 
-    def format_world(self, location: PickupLocation, with_color: bool) -> str:
+    def format_region(self, location: PickupLocation, with_color: bool) -> str:
         raise NotImplementedError()
 
-    def format_area(self, location: PickupLocation, with_world: bool, with_color: bool) -> str:
+    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
         raise NotImplementedError()
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
@@ -42,10 +42,10 @@ class HintNamer:
         raise NotImplementedError()
 
     # Helper
-    def format_location(self, location: PickupLocation, with_world: bool, with_area: bool, with_color: bool) -> str:
+    def format_location(self, location: PickupLocation, with_region: bool, with_area: bool, with_color: bool) -> str:
         if with_area:
-            return self.format_area(location, with_world=with_world, with_color=with_color)
-        elif with_world:
-            return self.format_world(location, with_color=with_color)
+            return self.format_area(location, with_region=with_region, with_color=with_color)
+        elif with_region:
+            return self.format_region(location, with_color=with_color)
         else:
-            raise ValueError("Both with_world and with_area not not set.")
+            raise ValueError("Both with_region and with_area not not set.")

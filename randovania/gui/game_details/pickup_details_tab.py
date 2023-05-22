@@ -6,7 +6,7 @@ from PySide6 import QtWidgets, QtCore
 from randovania.exporter import item_names
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
@@ -39,7 +39,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         self.setupUi(self.root)
 
         self.pickup_spoiler_buttons = []
-        self._pickup_spoiler_world_to_group = {}
+        self._pickup_spoiler_region_to_group = {}
 
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
         self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
@@ -59,14 +59,14 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         }
         game_description = filtered_database.game_description_for_layout(configuration)
         self._create_pickup_spoilers(game_description)
-        starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
+        starting_area = game_description.region_list.area_by_area_location(patches.starting_location)
 
         extra_items = item_names.additional_starting_equipment(configuration,
                                                                game_description,
                                                                patches)
 
         self.spoiler_starting_location_label.setText("Starting Location: {}".format(
-            game_description.world_list.area_name(starting_area)
+            game_description.region_list.area_name(starting_area)
         ))
         self.spoiler_starting_items_label.setText("Random Starting Items: {}".format(
             ", ".join(extra_items)
@@ -95,34 +95,34 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
                 pickup_button.setText(pickup_button.item_name)
 
     def _create_pickup_spoilers(self, game_description: GameDescription):
-        for groups in self._pickup_spoiler_world_to_group.values():
+        for groups in self._pickup_spoiler_region_to_group.values():
             groups.deleteLater()
 
         self.pickup_spoiler_show_all_button.currently_show_all = True
         self.pickup_spoiler_buttons.clear()
 
-        self._pickup_spoiler_world_to_group = {}
-        nodes_in_world = collections.defaultdict(list)
+        self._pickup_spoiler_region_to_group = {}
+        nodes_in_region = collections.defaultdict(list)
 
-        for world, area, node in game_description.world_list.all_worlds_areas_nodes:
+        for region, area, node in game_description.region_list.all_regions_areas_nodes:
             if isinstance(node, PickupNode):
-                world_name = world.correct_name(area.in_dark_aether)
-                nodes_in_world[world_name].append((f"{area.name} - {node.name}", node.pickup_index))
+                region_name = region.correct_name(area.in_dark_aether)
+                nodes_in_region[region_name].append((f"{area.name} - {node.name}", node.pickup_index))
                 continue
 
-        for world_name in sorted(nodes_in_world.keys()):
+        for region_name in sorted(nodes_in_region.keys()):
             group_box = QtWidgets.QGroupBox(self.pickup_spoiler_scroll_contents)
-            group_box.setTitle(world_name)
+            group_box.setTitle(region_name)
             vertical_layout = QtWidgets.QVBoxLayout(group_box)
             vertical_layout.setContentsMargins(8, 4, 8, 4)
             vertical_layout.setSpacing(2)
             group_box.vertical_layout = vertical_layout
 
             vertical_layout.horizontal_layouts = []
-            self._pickup_spoiler_world_to_group[world_name] = group_box
+            self._pickup_spoiler_region_to_group[region_name] = group_box
             self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
 
-            for area_name, pickup_index in sorted(nodes_in_world[world_name], key=lambda it: it[0]):
+            for area_name, pickup_index in sorted(nodes_in_region[region_name], key=lambda it: it[0]):
                 horizontal_layout = QtWidgets.QHBoxLayout()
                 horizontal_layout.setSpacing(2)
 

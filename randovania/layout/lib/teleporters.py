@@ -6,11 +6,11 @@ from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 from randovania.lib import enum_lib
@@ -79,12 +79,10 @@ def _has_editable_teleporter(area: Area) -> bool:
 class TeleporterList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
-        world_list = default_database.game_description_for(game).world_list
+        region_list = default_database.game_description_for(game).region_list
         nodes = [
-            world_list.identifier_for_node(node)
-            for world in world_list.worlds
-            for area in world.areas
-            for node in area.nodes
+            region_list.identifier_for_node(node)
+            for node in region_list.all_nodes
             if isinstance(node, TeleporterNode) and node.editable
         ]
         nodes.sort()
@@ -173,13 +171,13 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     if location not in self.excluded_targets.locations]
 
         elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
-            world_list = default_database.game_description_for(self.game).world_list
+            region_list = default_database.game_description_for(self.game).region_list
             result = []
             for identifier in self.editable_teleporters:
-                node = world_list.node_by_identifier(identifier)
+                node = region_list.node_by_identifier(identifier)
                 if isinstance(node, TeleporterNode) and node.editable:
                     # Valid destinations must be valid starting areas
-                    area = world_list.nodes_to_area(node)
+                    area = region_list.nodes_to_area(node)
                     if area.has_start_node():
                         result.append(identifier.area_identifier)
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent

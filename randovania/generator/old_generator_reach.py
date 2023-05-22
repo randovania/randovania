@@ -6,8 +6,8 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.generator import graph as graph_module
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State
@@ -93,7 +93,7 @@ class OldGeneratorReach(GeneratorReach):
                          ) -> "GeneratorReach":
 
         reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
-        game.world_list.ensure_has_node_cache()
+        game.region_list.ensure_has_node_cache()
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 
@@ -101,7 +101,7 @@ class OldGeneratorReach(GeneratorReach):
         extra_requirement = _extra_requirement_for_node(self._game, self.node_context(), node)
         requirement_to_leave = node.requirement_to_leave(self._state.node_context())
 
-        for target_node, requirement in self._game.world_list.potential_nodes_from(node, self.node_context()):
+        for target_node, requirement in self._game.region_list.potential_nodes_from(node, self.node_context()):
             if target_node is None:
                 continue
 
@@ -122,18 +122,18 @@ class OldGeneratorReach(GeneratorReach):
             path = paths_to_check.pop(0)
 
             if path.is_in_graph(self._digraph):
-                # print(">>> already in graph", self.game.world_list.node_name(path.node))
+                # print(">>> already in graph", self.game.region_list.node_name(path.node))
                 continue
 
-            # print(">>> will check starting at", self.game.world_list.node_name(path.node))
+            # print(">>> will check starting at", self.game.region_list.node_name(path.node))
             path.add_to_graph(self._digraph)
 
             for target_node, requirement in self._potential_nodes_from(path.node):
                 if requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database):
-                    # print("* Queue path to", self.game.world_list.node_name(target_node))
+                    # print("* Queue path to", self.game.region_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
-                    # print("* Unreachable", self.game.world_list.node_name(target_node), ", missing:",
+                    # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
                     #       requirement.as_str)
                     self._unreachable_paths[path.node.node_index, target_node.node_index] = requirement
             # print("> done")
@@ -227,7 +227,7 @@ class OldGeneratorReach(GeneratorReach):
 
     @property
     def all_nodes(self) -> tuple[Node | None, ...]:
-        return self.game.world_list.all_nodes
+        return self.game.region_list.all_nodes
 
     @property
     def nodes(self) -> Iterator[Node]:

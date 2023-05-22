@@ -27,7 +27,7 @@ class WindowManager(QtWidgets.QMainWindow):
     async def open_map_tracker(self, configuration: Preset):
         raise NotImplementedError()
 
-    def open_data_visualizer_at(self, world_name: str | None, area_name: str | None, game: RandovaniaGame,
+    def open_data_visualizer_at(self, region_name: str | None, area_name: str | None, game: RandovaniaGame,
                                 trick_levels: TrickLevelConfiguration | None = None):
         raise NotImplementedError()
 

@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, AsyncMock, ANY, call
 import discord
 
 from randovania.games.game import RandovaniaGame
-from randovania.server.discord.database_command import DatabaseCommandCog, SplitWorld, SelectSplitWorldItem, \
+from randovania.server.discord.database_command import DatabaseCommandCog, SplitRegion, SelectSplitRegionItem, \
     SelectAreaItem, AreaWidget, SelectNodesItem
 
 
@@ -28,7 +28,7 @@ async def test_database_command():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
     cog.database_inspect.cog = cog
-    cog._select_split_world_view[RandovaniaGame.METROID_PRIME_CORRUPTION] = view = MagicMock()
+    cog._select_split_region_view[RandovaniaGame.METROID_PRIME_CORRUPTION] = view = MagicMock()
     ctx = AsyncMock()
 
     # Run
@@ -48,10 +48,10 @@ async def test_on_database_world_selected():
     area.area.name = "The Area"
 
     view = MagicMock()
-    item = SelectSplitWorldItem(
+    item = SelectSplitRegionItem(
         RandovaniaGame.METROID_PRIME_CORRUPTION,
         [
-            SplitWorld(
+            SplitRegion(
                 MagicMock(),
                 "The World",
                 [area],
@@ -85,12 +85,12 @@ async def test_on_database_area_selected(tmp_path, echoes_game_description, mock
     Path(tmp_path / "bar").write_bytes(b"1234")
 
     db = echoes_game_description
-    world = echoes_game_description.world_list.worlds[2]
-    area = world.areas[0]
+    region = echoes_game_description.region_list.regions[2]
+    area = region.areas[0]
     view = MagicMock()
 
-    split_world = SplitWorld(
-        world, "The World",
+    split_world = SplitRegion(
+        region, "The World",
         [MagicMock(),
          AreaWidget(area, "area_1", view)
          ],
@@ -108,7 +108,7 @@ async def test_on_database_area_selected(tmp_path, echoes_game_description, mock
 
     # Assert
     ctx.response.send_message.assert_awaited_once_with(
-        content=f"**{db.game.long_name}: {db.world_list.area_name(area)}**\nRequested by {ctx.user.display_name}.",
+        content=f"**{db.game.long_name}: {db.region_list.area_name(area)}**\nRequested by {ctx.user.display_name}.",
         files=[mock_file.return_value],
         view=view,
     )
@@ -130,8 +130,8 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
     # Setup
     mock_embed: MagicMock = mocker.patch("discord.Embed")
 
-    world = echoes_game_description.world_list.worlds[2]
-    area = world.areas[2]
+    region = echoes_game_description.region_list.regions[2]
+    area = region.areas[2]
     area_widget = AreaWidget(
         area,
         "command",

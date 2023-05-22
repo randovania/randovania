@@ -9,15 +9,16 @@ from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -160,12 +161,12 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_game_description,
                                                      echoes_game_patches):
     # Setup
-    wl = echoes_game_description.world_list
+    wl = echoes_game_description.region_list
     elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
 
-    def add(world: str, area: str, node: str, target_world: str, target_area: str):
+    def add(region: str, area: str, node: str, target_world: str, target_area: str):
         elevator_connection.append((
-            wl.get_teleporter_node(NodeIdentifier.create(world, area, node)),
+            wl.get_teleporter_node(NodeIdentifier.create(region, area, node)),
             AreaIdentifier(target_world, target_area),
         ))
 
@@ -525,7 +526,7 @@ def test_create_string_patches(
         mocker,
 ):
     # Setup
-    game = MagicMock()
+    game: GameDescription = MagicMock()
     all_patches = MagicMock()
     rng = MagicMock()
     player_config = PlayersConfiguration(0, {0: "you"})
@@ -566,7 +567,7 @@ def test_create_string_patches(
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(all_patches, player_config, game.world_list, namer, rng)
+    mock_item_create_hints.assert_called_once_with(all_patches, player_config, game.region_list, namer, rng)
     mock_logbook_title_string_patches.assert_called_once_with()
     mock_akul_testament.assert_called_once_with(namer)
 

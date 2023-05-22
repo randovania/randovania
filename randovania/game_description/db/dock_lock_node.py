@@ -6,9 +6,9 @@ from typing import Iterator
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node import NodeContext, Node
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import NodeContext, Node
+from randovania.game_description.db.resource_node import ResourceNode
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

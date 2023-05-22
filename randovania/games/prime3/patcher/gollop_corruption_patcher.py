@@ -3,7 +3,7 @@ import hashlib
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
 
 LAYOUT_LETTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ(){}[]<>=,.!#^-+?"
 ITEM_NAME_TO_INDEX = {
@@ -205,8 +205,8 @@ def layout_string_for_items(item_names: list[str]) -> str:
 
 
 def starting_location_for(game: GameDescription, location: AreaIdentifier) -> str:
-    world = game.world_list.world_by_area_location(location)
-    area = game.world_list.area_by_area_location(location)
+    world = game.region_list.region_by_area_location(location)
+    area = game.region_list.area_by_area_location(location)
 
     return f"custom {world.extra['asset_id']:x} {area.extra['asset_id']:x}"
 

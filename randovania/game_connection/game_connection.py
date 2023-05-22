@@ -13,8 +13,8 @@ from randovania.game_connection.connector.remote_connector import RemoteConnecto
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_description.resources.item_resource_info import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.world import World
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.region import Region
 from randovania.interface_common.options import Options
 from randovania.lib.infinite_timer import InfiniteTimer
 
@@ -150,7 +150,7 @@ class GameConnection(QObject):
             self.connected_states[connector] = ConnectedGameState(the_id, connector)
         return self.connected_states[connector]
 
-    def _on_player_location_changed(self, connector: RemoteConnector, location: tuple[World | None, Area | None]):
+    def _on_player_location_changed(self, connector: RemoteConnector, location: tuple[Region | None, Area | None]):
         connected_state = self._ensure_connected_state_exists(connector)
         world, area = location
         if world is None:

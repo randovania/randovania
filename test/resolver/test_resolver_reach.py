@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, PropertyMock
 
-from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.db.event_node import EventNode
 from randovania.resolver.resolver_reach import ResolverReach
 
 
@@ -19,7 +19,7 @@ def test_possible_actions_no_resources():
     node_b = MagicMock(name="node_b")
     node_b.can_collect.return_value = False
     logic = MagicMock()
-    logic.game.world_list.all_nodes = [node_a, node_b]
+    logic.game.region_list.all_nodes = [node_a, node_b]
     node_a.get_index.return_value = 0
     node_b.get_index.return_value = 1
 
@@ -47,7 +47,7 @@ def test_possible_actions_with_event():
     type(event).is_resource_node = prop = PropertyMock(return_value=True)
     event.can_collect.return_value = True
 
-    logic.game.world_list.all_nodes = [event]
+    logic.game.region_list.all_nodes = [event]
 
     # Run
     reach = ResolverReach({0: 1}, {}, frozenset(), logic)

@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In the Data Visualizer, requirements are now displayed using a tree widget, which allows for collapsing the and/or blocks.
 - Changed: Optimized the solver by allowing more resources as additional resources, allowing more actions to be skipped until the necessary resources are found.
 - Changed: For Multiworld, it's now preferred to have an additional pickups than placing it in another player's game, when there's no locations left in your game.
+- Changed: Randovania now internally uses the term `Region` for what used to be called a `World`. This is mostly an internal change.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 - Fixed: Batch generation now properly prevents Windows from going to sleep.

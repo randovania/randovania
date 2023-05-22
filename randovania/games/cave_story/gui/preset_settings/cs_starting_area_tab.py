@@ -1,4 +1,4 @@
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 
 
@@ -34,8 +34,8 @@ class PresetCSStartingArea(PresetStartingArea):
             )
 
     def _starting_location_on_select_save_point(self):
-        world_list = self.game_description.world_list
-        save_points = [node.identifier for node in world_list.iterate_nodes() if "Save Point" in node.name]
+        region_list = self.game_description.region_list
+        save_points = [node.identifier for node in region_list.iterate_nodes() if "Save Point" in node.name]
 
         # remove because save point is locked behind a boss fight
         save_points = [i for i in save_points if i.area_name != "Egg Observation Room?"]

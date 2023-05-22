@@ -6,14 +6,13 @@ from pathlib import Path
 from textwrap import wrap
 
 import py_randomprime
-
 from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
 
 from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
+from randovania.game_description.db.region import Region
 from randovania.game_description.resources.pickup_entry import PickupModel
-from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
@@ -81,8 +80,8 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
     pyplot.clf()
 
 
-def make_one_map(filepath: Path, level_data: dict, world: World):
-    from randovania.game_description.world.dock_node import DockNode
+def make_one_map(filepath: Path, level_data: dict, region: Region):
+    from randovania.game_description.db.dock_node import DockNode
 
     def wrap_text(text):
         return '\n'.join(wrap(text, 18))
@@ -93,7 +92,7 @@ def make_one_map(filepath: Path, level_data: dict, world: World):
     # add edges which were not shuffled
     disabled_doors = set()
 
-    for area in world.areas:
+    for area in region.areas:
         for node in area.nodes:
             if not isinstance(node, DockNode):
                 continue
@@ -109,8 +108,8 @@ def make_one_map(filepath: Path, level_data: dict, world: World):
                 room_connections.append((wrap_text(src_name), wrap_text(dst_name)))
 
     # add edges which were shuffled
-    for room_name in level_data[world.name]["rooms"].keys():
-        room = level_data[world.name]["rooms"][room_name]
+    for room_name in level_data[region.name]["rooms"].keys():
+        room = level_data[region.name]["rooms"][room_name]
         if "doors" not in room.keys():
             continue
 
@@ -143,11 +142,11 @@ class PrimeGameExporter(GameExporter):
         return False
 
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
-        wl = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list
+        rl = default_database.game_description_for(RandovaniaGame.METROID_PRIME).region_list
 
-        for world_name in level_data.keys():
-            filepath = directory.with_name(f"{base_filename} {world_name}.png")
-            make_one_map(filepath, level_data, wl.world_with_name(world_name))
+        for region_name in level_data.keys():
+            filepath = directory.with_name(f"{base_filename} {region_name}.png")
+            make_one_map(filepath, level_data, rl.region_with_name(region_name))
 
     def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable) -> None:

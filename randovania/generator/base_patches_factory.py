@@ -7,7 +7,7 @@ from randovania.game_description.game_patches import GamePatches, ElevatorConnec
 from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
@@ -107,14 +107,14 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
                                             patches: GamePatches) -> GamePatches:
         elevators = configuration.elevators
 
-        world_list = filtered_database.game_description_for_layout(configuration).world_list
+        region_list = filtered_database.game_description_for_layout(configuration).region_list
         elevator_connection = {}
 
         if not elevators.is_vanilla:
             if rng is None:
                 raise MissingRng("Elevator")
 
-            elevator_db = elevator_distributor.create_elevator_database(world_list, elevators.editable_teleporters)
+            elevator_db = elevator_distributor.create_elevator_database(region_list, elevators.editable_teleporters)
             if elevators.mode == TeleporterShuffleMode.ECHOES_SHUFFLED:
                 connections = self.elevator_echoes_shuffled(configuration, patches, rng)
 
@@ -138,7 +138,7 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
             elevator_connection[teleporter] = destination
 
         assignment = [
-            (world_list.get_teleporter_node(identifier), target)
+            (region_list.get_teleporter_node(identifier), target)
             for identifier, target in elevator_connection.items()
         ]
 

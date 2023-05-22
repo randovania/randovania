@@ -163,7 +163,7 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
     connector.get_inventory = AsyncMock()
     connector.current_game_status = AsyncMock(return_value=(
         depth <= 1,  # has pending op
-        MagicMock() if depth > 0 else None,  # world
+        MagicMock() if depth > 0 else None,  # db
     ))
 
     should_disconnect = False

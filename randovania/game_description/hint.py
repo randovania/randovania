@@ -4,7 +4,7 @@ from enum import Enum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
 
 
 class HintType(Enum):
@@ -45,8 +45,8 @@ class HintLocationPrecision(Enum):
     # The exact location
     DETAILED = "detailed"
 
-    # Includes only the world of the location
-    WORLD_ONLY = "world-only"
+    # Includes only the region of the location
+    REGION_ONLY = "region-only"
 
     # Keybearer corpses
     KEYBEARER = "keybearer"

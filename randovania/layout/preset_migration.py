@@ -813,6 +813,26 @@ def _migrate_v51(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v52(preset: dict) -> dict:
+    def _fix(target):
+        target["region"] = target.pop("world_name")
+        target["area"] = target.pop("area_name")
+        target["node"] = target.pop("node_name")
+
+    config = preset["configuration"]
+
+    for location in config["starting_location"]:
+        _fix(location)
+
+    if "elevators" in config:
+        for location in config["elevators"]["excluded_teleporters"]:
+            _fix(location)
+        for location in config["elevators"]["excluded_targets"]:
+            _fix(location)
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -865,6 +885,7 @@ _MIGRATIONS = [
     _migrate_v49,
     _migrate_v50,
     _migrate_v51,
+    _migrate_v52,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

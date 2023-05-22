@@ -46,11 +46,11 @@ Examples:
 
 ## Database
 
-The sum total of all data that represents a game within Randovania. Contains a list of [Worlds](#world), a [Resource Database](#resource-database), a [Victory Condition](#victory-condition), and any other information necessary to represent the game.
+The sum total of all data that represents a game within Randovania. Contains a list of [Regions](#region), a [Resource Database](#resource-database), a [Victory Condition](#victory-condition), and any other information necessary to represent the game.
 
 ## Dock
 
-Represents some link between two [Areas](#area) that are directly adjacent. Docks usually represent things like doors, bridges, or other direct connections between areas, unlike [Teleporters](#teleporter), which represent means of travelling between two distant or disjointed Areas. Usually used to link two Areas within the same [World](#world), although it is possible for Docks to connect Areas between different Worlds.
+Represents some link between two [Areas](#area) that are directly adjacent. Docks usually represent things like doors, bridges, or other direct connections between areas, unlike [Teleporters](#teleporter), which represent means of travelling between two distant or disjointed Areas. Usually used to link two Areas within the same [Region](#region), although it is possible for Docks to connect Areas between different Regions.
 
 ## Event
 
@@ -205,7 +205,7 @@ By default, this process is run for all single-player Layouts after generation.
 
 ## Teleporter
 
-Any system that connects two conceptually disjointed [Areas](#area) of the game. Unlike [Docks](#dock), the areas they connect are not directly adjacent to one another. Teleporters are used to represent things like elevators, portals, fast-travel points, and, of course, actual teleporters. Teleporters are sually used to connect two distinct [Worlds](#world), though a Teleporter can also connect two Areas in the same World.
+Any system that connects two conceptually disjointed [Areas](#area) of the game. Unlike [Docks](#dock), the areas they connect are not directly adjacent to one another. Teleporters are used to represent things like elevators, portals, fast-travel points, and, of course, actual teleporters. Teleporters are sually used to connect two distinct [Region](#region), though a Teleporter can also connect two Areas in the same Region.
 
 ## Trick
 
@@ -230,9 +230,10 @@ Examples:
 - Reaching the Credits room in the Metroid Primes
 - Achieving any of the three endings in Cave Story
 
-## World
+## Region
 
-The largest subdivision used when mapping a game in Randovania. Worlds contain many [Areas](#area), and there are usually only a few Worlds per game.
+The largest subdivision used when mapping a game in Randovania. Region contain many [Areas](#area), and there are usually only a few Regions per game.
+Regions used to be called Worlds in previous versions of Randovania.
 
 Examples:
 - Chozo Ruins in Metroid Prime

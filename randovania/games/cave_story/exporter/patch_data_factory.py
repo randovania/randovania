@@ -12,9 +12,9 @@ from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CA
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
@@ -53,8 +53,8 @@ class CSPatchDataFactory(BasePatchDataFactory):
         ), self.players_config.player_index)
         nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
-        pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
-        for index in sorted(node.pickup_index for node in game_description.world_list.iterate_nodes()
+        pickups = {area.extra["map_name"]: {} for area in game_description.region_list.all_areas}
+        for index in sorted(node.pickup_index for node in game_description.region_list.iterate_nodes()
                             if isinstance(node, PickupNode)):
             target = self.patches.pickup_assignment.get(index, nothing_item)
 
@@ -62,8 +62,8 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 # TODO: will need to figure out what scripts to insert for other player's items
                 pass
 
-            node = game_description.world_list.node_from_pickup_index(index)
-            area = game_description.world_list.nodes_to_area(node)
+            node = game_description.region_list.node_from_pickup_index(index)
+            area = game_description.region_list.nodes_to_area(node)
 
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
@@ -81,19 +81,19 @@ class CSPatchDataFactory(BasePatchDataFactory):
 
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
         hints = {}
-        for logbook_node in game_description.world_list.iterate_nodes():
+        for logbook_node in game_description.region_list.iterate_nodes():
             if not isinstance(logbook_node, HintNode):
                 continue
 
             mapname = logbook_node.extra.get("event_map",
-                                             game_description.world_list.nodes_to_area(logbook_node).extra["map_name"])
+                                             game_description.region_list.nodes_to_area(logbook_node).extra["map_name"])
             event = logbook_node.extra["event"]
 
             if hints.get(mapname) is None:
                 hints[mapname] = {}
 
             hints[mapname][event] = {
-                "text": hints_for_identifier[game_description.world_list.identifier_for_node(logbook_node)],
+                "text": hints_for_identifier[game_description.region_list.identifier_for_node(logbook_node)],
                 "facepic": logbook_node.extra.get("facepic", "0000"),
                 "ending": logbook_node.extra.get("ending", "<END")
             }
@@ -278,13 +278,15 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 # started outside mimiga village
                 starting_script += "<FL+6201"
 
-        tra = game_description.world_list.area_by_area_location(self.patches.starting_location).extra["starting_script"]
+        tra = game_description.region_list.area_by_area_location(
+            self.patches.starting_location.area_identifier
+        ).extra["starting_script"]
         starting_script += tra
 
         # Softlock debug cat warps
         softlock_warps = {
             mapname: area.extra["softlock_warp"]
-            for area in game_description.world_list.all_areas
+            for area in game_description.region_list.all_areas
             if area.extra.get("softlock_warp") is not None
             for mapname in area.extra.get("softlock_maps", [area.extra["map_name"]])
         }

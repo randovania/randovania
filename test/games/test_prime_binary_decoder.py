@@ -33,9 +33,9 @@ sample_data = {
     },
     "layers": ["default"],
     "starting_location": {
-        "world_name": "Temple Grounds",
-        "area_name": "Landing Site",
-        "node_name": "Save Station"
+        "region": "Temple Grounds",
+        "area": "Landing Site",
+        "node": "Save Station"
     },
     "initial_states": {
         "Default": [
@@ -58,7 +58,7 @@ sample_data = {
             "to_shuffle_proportion": 1.0
         }
     },
-    "worlds": [],
+    "regions": [],
 }
 
 

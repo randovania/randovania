@@ -2,19 +2,19 @@ import copy
 import dataclasses
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.region_list import RegionList
 
 
 def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> GameDescription:
     if unknown_layers := active_layers - set(game.layers):
         raise ValueError(f"Unknown layers: {unknown_layers}")
 
-    worlds = []
+    regions = []
 
-    for world in game.world_list.worlds:
+    for region in game.region_list.regions:
         areas = []
-        for area in world.areas:
+        for area in region.areas:
             nodes = copy.copy(area.nodes)
             connections = {
                 node: copy.copy(connection) for node, connection in area.connections.items()
@@ -39,14 +39,14 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
                 extra=area.extra,
             ))
 
-        worlds.append(dataclasses.replace(world, areas=areas))
+        regions.append(dataclasses.replace(region, areas=areas))
 
     return GameDescription(
         game=game.game,
         resource_database=game.resource_database,
         layers=game.layers,
         dock_weakness_database=game.dock_weakness_database,
-        world_list=WorldList(worlds),
+        region_list=RegionList(regions),
         victory_condition=game.victory_condition,
         starting_location=game.starting_location,
         initial_states=game.initial_states,
