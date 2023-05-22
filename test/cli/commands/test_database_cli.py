@@ -71,7 +71,7 @@ def test_write_game_descriptions(mocker):
     ])
 
 
-@pytest.mark.parametrize("check", [False])
+@pytest.mark.parametrize("check", [False, True])
 def test_refresh_game_description_logic(check, mocker):
     # Setup
     args = MagicMock()
