@@ -456,6 +456,8 @@ def write_as_split_files(data: dict, base_path: Path):
     worlds = data.pop("worlds")
     data["worlds"] = []
 
+    base_path.mkdir(parents=True, exist_ok=True)
+
     for world in worlds:
         name = WORLD_NAME_TO_FILE_NAME_RE.sub(r'', world["name"])
         data["worlds"].append(f"{name}.json")

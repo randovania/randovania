@@ -11,7 +11,9 @@ from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attri
 
 from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
@@ -50,6 +52,81 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
                 pickup['model'] = converted_model_name
 
 
+def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepath: Path):
+    import networkx
+    import numpy
+    import logging
+
+    for name in ["matplotlib", "matplotlib.font", "matplotlib.pyplot"]:
+        logger = logging.getLogger(name)
+        logger.setLevel(logging.CRITICAL)
+        logger.disabled = True
+
+    import matplotlib
+    matplotlib._log.disabled = True
+    from matplotlib import pyplot
+
+    # model this world's connections as a graph
+    graph = networkx.DiGraph()
+    graph.add_edges_from(room_connections)
+
+    # render the graph to png
+    pos = networkx.spring_layout(graph, k=1.2 / numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
+    pyplot.figure(3, figsize=(22, 22))
+    networkx.draw(graph, pos=pos, node_size=800)
+    networkx.draw_networkx_labels(graph, pos=pos, font_weight='bold', font_size=4)
+    pyplot.savefig(filepath, bbox_inches='tight', dpi=220)
+
+    # reset for next graph
+    pyplot.clf()
+
+
+def make_one_map(filepath: Path, level_data: dict, world: World):
+    from randovania.game_description.world.dock_node import DockNode
+
+    def wrap_text(text):
+        return '\n'.join(wrap(text, 18))
+
+    # make list of all edges between rooms
+    room_connections = list()
+
+    # add edges which were not shuffled
+    disabled_doors = set()
+
+    for area in world.areas:
+        for node in area.nodes:
+            if not isinstance(node, DockNode):
+                continue
+
+            src_name = area.name
+            src_dock_num = node.extra["dock_index"]
+
+            if node.default_dock_weakness.name == "Permanently Locked":
+                disabled_doors.add((src_name, src_dock_num))
+
+            if node.extra["nonstandard"]:
+                dst_name = node.default_connection.area_identifier.area_name
+                room_connections.append((wrap_text(src_name), wrap_text(dst_name)))
+
+    # add edges which were shuffled
+    for room_name in level_data[world.name]["rooms"].keys():
+        room = level_data[world.name]["rooms"][room_name]
+        if "doors" not in room.keys():
+            continue
+
+        for dock_num in room["doors"]:
+            if "destination" not in room["doors"][dock_num].keys():
+                continue
+
+            if (room_name, int(dock_num)) in disabled_doors:
+                continue
+
+            dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
+            room_connections.append((wrap_text(room_name), wrap_text(dst_room_name)))
+
+    create_map_using_matplotlib(room_connections, filepath)
+
+
 class PrimeGameExporter(GameExporter):
     @property
     def is_busy(self) -> bool:
@@ -66,80 +143,11 @@ class PrimeGameExporter(GameExporter):
         return False
 
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
-        def make_one_map(filepath, level_data, world_name):
-            from randovania.game_description import default_database
-            from randovania.game_description.world.dock_node import DockNode
-
-            import networkx
-            import numpy
-            import logging
-
-            for name in ["matplotlib", "matplotlib.font", "matplotlib.pyplot"]:
-                logger = logging.getLogger(name)
-                logger.setLevel(logging.CRITICAL)
-                logger.disabled = True
-
-            import matplotlib
-            matplotlib._log.disabled = True
-            from matplotlib import pyplot
-
-            def wrap_text(text):
-                return '\n'.join(wrap(text, 18))
-
-            # make list of all edges between rooms
-            room_connections = list()
-
-            # add edges which were not shuffled
-            disabled_doors = set()
-            world = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list.world_with_name(
-                world_name)
-            for area in world.areas:
-                for node in area.nodes:
-                    if not isinstance(node, DockNode):
-                        continue
-
-                    src_name = area.name
-                    src_dock_num = node.extra["dock_index"]
-
-                    if node.default_dock_weakness.name == "Permanently Locked":
-                        disabled_doors.add((src_name, src_dock_num))
-
-                    if node.extra["nonstandard"]:
-                        dst_name = node.default_connection.area_identifier.area_name
-                        room_connections.append((wrap_text(src_name), wrap_text(dst_name)))
-
-            # add edges which were shuffled
-            for room_name in level_data[world_name]["rooms"].keys():
-                room = level_data[world_name]["rooms"][room_name]
-                if "doors" not in room.keys():
-                    continue
-                for dock_num in room["doors"]:
-                    if "destination" not in room["doors"][dock_num].keys():
-                        continue
-
-                    if (room_name, int(dock_num)) in disabled_doors:
-                        continue
-
-                    dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
-                    room_connections.append((wrap_text(room_name), wrap_text(dst_room_name)))
-
-            # model this world's connections as a graph
-            graph = networkx.DiGraph()
-            graph.add_edges_from(room_connections)
-
-            # render the graph to png
-            pos = networkx.spring_layout(graph, k=1.2 / numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
-            pyplot.figure(3, figsize=(22, 22))
-            networkx.draw(graph, pos=pos, node_size=800)
-            networkx.draw_networkx_labels(graph, pos=pos, font_weight='bold', font_size=4)
-            pyplot.savefig(filepath, bbox_inches='tight', dpi=220)
-
-            # reset for next graph
-            pyplot.clf()
+        wl = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list
 
         for world_name in level_data.keys():
             filepath = directory.with_name(f"{base_filename} {world_name}.png")
-            make_one_map(filepath, level_data, world_name)
+            make_one_map(filepath, level_data, wl.world_with_name(world_name))
 
     def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable) -> None:

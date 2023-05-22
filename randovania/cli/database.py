@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.games import default_data, binary_data
@@ -194,24 +195,27 @@ def update_human_readable(sub_parsers):
     parser.set_defaults(func=update_human_readable_logic)
 
 
-def refresh_all_logic(args):
+def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescription]):
     from randovania.game_description import pretty_print
-    from randovania.game_description import data_reader, data_writer
+    from randovania.game_description import data_writer
+
+    for game, gd in game_descriptions.items():
+        logging.info("Writing %s", game.long_name)
+        new_data = data_writer.write_game_description(gd)
+
+        path = game.data_path.joinpath("json_data")
+        data_writer.write_as_split_files(new_data, path)
+        pretty_print.write_human_readable_game(gd, path)
+
+
+def refresh_game_description_logic(args):
     from randovania.game_description import integrity_check
 
     gd_per_game = {}
-    path_per_game = {}
-    pdb_per_game = {}
 
-    for game in iterate_enum(RandovaniaGame):
+    for game in RandovaniaGame.all_games():
         logging.info("Reading %s", game.long_name)
-        path, data = default_data.read_json_then_binary(game)
-        path_per_game[game] = path
-        gd = data_reader.decode_data(data)
-        gd_per_game[game] = gd
-
-        pdb = default_database.pickup_database_for_game(game)
-        pdb_per_game[game] = pdb
+        gd_per_game[game] = default_database.game_description_for(game)
 
     should_stop = False
     if args.integrity_check:
@@ -223,24 +227,14 @@ def refresh_all_logic(args):
                 if game.data.development_state.is_stable:
                     should_stop = True
 
-    if should_stop:
-        return
-
-    for game, gd in gd_per_game.items():
-        path = path_per_game[game]
-        logging.info("Writing %s", game.long_name)
-        new_data = data_writer.write_game_description(gd)
-        data_writer.write_as_split_files(new_data, path)
-        path.with_suffix("").mkdir(parents=True, exist_ok=True)
-        pretty_print.write_human_readable_game(gd, path.with_suffix(""))
-
-        default_database.write_pickup_database_for_game(pdb_per_game[game], game)
+    if not should_stop:
+        write_game_descriptions(gd_per_game)
 
 
-def refresh_all_command(sub_parsers):
+def refresh_game_description_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "refresh-all",
-        help="Re-exports the json and txt files of all databases",
+        "refresh-game-description",
+        help="Re-exports the json and txt files of all game descriptions",
         formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.add_argument(
@@ -248,7 +242,23 @@ def refresh_all_command(sub_parsers):
         help="Runs the integrity check on all games, refusing to continue if a non-experimental game has issues.",
         action="store_true",
     )
-    parser.set_defaults(func=refresh_all_logic)
+    parser.set_defaults(func=refresh_game_description_logic)
+
+
+def refresh_pickup_database_logic(args):
+    for game in iterate_enum(RandovaniaGame):
+        logging.info("Updating %s", game.long_name)
+        pdb = default_database.pickup_database_for_game(game)
+        default_database.write_pickup_database_for_game(pdb, game)
+
+
+def refresh_pickup_database_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "refresh-pickup-database",
+        help="Re-exports the json of all pickup databases",
+        formatter_class=argparse.MetavarTypeHelpFormatter,
+    )
+    parser.set_defaults(func=refresh_pickup_database_logic)
 
 
 def _list_paths_with_resource(game,
@@ -618,7 +628,8 @@ def create_subparsers(sub_parsers):
     create_convert_database_command(sub_parsers)
     view_area_command(sub_parsers)
     update_human_readable(sub_parsers)
-    refresh_all_command(sub_parsers)
+    refresh_game_description_command(sub_parsers)
+    refresh_pickup_database_command(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
     render_worlds_graph(sub_parsers)
