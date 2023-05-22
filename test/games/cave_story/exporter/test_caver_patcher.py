@@ -1,14 +1,15 @@
-import json
 from pathlib import Path
 from unittest.mock import PropertyMock
 
 import pytest
 
 from randovania.games.cave_story.exporter.patch_data_factory import CSPatchDataFactory
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, CSMusic, CSSong, MusicRandoType, \
-    MyChar
+from randovania.games.cave_story.layout.cs_cosmetic_patches import (
+    CSCosmeticPatches, CSMusic, CSSong, MusicRandoType, MyChar
+)
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib import json_lib
 
 
 @pytest.mark.parametrize("rdvgame", [
@@ -59,11 +60,10 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
         mychar = Path(data["mychar"])
         data["mychar"] = mychar.name
 
-    # Uncomment the following lines to update:
-    # with test_files_dir.joinpath("caver_expected_data", f"{out_file}.json").open("w") as f:
-    #     json.dump(data, f)
+    path = test_files_dir.joinpath("caver_expected_data", f"{out_file}.json")
+    expected_data = json_lib.read_path(path)
 
-    with test_files_dir.joinpath("caver_expected_data", f"{out_file}.json").open("r") as f:
-        expected_data = json.load(f)
+    # # Uncomment the following lines to update:
+    # json_lib.write_path(path, data); assert False
 
     assert data == expected_data

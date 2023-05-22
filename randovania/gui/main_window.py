@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import base64
 import functools
-import json
 import logging
 import os
 import re
@@ -30,7 +29,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib import enum_lib
+from randovania.lib import enum_lib, json_lib
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
@@ -503,9 +502,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if database_path is None:
             return
 
-        with database_path.open("r") as database_file:
-            self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
-            self._data_editor.show()
+        self._data_editor = DataEditorWindow(json_lib.read_path(database_path), database_path, False, True)
+        self._data_editor.show()
 
     async def open_map_tracker(self, configuration: Preset):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker

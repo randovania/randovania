@@ -7,6 +7,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
+from randovania.lib import json_lib
 
 
 @pytest.fixture(
@@ -22,8 +23,7 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
 def _config_with_data(request):
     game: RandovaniaGame = request.param["game"]
 
-    with game.data_path.joinpath("pickup_database", "default_state", "ammo-pickups.json").open() as open_file:
-        default_data = json.load(open_file)
+    default_data = json_lib.read_path(game.data_path.joinpath("pickup_database", "default_state", "ammo-pickups.json"))
 
     default = AmmoPickupConfiguration.from_json(default_data, game)
     data = copy.deepcopy(default_data)

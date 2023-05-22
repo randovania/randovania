@@ -1,13 +1,11 @@
 import copy
 import dataclasses
 import functools
-import json
 import shutil
 from pathlib import Path
 
 import mp2hudcolor
 from retro_data_structures.asset_manager import PathFileProvider
-
 
 from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -150,6 +148,4 @@ class EchoesGameExporter(GameExporter):
 @functools.lru_cache
 def decode_randomizer_data() -> dict:
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
-
-    with randomizer_data_path.open() as randomizer_data_file:
-        return json.load(randomizer_data_file)
+    return json_lib.read_path(randomizer_data_path)

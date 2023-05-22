@@ -14,6 +14,7 @@ from randovania.games.prime1.exporter.patch_data_factory import prime1_pickup_de
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib import json_lib
 
 
 @pytest.mark.parametrize("other_player", [False, True])
@@ -77,13 +78,10 @@ def _test_preset(rdvgame_file: Path, expected_results_file: Path, mocker):
     data = PrimePatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with expected_results_file.open("r") as file:
-        expected_data = json.load(file)
+    expected_data = json_lib.read_path(expected_results_file)
 
-    # Uncomment to easily view diff of failed test
-    # expected_results_file.write_text(
-    #     json.dumps(data, indent=4, separators=(',', ': '))
-    # )
+    # # Uncomment to easily view diff of failed test
+    # json_lib.write_path(expected_results_file, data)
 
     # Ignore the part of the main menu message which has the randovania version in it
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]

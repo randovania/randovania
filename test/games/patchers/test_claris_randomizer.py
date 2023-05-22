@@ -242,7 +242,7 @@ def test_apply_patcher_file(
         "randovania.lib.status_update_lib.create_progress_update_from_successive_messages", autospec=True
     )
     mock_update_json_file: MagicMock = mocker.patch(
-        "randovania.games.prime2.patcher.claris_randomizer.update_json_file", autospec=True
+        "randovania.lib.json_lib.write_path", autospec=True
     )
     mock_get_custom_data_path: MagicMock = mocker.patch(
         "randovania.games.prime2.patcher.claris_randomizer._get_custom_data_path", autospec=True
@@ -284,9 +284,3 @@ def test_apply_patcher_file(
         mock_add_menu_mod_to_files.assert_not_called()
 
     assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION
-
-
-def test_update_json_file(tmp_path):
-    p = tmp_path.joinpath("foo/bar.json")
-    claris_randomizer.update_json_file(p, {"a": 5})
-    assert p.read_text() == '{\n    "a": 5\n}'

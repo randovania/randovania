@@ -7,11 +7,13 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
+from randovania.lib import json_lib
 
 
 def _create_config_for(game: RandovaniaGame, replace: dict):
-    with game.data_path.joinpath("pickup_database", "default_state", "standard-pickups.json").open() as open_file:
-        default_data = json.load(open_file)
+    default_data = json_lib.read_path(
+        game.data_path.joinpath("pickup_database", "default_state", "standard-pickups.json")
+    )
 
     default_data["minimum_random_starting_pickups"] = 0
     default_data["maximum_random_starting_pickups"] = 0

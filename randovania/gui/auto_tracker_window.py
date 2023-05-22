@@ -1,6 +1,5 @@
 import collections
 import functools
-import json
 from pathlib import Path
 
 from PySide6 import QtWidgets, QtGui
@@ -14,18 +13,20 @@ from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.interface_common.options import Options
+from randovania.lib import json_lib
 
 
 def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:
-    with get_data_path().joinpath("gui_assets/tracker/trackers.json").open("r") as trackers_file:
-        data = json.load(trackers_file)["trackers"]
+    data = json_lib.read_path(
+        get_data_path().joinpath("gui_assets/tracker/trackers.json")
+    )
 
     return {
         RandovaniaGame(game): {
             name: get_data_path().joinpath("gui_assets/tracker", file_name)
             for name, file_name in trackers.items()
         }
-        for game, trackers in data.items()
+        for game, trackers in data["trackers"].items()
     }
 
 
@@ -113,8 +114,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             )
             self.gridLayout.addWidget(self._dummy_tracker, 0, 0, 1, 1)
         else:
-            with self.trackers[target_game][tracker_name].open("r") as tracker_details_file:
-                tracker_details = json.load(tracker_details_file)
+            tracker_details = json_lib.read_path(self.trackers[target_game][tracker_name])
 
             self.item_tracker = ItemTrackerWidget(tracker_details)
             self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
