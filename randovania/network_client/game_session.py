@@ -10,7 +10,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib.construct_lib import convert_to_raw_python
-from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -107,6 +106,7 @@ class GameSessionEntry:
 
     @classmethod
     def from_json(cls, data) -> "GameSessionEntry":
+        from randovania.network_common.binary_formats import BinaryGameSessionEntry
         data = convert_to_raw_python(BinaryGameSessionEntry.parse(data))
 
         player_entries = [
