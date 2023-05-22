@@ -1,11 +1,15 @@
 import dataclasses
+import datetime
+import functools
 import typing
 import uuid
 from enum import Enum
 
 import construct
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.lib import type_lib
+from randovania.lib.construct_lib import convert_to_raw_python
 
 BinStr = construct.PascalString(construct.VarInt, "utf-8")
 
@@ -18,14 +22,21 @@ class DictAdapter(construct.Adapter):
         return list(obj.items())
 
 
-def construct_for_dataclass(cls) -> construct.Construct:
+def _construct_for_dataclass(cls) -> construct.Construct:
+    resolved_types = typing.get_type_hints(cls)
+
     fields = []
 
     for field in dataclasses.fields(cls):
         if not field.init:
             continue
+
+        field_type = field.type
+        if isinstance(field_type, str):
+            field_type = resolved_types[field.name]
+
         fields.append(construct.Renamed(
-            construct_for_type(field.type),
+            construct_for_type(field_type),
             field.name,
         ))
 
@@ -34,12 +45,14 @@ def construct_for_dataclass(cls) -> construct.Construct:
 
 _direct_mapping = {
     bool: construct.Flag,
-    int: construct.VarInt,
+    int: construct.ZigZag,
     str: BinStr,
     uuid.UUID: BinStr,
+    datetime.datetime: BinStr,
 }
 
 
+@functools.cache
 def construct_for_type(type_: type) -> construct.Construct:
     type_, is_optional = type_lib.resolve_optional(type_)
 
@@ -82,6 +95,18 @@ def construct_for_type(type_: type) -> construct.Construct:
         ))
 
     elif dataclasses.is_dataclass(type_):
-        return construct_for_dataclass(type_)
+        return _construct_for_dataclass(type_)
 
     raise TypeError(f"Unsupported type: {type_}.")
+
+
+T = typing.TypeVar("T", bound=JsonDataclass)
+
+
+def encode_json_dataclass(obj: JsonDataclass) -> bytes:
+    return construct_for_type(type(obj)).build(obj.as_json)
+
+
+def decode_json_dataclass(data: bytes, type_: type[T]) -> T:
+    decoded = construct_for_type(type_).parse(data)
+    return type_.from_json(convert_to_raw_python(decoded))
