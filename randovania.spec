@@ -14,7 +14,6 @@ game_assets = [(f'randovania/games/{game.value}/assets', f'games/{game.value}/as
 
 datas=[
     ("randovania/data/configuration.json", "data/"),
-    ("randovania/data/migration_data.json", "data/"),
     ("randovania/data/binary_data", "data/binary_data"),
     ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
     ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),

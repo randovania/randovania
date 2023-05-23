@@ -19,6 +19,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
+from randovania.lib import json_lib
 
 
 def test_create_patch_data(test_files_dir, mocker):
@@ -36,8 +37,7 @@ def test_create_patch_data(test_files_dir, mocker):
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "starter_preset.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = json_lib.read_path(test_files_dir.joinpath("patcher_data", "dread", "starter_preset.json"))
 
     assert data == expected_data
 
@@ -180,8 +180,8 @@ def setup_and_teardown_for_wrong_custom_spawn():
     # modify the default start to have no collision_camera (asset_id) and no vanilla
     # actor name for a start point
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Intro Room")
+    region = game_desc.region_list.region_with_name("Artaria")
+    area = region.area_by_name("Intro Room")
     node = area.node_with_name("Start Point")
     modified_node = dataclasses.replace(node, extra={})
     area.nodes.remove(node)
@@ -216,8 +216,8 @@ def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker, setup_and_
 def setup_and_teardown_for_custom_spawn():
     # modify a node to be a valid start point without a vanilla spawn
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Charge Tutorial")
+    region = game_desc.region_list.region_with_name("Artaria")
+    area = region.area_by_name("Charge Tutorial")
     node = area.node_with_name("Start Point")
     modified_node = dataclasses.replace(node, valid_starting_location=True)
     area.nodes.remove(node)
@@ -241,8 +241,7 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "custom_start.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = test_files_dir.read_json("patcher_data", "dread", "custom_start.json")
 
     assert data == expected_data
 
@@ -261,7 +260,6 @@ def test_create_patch_with_crazy_settings(test_files_dir, mocker, setup_and_tear
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "crazy_settings.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = test_files_dir.read_json("patcher_data", "dread", "crazy_settings.json")
 
     assert data == expected_data

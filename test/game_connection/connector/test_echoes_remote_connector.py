@@ -285,7 +285,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
 async def test_fetch_game_status(connector: EchoesRemoteConnector, version: EchoesDolVersion,
                                  has_world, has_pending_op, correct_vtable):
     # Setup
-    expected_world = connector.game.world_list.worlds[0]
+    expected_world = connector.game.region_list.regions[0]
 
     connector.executor.perform_memory_operations.side_effect = lambda ops: {
         ops[0]: expected_world.extra["asset_id"].to_bytes(4, "big") if has_world else b"DEAD",

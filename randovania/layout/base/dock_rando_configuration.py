@@ -7,7 +7,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.world.dock import DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 
@@ -118,15 +118,6 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     @property
     def possible_change_to(self) -> Iterator[DockWeakness]:
         yield from self._possible_change_to(self.game, self.dock_type_name)
-
-    @classmethod
-    def default_state(cls, game: RandovaniaGame, dock_type_name: str):
-        return cls(
-            game=game,
-            dock_type_name=dock_type_name,
-            can_change_from=set(cls._possible_change_from(game, dock_type_name)),
-            can_change_to=set(cls._possible_change_to(game, dock_type_name)),
-        )
 
 
 @dataclass(frozen=True)

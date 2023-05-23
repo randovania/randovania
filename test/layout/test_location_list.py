@@ -4,8 +4,8 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib.location_list import LocationList
 
@@ -13,19 +13,19 @@ from randovania.layout.lib.location_list import LocationList
 @pytest.fixture(
     params=[
         {"encoded": b'\x00', "json": []},
-        {"encoded": b'\x0cP', "json": [{"world_name": "Temple Grounds", "area_name": "Landing Site", "node_name": "Save Station"}]},
+        {"encoded": b'\x0cP', "json": [{"region": "Temple Grounds", "area": "Landing Site", "node": "Save Station"}]},
         {"encoded": b'\x12\x8a', "json": [
-            {"world_name": "Temple Grounds", "area_name": "Hall of Honored Dead", "node_name": "Door to Path of Honor"},
-            {"world_name": "Temple Grounds", "area_name": "Path of Eyes", "node_name": "Portal from Abandoned Base"}
+            {"region": "Temple Grounds", "area": "Hall of Honored Dead", "node": "Door to Path of Honor"},
+            {"region": "Temple Grounds", "area": "Path of Eyes", "node": "Portal from Abandoned Base"}
         ]},
     ],
     name="location_with_data")
 def _location_with_data(request, mocker, echoes_game_description):
-    world_list = echoes_game_description.world_list
+    region_list = echoes_game_description.region_list
     nodes = list(itertools.islice(
-        (NodeIdentifier.create(world.name, area.name, node.name)
-         for world in world_list.worlds
-         for area in world.areas
+        (NodeIdentifier.create(region.name, area.name, node.name)
+         for region in region_list.regions
+         for area in region.areas
          for node in area.actual_nodes
          if area.has_start_node() and node.valid_starting_location), 15))
 

@@ -4,9 +4,9 @@ from typing import Iterator, Callable, TypeVar, Iterable
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 
 
@@ -15,24 +15,22 @@ def _sorted_node_identifiers(elements: Iterable[NodeIdentifier]) -> list[NodeIde
 
 
 def node_and_area_with_filter(game: RandovaniaGame, condition: Callable[[Area, Node], bool]) -> list[NodeIdentifier]:
-    world_list = default_database.game_description_for(game).world_list
+    region_list = default_database.game_description_for(game).region_list
     identifiers = {
-        NodeIdentifier.create(world.name, area.name, node.name)
-        for world in world_list.worlds
-        for area in world.areas
+        node.identifier
+        for area in region_list.all_areas
         for node in area.actual_nodes
         if condition(area, node)
     }
     return _sorted_node_identifiers(identifiers)
 
+
 def node_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node], bool]) -> list[NodeIdentifier]:
-    world_list = default_database.game_description_for(game).world_list
+    region_list = default_database.game_description_for(game).region_list
     identifiers = [
-        NodeIdentifier.create(world.name, area.name, node.name)
-        for world in world_list.worlds
-        for area in world.areas
-        for node in area.actual_nodes
-        if condition(node)
+        node.identifier
+        for node in region_list.all_nodes
+        if not node.is_derived_node and condition(node)
     ]
     return _sorted_node_identifiers(identifiers)
 

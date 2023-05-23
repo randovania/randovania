@@ -17,7 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import (
     ResourceCollection
 )
-from randovania.game_description.world.world import World
+from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
 from randovania.lib.infinite_timer import InfiniteTimer
 from randovania.patching.prime import (all_prime_dol_patches)
@@ -33,7 +33,7 @@ class PrimeRemoteConnector(RemoteConnector):
     version: all_prime_dol_patches.BasePrimeDolVersion
     game: GameDescription
     _last_message_size: int = 0
-    _world: World | None = None
+    _world: Region | None = None
     executor: MemoryOperationExecutor
     remote_pickups: tuple[PickupEntryWithOwner, ...]
     message_cooldown: float = 0.0
@@ -68,12 +68,12 @@ class PrimeRemoteConnector(RemoteConnector):
         """struct.unpack format string for decoding an asset id"""
         raise NotImplementedError()
 
-    def world_by_asset_id(self, asset_id: int) -> World | None:
-        for world in self.game.world_list.worlds:
-            if world.extra["asset_id"] == asset_id:
-                return world
+    def world_by_asset_id(self, asset_id: int) -> Region | None:
+        for region in self.game.region_list.regions:
+            if region.extra["asset_id"] == asset_id:
+                return region
 
-    def _current_status_world(self, world_asset_id: bytes | None, vtable_bytes: bytes | None) -> World | None:
+    def _current_status_world(self, world_asset_id: bytes | None, vtable_bytes: bytes | None) -> Region | None:
         """
         Helper for `current_game_status`. Calculates the current World based on raw world_asset_id and vtable pointer.
         :param world_asset_id: Bytes for the current world asset id. Might be None.
@@ -95,7 +95,7 @@ class PrimeRemoteConnector(RemoteConnector):
         asset_id = struct.unpack(self._asset_id_format(), world_asset_id)[0]
         return self.world_by_asset_id(asset_id)
 
-    async def current_game_status(self) -> tuple[bool, World | None]:
+    async def current_game_status(self) -> tuple[bool, Region | None]:
         raise NotImplementedError()
 
     async def _memory_op_for_items(self, items: list[ItemResourceInfo],
@@ -265,11 +265,11 @@ class PrimeRemoteConnector(RemoteConnector):
     async def update(self):
         try:
             self.logger.debug("Start update")
-            has_pending_op, world = await self.current_game_status()
-            if world != self._world:
-                self.PlayerLocationChanged.emit(PlayerLocationEvent(world, None))
-            self._world = world
-            if world is not None:
+            has_pending_op, region = await self.current_game_status()
+            if region != self._world:
+                self.PlayerLocationChanged.emit(PlayerLocationEvent(region, None))
+            self._world = region
+            if region is not None:
                 await self.update_current_inventory()
                 if not has_pending_op:
                     self.message_cooldown = max(self.message_cooldown - self._dt, 0.0)

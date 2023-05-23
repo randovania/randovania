@@ -6,7 +6,7 @@ from randovania.game_description.hint import (
     PrecisionPair, HintDarkTemple, Hint, HintType
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
@@ -58,8 +58,8 @@ class EchoesHintDistributor(HintDistributor):
             (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
             (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
 
-            (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED, False): 2,
-            (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
+            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, False): 2,
+            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
         }
 
         hints = []

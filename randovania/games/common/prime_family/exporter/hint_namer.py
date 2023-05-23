@@ -8,18 +8,18 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-def _area_name(world_list: WorldList, pickup_node: PickupNode, hide_world: bool) -> str:
-    area = world_list.nodes_to_area(pickup_node)
-    if hide_world:
+def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:
+    area = region_list.nodes_to_area(pickup_node)
+    if hide_region:
         return area.name
     else:
-        return world_list.area_name(area)
+        return region_list.area_name(area)
 
 
 def colorize_text(color: str, text: str, with_color: bool):
@@ -40,7 +40,7 @@ class PrimeFamilyHintNamer(HintNamer):
                 "{determiner.title}{pickup} can be found in {node}.",
                 self,
             ),
-            HintLocationPrecision.WORLD_ONLY: TemplatedFormatter(
+            HintLocationPrecision.REGION_ONLY: TemplatedFormatter(
                 "{determiner.title}{pickup} can be found in {node}.",
                 self,
             ),
@@ -58,14 +58,14 @@ class PrimeFamilyHintNamer(HintNamer):
     def format_player(self, name: str, with_color: bool) -> str:
         return colorize_text(self.color_player, name, with_color)
 
-    def format_world(self, location: PickupLocation, with_color: bool) -> str:
-        world_list = default_database.game_description_for(location.game).world_list
-        result = world_list.world_name_from_node(world_list.node_from_pickup_index(location.location), True)
+    def format_region(self, location: PickupLocation, with_color: bool) -> str:
+        region_list = default_database.game_description_for(location.game).region_list
+        result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
         return colorize_text(self.color_location, result, with_color)
 
-    def format_area(self, location: PickupLocation, with_world: bool, with_color: bool) -> str:
-        world_list = default_database.game_description_for(location.game).world_list
-        result = _area_name(world_list, world_list.node_from_pickup_index(location.location), not with_world)
+    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
+        region_list = default_database.game_description_for(location.game).region_list
+        result = _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
         return colorize_text(self.color_location, result, with_color)
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
@@ -94,7 +94,7 @@ class PrimeFamilyHintNamer(HintNamer):
         return "{} is located in {}{}.".format(
             colorize_text(self.color_item, resource.long_name, with_color),
             determiner,
-            self.format_location(location, with_world=True, with_area=not hide_area, with_color=with_color),
+            self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color),
         )
 
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:

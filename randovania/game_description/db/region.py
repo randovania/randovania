@@ -5,13 +5,13 @@ import typing
 from typing import Iterator
 
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import Node
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node import Node
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
-class World:
+class Region:
     name: str
     areas: list[Area]
     extra: dict[str, typing.Any]
@@ -24,13 +24,9 @@ class World:
         return self.extra.get("dark_name")
 
     @property
-    def world_asset_id(self) -> int:
-        return self.extra["asset_id"]
-
-    @property
     def all_nodes(self) -> Iterator[Node]:
         """
-        Iterates over all nodes in all areas of this world.
+        Iterates over all nodes in all areas of this region.
         :return:
         """
         for area in self.areas:
@@ -50,16 +46,16 @@ class World:
         raise KeyError(f"Unknown name: {area_name}")
 
     def area_by_identifier(self, location: AreaIdentifier) -> Area:
-        if self.name != location.world_name:
-            raise ValueError(f"Attempting to use AreaIdentifier for {location.world_name} with world {self.name}")
+        if self.name != location.region_name:
+            raise ValueError(f"Attempting to use AreaIdentifier for {location.region_name} with region {self.name}")
         return self.area_by_name(location.area_name)
 
-    def correct_name(self, in_dark_world: bool) -> str:
-        if in_dark_world and self.dark_name is not None:
+    def correct_name(self, use_dark_name: bool) -> str:
+        if use_dark_name and self.dark_name is not None:
             return self.dark_name
         return self.name
 
-    def duplicate(self) -> World:
+    def duplicate(self) -> Region:
         return dataclasses.replace(
             self,
             areas=[

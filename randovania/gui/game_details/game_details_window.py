@@ -162,7 +162,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
 
         pickup_names = []
-        for index in range(game.world_list.num_pickup_nodes):
+        for index in range(game.region_list.num_pickup_nodes):
             p_index = PickupIndex(index)
             if p_index in patches.pickup_assignment:
                 name = patches.pickup_assignment[p_index].pickup.name

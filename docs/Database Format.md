@@ -1,12 +1,13 @@
 # Instructions and Standards for the Development of Organized Logic Databases  
   
   
-## WORLDS, AREAS, AND NODES  
-There exist 3 tiers of "Location" in the Randovania logic database - Worlds, Areas, and Nodes.  
+## REGIONS, AREAS, AND NODES  
+There exist 3 tiers of "Location" in the Randovania logic database - Regions, Areas, and Nodes.  
   
-![Worlds, Areas, and Nodes](./img/world_area_node.png)  
+![Regions, Areas, and Nodes](./img/world_area_node.png)  
   
-Worlds represent large swathes of the game's playable space, and a standard game will only have a few of these, often less than ten. Worlds contain many areas grouped together. The criteria for what is and isn't its own world are mostly arbitrary. Generally, areas within the same world should be geographically adjacent, rather than being disjoint, and worlds should have common themes to their design - in other words, areas within a world should feel as though they belong to the same group. In addition, worlds are usually drawn up as they are demarcated in the game itself, if a similar distinction exists within the game. Worlds usually have only a few connections to other worlds, such as elevators, portals, or teleporters, though standard docks can still connect areas between two different worlds.  
+Regions represent large swathes of the game's playable space, and a standard game will only have a few of these, often less than ten. Regions contain many areas grouped together. The criteria for what is and isn't its own region are mostly arbitrary. Generally, areas within the same region should be geographically adjacent, rather than being disjoint, and regions should have common themes to their design - in other regions, areas within a region should feel as though they belong to the same group. In addition, regions are usually drawn up as they are demarcated in the game itself, if a similar distinction exists within the game. Regions usually have only a few connections to other regions, such as elevators, portals, or teleporters, though standard docks can still connect areas between two different regions.
+Regions were previously called Worlds.
   
 Areas represent a single bite-sized chunk of the game, usually only a single room. The term "area" is often used interchangeably with room. Areas should remain true to the game - avoid excluding areas, even if you deem them irrelevant to randomization. Often, areas aren't given explicit or canonical names, and in this case it will be up to the database author to choose an appropriate name for a given area.  
   
@@ -24,7 +25,7 @@ Pickup Nodes represent a location in the game where something can be collected, 
   
 Events represent a one-time, irreversible action the player can take, and they can be performed if the generator is capable of reaching an associated event node. Event nodes cannot be crossed without activating the event in question. Events can only be performed once in a playthrough, and cannot be undone.  
   
-Dock nodes represent connections between two areas. Docks should represent standard doors or connections, linking two geographically adjacent but distinct game areas. Docks come in several different flavors, defined by the database creator, each of which carrying their own logical requirements to be used. While it is possible for a dock to connect two areas from different worlds, special devices such as portals, elevators, fast-travel beacons, and other long-distance or cross-world travel mechanisms that don't resemble standard docks should be represented as Teleporters.  
+Dock nodes represent connections between two areas. Docks should represent standard doors or connections, linking two geographically adjacent but distinct game areas. Docks come in several different flavors, defined by the database creator, each of which carrying their own logical requirements to be used. While it is possible for a dock to connect two areas from different regions, special devices such as portals, elevators, fast-travel beacons, and other long-distance or cross-region travel mechanisms that don't resemble standard docks should be represented as Teleporters.  
   
   
 ## DEFINING REQUIREMENTS  

@@ -15,9 +15,9 @@ from discord.ext.commands import Converter, Context
 
 from randovania.game_description import default_database, pretty_print
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import NodeLocation, Node
-from randovania.game_description.world.world import World
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.node import NodeLocation, Node
+from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
@@ -32,8 +32,8 @@ class AreaWidget:
 
 
 @dataclasses.dataclass()
-class SplitWorld:
-    world: World
+class SplitRegion:
+    region: Region
     name: str
     areas: list[AreaWidget]
     command_id: str
@@ -127,11 +127,11 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
     return result
 
 
-async def create_split_worlds(db: GameDescription) -> list[SplitWorld]:
-    world_options = []
+async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
+    region_options = []
 
     def create_id():
-        return f"{db.game.value}_world_{len(world_options)}"
+        return f"{db.game.value}_region_{len(region_options)}"
 
     def create_areas(a):
         return [
@@ -141,19 +141,19 @@ async def create_split_worlds(db: GameDescription) -> list[SplitWorld]:
             for i, it in enumerate(a)
         ]
 
-    for world in db.world_list.worlds:
-        for is_dark_world in [False, True]:
-            if is_dark_world and world.dark_name is None:
+    for region in db.region_list.regions:
+        for use_dark_name in [False, True]:
+            if use_dark_name and region.dark_name is None:
                 continue
 
             areas = sorted(
                 (
-                    area for area in world.areas
-                    if area.in_dark_aether == is_dark_world and area.nodes
+                    area for area in region.areas
+                    if area.in_dark_aether == use_dark_name and area.nodes
                 ),
                 key=lambda it: it.name,
             )
-            name = world.correct_name(is_dark_world)
+            name = region.correct_name(use_dark_name)
             if len(areas) > 25:
                 per_part = math.ceil(len(areas) / math.ceil(len(areas) / 25))
 
@@ -161,17 +161,17 @@ async def create_split_worlds(db: GameDescription) -> list[SplitWorld]:
                     areas_part = areas[:per_part]
                     del areas[:per_part]
 
-                    world_options.append(SplitWorld(
-                        world, "{} ({}-{})".format(name, areas_part[0].name[:2],
+                    region_options.append(SplitRegion(
+                        region, "{} ({}-{})".format(name, areas_part[0].name[:2],
                                                    areas_part[-1].name[:2]),
                         create_areas(areas_part),
                         create_id(),
                     ))
             else:
-                world_options.append(SplitWorld(world, name, create_areas(areas), create_id()))
+                region_options.append(SplitRegion(region, name, create_areas(areas), create_id()))
 
-    world_options.sort(key=lambda it: it.name)
-    return world_options
+    region_options.sort(key=lambda it: it.name)
+    return region_options
 
 
 class EnumConverter(Converter):
@@ -231,11 +231,11 @@ class SelectNodesItem(discord.ui.Select):
             if self.area.area.default_node == node.name:
                 name += "; Default Node"
 
-            body = pretty_print.pretty_print_node_type(node, db.world_list) + "\n"
+            body = pretty_print.pretty_print_node_type(node, db.region_list) + "\n"
 
             node_bodies = []
 
-            for target_node, requirement in db.world_list.area_connections_from(node):
+            for target_node, requirement in db.region_list.area_connections_from(node):
                 if target_node.is_derived_node:
                     continue
 
@@ -309,19 +309,19 @@ class SelectNodesItem(discord.ui.Select):
 
 
 class SelectAreaItem(discord.ui.Select):
-    def __init__(self, game: RandovaniaGame, split_world: SplitWorld):
+    def __init__(self, game: RandovaniaGame, split_region: SplitRegion):
         self.game = game
-        self.split_world = split_world
+        self.split_region = split_region
 
         options = [
             discord.SelectOption(
                 label=area.area.name,
                 value=area.command_id,
             )
-            for area in split_world.areas
+            for area in split_region.areas
         ]
         super().__init__(
-            custom_id=split_world.command_id,
+            custom_id=split_region.command_id,
             placeholder="Choose the room",
             options=options,
         )
@@ -332,19 +332,19 @@ class SelectAreaItem(discord.ui.Select):
         option_selected = self.values[0]
 
         valid_items = [
-            area for area in self.split_world.areas
+            area for area in self.split_region.areas
             if area.command_id == option_selected
         ]
         if not valid_items:
             await r.defer()
             return await interaction.edit_original_response(
                 view=None, embeds=[],
-                content=f"Invalid selected option, unable to find given world subset '{option_selected}'."
+                content=f"Invalid selected option, unable to find given db subset '{option_selected}'."
             )
         area = valid_items[0]
 
         db = default_database.game_description_for(self.game)
-        title = f"{self.game.long_name}: {db.world_list.area_name(area.area)}"
+        title = f"{self.game.long_name}: {db.region_list.area_name(area.area)}"
 
         files = []
 
@@ -364,18 +364,18 @@ class SelectAreaItem(discord.ui.Select):
         )
 
 
-class SelectSplitWorldItem(discord.ui.Select):
-    def __init__(self, game: RandovaniaGame, split_worlds: list[SplitWorld]):
+class SelectSplitRegionItem(discord.ui.Select):
+    def __init__(self, game: RandovaniaGame, split_regions: list[SplitRegion]):
         self.game = game
-        self.split_worlds = split_worlds
+        self.split_regions = split_regions
 
         options = [
-            discord.SelectOption(label=split_world.name, value=split_world.command_id)
-            for split_world in split_worlds
+            discord.SelectOption(label=split_region.name, value=split_region.command_id)
+            for split_region in split_regions
         ]
 
         super().__init__(
-            custom_id=f"{game.value}_world",
+            custom_id=f"{game.value}_region",
             placeholder="Choose your region",
             options=options,
         )
@@ -391,24 +391,24 @@ class SelectSplitWorldItem(discord.ui.Select):
 
         valid_items = [
             it
-            for it in self.split_worlds
+            for it in self.split_regions
             if it.command_id == option_selected
         ]
         if not valid_items:
             return await interaction.edit_original_response(
                 view=None, embeds=[],
-                content=f"Invalid selected option, unable to find given world subset '{option_selected}'."
+                content=f"Invalid selected option, unable to find given db subset '{option_selected}'."
             )
-        split_world = valid_items[0]
+        split_region = valid_items[0]
 
         embed = Embed(title=f"{self.game.long_name} Database",
-                      description=f"Choose the room in {split_world.name} to visualize.")
+                      description=f"Choose the room in {split_region.name} to visualize.")
 
         logging.info("Responding to area selection for section %s with %d options.",
-                     split_world.name, len(split_world.areas))
+                     split_region.name, len(split_region.areas))
         return await interaction.edit_original_response(
             embed=embed,
-            view=split_world.view,
+            view=split_region.view,
         )
 
 
@@ -426,20 +426,20 @@ class BackToGameButton(discord.ui.Button):
         # defer is needed to be able to edit the original message.
         await interaction.response.defer()
         return await interaction.edit_original_response(
-            embed=Embed(title=f"{self.game.long_name} Database", description="Choose the world subset to visualize."),
+            embed=Embed(title=f"{self.game.long_name} Database", description="Choose the db subset to visualize."),
             view=self.response_view,
         )
 
 
 class DatabaseCommandCog(RandovaniaCog):
-    _split_worlds: dict[RandovaniaGame, list[SplitWorld]]
-    _select_split_world_view: dict[RandovaniaGame, discord.ui.View]
+    _split_regions: dict[RandovaniaGame, list[SplitRegion]]
+    _select_split_region_view: dict[RandovaniaGame, discord.ui.View]
 
     def __init__(self, configuration: dict, bot: RandovaniaBot):
         self.configuration = configuration
         self.bot = bot
-        self._split_worlds = {}
-        self._select_split_world_view = {}
+        self._split_regions = {}
+        self._select_split_region_view = {}
         self._on_database_component_listener = {}
 
     @discord.commands.slash_command(name="database")
@@ -447,33 +447,33 @@ class DatabaseCommandCog(RandovaniaCog):
         """Consult the Randovania's logic database for one specific room."""
         assert isinstance(game, RandovaniaGame)
 
-        embed = Embed(title=f"{game.long_name} Database", description="Choose the world subset to visualize.")
-        view = self._select_split_world_view[game]
-        logging.info("Responding requesting list of worlds for game %s.", game.long_name)
+        embed = Embed(title=f"{game.long_name} Database", description="Choose the db subset to visualize.")
+        view = self._select_split_region_view[game]
+        logging.info("Responding requesting list of regions for game %s.", game.long_name)
 
         await context.respond(embed=embed, view=view, ephemeral=True)
 
     async def add_commands(self):
         for game in enum_lib.iterate_enum(RandovaniaGame):
             db = default_database.game_description_for(game)
-            world_options = await create_split_worlds(db)
-            self._split_worlds[game] = world_options
+            region_options = await create_split_regions(db)
+            self._split_regions[game] = region_options
 
             view = discord.ui.View(
-                SelectSplitWorldItem(game, world_options),
+                SelectSplitRegionItem(game, region_options),
                 timeout=None,
             )
             self.bot.add_view(view)
-            self._select_split_world_view[game] = view
+            self._select_split_region_view[game] = view
 
-            for split_world in world_options:
-                split_world.view = discord.ui.View(
-                    SelectAreaItem(game, split_world),
+            for split_region in region_options:
+                split_region.view = discord.ui.View(
+                    SelectAreaItem(game, split_region),
                     BackToGameButton(game, view),
                     timeout=None,
                 )
-                self.bot.add_view(split_world.view)
-                for area in split_world.areas:
+                self.bot.add_view(split_region.view)
+                for area in split_region.areas:
                     area.view = discord.ui.View(
                         SelectNodesItem(game, area),
                         timeout=None,

@@ -5,8 +5,8 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGain, ResourceCollection
-from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -83,7 +83,7 @@ class Bootstrap:
 
     def calculate_starting_state(self, game: GameDescription, patches: GamePatches,
                                  configuration: BaseConfiguration) -> "State":
-        starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
+        starting_node = game.region_list.resolve_teleporter_connection(patches.starting_location)
         initial_resources = patches.starting_resources()
 
         starting_energy, energy_per_tank = self.energy_config(configuration)
@@ -93,7 +93,7 @@ class Bootstrap:
             initial_resources.add_resource_gain(
                 starting_node.resource_gain_on_collect(NodeContext(
                     patches, initial_resources,
-                    game.resource_database, game.world_list,
+                    game.resource_database, game.region_list,
                 )),
             )
 
@@ -110,7 +110,7 @@ class Bootstrap:
             None,
             StateGameData(
                 game.resource_database,
-                game.world_list,
+                game.region_list,
                 energy_per_tank,
                 starting_energy
             )
@@ -175,7 +175,7 @@ class Bootstrap:
         if not game.mutable:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
-        game.world_list.ensure_has_node_cache()
+        game.region_list.ensure_has_node_cache()
         starting_state = self.calculate_starting_state(game, patches, configuration)
 
         if configuration.trick_level.minimal_logic:

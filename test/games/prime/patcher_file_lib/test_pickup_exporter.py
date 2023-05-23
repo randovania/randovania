@@ -13,8 +13,8 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion, PickupGeneratorParams
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -135,8 +135,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     ])
     creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
 
-    world_list = MagicMock()
-    world_list.iterate_nodes.return_value = [
+    region_list = MagicMock()
+    region_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("World", "Area", f"Name {i}"),
                    i, False, None, "", ("default",), {}, False, PickupIndex(i), False)
         for i in range(5)
@@ -146,7 +146,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        world_list,
+        region_list,
         rng,
         model_style,
         PickupModelDataSource.ETM,
@@ -267,8 +267,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     creator = pickup_exporter.PickupExporterSolo(memo_data)
 
-    world_list = MagicMock()
-    world_list.iterate_nodes.return_value = [
+    region_list = MagicMock()
+    region_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("W", "A", f"Name {i}"),
                    i, False, None, "", ("default",), {}, False, PickupIndex(i), False)
         for i in range(5)
@@ -278,7 +278,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        world_list,
+        region_list,
         rng,
         PickupModelStyle.HIDE_ALL,
         PickupModelDataSource.RANDOM,

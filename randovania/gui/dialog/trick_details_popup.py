@@ -9,9 +9,9 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.world import World
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.region import Region
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
@@ -66,7 +66,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
                  parent: QWidget,
                  window_manager: WindowManager,
                  game_description: GameDescription,
-                 areas_to_show: list[tuple[World, Area, list[str]]],
+                 areas_to_show: list[tuple[Region, Area, list[str]]],
                  trick_levels: TrickLevelConfiguration | None = None,
                  ):
         super().__init__(parent)
@@ -87,12 +87,12 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         # Update
         if areas_to_show:
             lines = [
-                (f'<a href="data-editor://{world.correct_name(area.in_dark_aether)}/{area.name}">'
-                 f'{world.correct_name(area.in_dark_aether)} - {area.name}</a>') + "".join(
+                (f'<a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
+                 f'{region.correct_name(area.in_dark_aether)} - {area.name}</a>') + "".join(
                     f"\n<br />{usage}"
                     for usage in usages
                 ) + "<br />"
-                for (world, area, usages) in areas_to_show
+                for (region, area, usages) in areas_to_show
             ]
             self.area_list_label.setText("<br />".join(sorted(lines)))
         else:
@@ -104,9 +104,9 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
     def _on_click_link_to_data_editor(self, link: str):
         info = re.match(r"^data-editor://([^)]+)/([^)]+)$", link)
         if info:
-            world_name, area_name = info.group(1, 2)
+            region_name, area_name = info.group(1, 2)
             self._window_manager.open_data_visualizer_at(
-                world_name, area_name, game=self._game_description.game,
+                region_name, area_name, game=self._game_description.game,
                 trick_levels=self._trick_levels,
             )
 
@@ -121,9 +121,9 @@ class TrickDetailsPopup(BaseResourceDetailsPopup):
                  trick_levels: TrickLevelConfiguration | None = None,
                  ):
         areas_to_show = [
-            (world, area, usages)
-            for world in game_description.world_list.worlds
-            for area in world.areas
+            (region, area, usages)
+            for region in game_description.region_list.regions
+            for area in region.areas
             if (usages := list(_area_uses_resource(area, _requirement_at_value(trick, level),
                                                    game_description.resource_database)))
         ]
@@ -148,9 +148,9 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
             return individual.resource == resource
 
         areas_to_show = [
-            (world, area, usages)
-            for world in game_description.world_list.worlds
-            for area in world.areas
+            (region, area, usages)
+            for region in game_description.region_list.regions
+            for area in region.areas
             if (usages := list(_area_uses_resource(area, is_resource, game_description.resource_database)))
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show)

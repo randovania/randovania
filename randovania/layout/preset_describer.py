@@ -135,8 +135,8 @@ class GamePresetDescriber:
         # Gameplay
         starting_locations = configuration.starting_location.locations
         if len(starting_locations) == 1:
-            area = game_description.world_list.area_by_area_location(starting_locations[0])
-            starting_location = f"Starts at {game_description.world_list.area_name(area)}"
+            area = game_description.region_list.area_by_area_location(starting_locations[0])
+            starting_location = f"Starts at {game_description.region_list.area_name(area)}"
         else:
             starting_location = f"{len(starting_locations)} starting locations"
         template_strings["Gameplay"].append(starting_location)

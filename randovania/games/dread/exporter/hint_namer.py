@@ -9,8 +9,8 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -37,12 +37,12 @@ class DreadColor(Enum):
     DIM_BLUE = "{c7}"
 
 
-def _area_name(world_list: WorldList, pickup_node: PickupNode, hide_world: bool) -> str:
-    area = world_list.nodes_to_area(pickup_node)
-    if hide_world:
+def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:
+    area = region_list.nodes_to_area(pickup_node)
+    if hide_region:
         return area.name
     else:
-        return world_list.area_name(area)
+        return region_list.area_name(area)
 
 
 def colorize_text(color: DreadColor, text: str, with_color: bool):
@@ -69,7 +69,7 @@ class DreadHintNamer(HintNamer):
             HintLocationPrecision.DETAILED: TemplatedFormatter(
                 location_hint_template, self,
             ),
-            HintLocationPrecision.WORLD_ONLY: TemplatedFormatter(
+            HintLocationPrecision.REGION_ONLY: TemplatedFormatter(
                 location_hint_template, self,
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
@@ -86,14 +86,14 @@ class DreadHintNamer(HintNamer):
     def format_player(self, name: str, with_color: bool) -> str:
         return colorize_text(self.color_player, name, with_color)
 
-    def format_world(self, location: PickupLocation, with_color: bool) -> str:
-        world_list = default_database.game_description_for(location.game).world_list
-        result = world_list.world_name_from_node(world_list.node_from_pickup_index(location.location), True)
+    def format_region(self, location: PickupLocation, with_color: bool) -> str:
+        region_list = default_database.game_description_for(location.game).region_list
+        result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
         return colorize_text(self.color_location, result, with_color)
 
-    def format_area(self, location: PickupLocation, with_world: bool, with_color: bool) -> str:
-        world_list = default_database.game_description_for(location.game).world_list
-        result = _area_name(world_list, world_list.node_from_pickup_index(location.location), not with_world)
+    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
+        region_list = default_database.game_description_for(location.game).region_list
+        result = _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
         return colorize_text(self.color_location, result, with_color)
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
@@ -123,9 +123,10 @@ class DreadHintNamer(HintNamer):
             determiner = self.format_player(player_name, with_color=with_color) + "'s "
 
         fmt = "{} is located in {}{}."
-        location_name = self.format_location(location, with_world=True, with_area=not hide_area, with_color=with_color)
+        location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
 
-        node = default_database.game_description_for(location.game).world_list.node_from_pickup_index(location.location)
+        region_list = default_database.game_description_for(location.game).region_list
+        node = region_list.node_from_pickup_index(location.location)
         if (boss_hint_name := node.extra.get("boss_hint_name")) is not None:
             fmt = "{} is guarded by {}{}."
             location_name = colorize_text(DreadColor.RED, boss_hint_name, with_color)

@@ -197,6 +197,28 @@ def _migrate_v16(data: dict) -> dict:
     return data
 
 
+def _migrate_v17(data: dict) -> dict:
+    if "worlds" in data:
+        data["regions"] = data.pop("worlds")
+
+    def _fix(target):
+        target["region"] = target.pop("world_name")
+        target["area"] = target.pop("area_name")
+        if "node_name" in target:
+            target["node"] = target.pop("node_name")
+
+    _fix(data["starting_location"])
+    for world in data["regions"]:
+        for area_name, area in world["areas"].items():
+            for node_name, node in area["nodes"].items():
+                if node["node_type"] == "dock":
+                    _fix(node["default_connection"])
+                elif node["node_type"] == "teleporter":
+                    _fix(node["destination"])
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -214,6 +236,7 @@ _MIGRATIONS = [
     _migrate_v14,
     _migrate_v15,
     _migrate_v16,
+    _migrate_v17,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

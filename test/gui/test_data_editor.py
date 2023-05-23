@@ -5,8 +5,8 @@ import pytest
 from PySide6 import QtWidgets
 
 from randovania.game_description import data_reader, pretty_print
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import NodeLocation
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node import NodeLocation
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow
@@ -20,7 +20,7 @@ def test_select_area_by_name(echoes_game_data,
     skip_qtbot.addWidget(window)
 
     # Run
-    window.focus_on_world_by_name("Torvus Bog")
+    window.focus_on_region_by_name("Torvus Bog")
 
     assert window.current_area.name != "Forgotten Bridge"
     window.focus_on_area_by_name("Forgotten Bridge")
@@ -142,7 +142,7 @@ def test_on_filters_changed_view_mode(tmp_path, mocker, skip_qtbot):
     assert found
     window.layers_editor.layer_checks[1].setChecked(False)
 
-    window.focus_on_world_by_name("Intro")
+    window.focus_on_region_by_name("Intro")
     window.focus_on_area_by_name("Boss Arena")
 
     assert window.current_area.node_with_name("Pickup (Free Loot)") is None
@@ -158,7 +158,7 @@ def test_create_new_dock(skip_qtbot, tmp_path, blank_game_data):
 
     window.focus_on_area_by_name("Back-Only Lock Room")
     current_area = window.current_area
-    target_area = window.game_description.world_list.area_by_area_location(AreaIdentifier("Intro", "Explosive Depot"))
+    target_area = window.game_description.region_list.area_by_area_location(AreaIdentifier("Intro", "Explosive Depot"))
 
     assert current_area.node_with_name("Dock to Explosive Depot") is None
     assert target_area.node_with_name("Dock to Back-Only Lock Room") is None

@@ -9,9 +9,9 @@ from randovania.game_description.hint import Hint, HintType, PrecisionPair, Hint
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
@@ -27,8 +27,8 @@ async def test_run_filler(echoes_game_description,
     rng = Random(5000)
     status_update = MagicMock()
 
-    hint_identifiers = [echoes_game_description.world_list.identifier_for_node(node)
-                        for node in echoes_game_description.world_list.iterate_nodes() if isinstance(node, HintNode)]
+    hint_identifiers = [echoes_game_description.region_list.identifier_for_node(node)
+                        for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)]
 
     player_pools = [
         await create_player_pool(rng, default_echoes_configuration, 0, 1),
@@ -67,14 +67,14 @@ async def test_run_filler(echoes_game_description,
 def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
     # Setup
     rng = Random(5000)
-    expected_logbooks = sum(1 for node in echoes_game_description.world_list.iterate_nodes()
+    expected_logbooks = sum(1 for node in echoes_game_description.region_list.iterate_nodes()
                             if isinstance(node, HintNode))
     hint_distributor = echoes_game_description.game.generator.hint_distributor
 
     # Run
     result = hint_distributor.fill_unassigned_hints(
         echoes_game_patches,
-        echoes_game_description.world_list,
+        echoes_game_description.region_list,
         rng, {},
     )
 
@@ -115,7 +115,7 @@ def test_add_hints_precision(empty_patches):
                                                                  HintItemPrecision.DETAILED,
                                                                  include_owner=False),
                                 PickupIndex(1)),
-        nc("w", "a", "1"): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
+        nc("w", "a", "1"): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.REGION_ONLY,
                                                                  HintItemPrecision.PRECISE_CATEGORY,
                                                                  include_owner=True),
                                 PickupIndex(2)),
@@ -170,7 +170,7 @@ def test_add_relative_hint(echoes_game_description, echoes_game_patches, precise
 
     # Run
     result = hint_distributor.add_relative_hint(
-        echoes_game_description.world_list,
+        echoes_game_description.region_list,
         patches,
         rng,
         PickupIndex(1),

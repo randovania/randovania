@@ -6,8 +6,8 @@ from typing import Iterator, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 
@@ -59,10 +59,10 @@ def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifi
     from randovania.game_description import default_database
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     return {
-        game.world_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(
+        game.region_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(
             node.extra[extra_field]
         )
-        for node in game.world_list.iterate_nodes()
+        for node in game.region_list.iterate_nodes()
         if isinstance(node, ConfigurableNode)
     }
 

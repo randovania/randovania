@@ -12,9 +12,9 @@ Meanwhile, the editor is expected to be used by contributors running Randovania 
 
 You can open the visualizer via the Open -> Game -> Data Visualizer, while the editor is via Edit -> Database -> Internal -> Game.
 
-The editor works by focusing on a single area at a time. Randovania divides the game into multiple worlds, each having multiple areas. What exactly each one means is arbitrarily defined per game. In Echoes, the worlds are Temple Grounds, Agon Wastes, etc, with the areas being each room being an area. In Dread, the worlds are Artaria, Burenia, etc, with areas being roughly the rooms, based on camera.
+The editor works by focusing on a single area at a time. Randovania divides the game into multiple regions, each having multiple areas. What exactly each one means is arbitrarily defined per game. In Echoes, the regions are Temple Grounds, Agon Wastes, etc, with the areas being each room being an area. In Dread, the regions are Artaria, Burenia, etc, with areas being roughly the rooms, based on camera.
 
-There are 3 sections which can be moved around if you want. On the right side are details of the selected node. In the middle is a map of the current area, sadly only for Dread and Cave Story at the moment. On the left is a list of nodes in the current area, as well as combo boxes for selecting the world and area to edit.
+There are 3 sections which can be moved around if you want. On the right side are details of the selected node. In the middle is a map of the current area, sadly only for Dread and Cave Story at the moment. On the left is a list of nodes in the current area, as well as combo boxes for selecting the region and area to edit.
 Still on the left side, there's a separate tab where you can edit the resource database - mostly events and templates, but more on this later.
 
 The main focus of the editor is establishing connections between multiple nodes, effectively points of interest in each area.

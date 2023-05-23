@@ -8,8 +8,8 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGain
-from randovania.game_description.world.node import NodeContext, Node
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import NodeContext, Node
+from randovania.game_description.db.resource_node import ResourceNode
 
 
 def _all_nodes_in_network(context: NodeContext, network_name: str) -> typing.Iterator[TeleporterNetworkNode]:

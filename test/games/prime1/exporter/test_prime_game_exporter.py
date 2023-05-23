@@ -1,6 +1,6 @@
 import json
 import os
-from unittest.mock import MagicMock, ANY
+from unittest.mock import MagicMock, ANY, call
 
 import pytest
 
@@ -16,12 +16,14 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
     })
     seed = 103817502
     if use_enemy_attribute_randomizer:
-        enemy_attribute_randomizer = EnemyAttributeRandomizer(1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True).as_json
+        enemy_attribute_randomizer = EnemyAttributeRandomizer(1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0,
+                                                              True).as_json
     else:
         enemy_attribute_randomizer = None
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
-    mock_enemy_data: MagicMock = mocker.patch("randovania.games.prime1.exporter.game_exporter.PyRandom_Enemy_Attributes")
+    mock_enemy_data: MagicMock = mocker.patch(
+        "randovania.games.prime1.exporter.game_exporter.PyRandom_Enemy_Attributes")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
                   "randEnemyAttributes": enemy_attribute_randomizer, "seed": seed}
@@ -78,7 +80,9 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         assert not asset_cache_path.exists()
 
     if use_enemy_attribute_randomizer:
-        mock_enemy_data.assert_called_once_with(os.fspath(tmp_path.joinpath("input.iso")), os.fspath(tmp_path.joinpath("output.iso")), seed, 1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True)
+        mock_enemy_data.assert_called_once_with(os.fspath(tmp_path.joinpath("input.iso")),
+                                                os.fspath(tmp_path.joinpath("output.iso")), seed, 1.4, 1.8, 2.25, 1.9,
+                                                0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True)
     else:
         mock_enemy_data.assert_not_called()
 
@@ -145,8 +149,11 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     progress_update = MagicMock()
 
-    with test_files_dir.joinpath("randomprime_expected_data_crazy.json").open("r") as file:
-        patch_data = json.load(file)
+    mock_create_map_using_matplotlib: MagicMock = mocker.patch(
+        "randovania.games.prime1.exporter.game_exporter.create_map_using_matplotlib"
+    )
+
+    patch_data = test_files_dir.read_json("randomprime_expected_data_crazy.json")
 
     exporter = PrimeGameExporter()
 
@@ -171,7 +178,8 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(ANY, ANY)
 
-    pngs = [f for f in os.listdir(tmp_path) if os.path.isfile(os.path.join(tmp_path, f)) and f.endswith(".png")]
-    assert len(pngs) == 7
-    for png in pngs:
-        assert os.path.getsize(os.path.join(tmp_path, png)) > 10_000
+    mock_create_map_using_matplotlib.assert_has_calls([
+        call(ANY, tmp_path.joinpath(f"output {x}.png"))
+        for x in ["Chozo Ruins", "Impact Crater", "Phendrana Drifts", "Frigate Orpheon",
+                  "Magmoor Caverns", "Phazon Mines", "Tallon Overworld"]
+    ], any_order=True)

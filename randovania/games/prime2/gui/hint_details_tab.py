@@ -32,17 +32,17 @@ class EchoesHintDetailsTab(GameDetailsTab):
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
 
         game = filtered_database.game_description_for_layout(configuration)
-        world_list = game.world_list
+        region_list = game.region_list
         patches = all_patches[players.player_index]
 
-        per_world: dict[str, dict[str, tuple[str, str]]] = collections.defaultdict(dict)
+        per_region: dict[str, dict[str, tuple[str, str]]] = collections.defaultdict(dict)
         namer = EchoesHintNamer(all_patches, players)
         exporter = HintExporter(namer, random.Random(0), ["A joke hint."])
 
         for identifier, hint in patches.hints.items():
-            node = world_list.node_by_identifier(identifier)
-            source_world = world_list.nodes_to_world(node)
-            source_name = world_list.node_name(node)
+            node = region_list.node_by_identifier(identifier)
+            source_region = region_list.nodes_to_region(node)
+            source_name = region_list.node_name(node)
 
             hint_text = exporter.create_message_for_hint(hint, all_patches, players, False)
 
@@ -57,14 +57,14 @@ class EchoesHintDetailsTab(GameDetailsTab):
                     if players.is_multiworld:
                         hinted_pickup = f"{players.player_names[target.player]}'s {hinted_pickup}"
 
-            per_world[source_world.name][source_name] = (hint_text, hinted_pickup)
+            per_region[source_region.name][source_name] = (hint_text, hinted_pickup)
 
-        for world_name, world_contents in iterate_key_sorted(per_world):
-            world_item = QtWidgets.QTreeWidgetItem(self.tree_widget)
-            world_item.setText(0, world_name)
-            world_item.setExpanded(True)
-            for source_name, content in iterate_key_sorted(world_contents):
-                area_item = QtWidgets.QTreeWidgetItem(world_item)
+        for region_name, region_contents in iterate_key_sorted(per_region):
+            region_item = QtWidgets.QTreeWidgetItem(self.tree_widget)
+            region_item.setText(0, region_name)
+            region_item.setExpanded(True)
+            for source_name, content in iterate_key_sorted(region_contents):
+                area_item = QtWidgets.QTreeWidgetItem(region_item)
                 area_item.setText(0, source_name)
                 area_item.setText(1, content[1])
                 area_item.setText(2, content[0])

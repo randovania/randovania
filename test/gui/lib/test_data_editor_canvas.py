@@ -13,10 +13,10 @@ def _canvas(skip_qtbot, dread_game_description):
     canvas = DataEditorCanvas()
     skip_qtbot.addWidget(canvas)
 
-    world = dread_game_description.world_list.world_with_name("Artaria")
-    area = world.area_by_name("First Tutorial")
+    region = dread_game_description.region_list.region_with_name("Artaria")
+    area = region.area_by_name("First Tutorial")
 
-    canvas.select_world(world)
+    canvas.select_region(region)
     canvas.select_area(area)
 
     canvas.highlight_node(area.nodes[0])
@@ -77,9 +77,9 @@ def test_contextMenuEvent(skip_qtbot, canvas, mocker):
 def test_area_maps(skip_qtbot, canvas: DataEditorCanvas, mocker):
     canvas.select_game(RandovaniaGame.CAVE_STORY)
 
-    for world in default_database.game_description_for(RandovaniaGame.CAVE_STORY).world_list.worlds:
-        canvas.select_world(world)
-        for area in world.areas:
+    for region in default_database.game_description_for(RandovaniaGame.CAVE_STORY).region_list.regions:
+        canvas.select_region(region)
+        for area in region.areas:
             canvas.select_area(area)
             break
         break

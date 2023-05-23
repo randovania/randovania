@@ -6,7 +6,7 @@ from PySide6 import QtCore
 import pytest
 
 from randovania.game_description import default_database
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout import prime_configuration
 from randovania.gui.preset_settings.elevators_tab import PresetElevators

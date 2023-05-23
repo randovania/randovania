@@ -1,10 +1,9 @@
+import copy
 import math
 import uuid
 
-from randovania.game_description import migration_data, default_database
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.dock_rando_configuration import DockTypeState
 from randovania.lib import migration_lib
 
 
@@ -205,17 +204,13 @@ def _migrate_v7(preset: dict) -> dict:
 
 
 def _migrate_v8(preset: dict) -> dict:
-    game = default_database.game_description_for(RandovaniaGame(preset["game"]))
-
-    # FIXME: area location is now something different, this code broke
+    migration = migration_data.get_raw_data(RandovaniaGame(preset["game"]))
 
     def _name_to_location(name: str):
         world_name, area_name = name.split("/", 1)
-        world = game.world_list.world_with_name(world_name)
-        area = world.area_by_name(area_name)
         return {
-            "world_asset_id": world.extra["asset_id"],
-            "area_asset_id": area.extra["asset_id"],
+            "world_asset_id": migration["world_name_to_id"][world_name],
+            "area_asset_id": migration["area_name_to_id"][world_name][area_name],
         }
 
     preset["configuration"]["multi_pickup_placement"] = False
@@ -406,21 +401,9 @@ def _migrate_v13(preset: dict) -> dict:
 
 def _migrate_v14(preset: dict) -> dict:
     game = RandovaniaGame(preset["game"])
-    db = default_database.game_description_for(game)
 
     def _migrate_area_location(old_loc: dict[str, int]) -> dict[str, str]:
-        result = migration_data.convert_area_loc_id_to_name(game, old_loc)
-
-        if "instance_id" in old_loc:
-            # FIXME
-            world = db.world_list.world_with_name(result["world_name"])
-            area = world.area_by_name(result["area_name"])
-            for node in area.nodes:
-                if node.extra.get("teleporter_instance_id") == old_loc["instance_id"]:
-                    result["node_name"] = node.name
-                    break
-
-        return result
+        return migration_data.convert_area_loc_id_to_name(game, old_loc)
 
     preset["configuration"]["starting_location"] = [
         _migrate_area_location(old_loc)
@@ -629,14 +612,10 @@ def _migrate_v31(preset: dict) -> dict:
 
 def _update_default_dock_rando(preset: dict) -> dict:
     game = RandovaniaGame(preset["game"])
-    weakness_database = default_database.game_description_for(game).dock_weakness_database
 
     preset["configuration"]["dock_rando"] = {
         "mode": "vanilla",
-        "types_state": {
-            dock_type.short_name: DockTypeState.default_state(game, dock_type.short_name).as_json
-            for dock_type in weakness_database.dock_types
-        }
+        "types_state": copy.deepcopy(migration_data.get_default_dock_lock_settings(game)),
     }
     return preset
 
@@ -728,16 +707,27 @@ def _migrate_v43(preset: dict) -> dict:
 
 
 def _migrate_v44(preset: dict) -> dict:
-    for start_loc in preset["configuration"]["starting_location"]:
-        area_identifier = AreaIdentifier(start_loc["world_name"], start_loc["area_name"])
-        node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
-        start_loc["node_name"] = node_identifier.node_name
+    def add_node_name(location):
+        node_name = migration_data.get_node_name_for_area(
+            preset["game"], location["world_name"], location["area_name"]
+        )
+        location["node_name"] = node_name
+
+    for loc in preset["configuration"]["starting_location"]:
+        add_node_name(loc)
 
     if "elevators" in preset["configuration"]:
-        for start_loc in preset["configuration"]["elevators"]["excluded_targets"]:
-            area_identifier = AreaIdentifier(start_loc["world_name"], start_loc["area_name"])
-            node_identifier = migration_data.get_new_start_loc_from_old_start_loc(preset["game"], area_identifier)
-            start_loc["node_name"] = node_identifier.node_name
+        result = []
+        for loc in preset["configuration"]["elevators"]["excluded_teleporters"]:
+            try:
+                add_node_name(loc)
+                result.append(loc)
+            except KeyError:
+                continue
+        preset["configuration"]["elevators"]["excluded_teleporters"] = result
+
+        for loc in preset["configuration"]["elevators"]["excluded_targets"]:
+            add_node_name(loc)
 
     return preset
 
@@ -823,6 +813,26 @@ def _migrate_v51(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v52(preset: dict) -> dict:
+    def _fix(target):
+        target["region"] = target.pop("world_name")
+        target["area"] = target.pop("area_name")
+        target["node"] = target.pop("node_name")
+
+    config = preset["configuration"]
+
+    for location in config["starting_location"]:
+        _fix(location)
+
+    if "elevators" in config:
+        for location in config["elevators"]["excluded_teleporters"]:
+            _fix(location)
+        for location in config["elevators"]["excluded_targets"]:
+            _fix(location)
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -875,6 +885,7 @@ _MIGRATIONS = [
     _migrate_v49,
     _migrate_v50,
     _migrate_v51,
+    _migrate_v52,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

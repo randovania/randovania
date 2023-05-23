@@ -1,8 +1,6 @@
 import contextlib
 import copy
-import json
 import pickle
-from pathlib import Path
 
 import pytest
 
@@ -18,10 +16,7 @@ def test_pickle_trick_level(value: LayoutTrickLevel):
 
 @pytest.fixture()
 def multiworld_rdvgame(test_files_dir):
-    file_path = Path(test_files_dir).joinpath("log_files", "multiworld.rdvgame")
-
-    with file_path.open("r") as open_file:
-        return json.load(open_file)
+    return test_files_dir.read_json("log_files", "multiworld.rdvgame")
 
 
 def test_load_multiworld(multiworld_rdvgame):

@@ -2,19 +2,19 @@ import dataclasses
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock_lock_node import DockLockNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node import Node, NodeIndex
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import Node, NodeIndex
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
 
 
 class Editor:
     def __init__(self, game: GameDescription):
         self.game = game
-        self.next_node_index = len(game.world_list.all_nodes)
+        self.next_node_index = len(game.region_list.all_nodes)
 
     def new_node_index(self) -> NodeIndex:
         result = self.next_node_index
@@ -39,7 +39,7 @@ class Editor:
         area.nodes.append(node)
         area.connections[node] = {}
         area.clear_dock_cache()
-        self.game.world_list.invalidate_node_cache()
+        self.game.region_list.invalidate_node_cache()
 
     def remove_node(self, area: Area, node: Node):
         area.nodes.remove(node)
@@ -48,7 +48,7 @@ class Editor:
             connection.pop(node, None)
         area.clear_dock_cache()
 
-        self.game.world_list.invalidate_node_cache()
+        self.game.region_list.invalidate_node_cache()
 
         if isinstance(node, DockNode):
             self.remove_node(area, node.lock_node)
@@ -94,14 +94,14 @@ class Editor:
         if isinstance(new_node, DockNode):
             self.add_node(area, DockLockNode.create_from_dock(new_node, self.new_node_index()))
 
-        self.game.world_list.invalidate_node_cache()
+        self.game.region_list.invalidate_node_cache()
 
     def rename_node(self, area: Area, node: Node, new_name: str):
         self.replace_node(area, node, dataclasses.replace(node, identifier=node.identifier.renamed(new_name)))
 
     def rename_area(self, current_area: Area, new_name: str):
-        current_world = self.game.world_list.world_with_area(current_area)
-        old_identifier = self.game.world_list.identifier_for_area(current_area)
+        current_world = self.game.region_list.region_with_area(current_area)
+        old_identifier = self.game.region_list.identifier_for_area(current_area)
         new_identifier = dataclasses.replace(old_identifier, area_name=new_name)
 
         self.replace_references_to_area_identifier(
@@ -112,14 +112,14 @@ class Editor:
         new_area = dataclasses.replace(current_area, name=new_name)
         current_world.areas[current_world.areas.index(current_area)] = new_area
 
-        self.game.world_list.invalidate_node_cache()
+        self.game.region_list.invalidate_node_cache()
 
     def replace_references_to_area_identifier(self, old_identifier: AreaIdentifier, new_identifier: AreaIdentifier):
         if old_identifier == new_identifier:
             return
 
-        for world in self.game.world_list.worlds:
-            for area in world.areas:
+        for region in self.game.region_list.regions:
+            for area in region.areas:
                 for i in range(len(area.nodes)):
                     node = area.nodes[i]
                     new_node = None
@@ -154,8 +154,8 @@ class Editor:
         if old_identifier == new_identifier:
             return
 
-        for world in self.game.world_list.worlds:
-            for area in world.areas:
+        for region in self.game.region_list.regions:
+            for area in region.areas:
                 for i in range(len(area.nodes)):
                     node = area.nodes[i]
                     new_node = None
@@ -179,12 +179,12 @@ class Editor:
         if new_area.node_with_name(node.name) is not None:
             raise ValueError(f"New area {new_area.name} already contains a node named {node.name}")
 
-        old_world = self.game.world_list.world_with_area(old_area)
-        new_world = self.game.world_list.world_with_area(new_area)
+        old_region = self.game.region_list.region_with_area(old_area)
+        new_region = self.game.region_list.region_with_area(new_area)
 
         self.remove_node(old_area, node)
         self.add_node(new_area, node)
         self.replace_references_to_node_identifier(
-            NodeIdentifier.create(old_world.name, old_area.name, node.name),
-            NodeIdentifier.create(new_world.name, new_area.name, node.name),
+            NodeIdentifier.create(old_region.name, old_area.name, node.name),
+            NodeIdentifier.create(new_region.name, new_area.name, node.name),
         )

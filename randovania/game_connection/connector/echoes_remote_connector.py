@@ -4,7 +4,7 @@ from randovania.game_connection.connector.prime_remote_connector import PrimeRem
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world.world import World
+from randovania.game_description.db.region import Region
 from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
 from randovania.patching.prime import (all_prime_dol_patches)
 
@@ -38,9 +38,9 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     def _asset_id_format(self):
         return ">I"
 
-    async def current_game_status(self) -> tuple[bool, World | None]:
+    async def current_game_status(self) -> tuple[bool, Region | None]:
         """
-        Fetches the world the player's currently at, or None if they're not in-game.
+        Fetches the region the player's currently at, or None if they're not in-game.
         :return: bool indicating if there's a pending `execute_remote_patches` operation.
         """
 

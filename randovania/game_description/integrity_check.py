@@ -5,16 +5,16 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeakness, DockType
-from randovania.game_description.world.dock_lock_node import DockLockNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock import DockWeakness, DockType
+from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.region import Region
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_re = re.compile(r"(.+?) (to|from) (.+?)( \(.*\))?$")
@@ -61,8 +61,8 @@ def dock_has_correct_name(area: Area, node: DockNode) -> tuple[bool, str | None]
 
 
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
-    world_list = game.world_list
-    area = world_list.nodes_to_area(node)
+    region_list = game.region_list
+    area = region_list.nodes_to_area(node)
 
     if invalid_layers := set(node.layers) - set(game.layers):
         yield f"'{node.name}' has unknown layers {invalid_layers}"
@@ -91,13 +91,13 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
         other_node = None
         try:
-            other_node = world_list.node_by_identifier(node.default_connection)
+            other_node = region_list.node_by_identifier(node.default_connection)
         except ValueError as e:
             yield f"'{node.name}' is a Dock Node, but connection '{node.default_connection}' is invalid: {e}"
 
         if other_node is not None:
             if isinstance(other_node, DockNode):
-                if other_node.default_connection != world_list.identifier_for_node(node):
+                if other_node.default_connection != region_list.identifier_for_node(node):
                     yield (f"'{node.name}' connects to '{node.default_connection}', but that dock connects "
                            f"to '{other_node.default_connection}' instead.")
             else:
@@ -108,7 +108,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
     if isinstance(node, TeleporterNode):
         try:
-            world_list.resolve_teleporter_connection(node.default_connection)
+            region_list.resolve_teleporter_connection(node.default_connection)
         except IndexError as e:
             yield f"'{node.name}' is a Teleporter Node, but connection {node.default_connection} is invalid: {e}"
 
@@ -151,17 +151,17 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
 
 
-def find_world_errors(game: GameDescription, world: World) -> Iterator[str]:
-    for area in world.areas:
+def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
+    for area in region.areas:
         for error in find_area_errors(game, area):
-            yield f"{world.name} - {error}"
+            yield f"{region.name} - {error}"
 
 
 def find_invalid_strongly_connected_components(game: GameDescription) -> Iterator[str]:
     import networkx
     graph = networkx.DiGraph()
 
-    for node in game.world_list.iterate_nodes():
+    for node in game.region_list.iterate_nodes():
         if isinstance(node, DockLockNode):
             continue
         graph.add_node(node)
@@ -170,21 +170,21 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         patches=GamePatches.create_from_game(game, 0, None),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
-        node_provider=game.world_list,
+        node_provider=game.region_list,
     )
 
-    for node in game.world_list.iterate_nodes():
+    for node in game.region_list.iterate_nodes():
         if node not in graph:
             continue
 
-        for other, req in game.world_list.potential_nodes_from(node, context):
+        for other, req in game.region_list.potential_nodes_from(node, context):
             if other not in graph:
                 continue
 
             if req != Requirement.impossible():
                 graph.add_edge(node, other)
 
-    starting_node = game.world_list.resolve_teleporter_connection(game.starting_location)
+    starting_node = game.region_list.resolve_teleporter_connection(game.starting_location)
 
     for strong_comp in networkx.strongly_connected_components(graph):
         components: set[Node] = strong_comp
@@ -200,7 +200,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             node = next(iter(components))
 
             # If the component is a single node which is the default node of its area, allow it
-            area = game.world_list.nodes_to_area(node)
+            area = game.region_list.nodes_to_area(node)
             if area.default_node == node.name:
                 continue
 
@@ -209,7 +209,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
                 continue
 
         names = sorted(
-            game.world_list.node_name(node, with_world=True)
+            game.region_list.node_name(node, with_region=True)
             for node in strong_comp
         )
         yield f"Unknown strongly connected component detected containing {len(names)} nodes:\n{names}"
@@ -222,8 +222,8 @@ def find_database_errors(game: GameDescription) -> list[str]:
         if layer_name_re.match(layer) is None:
             result.append(f"Layer '{layer}' doesn't match {layer_name_re.pattern}")
 
-    for world in game.world_list.worlds:
-        result.extend(find_world_errors(game, world))
+    for region in game.region_list.regions:
+        result.extend(find_region_errors(game, region))
     result.extend(find_invalid_strongly_connected_components(game))
 
     return result

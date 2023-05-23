@@ -7,7 +7,7 @@ from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,
                        Short, PrefixedArray, Switch, VarInt, Float64b, Compressed)
 
 from randovania.game_description import game_migration
-from randovania.game_description.world.hint_node import HintNodeKind
+from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
 
@@ -23,7 +23,7 @@ _EXPECTED_FIELDS = [
     "minimal_logic",
     "victory_condition",
     "dock_weakness_database",
-    "worlds",
+    "regions",
 ]
 
 
@@ -59,14 +59,14 @@ def _build_resource_info(**kwargs):
 
 
 ConstructAreaIdentifier = construct.Struct(
-    world_name=String,
-    area_name=String,
+    region=String,
+    area=String,
 )
 
 ConstructNodeIdentifier = construct.Struct(
-    world_name=String,
-    area_name=String,
-    node_name=String,
+    region=String,
+    area=String,
+    node=String,
 )
 
 ConstructResourceInfo = _build_resource_info()
@@ -235,7 +235,7 @@ ConstructArea = Struct(
     nodes=ConstructDict(ConstructNode),
 )
 
-ConstructWorld = Struct(
+ConstructRegion = Struct(
     name=String,
     extra=JsonEncodedValue,
     areas=ConstructDict(ConstructArea),
@@ -297,6 +297,6 @@ ConstructGame = Struct(
         victory_condition=ConstructRequirement,
 
         dock_weakness_database=ConstructDockWeaknessDatabase,
-        worlds=PrefixedArray(VarInt, ConstructWorld),
+        regions=PrefixedArray(VarInt, ConstructRegion),
     ), "lzma")
 )

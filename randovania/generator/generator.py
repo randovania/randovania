@@ -9,7 +9,7 @@ from randovania.game_description.assignment import (PickupTarget, PickupTargetAs
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, filter_unassigned_pickup_nodes)
@@ -32,10 +32,10 @@ from randovania.layout.exceptions import InvalidConfiguration
 def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
                              configuration: BaseConfiguration) -> None:
     min_starting_items = configuration.standard_pickup_configuration.minimum_random_starting_pickups
-    if len(item_pool) > game.world_list.num_pickup_nodes + min_starting_items:
+    if len(item_pool) > game.region_list.num_pickup_nodes + min_starting_items:
         raise InvalidConfiguration(
             "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(
-                len(item_pool), game.world_list.num_pickup_nodes, min_starting_items))
+                len(item_pool), game.region_list.num_pickup_nodes, min_starting_items))
 
 
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
@@ -121,7 +121,7 @@ def _distribute_remaining_items(rng: Random,
 
     for player, filler_result in filler_results.player_results.items():
         split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
-        for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
+        for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.region_list.iterate_nodes(),
                                                           filler_result.patches.pickup_assignment):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:
                 major_pickup_nodes.append((player, pickup_node))
