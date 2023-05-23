@@ -1,6 +1,6 @@
 import dataclasses
-import json
 from unittest.mock import PropertyMock, MagicMock
+from pathlib import Path
 
 import pytest
 
@@ -263,3 +263,37 @@ def test_create_patch_with_crazy_settings(test_files_dir, mocker, setup_and_tear
     expected_data = test_files_dir.read_json("patcher_data", "dread", "crazy_settings.json")
 
     assert data == expected_data
+
+
+def _test_preset(rdvgame_file: Path, expected_results_file: Path):
+    # Setup
+    description = LayoutDescription.from_file(rdvgame_file)
+    players_config = PlayersConfiguration(0, {0: "Player 1", 1: "Player 2"})
+    cosmetic_patches = DreadCosmeticPatches()
+
+    # Run
+    data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
+
+    # Expected Result
+    expected_data = json_lib.read_path(expected_results_file)
+
+    # Uncomment to easily view diff of failed test
+    # json_lib.write_path(expected_results_file, data)
+
+    # remove part which has the randovania version in it
+    data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"] = data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"].split("|")[1]
+    expected_data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"] = expected_data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"].split("|")[1]
+
+    assert data == expected_data
+
+@pytest.mark.parametrize(
+    ("rdvgame_filename", "expected_results_filename"),
+    [
+        ("dread_dread_multiworld.rdvgame", "dread_dread_multiworld_expected.json"),    # dread-dread multi
+        ("dread_prime1_multiworld.rdvgame", "dread_prime1_multiworld_expected.json"),  # dread-prime1 multi
+    ]
+)
+def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename):
+    rdvgame = test_files_dir.joinpath("log_files", "dread", rdvgame_filename)
+    expected_results = test_files_dir.joinpath("patcher_data", "dread", expected_results_filename)
+    _test_preset(rdvgame, expected_results)
