@@ -186,15 +186,17 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
     else:
         raise RuntimeError(f"Unknown command: {command}")
 
+def abs_path_for_args(path: str):
+    return Path(path).resolve()
 
 def add_options_cli_args(parser: ArgumentParser):
     parser.add_argument(
-        "--local-data", type=Path,
+        "--local-data", type=abs_path_for_args,
         default=persistence.local_data_dir(),
         help="Selects the local data path. This is used to store preferences and temporary copies of huge files."
     )
     parser.add_argument(
-        "--user-data", type=Path,
+        "--user-data", type=abs_path_for_args,
         default=persistence.roaming_data_dir(),
         help="Selects the user data path. This is used to store your presets."
     )
