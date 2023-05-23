@@ -1,9 +1,29 @@
 import copy
-import json
 from pathlib import Path
-from typing import Callable, TypeVar, Hashable, Any
+from typing import Callable, TypeVar
 
 from randovania.game_description import game_migration
+from randovania.game_description.db import event_pickup
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock import (
+    DockRandoConfig, DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
+)
+from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNodeKind, HintNode
+from randovania.game_description.db.node import (
+    GenericNode, Node,
+    NodeLocation
+)
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -22,29 +42,8 @@ from randovania.game_description.resources.search import (
 )
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.db import event_pickup
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import (
-    DockRandoConfig, DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
-)
-from randovania.game_description.db.dock_lock_node import DockLockNode
-from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNodeKind, HintNode
-from randovania.game_description.db.node import (
-    GenericNode, Node,
-    NodeLocation
-)
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
-from randovania.lib import frozen_lib
+from randovania.lib import frozen_lib, json_lib
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -534,8 +533,8 @@ def decode_data(data: dict) -> GameDescription:
 
 
 def read_split_file(dir_path: Path):
-    with dir_path.joinpath("header.json").open(encoding="utf-8") as meta_file:
-        data = read_json_file(meta_file)
+    data = json_lib.read_path(dir_path.joinpath("header.json"),
+                              raise_on_duplicate_keys=True)
 
     key_name = "regions"
     if key_name not in data:
@@ -544,25 +543,9 @@ def read_split_file(dir_path: Path):
 
     regions = data.pop(key_name)
 
-    data[key_name] = []
-    for region_file_name in regions:
-        with dir_path.joinpath(region_file_name).open(encoding="utf-8") as region_file:
-            data[key_name].append(read_json_file(region_file))
+    data[key_name] = [
+        json_lib.read_path(dir_path.joinpath(region_file_name), raise_on_duplicate_keys=True)
+        for region_file_name in regions
+    ]
 
     return data
-
-
-def raise_on_duplicate_keys(ordered_pairs: list[tuple[Hashable, Any]]) -> dict:
-    """Raise ValueError if a duplicate key exists in provided ordered list of pairs, otherwise return a dict."""
-    dict_out = {}
-    for key, val in ordered_pairs:
-        if key in dict_out:
-            raise ValueError(f'Duplicate key: {key}')
-        else:
-            dict_out[key] = val
-    return dict_out
-
-
-def read_json_file(file):
-    """json.load, but rejects duplicated keys"""
-    return json.load(file, object_pairs_hook=raise_on_duplicate_keys)

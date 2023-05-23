@@ -1,5 +1,4 @@
 import argparse
-import json
 import logging
 import typing
 from argparse import ArgumentParser
@@ -12,6 +11,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.games import default_data, binary_data
 from randovania.games.game import RandovaniaGame
+from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 
@@ -23,14 +23,13 @@ def _get_sorted_list_of_names(input_list: list[Any], prefix: str = "") -> list[s
 def decode_data_file(args) -> dict:
     json_database: Path | None = args.json_database
     if json_database is not None:
-        with json_database.open() as data_file:
-            return json.load(data_file)
+        return json_lib.read_path(json_database)
     else:
         return default_data.read_json_then_binary(RandovaniaGame(args.game))[1]
 
 
 def export_as_binary(data: dict, output_binary: Path):
-    with output_binary.open("wb") as x:  # type: BinaryIO
+    with output_binary.open("wb") as x:
         binary_data.encode(data, x)
 
 
@@ -48,8 +47,7 @@ def convert_database_command_logic(args):
         export_as_binary(data, output_binary)
 
     elif output_json is not None:
-        with output_json.open("w") as x:  # type: TextIO
-            json.dump(data, x, indent=4)
+        json_lib.write_path(output_json, data)
     else:
         raise ValueError("Neither binary nor JSON set. Argparse is broken?")
 

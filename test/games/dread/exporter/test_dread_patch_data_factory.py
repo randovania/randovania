@@ -19,6 +19,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
+from randovania.lib import json_lib
 
 
 def test_create_patch_data(test_files_dir, mocker):
@@ -36,8 +37,7 @@ def test_create_patch_data(test_files_dir, mocker):
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "starter_preset.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = json_lib.read_path(test_files_dir.joinpath("patcher_data", "dread", "starter_preset.json"))
 
     assert data == expected_data
 
@@ -241,8 +241,7 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "custom_start.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = test_files_dir.read_json("patcher_data", "dread", "custom_start.json")
 
     assert data == expected_data
 
@@ -261,7 +260,6 @@ def test_create_patch_with_crazy_settings(test_files_dir, mocker, setup_and_tear
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "crazy_settings.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = test_files_dir.read_json("patcher_data", "dread", "crazy_settings.json")
 
     assert data == expected_data

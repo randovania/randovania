@@ -1,5 +1,4 @@
 import asyncio
-import json
 import os
 import platform
 import shutil
@@ -18,6 +17,7 @@ from randovania import VERSION
 from randovania.cli import database
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
@@ -123,8 +123,7 @@ async def main():
         "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
         "socketio_path": f"/{server_suffix}/socket.io",
     }
-    with _ROOT_FOLDER.joinpath("randovania", "data", "configuration.json").open("w") as config_release:
-        json.dump(configuration, config_release)
+    json_lib.write_path(_ROOT_FOLDER.joinpath("randovania", "data", "configuration.json"), configuration)
 
     await download_nintendont()
 

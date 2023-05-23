@@ -1,5 +1,4 @@
 import asyncio
-import json
 import logging
 import uuid
 from pathlib import Path
@@ -11,6 +10,7 @@ from qasync import asyncSlot
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.gui.lib.qt_network_client import QtNetworkClient
+from randovania.lib import json_lib
 from randovania.network_client.game_session import GameSessionPickups
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import error
@@ -31,8 +31,7 @@ class Data(AsyncContextManager):
         self._lock = asyncio.Lock()
 
         try:
-            with self._path.open() as f:
-                data = json.load(f)
+            data = json_lib.read_path(self._path)
             self.collected_locations = set(data["collected_locations"])
             self.uploaded_locations = set(data["uploaded_locations"])
             self.latest_message_displayed = data["latest_message_displayed"]
@@ -46,12 +45,12 @@ class Data(AsyncContextManager):
         return self
 
     async def __aexit__(self, exc_type, exc, tb):
-        new_data = json.dumps({
+        new_data = {
             "collected_locations": list(self.collected_locations),
             "uploaded_locations": list(self.uploaded_locations),
             "latest_message_displayed": self.latest_message_displayed,
-        })
-        self._path.write_text(new_data)
+        }
+        json_lib.write_path(self._path, new_data)
         self._lock.release()
 
 

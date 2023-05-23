@@ -1,5 +1,4 @@
 import dataclasses
-import json
 import re
 from pathlib import Path
 from typing import Self
@@ -39,6 +38,7 @@ from randovania.gui.lib import async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer, create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
+from randovania.lib import json_lib
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 
@@ -623,8 +623,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             path.with_suffix("").mkdir(exist_ok=True)
             data_writer.write_as_split_files(data, path.with_suffix(""))
         else:
-            with path.open("w") as open_file:
-                json.dump(data, open_file, indent=4)
+            json_lib.write_path(path, data)
         self._last_data = data
         return True
 

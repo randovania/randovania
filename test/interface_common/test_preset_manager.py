@@ -23,11 +23,11 @@ async def test_add_then_delete_preset(tmp_path, default_preset):
 
 def test_get_preset_at_version(test_files_dir):
     # Setup
-    preset_path = test_files_dir / "presets/fewest_changes_v1.rdvpreset"
+    preset_path = test_files_dir.joinpath("presets/fewest_changes_v1.rdvpreset")
 
     # Run
     result = preset_manager._get_preset_at_version(
-        test_files_dir.parents[1],
+        test_files_dir.root.parents[1],
         b'1f2a55862ce12938dfa806d2dbd35b346a0164d3',
         preset_path,
     )

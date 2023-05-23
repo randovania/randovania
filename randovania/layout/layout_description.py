@@ -17,7 +17,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.lib import obfuscator
+from randovania.lib import obfuscator, json_lib
 
 
 class InvalidLayoutDescription(Exception):
@@ -26,11 +26,11 @@ class InvalidLayoutDescription(Exception):
 
 @lru_cache(maxsize=1)
 def _all_hash_words() -> dict[RandovaniaGame, list[str]]:
-    with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
-        return {
-            RandovaniaGame(key): words
-            for key, words in json.load(hash_words_file).items()
-        }
+    hash_words = json_lib.read_path(get_data_path() / "hash_words" / "hash_words.json")
+    return {
+        RandovaniaGame(key): words
+        for key, words in hash_words.items()
+    }
 
 
 def shareable_hash(hash_bytes: bytes) -> str:
@@ -130,8 +130,7 @@ class LayoutDescription:
 
     @classmethod
     def from_file(cls, path: Path) -> typing.Self:
-        with path.open("r") as open_file:
-            return cls.from_json_dict(json.load(open_file))
+        return cls.from_json_dict(json_lib.read_path(path))
 
     @property
     def permalink(self):
@@ -227,5 +226,6 @@ class LayoutDescription:
         )
 
     def save_to_file(self, json_path: Path):
-        with json_path.open("w") as open_file:
-            json.dump(self.as_json(), open_file, indent=4, separators=(',', ': '))
+        json_lib.write_path(
+            json_path, self.as_json()
+        )

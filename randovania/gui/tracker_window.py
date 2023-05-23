@@ -36,6 +36,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
+from randovania.lib import json_lib
 from randovania.patching.prime import elevators
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -64,8 +65,7 @@ def _load_previous_state(persistence_path: Path,
 
     previous_state_path = persistence_path.joinpath("state.json")
     try:
-        with previous_state_path.open() as previous_state_file:
-            return json.load(previous_state_file)
+        return json_lib.read_path(previous_state_path)
     except (FileNotFoundError, json.JSONDecodeError):
         return None
 
@@ -423,33 +423,32 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     def persist_current_state(self):
         region_list = self.game_description.region_list
-        with self.persistence_path.joinpath("state.json").open("w") as state_file:
-            json.dump(
-                {
-                    "actions": [
-                        node.identifier.as_string
-                        for node in self._actions
-                    ],
-                    "collected_pickups": {
-                        pickup.name: quantity
-                        for pickup, quantity in self._collected_pickups.items()
-                    },
-                    "elevators": [
-                        {
-                            "teleporter": teleporter.as_json,
-                            "data": combo.currentData().as_json if combo.currentIndex() > 0 else None
-                        }
-                        for teleporter, combo in self._elevator_id_to_combo.items()
-                    ],
-                    "configurable_nodes": {
-                        gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
-                        for gate, combo in self._translator_gate_to_combo.items()
-                    },
-                    "starting_location": region_list.identifier_for_node(self._initial_state.node
-                                                                         ).area_identifier.as_json,
+        json_lib.write_path(
+            self.persistence_path.joinpath("state.json"),
+            {
+                "actions": [
+                    node.identifier.as_string
+                    for node in self._actions
+                ],
+                "collected_pickups": {
+                    pickup.name: quantity
+                    for pickup, quantity in self._collected_pickups.items()
                 },
-                state_file
-            )
+                "elevators": [
+                    {
+                        "teleporter": teleporter.as_json,
+                        "data": combo.currentData().as_json if combo.currentIndex() > 0 else None
+                    }
+                    for teleporter, combo in self._elevator_id_to_combo.items()
+                ],
+                "configurable_nodes": {
+                    gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
+                    for gate, combo in self._translator_gate_to_combo.items()
+                },
+                "starting_location": region_list.identifier_for_node(self._initial_state.node
+                                                                     ).area_identifier.as_json,
+            },
+        )
 
     def setup_possible_locations_tree(self):
         """
