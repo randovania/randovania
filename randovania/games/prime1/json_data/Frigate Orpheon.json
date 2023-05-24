@@ -3673,7 +3673,7 @@
                     "default_connection": {
                         "region": "Frigate Orpheon",
                         "area": "Reactor Core Entrance",
-                        "node": "Door to Cargo Freight Lift to Deck Gamma"
+                        "node": "Door from Cargo Freight Lift to Deck Gamma"
                     },
                     "default_dock_weakness": "Square Door",
                     "exclude_from_dock_rando": false,
@@ -3715,7 +3715,7 @@
                 ]
             },
             "nodes": {
-                "Door to Cargo Freight Lift to Deck Gamma": {
+                "Door from Cargo Freight Lift to Deck Gamma": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3738,7 +3738,7 @@
                         "area": "Cargo Freight Lift to Deck Gamma",
                         "node": "Door to Reactor Core Entrance"
                     },
-                    "default_dock_weakness": "Square Door",
+                    "default_dock_weakness": "Permanently Locked",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3807,7 +3807,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Save Station": {
                     "node_type": "generic",
@@ -3820,7 +3828,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Cargo Freight Lift to Deck Gamma": {
+                        "Door from Cargo Freight Lift to Deck Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
