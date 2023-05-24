@@ -30,6 +30,9 @@ Templates
 * Shoot Ice Missile:
       Ice Missile and Shoot Missile
 
+* Shoot Storm Missile:
+      Missiles ≥ 3 and Storm Missile and Shoot Missile
+
 * Push Wide Beam Block:
       Shoot Charge Beam and Shoot Wide Beam
 
@@ -509,6 +512,38 @@ Dock Weaknesses
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
           Shoot Diffusion Beam
 
+
+  * Storm Missile Door
+      Extra - type: storm_missile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Storm Missile
+
+
+  * Bomb Door
+      Extra - type: bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Bomb
+
+
+  * Cross Bomb Door
+      Extra - type: cross_bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Cross Bomb
+
+
+  * Power Bomb Door
+      Extra - type: power_bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Power Bomb
+
   > Dock Rando:
       Unlocked: Power Beam Door
       Locked: Access Permanently Closed
@@ -524,13 +559,17 @@ Dock Weaknesses
           Wave Beam Door
           Wide Beam Door
       Change to:
+          Bomb Door
           Charge Beam Door
+          Cross Bomb Door
           Diffusion Beam Door
           Grapple Beam Door
           Ice Missile Door
           Missile Door
           Plasma Beam Door
           Power Beam Door
+          Power Bomb Door
+          Storm Missile Door
           Super Missile Door
           Wave Beam Door
           Wide Beam Door
