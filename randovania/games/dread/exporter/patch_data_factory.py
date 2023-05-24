@@ -7,6 +7,7 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.area import Area
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
@@ -307,6 +308,30 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             DreadHintNamer(self.description.all_patches, self.players_config),
         )
 
+    def _static_room_name_fixes(self, scenario_name: str, area: Area):
+        # static fixes for some rooms
+        cc_name = area.extra["asset_id"]
+        area_name = area.name
+        if scenario_name == "s040_aqua":
+            if cc_name == "collision_camera_010":
+                return cc_name, "Burenia Main Hub"
+            if cc_name == "collision_camera_023_B":
+                return "collision_camera_023", area_name
+            
+        if scenario_name == "s050_forest":
+            if cc_name == "collision_camera_024":
+                return cc_name, "Golzuna Tower"
+
+        if scenario_name == "s060_quarantine":
+            if cc_name == "collision_camera_MBL_B":
+                return "collision_camera_MBL", area.name
+
+        if scenario_name == "s070_basesanc":
+            if cc_name == "collision_camera_038_A":
+                return "collision_camera_038", area.name
+            
+        return cc_name, area.name
+
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
         # generate a 2D dictionary of (scenario, collision camera) => room name
         all_dict: dict = {}
@@ -315,13 +340,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             region_dict: dict = {}
 
             for area in region.areas:
-                region_dict[area.extra["asset_id"]] = area.name
-
+                cc_name, area_name = self._static_room_name_fixes(scenario, area)
+                region_dict[cc_name] = area_name
             all_dict[scenario] = region_dict
-
-        # fix Burenia Main Tower and Golzuna Tower
-        all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
-        all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
 
         return all_dict
 
