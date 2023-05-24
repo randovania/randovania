@@ -1,4 +1,5 @@
 import dataclasses
+import datetime
 import inspect
 import typing
 import uuid
@@ -43,6 +44,9 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     elif type_ is uuid.UUID:
         return uuid.UUID(arg)
 
+    elif type_ is datetime.datetime:
+        return datetime.datetime.fromisoformat(arg)
+
     elif hasattr(type_, "from_json"):
         arg_spec = inspect.getfullargspec(type_.from_json)
 
@@ -73,6 +77,9 @@ def _encode_value(value: typing.Any) -> typing.Any:
             _encode_value(k): _encode_value(v)
             for k, v in value.items()
         }
+
+    elif isinstance(value, datetime.datetime):
+        return value.astimezone(datetime.timezone.utc).isoformat()
 
     elif value is not None and hasattr(value, "as_json"):
         value = value.as_json
