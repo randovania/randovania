@@ -246,7 +246,7 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
     assert data == expected_data
 
 
-def test_create_patch_with_crazy_settings(test_files_dir, mocker, setup_and_teardown_for_custom_spawn):
+def test_create_patch_with_crazy_settings(test_files_dir, mocker):
     # test for various uncommon or unusual preset settings
     file = test_files_dir.joinpath("log_files", "dread", "crazy_settings.rdvgame")
     description = LayoutDescription.from_file(file)
