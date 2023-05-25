@@ -40,6 +40,9 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             _decode_with_type(key, key_type, {}): _decode_with_type(value, value_type, {})
             for key, value in arg.items()
         }
+    
+    elif type_lib.is_named_tuple(type_):
+        return type_(**arg)
 
     elif type_ is uuid.UUID:
         return uuid.UUID(arg)
@@ -77,6 +80,9 @@ def _encode_value(value: typing.Any) -> typing.Any:
             _encode_value(k): _encode_value(v)
             for k, v in value.items()
         }
+    
+    elif type_lib.is_named_tuple(type(value)):
+        value = _encode_value(value._asdict())
 
     elif isinstance(value, datetime.datetime):
         return value.astimezone(datetime.timezone.utc).isoformat()

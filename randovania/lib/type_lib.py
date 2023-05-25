@@ -12,3 +12,11 @@ def resolve_optional(type_: type) -> tuple[type, bool]:
             return args[0], True
 
     return type_, False
+
+def is_named_tuple(type_: type) -> bool:
+    return (
+        issubclass(type_, tuple)
+        and hasattr(type_, "__annotations__")
+        and hasattr(type_, "_fields")
+        and hasattr(type_, "_field_defaults")
+    )

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+from typing import NamedTuple
 import uuid
 from enum import Enum
 
@@ -60,6 +61,9 @@ class K(JsonDataclass):
     a: str | None
     b: int
 
+class L(NamedTuple):
+    a: int
+    b: bool
 
 @dataclasses.dataclass()
 class J(JsonDataclass):
@@ -68,6 +72,7 @@ class J(JsonDataclass):
     c: list[uuid.UUID]
     d: datetime.datetime
     e: K
+    f: L
 
 
 def test_encode_jsondataclass():
@@ -79,12 +84,16 @@ def test_encode_jsondataclass():
         e=K(
             a="foo",
             b=-1,
-        )
+        ),
+        f=L(
+            a=2403,
+            b=True,
+        ),
     )
 
     encoded = construct_dataclass.encode_json_dataclass(reference)
     assert encoded == (b"\x14\x00\x01$00000000-0000-1111-0000-000000000001\x192020-01-30T14:20:00+00:00"
-                       b"\x01\x03foo\x01")
+                       b"\x01\x03foo\x01\xc6%\x01")
 
     decoded = construct_dataclass.decode_json_dataclass(encoded, J)
     assert decoded == reference
