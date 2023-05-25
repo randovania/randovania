@@ -32,8 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - **Major** - Added: Random Starting Locations is now supported. This enables all Save Stations, Navigation Stations, and Map Stations as possible starting options.
-- Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions
-- Added: Ice Missile Cover and Diffusion Beam Cover can now be added to Door Lock Randomizer
+- Added: New cosmetic option to display Randovania's area names on the HUD, either always or after room transitions.
+- Added: Door Lock Randomizer can randomize doors to be weak to Ice Missile, Storm Missile, Diffusion Beam, Bombs, Cross Bombs, Power Bombs.
 - Added: New option under "Game Modifications" to choose how inconsistencies in Raven Beak's damage resistance are handled.
 - Changed: The doors in Itorash are now excluded from being shuffled in Door Lock Randomizer.
 
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Belated April Fools 2023 preset. Enables door rando by default, as well as some surprise changes to the item pool. Make sure to see what advice ADAM has to give!
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
-- Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game
+- Fixed: Using Morph Ball in Proto Emmi sequence no longer crashes the game.
 
 #### Logic Database
 
@@ -51,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Speed Booster to skip breaking the blob submerged in water in Artaria Early Cloak room, requires Speed Booster Conservation (Beginner).
 - Added: Use Flash Shift to go right after getting the pickup in Artaria EMMI Zone Spinner.
 - Added: Use Flash Shift and Slide Jump to go from Artaria White EMMMI Arena to the top door to EMMI Zone Spinner.
-- Added: A new way to reach the tunnel in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump (Advanced)
+- Added: A new way to reach the tunnel in EMMI Hub Zone with Spider Magnet, Flash Shift and Single-wall Wall Jump (Advanced).
 - Added: Use a Shinespark to climb up from Above Screw Attack Blocks in Burenia Main Hub Tower Bottom with only Gravity Suit.
 - Added: Use a Shinespark to climb up from Alcove Across Grapple Block in Burenia Main Hub Tower Bottom with only Speed Booster using Speed Booster Conservation Beginner.
 - Added: Use a Shinespark with Gravity Suit to reach Ammo Recharge South at the bottom of Burenia Gravity Suit Tower before the Destroy Gravity Suit Floor event.
