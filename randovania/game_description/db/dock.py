@@ -55,7 +55,7 @@ class DockWeakness:
     The requirements for the weakness is required for every single use, but
     only from the front. The lock's requirement (if a lock is present) only needs to be satisfied once.
     """
-    weakness_index: int = dataclasses.field(compare=False)
+    weakness_index: int | None = dataclasses.field(compare=False)
     name: str
     extra: frozendict
     requirement: Requirement
