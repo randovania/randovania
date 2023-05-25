@@ -293,12 +293,14 @@ class WorldList(NodeProvider):
         self._nodes_to_world[node.node_index] = self.world_with_area(area)
 
     def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        if self._patches_dock_open_requirements is not None:
+        if (self._patches_dock_open_requirements is not None
+            and weakness.weakness_index is not None):
             return self._patches_dock_open_requirements[weakness.weakness_index]
         return weakness.requirement
 
     def lock_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        if self._patches_dock_lock_requirements is not None:
+        if (self._patches_dock_lock_requirements is not None
+            and weakness.weakness_index is not None):
             return self._patches_dock_lock_requirements[weakness.weakness_index]
         return weakness.lock.requirement
 

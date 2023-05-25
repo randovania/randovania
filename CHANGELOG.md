@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Generator unable to pass through one-way permanently locked doors such as the ones in uncrashed Frigate
 - Added: Missile Stations refill Power Bomb. In this version, this is always enabled.
 
 ## [5.7.0] - 2023-05-05

@@ -1,8 +1,11 @@
 import asyncio
 import dataclasses
 import time
+from functools import lru_cache
 from random import Random
 from typing import Callable
+
+from frozendict import frozendict
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -10,13 +13,14 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.world.dock import DockRandoParams, DockWeakness
+from randovania.game_description.world.dock import DockRandoParams, DockWeakness, DockLock, DockLockType
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import NodeContext
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.runner import FillerResults
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
+from randovania.layout.base.dock_rando_configuration import (DockRandoMode,
+                                                             DockTypeState)
 from randovania.lib import random_lib
 from randovania.resolver import debug, resolver
 from randovania.resolver.logic import Logic
@@ -81,6 +85,27 @@ class DockRandoLogic(Logic):
         )
         return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, context))
 
+    @staticmethod
+    @lru_cache
+    def special_locked_weakness() -> DockWeakness:
+        """
+        The resolver needs to pretend that the door it's changing:
+        1. is impassible
+        2. has a trivial lock on the front
+        The trivial lock is there to make the victory condition possible.
+        """
+
+        return DockWeakness(
+            weakness_index=None,
+            name="Locked",
+            extra=frozendict(),
+            requirement=Requirement.impossible(),
+            lock=DockLock(
+                lock_type=DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE,
+                requirement=Requirement.trivial(),
+            ),
+        )
+
 
 def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tuple[int, DockNode]]:
     """
@@ -132,15 +157,15 @@ async def _run_resolver(state: State, logic: Logic, max_attempts: int):
 
 async def _run_dock_resolver(dock: DockNode,
                              target: DockNode,
-                             dock_type_params: DockRandoParams,
                              setup: tuple[State, Logic]
                              ) -> tuple[State, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
     """
-    locks = [(dock, dock_type_params.locked)]
-    if setup[0].patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
-        locks.append((target, dock_type_params.locked))
+    locks = [
+        (dock, DockRandoLogic.special_locked_weakness()),
+        (target, DockRandoLogic.special_locked_weakness()),  # Two Way
+    ]
 
     state = setup[0].copy()
     state.patches = state.patches.assign_dock_weakness(locks)
@@ -272,7 +297,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
         else:
             # Determine the reach and possible weaknesses given that reach
             new_state, logic = await _run_dock_resolver(
-                dock, target, dock_type_params,
+                dock, target,
                 resolver.setup_resolver(patches.configuration, patches),
             )
             weighted_weaknesses = _determine_valid_weaknesses(
