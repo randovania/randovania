@@ -1,4 +1,5 @@
 import dataclasses
+import datetime
 import uuid
 from enum import Enum
 from typing import Optional
@@ -42,6 +43,7 @@ class HasDict(JsonDataclass):
     c: list[RandovaniaGame]
     d: list
     e: dict
+    f: datetime.datetime
 
 
 @pytest.fixture(
@@ -85,9 +87,10 @@ def test_from_json_missing_field_with_default():
 
 def test_has_dict():
     value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
-                    [RandovaniaGame.BLANK], [None], {})
+                    [RandovaniaGame.BLANK], [None], {},
+                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
     data = {"a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15},
-            "c": ["blank"], "d": [None], "e": {}}
+            "c": ["blank"], "d": [None], "e": {}, "f": "2019-01-03T02:50:00+00:00"}
 
     assert HasDict.from_json(data) == value
     assert value.as_json == data
