@@ -2,7 +2,7 @@ import dataclasses
 import datetime
 import uuid
 from enum import Enum
-from typing import Optional
+from typing import NamedTuple, Optional
 
 import pytest
 
@@ -36,6 +36,11 @@ class D2OldSyntax(JsonDataclass):
     b: D1
 
 
+class N(NamedTuple):
+    a: int
+    b: bool
+
+
 @dataclasses.dataclass()
 class HasDict(JsonDataclass):
     a: int
@@ -44,6 +49,7 @@ class HasDict(JsonDataclass):
     d: list
     e: dict
     f: datetime.datetime
+    g: N
 
 
 @pytest.fixture(
@@ -88,9 +94,11 @@ def test_from_json_missing_field_with_default():
 def test_has_dict():
     value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
                     [RandovaniaGame.BLANK], [None], {},
-                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
+                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc),
+                    N(2403, True))
     data = {"a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15},
-            "c": ["blank"], "d": [None], "e": {}, "f": "2019-01-03T02:50:00+00:00"}
+            "c": ["blank"], "d": [None], "e": {}, "f": "2019-01-03T02:50:00+00:00",
+            "g": {"a": 2403, "b": True}}
 
     assert HasDict.from_json(data) == value
     assert value.as_json == data

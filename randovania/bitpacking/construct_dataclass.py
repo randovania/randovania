@@ -42,6 +42,20 @@ def _construct_for_dataclass(cls) -> construct.Construct:
 
     return construct.Struct(*fields)
 
+def _construct_for_named_tuple(cls) -> construct.Construct:
+    resolved_types = typing.get_type_hints(cls)
+
+    fields = [
+        construct.Renamed(
+            construct_for_type(resolved_types[field_name]),
+            field_name
+        ) for field_name in cls._fields
+    ]
+
+    return construct.Struct(*fields)
+
+
+
 
 _direct_mapping = {
     bool: construct.Flag,
@@ -96,6 +110,9 @@ def construct_for_type(type_: type) -> construct.Construct:
 
     elif dataclasses.is_dataclass(type_):
         return _construct_for_dataclass(type_)
+    
+    elif type_lib.is_named_tuple(type_):
+        return _construct_for_named_tuple(type_)
 
     raise TypeError(f"Unsupported type: {type_}.")
 
