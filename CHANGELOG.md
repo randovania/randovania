@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
 - Fixed: Batch generation now properly prevents Windows from going to sleep.
 
+### Metroid Prime
+
+- Added: Missile Stations refill Power Bombs by default.
+
 ## [5.7.0] - 2023-05-??
 
 - Added: Skip usual Door Lock randomizer logic when the only valid lock option is unlocked doors.
