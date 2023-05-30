@@ -1,6 +1,7 @@
 import re
 import struct
 from unittest.mock import AsyncMock, MagicMock
+import uuid
 
 import pytest
 
@@ -29,13 +30,15 @@ def echoes_remote_connector(version: EchoesDolVersion):
     return connector
 
 
-async def test_is_this_version(connector: EchoesRemoteConnector):
+async def test_check_for_world_uid(connector: EchoesRemoteConnector):
     # Setup
-    build_info = b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32"
+    build_info = (b"!#$Met\xaa\xaa\xaa\xaa\xaa\xaa\x11\x11\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+                  b"Build v1.028 10/18/2004 10:44:32")
     connector.executor.perform_single_memory_operation.return_value = build_info
 
     # Run
-    assert await connector.is_this_version()
+    assert await connector.check_for_world_uid()
+    assert connector.layout_uuid == uuid.UUID("AAAAAAAA-AAAA-1111-AAAA-AAAAAAAAAAAA")
 
 
 @pytest.mark.parametrize(["message_original", "message_encoded", "previous_size"], [

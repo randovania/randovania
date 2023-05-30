@@ -20,7 +20,7 @@ def find_version_for_dol(dol_file: DolFile, all_versions: Iterable[DolVersion]) 
     with dol_file:
         for version in all_versions:
             build_string = dol_file.read(version.build_string_address, len(version.build_string))
-            if build_string == version.build_string:
+            if (build_string[:6], build_string[6 + 16:]) == (version.build_string[:6], version.build_string[6 + 16:]):
                 return version
 
     raise RuntimeError("Unsupported game version")

@@ -11,7 +11,7 @@ from randovania.lib import status_update_lib, json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patchers.exceptions import ExportFailure
 
-CURRENT_PATCH_VERSION = 2
+CURRENT_PATCH_VERSION = 3
 logger = logging.getLogger(__name__)
 
 
