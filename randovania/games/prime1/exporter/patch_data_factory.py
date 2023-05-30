@@ -993,6 +993,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 if self.configuration.enemy_attributes is not None
                 else None
             ),
+            "uuid": list(
+                self.players_config.get_own_uuid().bytes,
+            ),
 
             # TODO
             # "externAssetsDir": path_to_converted_assets,

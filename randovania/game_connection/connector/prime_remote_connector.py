@@ -1,6 +1,7 @@
 import dataclasses
 import logging
 import struct
+import uuid
 
 
 from randovania.dol_patching import assembler
@@ -58,11 +59,18 @@ class PrimeRemoteConnector(RemoteConnector):
     def description(self):
         return f"{self.game_enum.long_name}: {self.version.description}"
 
-    async def is_this_version(self) -> bool:
+    async def check_for_world_uid(self) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
         build_string = await self.executor.perform_single_memory_operation(operation)
-        return build_string == self.version.build_string
+        world_uid = build_string[6:6 + 16]
+        expected = bytearray(self.version.build_string)
+        expected[6:6 + 16] = world_uid
+        if build_string == expected:
+            self._layout_uuid = uuid.UUID(bytes=world_uid)
+            return True
+        else:
+            return False
 
     def _asset_id_format(self):
         """struct.unpack format string for decoding an asset id"""

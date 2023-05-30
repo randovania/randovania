@@ -1,5 +1,6 @@
 import dataclasses
 import struct
+import uuid
 
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.dol_patching import assembler
@@ -302,3 +303,10 @@ def apply_reverse_energy_tank_heal_patch(sd2_base: int,
         ]
 
     dol_file.write_instructions(addresses.incr_pickup + patch_offset, patch)
+
+
+def apply_build_info_patch(dol_file: DolFile, uid: uuid.UUID, version: DolVersion):
+    dol_file.write(
+        version.build_string_address + 6,
+        uid.bytes,
+    )
