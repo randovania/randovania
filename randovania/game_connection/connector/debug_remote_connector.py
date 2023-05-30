@@ -1,3 +1,4 @@
+import uuid
 from PySide6.QtCore import Signal
 
 from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner
@@ -13,6 +14,7 @@ class DebugRemoteConnector(RemoteConnector):
     def __init__(self, game: RandovaniaGame):
         super().__init__()
         self._game = game
+        self._layout_uuid = uuid.UUID("00000000-0000-1111-0000-000000000000")
 
     @property
     def game_enum(self) -> RandovaniaGame:

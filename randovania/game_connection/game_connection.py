@@ -70,7 +70,6 @@ class GameConnection(QObject):
         self.connection_builders = []
         self.remote_connectors = {}
         self.connected_states = {}
-        self.uuid_for_unknown = uuid.UUID("00000000-0000-1111-0000-000000000000")
 
         for builder_param in options.connector_builders:
             self.add_connection_builder(builder_param.create_builder())
@@ -145,9 +144,8 @@ class GameConnection(QObject):
         self._ensure_connected_state_exists(connector)
 
     def _ensure_connected_state_exists(self, connector: RemoteConnector) -> ConnectedGameState:
-        the_id = connector.layout_uuid or self.uuid_for_unknown
         if connector not in self.connected_states:
-            self.connected_states[connector] = ConnectedGameState(the_id, connector)
+            self.connected_states[connector] = ConnectedGameState(connector.layout_uuid, connector)
         return self.connected_states[connector]
 
     def _on_player_location_changed(self, connector: RemoteConnector, location: tuple[Region | None, Area | None]):

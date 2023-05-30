@@ -1,3 +1,4 @@
+import uuid
 from unittest.mock import AsyncMock, call, ANY
 from unittest.mock import MagicMock
 
@@ -142,6 +143,7 @@ async def test_connector_state_update(connection, qapp):
     # Setup
     builder = DebugConnectorBuilder(RandovaniaGame.BLANK.value)
     connection.add_connection_builder(builder)
+    debug_connector_uuid = uuid.UUID("00000000-0000-1111-0000-000000000000")
 
     game_state_updated = MagicMock()
     connection.GameStateUpdated.connect(game_state_updated)
@@ -152,9 +154,9 @@ async def test_connector_state_update(connection, qapp):
     assert isinstance(connector, DebugRemoteConnector)
 
     def make(status: GameConnectionStatus, inv: dict, indices: set):
-        return ConnectedGameState(connection.uuid_for_unknown, connector, status, inv, indices)
+        return ConnectedGameState(debug_connector_uuid, connector, status, inv, indices)
 
-    assert connection.get_backend_choice_for_state(ConnectedGameState(connection.uuid_for_unknown, connector)
+    assert connection.get_backend_choice_for_state(ConnectedGameState(debug_connector_uuid, connector)
                                                    ) == ConnectorBuilderChoice.DEBUG
 
     connector.PickupIndexCollected.emit(PickupIndex(1))
