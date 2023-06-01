@@ -318,13 +318,13 @@
                 "long_name": "Septogg Helpers",
                 "extra": {}
             },
-            "EntraceRando": {
+            "EntranceRando": {
                 "long_name": "Entrance Rando",
                 "extra": {}
             }
         },
         "requirement_template": {
-            "AnyBombs": {
+            "Can Use Any Bombs": {
                 "type": "and",
                 "data": {
                     "comment": "Possible to lay any kind of bombs",
@@ -367,7 +367,7 @@
                     ]
                 }
             },
-            "Bombs": {
+            "Can Use Bombs": {
                 "type": "and",
                 "data": {
                     "comment": "Able to lay normal bombs",
@@ -393,7 +393,7 @@
                     ]
                 }
             },
-            "PowerBombs": {
+            "Can Use Power Bombs": {
                 "type": "and",
                 "data": {
                     "comment": "Able to lay Power Bombs",
@@ -419,7 +419,7 @@
                     ]
                 }
             },
-            "SpringBall": {
+            "Can Use Spring Ball": {
                 "type": "and",
                 "data": {
                     "comment": "Able to use spring ball",
@@ -445,7 +445,7 @@
                     ]
                 }
             },
-            "SpiderBall": {
+            "Can Use Spider Ball": {
                 "type": "and",
                 "data": {
                     "comment": "Able to use spider ball",
@@ -471,54 +471,7 @@
                     ]
                 }
             },
-            "IBJ": {
-                "type": "and",
-                "data": {
-                    "comment": "Able to Infinite Bomb Jump",
-                    "items": [
-                        {
-                            "type": "template",
-                            "data": "Bombs"
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "tricks",
-                                "name": "IBJ",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
-            "MidAirMorph": {
-                "type": "and",
-                "data": {
-                    "comment": "Able to use the MidAirMorphTrick",
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morphball",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "tricks",
-                                "name": "MidAirMorph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
-            "MidWall": {
+            "Power Grip Wall": {
                 "type": "or",
                 "data": {
                     "comment": "Able to get over a mid-sized wall",
@@ -566,7 +519,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Bombs"
+                                        "data": "Can Use Bombs"
                                     },
                                     {
                                         "type": "resource",
@@ -582,12 +535,12 @@
                         },
                         {
                             "type": "template",
-                            "data": "SpiderBall"
+                            "data": "Can Use Spider Ball"
                         }
                     ]
                 }
             },
-            "HighWall": {
+            "Hijump Wall": {
                 "type": "or",
                 "data": {
                     "comment": "Able to get over a high sized wall",
@@ -608,7 +561,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Bombs"
+                                        "data": "Can Use Bombs"
                                     },
                                     {
                                         "type": "resource",
@@ -633,7 +586,7 @@
                         },
                         {
                             "type": "template",
-                            "data": "SpiderBall"
+                            "data": "Can Use Spider Ball"
                         },
                         {
                             "type": "resource",
@@ -647,7 +600,101 @@
                     ]
                 }
             },
-            "Defat Alpha": {
+            "Hijump With Power Grip Wall": {
+                "type": "or",
+                "data": {
+                    "comment": "Able to get over a high sized wall that requires powergrip",
+                    "items": [
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hijump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power Grip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Spacejump",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "Walljump",
+                                "amount": 2,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Can Use Spider Ball"
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "IBJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IBJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Space Jump Wall": {
                 "type": "or",
                 "data": {
                     "comment": null,
@@ -656,24 +703,75 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "Missile",
-                                "amount": 7,
+                                "name": "Spacejump",
+                                "amount": 1,
                                 "negate": false
                             }
                         },
                         {
+                            "type": "template",
+                            "data": "Can Use Spider Ball"
+                        },
+                        {
                             "type": "resource",
                             "data": {
-                                "type": "items",
-                                "name": "SuperMissile",
-                                "amount": 2,
+                                "type": "tricks",
+                                "name": "Walljump",
+                                "amount": 3,
                                 "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "IBJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IBJ",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hijump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
                 }
             },
-            "TunnelClimb": {
+            "Tunnel Climb": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -734,37 +832,7 @@
                     ]
                 }
             },
-            "DestroyTurbine": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 3,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SuperMissile",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "AnyBombs"
-                        }
-                    ]
-                }
-            },
-            "HighTunnelClimb": {
+            "High Mid-Air Morph Tunnel Climb": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -843,7 +911,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -864,7 +932,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -910,7 +978,7 @@
                     ]
                 }
             },
-            "GoThroughVines": {
+            "Low Mid-Air Morph Tunnel Climb": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -919,133 +987,57 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "Gravity",
+                                "name": "Morphball",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
                         {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "tricks",
-                                "name": "DamageBoost",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
-            "DefeatGamma": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 15,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SuperMissile",
-                                "amount": 3,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
-            "HighWallWithGrip": {
-                "type": "or",
-                "data": {
-                    "comment": "Able to get over a high sized wall that requires powergrip",
-                    "items": [
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
+                                "comment": "A way to get into hole",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Hijump",
+                                            "name": "Bomb",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power Grip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Power Grip",
+                                            "amount": 1,
+                                            "negate": false
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Spacejump",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "tricks",
-                                "name": "Walljump",
-                                "amount": 2,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "SpiderBall"
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": "IBJ",
-                                "items": [
+                                    },
                                     {
-                                        "type": "template",
-                                        "data": "Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spiderball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Springball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "IBJ",
+                                            "name": "MidAirMorph",
                                             "amount": 2,
                                             "negate": false
                                         }
@@ -1056,84 +1048,7 @@
                     ]
                 }
             },
-            "LargeWall": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Spacejump",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "SpiderBall"
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "tricks",
-                                "name": "Walljump",
-                                "amount": 3,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": "IBJ",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Bombs"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Hijump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "LargeTunnelClimb": {
+            "Power Grip Climb": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -1163,7 +1078,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "SpiderBall"
+                                        "data": "Can Use Spider Ball"
                                     },
                                     {
                                         "type": "and",
@@ -1224,11 +1139,11 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "SpringBall"
+                                                    "data": "Can Use Spring Ball"
                                                 }
                                             ]
                                         }
@@ -1240,7 +1155,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1260,7 +1175,7 @@
                     ]
                 }
             },
-            "GiantTunnelClimb": {
+            "Hijump Tunnel Climb": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -1281,7 +1196,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "SpiderBall"
+                                        "data": "Can Use Spider Ball"
                                     },
                                     {
                                         "type": "or",
@@ -1290,7 +1205,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1396,57 +1311,7 @@
                     ]
                 }
             },
-            "DefeatZeta": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": []
-                }
-            },
-            "Destroy Ice Barrier": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Ice Beam",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SuperMissile",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "SpaceJumpTunnelClimb": {
+            "Space Jump Tunnel Climb": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -1467,7 +1332,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "SpiderBall"
+                                        "data": "Can Use Spider Ball"
                                     },
                                     {
                                         "type": "and",
@@ -1476,7 +1341,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1556,7 +1421,129 @@
                     ]
                 }
             },
-            "FreezeAndDestroy": {
+            "Defeat Alpha": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missile",
+                                "amount": 7,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SuperMissile",
+                                "amount": 2,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat Gamma": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missile",
+                                "amount": 15,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SuperMissile",
+                                "amount": 3,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat Zeta": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Defeat Omega": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": []
+                }
+            },
+            "Go Through Vines": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "DamageBoost",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Destroy Turbine": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missile",
+                                "amount": 3,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SuperMissile",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Can Use Any Bombs"
+                        }
+                    ]
+                }
+            },
+            "Destroy Ice Barrier": {
                 "type": "and",
                 "data": {
                     "comment": null,
