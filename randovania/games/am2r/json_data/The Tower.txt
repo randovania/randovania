@@ -584,7 +584,7 @@ rm_a4a01
 
 ----------------
 rm_a4a02
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   * Layers: default
   > Door to rm_a4a01
       Trivial
@@ -664,13 +664,25 @@ rm_a4a05
   * Layers: default
   * Normal Door to rm_a4a06/Door to rm_a4a05
   > Event - Tester
-      Combat (Beginner)
+      All of the following:
+          Any of the following:
+              # Movements requirements
+              Spacejump or Combat (Advanced)
+          Any of the following:
+              # Energy requirements
+              Combat (Advanced) or Normal Damage ≥ 599
+          Any of the following:
+              # Attack requirements
+              Plasma Beam or Spazer Beam or Combat (Intermediate)
+              All of the following:
+                  # 4 PBs to destroy the outer shell
+                  Morphball and PowerBomb ≥ 4
 
 > Event - Tester; Heals? False
   * Layers: default
   * Event Boss Tester Defeated
   > Door to rm_a4a08
-      Trivial
+      Space Jump Wall
 
 ----------------
 rm_a4a06

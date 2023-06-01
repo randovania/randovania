@@ -194,7 +194,7 @@ Extra - map_name: rm_a2a01
 ----------------
 rm_a2a01A
 Extra - map_name: rm_a2a01A
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   * Layers: default
   > Dock to rm_a2h02
       Trivial
@@ -299,11 +299,16 @@ Extra - map_name: rm_a2a04
   * Layers: default
   * Normal Door to rm_a2a03/Door to rm_a2a04
   > Event - Arachnus
-      Any of the following:
-          Can Use Bombs
-          Morphball and PowerBomb ≥ 3
+      All of the following:
+          Any of the following:
+              # Item requirements
+              Can Use Bombs
+              Morphball and PowerBomb ≥ 3
+          Any of the following:
+              # Energy requirements
+              Combat (Beginner) or Normal Damage ≥ 199
   > Pickup (Springball)
-      After Arachnus
+      After Boss Arachnus Defeated
 
 > Event - Arachnus; Heals? False
   * Layers: default
@@ -814,7 +819,7 @@ Extra - map_name: rm_a2a18
   > Dock to rm_a2a12
       Trivial
 
-> Dock to rm_a2a12; Heals? False; Spawn Point
+> Dock to rm_a2a12; Heals? False
   * Layers: default
   * Open Passage to rm_a2a12/Dock to rm_a2a18
   > Dock to rm_a2a09
@@ -839,7 +844,7 @@ Extra - map_name: rm_a2a18
 ----------------
 rm_a2a19
 Extra - map_name: rm_a2a19
-> Dock to rm_a2a08; Heals? False; Spawn Point
+> Dock to rm_a2a08; Heals? False; Default Node
   * Layers: default
   * Open Passage to rm_a2a08/Dock to rm_a2a19
   > Teleporter Pipe
@@ -879,7 +884,7 @@ Extra - map_name: rm_a2c01
                       Hijump or Spacejump
                       Damage Boost (Intermediate) and Walljump (Expert)
   > Door to rm_a2c10
-      After Hydro Station EMP
+      After EMP in Hydro Station 
   > EMPBall
       Any of the following:
           All of the following:

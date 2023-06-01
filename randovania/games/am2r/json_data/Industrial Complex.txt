@@ -1,6 +1,6 @@
 ----------------
 rm_a3h01
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   * Layers: default
   > Dock to rm_a0h10a
       Trivial
@@ -314,7 +314,7 @@ rm_a3h08
   > Dock to rm_a3h02 (Top)
       Hijump Wall
   > Door to rm_a3h09
-      After Area 3 EMP
+      After EMP in Area 3 
   > Dock to rm_a3h01
       Can Use Any Bombs
   > Event - A3EMP
@@ -352,7 +352,9 @@ rm_a3a01
   * Layers: default
   * Pickup 6; Category? Major
   > Event - Torizo
-      Spacejump
+      All of the following:
+          Spacejump or Combat (Advanced)
+          Combat (Intermediate) or Normal Damage ≥ 399
 
 > Event - Torizo; Heals? False
   * Layers: default
@@ -966,7 +968,7 @@ rm_a3a23a
   * Layers: default
   * Open Passage to rm_a3a23/Dock to rm_a3a23a
   > Before Super
-      After Crystal before Super Missile or Power Grip Wall
+      After Area 3 Crystal before Super Missile or Power Grip Wall
   > Event - SuperCrystal
       SuperMissile
 
@@ -979,7 +981,7 @@ rm_a3a23a
 > Before Super; Heals? False
   * Layers: default
   > Dock to rm_a3a23
-      After Crystal before Super Missile
+      After Area 3 Crystal before Super Missile
   > Pickup (SuperMissile)
       Trivial
   > Event - SuperCrystal

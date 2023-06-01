@@ -1256,7 +1256,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to rm_a2h02": {
                             "type": "and",
@@ -1854,24 +1854,58 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Arachnus": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Item requirements",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morphball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBomb",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Energy requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Morphball",
+                                                        "type": "tricks",
+                                                        "name": "Combat",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -1879,9 +1913,9 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 3,
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 199,
                                                         "negate": false
                                                     }
                                                 }
@@ -5092,7 +5126,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
@@ -5229,7 +5263,7 @@
             }
         },
         "rm_a2a19": {
-            "default_node": null,
+            "default_node": "Dock to rm_a2a08",
             "extra": {
                 "map_name": "rm_a2a19"
             },
@@ -5247,7 +5281,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
